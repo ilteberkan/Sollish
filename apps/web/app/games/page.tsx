@@ -6,6 +6,7 @@ export const metadata: Metadata = { title: 'Oyunlar — Canlı & Solo', descript
 const solo = [
   { title: 'Crash', href: '/game/crash', text: 'Çarpan yükselirken çıkış anını sen seç.', type: 'Manuel çıkış', art: 'crash' },
   { title: 'Coinflip', href: '/game/coinflip', text: 'İki yüz, bir seçim, anında sonuç.', type: 'Klasik', art: 'coin' },
+  { title: 'Candy Cascade', href: '/game/cascade', text: 'Sekiz eşleşmede patlat, düşen şekerlerle zincir kur.', type: 'Tumble', art: 'candy' },
 ] as const;
 export default function Games() { return <div className={styles.page}>
   <Link href="/live/ringside" prefetch={false} className={styles.hero} aria-label="Ringside canlı arenaya gir">
@@ -24,6 +25,8 @@ export default function Games() { return <div className={styles.page}>
     <div className={styles.soloGrid}>{solo.map(game => <Link href={game.href} prefetch={false} className={styles.soloCard} key={game.href}>
       <span className={styles.soloArt} data-art={game.art} aria-hidden="true">{game.art === 'crash'
         ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 20c6-2 11-7 18-16"/><path d="M15 4h6v6"/></svg>
+        : game.art === 'candy'
+        ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M7.2 9.4 3 7.5l1.2 4.5L3 16.5l4.2-1.9M16.8 9.4 21 7.5l-1.2 4.5 1.2 4.5-4.2-1.9"/></svg>
         : <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>}</span>
       <span className={styles.soloCopy}><b>{game.title}</b><span>{game.text}</span><small>{game.type} · DEMO</small></span>
       <span className={styles.arrow} aria-hidden="true">→</span>

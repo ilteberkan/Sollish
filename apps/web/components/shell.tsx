@@ -10,7 +10,7 @@ import { ChatPanel } from './chat-panel';
 import { containDialogFocus } from '@/lib/dialog';
 const WalletDialog = dynamic(() => import('./wallet-dialog'), { ssr: false });
 const devnetConfigured = process.env.NEXT_PUBLIC_COINFLIP_ENABLED === 'true' || process.env.NEXT_PUBLIC_INCENTIVES_ENABLED === 'true';
-const links = [{ href: '/live/ringside', label: 'Ringside', icon: 'boxing', live: true }, { href: '/game/crash', label: 'Crash', icon: 'crash' }, { href: '/game/coinflip', label: 'Coinflip', icon: 'coin' }, { href: '/rewards', label: 'Ödüller', icon: 'gift' }, { href: '/stake', label: 'Stake', icon: 'stake' }];
+const links = [{ href: '/live/ringside', label: 'Ringside', icon: 'boxing', live: true }, { href: '/game/crash', label: 'Crash', icon: 'crash' }, { href: '/game/coinflip', label: 'Coinflip', icon: 'coin' }, { href: '/game/cascade', label: 'Candy Cascade', icon: 'candy' }, { href: '/rewards', label: 'Ödüller', icon: 'gift' }, { href: '/stake', label: 'Stake', icon: 'stake' }];
 export function Shell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const arenaFocus = pathname === '/live/ringside';

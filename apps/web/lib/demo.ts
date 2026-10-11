@@ -2,23 +2,26 @@
 export const DEMO_START_CENTS = 100_000;
 export const DEMO_MAX_BET_CENTS = 50_000;
 export const CRASH_GROWTH = 0.14;
+export const DEMO_DEFAULT_MAX_MULTIPLIER = 50;
+export const DEMO_CEILING_MULTIPLIER = 5000;
 export type Side = 'heads' | 'tails';
 
 /** In-memory practice bookkeeping, never a security boundary against the browser owner. */
 export class DemoLedger {
   private available = DEMO_START_CENTS;
-  private pending: { id: string; stake: number } | null = null;
+  private pending: { id: string; stake: number; maxMultiplier: number } | null = null;
   private readonly used = new Set<string>();
   get balance(): number { return this.available; }
-  reserve(stake: number, nonce: () => string = () => crypto.randomUUID()): string | null {
+  reserve(stake: number, nonce: () => string = () => crypto.randomUUID(), maxMultiplier: number = DEMO_DEFAULT_MAX_MULTIPLIER): string | null {
+    if (!Number.isSafeInteger(maxMultiplier) || maxMultiplier < 1 || maxMultiplier > DEMO_CEILING_MULTIPLIER) return null;
     if (!Number.isSafeInteger(stake) || stake < 100 || stake > DEMO_MAX_BET_CENTS || stake > this.available || this.pending) return null;
     const id = nonce();
     if (typeof id !== 'string' || !id || this.used.has(id)) throw new Error('Invalid demo reservation identity');
-    this.used.add(id); this.pending = { id, stake }; this.available -= stake; return id;
+    this.used.add(id); this.pending = { id, stake, maxMultiplier }; this.available -= stake; return id;
   }
   settle(record: { id: string; stake: number; payout: number }): boolean {
     if (!this.pending || this.pending.id !== record.id) return false;
-    if (record.stake !== this.pending.stake || !Number.isSafeInteger(record.payout) || record.payout < 0 || record.payout > this.pending.stake * 50 || !Number.isSafeInteger(this.available + record.payout)) throw new RangeError('Invalid demo settlement');
+    if (record.stake !== this.pending.stake || !Number.isSafeInteger(record.payout) || record.payout < 0 || record.payout > this.pending.stake * this.pending.maxMultiplier || !Number.isSafeInteger(this.available + record.payout)) throw new RangeError('Invalid demo settlement');
     this.available += record.payout; this.pending = null; return true;
   }
 }

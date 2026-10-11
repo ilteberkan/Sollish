@@ -3,6 +3,7 @@ export function Icon({ name, size = 20, className = '', style }: { name: string;
   const paths: Record<string, React.ReactNode> = {
     crash: <><path d="M3 18h18M4 15l5-3 4 1 7-9"/><path d="m15 4 5 0 0 5"/></>,
     coin: <><ellipse cx="12" cy="12" rx="8" ry="9"/><path d="M12 7v10m-3-8h4a2 2 0 0 1 0 4h-2a2 2 0 0 0 0 4h3"/></>,
+    candy: <><circle cx="12" cy="12" r="5"/><path d="M7.2 9.4 3 7.5l1.2 4.5L3 16.5l4.2-1.9M16.8 9.4 21 7.5l-1.2 4.5 1.2 4.5-4.2-1.9"/><path d="M10 10.5a3 3 0 0 1 3-1.2"/></>,
     boxing: <><path d="M8 16 5 12a3 3 0 0 1 0-4l1-1a2 2 0 0 1 3 0V6a3 3 0 0 1 3-3h4a4 4 0 0 1 4 4v4a6 6 0 0 1-3 5"/><path d="M8 16h9v5H8zm1-9v5m-1 7h9"/></>,
     gift: <><rect x="4" y="10" width="16" height="11" rx="1"/><path d="M3 6h18v4H3zm9 0v15"/><path d="M12 6H8a2.5 2.5 0 1 1 2.5-2.5L12 6Zm0 0h4a2.5 2.5 0 1 0-2.5-2.5L12 6Z"/></>,
     stake: <><path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5"/></>,

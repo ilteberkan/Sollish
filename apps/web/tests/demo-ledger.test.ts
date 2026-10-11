@@ -28,3 +28,14 @@ test('payout uses exact intermediate integers and rejects overflow; invalid cloc
   assert.equal(grossPayout(Number.MAX_SAFE_INTEGER, 1), Number.MAX_SAFE_INTEGER); assert.equal(grossPayout(101, 1.96), 197); assert.throws(() => grossPayout(Number.MAX_SAFE_INTEGER, 1.01), RangeError);
   for (const [time, point] of [[NaN, 2], [Infinity, 2], [1, NaN], [1, 0.99], [1, 50.01]]) assert.throws(() => crashAt(time!, point!), RangeError);
 });
+test('per-reservation multiplier cap: default 50, up to 5000 when reserved, invalid caps rejected', () => {
+  let ledger = new DemoLedger(); ledger.reserve(1000, () => 'a', 5000);
+  assert.throws(() => ledger.settle({ id: 'a', stake: 1000, payout: 5_000_001 }), RangeError);
+  assert.equal(ledger.settle({ id: 'a', stake: 1000, payout: 5_000_000 }), true); assert.equal(ledger.balance, 100_000 - 1000 + 5_000_000);
+  ledger = new DemoLedger(); ledger.reserve(1000, () => 'b');
+  assert.throws(() => ledger.settle({ id: 'b', stake: 1000, payout: 50_001 }), RangeError); assert.equal(ledger.settle({ id: 'b', stake: 1000, payout: 50_000 }), true);
+  ledger = new DemoLedger(); ledger.reserve(1000, () => 'c', 100); assert.throws(() => ledger.settle({ id: 'c', stake: 1000, payout: 100_001 }), RangeError);
+  ledger = new DemoLedger();
+  for (const cap of [0, -1, 0.5, 5001, NaN, Infinity, Number.MAX_SAFE_INTEGER]) assert.equal(ledger.reserve(1000, () => 'x', cap), null, String(cap));
+  assert.equal(ledger.balance, 100_000); assert.equal(ledger.reserve(1000, () => 'x', 5000), 'x');
+});

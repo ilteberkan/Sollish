@@ -3,12 +3,12 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { WalletConnection, type ConnectedWallet, type StandardWallet } from '@/lib/wallet';
 import { DEMO_START_CENTS, DemoLedger } from '@/lib/demo';
 
-export type DemoRecord = { id: string; game: 'Crash' | 'Coinflip' | 'Ringside'; stake: number; payout: number; detail: string; at: number };
+export type DemoRecord = { id: string; game: 'Crash' | 'Coinflip' | 'Ringside' | 'Cascade'; stake: number; payout: number; detail: string; at: number };
 type ProductContext = {
   wallet: ConnectedWallet | null; connectWallet: (wallet: StandardWallet) => Promise<void>; disconnectWallet: () => void;
   walletOpen: boolean; setWalletOpen: (open: boolean) => void;
   demoBalance: number; records: DemoRecord[];
-  reserveDemo: (amount: number) => string | null;
+  reserveDemo: (amount: number, maxMultiplier?: number) => string | null;
   settleDemo: (record: DemoRecord) => void;
   activeDemo: boolean; setActiveDemo: (active: boolean) => void;
 };
@@ -28,8 +28,8 @@ export function Providers({ children }: { children: ReactNode }) {
   const [records, setRecords] = useState<DemoRecord[]>([]);
   const [activeDemo, setActiveDemo] = useState(false);
   const ledger = useRef(new DemoLedger());
-  const reserveDemo = useCallback((amount: number) => {
-    const id = ledger.current.reserve(amount);
+  const reserveDemo = useCallback((amount: number, maxMultiplier?: number) => {
+    const id = ledger.current.reserve(amount, undefined, maxMultiplier);
     if (!id) return null;
     setBalance(ledger.current.balance);
     return id;
