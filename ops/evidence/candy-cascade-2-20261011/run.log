@@ -1,0 +1,3 @@
+{"mode":"standard","rtpPct":95.7363,"ci":[95.1282,96.3443],"feature":0.002095,"hit":0.26527,"contribution":{"baseGame":57.6435,"freeSpins":38.0928,"scatterPayInBase":0.8197},"avgFreeWin":181.84,"sec":147.7}
+{"mode":"ante","rtpPct":96.2784,"ci":[95.7199,96.8368],"feature":0.004383,"hit":0.26165,"contribution":{"baseGame":45.4917,"freeSpins":50.7867,"scatterPayInBase":1.5207},"avgFreeWin":144.84,"sec":154.2}
+{"mode":"buy","rtpPct":96.1841,"ci":[96.1263,96.2419],"feature":1,"hit":1,"contribution":{"baseGame":3.4029,"freeSpins":92.7812,"scatterPayInBase":3.1988},"avgFreeWin":92.78,"sec":641}

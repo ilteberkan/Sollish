@@ -1,0 +1,688 @@
+{
+  "kind": "candy-cascade-2-rtp-simulation",
+  "scope": "DEMO credits only; Monte Carlo estimate, not a certified or guaranteed RTP; RTP is return / cost",
+  "engine": "candy-cascade-2",
+  "engineSourceSha256": "f64f26ea1a3f0e1fa6af976b5a3d96b9ea1e410335759e1482de477cc700c547",
+  "engineSourceSha256AtRun": "2f0c34a1756831158538579254d5bff5c88e7a45c37c6a886af69d326c393a9d",
+  "engineSourceNote": "engineSourceSha256 = sha256 of packages/protocol/src/cascade-2.ts with the CASCADE2_RTP evidence block (between the @evidence-block markers) removed. engineSourceSha256AtRun = sha256 of the whole file when the simulation ran (RTP constants still zero, no markers); the file at that time equals the current file with the evidence block replaced by the zero constants (verified before filling the constants). Only the constants and their comment changed after the run, no engine code, tables or RNG.",
+  "seed": "candy-cascade-2-20261011-evidence",
+  "workers": 4,
+  "betCentsSimulated": 100,
+  "betLevelsCents": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    800,
+    1000,
+    1500,
+    2000,
+    2500,
+    4000,
+    5000,
+    7500,
+    10000,
+    15000,
+    20000,
+    25000,
+    40000,
+    50000
+  ],
+  "tuningOverride": null,
+  "modes": {
+    "standard": {
+      "rounds": 20000000,
+      "costBets": 1,
+      "rtpVsCost": {
+        "pointEstimate": 0.95736,
+        "pointEstimatePct": 95.7363,
+        "ci95": [
+          0.95128,
+          0.96344
+        ],
+        "ci95Pct": [
+          95.1282,
+          96.3443
+        ],
+        "ci95HalfWidthPct": 0.6081
+      },
+      "integerPayoutCheckRtp": 0.95736,
+      "hitRate": 0.26527,
+      "featureRate": 0.002095,
+      "featureOneIn": 477.4,
+      "featureCount": 41896,
+      "avgFreeSpinsPerRound": 0.02406,
+      "avgFreeSpinsPerTrigger": 11.487,
+      "freeSpinsPlayed": 481260,
+      "retriggers": 12461,
+      "maxFreeSpinsInOneRound": 45,
+      "stdDevPerRoundCostUnits": 13.8739,
+      "contributionPctOfCost": {
+        "baseGame": 57.6435,
+        "freeSpins": 38.0928,
+        "scatterPayInBase": 0.8197
+      },
+      "avgFreeWinPerTriggerBets": 181.84,
+      "maxObservedMultiplierSum": 167,
+      "maxObservedXBet": 5000,
+      "maxObservedXCost": 5000,
+      "maxTumblesInOneSpin": 13,
+      "capHits": 1,
+      "capXBet": 5000,
+      "minStarsInInitialBaseGrid": 0,
+      "costMismatches": 0,
+      "roundsWithWinAtLeastXBet": {
+        "1x": 3607156,
+        "10x": 114794,
+        "50x": 28479,
+        "100x": 22339,
+        "500x": 3599,
+        "1000x": 576,
+        "2000x": 35,
+        "5000x": 1
+      },
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 147.7
+    },
+    "ante": {
+      "rounds": 20000000,
+      "costBets": 1.25,
+      "rtpVsCost": {
+        "pointEstimate": 0.96278,
+        "pointEstimatePct": 96.2784,
+        "ci95": [
+          0.9572,
+          0.96837
+        ],
+        "ci95Pct": [
+          95.7199,
+          96.8368
+        ],
+        "ci95HalfWidthPct": 0.5584
+      },
+      "integerPayoutCheckRtp": 0.96278,
+      "hitRate": 0.26165,
+      "featureRate": 0.004383,
+      "featureOneIn": 228.2,
+      "featureCount": 87657,
+      "avgFreeSpinsPerRound": 0.05189,
+      "avgFreeSpinsPerTrigger": 11.839,
+      "freeSpinsPlayed": 1037765,
+      "retriggers": 32239,
+      "maxFreeSpinsInOneRound": 60,
+      "stdDevPerRoundCostUnits": 12.7418,
+      "contributionPctOfCost": {
+        "baseGame": 45.4917,
+        "freeSpins": 50.7867,
+        "scatterPayInBase": 1.5207
+      },
+      "avgFreeWinPerTriggerBets": 144.84,
+      "maxObservedMultiplierSum": 206,
+      "maxObservedXBet": 3447.15,
+      "maxObservedXCost": 2757.72,
+      "maxTumblesInOneSpin": 13,
+      "capHits": 0,
+      "capXBet": 5000,
+      "minStarsInInitialBaseGrid": 0,
+      "costMismatches": 0,
+      "roundsWithWinAtLeastXBet": {
+        "1x": 3553805,
+        "10x": 151388,
+        "50x": 57367,
+        "100x": 41020,
+        "500x": 4430,
+        "1000x": 584,
+        "2000x": 32,
+        "5000x": 0
+      },
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 154.2
+    },
+    "buy": {
+      "rounds": 20000000,
+      "costBets": 100,
+      "rtpVsCost": {
+        "pointEstimate": 0.96184,
+        "pointEstimatePct": 96.1841,
+        "ci95": [
+          0.96126,
+          0.96242
+        ],
+        "ci95Pct": [
+          96.1263,
+          96.2419
+        ],
+        "ci95HalfWidthPct": 0.0578
+      },
+      "integerPayoutCheckRtp": 0.96184,
+      "hitRate": 1,
+      "featureRate": 1,
+      "featureOneIn": 1,
+      "featureCount": 20000000,
+      "avgFreeSpinsPerRound": 12.09311,
+      "avgFreeSpinsPerTrigger": 12.093,
+      "freeSpinsPlayed": 241862104,
+      "retriggers": 8372572,
+      "maxFreeSpinsInOneRound": 75,
+      "stdDevPerRoundCostUnits": 1.3194,
+      "contributionPctOfCost": {
+        "baseGame": 3.4029,
+        "freeSpins": 92.7812,
+        "scatterPayInBase": 3.1988
+      },
+      "avgFreeWinPerTriggerBets": 92.78,
+      "maxObservedMultiplierSum": 215,
+      "maxObservedXBet": 5000,
+      "maxObservedXCost": 50,
+      "maxTumblesInOneSpin": 14,
+      "capHits": 156,
+      "capXBet": 5000,
+      "minStarsInInitialBaseGrid": 4,
+      "costMismatches": 0,
+      "roundsWithWinAtLeastXBet": {
+        "1x": 20000000,
+        "10x": 17283191,
+        "50x": 10453297,
+        "100x": 6199373,
+        "500x": 347273,
+        "1000x": 40442,
+        "2000x": 4547,
+        "5000x": 156
+      },
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 641
+    }
+  },
+  "tables": {
+    "paytableHundredths": {
+      "crown": [
+        2023,
+        5058,
+        10115
+      ],
+      "cupcake": [
+        1012,
+        3034,
+        6069
+      ],
+      "donut": [
+        607,
+        2023,
+        4046
+      ],
+      "gumdrop": [
+        405,
+        1214,
+        3034
+      ],
+      "strawberry": [
+        202,
+        607,
+        1618
+      ],
+      "blueberry": [
+        152,
+        405,
+        1214
+      ],
+      "kiwi": [
+        101,
+        303,
+        1012
+      ],
+      "lemon": [
+        81,
+        243,
+        809
+      ],
+      "cherry": [
+        51,
+        202,
+        607
+      ]
+    },
+    "scatterPayHundredths": {
+      "4": 300,
+      "5": 500,
+      "6": 10000
+    },
+    "modeTables": {
+      "standard": {
+        "base": [
+          [
+            "crown",
+            60
+          ],
+          [
+            "cupcake",
+            80
+          ],
+          [
+            "donut",
+            100
+          ],
+          [
+            "gumdrop",
+            120
+          ],
+          [
+            "strawberry",
+            160
+          ],
+          [
+            "blueberry",
+            170
+          ],
+          [
+            "kiwi",
+            180
+          ],
+          [
+            "lemon",
+            190
+          ],
+          [
+            "cherry",
+            200
+          ],
+          [
+            "star",
+            21
+          ]
+        ],
+        "free": [
+          [
+            "crown",
+            93
+          ],
+          [
+            "cupcake",
+            114
+          ],
+          [
+            "donut",
+            133
+          ],
+          [
+            "gumdrop",
+            142
+          ],
+          [
+            "strawberry",
+            138
+          ],
+          [
+            "blueberry",
+            107
+          ],
+          [
+            "kiwi",
+            86
+          ],
+          [
+            "lemon",
+            57
+          ],
+          [
+            "cherry",
+            38
+          ],
+          [
+            "star",
+            21
+          ],
+          [
+            "crystal",
+            100
+          ]
+        ],
+        "crystals": [
+          [
+            2,
+            600
+          ],
+          [
+            3,
+            440
+          ],
+          [
+            4,
+            320
+          ],
+          [
+            5,
+            220
+          ],
+          [
+            6,
+            160
+          ],
+          [
+            8,
+            100
+          ],
+          [
+            10,
+            70
+          ],
+          [
+            12,
+            40
+          ],
+          [
+            15,
+            24
+          ],
+          [
+            20,
+            14
+          ],
+          [
+            25,
+            8
+          ],
+          [
+            50,
+            3
+          ],
+          [
+            100,
+            1
+          ]
+        ]
+      },
+      "ante": {
+        "base": [
+          [
+            "crown",
+            60
+          ],
+          [
+            "cupcake",
+            80
+          ],
+          [
+            "donut",
+            100
+          ],
+          [
+            "gumdrop",
+            120
+          ],
+          [
+            "strawberry",
+            160
+          ],
+          [
+            "blueberry",
+            170
+          ],
+          [
+            "kiwi",
+            180
+          ],
+          [
+            "lemon",
+            190
+          ],
+          [
+            "cherry",
+            200
+          ],
+          [
+            "star",
+            26
+          ]
+        ],
+        "free": [
+          [
+            "crown",
+            93
+          ],
+          [
+            "cupcake",
+            114
+          ],
+          [
+            "donut",
+            133
+          ],
+          [
+            "gumdrop",
+            142
+          ],
+          [
+            "strawberry",
+            138
+          ],
+          [
+            "blueberry",
+            107
+          ],
+          [
+            "kiwi",
+            86
+          ],
+          [
+            "lemon",
+            57
+          ],
+          [
+            "cherry",
+            38
+          ],
+          [
+            "star",
+            21
+          ],
+          [
+            "crystal",
+            47
+          ]
+        ],
+        "crystals": [
+          [
+            2,
+            600
+          ],
+          [
+            3,
+            440
+          ],
+          [
+            4,
+            320
+          ],
+          [
+            5,
+            220
+          ],
+          [
+            6,
+            160
+          ],
+          [
+            8,
+            100
+          ],
+          [
+            10,
+            70
+          ],
+          [
+            12,
+            40
+          ],
+          [
+            15,
+            24
+          ],
+          [
+            20,
+            14
+          ],
+          [
+            25,
+            8
+          ],
+          [
+            50,
+            3
+          ],
+          [
+            100,
+            1
+          ]
+        ]
+      },
+      "buy": {
+        "base": [
+          [
+            "crown",
+            60
+          ],
+          [
+            "cupcake",
+            80
+          ],
+          [
+            "donut",
+            100
+          ],
+          [
+            "gumdrop",
+            120
+          ],
+          [
+            "strawberry",
+            160
+          ],
+          [
+            "blueberry",
+            170
+          ],
+          [
+            "kiwi",
+            180
+          ],
+          [
+            "lemon",
+            190
+          ],
+          [
+            "cherry",
+            200
+          ],
+          [
+            "star",
+            21
+          ]
+        ],
+        "free": [
+          [
+            "crown",
+            93
+          ],
+          [
+            "cupcake",
+            114
+          ],
+          [
+            "donut",
+            133
+          ],
+          [
+            "gumdrop",
+            142
+          ],
+          [
+            "strawberry",
+            138
+          ],
+          [
+            "blueberry",
+            107
+          ],
+          [
+            "kiwi",
+            86
+          ],
+          [
+            "lemon",
+            57
+          ],
+          [
+            "cherry",
+            38
+          ],
+          [
+            "star",
+            21
+          ],
+          [
+            "crystal",
+            21
+          ]
+        ],
+        "crystals": [
+          [
+            2,
+            600
+          ],
+          [
+            3,
+            440
+          ],
+          [
+            4,
+            320
+          ],
+          [
+            5,
+            220
+          ],
+          [
+            6,
+            160
+          ],
+          [
+            8,
+            100
+          ],
+          [
+            10,
+            70
+          ],
+          [
+            12,
+            40
+          ],
+          [
+            15,
+            24
+          ],
+          [
+            20,
+            14
+          ],
+          [
+            25,
+            8
+          ],
+          [
+            50,
+            3
+          ],
+          [
+            100,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "runtimeSeconds": 942.9,
+  "node": "v24.21.0",
+  "generatedAt": "2026-10-11T20:22:57.219Z"
+}
