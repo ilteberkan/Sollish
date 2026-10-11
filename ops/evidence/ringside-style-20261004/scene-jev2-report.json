@@ -1,0 +1,297 @@
+{
+ "providerCalls": 18,
+ "provider": [
+  {
+   "code": "OK",
+   "ms": 815,
+   "inputTokens": 852,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 1221,
+   "inputTokens": 852,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 499,
+   "inputTokens": 849,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 493,
+   "inputTokens": 849,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 392,
+   "inputTokens": 849,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 398,
+   "inputTokens": 849,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 356,
+   "inputTokens": 850,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 395,
+   "inputTokens": 850,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 407,
+   "inputTokens": 849,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 392,
+   "inputTokens": 849,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 542,
+   "inputTokens": 850,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 519,
+   "inputTokens": 850,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 347,
+   "inputTokens": 851,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 375,
+   "inputTokens": 851,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 376,
+   "inputTokens": 852,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 505,
+   "inputTokens": 852,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 484,
+   "inputTokens": 852,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 534,
+   "inputTokens": 852,
+   "outputTokens": 67
+  }
+ ],
+ "at": "2026-10-04T22:36:33.499Z",
+ "scope": "local dev runtime http://127.0.0.1:3000 (next dev, Turbopack), headless Chromium with GPU WebGL (ANGLE Metal); not a production build, not hosted",
+ "mode": "jev",
+ "seed": 20261041,
+ "viewport": [
+  1280,
+  720
+ ],
+ "finished": true,
+ "stage": {
+  "tick": 9060,
+  "decisions": 18
+ },
+ "waitingSamples": 2,
+ "posts": [
+  {
+   "failed": "net::ERR_ABORTED"
+  },
+  {
+   "atS": 4.2,
+   "status": 200,
+   "ms": 1503,
+   "source": "jev",
+   "code": null,
+   "style": "pressure",
+   "confidence": 0.36
+  },
+  {
+   "atS": 4.3,
+   "status": 200,
+   "ms": 1524,
+   "source": "jev",
+   "code": null,
+   "style": "pressure",
+   "confidence": 0.31
+  },
+  {
+   "atS": 20,
+   "status": 200,
+   "ms": 602,
+   "source": "jev",
+   "code": null,
+   "style": "cautious",
+   "confidence": 0.94
+  },
+  {
+   "atS": 20,
+   "status": 200,
+   "ms": 603,
+   "source": "jev",
+   "code": null,
+   "style": "cautious",
+   "confidence": 0.17
+  },
+  {
+   "atS": 34.8,
+   "status": 200,
+   "ms": 456,
+   "source": "jev",
+   "code": null,
+   "style": "outboxer",
+   "confidence": 0.21
+  },
+  {
+   "atS": 34.8,
+   "status": 200,
+   "ms": 464,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.46
+  },
+  {
+   "atS": 50,
+   "status": 200,
+   "ms": 558,
+   "source": "jev",
+   "code": null,
+   "style": "cautious",
+   "confidence": 0.34
+  },
+  {
+   "atS": 50,
+   "status": 200,
+   "ms": 566,
+   "source": "jev",
+   "code": null,
+   "style": "pressure",
+   "confidence": 0.26
+  },
+  {
+   "atS": 72.8,
+   "status": 200,
+   "ms": 469,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.38
+  },
+  {
+   "atS": 72.8,
+   "status": 200,
+   "ms": 465,
+   "source": "jev",
+   "code": null,
+   "style": "cautious",
+   "confidence": 0.85
+  },
+  {
+   "atS": 88,
+   "status": 200,
+   "ms": 638,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.35
+  },
+  {
+   "atS": 88,
+   "status": 200,
+   "ms": 649,
+   "source": "jev",
+   "code": null,
+   "style": "pressure",
+   "confidence": 0.51
+  },
+  {
+   "atS": 102.7,
+   "status": 200,
+   "ms": 407,
+   "source": "jev",
+   "code": null,
+   "style": "outboxer",
+   "confidence": 0.11
+  },
+  {
+   "atS": 102.8,
+   "status": 200,
+   "ms": 446,
+   "source": "jev",
+   "code": null,
+   "style": "cautious",
+   "confidence": 0.7
+  },
+  {
+   "atS": 125.9,
+   "status": 200,
+   "ms": 563,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.47
+  },
+  {
+   "atS": 125.9,
+   "status": 200,
+   "ms": 584,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.4
+  },
+  {
+   "atS": 141.2,
+   "status": 200,
+   "ms": 742,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.76
+  },
+  {
+   "atS": 141.2,
+   "status": 200,
+   "ms": 733,
+   "source": "jev",
+   "code": null,
+   "style": "outboxer",
+   "confidence": 0.4
+  }
+ ],
+ "errors": [],
+ "logText": "Stil kararları\nCANLI\nKaydı indir\nKayıt yükle\n02:16\nt8160\nAYAZ\nMesafeci\nJEV\n%40\n02:16\nt8160\nKOR\nKontracı\nJEV\n%76\n02:01\nt7260\nAYAZ\nKontracı\nJEV\n%40\n02:01\nt7260\nKOR\nKontracı\nJEV\n%47\n01:38\nt5880\nAYAZ\nMesafeci\nJEV\n%11\n01:38\nt5880\nKOR\nTemkinli\nJEV\n%70\n01:23\nt4980\nAYAZ\nBaskıcı\nJEV\n%51\n01:23\nt4980\nKOR\nKontracı\nJEV\n%35",
+ "logFile": "/private/tmp/claude-501/-Users-macmini-Desktop-Sollish/021e099c-5b54-43d5-9578-0302c917ae37/scratchpad/agent-style/scene-jev2/decision-log.json"
+}

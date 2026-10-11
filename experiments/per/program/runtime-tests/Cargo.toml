@@ -1,0 +1,19 @@
+[package]
+name = "per-probe-runtime-tests"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dev-dependencies]
+anchor-lang = "=1.2.0"
+per-probe = { path = "..", features = ["no-entrypoint"] }
+ephemeral-rollups-sdk = { version = "=0.16.2", features = ["anchor", "access-control"] }
+ephemeral-vrf-sdk = { version = "=0.4.1", features = ["anchor-modern"] }
+litesvm = "=0.15.2"
+solana-account = "=4.3.0"
+solana-address = "=2.6.1"
+solana-instruction = "=3.4.0"
+solana-keypair = "=3.1.2"
+solana-message = "=4.4.0"
+solana-signer = "=3.0.1"
+solana-transaction = "=4.1.5"

@@ -1,0 +1,97 @@
+{
+  "atUtc": "2026-10-03T03:50:24.970884+00:00",
+  "commit": "1f915c52fcd4b95b5f5f15b759ae91bd81e9a801",
+  "totalDownloadedBytes": 6263749,
+  "maxDownloadBytes": 15000000,
+  "modelLoaded": false,
+  "files": [
+    {
+      "path": "LICENSE",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/LICENSE",
+      "bytes": 1069,
+      "sha256": "eb4aa4f4f1e9a18875e996e12a7aaf9dc078562ef5db372b55910c6599dbcdc5",
+      "httpStatus": 200
+    },
+    {
+      "path": "args/run_humanoid3d_spinkick_args.txt",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/args/run_humanoid3d_spinkick_args.txt",
+      "bytes": 619,
+      "sha256": "c49977337721b02679ec20a925ea74797f5f8f544551e46d0396b80545b2b3d4",
+      "httpStatus": 200
+    },
+    {
+      "path": "data/policies/humanoid3d/humanoid3d_spinkick.ckpt.data-00000-of-00001",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/data/policies/humanoid3d/humanoid3d_spinkick.ckpt.data-00000-of-00001",
+      "bytes": 6130068,
+      "sha256": "deae7c33edb66994b67e34d6a73c66f577e3fe2a14c60817992ab42131cd022a",
+      "httpStatus": 200
+    },
+    {
+      "path": "data/policies/humanoid3d/humanoid3d_spinkick.ckpt.index",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/data/policies/humanoid3d/humanoid3d_spinkick.ckpt.index",
+      "bytes": 1355,
+      "sha256": "d14fe2801676d51c423bd8f67e1ed6890f7feeced1054fb0972dce43d845bdd0",
+      "httpStatus": 200
+    },
+    {
+      "path": "data/motions/humanoid3d_spinkick.txt",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/data/motions/humanoid3d_spinkick.txt",
+      "bytes": 72338,
+      "sha256": "e293f84c00e5a3cefaf8e9e9952ac39cfcdc8a9d445b5c1d24c67a271c97d43c",
+      "httpStatus": 200
+    },
+    {
+      "path": "data/characters/humanoid3d.txt",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/data/characters/humanoid3d.txt",
+      "bytes": 22221,
+      "sha256": "17469797e00704e82c53f70e3c08fd0e5adaf437b9c838b808f1173ca78c16a6",
+      "httpStatus": 200
+    },
+    {
+      "path": "data/controllers/humanoid3d_phase_rot_ctrl.txt",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/data/controllers/humanoid3d_phase_rot_ctrl.txt",
+      "bytes": 1875,
+      "sha256": "c53bdab04c6785d8d965265832e31c4c06426575041697438c3da600f22f714d",
+      "httpStatus": 200
+    },
+    {
+      "path": "data/agents/ct_agent_humanoid_ppo.txt",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/data/agents/ct_agent_humanoid_ppo.txt",
+      "bytes": 734,
+      "sha256": "8905fcf191eed349e9314413d1770925d185449f9a7912473bd754bdb731c4a1",
+      "httpStatus": 200
+    },
+    {
+      "path": "learning/pg_agent.py",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/learning/pg_agent.py",
+      "bytes": 14113,
+      "sha256": "afde8d2bc4f3450a935425df4f5d8b07e5c790f21421a740807d6a40e1d485e4",
+      "httpStatus": 200
+    },
+    {
+      "path": "learning/ppo_agent.py",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/learning/ppo_agent.py",
+      "bytes": 13766,
+      "sha256": "df56a78501c1853ad60dce79470553c62e244690b6ff0e5d3919365c41b2ca56",
+      "httpStatus": 200
+    },
+    {
+      "path": "learning/nets/fc_2layers_1024units.py",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/learning/nets/fc_2layers_1024units.py",
+      "bytes": 355,
+      "sha256": "76941cd8361480afc95d5f52d5f5c1ce91b71fe882835f2635bb652d4bed697c",
+      "httpStatus": 200
+    },
+    {
+      "path": "learning/nets/fc_2layers_1024_512.py",
+      "httpStatus": 404
+    },
+    {
+      "path": "learning/tf_agent.py",
+      "url": "https://raw.githubusercontent.com/xbpeng/DeepMimic/1f915c52fcd4b95b5f5f15b759ae91bd81e9a801/learning/tf_agent.py",
+      "bytes": 5236,
+      "sha256": "4ac0524bd671aa824199c6c9eb144675ef364602dd76f296ce571e5d495bedbd",
+      "httpStatus": 200
+    }
+  ]
+}

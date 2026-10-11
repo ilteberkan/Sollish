@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-01T21:03:05.253Z",
+  "runtime": "local-workerd",
+  "node": "v24.21.0",
+  "auth": "local ES256 JWKS/Auth/DB fixture, no cloud connection",
+  "spectators": 1000,
+  "fanoutBuckets": 8,
+  "authenticatedSockets": 1000,
+  "checks": 16,
+  "authenticationBatchMs": 5676,
+  "eventFanoutMs": {
+    "p50": 30,
+    "p95": 50,
+    "max": 52
+  },
+  "authFixtureRequests": {
+    "jwks": 1,
+    "user": 1003,
+    "session": 1120,
+    "snapshot": 1003
+  },
+  "scope": "one localhost host; synthetic public chat event; no financial transactions, hosted Supabase, production geography, reconnect storm or sustained load"
+}

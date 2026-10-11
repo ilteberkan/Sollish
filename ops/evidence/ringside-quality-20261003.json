@@ -1,0 +1,491 @@
+{
+  "schema": "sollish-ringside-quality-release-v1",
+  "recordedAt": "2026-10-03T12:05:59.128366+00:00",
+  "status": "LAB_RELEASE_VERIFIED_RESEARCH_QUALITY_NOT_READY",
+  "scope": "Ringside Lab presentation, actual offline residual-policy training and pretrained free-base motor reuse. No LIVE engine/economy promotion.",
+  "identity": {
+    "kind": "uncommitted-working-directory-sha256",
+    "gitCommit": null,
+    "githubCiRun": null,
+    "buildId": "F6qR4xrhj4rt41g0i_2To",
+    "nodeVersion": "24.21.0",
+    "sourceScope": "Explicit source/artifact manifest; no claim of reproducible committed release or remote CI."
+  },
+  "deployment": [
+    {
+      "name": "sollish-web-devnet",
+      "success": true,
+      "status": 200,
+      "deployment": {
+        "id": "e56cd4c3-2c00-40b3-a49a-63cdc1ab2847",
+        "created_on": "2026-10-03T11:51:28.287689Z",
+        "versions": [
+          {
+            "version_id": "1ab9a7f7-797b-49d5-8612-309b5ff69aee",
+            "percentage": 100
+          }
+        ]
+      }
+    },
+    {
+      "name": "sollish-realtime",
+      "success": true,
+      "status": 200,
+      "deployment": {
+        "id": "5a7add8e-9b57-42cb-a7f7-38085612a98d",
+        "created_on": "2026-10-02T23:27:46.461695Z",
+        "versions": [
+          {
+            "version_id": "fd489ab1-98ab-4aa9-8dc7-d010717747c9",
+            "percentage": 100
+          }
+        ]
+      }
+    }
+  ],
+  "deploymentEvidence": "ringside-quality-20261003/deployments-after.json",
+  "tests": {
+    "webTypecheck": {
+      "passed": true,
+      "command": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck",
+      "log": "ringside-quality-20261003/typecheck.log"
+    },
+    "webUnit": {
+      "passed": 57,
+      "failed": 0,
+      "log": "ringside-quality-20261003/web-unit.log"
+    },
+    "selfplayUnitAndRuntime": {
+      "passed": 24,
+      "failed": 0,
+      "log": "ringside-quality-20261003/learning-tests.log"
+    },
+    "classicGlbCpu": {
+      "passed": 9,
+      "failed": 0,
+      "log": "ringside-quality-20261003/classic-rig.log",
+      "historicalCaveat": "scripts/boxing-assets/evidence/contact-rig-cpu.json has historical scene hashes; this new run log and current sourceSha256 are the evidence for this release."
+    },
+    "fightkitGlbCpu": {
+      "passed": 4,
+      "checkedVertices": 107736,
+      "cameraFits": 54,
+      "evidence": "scripts/boxing-assets/evidence/fightkit-rig-cpu.json",
+      "sourceHashesMatched": true
+    },
+    "learnedMotorDataAndRealRuntime": {
+      "passed": 13,
+      "pureDataTests": 11,
+      "realBulletGeometryTests": 2,
+      "evidence": "experiments/combat-motor-reuse/evidence/manifest.json"
+    },
+    "productionPreviewBrowser": {
+      "startTime": "2026-10-03T11:49:11.578Z",
+      "duration": 52643.703,
+      "expected": 21,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "evidence": "ringside-quality-20261003/browser-final.json",
+      "files": [
+        "boxing-lifecycle.spec.ts",
+        "boxing.spec.ts",
+        "ringside-research.spec.ts"
+      ],
+      "scope": "Local built OpenNext workerd preview, not hosted load/physical phone"
+    },
+    "openNextBuild": {
+      "passed": true,
+      "log": "ringside-quality-20261003/build.log",
+      "warning": "Third-party esbuild negative-zero comparison warning retained in build log."
+    },
+    "launchReadiness": {
+      "exitCode": 2,
+      "status": "BLOCKED",
+      "productionApproved": false,
+      "evidence": "ringside-quality-20261003/readiness.log"
+    },
+    "earlierFailuresRetained": [
+      "ringside-quality-20261003/browser-initial.json",
+      "ringside-quality-20261003/browser-preview-startup-failure.json"
+    ]
+  },
+  "hosted": {
+    "filesVerified": 16,
+    "assetEvidence": "ringside-quality-20261003/hosted-assets.json",
+    "uiEvidence": "ringside-quality-20261003/hosted-ui.json",
+    "publicStatusEvidence": "ringside-quality-20261003/public-status.json"
+  },
+  "learning": {
+    "actualAdditionalTrainingEpisodes": 26640,
+    "totalGenerations": 115,
+    "modelSha256": "eb270b099c4c0d64bebc55f1d74ee06e92c6d24335370f501011ee6c7a8f5dee",
+    "evaluationEpisodesPerPolicy": 576,
+    "method": "Real episode reward ES/CEM residual training on an existing128-neuron/4949-edge reservoir; no teacher labels or legality mask. Final model and thresholds frozen before final test.",
+    "metrics": {
+      "meanAttackTechniques": {
+        "previous": 2.9739583333333335,
+        "candidate": 3.6024305555555554
+      },
+      "meanForcedFraction": {
+        "previous": 0.6217210988408772,
+        "candidate": 0.08605953796780462
+      },
+      "meanUnaffordableProposalFraction": {
+        "previous": 0.28298705855549894,
+        "candidate": 2.800179211469534e-05
+      },
+      "meanCleanHits": {
+        "previous": 14.98263888888889,
+        "candidate": 10.880208333333334
+      },
+      "maxNoContactMs": {
+        "previous": 8550,
+        "candidate": 6300
+      },
+      "winRate": {
+        "previous": 0.9131944444444444,
+        "candidate": 0.9079861111111112
+      }
+    },
+    "checks": {
+      "trainingCompleted": true,
+      "actualSelfPlay": true,
+      "originalWin": true,
+      "originalDamage": true,
+      "originalEntropy": true,
+      "originalNoStrike": true,
+      "improveWarmWin": true,
+      "improveWarmDamage": true,
+      "attackTypes": true,
+      "overrides": true,
+      "cleanHits": false,
+      "noContact": true,
+      "stateBounds": true
+    },
+    "overallQuality": "FAIL",
+    "fixedKickBaselineWinRate": 0.9982638888888888,
+    "evidence": [
+      "experiments/combat-selfplay/ENERGY.md",
+      "experiments/combat-selfplay/evidence/energy-controller-4/training.json",
+      "experiments/combat-selfplay/evidence/energy-refinement-5/training.json",
+      "experiments/combat-selfplay/evidence/energy-cem-6/training.json",
+      "experiments/combat-selfplay/evidence/energy-cem-6/evaluation.json",
+      "experiments/combat-selfplay/evidence/energy-cem-6/single-action-audit.json"
+    ],
+    "limitations": [
+      "128-neuron subgraph with hypothetical sensory/dynamics mapping is not a whole functional fly brain",
+      "Learned decision policy is not joint torque or balance control",
+      "Technique imbalance remains; fixed-kick baseline outperforms candidate",
+      "Fresh final data must be used for any later candidate tuning"
+    ]
+  },
+  "physics": {
+    "learnedPretrainedActorActuallyExecuted": true,
+    "newMotorTrainingPerformed": false,
+    "runtime": "PyBullet3.2.7 CPU; published DeepMimic mean actor evaluated in NumPy",
+    "sourceAttribution": {
+      "description": "Bullet-distributed DeepMimic pretrained policy; not byte-identical to original XBPeng checkpoint",
+      "bulletCommit": "63c4d67e337017f9d8b298c900e9aabdb69296e7",
+      "path": "examples/pybullet/gym/pybullet_data/data/policies/humanoid3d/humanoid3d_spinkick.ckpt.data-00000-of-00001",
+      "localGitBlobSha1": "e499b1f261528e5ee4d35abcb2b7c882b4ce2083",
+      "officialBulletGitBlobSha1": "e499b1f261528e5ee4d35abcb2b7c882b4ce2083",
+      "originalDeepMimicInitialCommit": "3ca04d38285ec3556dc0423f466477e96d934787",
+      "originalInitialCheckpointGitBlobSha1": "58acc3dd9283fac3115c345b4e5bd7352da3bd6a"
+    },
+    "nominalHz": 240,
+    "actualPolicyDecisionsPer10Seconds": 275,
+    "targetPolicyHz": 30,
+    "canonicalSkills": [
+      "walk",
+      "spinkick"
+    ],
+    "freeBaseWithoutPelvisAssist": true,
+    "observed10SecondsWithoutFall": true,
+    "robustBalanceProven": false,
+    "allThreeThresholdsPassed": false,
+    "qualityThresholds": {
+      "worldTrackingP95Metres": 0.05,
+      "penetrationMetres": 0.005,
+      "supportAnkleSpeedP95MetresPerSecond": 0.1
+    },
+    "evidence": "experiments/combat-motor-reuse/evidence/manifest.json",
+    "scope": "Offline real solver trace displayed in browser; independent motor and strategic learning remain uncombined."
+  },
+  "visuals": {
+    "fightkitSha256": "3acefb55468c8201e7ad5376e7e04103f1fab0d56359b94b1b35d813fd54a69f",
+    "model": "Existing licensed65-bone athlete with new skinned FightKit equipment; existing anatomy retained.",
+    "animation": "14 authored clips plus procedural overlays; not new full fight mocap",
+    "AAQualityClaimed": false,
+    "newUi": [
+      "Selected fighter health/energy/action-phase/hit HUD",
+      "Closer fighter camera and adjusted crowd lighting",
+      "Before/after training comparison",
+      "Hash-pinned motor replay with camera, timeline and explicit quality gates"
+    ],
+    "credits": "apps/web/public/models/boxing/fightkit-v1-credits.json"
+  },
+  "frozenLive": {
+    "packages/protocol/src/combat-v3.ts": {
+      "sha256": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+      "matchesPrevious": true
+    },
+    "packages/protocol/src/connectome-policy.ts": {
+      "sha256": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+      "matchesPrevious": true
+    },
+    "packages/protocol/src/ringside.ts": {
+      "sha256": "17b86d0dfc7467c7d31d2cb0fafd373fe2e65356ca296d5fafb8cf2067b5bf12",
+      "matchesPrevious": true
+    },
+    "packages/protocol/src/pari-mutuel.ts": {
+      "sha256": "75527f5e04edd319e837708ce81dae33e662d1fd8005710df14a3efbf933a3c6",
+      "matchesPrevious": true
+    },
+    "apps/realtime/src/ringside-arena.ts": {
+      "sha256": "8a8c2a14130035a1b1616d58547d86f0aec4f4fc8c7d8574cb4d83adf5498e21",
+      "matchesPrevious": true
+    },
+    "apps/realtime/src/index.ts": {
+      "sha256": "0182b726ba3e20c474cc4031d5001b2a77a2ec07a60ef2b1be0d575a4e4bc29a",
+      "matchesPrevious": true
+    }
+  },
+  "realAssetsEnabled": false,
+  "phoneTesting": "Deferred by user; browser viewport emulation only. No physical device or native mobile OS simulator used.",
+  "notCompleted": [
+    "AA character/animation quality",
+    "Unified independently balanced physical combat and learned strategy",
+    "Clean-hit threshold and single-technique exploitation fixes",
+    "Three physics quality thresholds",
+    "Whole functional biological brain",
+    "Physical-phone test (user deferred)",
+    "New hosted thousands-of-users load test",
+    "Real-asset protocol/oracle/privacy/payment/audit launch gates"
+  ],
+  "sourceSha256": {
+    "README.md": "73c6e753a44ceac970790330166ffb12874b78937131f61d7dc45cd5cd36ffa8",
+    "apps/realtime/src/index.ts": "0182b726ba3e20c474cc4031d5001b2a77a2ec07a60ef2b1be0d575a4e4bc29a",
+    "apps/realtime/src/ringside-arena.ts": "8a8c2a14130035a1b1616d58547d86f0aec4f4fc8c7d8574cb4d83adf5498e21",
+    "apps/web/app/lab/ringside/page.tsx": "8d0395f0b291cf575328acfa6ca10a5c44b091371b1da345e382c393a7c242ff",
+    "apps/web/components/boxing-game.module.css": "8d63212a1a1f29f7cdbb6220c81d53cd769abee0da449281c988214f9d6e158a",
+    "apps/web/components/boxing-game.tsx": "cf3e846940cb210c0b7c04c283cf749e84f6f151741d3855410d701cdee66ada",
+    "apps/web/components/boxing-learned-motor.module.css": "034f3691d92cadad26ded483425d2c1b23abe942bcfcb5b079fbbdeb1f36659c",
+    "apps/web/components/boxing-learned-motor.tsx": "f95faac3519bcc36fdda798c77791e612112ccf091a59cc8230e5f95773d2982",
+    "apps/web/components/boxing-physics-lab.tsx": "83b501ce6ba7e72292a4176884a1804cd05ad4acbbf74ff521fcc8cb3b54a800",
+    "apps/web/components/boxing-scene-athletes.ts": "07c6eadaf6372919a598f81de013c877ee782f8d50671f18f878100487984156",
+    "apps/web/components/boxing-scene-framing.ts": "3498aca99dc3ede64a731a0cecbea88d0705ab80ab2887a5d0dc1ae51f796781",
+    "apps/web/components/boxing-scene-ik.ts": "be6e5d8580cd9082effd17991d10a033c9d382931eec9a76cdac930af358b941",
+    "apps/web/components/boxing-scene.tsx": "66774a5a5b63a702ef6beae20fdfc9d942461236bb47f7d1a0f45d69d2c0adc8",
+    "apps/web/components/ringside-arena.tsx": "fb9af768fddda2b3c82ab0f2314e24c55b9d001987b938a8dad7d551560a49cb",
+    "apps/web/components/ringside-research.module.css": "02746a9148c8639a3412c5287ebc3834fbe3b6d74fda5a1f77f8085b4addc852",
+    "apps/web/components/ringside-research.tsx": "3fd412f70803140eb49ddec2439d19d40928136808b1b472d75fcf00227143d3",
+    "apps/web/components/shell.tsx": "6552e325be55471eb841b599fb6b1d8234f5e8cb74ceb7da6aedefa370fdf1f0",
+    "apps/web/lib/combat-research.ts": "70d18c668d8ce8a841f1140a1cc86e175b52753fbb4348ce6d26b742d1b6e8de",
+    "apps/web/lib/learned-motor.ts": "d151c61354b5976fc7dcbcf6b80fcbb650817cf4d0519421051fe549cb5cb01a",
+    "apps/web/public/models/boxing/athlete-fightkit-v1.glb": "3acefb55468c8201e7ad5376e7e04103f1fab0d56359b94b1b35d813fd54a69f",
+    "apps/web/public/models/boxing/fightkit-v1-NOTICE.txt": "5b74a8b9527159d96d885d2ef66b6aa53e39fe8654e159fe72dd761535032765",
+    "apps/web/public/models/boxing/fightkit-v1-credits.json": "954d62bf9efa46fe0dfef365b4f36a444947d364f2d5f62fcd7ec9de43852787",
+    "apps/web/public/research/ringside/energy6-quality.json": "cfdae2202e3f7dbf8751c3afb8a28e14bd5247f4fe464e6f9fd6b458d0e2854d",
+    "apps/web/public/research/ringside/guarded-v1-manifest.json": "27e1ea2af90641169c33ce06d631384d4b7c3f285103fb0f7e64b14dc3c35e64",
+    "apps/web/public/research/ringside/manifest.json": "4cef8101d262c7919e3436c85d6c844c30590594b53cfff9f1ca31204081340e",
+    "apps/web/public/research/ringside/motor-credits.json": "b8ebbbb72016d6e59a56ebc884414e3c913008e6c5b7510110eab1698412f86d",
+    "apps/web/public/research/ringside/motor-manifest.json": "ca6b14ba66f9ccaa9f61cc1909ec3641c644b67b1d4a52cb583a1d350c62c9d8",
+    "apps/web/public/research/ringside/motor-spinkick-240hz-v1.json": "bc826de04dffb84ac71f2a95762f8bf19b2a9f98d798489bb7bf54d5b0b97f6c",
+    "apps/web/public/research/ringside/motor-walk-240hz-v1.json": "f8510d89c91cba700c7b10735f0cc5d69f204c36233a718e49db6875359e4693",
+    "apps/web/public/research/ringside/physics-manifest.json": "e8374a8c6618777b807dce963eac33c218fbdfcb8444f7be883019becc1cf9a6",
+    "apps/web/public/research/ringside/physics-trace.json": "90b8aadf17a7571faea95809a2400f445d0b89f93dceac7689775ea8613fa724",
+    "apps/web/public/research/ringside/selfplay-energy6-260000-initial.json": "2811bcb47a797f7ade357090756f053ba67c98f432118bc971a8da3714d0735e",
+    "apps/web/public/research/ringside/selfplay-energy6-260000-learned.json": "1a06ccca8a259843f779c7ea77065b74aefb55f28890ffc31ab937a6fb7d9347",
+    "apps/web/public/research/ringside/selfplay-energy6-260001-initial.json": "5b61cce17d1d8e6587b5bbc5a34804d87e326f351f133438c50d85aa6ce0ae74",
+    "apps/web/public/research/ringside/selfplay-energy6-260001-learned.json": "00d0a37dd4738c36080e2a4b2056839154ba9997a72eeb44ea78b7421bf133f2",
+    "apps/web/public/research/ringside/selfplay-energy6-260002-initial.json": "fb61d1f4064a7c82a97c446d534de41d6641ba4d8505b1e79e6b3daf8d734a22",
+    "apps/web/public/research/ringside/selfplay-energy6-260002-learned.json": "f40dad22b4929a3b2c9ba64a6b3becff0c2aa62506576ddf700bea2809c6798f",
+    "apps/web/public/research/ringside/selfplay-guarded-120000-initial.json": "7bd4b7d91be20df0270d3b52ffb0001691d45c6aa12aefe6dffe04ca14a4812a",
+    "apps/web/public/research/ringside/selfplay-guarded-120000-learned.json": "b88cb169634bf8aa81ae2d75a166639fe169ab3dfcd2563fae2c1f8d97557e56",
+    "apps/web/public/research/ringside/selfplay-guarded-120001-initial.json": "6b4de7ef78f403e680aff48de1481e9991547eb1e05f8f2de7f2e967edf2f04a",
+    "apps/web/public/research/ringside/selfplay-guarded-120001-learned.json": "0a98327af2398d0a89308228f422c3b58ce9bd82dadd256a26404804508a64b1",
+    "apps/web/public/research/ringside/selfplay-guarded-120002-initial.json": "c26e256ad45b17855b060f2881aaa9e6a3cb1ef732a42dbba582b4b596d798d1",
+    "apps/web/public/research/ringside/selfplay-guarded-120002-learned.json": "400957c986f4c7b6520991213904221a2f66b24e58e364bd43e7460adb990f9e",
+    "apps/web/tests/browser/boxing-lifecycle.spec.ts": "b69d758099304dd3f85643889c188a9d7992e84e42c4d751cac138f3e262194f",
+    "apps/web/tests/browser/boxing.spec.ts": "97add0e4da40c987c60c4cea89ccf3fd6a92b9818e321e31fb4c8bf7992ee890",
+    "apps/web/tests/browser/ringside-research.spec.ts": "d5d116b1cf504719fa0d064c359d75dfdc906620c749fff5a4c2ef70c97201e4",
+    "apps/web/tests/combat-research.test.ts": "1a1384628b969393dbb25fa16424ea3bdbad207092d037f339474cc98598b135",
+    "apps/web/tests/learned-motor.test.ts": "59e390f6ffb445fc620ea571b5d6e67f6969c0aec6c137a13d08b87bc04db7e6",
+    "apps/web/tests/physics-trace.test.ts": "446f967c41776fecc5f617807eb8f19c7fd3967480108f4b087feadf33d9952d",
+    "apps/web/wrangler.jsonc": "c8643ac34d3196700628fa380047cb23fd0ade161b304f54496b9ec520d4dd42",
+    "docs/load-validation.md": "dd64a5d39a2b0dc5c59b611c1f0d9d09df49391cd878c9fce0e686ed2b45c65d",
+    "docs/product/ringside-neuroarena-spec.md": "1b479d93cd48bfb257332abb1bc65bb3da51f439a88edd9058e60b834a5acb0f",
+    "docs/validation.md": "bcc5fb9d55070f4e4d3d4daff65ed4d05dc60399fdcaeb889e8b0d4363d108a6",
+    "experiments/combat-motor-reuse/README.md": "d33deea200738f5af8d8326687d69dc29712996949705b7d2156a1896b35c39a",
+    "experiments/combat-motor-reuse/cpu_probe.py": "d4629ad7aeab328c6ad586f32040c11f79bdad20e1a20ea4bc9185bac0bfc212",
+    "experiments/combat-motor-reuse/evidence/asset-access.json": "ec0b4b794232a2cad93c9fa295241b04dc34dc1e9fb7a8468e98b814460c8174",
+    "experiments/combat-motor-reuse/evidence/cpu-runtime-initial.json": "fc19c97643abd7b1d0914e388f3aa864d6a6372db0ebbaeb8790b0515e9acd69",
+    "experiments/combat-motor-reuse/evidence/cpu-runtime.json": "04eec8f7523c83958f4895496b442c5e4a09ecad6cc713ef37e7fc284305a2c1",
+    "experiments/combat-motor-reuse/evidence/deepmimic-download.json": "3654529129697a23f9a4452675d3692129f023a775744f0fc3a48d2f257aea74",
+    "experiments/combat-motor-reuse/evidence/manifest.json": "0277773344fe531d273c24b8aed0e20e9060377e711f8f1c81372ee7eb9b6bcd",
+    "experiments/combat-motor-reuse/evidence/package-provenance.json": "117469f2413fe2af5c0c781d15acdd0aa1f2cf341d060e89cda5e867071472f5",
+    "experiments/combat-motor-reuse/evidence/passive-trace.json": "be735eceae8bf23b329c404bbba1536ff3c2b721f677deea01b397b00da94231",
+    "experiments/combat-motor-reuse/evidence/source-provenance.json": "386046970e0547c31b6aefede761bca197267ee80b3bfabe6e87be4d91e565f7",
+    "experiments/combat-motor-reuse/export_checkpoint.py": "0047573bd22469d2a30e7a76db19bd9ea0bb4cdc3861421cf9f91e49736c2bec",
+    "experiments/combat-motor-reuse/export_geometry.py": "c7fb3e5359ec708ebe00a0b6a787f42e46127568bb58a64afba498cc18ff5ad4",
+    "experiments/combat-motor-reuse/inspect_assets.py": "4d7600d5b81508c2699a411b3ae83ec6b4cb7d013ceb8f056ed62ab0dea35067",
+    "experiments/combat-motor-reuse/policy_numpy.py": "5d504a6b6118a0403a338d5a27833bf9f130a6eca038bed3e17a63def8b42ad7",
+    "experiments/combat-motor-reuse/prepare_sources.py": "ae6b72a233fa33648b24b225274ec3cbbb7aab50b201fb69397a642c832c1342",
+    "experiments/combat-motor-reuse/record_manifest.py": "9d7ca3aeb54d328586f81e6c0302e20ff819c062f269622847a76d8eb38a1802",
+    "experiments/combat-motor-reuse/requirements.lock": "282c723117aebb5166503f8426c793cc06d845dc9efe9b0cdd8b7d5bf5f910c3",
+    "experiments/combat-motor-reuse/run_policy.py": "38d26aab25c84b5ca37e3dd29bf928988bad9989933b2f470a979c4251e8aadd",
+    "experiments/combat-motor-reuse/safe_artifacts.py": "0534b966c31d42629d96051bbed0e4f87cd5011dc988ebde323de43983a86930",
+    "experiments/combat-motor-reuse/test_evidence.py": "84f22b87370832d98253d3b2aebd6043f12ab9a23ad01e36f2f9fc94a39bd669",
+    "experiments/combat-motor-reuse/test_geometry.py": "663342eaa3f4ae0a8494d1aaed5ae5d438684b6c52d19441d3fff898a5ef38e2",
+    "experiments/combat-motor-reuse/test_policy_numpy.py": "c66f3e401eb51a801dc3dd2a39f3918aa2e7cc8f778267a0f8f6a8a9b904219d",
+    "experiments/combat-motor-reuse/test_safe_artifacts.py": "1a32152e2677ef8d5b73f7926f4863d8022fbd822ef4c29a20776f4400c99ccb",
+    "experiments/combat-motor-reuse/validate_evidence.py": "6f42f729880ae9d934f05ed3d20db736a7a637d24123f69e9674d057297462ac",
+    "experiments/combat-physics/README.md": "bedc29eb00b6ed297b6c6baaa061f606cb084b1b7911c80cb1d8479949dd2612",
+    "experiments/combat-physics/bvh.py": "72bef3dc5be0c96ac7253fff6dab83ca530bd8ddf6e9259be662dc0373caeade",
+    "experiments/combat-physics/evidence/feedforward-failure.json": "f973c735193c4cef2f962ef4a36267c547fde562dfb95f65c95c0199deefe427",
+    "experiments/combat-physics/evidence/initial-pd-failure.json": "99d210337995a4537d3aa68ae14f004bdaf0e83323f4facf98f88f542647a7e5",
+    "experiments/combat-physics/evidence/manifest.json": "c0541c09cfc06543533ca3ad994a697458bcf6d246fe531e142f9ae6b17e218c",
+    "experiments/combat-physics/evidence/metrics.json": "21f4ded34fef3b3996df138013da3e7c5090c202cce9a4092d193e4267be9e5e",
+    "experiments/combat-physics/evidence/model.xml": "fa9bbda6f0aabb70b557d616a6ca99a3fa42dea5506a7c18f56b4d33b5af8472",
+    "experiments/combat-physics/evidence/trace.json": "90b8aadf17a7571faea95809a2400f445d0b89f93dceac7689775ea8613fa724",
+    "experiments/combat-physics/fetch_source.py": "1be10f84b815d35afba3fa7302bb2e1e54caae016fed35a611ccac156fc3fac2",
+    "experiments/combat-physics/requirements.txt": "e1f681c689faea89e50b0c8b10c9ad77209cce7c2e20510671e15d19699c75d6",
+    "experiments/combat-physics/run.py": "bd1b0fa6a98d417927885becd73b1ab89cfbbfbcb935a2fec95fdf7d81c6957e",
+    "experiments/combat-physics/test-trace.mjs": "25ec3254ee95a28f8a2f925470012d76b9bc5e69c2d523531df701f655893398",
+    "experiments/combat-physics/test_physics.py": "b91fde3598b36d7aef2a35fc0062584f4ad2074ec62d012462cb4b42656fbb0f",
+    "experiments/combat-physics/trained-motor-review.md": "d9ad5b8ac1b00b9ecd595c13ba1f3ff45d972ba5c18ecaf072893bbbdb15abb3",
+    "experiments/combat-selfplay/CURRICULUM.md": "8150442389c745663543d2de61b294800b4842ab64a48f4a33be7339791ef632",
+    "experiments/combat-selfplay/ENERGY.md": "ea6646f40c327842305e66790ceb943890dfe866e228dc4a762667ef72793273",
+    "experiments/combat-selfplay/GUARDED.md": "2424bbcf9a8aa96514852f99d05cfc1392d97c9eedbdc5e225cff2ee412f3bd2",
+    "experiments/combat-selfplay/README.md": "1316912478f789c0d7c573cd1f0df2a7b8b5dd9c03f9b09e7a1b75442f4f3171",
+    "experiments/combat-selfplay/analyse.mjs": "934b83a3e9f4695441d0ab308786936c62505e982d639633c9954e203cece8f7",
+    "experiments/combat-selfplay/atomic-module.mjs": "23a1c364fa09f90e7ee4a7ca93e2f565ea1b3e4069d4edd2534e42621edfe836",
+    "experiments/combat-selfplay/atomic-module.test.mjs": "faf06c2ebfef7866a1511231b6f87e5231ac2bfcc8b4f52772ff743fcdb07c4d",
+    "experiments/combat-selfplay/curriculum-plan.json": "4c8eb23846ac3d078d4e78e431eb3aae9347647b0de591cac0e566f2b3348049",
+    "experiments/combat-selfplay/curriculum.mjs": "bdec1e907cb28a1ee1c30ab6444cc5f5b610034d66ed203763499c8528b8e597",
+    "experiments/combat-selfplay/curriculum.test.mjs": "8d798abe5d7898e4ba3466647d6e1846e248f65a37aa7fb577304c3981b2c3eb",
+    "experiments/combat-selfplay/energy-audit-plan.json": "7c3a3048c5f6d14004f1f82ae82f9e506d1aa8d1634d93599907c13d07826ea4",
+    "experiments/combat-selfplay/energy-audit.mjs": "20a873c4846463fb4d2992f4628be8ac98535fb2ffbdec97833f95b2a5484b68",
+    "experiments/combat-selfplay/energy-cem-audit-plan.json": "410213826a11b11a43e6518832060f8e5588d4711efa5ce700f055aa400e3fea",
+    "experiments/combat-selfplay/energy-cem-audit.mjs": "d8f58fc0d98cdc2460aa1c991ea8ea7615f33858f746db6553ede4c66a59968e",
+    "experiments/combat-selfplay/energy-cem-plan.json": "0936b4f82375b3450dcdea872056a689ce8810fad29f2a502b6491c1a93e33c7",
+    "experiments/combat-selfplay/energy-cem.mjs": "e74613993c09c3e508d766c38daf3da48eb39c5d7546309836b14c8e6013bfe0",
+    "experiments/combat-selfplay/energy-diagnostic.mjs": "7d422fdd6a8b48fd8302b28f0e0d094f250223e7974109d3e7aa3329fd8d900c",
+    "experiments/combat-selfplay/energy-evidence.test.mjs": "f80592a3bfdf5b3cc45cbda345ffa553d3b7982b270a968870fdf287bc844859",
+    "experiments/combat-selfplay/energy-plan.json": "f5e52bac50b96b7043cd982b5e6dbe1c7a712dad563a316a5621358084188e31",
+    "experiments/combat-selfplay/energy-policy.mjs": "48d1e7efa5df51645f7388c098d2219337191a13d8e96a65c9f6be29a1aae959",
+    "experiments/combat-selfplay/energy-preview-plan.json": "b50a340359d03241e095b1ba3a8e0867e921b5a2f1aef977c5d64c26f5707cbf",
+    "experiments/combat-selfplay/energy-refinement-audit-plan.json": "e91d7cb15db45a3416327af6ebb6113ee559b32c531a77b4798839ca4aff9655",
+    "experiments/combat-selfplay/energy-refinement-audit.mjs": "7c2242e02a87733b0e8474bd16ae4846192fedc5051dff7d06b4ac23130bd993",
+    "experiments/combat-selfplay/energy-refinement-plan.json": "3903152a66bbb1e75cb4a72c98cd7f23ca7bf5eb4f2e05933940d3bf7cc3af36",
+    "experiments/combat-selfplay/energy-refinement.mjs": "7e0e3e12a6e73a5e04c406824c3a953154d444c39ca705b3ec753cc42a83cb6b",
+    "experiments/combat-selfplay/energy-training.mjs": "d3d76a92ac1fdfb077f6b1769c215dc6bd8aa167db9001ac5e08641197a2af8a",
+    "experiments/combat-selfplay/energy.test.mjs": "8ad3399f885182cca1f47170e808312f8e911b9366b1b1bac83ae64208faf0ff",
+    "experiments/combat-selfplay/environment.mjs": "786b4e88142b52dff673a0c4e96db4d28894e955a4084f31b371ab4d274ba9d6",
+    "experiments/combat-selfplay/evidence.test.mjs": "c3bb729bcb8729b7e7eebc766652a364f09fea11f90997a29cc68c1efafbdf26",
+    "experiments/combat-selfplay/evidence/analysis.json": "16f08e53f79378179a25261bd423a2f200f7851723b84d98986232b3bc64edbc",
+    "experiments/combat-selfplay/evidence/connectome-model.json": "ff0f938d6e7b3061281039cc043454a9be9f35552d9c535c6e11d7ec0f1dfec8",
+    "experiments/combat-selfplay/evidence/connectome-training.json": "a62f5d49591af843c81d972198bb88437fbc1446a9754a81a3f095ba7118f5bb",
+    "experiments/combat-selfplay/evidence/curriculum-2/evaluation.json": "6d8f7c8692632d5e2104512c513902b7c8012816a483690c83d55b5e3decd798",
+    "experiments/combat-selfplay/evidence/curriculum-2/model.json": "97e829991918e0285040d1ad3b1b7eda0bfee8198611d82bf3ef9d5f895f802b",
+    "experiments/combat-selfplay/evidence/curriculum-2/preview/curriculum-90000-curriculum.json": "000a68abd37d8a95529b4c8f3822d84ec9cfd08af3d989b6edfd8067a727e7a6",
+    "experiments/combat-selfplay/evidence/curriculum-2/preview/curriculum-90000-v1.json": "39330fe64bdee275467a10b5bd6381b859d74e165aa2827c10afb56da6d60cf6",
+    "experiments/combat-selfplay/evidence/curriculum-2/preview/curriculum-90001-curriculum.json": "0f726b3ad693620806e724af6deb13344655ea63946ce01e7de5682c5d89309a",
+    "experiments/combat-selfplay/evidence/curriculum-2/preview/curriculum-90001-v1.json": "595fdcbe16ca03be45b4715e0b702d833f248e971b6517d81598c7982bfd5167",
+    "experiments/combat-selfplay/evidence/curriculum-2/preview/curriculum-90002-curriculum.json": "63247c25d2f39bfcbe54ae81f446059cbbeefd6157955a48a54fe4223a3a73c4",
+    "experiments/combat-selfplay/evidence/curriculum-2/preview/curriculum-90002-v1.json": "77213c20dc635f10ebf22f4c0a54b47d97c324500518af2d994d77372b8b2f05",
+    "experiments/combat-selfplay/evidence/curriculum-2/preview/manifest.json": "13cdd260f4983ba597b582ec72473f517847e648bfef1951c6ed30a91aa1ba0c",
+    "experiments/combat-selfplay/evidence/curriculum-2/run-plan.json": "1a8889311db9c69c1d0868c4e75fd79b64a9fc5b832652b217a3f4072e40ec37",
+    "experiments/combat-selfplay/evidence/curriculum-2/training.json": "9dbde1063b7b4ceac042f3d53423c405e1aa737d6f6a06ed9894f377f6033c0a",
+    "experiments/combat-selfplay/evidence/evaluation.json": "4ce1dabb6f2db209730a52f861bfc215ccbc85f6c37c0248457574ef52f9bdfa",
+    "experiments/combat-selfplay/evidence/exploit-audit.json": "741a5faad28e61f10f10127ae0bd16ee59d119f4d97b842dc275bdfc53449003",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/diagnostic-frozen.json": "bea9549b1a9953c3980397b28e2aa1b3f0a004cc1d4ae4c9fada143913129196",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/diagnostic-guarded.json": "a20d8f8faaddffb049c5b96dfdbd031f031a1280373a23f93083c5556fc5f9a5",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/diagnostic.json": "244227dfeeea91a7b218cce67ade7e5914eae676e96d4f253c1a38cf020e302b",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/evaluation.json": "c114701aa1e19e76b26fa3d5dc6fa89a9f339f1cd397dfed9e5eeebb1c1a9502",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/model.json": "5fa409248676cefbc20275700922f7dcc171c24236e8b9683131ce842c0f3b54",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/preview/manifest.json": "27e1ea2af90641169c33ce06d631384d4b7c3f285103fb0f7e64b14dc3c35e64",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/preview/selfplay-guarded-120000-initial.json": "7bd4b7d91be20df0270d3b52ffb0001691d45c6aa12aefe6dffe04ca14a4812a",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/preview/selfplay-guarded-120000-learned.json": "b88cb169634bf8aa81ae2d75a166639fe169ab3dfcd2563fae2c1f8d97557e56",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/preview/selfplay-guarded-120001-initial.json": "6b4de7ef78f403e680aff48de1481e9991547eb1e05f8f2de7f2e967edf2f04a",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/preview/selfplay-guarded-120001-learned.json": "0a98327af2398d0a89308228f422c3b58ce9bd82dadd256a26404804508a64b1",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/preview/selfplay-guarded-120002-initial.json": "c26e256ad45b17855b060f2881aaa9e6a3cb1ef732a42dbba582b4b596d798d1",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/preview/selfplay-guarded-120002-learned.json": "400957c986f4c7b6520991213904221a2f66b24e58e364bd43e7460adb990f9e",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/run-plan.json": "42578bbe35b3da7926731d35a7086179effd5d0535a4a5d65f28e4cb54a56df2",
+    "experiments/combat-selfplay/evidence/guarded-contact-1/training.json": "28bbe3870000240a54ed2e617a87690f1b555c84dcb94b0b31a960f078d36e9b",
+    "experiments/combat-selfplay/evidence/no-recurrence-model.json": "1f2ec43c86a0919caeab38bdc97de212a5159216664a2e958f876f89739b20d6",
+    "experiments/combat-selfplay/evidence/no-recurrence-training.json": "f492873e0f56799109ffc4b7cc321e9cce684e2de075286bea5825c9d9aa3594",
+    "experiments/combat-selfplay/evidence/preview/manifest.json": "d8e1a6c1b60537dcb3fab8e8ce46d8e33f6e812b26950f36b8546eff3638fe65",
+    "experiments/combat-selfplay/evidence/preview/selfplay-40000-initial.json": "79f9c8edb7c0e53ca51ca27be13c365c096281b6aef843bff654ffd245ec0e1f",
+    "experiments/combat-selfplay/evidence/preview/selfplay-40000-learned.json": "0e229dd292574b970c11a7751ecee6aaebca22d91afac60ff894535828d08069",
+    "experiments/combat-selfplay/evidence/preview/selfplay-40001-initial.json": "7e8101419b8521893f00fb0a6c74606f4d1b961ea05459c4856ab3d8762abfd8",
+    "experiments/combat-selfplay/evidence/preview/selfplay-40001-learned.json": "1d31a928a3528b79007dfc2e4c7f800e8482b82a1ee69d90e1991ca0d59ee9b8",
+    "experiments/combat-selfplay/evidence/preview/selfplay-40002-initial.json": "b829cd40eafad0b42c9fec5c04e31b2fbf23a218ea49a932bc375af056002387",
+    "experiments/combat-selfplay/evidence/preview/selfplay-40002-learned.json": "1eabd643bda1184ccc2d25cd77b5b0f2e4078a3c50aa3da1da8e2e687200e323",
+    "experiments/combat-selfplay/evidence/run-plan.json": "735356fa85047ecd63fee3f30b57755f9df57ae5c563f494b608982a297b47d6",
+    "experiments/combat-selfplay/evidence/scrambled-model.json": "bb8f64958387737d4d2ec84433637ec290281b37a46f1f27a6631e19cd52081a",
+    "experiments/combat-selfplay/evidence/scrambled-training.json": "54c47d230fa31eead577b4640ad9c3bcbcdc9517853e3b0630f792e1d68a2d6d",
+    "experiments/combat-selfplay/evidence/trace-initial-counter-40000.json": "123774f149ab37e20f5e2a877b36a71658f024b47f818857607d12079e262f5d",
+    "experiments/combat-selfplay/evidence/trace-learned-counter-40000.json": "506b16869a4f23b2b3b6b9942fbd0add1fea3a001900bf0fb1d0834a0166c46e",
+    "experiments/combat-selfplay/evidence/trace-manifest.json": "37567b14358bcb69d65d6db6fee937b7ca7ac6b77ad56d4af399725a3e1880a0",
+    "experiments/combat-selfplay/exploit-audit.mjs": "d581b35377e7718e3ce59759321bd7ccb05a35b1ad6467914ca175cdd3d045d0",
+    "experiments/combat-selfplay/export-curriculum-preview.mjs": "1db3d5fdc8c931bf8e1888ab15d2d9ba1d0755595db5983f4adb39cee2833de0",
+    "experiments/combat-selfplay/export-energy-preview.mjs": "28106f3ef47a25cb56b1bd622e9648c5885faf79a5a4139c8306bb9a563b243a",
+    "experiments/combat-selfplay/export-guarded-preview.mjs": "9c6291ee4bc5568541d6d9af115356d7a48d9396d5c9555028694df3f1041508",
+    "experiments/combat-selfplay/export-preview.mjs": "ebdf6ba074c3a180c5c39c7ea965b577d17112d12f8bb8b8ae43ee4392e809ed",
+    "experiments/combat-selfplay/guard-diagnostic.mjs": "eba8c8b71713f829970e390f70235fbb3bd4b75a9ed53db96598501915ad70f5",
+    "experiments/combat-selfplay/guard-geometry.mjs": "e22c47178209badd5efb0f87e357ec5922cc584aac979addff78b953ba1046d4",
+    "experiments/combat-selfplay/guard-geometry.test.mjs": "0be364359f66f67db9032ede082a654054f15b0bc8be362b3add51c58c957f82",
+    "experiments/combat-selfplay/guarded-environment.mjs": "1db66e308b5497fc19bcedc01cc8a4cf00ea528cae4e4391e83d409cab19c722",
+    "experiments/combat-selfplay/guarded-plan.json": "7b8860f84609ce4c2b3009f12d7d032a2c9cbc2a87aa7851344f53c99d319dcc",
+    "experiments/combat-selfplay/guarded-training.mjs": "0dc10d6f8b6e26a050ee3334041c883e6552e06589ab32828a9ac17743494167",
+    "experiments/combat-selfplay/metrics.mjs": "1b4e7a476765490d78d3be2d187ebe407a04a5c9c7ea5c7bb47faeb9d007e769",
+    "experiments/combat-selfplay/plan.json": "2022d5026e4f1d1b5ed741eac21ad1b43fae6941af102b70272c68dde8ac6f65",
+    "experiments/combat-selfplay/policy.mjs": "70de3a7db071702281cdfb662565b20bb7964a43f91fbd307f18a8fadd5a8c29",
+    "experiments/combat-selfplay/selfplay.test.mjs": "f76901e74824e146e2c4d7f174080c56bf18614db67aaddc2d32c629cc8b4107",
+    "experiments/combat-selfplay/train.mjs": "37f7e7ddff11a2106f17ee6c891d997974889bd3a715223df8831a3a6d65b208",
+    "experiments/load/README.md": "6e72a9b97a4bf241fd12b30c13e50e404d6c97436b5fc6c440e77ea1706323c3",
+    "experiments/load/contact-rooms.mjs": "f3af9061e64bb8e30af5a5232f7b5e7a95863ffab93955bdce81bb40ae2008f2",
+    "experiments/load/delta-viewers.mjs": "d7a05e82095c9c659a87ddc37f8d8a9b2004be72d094d4582c10b3cbf1511840",
+    "experiments/load/evidence/contact-rooms-first-burst.json": "f655def2b4205b11c8e57fdd68c334df6865ee28fc80aba6115c515cce237cd7",
+    "experiments/load/evidence/contact-rooms-latest.json": "af334d40ef996606aa210f912ee61fcc868dd24eb0b34187eafdeb9f33603fdc",
+    "experiments/load/evidence/single-round-delta-latest.json": "70ca912aa7a399cb60ced5d3cbca8b58d9d65ffa093208d3f33407899a1912c3",
+    "experiments/load/evidence/single-round-fanout-latest.json": "18b790f09d59f1e2c56b73b0907b0b4a3c6750f0dcb0d59a90a1bd34971dce29",
+    "experiments/load/public-delta-worker.ts": "aa7ed16f9ac146a6553f271f97c9e626b8bb6f1049a381f9e272d17444dcf255",
+    "experiments/load/public-delta.test.ts": "c5934acf4e35b91bbf88cd966056bd02e5bdc829d606438d78b2a6981c952fae",
+    "experiments/load/public-delta.ts": "116e099179610bc24252a85a6b462eb6b1ffda6c6f8d863b0158622531df7f53",
+    "experiments/load/public-fanout-worker.ts": "4d8a7fad634df7ca2d5be2ba0d02c66d6c7e48e04db5012c1c990f2d432c12f1",
+    "experiments/load/runtime.mjs": "e38ac58cb33bf8226e926d48b0948a523b8e7416964276e086ac009d902fd1a0",
+    "experiments/load/single-round-delta.mjs": "a469f64b825f46024d5a46e54d6150b9c425f1b24e90893718ee52420158409a",
+    "experiments/load/single-round-fanout.mjs": "9fc41d3703b6266a1be51ef603f72cecf8a8d630fa59e5a214583033b6e40d47",
+    "packages/protocol/src/combat-v3.ts": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+    "packages/protocol/src/connectome-policy.ts": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+    "packages/protocol/src/pari-mutuel.ts": "75527f5e04edd319e837708ce81dae33e662d1fd8005710df14a3efbf933a3c6",
+    "packages/protocol/src/ringside.ts": "17b86d0dfc7467c7d31d2cb0fafd373fe2e65356ca296d5fafb8cf2067b5bf12",
+    "pnpm-lock.yaml": "7744f516a98b94385a1cc45fde1e482d0f4b9c0907a00f1200e8b07fe61cf92d",
+    "scripts/boxing-assets/fightkit-replay.test.ts": "922402ad075262bcfd852953084af341457f8eab6b6f0b5f1e30fbc9e38e14f2",
+    "scripts/boxing-assets/test-fightkit-replay.mjs": "a77ce6383f49f29eadef95be254f90a1a8e3fcc3d1fa44e95c59554a5b96e274"
+  },
+  "evidenceSha256": {
+    "ops/evidence/ringside-quality-20261003/browser-final.json": "9681af15e91fe78799487c2b94aea7dd63657edcdeb1c678dc59ac8d71f1ec9e",
+    "ops/evidence/ringside-quality-20261003/browser-initial.json": "c1bc142106582747da3a7f6187b80ac96e39ee8841d9c06811be184c31bcfa27",
+    "ops/evidence/ringside-quality-20261003/browser-preview-startup-failure.json": "9b4465263505cfade510e7b5466270f6456541f6ee00734c4459d00a6bcae1dd",
+    "ops/evidence/ringside-quality-20261003/build.log": "21c1d630d865a054d1e31d994b84109ff4cbfbe67fe101819947e751c11ca96e",
+    "ops/evidence/ringside-quality-20261003/classic-rig.log": "cc0e260ff037dd86e0b44b6bf0c2a7bc4512028696b53a9c21900a0242015e3c",
+    "ops/evidence/ringside-quality-20261003/deploy.log": "91d2c098decf6befdb4ba573fef50bdf35020c415c670139eb614232646f85a9",
+    "ops/evidence/ringside-quality-20261003/deployments-after.json": "8d718703e12fb6ebcd5f5a89c3930d7debb6cafb08134087d60a891791c63e7b",
+    "ops/evidence/ringside-quality-20261003/deployments-before.json": "869bae691000323abc46185c83717969e1c23ab8317db44e4f7400fa00baa07f",
+    "ops/evidence/ringside-quality-20261003/hosted-assets.json": "4edb695368c4b698cdccd0223099f6327c1fb176de575a4ced17bb23341430d6",
+    "ops/evidence/ringside-quality-20261003/hosted-learning-390.jpg": "33feebfb3bca58da4bd65b94aad2e84d3ff43652c3562c74cf3d4c71a5dc40ea",
+    "ops/evidence/ringside-quality-20261003/hosted-learning-desktop.jpg": "9a0300bfcfd7dbd6ce1c8cc04f2dfb9068894359db3a86bbde362a76893470b4",
+    "ops/evidence/ringside-quality-20261003/hosted-motor-390.jpg": "5a99a1989c1344a59e32b98da70f44d268fb532f0aab09c74a6e39eb0f74294f",
+    "ops/evidence/ringside-quality-20261003/hosted-ui.json": "be20810119d43a18466498f254deb2784ffaf977f9d9d4f48b9406469eb2cf5d",
+    "ops/evidence/ringside-quality-20261003/learning-tests.log": "107eef829dbd8575e1d219b6f776c9c4fce7e6613678db860e1198bdbec1b490",
+    "ops/evidence/ringside-quality-20261003/local-desktop.jpg": "51c9424da02b08bf3ea6ecd384a8a64432d23659045adedbf5b01b57e002fba5",
+    "ops/evidence/ringside-quality-20261003/public-status.json": "76973bd22d3b9aa4e41fdb555e3a824299b26275a12d0db65e20d6b102283278",
+    "ops/evidence/ringside-quality-20261003/readiness.log": "c14b05225211d5b23562afa9dd32e56ee625468953b9e93dfe4b448ecbbb84f5",
+    "ops/evidence/ringside-quality-20261003/typecheck.log": "f82717979a4bc2a8b90168828a0a3ae65e1165a229e053ef806d6b34d4e7001a",
+    "ops/evidence/ringside-quality-20261003/web-unit.log": "fbe60e3198f6ed5c304118095ae06a565655b0b782c98fd4d246b6b33451a05f"
+  }
+}

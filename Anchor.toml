@@ -1,0 +1,23 @@
+[toolchain]
+anchor_version = "1.2.0"
+solana_version = "4.1.2"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.localnet]
+house = "9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2"
+games = "8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ"
+incentives = "E5tr12oarJumShYmXvohnSDJNVKrVGuKS4gLm6pdgfHv"
+
+[provider]
+cluster = "Localnet"
+wallet = "~/.config/solana/id.json"
+
+# The permissionless mock game is intentionally absent from deployment config.
+[workspace]
+members = ["programs/house", "programs/games", "programs/incentives"]
+
+[scripts]
+test = "bash scripts/test-contracts.sh"

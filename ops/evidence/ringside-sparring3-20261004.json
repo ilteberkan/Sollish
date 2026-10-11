@@ -1,0 +1,137 @@
+{
+ "schema": "sollish.evidence.v1",
+ "at": "2026-10-04T03:10+03:00",
+ "status": "LOCAL_PRODUCTION_RUNTIME_VERIFIED_NOT_DEPLOYED",
+ "scope": "Spectator-only Combat Club (/lab/ringside/play): sparring-3 boxing rules, CMU mocap renderer, procedural arena, arena audio. Non-monetary.",
+ "userDecision": "Play-yourself mode removed: products are spectator/betting only (user, 4 Oct 2026).",
+ "engineVersion": "sparring-3",
+ "buildId": "1JyknQCgc_sUVus5smcSg",
+ "deployment": "NOT DEPLOYED; hosted remains sparring-1 (93645ad3-...).",
+ "sourceSha256": {
+  "packages/protocol/src/combat-sparring.ts": "bcc4b95c99495daed15eec57080bbdd495c86ed0e95de783e2561d782f6532ad",
+  "packages/protocol/test/combat-sparring.test.ts": "a2ae3090e4755ca0bcc7fede98d83e87edeba52feaca8bee3f6b663bd145eef8",
+  "apps/web/components/boxing-sparring.tsx": "68d5ec9811ea1d6c52858db194c77d884f9e1dfa8779d287b3a46166476d594f",
+  "apps/web/components/boxing-sparring-scene.tsx": "6ea29fd564d3d701a68e1064cb72a677c361247f0dd4f596409b90a851efd947",
+  "apps/web/components/boxing-mocap-athletes.ts": "867180622f8713a74af6736ddbb6a1851a111724e8e836c769d25405b6708e72",
+  "apps/web/components/boxing-arena.ts": "99d215b44a4df77ccbcabf76b523761a0071129e9ca9c0eab2c71af6aa63c443",
+  "apps/web/components/boxing-sparring-athletes.ts": "5ac1135ce36f4d6fb4aee266b0750680e15c0bf1914740a1940b3421a6cf5572",
+  "apps/web/components/boxing-sparring.module.css": "444948d8cbc3eafe80dda615d48146812652a30d26663d82fe3bd48f2c6c01fe",
+  "apps/web/lib/ringside-audio.ts": "279ead7b7eeedf8eb0f945353b970f60bc54cc2d25b930a29f0990519ee3c847",
+  "apps/web/lib/sparring-camera.ts": "16a80930c4bad67d8c78484b05852fa3a835557fa9ef063fd0e7df9787feda26",
+  "apps/web/tests/browser/ringside-sparring.spec.ts": "a6f9d9c75c16d71197ee435cf11beb1f3a4944f573031496ccd1be1d1dfb33eb",
+  "apps/web/tests/sparring-camera.test.ts": "e7e3f30fc0e0dd878d57f72c60b1308d2f3f5f1c55cb23b4a2434fb219d3ec89",
+  "apps/web/tests/sparring-controls.test.ts": "3307933de730cde3d53448e5401f79483857856d7d847f0902492c1f4a4fd686",
+  "scripts/boxing-assets/sparring-replay.test.ts": "15724ba04782f4cf57906ec586f4b1d7f56eb897e077f7755b5bda4f9fbf697a",
+  "apps/web/public/models/boxing/cmu-boxing-v1.glb": "319792e80fdaeb4ba4bad60983450841337706694c9459a4a2030207ba1fb19f",
+  "apps/web/public/models/boxing/cmu-boxing-v1.json": "9d0257ac2761f5a286e70d61e3817404ca516ce5c6b4e3b3b2870026b803da54",
+  "apps/web/public/models/boxing/cmu-boxing-v1-credits.json": "3d8dacff7170151bcefec0358e30d5fd7453f1334b6504a524732eebb9449f9e",
+  "apps/web/public/audio/ringside/credits.json": "0ed35ae728491817b8e5d8d1e3d8cd39986e850b4792ce14f1a3afb9760d6397",
+  "experiments/combat-sparring-audit/audit.ts": "948af38898a4dd0db2564c7a7fd77356dabf8ad04975a197dff2b31cee0e8447",
+  "experiments/combat-sparring-audit/baseline-sparring-2.ts": "e50a99b603069f903afa3f3fb3bfaf5e75a69fc75e2b2f88e518c8e8f80e5b08",
+  "experiments/combat-sparring-audit/capture.mjs": "9e5d9af1e618ff40ddb40141a52c5995eb4a25977f28487866c07add1aa679a9",
+  "scripts/boxing-assets/cmu/README.md": "40c501c6651c3fe95d5b8e9fe041beac4a4ac1846105370d3065c3e5fecf6844",
+  "scripts/boxing-assets/cmu/analyze.html": "9dff092a3f1352b85262c0cece503b7cd392ed1bbcff8a53677a40e3e85d7e4e",
+  "scripts/boxing-assets/cmu/bake-run.mjs": "45c320c2c15f9228efedbefc5013380df1f5c5076482582a9869d6ee86719b7a",
+  "scripts/boxing-assets/cmu/bake.html": "445357b17da748f82b882a9c21db0d39e8ab8b7feae45c67f2dc65b164d163a2",
+  "scripts/boxing-assets/cmu/base.py": "174d5b692373fb68a4af59936d15cebb8b47929920c0654d42e75ce1492f0f1c",
+  "scripts/boxing-assets/cmu/eval.mjs": "00984d4293327b7b89afcb88768f9682b6f81f6d419c3f397039a96359eee1a1",
+  "scripts/boxing-assets/cmu/fetch_cmu.py": "1d56798870092acadd75a2e64f6719a5a31d72e65cf868fb8852377f9c28a3c5",
+  "scripts/boxing-assets/cmu/hooks.py": "6eeeb07811f1c1cc3366b14b70b1e488244159271c66628f5b754ed2fe83fb46",
+  "scripts/boxing-assets/cmu/retarget.js": "2198d2b38aadf3ac0e1b8ad73a33ea5aca544adbc34581dff514d01d33c4b7e9",
+  "scripts/boxing-assets/cmu/segment.py": "9b9d57f1f617893d7dd6a1089c3320189fd4b09b4b7d335e7b61e0d1e1b6e7ad",
+  "scripts/boxing-assets/cmu/segments-selected.json": "476cc06c3276067e56e0d9a0428b3d756720da740e761503950ed01a2f9b0ee2",
+  "scripts/boxing-assets/cmu/select.py": "ad247fd426fe2f71e74d106a4cf92ece1fb943e81e59af595729d0e280d4ac71",
+  "scripts/boxing-assets/cmu/serve.mjs": "37675bf949efa1e6b677e5194cf05e8a216ec776edaaab0e8a7f8aae10c98297",
+  "scripts/boxing-assets/cmu/view.html": "61f5b06f19286bedd61e987bbd92067bd281115003bb2483c6507855b254fed8",
+  "apps/web/public/audio/ringside/bell.mp3": "6704e790524ad585240d531937651187f64505618a1df4c2762b80c7c92c8b38",
+  "apps/web/public/audio/ringside/crowd-ambience.mp3": "733df79874aad29c639695c64a8e4dd579930b0e3579ef06dd11e5f3d37b58d1",
+  "apps/web/public/audio/ringside/crowd-cheer.mp3": "54b59acee919bd6f0ccd9a120b5a8ff11911742eea18f738ba3ec1f39054587f",
+  "apps/web/public/audio/ringside/crowd-react.mp3": "4f00f0717f77b198eb3245fa10c96f85426414999eca47a533b1d9bce0ea5b3e",
+  "apps/web/public/audio/ringside/punch-01.mp3": "49a07f33c28d1077e0fdf690f4079f44a0d5598ec36cc3651b6d10f6af3a58d3",
+  "apps/web/public/audio/ringside/punch-02.mp3": "a42df78f02d387106ea2b27c5c3a0c5cd1e52ff83c3f34011ac55111f7104ab0",
+  "apps/web/public/audio/ringside/punch-03.mp3": "afba54e27e3e711ec9f611dd221f7b546b64c763182209959bc3040cab9e0f07",
+  "apps/web/public/audio/ringside/punch-04.mp3": "4c991f12f8e5b55d7f08604404e6755fdb4d5d72722b3504d814f21dd43f16cc",
+  "apps/web/public/audio/ringside/punch-05.mp3": "5dc3d9e23484a05e0c5550d0e6ebbb2358ef29409b3d81a3a6e36907d94d3d26"
+ },
+ "frozenLiveSourcesUnchanged": {
+  "packages/protocol/src/combat-v3.ts": {
+   "sha256": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+   "matchesPrior": true
+  },
+  "packages/protocol/src/connectome-policy.ts": {
+   "sha256": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+   "matchesPrior": true
+  },
+  "packages/protocol/src/ringside.ts": {
+   "sha256": "17b86d0dfc7467c7d31d2cb0fafd373fe2e65356ca296d5fafb8cf2067b5bf12",
+   "matchesPrior": true
+  },
+  "packages/protocol/src/pari-mutuel.ts": {
+   "sha256": "75527f5e04edd319e837708ce81dae33e662d1fd8005710df14a3efbf933a3c6",
+   "matchesPrior": true
+  },
+  "packages/protocol/src/live-round.ts": {
+   "sha256": "64bf647babf69f80cd06fae24b2c56e2ec1e8448de258fc0ec3b3386e09870a8",
+   "matchesPrior": true
+  },
+  "packages/protocol/src/combat.ts": {
+   "sha256": "aa3471a0e718f6431f3e22859eb102a92e96976de67146596061363fd7e23abf",
+   "matchesPrior": true
+  },
+  "apps/realtime/src/ringside-arena.ts": {
+   "sha256": "8a8c2a14130035a1b1616d58547d86f0aec4f4fc8c7d8574cb4d83adf5498e21",
+   "matchesPrior": true
+  },
+  "apps/realtime/src/index.ts": {
+   "sha256": "0182b726ba3e20c474cc4031d5001b2a77a2ec07a60ef2b1be0d575a4e4bc29a",
+   "matchesPrior": true
+  }
+ },
+ "checks": {
+  "protocolUnit": "67/67",
+  "webUnit": "76/76",
+  "typecheck": "PASS",
+  "glbClassic": "10/10",
+  "glbMocap": "10/10",
+  "assetPython": "OK",
+  "threeMotion": "3/3",
+  "browserFull": "77/77 PASS, workers=1, 4.2 min, log .tooling/sparring3-production-browser.log",
+  "mocapRebakeIdentical": true
+ },
+ "mechanicsHeldOut": {
+  "file": "experiments/combat-sparring-audit/evidence/sparring3-heldout-1001-48seeds.json",
+  "sha256": "554c5d94a118b7defcc9e2b9e8397f36d364bbe9e9f974020fd08835f7219215",
+  "runner": "0.000 KO 100%",
+  "hitAndRun": "0.094-0.443",
+  "jabSpam": "0.000",
+  "depthMaxCm": 0.2
+ },
+ "fps": {
+  "m2MetalActiveCombat": "~59.9 (broadcast/chase/390 emulation)",
+  "swiftShaderSoftware": "~3.5 worst case, not a phone measurement",
+  "adaptiveQuality": "drops pixel ratio, shadow size, beam cones and crowd motion after sustained >33 ms frames"
+ },
+ "images": {
+  "ops/evidence/ringside-sparring3-20261004/broadcast-grid.jpg": "26deba76bcc3efc9b7e4a643835ffca9de8799e950ba6b306d36d5f89a2ec541",
+  "ops/evidence/ringside-sparring3-20261004/chase-grid.jpg": "07bd7d6305734ed1b00153c8fbffd3bff2fb3cf6c7ea2fc5cc0b4c815dd15911",
+  "ops/evidence/ringside-sparring3-20261004/mobile-390.jpg": "52517e22c96dd034696e76398640d28385ec8b2531fd9e6e622b9a88ee8fdf7e",
+  "ops/evidence/ringside-sparring3-20261004/mocap-hook-curation.jpg": "7339ea726e34d064fd40ab257e066247d37dc250db976f67c92142358843adc7",
+  "ops/evidence/ringside-sparring3-20261004/mocap-jab-cross-curation.jpg": "a36c1ebbc43209d0fcfcc53c11a00bd1dd332795db0b64ec9fd8a618bfe3ad78"
+ },
+ "captures": {
+  "ops/evidence/ringside-sparring3-20261004/capture-broadcast.json": "013a2da77d369e3aa20610aed73455371bdea6e48fd4630930f90576d9a7ef5f",
+  "ops/evidence/ringside-sparring3-20261004/capture-chase.json": "f382f40971900612bc7fcd88c82ec5ff1ad70ec54327d65770bea3cd30e0605f",
+  "ops/evidence/ringside-sparring3-20261004/capture-mobile.json": "d8a3533de8c24e56b32ee52deca1d2da78b6a96a252bbffe4c974a310b2fdeaa"
+ },
+ "limits": [
+  "User visual acceptance open",
+  "Quaternius low-poly character/face unchanged; no AA character",
+  "No uppercut/hit-reaction/knockdown/get-up mocap; authored + procedural",
+  "Footwork blend can slide feet; no full foot-lock solver",
+  "Scripted corners, not learned policy; connectome/Energy6/DeepMimic not integrated",
+  "No knockdown count or round structure yet",
+  "Not promoted to a wagering LIVE namespace",
+  "Physical phone pending",
+  "Nine real-asset gates unchanged"
+ ]
+}

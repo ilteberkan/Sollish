@@ -1,0 +1,41 @@
+{
+ "label": "after-desktop-1280x720",
+ "base": "http://127.0.0.1:3000",
+ "viewport": {
+  "width": 1280,
+  "height": 720
+ },
+ "gl": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+ "maxTick": 3965,
+ "countSeen": true,
+ "shots": [
+  "t00000.jpg",
+  "t00600.jpg",
+  "t01200.jpg",
+  "t01805.jpg",
+  "t02405.jpg",
+  "t03005.jpg",
+  "t03480-count.jpg",
+  "t03530-count.jpg",
+  "t03580-count.jpg",
+  "t03630-count.jpg",
+  "t03680-count.jpg",
+  "t03730-count.jpg"
+ ],
+ "refereeProbe": {
+  "frames": 3965,
+  "rootStepMaxM": 0.0243,
+  "plantedFrames": 4193,
+  "footSlideMeanPerPlantedFrameM": 0.00005,
+  "steps": 186,
+  "footSlidePerStepP95M": 0.0072,
+  "footSlidePerStepMaxM": 0.0214
+ },
+ "fighterProbe": {
+  "frames": 3964,
+  "dtMsP50": 16.7,
+  "dtMsP99": 16.8
+ },
+ "errors": [],
+ "scope": "local runtime, headless Chromium on this Mac (GPU WebGL via ANGLE/Metal); screenshots stall rendering, so frame pacing is not a device benchmark"
+}

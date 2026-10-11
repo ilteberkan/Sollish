@@ -1,0 +1,282 @@
+{
+ "params": "experiments/ringside-learner/runs/rule-v5m/main/params.json",
+ "rates": {
+  "actor": 0.1,
+  "critic": 0.05,
+  "fast": 0.5,
+  "entropy": 0.1
+ },
+ "matchRates": {
+  "actor": 1,
+  "critic": 0.05,
+  "fast": 2,
+  "entropy": 0.03,
+  "fastInputs": 0
+ },
+ "seeds": "test7",
+ "opps": "heldout",
+ "n": 200,
+ "summary": {
+  "learning": {
+   "switcher": {
+    "win": 0.32,
+    "margin": -148,
+    "adaptation": -233,
+    "kickShare": 0.31,
+    "roundMargin": [
+     -41,
+     -53,
+     -56
+    ]
+   },
+   "bodySnatcher": {
+    "win": 0.235,
+    "margin": -263,
+    "adaptation": -57,
+    "kickShare": 0.289,
+    "roundMargin": [
+     -98,
+     -86,
+     -80
+    ]
+   },
+   "slipper": {
+    "win": 0.895,
+    "margin": 404,
+    "adaptation": -67,
+    "kickShare": 0.359,
+    "roundMargin": [
+     144,
+     114,
+     147
+    ]
+   },
+   "mover": {
+    "win": 0.815,
+    "margin": 270,
+    "adaptation": -86,
+    "kickShare": 0.488,
+    "roundMargin": [
+     119,
+     82,
+     69
+    ]
+   }
+  },
+  "frozen": {
+   "switcher": {
+    "win": 0.33,
+    "margin": -143,
+    "adaptation": -238,
+    "kickShare": 0.345,
+    "roundMargin": [
+     -65,
+     -25,
+     -52
+    ]
+   },
+   "bodySnatcher": {
+    "win": 0.16,
+    "margin": -330,
+    "adaptation": -60,
+    "kickShare": 0.321,
+    "roundMargin": [
+     -126,
+     -98,
+     -106
+    ]
+   },
+   "slipper": {
+    "win": 0.935,
+    "margin": 393,
+    "adaptation": -53,
+    "kickShare": 0.366,
+    "roundMargin": [
+     143,
+     121,
+     129
+    ]
+   },
+   "mover": {
+    "win": 0.863,
+    "margin": 262,
+    "adaptation": -70,
+    "kickShare": 0.512,
+    "roundMargin": [
+     104,
+     77,
+     81
+    ]
+   }
+  },
+  "untrainedLearning": {
+   "switcher": {
+    "win": 0.155,
+    "margin": -341,
+    "adaptation": -192,
+    "kickShare": 0.464,
+    "roundMargin": [
+     -129,
+     -103,
+     -110
+    ]
+   },
+   "bodySnatcher": {
+    "win": 0.07,
+    "margin": -569,
+    "adaptation": -42,
+    "kickShare": 0.388,
+    "roundMargin": [
+     -202,
+     -197,
+     -177
+    ]
+   },
+   "slipper": {
+    "win": 0.718,
+    "margin": 185,
+    "adaptation": 25,
+    "kickShare": 0.513,
+    "roundMargin": [
+     51,
+     55,
+     79
+    ]
+   },
+   "mover": {
+    "win": 0.79,
+    "margin": 193,
+    "adaptation": -6,
+    "kickShare": 0.707,
+    "roundMargin": [
+     52,
+     66,
+     75
+    ]
+   }
+  },
+  "shuffledGraphLearning": {
+   "switcher": {
+    "win": 0.31,
+    "margin": -155,
+    "adaptation": -260,
+    "kickShare": 0.305,
+    "roundMargin": [
+     -63,
+     -47,
+     -45
+    ]
+   },
+   "bodySnatcher": {
+    "win": 0.223,
+    "margin": -243,
+    "adaptation": -46,
+    "kickShare": 0.295,
+    "roundMargin": [
+     -84,
+     -87,
+     -72
+    ]
+   },
+   "slipper": {
+    "win": 0.92,
+    "margin": 474,
+    "adaptation": -91,
+    "kickShare": 0.328,
+    "roundMargin": [
+     168,
+     137,
+     171
+    ]
+   },
+   "mover": {
+    "win": 0.818,
+    "margin": 251,
+    "adaptation": -96,
+    "kickShare": 0.455,
+    "roundMargin": [
+     112,
+     58,
+     81
+    ]
+   }
+  }
+ },
+ "comparisons": {
+  "learningVsFrozenMargin": {
+   "mean": 19.96,
+   "lo": -5.24,
+   "hi": 44.83
+  },
+  "learningVsFrozenWin": {
+   "mean": -0.01,
+   "lo": -0.04,
+   "hi": 0.03
+  },
+  "learningVsFrozenAdaptation": {
+   "mean": -5.48,
+   "lo": -21.74,
+   "hi": 11.23
+  },
+  "learningVsUntrainedMargin": {
+   "mean": 198.5,
+   "lo": 169.31,
+   "hi": 228.72
+  },
+  "malecnsVsShuffledMargin": {
+   "mean": -16.23,
+   "lo": -43.92,
+   "hi": 10.27
+  },
+  "learningVsFrozenMargin:switcher": {
+   "mean": -5.83,
+   "lo": -55.47,
+   "hi": 45.38
+  },
+  "learningVsFrozenMargin:bodySnatcher": {
+   "mean": 66.63,
+   "lo": 9.38,
+   "hi": 124.61
+  },
+  "learningVsFrozenMargin:slipper": {
+   "mean": 10.95,
+   "lo": -38.47,
+   "hi": 61.43
+  },
+  "learningVsFrozenMargin:mover": {
+   "mean": 8.1,
+   "lo": -35.86,
+   "hi": 52.52
+  },
+  "exploratoryPerRound": [
+   {
+    "round": 1,
+    "n": 800,
+    "mean": 17.09,
+    "lo": 3.62,
+    "hi": 30.25
+   },
+   {
+    "round": 2,
+    "n": 799,
+    "mean": -4.44,
+    "lo": -16.84,
+    "hi": 8.88
+   },
+   {
+    "round": 3,
+    "n": 794,
+    "mean": 7.63,
+    "lo": -6.85,
+    "hi": 22.06
+   }
+  ],
+  "exploratoryGrowthRound3MinusRound1": {
+   "n": 794,
+   "mean": -9.24,
+   "lo": -28.6,
+   "hi": 9.51
+  }
+ },
+ "seconds": 180.2
+}

@@ -1,0 +1,104 @@
+{
+  "computeUnits": 71916,
+  "house": "9iZHJfWLvMePnwXtFV6ESMR1exCHsoiLfkWP47Pim34A",
+  "packetBytes": 524,
+  "scope": "Actual LiteSVM runtime logs from house/games SBF and LOCAL MOCK VRF; not devnet or real proof. RPC message projection: instruction dataBytes is raw bytes, not RPC base58 data.",
+  "signature": "2EMKRbdHEqbW2PbyLNBQYgaKzfnqnenLxrZmZkTXzcWbtnXQm19AyE6zrk2pHUyPFoQyRrb2bA1cDpUv4d1LA4CA",
+  "transaction": {
+    "meta": {
+      "err": null,
+      "logMessages": [
+        "Program 8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ invoke [1]",
+        "Program log: Instruction: SettleCoinflip",
+        "Program 9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2 invoke [2]",
+        "Program log: Instruction: SettleBet",
+        "Program data: OZHgoD53486Bgs8Xlh/u2ALgwjZvkXibGdy4yszIvAtUWZ/AslfGL5jJyMgCn6lk2lESEU+ryN/vgUFn8RTpPRzcH2Qag2vKBYhvd2qr7lN9I7kkCbK1VpEGOk+l9VL/ZqO8eWPs5xYTbA3s6KjKyPv4zmkoS26kDFuBmSNEJhAMFy1RCYVxbgEAAAAAAAAAgJaYAAAAAACAEisBAAAAAAB8kgAAAAAAAAAAAAAAAAA=",
+        "Program 9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2 consumed 16831 of 374314 compute units",
+        "Program 9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2 success",
+        "Program 9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2 invoke [2]",
+        "Program log: Instruction: CloseBet",
+        "Program data: ehSd/t0AJ4GBgs8Xlh/u2ALgwjZvkXibGdy4yszIvAtUWZ/AslfGL5jJyMgCn6lk2lESEU+ryN/vgUFn8RTpPRzcH2Qag2vKBYhvd2qr7lN9I7kkCbK1VpEGOk+l9VL/ZqO8eWPs5xYTbA3s6KjKyPv4zmkoS26kDFuBmSNEJhAMFy1RCYVxbgEAAAAAAAAAgBIrAQAAAABgGR0AAAAAAA==",
+        "Program 9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2 consumed 12197 of 354346 compute units",
+        "Program 9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2 success",
+        "Program data: ENS6BQgiC2GBgs8Xlh/u2ALgwjZvkXibGdy4yszIvAtUWZ/AslfGL5jJyMgCn6lk2lESEU+ryN/vgUFn8RTpPRzcH2Qag2vK450eDRderDzFouMNviDPp5WljxVmg2Dxa6ON3LmaVV0TbA3s6KjKyPv4zmkoS26kDFuBmSNEJhAMFy1RCYVxbgEAAAAAAAAAgJaYAAAAAACAEisBAAAAAAAAAAAAAAAAAAAB",
+        "Program 8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ consumed 60425 of 400000 compute units",
+        "Program 8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ success",
+        "Program 8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ invoke [1]",
+        "Program log: Instruction: CloseCoinflip",
+        "Program data: WZiaEQL+ZCofbUsJ7B1jgZyFeeyVKdLHaJzi3f5TDmqkTzpv85fcq4GCzxeWH+7YAuDCNm+ReJsZ3LjKzMi8C1RZn8CyV8YvmMnIyAKfqWTaURIRT6vI3++BQWfxFOk9HNwfZBqDa8rjnR4NF16sPMWi4w2+IM+nlaWPFWaDYPFro43cuZpVXRNsDezoqMrI+/jOaShLbqQMW4GZI0QmEAwXLVEJhXFuAQAAAAAAAACAlpgAAAAAAIASKwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOOdHg0XXqw8xaLjDb4gz6eVpY8VZoNg8Wujjdy5mlVdgBIrAQAAAAAAAAAAAAAAAAAAAAAAAAAAAUBbKAAAAAAA",
+        "Program 8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ consumed 11491 of 339575 compute units",
+        "Program 8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ success"
+      ]
+    },
+    "slot": 435888000,
+    "transaction": {
+      "message": {
+        "accountKeys": [
+          "9oU8TswuuUE52MeChNE6vtCHojhd4MLJduUeSRqZ3ynD",
+          "NbhkkqpdBsNqdorPV9sUcLxR9am5uXSUUgjGesdH3A5",
+          "21w2ox9cs9Ymc6r1Nc98yGuvim8eftdQRAtnuDkqKehk",
+          "2JpJzDp4mBXt6ZHtKQP2sCnjvCcSsVB6L3zxmCZaoKq7",
+          "BHRRtZKD2j1HdSZu9BCYZF9wf6UhDNSjdGxKH2ddY4Vo",
+          "GKWWASQMJc5n5Ru8XXcFYkvH49i78f4YG2tDaoJuxoG8",
+          "37gJHYJPDpexX5r6RuztWRk9Ed5BK2VtJu3sJMyYN1kv",
+          "8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ",
+          "9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2",
+          "9iZHJfWLvMePnwXtFV6ESMR1exCHsoiLfkWP47Pim34A",
+          "DEanwq116ZnRqMu7eNk1gwq4KcHFsQsbnda6SxQBzLYr",
+          "HXkKvUG5BF2BZUzum2Vfa2cN1yqjkrg4iWkUVPDqh7vo"
+        ],
+        "instructions": [
+          {
+            "accounts": [
+              3,
+              9,
+              6,
+              4,
+              1,
+              10,
+              5,
+              7,
+              11,
+              8,
+              2
+            ],
+            "dataBytes": [
+              69,
+              57,
+              200,
+              136,
+              7,
+              34,
+              236,
+              112
+            ],
+            "programIdIndex": 7
+          },
+          {
+            "accounts": [
+              3,
+              9,
+              5,
+              10,
+              2
+            ],
+            "dataBytes": [
+              80,
+              248,
+              191,
+              227,
+              10,
+              46,
+              103,
+              252
+            ],
+            "programIdIndex": 7
+          }
+        ]
+      },
+      "signatures": [
+        "2EMKRbdHEqbW2PbyLNBQYgaKzfnqnenLxrZmZkTXzcWbtnXQm19AyE6zrk2pHUyPFoQyRrb2bA1cDpUv4d1LA4CA"
+      ]
+    }
+  }
+}

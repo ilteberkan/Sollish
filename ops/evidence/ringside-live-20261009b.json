@@ -1,0 +1,162 @@
+{
+ "date": "2026-10-09",
+ "engine": "ringside-contact-5-dfd179bd",
+ "rule": "v4b",
+ "published": false,
+ "request": "tempo too high; punches before closing distance; 2.5D only, delete 3D; one live boxing game; Jev and fruit-fly learner fully working; better code animation",
+ "engineChanges": {
+  "V5_TEMPO": "strike legal only within reach+100 mm; combination <=3; reset 10+12/punch ticks unless counter window; stamina regen 3 (0 while punching); stun decay 2/tick; longer footwork spans",
+  "plans": "every 180 ticks (9 s), 5 per round, 18 s window",
+  "chin": {
+   "kor": 1.03,
+   "ayaz": 1.0
+  }
+ },
+ "balance": {
+  "seeds": "balance:0..299",
+  "kor": 0.483,
+  "ayaz": 0.51,
+  "draw": 0.007,
+  "knockdown": 0.24,
+  "strikesPerRound": 53.85,
+  "hitsPerRound": 26.977,
+  "techniques": {
+   "rearHook": 0.153,
+   "leadHook": 0.133,
+   "jab": 0.172,
+   "cross": 0.236,
+   "bodyHook": 0.208,
+   "uppercut": 0.098
+  },
+  "band": {
+   "korShare": true,
+   "punches": true,
+   "knockdowns": true
+  },
+  "pass": true
+ },
+ "heldOut": {
+  "ruleV4_579c86bc": {
+   "learned": {
+    "learningVsFrozenMargin": {
+     "mean": 19.63,
+     "lo": 0.43,
+     "hi": 38.44
+    },
+    "malecnsVsShuffledMargin": {
+     "mean": 5.43,
+     "lo": -13.73,
+     "hi": 24.69
+    }
+   },
+   "scripts": {
+    "learningVsFrozenMargin": {
+     "mean": 50.09,
+     "lo": 35.66,
+     "hi": 64.41
+    },
+    "malecnsVsShuffledMargin": {
+     "mean": 0.75,
+     "lo": -14.29,
+     "hi": 16.09
+    }
+   },
+   "claim": "passed (interval above 0)",
+   "preregistration": "ops/evidence/ringside-contact5-20261009/rule-v4/preregistration-v4.json"
+  },
+  "ruleV4b_dfd179bd": {
+   "learned": {
+    "learningVsFrozenMargin": {
+     "mean": -2.6,
+     "lo": -22.92,
+     "hi": 17.74
+    },
+    "malecnsVsShuffledMargin": {
+     "mean": 2.63,
+     "lo": -17.31,
+     "hi": 22.46
+    }
+   },
+   "scripts": {
+    "learningVsFrozenMargin": {
+     "mean": 38.81,
+     "lo": 24.62,
+     "hi": 53.42
+    },
+    "malecnsVsShuffledMargin": {
+     "mean": -0.58,
+     "lo": -15.55,
+     "hi": 13.98
+    }
+   },
+   "claim": "failed on learned opponents; benefit only against fixed-style held-out scripts",
+   "preregistration": "ops/evidence/ringside-contact5-20261009/rule-v4b/preregistration-v4b.json"
+  }
+ },
+ "jev": {
+  "retry": "one retry for TIMEOUT/NETWORK/HTTP/INVALID/429 when >=0.6 s remain before the deadline; every attempt counts against JEV_CALL_BUDGET",
+  "workerdProbe": "apps/realtime/test/contact-arena-v5.workerd.mjs 11/11",
+  "liveLocal": {
+   "setup": "local wrangler dev :8787 with the real key via --env-file (.tooling/secrets), JEV_CALL_BUDGET 20; existing next dev :3000 with a temporary .env.development.local (moved to .tooling/archive/temp afterwards)",
+   "calls": 15,
+   "ok": 15,
+   "elapsedMs": [
+    354,
+    545
+   ],
+   "log": "ops/evidence/ringside-contact5-20261009/live-v5b-jev-calls.jsonl",
+   "result": "one full 3-round bout, every plan from Jev, browser replay verification without mismatch alert, DEMO ticket in round 2 refunded (one-sided pool) as the rules state"
+  },
+  "realCallsThisSessionTotal": 32
+ },
+ "motion": {
+  "files": [
+   "apps/web/lib/ringside-25d/motion.ts",
+   "apps/web/components/ringside-broadcast.tsx"
+  ],
+  "provenance": "authored in code; no motion capture, no clips, no three.js",
+  "gates60Hz10Rounds": {
+   "gloveHeadGapP95cm": 0.43,
+   "gloveHeadGapMaxCm": 3.37,
+   "plantedFootSlideCm": 0,
+   "boneLength": "constant (<2 mm)",
+   "maxStepPerFrameCm": {
+    "gloveOrElbow": 35.8,
+    "headTrunkLegs": 15.5
+   },
+   "test": "apps/web/tests/ringside-motion.test.ts"
+  },
+  "renders": "ops/evidence/ringside-contact5-20261009/broadcast-25d/"
+ },
+ "site": {
+  "kept": "/live/ringside (plus Crash, Coinflip, rewards, stake)",
+  "redirected": [
+   "/game/boxing",
+   "/live/boxing",
+   "/live/ringside-v2",
+   "/live/ringside-v3",
+   "/live/ringside-v4",
+   "/lab/ringside",
+   "/lab/ringside/*"
+  ],
+  "movedNotDeleted": ".tooling/archive/removed-20261009/ (and ringside-removed-20261009.tar.gz)",
+  "dependencyRemoved": [
+   "three",
+   "@types/three"
+  ],
+  "backendKept": "v2-v4 arenas stay for accepted tickets"
+ },
+ "tests": {
+  "protocol": "125/125",
+  "web": "38/38 (incl. motion gates)",
+  "webTypecheck": "clean",
+  "realtime": "11/11 unit, tsc clean, contact 16 checks, ringside 12 checks, v5 workerd 11/11",
+  "browser": "ringside-contact.spec 7/7 and product.spec 14/14 against next dev :3000 (not the Cloudflare build)"
+ },
+ "notDone": [
+  "hosted deploy (realtime migration v6, then web) and hosted Jev secret: need owner approval",
+  "phone 60 fps measurement",
+  "Playwright against build:cloudflare preview",
+  "user's visual acceptance"
+ ]
+}

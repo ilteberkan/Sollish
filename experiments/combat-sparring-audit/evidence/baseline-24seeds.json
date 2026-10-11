@@ -1,0 +1,344 @@
+{
+ "engine": "baseline",
+ "version": "sparring-1",
+ "seeds": 24,
+ "firstSeed": 1,
+ "sidesPerSeed": 2,
+ "seconds": 90,
+ "results": [
+  {
+   "a": "balanced",
+   "b": "pressure",
+   "games": 48,
+   "aScore": 0.542,
+   "koShare": 1,
+   "aCleanHitsPerGame": 10.5,
+   "bCleanHitsPerGame": 10.1,
+   "aTechniqueShare": {
+    "roundhouse": 0.133,
+    "cross": 0.488,
+    "hook": 0.081,
+    "jab": 0.298
+   },
+   "penetrationCm": {
+    "p95": 14.6,
+    "max": 17.5,
+    "overlapTicks": 3213
+   },
+   "longestNoContactS": {
+    "p50": 2.1,
+    "max": 2.4
+   },
+   "outOfRangeShare": 0.128,
+   "durationS": {
+    "p50": 23.9,
+    "min": 7.1
+   },
+   "lowStaminaShare": 0.652
+  },
+  {
+   "a": "balanced",
+   "b": "counter",
+   "games": 48,
+   "aScore": 0.573,
+   "koShare": 1,
+   "aCleanHitsPerGame": 9.96,
+   "bCleanHitsPerGame": 9.4,
+   "aTechniqueShare": {
+    "roundhouse": 0.218,
+    "cross": 0.404,
+    "jab": 0.268,
+    "hook": 0.105,
+    "uppercut": 0.006
+   },
+   "penetrationCm": {
+    "p95": 18.5,
+    "max": 21.4,
+    "overlapTicks": 4848
+   },
+   "longestNoContactS": {
+    "p50": 2.1,
+    "max": 2.8
+   },
+   "outOfRangeShare": 0.109,
+   "durationS": {
+    "p50": 28.1,
+    "min": 18.4
+   },
+   "lowStaminaShare": 0.678
+  },
+  {
+   "a": "runner",
+   "b": "pressure",
+   "games": 48,
+   "aScore": 0.5,
+   "koShare": 0,
+   "aCleanHitsPerGame": 0,
+   "bCleanHitsPerGame": 0,
+   "aTechniqueShare": {},
+   "penetrationCm": {
+    "p95": 0,
+    "max": 0,
+    "overlapTicks": 0
+   },
+   "longestNoContactS": {
+    "p50": 90,
+    "max": 90
+   },
+   "outOfRangeShare": 0.276,
+   "durationS": {
+    "p50": 90,
+    "min": 90
+   },
+   "lowStaminaShare": 0
+  },
+  {
+   "a": "runner",
+   "b": "balanced",
+   "games": 48,
+   "aScore": 0.5,
+   "koShare": 0,
+   "aCleanHitsPerGame": 0,
+   "bCleanHitsPerGame": 0,
+   "aTechniqueShare": {},
+   "penetrationCm": {
+    "p95": 0,
+    "max": 0,
+    "overlapTicks": 0
+   },
+   "longestNoContactS": {
+    "p50": 90,
+    "max": 90
+   },
+   "outOfRangeShare": 0.276,
+   "durationS": {
+    "p50": 90,
+    "min": 90
+   },
+   "lowStaminaShare": 0
+  },
+  {
+   "a": "hitAndRun",
+   "b": "pressure",
+   "games": 48,
+   "aScore": 0.677,
+   "koShare": 0.333,
+   "aCleanHitsPerGame": 4.69,
+   "bCleanHitsPerGame": 5.25,
+   "aTechniqueShare": {
+    "roundhouse": 0.129,
+    "cross": 0.507,
+    "hook": 0.04,
+    "jab": 0.32,
+    "uppercut": 0.004
+   },
+   "penetrationCm": {
+    "p95": 14.5,
+    "max": 17.5,
+    "overlapTicks": 1489
+   },
+   "longestNoContactS": {
+    "p50": 88.1,
+    "max": 89.6
+   },
+   "outOfRangeShare": 0.225,
+   "durationS": {
+    "p50": 90,
+    "min": 7.1
+   },
+   "lowStaminaShare": 0.226
+  },
+  {
+   "a": "hitAndRun",
+   "b": "balanced",
+   "games": 48,
+   "aScore": 0.688,
+   "koShare": 0.313,
+   "aCleanHitsPerGame": 4.33,
+   "bCleanHitsPerGame": 5.13,
+   "aTechniqueShare": {
+    "roundhouse": 0.168,
+    "cross": 0.495,
+    "hook": 0.029,
+    "jab": 0.308
+   },
+   "penetrationCm": {
+    "p95": 14.3,
+    "max": 16.9,
+    "overlapTicks": 1352
+   },
+   "longestNoContactS": {
+    "p50": 88.1,
+    "max": 89.6
+   },
+   "outOfRangeShare": 0.228,
+   "durationS": {
+    "p50": 90,
+    "min": 7.1
+   },
+   "lowStaminaShare": 0.208
+  },
+  {
+   "a": "kickSpam",
+   "b": "balanced",
+   "games": 48,
+   "aScore": 0,
+   "koShare": 1,
+   "aCleanHitsPerGame": 4.52,
+   "bCleanHitsPerGame": 11.69,
+   "aTechniqueShare": {
+    "roundhouse": 1
+   },
+   "penetrationCm": {
+    "p95": 16,
+    "max": 18.2,
+    "overlapTicks": 2008
+   },
+   "longestNoContactS": {
+    "p50": 2,
+    "max": 2.5
+   },
+   "outOfRangeShare": 0.01,
+   "durationS": {
+    "p50": 13.5,
+    "min": 10
+   },
+   "lowStaminaShare": 0.621
+  },
+  {
+   "a": "kickSpam",
+   "b": "pressure",
+   "games": 48,
+   "aScore": 0,
+   "koShare": 1,
+   "aCleanHitsPerGame": 4.35,
+   "bCleanHitsPerGame": 11.77,
+   "aTechniqueShare": {
+    "roundhouse": 1
+   },
+   "penetrationCm": {
+    "p95": 16,
+    "max": 17.4,
+    "overlapTicks": 1974
+   },
+   "longestNoContactS": {
+    "p50": 2.1,
+    "max": 2.5
+   },
+   "outOfRangeShare": 0.01,
+   "durationS": {
+    "p50": 14.2,
+    "min": 10.7
+   },
+   "lowStaminaShare": 0.656
+  },
+  {
+   "a": "kickSpam",
+   "b": "counter",
+   "games": 48,
+   "aScore": 0,
+   "koShare": 1,
+   "aCleanHitsPerGame": 5.81,
+   "bCleanHitsPerGame": 11.75,
+   "aTechniqueShare": {
+    "roundhouse": 1
+   },
+   "penetrationCm": {
+    "p95": 18.1,
+    "max": 21.4,
+    "overlapTicks": 2269
+   },
+   "longestNoContactS": {
+    "p50": 2,
+    "max": 2.6
+   },
+   "outOfRangeShare": 0.009,
+   "durationS": {
+    "p50": 15.3,
+    "min": 10.8
+   },
+   "lowStaminaShare": 0.62
+  },
+  {
+   "a": "jabSpam",
+   "b": "balanced",
+   "games": 48,
+   "aScore": 0.813,
+   "koShare": 0,
+   "aCleanHitsPerGame": 7.94,
+   "bCleanHitsPerGame": 4.73,
+   "aTechniqueShare": {
+    "jab": 1
+   },
+   "penetrationCm": {
+    "p95": 15.5,
+    "max": 21.3,
+    "overlapTicks": 75175
+   },
+   "longestNoContactS": {
+    "p50": 0.7,
+    "max": 0.8
+   },
+   "outOfRangeShare": 0.001,
+   "durationS": {
+    "p50": 90,
+    "min": 90
+   },
+   "lowStaminaShare": 0.937
+  },
+  {
+   "a": "jabSpam",
+   "b": "pressure",
+   "games": 48,
+   "aScore": 0.813,
+   "koShare": 0,
+   "aCleanHitsPerGame": 7.94,
+   "bCleanHitsPerGame": 4.73,
+   "aTechniqueShare": {
+    "jab": 1
+   },
+   "penetrationCm": {
+    "p95": 15.5,
+    "max": 21.3,
+    "overlapTicks": 75204
+   },
+   "longestNoContactS": {
+    "p50": 0.7,
+    "max": 0.8
+   },
+   "outOfRangeShare": 0.001,
+   "durationS": {
+    "p50": 90,
+    "min": 90
+   },
+   "lowStaminaShare": 0.937
+  },
+  {
+   "a": "jabSpam",
+   "b": "counter",
+   "games": 48,
+   "aScore": 0.938,
+   "koShare": 0,
+   "aCleanHitsPerGame": 6.08,
+   "bCleanHitsPerGame": 4.96,
+   "aTechniqueShare": {
+    "jab": 1
+   },
+   "penetrationCm": {
+    "p95": 15.5,
+    "max": 21.4,
+    "overlapTicks": 74715
+   },
+   "longestNoContactS": {
+    "p50": 0.7,
+    "max": 0.9
+   },
+   "outOfRangeShare": 0.001,
+   "durationS": {
+    "p50": 90,
+    "min": 90
+   },
+   "lowStaminaShare": 0.936
+  }
+ ]
+}

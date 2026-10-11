@@ -1,0 +1,135 @@
+{
+ "at": "2026-10-05T03:32:55.540Z",
+ "base": "http://127.0.0.1:3000",
+ "seed": 5,
+ "corners": "pressure,balanced",
+ "viewport": [
+  1280,
+  720
+ ],
+ "camera": "Yayın",
+ "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+ "rows": [
+  {
+   "target": 180,
+   "tickAtShot": 180,
+   "file": "seed5-1280x720-t00180.jpg",
+   "probe": {
+    "frames": 182,
+    "lastPenetration": 0.0013,
+    "lastRaw": 0.2304
+   }
+  },
+  {
+   "target": 190,
+   "tickAtShot": 190,
+   "file": "seed5-1280x720-t00190.jpg",
+   "probe": {
+    "frames": 191,
+    "lastPenetration": 0.0007,
+    "lastRaw": 0.031
+   }
+  },
+  {
+   "target": 200,
+   "tickAtShot": 200,
+   "file": "seed5-1280x720-t00200.jpg",
+   "probe": {
+    "frames": 201,
+    "lastPenetration": 0,
+    "lastRaw": 0
+   }
+  },
+  {
+   "target": 215,
+   "tickAtShot": 215,
+   "file": "seed5-1280x720-t00215.jpg",
+   "probe": {
+    "frames": 216,
+    "lastPenetration": 0,
+    "lastRaw": 0
+   }
+  },
+  {
+   "target": 235,
+   "tickAtShot": 235,
+   "file": "seed5-1280x720-t00235.jpg",
+   "probe": {
+    "frames": 237,
+    "lastPenetration": 0,
+    "lastRaw": 0
+   }
+  },
+  {
+   "target": 260,
+   "tickAtShot": 260,
+   "file": "seed5-1280x720-t00260.jpg",
+   "probe": {
+    "frames": 261,
+    "lastPenetration": 0,
+    "lastRaw": 0
+   }
+  },
+  {
+   "target": 320,
+   "tickAtShot": 320,
+   "file": "seed5-1280x720-t00320.jpg",
+   "probe": {
+    "frames": 322,
+    "lastPenetration": 0,
+    "lastRaw": 0
+   }
+  }
+ ],
+ "contact": {
+  "after": {
+   "frames": 323,
+   "p50": 0,
+   "p95": 0.1089,
+   "max": 0.163,
+   "over1cm": 56
+  },
+  "raw": {
+   "frames": 323,
+   "p50": 0.0647,
+   "p95": 0.264,
+   "max": 0.3373,
+   "over1cm": 176
+  },
+  "rootOffsetMax": 0.12,
+  "worstContact": {
+   "depth": 0.163,
+   "pair": "glove_r/upperarm_l",
+   "tick": 27,
+   "shot": "broadcast"
+  },
+  "worstPairs": [
+   [
+    "glove_l/glove_l",
+    19
+   ],
+   [
+    "glove_r/glove_l",
+    15
+   ],
+   [
+    "glove_l/glove_r",
+    7
+   ],
+   [
+    "glove_r/glove_r",
+    4
+   ],
+   [
+    "upperarm_l/glove_l",
+    4
+   ],
+   [
+    "upperarm_l/upperarm_r",
+    3
+   ]
+  ]
+ },
+ "errors": [],
+ "scope": "local dev runtime (next dev, Turbopack) headless Chromium with Metal WebGL; not a production build or hosted"
+}

@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-01T05:30:38.967Z",
+  "scope": "Read-only own-probe rent and funding inspection; no transaction, faucet, key creation or deployment",
+  "status": "BLOCKED",
+  "checks": [
+    {
+      "id": "inspection",
+      "status": "BLOCKED",
+      "evidence": "Local artifact changed: cargoLockSha256; rebuild the probe"
+    }
+  ],
+  "finishedAt": "2026-10-01T05:30:39.011Z"
+}

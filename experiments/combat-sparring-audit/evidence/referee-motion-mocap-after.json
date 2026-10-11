@@ -1,0 +1,149 @@
+{
+ "schema": "sollish.referee-motion.v1",
+ "renderer": "mocap",
+ "mode": "after: sparring-5 official + gait-matched module",
+ "engineVersion": "sparring-5",
+ "scope": "CPU real-GLB (Three.js skinning in Node, image decoding stubbed); not GPU, browser or device evidence",
+ "smoothing": true,
+ "results": {
+  "seed3-balanced-pressure-round1+break": {
+   "frames": 3000,
+   "rootStepMaxM": 0.0238,
+   "yawStepMaxRad": 0.0578,
+   "plantedFrames": 3060,
+   "footSlideMeanPerPlantedFrameM": 0,
+   "footSlideMeanPerPlantedFrameWhileWalkingM": 0,
+   "walkingPlantedFrames": 2388,
+   "steps": 149,
+   "footSlidePerStepP95M": 0.005,
+   "footSlidePerStepMaxM": 0.0146,
+   "boundsVerticesInspected": 56430,
+   "boundsVerticesOutside": 0
+  },
+  "seed7-counter-pressure-round1+break": {
+   "frames": 3000,
+   "rootStepMaxM": 0.0243,
+   "yawStepMaxRad": 0.0578,
+   "plantedFrames": 3034,
+   "footSlideMeanPerPlantedFrameM": 0,
+   "footSlideMeanPerPlantedFrameWhileWalkingM": 0,
+   "walkingPlantedFrames": 2279,
+   "steps": 162,
+   "footSlidePerStepP95M": 0.0044,
+   "footSlidePerStepMaxM": 0.0199,
+   "boundsVerticesInspected": 56430,
+   "boundsVerticesOutside": 0
+  },
+  "forced-knockdown-count": {
+   "frames": 900,
+   "rootStepMaxM": 0.0241,
+   "yawStepMaxRad": 0.0547,
+   "plantedFrames": 1415,
+   "footSlideMeanPerPlantedFrameM": 0,
+   "footSlideMeanPerPlantedFrameWhileWalkingM": 0,
+   "walkingPlantedFrames": 395,
+   "steps": 22,
+   "footSlidePerStepP95M": 0.0001,
+   "footSlidePerStepMaxM": 0.0027,
+   "boundsVerticesInspected": 17100,
+   "boundsVerticesOutside": 0
+  },
+  "120Hz-seed3-balanced-pressure-round1+break": {
+   "frames": 3000,
+   "rootStepMaxM": 0.0123,
+   "yawStepMaxRad": 0.0307,
+   "plantedFrames": 3078,
+   "footSlideMeanPerPlantedFrameM": 0,
+   "footSlideMeanPerPlantedFrameWhileWalkingM": 0,
+   "walkingPlantedFrames": 2535,
+   "steps": 75,
+   "footSlidePerStepP95M": 0.005,
+   "footSlidePerStepMaxM": 0.0087,
+   "boundsVerticesInspected": 0,
+   "boundsVerticesOutside": 0
+  },
+  "footworkComparison": {
+   "mesh2motion": {
+    "gaits": {
+     "forward": {
+      "clip": "Walk_Formal_Loop",
+      "strideM": 1.3277394150906092,
+      "speedMps": 0.9958045316406692,
+      "sync": 0
+     },
+     "back": {
+      "clip": "Referee_Combat_Walk_Backwards",
+      "strideM": 1.0438499528971523,
+      "speedMps": 1.0438499528971523,
+      "sync": 0.4940722624320334
+     },
+     "left": {
+      "clip": "Referee_Combat_Strafe_Right",
+      "strideM": 0.7860163999766718,
+      "speedMps": 0.7860163999766718,
+      "sync": 0.5141872301335846
+     },
+     "right": {
+      "clip": "Referee_Combat_Strafe_Left",
+      "strideM": 0.7919291511000506,
+      "speedMps": 0.7919291511000506,
+      "sync": 0
+     }
+    },
+    "frames": 3000,
+    "rootStepMaxM": 0.0238,
+    "yawStepMaxRad": 0.0578,
+    "plantedFrames": 3060,
+    "footSlideMeanPerPlantedFrameM": 0,
+    "footSlideMeanPerPlantedFrameWhileWalkingM": 0,
+    "walkingPlantedFrames": 2388,
+    "steps": 149,
+    "footSlidePerStepP95M": 0.005,
+    "footSlidePerStepMaxM": 0.0146,
+    "boundsVerticesInspected": 0,
+    "boundsVerticesOutside": 0
+   },
+   "mixamo": {
+    "gaits": {
+     "forward": {
+      "clip": "Walk_Formal_Loop",
+      "strideM": 1.3277394150906092,
+      "speedMps": 0.9958045316406692,
+      "sync": 0
+     },
+     "back": {
+      "clip": "Referee_mx_walk_back",
+      "strideM": 0.911573121248545,
+      "speedMps": 0.6077154141656966,
+      "sync": 0.16092270536775263
+     },
+     "left": {
+      "clip": "Referee_mx_strafe_left",
+      "strideM": 1.2660803982633904,
+      "speedMps": 1.1869503114676458,
+      "sync": 0.8608695428854664
+     },
+     "right": {
+      "clip": "Referee_mx_strafe_right",
+      "strideM": 2.1972028301471647,
+      "speedMps": 1.8833167757000997,
+      "sync": 0.3458130947370898
+     }
+    },
+    "frames": 3000,
+    "rootStepMaxM": 0.0238,
+    "yawStepMaxRad": 0.0578,
+    "plantedFrames": 3392,
+    "footSlideMeanPerPlantedFrameM": 0,
+    "footSlideMeanPerPlantedFrameWhileWalkingM": 0,
+    "walkingPlantedFrames": 2824,
+    "steps": 178,
+    "footSlidePerStepP95M": 0.0014,
+    "footSlidePerStepMaxM": 0.0131,
+    "boundsVerticesInspected": 0,
+    "boundsVerticesOutside": 0
+   }
+  }
+ },
+ "at": "2026-10-05T08:34:44.542Z"
+}

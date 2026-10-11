@@ -1,0 +1,56 @@
+{
+ "schema": "sollish.evidence.v1",
+ "at": "2026-10-08",
+ "status": "LOCAL_PRODUCTION_RUNTIME_VERIFIED_NOT_DEPLOYED",
+ "buildId": "DINV9x3S-RPMG7kNXj6Aa",
+ "scope": "Presentation only. New default 'Gece Ligi' 2.5D canvas broadcast for /live/ringside (Contact v3). Reads committed frames/events; engine ringside-contact-3-f8cd1d1f, policy, admission and settlement unchanged. Previous 3D scene kept behind the '3D' camera button and ?scene=3d. Offline preview at /lab/ringside/night. Games page poster replaced.",
+ "animation": "Hand-authored 2D keyframe poses + procedural two-bone IK aimed at recorded contact points. Not motion capture, not a learned motor.",
+ "checks": {
+  "contactLanding": "474/474 recorded hit/block events in 12 seeds: visible glove/foot within 2.5 cm of the struck part at the event tick (tests/ringside-night.test.ts)",
+  "webUnit": "96/96 (pnpm --filter @sollish/web test)",
+  "protocolUnit": "105/105",
+  "typecheck": "clean",
+  "browserProductionPreview": "82/82 on wrangler preview :3001 (build DINV9x3S-RPMG7kNXj6Aa), incl. new canvas2d warm-up + fighting test with WebGL disabled",
+  "renderCostHeadlessSoftware": {
+   "1440x900@dpr2 (canvas 1706x890)": {
+    "medianMs": 14.2,
+    "p95Ms": 15.8
+   },
+   "390x844@dpr3 (canvas 664x705)": {
+    "medianMs": 4.7,
+    "p95Ms": 5.2
+   },
+   "note": "Headless Chromium software raster; not a device GPU measurement. Background layer rendered at half resolution (was 86 ms before)."
+  }
+ },
+ "notVerified": [
+  "hosted deployment",
+  "physical phone",
+  "user visual acceptance",
+  "Combat Club, /live/boxing, /game/boxing and /live/ringside-v2 still use the 3D scene"
+ ],
+ "visualOnlyAdjustments": [
+  "fighters eased apart to >=1.08 m along the camera axis when closer (strikes re-aim at the eased positions)",
+  "referee fades to 35% when between camera and fighters",
+  "referee walks toward a downed fighter for the count and beside the winner after the result",
+  "before the seed is revealed fighters warm up at the engine start marks"
+ ],
+ "sourceSha256": {
+  "apps/web/lib/ringside-night/rig.ts": "1197b0b4b1a6bc13c45b902ff95a9553a5f68f34b97915e9698d68a4e6b5d069",
+  "apps/web/lib/ringside-night/motion.ts": "850c13511b2802b588d5183eff073f680bb1699db4d6ba4c3a474f58a359b71e",
+  "apps/web/components/ringside-night-scene.tsx": "53cd2c953c52e517874cb57a40dcd1569e5655b0e4655c4e74bce753f51c6ca1",
+  "apps/web/components/ringside-arena.tsx": "9a954fc94e10a1739fb164de22c91d9e72d0c2cb2519c550b3bb0a41e1b9dc29",
+  "apps/web/components/ringside-night-lab.tsx": "8cf88176c9e8f3eb0d1b5767b696f7ee298a139ec41f97144381ad2271006d54",
+  "apps/web/tests/ringside-night.test.ts": "b9a7942d91a7c2d95a353bcca5b3b2b926bcdc25d0e43a5b5d0785f890e08351",
+  "apps/web/tests/browser/ringside-contact.spec.ts": "91746fb5897bde97d1f58105861ab850adafa8ae849f648fd7cc43dbbebe099e",
+  "packages/protocol/src/combat-v3.ts": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+  "apps/web/public/models/boxing/ringside-gece-ligi-poster.jpg": "f2be4118f8061e3c4773343d0b66615a9e8c658855c72c1e31c5986515daad87"
+ },
+ "screens": {
+  "broadcast-head-hit.png": "f6b0e732e5289a0d01524498b752ad1ff1041c050633fa83985a69ccbc02e641",
+  "cameras-and-mobile.png": "53b03bf693905ca6a757ef3f5745589297e1462b7dc649441a91378b15fa8357",
+  "kick-sequence.png": "26033e4fcb2ebee971c2e67b8040d26cdb215c0efacdebb9fc116997ad93fea0",
+  "knockdown-sequence.png": "d6074aceeae7f3ac24f087db3f65f82f42268fab361e1dad9cb74da2ef7a34a2",
+  "live-arena-fixture-fighting.png": "454bd4fe5d545fc0a10b8fa94c8614d81c18b08e8941465552e5d42bcf0696d1"
+ }
+}

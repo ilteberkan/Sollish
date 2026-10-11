@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sollish-web-devnet",
+  "account_id": "a0a597b596eadd6579942c4905197d17",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "sollish-web-devnet" }],
+  "observability": { "enabled": true },
+  "workers_dev": true,
+  "vars": { "NEXTJS_ENV": "production" }
+}

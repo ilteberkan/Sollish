@@ -1,0 +1,155 @@
+{
+ "schema": "sollish.evidence.v1",
+ "at": "2026-10-05",
+ "scope": "Coordinator A/B of the contact resolver's live root-offset rate (ROOT_RATE). Same engine bout (seed 7, default neuro-2 s1 vs s1), 30 s, local Next dev runtime :3000, headless Chromium ANGLE/Metal. worstPairs counts only the deepest pair per frame (>5 mm), so a shallower leg overlap in the same frame is not visible here. Script: experiments/combat-sparring-audit/root-rate-ab.mjs",
+ "results": [
+  {
+   "rootRateMps": 1.5,
+   "frames": 1804,
+   "rootJumpMaxM": 0.066,
+   "rootJumpP99M": 0.0573,
+   "penetrationP50M": 0.0018,
+   "penetrationP99M": 0.1869,
+   "framesOver1cm": 639,
+   "worstPairFramesOver5mm": {
+    "arm-arm": 648,
+    "arm-body": 13,
+    "body-body": 0
+   }
+  },
+  {
+   "rootRateMps": 3,
+   "frames": 1804,
+   "rootJumpMaxM": 0.0894,
+   "rootJumpP99M": 0.0619,
+   "penetrationP50M": 0.0018,
+   "penetrationP99M": 0.187,
+   "framesOver1cm": 630,
+   "worstPairFramesOver5mm": {
+    "arm-arm": 639,
+    "arm-body": 18,
+    "body-body": 0
+   }
+  },
+  {
+   "rootRateMps": 6,
+   "frames": 1806,
+   "rootJumpMaxM": 0.1375,
+   "rootJumpP99M": 0.0709,
+   "penetrationP50M": 0.0018,
+   "penetrationP99M": 0.1882,
+   "framesOver1cm": 631,
+   "worstPairFramesOver5mm": {
+    "arm-arm": 637,
+    "arm-body": 20,
+    "body-body": 1
+   }
+  }
+ ],
+ "reference": "Before any rate limit (production runtime, same bout): rootJumpMaxM 0.2311.",
+ "decision": "ROOT_RATE = 3 m/s: torso/head close to the unlimited resolver, leg-leg overlap frames 2744 (1.5 m/s: 4024; none: 1238), real-scene root pops 0.089 m/frame (none: 0.231). Leg-leg max stays ~0.25 m at every limit because the large jumps are overlap-normal flips (either a pop or a brief pass-through); the real fix is a stable separation axis in the resolver.",
+ "knownRisk": "The contact engineer's CPU smoke (first 240 ticks x 3 bouts, smoothing on) found transient leg-leg overlap up to 0.230 m during a seed-11 lunge with the limit (0.050 m without) and head-body 0.052 m (0.014 m without).",
+ "cpuGlb": {
+  "scope": "CPU skin (real Mixamo GLB in Node, smoothing on as the live viewer), 3 full 3x45 s bouts, 4 sub-tick samples per tick, 103 760 frames; not GPU or browser",
+  "noLimit": {
+   "torsoTorso": {
+    "maxM": 0.075,
+    "frames": 41
+   },
+   "headBody": {
+    "maxM": 0.104,
+    "frames": 321
+   },
+   "legLeg": {
+    "maxM": 0.064,
+    "p95M": 0.031,
+    "frames": 1238
+   },
+   "armTorso": {
+    "maxM": 0.213
+   },
+   "note": "contact engineer report, resolver a3dcfe5b"
+  },
+  "rate1_5": {
+   "torsoTorso": {
+    "maxM": 0.0539,
+    "p95M": 0.0436,
+    "frames": 129
+   },
+   "headBody": {
+    "maxM": 0.0938,
+    "p95M": 0.0544,
+    "frames": 1094
+   },
+   "legLeg": {
+    "maxM": 0.2534,
+    "p95M": 0.1452,
+    "frames": 4024
+   },
+   "armTorso": {
+    "maxM": 0.1938,
+    "p95M": 0.1037,
+    "frames": 5769
+   },
+   "gloveGloveForearm": {
+    "maxM": 0.2308,
+    "p95M": 0.1515,
+    "frames": 60374
+   }
+  },
+  "rate3": {
+   "torsoTorso": {
+    "maxM": 0.0353,
+    "p95M": 0.0324,
+    "frames": 36
+   },
+   "headBody": {
+    "maxM": 0.0896,
+    "p95M": 0.057,
+    "frames": 468
+   },
+   "legLeg": {
+    "maxM": 0.2547,
+    "p95M": 0.141,
+    "frames": 2744
+   },
+   "armTorso": {
+    "maxM": 0.168,
+    "p95M": 0.1025,
+    "frames": 5823
+   },
+   "gloveGloveForearm": {
+    "maxM": 0.2308,
+    "p95M": 0.1515,
+    "frames": 60249
+   }
+  },
+  "rate6": {
+   "torsoTorso": {
+    "maxM": 0.0302,
+    "p95M": 0.029,
+    "frames": 31
+   },
+   "headBody": {
+    "maxM": 0.0814,
+    "p95M": 0.0616,
+    "frames": 358
+   },
+   "legLeg": {
+    "maxM": 0.2508,
+    "p95M": 0.1322,
+    "frames": 1988
+   },
+   "armTorso": {
+    "maxM": 0.1611,
+    "p95M": 0.0992,
+    "frames": 5839
+   },
+   "gloveGloveForearm": {
+    "maxM": 0.2308,
+    "p95M": 0.1516,
+    "frames": 60176
+   }
+  }
+ }
+}

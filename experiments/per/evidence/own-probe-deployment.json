@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-10-01T14:35:21.138Z",
+  "scope": "Owned experimental DEVNET deployment, no game/payment/production approval",
+  "status": "OWN_PROGRAM_DEPLOYED_AND_FINALIZED",
+  "genesis": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+  "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+  "programData": "3TjrsRtLukZwUfnWxFZchVXE2dAd2xp4UfkMe6h6RaAD",
+  "elfSha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+  "elfBytes": 292384,
+  "allocationPaddingBytes": 0,
+  "upgradeAuthority": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+  "signature": "5LJDTW5QagHVCJyQvzVKEKU2g1hk1hR6rBNk54AiWedKbRxrpD3Bp83QDYsZ4YMWyqDDxvRdiQX1CYSogowdUnoN",
+  "transactionSlot": 506304685,
+  "deploymentSlot": "506304685",
+  "observedSlot": 506304893,
+  "payerLamportsAfterDeploy": 511432320,
+  "bufferClosed": true,
+  "sourceSha256": "674254f64675dac516f5f566534db97ad3c1f1460fcb99c6f8603fe5a7d73449",
+  "idlSha256": "d71cf0464d04a123d15fd743968e6e15cbadc6a6083fd3e2c9e333bebc51717e",
+  "cargoLockSha256": "84a0690471d94decb41794b22925c4e42fbc57ca5a0ed53c95eeac6cc3ded490",
+  "productionApproval": false
+}

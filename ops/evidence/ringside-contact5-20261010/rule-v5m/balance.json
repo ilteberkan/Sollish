@@ -1,0 +1,155 @@
+{
+ "params": "frozen",
+ "rates": "engine",
+ "seeds": "balance:0..299 (bouts of up to 3 rounds)",
+ "bouts": 300,
+ "rounds": 900,
+ "kor": 0.507,
+ "ayaz": 0.487,
+ "draw": 0.007,
+ "knockdown": 0.188,
+ "stoppage": 0.001,
+ "strikesPerRound": 41.548,
+ "minStrikes": 8,
+ "hitsPerRound": 22.534,
+ "kicks": 13697,
+ "legHitsPerRound": 0.98,
+ "kneesFromClinch": 875,
+ "techniques": {
+  "cross": 0.176,
+  "leadHook": 0.107,
+  "teep": 0.094,
+  "jab": 0.117,
+  "bodyKick": 0.106,
+  "bodyHook": 0.087,
+  "headKick": 0.099,
+  "rearHook": 0.084,
+  "uppercut": 0.062,
+  "lowKick": 0.036,
+  "knee": 0.032
+ },
+ "outcomes": {
+  "cross": {
+   "hit": 3174,
+   "miss": 106,
+   "block": 1636,
+   "dodge": 837
+  },
+  "leadHook": {
+   "hit": 1965,
+   "block": 924,
+   "miss": 324,
+   "dodge": 220
+  },
+  "teep": {
+   "hit": 2487,
+   "miss": 165,
+   "block": 518
+  },
+  "bodyKick": {
+   "hit": 2643,
+   "block": 509,
+   "miss": 198
+  },
+  "bodyHook": {
+   "hit": 2200,
+   "block": 439,
+   "miss": 230
+  },
+  "rearHook": {
+   "hit": 1446,
+   "block": 823,
+   "miss": 155,
+   "dodge": 209
+  },
+  "headKick": {
+   "hit": 1249,
+   "block": 1229,
+   "dodge": 236,
+   "miss": 138
+  },
+  "jab": {
+   "dodge": 561,
+   "block": 1077,
+   "hit": 2236,
+   "miss": 60
+  },
+  "uppercut": {
+   "hit": 1141,
+   "block": 264,
+   "miss": 435,
+   "dodge": 49
+  },
+  "knee": {
+   "block": 214,
+   "hit": 858,
+   "miss": 50
+  },
+  "lowKick": {
+   "miss": 52,
+   "hit": 882,
+   "block": 192
+  }
+ },
+ "actionShare": {
+  "guard": 0.134,
+  "circle": 0.24,
+  "slip": 0.085,
+  "advance": 0.106,
+  "roll": 0.08,
+  "retreat": 0.097,
+  "cross": 0.03,
+  "leadHook": 0.018,
+  "stagger": 0.016,
+  "teep": 0.023,
+  "jab": 0.015,
+  "bodyKick": 0.029,
+  "bodyHook": 0.014,
+  "headKick": 0.029,
+  "rearHook": 0.017,
+  "uppercut": 0.012,
+  "down": 0.014,
+  "neutral": 0.015,
+  "rise": 0.002,
+  "lowKick": 0.008,
+  "clinch": 0.01,
+  "knee": 0.006
+ },
+ "msPerRound": 34.4,
+ "kickShare": 0.366,
+ "byRound": [
+  {
+   "round": 1,
+   "rounds": 300,
+   "strikes": 44.1,
+   "kickShare": 0.374,
+   "knockdowns": 0.057,
+   "hits": 24
+  },
+  {
+   "round": 2,
+   "rounds": 300,
+   "strikes": 41,
+   "kickShare": 0.367,
+   "knockdowns": 0.18,
+   "hits": 22.3
+  },
+  {
+   "round": 3,
+   "rounds": 300,
+   "strikes": 39.5,
+   "kickShare": 0.358,
+   "knockdowns": 0.327,
+   "hits": 21.3
+  }
+ ],
+ "missingTechniques": [],
+ "band": {
+  "eitherSideWins40to60": true,
+  "strikes40to65": true,
+  "kickShare15to35": false,
+  "knockdowns15to35": true,
+  "everyBlowUsed": true
+ },
+ "pass": false
+}

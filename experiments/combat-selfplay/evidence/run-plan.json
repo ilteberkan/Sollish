@@ -1,0 +1,83 @@
+{
+  "startedAt": "2026-10-03T03:01:26.702Z",
+  "plan": {
+    "schemaVersion": 1,
+    "experiment": "combat-selfplay-es-1",
+    "purpose": "CPU-only reward-driven closed-loop learning; no imitation labels and no financial deployment",
+    "optimizer": "antithetic Gaussian evolution strategy with standardized paired returns, Adam",
+    "seed": 9173,
+    "initialPolicySeed": 171,
+    "generations": 24,
+    "directions": 12,
+    "sigma": 0.08,
+    "learningRate": 0.025,
+    "trainingEpisodesPerCandidate": 4,
+    "validationEvery": 4,
+    "maxRunSeconds": 540,
+    "trainingSeeds": "train/generation*100 + 0,1; each candidate plays both sides of each seed",
+    "validationSeeds": [
+      20000,
+      20001,
+      20002,
+      20003
+    ],
+    "finalTestSeeds": [
+      40000,
+      40001,
+      40002,
+      40003,
+      40004,
+      40005,
+      40006,
+      40007,
+      40008,
+      40009,
+      40010,
+      40011,
+      40012,
+      40013,
+      40014,
+      40015
+    ],
+    "trainingOpponents": "initial random readout plus frozen student checkpoints every four generations; generation cycles opponent pool; never final-test opponents",
+    "validationOpponents": [
+      "initial",
+      "jab-only"
+    ],
+    "finalOpponents": [
+      "initial",
+      "jab-only",
+      "kick-only",
+      "counter",
+      "alternating",
+      "turtle",
+      "evasive",
+      "frozen-v3"
+    ],
+    "variants": [
+      "connectome",
+      "scrambled",
+      "no-recurrence"
+    ],
+    "selection": "highest fixed-validation mean reward; final test never used for model/epoch choice",
+    "researchGate": {
+      "winRateImprovementOverInitial": 0.05,
+      "meanDamageMarginImprovement": 25,
+      "meanActionEntropyMinimum": 0.45,
+      "maxNoStrikeMs": 6000,
+      "ringViolations": 0
+    },
+    "deploymentGate": "CLOSED: even a research pass is not physical realism, robust opponent performance, payment verification, whole-brain or consciousness evidence"
+  },
+  "planSha256": "2022d5026e4f1d1b5ed741eac21ad1b43fae6941af102b70272c68dde8ac6f65",
+  "sources": {
+    "environment.mjs": "f1ec19b2703b020534f268837a0fd2e19ad2e3af28f2de1f7349e27038fa2f76",
+    "policy.mjs": "70de3a7db071702281cdfb662565b20bb7964a43f91fbd307f18a8fadd5a8c29",
+    "metrics.mjs": "1b4e7a476765490d78d3be2d187ebe407a04a5c9c7ea5c7bb47faeb9d007e769",
+    "train.mjs": "37f7e7ddff11a2106f17ee6c891d997974889bd3a715223df8831a3a6d65b208",
+    "plan.json": "2022d5026e4f1d1b5ed741eac21ad1b43fae6941af102b70272c68dde8ac6f65"
+  },
+  "engineSha256": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+  "adapterSha256": "7e898ef4509d4383154e76801b1a603b2a55bf1e9fc2042b40570a78d8a985d6",
+  "graphSha256": "284dca2f166169c47d50a489d96bb011ceab3ae01a73922c2dd4c44da041e37d"
+}

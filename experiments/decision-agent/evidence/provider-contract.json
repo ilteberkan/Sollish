@@ -1,0 +1,39 @@
+{
+  "source": "https://api.typesafe.ai/openapi.json",
+  "observedAt": "2026-10-01T22:13:35.834514+00:00",
+  "sha256": "a191f8a7df6bd6fedced8120dd0fd106f88575d1d1c8360d08900a6c7c0360d5",
+  "apiVersion": "0.2.0",
+  "method": "POST",
+  "origin": "https://api.typesafe.ai",
+  "path": "/v1/systemone",
+  "requestRequired": [
+    "model",
+    "questions",
+    "state"
+  ],
+  "responseRequired": [
+    "model",
+    "answers",
+    "usage"
+  ],
+  "choiceQuestionRequired": [
+    "criteria",
+    "type"
+  ],
+  "choiceAnswerRequired": [
+    "choice",
+    "confidence",
+    "probabilities",
+    "type"
+  ],
+  "usageRequired": [
+    "input_tokens",
+    "output_tokens"
+  ],
+  "security": [
+    {
+      "HTTPBearer": []
+    }
+  ],
+  "note": "Public documentation GET only; no bearer token, authenticated model listing, inference, account or billing request was made."
+}

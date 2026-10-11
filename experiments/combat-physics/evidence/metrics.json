@@ -1,0 +1,36 @@
+{
+  "observedAt": "2026-10-03T03:17:22Z",
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "engine": "MuJoCo 3.14.0",
+  "sourceSha256": "24efe49cc97292cbce871bec7ed3a2413118da63d435b9ad46a57e7eb81eafbb",
+  "metrics": {
+    "steps": 4800,
+    "physicsDt": 0.0016666666666666668,
+    "runtimeSeconds": 1.592603832948953,
+    "simulatedSeconds": 8,
+    "meanJointPositionErrorMeters": 0.09579761583585633,
+    "p95JointPositionErrorMeters": 0.1651534677309795,
+    "maxContactPenetrationMeters": 0.005105205397200593,
+    "groundAndBagContactsOver1N": 2484,
+    "bagContactsOver1N": 53,
+    "p95LowFootHorizontalSpeedMps": 0.7116154476537999,
+    "p95SupportedFootHorizontalSpeedMps": 0.2754013115532325,
+    "selfContactSamplesOver1N": 841,
+    "maxNonRootGeneralizedTorqueNm": 69.33189354445341,
+    "finite": true,
+    "stateSha256": "d43d19b5967b458efb6f6afc4468802ff9b8a2efcf54bdccc0f71fcb11441da8",
+    "qualityGates": {
+      "trackingP95Under5cm": false,
+      "penetrationUnder5mm": false,
+      "supportedFootSpeedP95Under10cmps": false
+    },
+    "qualityReady": false
+  },
+  "limitations": [
+    "Assisted tracking: pelvis has a bounded six-DOF support wrench; not an independently balanced controller.",
+    "Knees/elbows are single-axis 0..155 degree hinges calibrated to capture rest axes; other ball swings 175 degrees. Engineering bounds, not validated biomechanics.",
+    "Nonadjacent self collision, floor and passive bag collisions active; direct physical neighbours and overlapping axial proxy group excluded.",
+    "One CMU boxing capture; noisy fingers/toes preserved as non-colliding branches.",
+    "No opponent, scoring, learned policy, wager, payout or production authority."
+  ]
+}

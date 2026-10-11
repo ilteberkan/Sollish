@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "experiment": "combat-selfplay-es-1",
+  "publishedAt": "2026-10-03T03:03:11.873Z",
+  "modelSha256": "ff0f938d6e7b3061281039cc043454a9be9f35552d9c535c6e11d7ec0f1dfec8",
+  "sourceSha256": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+  "promotionPassed": false,
+  "training": {
+    "episodes": 2304,
+    "generations": 24,
+    "method": "Öğretmen etiketi olmadan, geçmiş politikalarla self-play ve ödül temelli evolution strategy; 1.112 çıkış parametresi",
+    "seconds": 43.023136708
+  },
+  "evaluation": {
+    "games": 256,
+    "beforeScore": 0.47265625,
+    "afterScore": 0.9921875,
+    "baseline": "Aynı seed ve taraflarda başlangıç politikası; 8 rakip tipi",
+    "scope": "16 görülmemiş seed × 2 taraf × 8 rakip; kazanma=1, beraberlik=0,5. Son test sonuçlarına göre politika seçilmedi."
+  },
+  "limitations": [
+    "Araştırma kalite kapısı geçmedi: eylem çeşitliliği hedefin altında.",
+    "Cross ağırlıklı dar bir strateji; daha gerçekçi dövüş, insan becerisi veya biyolojik düşünme kanıtı değil.",
+    "Mevcut v3 kuralları yaklaşma, düşük enerjide gard ve saldırısız kalma süresini zorlar; bunlar öğrenilmedi.",
+    "128 gerçek MaleCNS düğümü; bütün beyin değil. Anatomik kenarlar ve varsayımsal dinamikler sabit; yalnız çıkış ağırlıkları öğrenildi.",
+    "Bu kayıtlar yerel deneydir. Canlı maç, bahis, para veya finansal protokol yetkisi yoktur."
+  ],
+  "cases": [
+    {
+      "id": "40000",
+      "label": "Kontra rakibi",
+      "opponent": "counter",
+      "seed": "f1fd247635d4c5d9aaec3dcb5869901a3401514516d14567f226ca5f38add559",
+      "runs": [
+        {
+          "id": "initial",
+          "label": "Eğitim öncesi",
+          "path": "/research/ringside/selfplay-40000-initial.json",
+          "sha256": "79f9c8edb7c0e53ca51ca27be13c365c096281b6aef843bff654ffd245ec0e1f",
+          "bytes": 1059552,
+          "trained": false
+        },
+        {
+          "id": "learned",
+          "label": "Öğrenilmiş aday",
+          "path": "/research/ringside/selfplay-40000-learned.json",
+          "sha256": "0e229dd292574b970c11a7751ecee6aaebca22d91afac60ff894535828d08069",
+          "bytes": 1066902,
+          "trained": true
+        }
+      ]
+    },
+    {
+      "id": "40001",
+      "label": "Tekme ağırlıklı rakip",
+      "opponent": "kick-only",
+      "seed": "20131019ac755cca54e9fe282f20f2da1486004e328606cf7a6c87ced865b914",
+      "runs": [
+        {
+          "id": "initial",
+          "label": "Eğitim öncesi",
+          "path": "/research/ringside/selfplay-40001-initial.json",
+          "sha256": "7e8101419b8521893f00fb0a6c74606f4d1b961ea05459c4856ab3d8762abfd8",
+          "bytes": 1064319,
+          "trained": false
+        },
+        {
+          "id": "learned",
+          "label": "Öğrenilmiş aday",
+          "path": "/research/ringside/selfplay-40001-learned.json",
+          "sha256": "1d31a928a3528b79007dfc2e4c7f800e8482b82a1ee69d90e1991ca0d59ee9b8",
+          "bytes": 1058959,
+          "trained": true
+        }
+      ]
+    },
+    {
+      "id": "40002",
+      "label": "Dondurulmuş v3 rakibi",
+      "opponent": "frozen-v3",
+      "seed": "29f997fac9feebd8054a03eee96f0fb9585b8ed01d74198a009f313d01eb75b2",
+      "runs": [
+        {
+          "id": "initial",
+          "label": "Eğitim öncesi",
+          "path": "/research/ringside/selfplay-40002-initial.json",
+          "sha256": "b829cd40eafad0b42c9fec5c04e31b2fbf23a218ea49a932bc375af056002387",
+          "bytes": 1057688,
+          "trained": false
+        },
+        {
+          "id": "learned",
+          "label": "Öğrenilmiş aday",
+          "path": "/research/ringside/selfplay-40002-learned.json",
+          "sha256": "1eabd643bda1184ccc2d25cd77b5b0f2e4078a3c50aa3da1da8e2e687200e323",
+          "bytes": 1063771,
+          "trained": true
+        }
+      ]
+    }
+  ]
+}

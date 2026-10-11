@@ -1,0 +1,119 @@
+{
+  "checkedAt": "2026-10-01T19:33:32.029Z",
+  "environment": "devnet",
+  "supabase": {
+    "projectRef": "lutwdmwkogtzajxvbuiy",
+    "name": "Sollish Devnet",
+    "region": "eu-central-1",
+    "organization": "Solgamb",
+    "status": "ACTIVE_HEALTHY",
+    "quotedMonthlyUsd": 0,
+    "url": "https://lutwdmwkogtzajxvbuiy.supabase.co",
+    "migration": {
+      "version": "20261001183459",
+      "name": "backend",
+      "sha256": "7fe5600e0cd009465baf74abd32fc809130c2e8d5981f86cd18e7b980f1ab678"
+    },
+    "privateTables": 8,
+    "allPrivateTablesRls": true,
+    "clientDirectTableGrants": false,
+    "publicReadFunctions": [
+      "chat_snapshot",
+      "platform_status"
+    ],
+    "localSqlAssertions": 41,
+    "publicHttpChecks": 8,
+    "jwksAlgorithm": "ES256",
+    "initialSiwsPreflight": {
+      "attempts": 1,
+      "status": 422,
+      "code": "web3_provider_disabled",
+      "sessionCreated": false,
+      "uriAllowlistVerified": false
+    },
+    "solanaSiws": {
+      "enabled": true,
+      "siteUrl": "https://sollish-web-devnet.sollish-web.workers.dev",
+      "allowedRedirect": "https://sollish-web-devnet.sollish-web.workers.dev/**",
+      "httpStatus": 200,
+      "jwtCryptographicallyVerified": true,
+      "jwtAlgorithm": "ES256",
+      "identitySource": "auth.identities.identity_data.custom_claims",
+      "checksPassed": 8,
+      "sessionRevoked": true,
+      "activeAuthSessionsAfterTest": 0,
+      "uriPositiveTestPassed": true,
+      "uriNegativeTestPerformed": false
+    },
+    "authClaimsMigration": {
+      "version": "20261001190258",
+      "name": "siws_nested_claims",
+      "sha256": "bd0d13c23aa694999c38f75a626e842df43f0e2f7c890a26dbf1e4ef86b503fd",
+      "ownerAndAclUnchanged": true
+    },
+    "advisorFindings": {
+      "rls_enabled_no_policy": 8,
+      "anon_security_definer_function_executable": 2,
+      "authenticated_security_definer_function_executable": 2,
+      "auth_leaked_password_protection": 1
+    }
+  },
+  "cloudflare": {
+    "accountId": "a0a597b596eadd6579942c4905197d17",
+    "web": {
+      "name": "sollish-web-devnet",
+      "version": "6212d442-2122-4d24-9f21-af43b23234ee",
+      "origin": "https://sollish-web-devnet.sollish-web.workers.dev",
+      "unitTestsPassed": 18,
+      "hostedBrowserTestsPassed": 14,
+      "publicConfigEmbedded": true
+    },
+    "realtime": {
+      "name": "sollish-realtime",
+      "origin": "https://sollish-realtime.sollish-web.workers.dev",
+      "configuredBindings": [
+        "SUPABASE_URL",
+        "SUPABASE_ANON_KEY",
+        "PUBLISH_SIGNING_KEY",
+        "SUPABASE_SERVICE_ROLE_KEY"
+      ],
+      "missingBindings": [],
+      "fanoutBuckets": 8,
+      "partialConfigurationChecksPassed": 7,
+      "publishedTestEvents": 0,
+      "historyHttpStatus": 200,
+      "authenticatedWebSocketVerified": true
+    }
+  },
+  "vps": {
+    "service": "sollish-worker",
+    "active": true,
+    "configured": false,
+    "keeperEnabled": false,
+    "envMode": "0600",
+    "publisherConnectionConfigured": true,
+    "databaseLoginConfigured": true,
+    "databaseRole": "sollish_worker",
+    "databaseConnectionLimit": 5,
+    "databaseStrictTlsVerified": true,
+    "managedDatabaseChecksPassed": 12,
+    "managedDatabaseEvidence": "managed-db-vps-20261001.json",
+    "caPath": "/etc/sollish-ca/supabase-root-2021.crt",
+    "indexerEnabled": false,
+    "operationalTestsPassed": 18
+  },
+  "pending": [
+    "Verified House/Games deployment, code hash and house address; devnet test funding shortfall",
+    "Finalized indexer and explicit minimum wager setting",
+    "Real eligible/ineligible wager-based chat and outbox fanout proof",
+    "Manual Crash privacy/order/payment acceptance",
+    "Live Coinflip oracle and token/staking/airdrop acceptance"
+  ],
+  "limits": [
+    "Not a live wagering or production readiness approval",
+    "No mainnet or paid plan",
+    "No funds used by disposable SIWS test",
+    "No secret, API key value, JWT or private key included",
+    "Chat write is CHAT_UNAVAILABLE and health remains 503 without verified index/settings; no fake wager facts were inserted"
+  ]
+}

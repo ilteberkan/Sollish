@@ -1,0 +1,50 @@
+
+ ⛅️ wrangler 4.145.0 (update available 4.147.0)
+───────────────────────────────────────────────
+OpenNext project detected, calling `opennextjs-cloudflare deploy`
+
+┌──────────────────────────────┐
+│ OpenNext — Cloudflare deploy │
+└──────────────────────────────┘
+
+Monorepo detected at /Users/macmini/Desktop/Sollish
+Incremental cache does not need populating
+Tag cache does not need populating
+
+ ⛅️ wrangler 4.145.0 (update available 4.147.0)
+───────────────────────────────────────────────
+🌀 Building list of assets...
+✨ Read 99 files from the assets directory /Users/macmini/Desktop/Sollish/apps/web/.open-next/assets
+🌀 Starting asset upload...
+🌀 Found 3 new or modified static assets to upload. Proceeding with upload...
++ /BUILD_ID
++ /_next/static/chunks/06yqj21bzwoa4.js
++ /_next/static/chunks/33xm8uy2qh9nr.js
+Uploaded 1 of 3 assets
+Uploaded 2 of 3 assets
+Uploaded 3 of 3 assets
+✨ Success! Uploaded 3 files (85 already uploaded) (1.57 sec)
+
+Total Upload: 6458.63 KiB / gzip: 1368.40 KiB
+Worker Startup Time: 17 ms
+Your Worker has access to the following bindings:
+Binding                                             Resource                  
+env.WORKER_SELF_REFERENCE (sollish-web-devnet)      Worker                    
+env.ASSETS                                          Assets                    
+env.NEXTJS_ENV ("production")                       Environment Variable      
+
+Uploaded sollish-web-devnet (13.56 sec)
+Deployed sollish-web-devnet triggers (1.92 sec)
+  https://sollish-web-devnet.sollish-web.workers.dev
+Current Version ID: 93645ad3-1955-4f7d-b947-c495d6b604f6
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mComparison with -0 using the "===" operator will also match 0[0m [equals-negative-zero]
+
+    .open-next/server-functions/default/apps/web/handler.mjs:771:89385:
+[37m      771 │ ...ned){if(h<0)h+=e2;else if(h===[32m-0[37m)return 0}return h}}b.exports=...
+          ╵                                  [32m~~[0m
+
+  Floating-point equality is defined such that 0 and -0 are equal, so "x === -0" returns true for both 0 and -0. You need to use "Object.is(x, -0)" instead to test for -0.
+
+
+(node:50337) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)

@@ -1,0 +1,23 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sollish-realtime",
+  "account_id": "a0a597b596eadd6579942c4905197d17",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "dev": { "port": 8787 },
+  "vars": { "ALLOWED_ORIGINS": "https://sollish-web-devnet.sollish-web.workers.dev", "FANOUT_BUCKETS": "8", "LIVE_ARENA_ENABLED": "true" },
+  "durable_objects": { "bindings": [
+    { "name": "ROOMS", "class_name": "RoomCoordinator" },
+    { "name": "BUCKETS", "class_name": "FanoutBucket" },
+    { "name": "ADMISSION", "class_name": "AdmissionGate" },
+    { "name": "LIVE_ARENA", "class_name": "LiveArena" },
+    { "name": "RINGSIDE_ARENA", "class_name": "RingsideArena" },
+    { "name": "CONTACT_ARENA", "class_name": "ContactArena" },
+    { "name": "CONTACT_ARENA_V4", "class_name": "ContactArenaV4" },
+    { "name": "CONTACT_ARENA_V5", "class_name": "ContactArenaV5" }
+  ] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RoomCoordinator", "FanoutBucket", "AdmissionGate"] }, { "tag": "v2", "new_sqlite_classes": ["LiveArena"] }, { "tag": "v3", "new_sqlite_classes": ["RingsideArena"] }, { "tag": "v4", "new_sqlite_classes": ["ContactArena"] }, { "tag": "v5", "new_sqlite_classes": ["ContactArenaV4"] }, { "tag": "v6", "new_sqlite_classes": ["ContactArenaV5"] }],
+  "observability": { "enabled": false }
+}

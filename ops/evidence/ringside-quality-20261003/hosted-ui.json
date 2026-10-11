@@ -1,0 +1,79 @@
+{
+  "recordedAt": "2026-10-03T12:05:59.128366+00:00",
+  "scope": "Manual Codex IAB DOM and WebGL observations on deployed Lab; desktop browser viewport, not physical device or native OS simulator.",
+  "url": "https://sollish-web-devnet.sollish-web.workers.dev/lab/ringside",
+  "webVersion": "1ab9a7f7-797b-49d5-8612-309b5ff69aee",
+  "observations": [
+    {
+      "area": "learning",
+      "observed": [
+        "New FightKit asset rendered",
+        "Fighter health, energy, action phase and hit HUD visible",
+        "Replay reached 42.15s then 45s; Home reset to 0s",
+        "Reentry from both physics tabs rendered again",
+        "Published quality table shows technique/override PASS, clean hits FAIL and fixed-kick imbalance"
+      ]
+    },
+    {
+      "area": "learned-motor",
+      "observed": [
+        "Pinned walk record loaded",
+        "Play advanced time to0.22s with position change",
+        "Spinkick selection loaded its distinct metrics",
+        "End keyboard seek reached10.0s",
+        "All three failed gates displayed without substitution"
+      ]
+    },
+    {
+      "area": "cmu-physics",
+      "observed": [
+        "Pinned unchanged CMU record loaded in webgl-physics canvas",
+        "16.5cm,5.1mm,27.5cm/s and failed gates displayed"
+      ]
+    },
+    {
+      "area": "responsive",
+      "observedViewport": {
+        "width": 390,
+        "height": 844,
+        "clientWidth": 375,
+        "scrollWidth": 375
+      },
+      "horizontalOverflow": false,
+      "motorCanvas": {
+        "width": 353,
+        "height": 368
+      }
+    },
+    {
+      "area": "desktop-final",
+      "observedViewport": {
+        "width": 1280,
+        "height": 720,
+        "clientWidth": 1265,
+        "scrollWidth": 1265
+      },
+      "horizontalOverflow": false,
+      "fighterCanvas": {
+        "width": 679,
+        "height": 440
+      }
+    }
+  ],
+  "consoleErrorsObserved": [],
+  "consoleScope": "Bounded error log read after learned motor and CMU interaction; no claim of complete network telemetry.",
+  "viewportNote": "390px override worked on the test tab. Later resize/reset did not resize that existing tab; it was closed after reset. A new normal tab verified1280x720. No hosted1440 claim.",
+  "screenshots": [
+    "hosted-learning-desktop.jpg",
+    "hosted-learning-390.jpg",
+    "hosted-motor-390.jpg"
+  ],
+  "phoneQa": "User explicitly deferred actual-phone testing until later. No physical iOS/Android device tested.",
+  "notClaimed": [
+    "new on-chain settlement",
+    "GPU performance certification",
+    "thousands of hosted users",
+    "complete functional brain",
+    "AA final animation quality"
+  ]
+}

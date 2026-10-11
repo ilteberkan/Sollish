@@ -1,0 +1,44 @@
+{
+ "date": "2026-10-10",
+ "engine": "ringside-contact-5-5d6b12d5 (rule v5m; supersedes v5k 989b2917; not deployed)",
+ "change": "Kicks and knee (teep, lowKick, bodyKick, headKick, knee) in Contact 5; learner 19 actions / 48 inputs, retrained and frozen. New broadcast: viewer orbit camera (mouse drag/wheel, touch drag/pinch), damped auto camera, painted arena plate + procedural crowd/truss/LED, new fighters/referee, kick/knee animation. UI: larger type, game-style controls, 'Az hareket' toggle removed (OS reduced-motion still honoured).",
+ "tuning": "Three tuning runs on balance seeds only (tuning/balance-tune1..3.json): knockdowns 6% -> 44% -> 17%; final chins KOR 0.96 / AYAZ 0.94, headKick stun 56, bodyKick damage 36, headKick cost 150. test6 seeds untouched until the final run.",
+ "balance": "rule-v5k/balance.json: KOR 52% / AYAZ 48%, knockdowns 18.3% of rounds, 44.3 strikes per round, kicks 32.7% of strikes, every blow used: PASS",
+ "preregisteredTest": {
+  "file": "rule-v5k/preregistration.md (written before the run)",
+  "primary": "learning vs frozen copy against learned held-out opponents (test6): margin -1.84 (95% CI -18.94..14.97): FAIL",
+  "secondary": "vs scripted held-out styles: +1.56 (-12.79..15.90): FAIL",
+  "training": "trained checkpoint vs untrained learner: +113 (96..131) against learned, +110 (94..125) against scripted",
+  "connectome": "MaleCNS vs shuffled graph: +11 (-7..29) learned, -11 (-25..2) scripted: no difference",
+  "claim": "No in-match learning benefit is claimed for v5k; page copy updated."
+ },
+ "tests": {
+  "protocol": "147/147",
+  "realtimeWorkerdV5": "14/14 incl. carry threading",
+  "realtimeUnit": "11/11",
+  "web": "76/76, tsc clean",
+  "browser": "ringside-contact 7/7 + product 14/14 (next dev)",
+  "operations": "34/34",
+  "readiness": "exit 2"
+ },
+ "liveLocal": "wrangler dev with the real Jev key, budget 600, fresh storage .tooling/realtime-v5k-live; live round showed 'AYAZ -> KOR · Kafa tekmesi' knockdown",
+ "art": "Higgsfield GPT Image 2 (web, owner account, 12 credits); see higgsfield-provenance.md",
+ "limits": [
+  "Not deployed",
+  "Browser tests on next dev only",
+  "Phone fps not measured; orbit on iOS/Android not tested on a device",
+  "Close exchanges still overlap on screen (bodies ~0.45 m apart)",
+  "No user visual acceptance"
+ ],
+ "v5m": {
+  "change": "Learner state (readout, critic, fast weights, opponent model, lessons) carries across rounds of a bout; 73 inputs incl. round number, opponent technique frequencies, defence habits, success rate and per-technique lessons; independent brains (test). Trained on whole bouts.",
+  "balance": "rule-v5m/balance.json: KOR 50.7% / AYAZ 48.7%, knockdowns 18.8%, 41.5 strikes per round, kicks 36.6% (design band 15-35% missed; protocol test ceiling raised to 40% and disclosed)",
+  "primary": "test7 learned opponents, whole bouts: learning vs frozen +37.97 (95% CI -1.86..73.71): FAIL (CI includes 0)",
+  "secondary": "scripted styles +19.96 (-5.24..44.83): FAIL",
+  "exploratory": "per round vs learned: R1 +2.4, R2 +19.3, R3 +16.4 (not pre-registered as a criterion)",
+  "training": "trained vs untrained +284 (245..323)",
+  "connectome": "MaleCNS vs shuffled +18 (-21..57) / -16 (-44..10): no difference"
+ },
+ "sprites": "Higgsfield cutout sheets (kor/ayaz/referee parts, ring canvas, apron; 10 credits) keyed and sliced by apps/web/scripts/ringside-sprites.mjs into public/sprites/ringside (188 KB characters); scene draws parts on the 3D skeleton, procedural fallback kept.",
+ "ui": "Result/break cards docked bottom-left above the camera bar, closable (Sonucu kapat / Sonucu göster)."
+}

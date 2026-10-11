@@ -1,0 +1,27 @@
+{
+  "author": "Rob Tuytel / Poly Haven",
+  "asset": "leather_white",
+  "sourceUrl": "https://polyhaven.com/a/leather_white",
+  "license": "CC0-1.0",
+  "licenseUrl": "https://polyhaven.com/license",
+  "files": [
+    {
+      "file": "leather_white_diff_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leather_white/leather_white_diff_1k.jpg",
+      "bytes": 728363,
+      "sha256": "4d916dfe89c9d2b88bf52e0c70c6a9798a5c29c8c2fcb6ba1ab7b7ded9ef3ed5"
+    },
+    {
+      "file": "leather_white_nor_gl_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leather_white/leather_white_nor_gl_1k.jpg",
+      "bytes": 670610,
+      "sha256": "51bdac4b76da70dc54c288cffea4ecaf837ebb6ed9264664bf5c9a1fc79aa074"
+    },
+    {
+      "file": "leather_white_arm_1k.jpg",
+      "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leather_white/leather_white_arm_1k.jpg",
+      "bytes": 899257,
+      "sha256": "e5fdcd8010a5a881229ec06fbc116974bdedd36464d20c6bef20ad4d42259542"
+    }
+  ]
+}

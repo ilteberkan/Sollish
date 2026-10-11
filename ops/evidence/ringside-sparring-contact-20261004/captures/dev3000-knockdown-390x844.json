@@ -1,0 +1,95 @@
+{
+ "at": "2026-10-05T03:33:01.871Z",
+ "base": "http://127.0.0.1:3000",
+ "seed": 5,
+ "corners": "pressure,balanced",
+ "viewport": [
+  390,
+  844
+ ],
+ "camera": "Yayın",
+ "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+ "rows": [
+  {
+   "target": 190,
+   "tickAtShot": 190,
+   "file": "seed5-390x844-t00190.jpg",
+   "probe": {
+    "frames": 193,
+    "lastPenetration": 0,
+    "lastRaw": 0
+   }
+  },
+  {
+   "target": 215,
+   "tickAtShot": 215,
+   "file": "seed5-390x844-t00215.jpg",
+   "probe": {
+    "frames": 217,
+    "lastPenetration": 0,
+    "lastRaw": 0
+   }
+  },
+  {
+   "target": 260,
+   "tickAtShot": 260,
+   "file": "seed5-390x844-t00260.jpg",
+   "probe": {
+    "frames": 262,
+    "lastPenetration": 0,
+    "lastRaw": 0
+   }
+  }
+ ],
+ "contact": {
+  "after": {
+   "frames": 263,
+   "p50": 0.0008,
+   "p95": 0.1125,
+   "max": 0.1634,
+   "over1cm": 55
+  },
+  "raw": {
+   "frames": 263,
+   "p50": 0.1197,
+   "p95": 0.269,
+   "max": 0.3373,
+   "over1cm": 177
+  },
+  "rootOffsetMax": 0.1054,
+  "worstContact": {
+   "depth": 0.1634,
+   "pair": "glove_l/glove_l",
+   "tick": 79,
+   "shot": "broadcast"
+  },
+  "worstPairs": [
+   [
+    "glove_l/glove_l",
+    18
+   ],
+   [
+    "glove_r/glove_l",
+    15
+   ],
+   [
+    "glove_l/glove_r",
+    7
+   ],
+   [
+    "glove_r/glove_r",
+    5
+   ],
+   [
+    "upperarm_l/glove_l",
+    4
+   ],
+   [
+    "upperarm_l/upperarm_r",
+    3
+   ]
+  ]
+ },
+ "errors": [],
+ "scope": "local dev runtime (next dev, Turbopack) headless Chromium with Metal WebGL; not a production build or hosted"
+}

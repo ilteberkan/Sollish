@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "scope": "NON-PRODUCTION LOCAL SBF BUILD ONLY; NOT A DEPLOYED-PROGRAM OR VRF LIVENESS VERIFICATION",
+  "verifiedAtUtc": "2026-10-01T09:22:22.491248+00:00",
+  "upstreamRepository": "https://github.com/magicblock-labs/solana-vrf.git",
+  "programId": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+  "license": "Business Source License 1.1; non-production experiment only",
+  "buildSpec": {
+    "upstreamCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+    "sourceTree": "cdde4e8cd53a63eadd02e222f3afb2d9a9aa41fc",
+    "upstreamCargoLockSha256": "16513fabe8ac2833e061569bc032262f2dc5da1fe5a090ea9c09ff9ecb21571f",
+    "sbfArch": "v2",
+    "cargoLocked": true,
+    "defaultFeatures": [],
+    "enabledFeatures": [],
+    "buildScriptSha256": "3ecee1ab8cf0f8e51c37672661e8a94ede89b459d469055245528093c8619c93",
+    "builderWrapperSha256": "b676a8fe6181ae0ed40b053cd88c76193d5b5854db8b5d714ae360f408f7a78b",
+    "builderBinarySha256": "c18619aa8705131285c3b8ef4dda0c9b6f50ee55efb80317a92fe31c22e16bd8",
+    "builderVersion": "cargo-build-sbf 4.4.0\nplatform-tools v1.57\nrustc 1.95.0",
+    "rustcBinarySha256": "a6bab6b6060c911f3f3e601532e6064500a7f7d53645bc62692c633a0541797a",
+    "rustcVersion": "rustc 1.95.0-dev (ae660768a 2026-08-17)"
+  },
+  "trackedSourceUnchanged": true,
+  "artifactPath": ".tooling/vrf-provider-build/artifacts/solana_vrf_program.so",
+  "artifactBytes": 258392,
+  "artifactSha256": "d4033cbd7b2e0f0b852a317a6a24f64a9e1fd30c4b773119efc16703a06220d7",
+  "buildLogPath": ".tooling/vrf-provider-build/build.log",
+  "generatedKeypair": "Ignored tool output; not the provider identity; never deploy it"
+}

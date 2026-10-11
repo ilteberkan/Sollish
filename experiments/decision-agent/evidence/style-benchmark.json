@@ -1,0 +1,147 @@
+{
+ "observedAt": "2026-10-05T03:35:08.377Z",
+ "scope": "real authenticated TypeSafe calls from this Mac (Node 24 production server client, sequential); not hosted, not a load test",
+ "model": "jev-1.13.0",
+ "endpoint": "https://api.typesafe.ai/v1/systemone",
+ "realCallsTotal": 68,
+ "directCalls": 32,
+ "rejectedBeforeProvider": 2,
+ "routeCallBatches": [
+  {
+   "at": "2026-10-04T22:36:33.497Z",
+   "via": "browser-next-route",
+   "calls": 18,
+   "seed": 20261041,
+   "mode": "jev",
+   "codes": {
+    "OK": 18
+   }
+  },
+  {
+   "at": "2026-10-05T03:26:39.893Z",
+   "via": "browser-next-route",
+   "calls": 18,
+   "seed": 20261043,
+   "mode": "jev",
+   "codes": {
+    "OK": 18
+   }
+  }
+ ],
+ "codes": {
+  "OK": 32
+ },
+ "byPoint": {
+  "start": 2,
+  "midround": 16,
+  "roundend": 14
+ },
+ "byPath": {
+  "node-production-client": 30,
+  "next-route-node": 2
+ },
+ "paths": {
+  "node-production-client": {
+   "ok": 30,
+   "latencyMs": {
+    "n": 30,
+    "min": 265,
+    "p50": 281,
+    "p90": 337,
+    "max": 481,
+    "mean": 298.8
+   },
+   "inputTokens": {
+    "n": 30,
+    "min": 848,
+    "p50": 850,
+    "p90": 852,
+    "max": 852,
+    "mean": 850.4
+   },
+   "outputTokens": {
+    "n": 30,
+    "min": 65,
+    "p50": 67,
+    "p90": 67,
+    "max": 67,
+    "mean": 66
+   }
+  },
+  "next-route-node": {
+   "ok": 2,
+   "latencyMs": {
+    "n": 2,
+    "min": 302,
+    "p50": 497,
+    "p90": 497,
+    "max": 497,
+    "mean": 399.5
+   },
+   "inputTokens": null,
+   "outputTokens": null
+  }
+ },
+ "styles": {
+  "pressure": 11,
+  "cautious": 14,
+  "counter": 6,
+  "outboxer": 1
+ },
+ "confidence": {
+  "n": 32,
+  "min": 0.2,
+  "p50": 0.55,
+  "p90": 0.85,
+  "max": 0.9,
+  "mean": 0.5
+ },
+ "agreementWithFallbackRule": {
+  "n": 30,
+  "share": 0.5
+ },
+ "observations": "decision points of real Combat Club bouts (seeds 6101-6106, both corners neuro-2 Jev strategist on the fallback path; neuro-2 model as recorded in each run) via createStyleSession; integer-only public observation, no seed/tick/ids",
+ "limits": [
+  "Latency includes TLS and the 16 KiB bounded body read; elapsed is wall clock on one Mac over one network.",
+  "Decision quality is not evaluated; agreement with the authored fallback rule is descriptive only.",
+  "Small sample; no concurrency; provider-side variance unmeasured."
+ ],
+ "files": [
+  {
+   "file": "style-benchmark.ts",
+   "sha256": "64ecb94dfd873bb3014314d0a9360f921e828f88a7d7f1e572f61ba9339c75eb"
+  },
+  {
+   "file": "style-route-check.mjs",
+   "sha256": "0ff7d17d42e1e5eca320a36198cfbeaa6b75dd459a563c3aaef0db3a03b98230"
+  },
+  {
+   "file": "build-style-cache.ts",
+   "sha256": "475c8adc29dbfff5695f3441c94f115805814baff622becc1e718b337a5126e6"
+  },
+  {
+   "file": "summarize-style-evidence.mjs",
+   "sha256": "87e2bf133dcde877adf18583736b6cc841a5fd009cc2ef3d4410c323f5b6da95"
+  },
+  {
+   "file": "evidence/style-real-calls.jsonl",
+   "sha256": "7a31a3cc79cbcaff49b6cd0bcb6b8e601586c6a0aed055978e3bdda8a2106d15"
+  },
+  {
+   "file": "evidence/style-bout-20261041.json",
+   "sha256": "10a6aa37d6d8749201b2ed3f04ec26d215cdf9af299a62713c70e59779760b16"
+  },
+  {
+   "file": "evidence/style-bout-20261043.json",
+   "sha256": "c9e31f8a61f15cc83d7128b282f85871416a57352c1023c06ca1fc0cacb27aee"
+  },
+  {
+   "file": "../../apps/web/lib/server/typesafe-style.ts",
+   "sha256": "5b5f1a6d03a5c4a83b001481307a51dd8e494c6a683a0818051f0927d0af58fe"
+  },
+  {
+   "file": "../../apps/web/app/api/ringside/style/route.ts",
+   "sha256": "c39db3c784e1635b0b1da24fbac62bad2dd993961abeacd3e614c6d217ecad3e"
+  }
+ ]
+}

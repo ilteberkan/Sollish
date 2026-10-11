@@ -1,0 +1,340 @@
+{
+  "schema": "sollish-motor-reuse-manifest-v2",
+  "atUtc": "2026-10-03T11:41:19.416815+00:00",
+  "status": "LEARNED_MOTOR_OBSERVED_QUALITY_NOT_READY",
+  "learnedPolicyLoaded": true,
+  "trainingPerformed": false,
+  "runtime": "PyBullet3.2.7 CPU; published DeepMimic mean actor evaluated in NumPy",
+  "policyOrigin": {
+    "description": "Bullet-distributed DeepMimic pretrained policy; not byte-identical to original XBPeng checkpoint",
+    "bulletCommit": "63c4d67e337017f9d8b298c900e9aabdb69296e7",
+    "path": "examples/pybullet/gym/pybullet_data/data/policies/humanoid3d/humanoid3d_spinkick.ckpt.data-00000-of-00001",
+    "localGitBlobSha1": "e499b1f261528e5ee4d35abcb2b7c882b4ce2083",
+    "officialBulletGitBlobSha1": "e499b1f261528e5ee4d35abcb2b7c882b4ce2083",
+    "originalDeepMimicInitialCommit": "3ca04d38285ec3556dc0423f466477e96d934787",
+    "originalInitialCheckpointGitBlobSha1": "58acc3dd9283fac3115c345b4e5bd7352da3bd6a"
+  },
+  "runtimeProvenance": "evidence/runtime-provenance.json",
+  "canonicalRuns": [
+    "spinkick-240hz-10iterations",
+    "walk-240hz-10iterations"
+  ],
+  "experimentalRuns": [
+    "spinkick-600hz-10iterations",
+    "walk-600hz-10iterations",
+    "spinkick-1200hz-50iterations",
+    "walk-1200hz-50iterations"
+  ],
+  "unitAndRuntimeTests": {
+    "passed": 13,
+    "pureDataTests": 11,
+    "realBulletGeometryTests": 2
+  },
+  "traceValidation": "PASS",
+  "qualityReady": false,
+  "allRecordedRunsQualityReady": false,
+  "cmuAssistedEvidenceChanged": false,
+  "frozenV3Changed": false,
+  "historicalManifest": "evidence/manifest-newton-historical.json",
+  "sourceIdentityScope": "Current scripts and installed dependency hashes; historical traces preserve their original bytes. Not TensorFlow bit-parity or original C++ runtime equivalence.",
+  "networkBudgetBytes": 500000000,
+  "additionalNetworkEstimateBytesUpper": 90000000,
+  "networkAccounting": "80.508MB PyBullet sdist, 0.629MB reader sdist retrieved twice, small dependencies/primary metadata; bounded estimate, not packet-level measurement. Prior Newton downloads separate.",
+  "isolatedWorkspaceFileBytes": 936691988,
+  "freeDiskBytes": 12439035904,
+  "minimumFreeDiskBytes": 10737418240,
+  "largestMeasuredRolloutPeakRssBytes": 89145344,
+  "buildPeakRssScope": "Compiler constrained to one process; no rigorous peak-RSS trace was collected for the complete build.",
+  "files": [
+    {
+      "path": "HISTORY.md",
+      "bytes": 8628,
+      "sha256": "79a7005561d58579b14b2558a73de3fb319ef58a4ae45cb1163d00cd46a7e724"
+    },
+    {
+      "path": "README.md",
+      "bytes": 11945,
+      "sha256": "d33deea200738f5af8d8326687d69dc29712996949705b7d2156a1896b35c39a"
+    },
+    {
+      "path": "cpu_probe.py",
+      "bytes": 5241,
+      "sha256": "d4629ad7aeab328c6ad586f32040c11f79bdad20e1a20ea4bc9185bac0bfc212"
+    },
+    {
+      "path": "evidence/asset-access.json",
+      "bytes": 891,
+      "sha256": "ec0b4b794232a2cad93c9fa295241b04dc34dc1e9fb7a8468e98b814460c8174"
+    },
+    {
+      "path": "evidence/checkpoint-origin-check.json",
+      "bytes": 786,
+      "sha256": "4dd62ffba56829a4a36e8de1679e78f79a5c4a8a8c91465f5d16fda532aacf26"
+    },
+    {
+      "path": "evidence/cpu-runtime-initial.json",
+      "bytes": 1065,
+      "sha256": "fc19c97643abd7b1d0914e388f3aa864d6a6372db0ebbaeb8790b0515e9acd69"
+    },
+    {
+      "path": "evidence/cpu-runtime.json",
+      "bytes": 1172,
+      "sha256": "04eec8f7523c83958f4895496b442c5e4a09ecad6cc713ef37e7fc284305a2c1"
+    },
+    {
+      "path": "evidence/deepmimic-download.json",
+      "bytes": 4367,
+      "sha256": "3654529129697a23f9a4452675d3692129f023a775744f0fc3a48d2f257aea74"
+    },
+    {
+      "path": "evidence/humanoid-geometry.json",
+      "bytes": 8801,
+      "sha256": "9d0abed98b14a26a1d583c88b497c6b06e003fc3fc76fb51b6363c343878b884"
+    },
+    {
+      "path": "evidence/manifest-newton-historical.json",
+      "bytes": 3095,
+      "sha256": "2cd54dc2928a0672046e8a2d38150f0efb335eb9f1126c3010cc139d309e2175"
+    },
+    {
+      "path": "evidence/package-provenance.json",
+      "bytes": 4253,
+      "sha256": "117469f2413fe2af5c0c781d15acdd0aa1f2cf341d060e89cda5e867071472f5"
+    },
+    {
+      "path": "evidence/passive-trace.json",
+      "bytes": 331705,
+      "sha256": "be735eceae8bf23b329c404bbba1536ff3c2b721f677deea01b397b00da94231"
+    },
+    {
+      "path": "evidence/public-credits.json",
+      "bytes": 5947,
+      "sha256": "b8ebbbb72016d6e59a56ebc884414e3c913008e6c5b7510110eab1698412f86d"
+    },
+    {
+      "path": "evidence/pybullet-artifacts.json",
+      "bytes": 1608,
+      "sha256": "91f384783ed7dd4ad4e2841d232d8d851ab1fe2f19be29238ee1351b18e7db3d"
+    },
+    {
+      "path": "evidence/render-traces.json",
+      "bytes": 1571,
+      "sha256": "2958d74679a7bd2890e5a30aba257e2150c494af4ed221c198494398aaa6150d"
+    },
+    {
+      "path": "evidence/runtime-provenance.json",
+      "bytes": 4916,
+      "sha256": "3c794d507dc99deb40cb6dcebca915afafe62e80e743bb19bcdbaca65256247a"
+    },
+    {
+      "path": "evidence/source-provenance.json",
+      "bytes": 1415,
+      "sha256": "386046970e0547c31b6aefede761bca197267ee80b3bfabe6e87be4d91e565f7"
+    },
+    {
+      "path": "evidence/spinkick-1200hz-50iterations-metrics.json",
+      "bytes": 1192,
+      "sha256": "4036363d498d0ff0c2ae54153fe85844c2e38ec5633efbab16e0ce902a92cfa4"
+    },
+    {
+      "path": "evidence/spinkick-1200hz-50iterations-render-trace.json",
+      "bytes": 3039564,
+      "sha256": "10238c1bce7ace601fa93932cd532f539d5312e5710319181d5cf93e43104c9c"
+    },
+    {
+      "path": "evidence/spinkick-1200hz-50iterations-trace.json",
+      "bytes": 3035683,
+      "sha256": "47783e3f00b7018364edf00b0bbfe610333453ff86b6359533f07daec8e7c6d6"
+    },
+    {
+      "path": "evidence/spinkick-240hz-10iterations-metrics.json",
+      "bytes": 1520,
+      "sha256": "ea777a8ede22cf806c15439707fa4d1cc6378894c1344fd5eec1f939be10b579"
+    },
+    {
+      "path": "evidence/spinkick-240hz-10iterations-render-trace.json",
+      "bytes": 3097956,
+      "sha256": "bc826de04dffb84ac71f2a95762f8bf19b2a9f98d798489bb7bf54d5b0b97f6c"
+    },
+    {
+      "path": "evidence/spinkick-240hz-10iterations-trace.json",
+      "bytes": 3094075,
+      "sha256": "e0231e4935d4675abe7618c02c2404615d360015d0fa562b9b81287e955a1bdb"
+    },
+    {
+      "path": "evidence/spinkick-600hz-10iterations-metrics.json",
+      "bytes": 1036,
+      "sha256": "8226c00618e1ddc60adc5168b1cd272273ae8a65793bfa7b9275c81b6e7ec10f"
+    },
+    {
+      "path": "evidence/spinkick-600hz-10iterations-render-trace.json",
+      "bytes": 3066142,
+      "sha256": "e10005a6f9902f18d2a1f6462053fb14762efb173639552ed33d5a1292bfb9bc"
+    },
+    {
+      "path": "evidence/spinkick-600hz-10iterations-trace.json",
+      "bytes": 3062261,
+      "sha256": "f3621252f572da5f872e121c6447f7f9e4d7e0f185968062a57aa14a2fad05ef"
+    },
+    {
+      "path": "evidence/spinkick-tensor-export.json",
+      "bytes": 2990,
+      "sha256": "86f8850fea9cf87582f93d277762068ab90556e8f508c8e8d45f38ed4bcdb5d4"
+    },
+    {
+      "path": "evidence/validation.json",
+      "bytes": 1905,
+      "sha256": "e94dc63a0b316a7beb8006d44d87705a1f463d064f4e0a9f8756070ac200efea"
+    },
+    {
+      "path": "evidence/walk-1200hz-50iterations-metrics.json",
+      "bytes": 1195,
+      "sha256": "7ee3abdb7347212d4c2f03dfa86eff3a84aab00f6983bd259ed71c58dbeddc95"
+    },
+    {
+      "path": "evidence/walk-1200hz-50iterations-render-trace.json",
+      "bytes": 3334010,
+      "sha256": "c0bb27902b0bfa45b7a43cddea2d7ce9c9f8e1c93fb5b32c2a376318c37362c1"
+    },
+    {
+      "path": "evidence/walk-1200hz-50iterations-trace.json",
+      "bytes": 3330129,
+      "sha256": "4b49b6e2c195ad26f156deb819fa2bd66d87c8700881188c622a6bc30e11399e"
+    },
+    {
+      "path": "evidence/walk-240hz-10iterations-metrics.json",
+      "bytes": 1524,
+      "sha256": "aa57ba52b31649af8aa29c50df1ed28fc6a6ad2d35c8dc04818632494e74b263"
+    },
+    {
+      "path": "evidence/walk-240hz-10iterations-render-trace.json",
+      "bytes": 3223001,
+      "sha256": "f8510d89c91cba700c7b10735f0cc5d69f204c36233a718e49db6875359e4693"
+    },
+    {
+      "path": "evidence/walk-240hz-10iterations-trace.json",
+      "bytes": 3219120,
+      "sha256": "4fe64ff6c7fda32357907e8d5d14fa1076149f32187825fdb2c7088e81a28ee3"
+    },
+    {
+      "path": "evidence/walk-600hz-10iterations-metrics.json",
+      "bytes": 1039,
+      "sha256": "ed41b52573fece532d14ffd29504c8c680a25ad65621851e53d6ae1ed6d859bd"
+    },
+    {
+      "path": "evidence/walk-600hz-10iterations-render-trace.json",
+      "bytes": 3131395,
+      "sha256": "d1acb70d75e7447529f56b8a328bca5b1df26183709f966b833a8484fe9c378d"
+    },
+    {
+      "path": "evidence/walk-600hz-10iterations-trace.json",
+      "bytes": 3127514,
+      "sha256": "840f716ee4c2c0567d0d0fc1c856ed1ca3fe499b15bf5e66f5499f8ecdbb78d2"
+    },
+    {
+      "path": "evidence/walk-tensor-export.json",
+      "bytes": 2974,
+      "sha256": "18b61897172f6d2882b0071e46ab4c9068f56c1214774741cda72f6f0050f1de"
+    },
+    {
+      "path": "export_checkpoint.py",
+      "bytes": 2605,
+      "sha256": "0047573bd22469d2a30e7a76db19bd9ea0bb4cdc3861421cf9f91e49736c2bec"
+    },
+    {
+      "path": "export_geometry.py",
+      "bytes": 5257,
+      "sha256": "c7fb3e5359ec708ebe00a0b6a787f42e46127568bb58a64afba498cc18ff5ad4"
+    },
+    {
+      "path": "inspect_assets.py",
+      "bytes": 2508,
+      "sha256": "4d7600d5b81508c2699a411b3ae83ec6b4cb7d013ceb8f056ed62ab0dea35067"
+    },
+    {
+      "path": "licenses/Bullet-zlib.txt",
+      "bytes": 1022,
+      "sha256": "885cd516a8420acb7c3e0b1a7119913b686495001ae564e3229740460e8cff59"
+    },
+    {
+      "path": "licenses/DeepMimic-MIT.txt",
+      "bytes": 1069,
+      "sha256": "eb4aa4f4f1e9a18875e996e12a7aaf9dc078562ef5db372b55910c6599dbcdc5"
+    },
+    {
+      "path": "licenses/checkpoint-reader-MIT.txt",
+      "bytes": 1149,
+      "sha256": "72cfd312872a2088064082a2f9e96078e6335dba533fbb6afa06af1e25c36b2c"
+    },
+    {
+      "path": "patches/pybullet-darwin-bounded-build.patch",
+      "bytes": 879,
+      "sha256": "ffeb64942f5f343170b3756b1cfc23be113b2ba534ca6d608bcaea32951ecef4"
+    },
+    {
+      "path": "patches/reader-python313-numpy2.patch",
+      "bytes": 882,
+      "sha256": "e6f899bb0d54e3d79a5a0a63509dc6b1a65faef42149c8e27c1d30bbac9724f6"
+    },
+    {
+      "path": "policy_numpy.py",
+      "bytes": 1904,
+      "sha256": "5d504a6b6118a0403a338d5a27833bf9f130a6eca038bed3e17a63def8b42ad7"
+    },
+    {
+      "path": "prepare_sources.py",
+      "bytes": 1236,
+      "sha256": "ae6b72a233fa33648b24b225274ec3cbbb7aab50b201fb69397a642c832c1342"
+    },
+    {
+      "path": "record_manifest.py",
+      "bytes": 3265,
+      "sha256": "9d7ca3aeb54d328586f81e6c0302e20ff819c062f269622847a76d8eb38a1802"
+    },
+    {
+      "path": "requirements-learned.txt",
+      "bytes": 166,
+      "sha256": "0a18303efbd150886c209bc9e83e99b786951266d2934672b510daf4b71514a8"
+    },
+    {
+      "path": "requirements.lock",
+      "bytes": 1245,
+      "sha256": "282c723117aebb5166503f8426c793cc06d845dc9efe9b0cdd8b7d5bf5f910c3"
+    },
+    {
+      "path": "run_policy.py",
+      "bytes": 9560,
+      "sha256": "38d26aab25c84b5ca37e3dd29bf928988bad9989933b2f470a979c4251e8aadd"
+    },
+    {
+      "path": "safe_artifacts.py",
+      "bytes": 3580,
+      "sha256": "0534b966c31d42629d96051bbed0e4f87cd5011dc988ebde323de43983a86930"
+    },
+    {
+      "path": "test_evidence.py",
+      "bytes": 1525,
+      "sha256": "84f22b87370832d98253d3b2aebd6043f12ab9a23ad01e36f2f9fc94a39bd669"
+    },
+    {
+      "path": "test_geometry.py",
+      "bytes": 3029,
+      "sha256": "663342eaa3f4ae0a8494d1aaed5ae5d438684b6c52d19441d3fff898a5ef38e2"
+    },
+    {
+      "path": "test_policy_numpy.py",
+      "bytes": 1961,
+      "sha256": "c66f3e401eb51a801dc3dd2a39f3918aa2e7cc8f778267a0f8f6a8a9b904219d"
+    },
+    {
+      "path": "test_safe_artifacts.py",
+      "bytes": 2050,
+      "sha256": "1a32152e2677ef8d5b73f7926f4863d8022fbd822ef4c29a20776f4400c99ccb"
+    },
+    {
+      "path": "validate_evidence.py",
+      "bytes": 5398,
+      "sha256": "6f42f729880ae9d934f05ed3d20db736a7a637d24123f69e9674d057297462ac"
+    }
+  ]
+}

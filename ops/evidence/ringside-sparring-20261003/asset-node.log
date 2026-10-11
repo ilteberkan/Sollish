@@ -1,0 +1,11 @@
+✔ real GLTFLoader parses eight animation-only clips with target names (2.902292ms)
+✔ actual AnimationMixer binds to existing 65-bone skeleton without warnings (31.12375ms)
+✔ clips produce changing poses without root travel in actual mixer (3.901708ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 154.738458

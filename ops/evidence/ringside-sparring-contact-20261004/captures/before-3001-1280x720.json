@@ -1,0 +1,68 @@
+{
+ "at": "2026-10-04T11:31:42.009Z",
+ "base": "http://127.0.0.1:3001",
+ "seed": 7,
+ "viewport": [
+  1280,
+  720
+ ],
+ "camera": "Yayın",
+ "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+ "rows": [
+  {
+   "target": 300,
+   "tickAtShot": 300,
+   "file": "seed7-1280x720-t00300.jpg",
+   "probe": {
+    "frames": 304,
+    "last": null
+   }
+  },
+  {
+   "target": 330,
+   "tickAtShot": 330,
+   "file": "seed7-1280x720-t00330.jpg",
+   "probe": {
+    "frames": 332,
+    "last": null
+   }
+  },
+  {
+   "target": 360,
+   "tickAtShot": 360,
+   "file": "seed7-1280x720-t00360.jpg",
+   "probe": {
+    "frames": 362,
+    "last": null
+   }
+  },
+  {
+   "target": 375,
+   "tickAtShot": 375,
+   "file": "seed7-1280x720-t00375.jpg",
+   "probe": {
+    "frames": 377,
+    "last": null
+   }
+  },
+  {
+   "target": 390,
+   "tickAtShot": 390,
+   "file": "seed7-1280x720-t00390.jpg",
+   "probe": {
+    "frames": 392,
+    "last": null
+   }
+  },
+  {
+   "target": 420,
+   "tickAtShot": 420,
+   "file": "seed7-1280x720-t00420.jpg",
+   "probe": {
+    "frames": 422,
+    "last": null
+   }
+  }
+ ],
+ "errors": []
+}

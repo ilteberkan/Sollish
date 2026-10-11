@@ -1,0 +1,1693 @@
+{
+ "schema": "sollish.referee-audit.v1",
+ "label": "final",
+ "at": "2026-10-05T08:30:38.990Z",
+ "engineVersion": "sparring-5",
+ "engineSource": "/Users/macmini/Desktop/Sollish/packages/protocol/src",
+ "engineSha256": "c1ca71f9c4a4877c1d5d8b1b175a7fae54053009a61cf5148d44a54d2d3ca950",
+ "refereeSha256": "a49fe90b217f6fd1b186c8b13b966f94facf55dcb481244171111aa59d330e0a",
+ "scope": "Deterministic engine rollouts (fixture level) on this machine; ground-plane (x,z) distances from the referee root to sparringPose segments pelvis→head/hands/knees and to the lying segment [root-1.85u, root+0.15u]. Not a rendering, GPU or browser measurement.",
+ "acceptance": {
+  "standingClearanceM": 0.55,
+  "lyingClearanceM": 0.6,
+  "crossings": 0,
+  "maxYawRadPerTick": 0.05,
+  "maxStepMPerTick": 0.025,
+  "maxSpeedChangeMPerSPerTick": 0.06666666666666667
+ },
+ "bouts": 60,
+ "boutShape": {
+  "durationSeconds": 45,
+  "rounds": 3,
+  "breakSeconds": 8
+ },
+ "scriptedPairs": [
+  [
+   "balanced",
+   "pressure"
+  ],
+  [
+   "pressure",
+   "counter"
+  ],
+  [
+   "counter",
+   "balanced"
+  ],
+  [
+   "pressure",
+   "pressure"
+  ],
+  [
+   "balanced",
+   "counter"
+  ],
+  [
+   "counter",
+   "pressure"
+  ]
+ ],
+ "neuroBouts": 12,
+ "resultMismatchBouts": 0,
+ "shipped": {
+  "ticks": 504525,
+  "fightTicks": 427504,
+  "minStandingClearanceM": 0.6961,
+  "ticksStandingUnder055": 0,
+  "minLyingClearanceM": 0.6618,
+  "ticksLyingUnder060": 0,
+  "lyingTicks": 21641,
+  "crossingsWhileFighting": 0,
+  "maxYawRadPerTick": 0.05,
+  "maxStepMPerTick": 0.0233,
+  "maxVelocityChangeMPerSPerTick": 0.0667,
+  "maxSpeedChangeMPerSPerTick": 0.0667,
+  "maxAbsCoordinateM": 2.845,
+  "broadcastOccludedShare": 0.0869,
+  "cameraSideShare": 0.0535,
+  "meanRadiusFromFightersMidpointM": 1.934,
+  "maxRadiusM": 4.194,
+  "worstStanding": {
+   "seed": 14,
+   "tick": 2758,
+   "phase": "break",
+   "fighter": 0,
+   "action": "move"
+  },
+  "worstLying": {
+   "seed": 28,
+   "tick": 7526,
+   "phase": "count",
+   "fighter": 1
+  }
+ },
+ "oldOfficialSameEngine": {
+  "ticks": 504525,
+  "fightTicks": 427504,
+  "minStandingClearanceM": 0.3929,
+  "ticksStandingUnder055": 206,
+  "minLyingClearanceM": 0.108,
+  "ticksLyingUnder060": 1718,
+  "lyingTicks": 21641,
+  "crossingsWhileFighting": 0,
+  "maxYawRadPerTick": 3.1327,
+  "maxStepMPerTick": 0.0316,
+  "maxVelocityChangeMPerSPerTick": 3.4,
+  "maxSpeedChangeMPerSPerTick": 1.725,
+  "maxAbsCoordinateM": 2.95,
+  "broadcastOccludedShare": 0.3522,
+  "cameraSideShare": 0.0203,
+  "meanRadiusFromFightersMidpointM": 1.61,
+  "maxRadiusM": 2.012,
+  "worstStanding": {
+   "seed": 38,
+   "tick": 5324,
+   "phase": "fight",
+   "fighter": 1,
+   "action": "hook"
+  },
+  "worstLying": {
+   "seed": 16,
+   "tick": 7540,
+   "phase": "finished",
+   "fighter": 0
+  }
+ },
+ "replay": [
+  {
+   "seed": 1,
+   "identical": true,
+   "sha256": "a27e1f00ce23367a"
+  },
+  {
+   "seed": 2,
+   "identical": true,
+   "sha256": "8bb99f1294183900"
+  },
+  {
+   "seed": 3,
+   "identical": true,
+   "sha256": "b10014bd3e6a7b50"
+  },
+  {
+   "seed": 4,
+   "identical": true,
+   "sha256": "bcfbc81f9de1e779"
+  }
+ ],
+ "neuroKnockdowns": [
+  {
+   "seed": 20261003,
+   "tick": 8811,
+   "corners": "neuro/neuro"
+  },
+  {
+   "seed": 20261004,
+   "tick": 9011,
+   "corners": "neuro/neuro"
+  },
+  {
+   "seed": 20261005,
+   "tick": 8515,
+   "corners": "neuro/neuro"
+  },
+  {
+   "seed": 20261006,
+   "tick": 8975,
+   "corners": "neuro/neuro"
+  },
+  {
+   "seed": 20261008,
+   "tick": 7791,
+   "corners": "neuro/neuro"
+  },
+  {
+   "seed": 20261008,
+   "tick": 9247,
+   "corners": "neuro/neuro"
+  },
+  {
+   "seed": 20261009,
+   "tick": 8947,
+   "corners": "neuro/neuro"
+  },
+  {
+   "seed": 20261012,
+   "tick": 8031,
+   "corners": "neuro/neuro"
+  },
+  {
+   "seed": 20261014,
+   "tick": 8531,
+   "corners": "neuro/neuro"
+  },
+  {
+   "seed": 20261014,
+   "tick": 9119,
+   "corners": "neuro/neuro"
+  }
+ ],
+ "elapsedS": 19.503,
+ "perBout": [
+  {
+   "seed": 1,
+   "corners": "balanced/pressure",
+   "winner": 0,
+   "method": "tko",
+   "ticks": 4555,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.107,
+    "minLying": 1.112,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.544,
+    "minLying": 0.194,
+    "crossings": 0,
+    "maxYaw": 3.1243,
+    "maxStep": 0.0283,
+    "maxDv": 1.916
+   }
+  },
+  {
+   "seed": 2,
+   "corners": "pressure/counter",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.145,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.584,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 3.3954
+   }
+  },
+  {
+   "seed": 3,
+   "corners": "counter/balanced",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.119,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 1.2302,
+    "maxStep": 0.0283,
+    "maxDv": 1.9326
+   }
+  },
+  {
+   "seed": 4,
+   "corners": "pressure/pressure",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 8158,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.183,
+    "minLying": 1.099,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.745,
+    "crossings": 0,
+    "maxYaw": 3.1322,
+    "maxStep": 0.0283,
+    "maxDv": 2.1189
+   }
+  },
+  {
+   "seed": 5,
+   "corners": "balanced/counter",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.121,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.493,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 3.3999
+   }
+  },
+  {
+   "seed": 6,
+   "corners": "counter/pressure",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.136,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.59,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 3.4
+   }
+  },
+  {
+   "seed": 7,
+   "corners": "balanced/pressure",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.15,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 3.3993
+   }
+  },
+  {
+   "seed": 8,
+   "corners": "pressure/counter",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 7357,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.071,
+    "minLying": 1.137,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.744,
+    "crossings": 0,
+    "maxYaw": 3.1119,
+    "maxStep": 0.0287,
+    "maxDv": 2.1258
+   }
+  },
+  {
+   "seed": 9,
+   "corners": "counter/balanced",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.144,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 3.3997
+   }
+  },
+  {
+   "seed": 10,
+   "corners": "pressure/pressure",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 4429,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.183,
+    "minLying": 1.135,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.154,
+    "crossings": 0,
+    "maxYaw": 3.1252,
+    "maxStep": 0.0283,
+    "maxDv": 2.06
+   }
+  },
+  {
+   "seed": 11,
+   "corners": "balanced/counter",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.091,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 3.4
+   }
+  },
+  {
+   "seed": 12,
+   "corners": "counter/pressure",
+   "winner": 0,
+   "method": "ko",
+   "ticks": 7347,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 0.949,
+    "minLying": 1.138,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.55,
+    "minLying": 0.789,
+    "crossings": 0,
+    "maxYaw": 3.1113,
+    "maxStep": 0.0283,
+    "maxDv": 2.167
+   }
+  },
+  {
+   "seed": 13,
+   "corners": "balanced/pressure",
+   "winner": 0,
+   "method": "ko",
+   "ticks": 6588,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 0.871,
+    "minLying": 0.859,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.558,
+    "minLying": 0.223,
+    "crossings": 0,
+    "maxYaw": 3.1205,
+    "maxStep": 0.0283,
+    "maxDv": 3.3872
+   }
+  },
+  {
+   "seed": 14,
+   "corners": "pressure/counter",
+   "winner": 1,
+   "method": "tko",
+   "ticks": 7500,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 0.696,
+    "minLying": 1.157,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.745,
+    "crossings": 0,
+    "maxYaw": 3.1115,
+    "maxStep": 0.0292,
+    "maxDv": 3.4
+   }
+  },
+  {
+   "seed": 15,
+   "corners": "counter/balanced",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.135,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.584,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 1.8472
+   }
+  },
+  {
+   "seed": 16,
+   "corners": "pressure/pressure",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 7540,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.182,
+    "minLying": 1.136,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.108,
+    "crossings": 0,
+    "maxYaw": 3.1261,
+    "maxStep": 0.0283,
+    "maxDv": 2.0825
+   }
+  },
+  {
+   "seed": 17,
+   "corners": "balanced/counter",
+   "winner": "draw",
+   "method": "draw",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.117,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.572,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 1.8059
+   }
+  },
+  {
+   "seed": 18,
+   "corners": "counter/pressure",
+   "winner": 0,
+   "method": "ko",
+   "ticks": 8303,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.146,
+    "minLying": 1.132,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.777,
+    "crossings": 0,
+    "maxYaw": 3.1138,
+    "maxStep": 0.0283,
+    "maxDv": 3.3996
+   }
+  },
+  {
+   "seed": 19,
+   "corners": "balanced/pressure",
+   "winner": 0,
+   "method": "tko",
+   "ticks": 7941,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.16,
+    "minLying": 1.14,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.55,
+    "minLying": 0.752,
+    "crossings": 0,
+    "maxYaw": 3.1215,
+    "maxStep": 0.0283,
+    "maxDv": 2.0509
+   }
+  },
+  {
+   "seed": 20,
+   "corners": "pressure/counter",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.174,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.581,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 2.031
+   }
+  },
+  {
+   "seed": 21,
+   "corners": "counter/balanced",
+   "winner": "draw",
+   "method": "draw",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.175,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.8038,
+    "maxStep": 0.0297,
+    "maxDv": 2.1806
+   }
+  },
+  {
+   "seed": 22,
+   "corners": "pressure/pressure",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 5911,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.175,
+    "minLying": 1.137,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.541,
+    "minLying": 0.761,
+    "crossings": 0,
+    "maxYaw": 3.1327,
+    "maxStep": 0.0283,
+    "maxDv": 2.2263
+   }
+  },
+  {
+   "seed": 23,
+   "corners": "balanced/counter",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.148,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.59,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 2.0232
+   }
+  },
+  {
+   "seed": 24,
+   "corners": "counter/pressure",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.095,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 2.1315
+   }
+  },
+  {
+   "seed": 25,
+   "corners": "balanced/pressure",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.185,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.584,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 2.0666
+   }
+  },
+  {
+   "seed": 26,
+   "corners": "pressure/counter",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 7580,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.078,
+    "minLying": 1.138,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.319,
+    "crossings": 0,
+    "maxYaw": 3.1282,
+    "maxStep": 0.0283,
+    "maxDv": 2.0591
+   }
+  },
+  {
+   "seed": 27,
+   "corners": "counter/balanced",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.133,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.584,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 2.2849
+   }
+  },
+  {
+   "seed": 28,
+   "corners": "pressure/pressure",
+   "winner": 0,
+   "method": "ko",
+   "ticks": 8235,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.026,
+    "minLying": 0.662,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.135,
+    "crossings": 0,
+    "maxYaw": 3.1327,
+    "maxStep": 0.0283,
+    "maxDv": 3.4
+   }
+  },
+  {
+   "seed": 29,
+   "corners": "balanced/counter",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.112,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.532,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.8524,
+    "maxStep": 0.0283,
+    "maxDv": 3.3998
+   }
+  },
+  {
+   "seed": 30,
+   "corners": "counter/pressure",
+   "winner": 0,
+   "method": "tko",
+   "ticks": 7533,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.116,
+    "minLying": 1.139,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.553,
+    "minLying": 0.786,
+    "crossings": 0,
+    "maxYaw": 3.1126,
+    "maxStep": 0.0283,
+    "maxDv": 2.2121
+   }
+  },
+  {
+   "seed": 31,
+   "corners": "balanced/pressure",
+   "winner": 0,
+   "method": "ko",
+   "ticks": 7595,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.171,
+    "minLying": 1.11,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.545,
+    "minLying": 0.133,
+    "crossings": 0,
+    "maxYaw": 3.1253,
+    "maxStep": 0.0283,
+    "maxDv": 2.0427
+   }
+  },
+  {
+   "seed": 32,
+   "corners": "pressure/counter",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.13,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 1.0394,
+    "maxStep": 0.0283,
+    "maxDv": 3.4
+   }
+  },
+  {
+   "seed": 33,
+   "corners": "counter/balanced",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.145,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.46,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 3.3645
+   }
+  },
+  {
+   "seed": 34,
+   "corners": "pressure/pressure",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 4198,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.179,
+    "minLying": 1.118,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.745,
+    "crossings": 0,
+    "maxYaw": 3.1222,
+    "maxStep": 0.0283,
+    "maxDv": 1.9982
+   }
+  },
+  {
+   "seed": 35,
+   "corners": "balanced/counter",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.168,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.571,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 1.9652
+   }
+  },
+  {
+   "seed": 36,
+   "corners": "counter/pressure",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.124,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.463,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.9369,
+    "maxStep": 0.0295,
+    "maxDv": 3.4
+   }
+  },
+  {
+   "seed": 37,
+   "corners": "balanced/pressure",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.128,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 2.0614
+   }
+  },
+  {
+   "seed": 38,
+   "corners": "pressure/counter",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.14,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.393,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 2.8862,
+    "maxStep": 0.0283,
+    "maxDv": 3.3999
+   }
+  },
+  {
+   "seed": 39,
+   "corners": "counter/balanced",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.124,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.584,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 3.3998
+   }
+  },
+  {
+   "seed": 40,
+   "corners": "pressure/pressure",
+   "winner": 0,
+   "method": "ko",
+   "ticks": 7598,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.111,
+    "minLying": 1.113,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.542,
+    "minLying": 0.331,
+    "crossings": 0,
+    "maxYaw": 3.126,
+    "maxStep": 0.0283,
+    "maxDv": 3.3999
+   }
+  },
+  {
+   "seed": 41,
+   "corners": "balanced/counter",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.131,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.579,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 2.0158
+   }
+  },
+  {
+   "seed": 42,
+   "corners": "counter/pressure",
+   "winner": 0,
+   "method": "ko",
+   "ticks": 7575,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.095,
+    "minLying": 1.116,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.544,
+    "minLying": 0.208,
+    "crossings": 0,
+    "maxYaw": 3.128,
+    "maxStep": 0.0283,
+    "maxDv": 3.3946
+   }
+  },
+  {
+   "seed": 43,
+   "corners": "balanced/pressure",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.186,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 2.0665
+   }
+  },
+  {
+   "seed": 44,
+   "corners": "pressure/counter",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 7414,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.06,
+    "minLying": 1.128,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.745,
+    "crossings": 0,
+    "maxYaw": 3.112,
+    "maxStep": 0.0302,
+    "maxDv": 1.9492
+   }
+  },
+  {
+   "seed": 45,
+   "corners": "counter/balanced",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.136,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.59,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 2.0459
+   }
+  },
+  {
+   "seed": 46,
+   "corners": "pressure/pressure",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 8340,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.089,
+    "minLying": 0.918,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.745,
+    "crossings": 0,
+    "maxYaw": 3.1302,
+    "maxStep": 0.0283,
+    "maxDv": 3.4
+   }
+  },
+  {
+   "seed": 47,
+   "corners": "balanced/counter",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.208,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0283,
+    "maxDv": 2.5996
+   }
+  },
+  {
+   "seed": 48,
+   "corners": "counter/pressure",
+   "winner": 0,
+   "method": "ko",
+   "ticks": 7385,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.118,
+    "minLying": 1.138,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.548,
+    "minLying": 0.789,
+    "crossings": 0,
+    "maxYaw": 3.1113,
+    "maxStep": 0.0286,
+    "maxDv": 2.1273
+   }
+  },
+  {
+   "seed": 20261003,
+   "corners": "neuro/neuro",
+   "winner": "draw",
+   "method": "draw",
+   "ticks": 9495,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 0.938,
+    "minLying": 1.13,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.571,
+    "minLying": 0.756,
+    "crossings": 0,
+    "maxYaw": 3.1191,
+    "maxStep": 0.0313,
+    "maxDv": 3.3901
+   }
+  },
+  {
+   "seed": 20261004,
+   "corners": "neuro/neuro",
+   "winner": 0,
+   "method": "ko",
+   "ticks": 9446,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 0.987,
+    "minLying": 0.838,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.557,
+    "minLying": 0.753,
+    "crossings": 0,
+    "maxYaw": 3.1209,
+    "maxStep": 0.0316,
+    "maxDv": 3.179
+   }
+  },
+  {
+   "seed": 20261005,
+   "corners": "neuro/neuro",
+   "winner": 0,
+   "method": "ko",
+   "ticks": 8950,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.007,
+    "minLying": 1.123,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.801,
+    "crossings": 0,
+    "maxYaw": 3.1198,
+    "maxStep": 0.0307,
+    "maxDv": 3.3901
+   }
+  },
+  {
+   "seed": 20261006,
+   "corners": "neuro/neuro",
+   "winner": "draw",
+   "method": "draw",
+   "ticks": 9495,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.049,
+    "minLying": 1.106,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.547,
+    "minLying": 0.777,
+    "crossings": 0,
+    "maxYaw": 3.1231,
+    "maxStep": 0.0307,
+    "maxDv": 3.2697
+   }
+  },
+  {
+   "seed": 20261007,
+   "corners": "neuro/neuro",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.03,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.495,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0312,
+    "maxDv": 3.3369
+   }
+  },
+  {
+   "seed": 20261008,
+   "corners": "neuro/neuro",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 9682,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 0.937,
+    "minLying": 0.858,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.533,
+    "minLying": 0.761,
+    "crossings": 0,
+    "maxYaw": 3.1305,
+    "maxStep": 0.0303,
+    "maxDv": 3.3182
+   }
+  },
+  {
+   "seed": 20261009,
+   "corners": "neuro/neuro",
+   "winner": 0,
+   "method": "decision",
+   "ticks": 9495,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 0.951,
+    "minLying": 1.124,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.869,
+    "crossings": 0,
+    "maxYaw": 3.1191,
+    "maxStep": 0.0313,
+    "maxDv": 3.1821
+   }
+  },
+  {
+   "seed": 20261010,
+   "corners": "neuro/neuro",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 0.992,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.566,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 1.6175,
+    "maxStep": 0.0313,
+    "maxDv": 3.3554
+   }
+  },
+  {
+   "seed": 20261011,
+   "corners": "neuro/neuro",
+   "winner": "draw",
+   "method": "draw",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 0.997,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.535,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0313,
+    "maxDv": 3.3497
+   }
+  },
+  {
+   "seed": 20261012,
+   "corners": "neuro/neuro",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 8466,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.008,
+    "minLying": 1.118,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.573,
+    "minLying": 0.801,
+    "crossings": 0,
+    "maxYaw": 3.1205,
+    "maxStep": 0.0316,
+    "maxDv": 2.7646
+   }
+  },
+  {
+   "seed": 20261013,
+   "corners": "neuro/neuro",
+   "winner": 1,
+   "method": "decision",
+   "ticks": 9060,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 0.966,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.568,
+    "minLying": null,
+    "crossings": 0,
+    "maxYaw": 0.7854,
+    "maxStep": 0.0291,
+    "maxDv": 3.299
+   }
+  },
+  {
+   "seed": 20261014,
+   "corners": "neuro/neuro",
+   "winner": 1,
+   "method": "ko",
+   "ticks": 9554,
+   "resultsIdentical": true,
+   "firstMismatch": null,
+   "A": {
+    "minStanding": 1.039,
+    "minLying": 1.106,
+    "crossings": 0,
+    "maxYaw": 0.05,
+    "maxStep": 0.0233,
+    "maxDv": 0.0667
+   },
+   "B": {
+    "minStanding": 0.565,
+    "minLying": 0.231,
+    "crossings": 0,
+    "maxYaw": 3.1258,
+    "maxStep": 0.031,
+    "maxDv": 3.0812
+   }
+  }
+ ]
+}

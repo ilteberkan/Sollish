@@ -1,0 +1,91 @@
+{
+ "schema": "sollish.evidence.v1",
+ "at": "2026-10-08",
+ "status": "LOCAL_PRODUCTION_RUNTIME_VERIFIED_NOT_DEPLOYED",
+ "buildId": "CHDaObcMu5nfY-wNXYcTI",
+ "scope": "New LIVE engine ringside-contact-4-f8cd1d1f (six techniques, combinations, counters, clinch, knockdown counts) in its own namespace /v4 and SQLite class ContactArenaV4 (migration v5). Contact 3 frozen byte for byte and kept on /v3 with /live/ringside-v3. /live/ringside now runs Contact 4 with the Gece Ligi broadcast (hit-stop, glove trails, knockdown replay, round highlight, arena sound). Hosted services unchanged.",
+ "engine": {
+  "version": "ringside-contact-4-f8cd1d1f",
+  "policy": "malecns-descending128-imitation-mlp-v2 (unchanged weights; picks tactical intent only)",
+  "rules": "combinations, range, defence, counts and stoppage are explicit deterministic rules, not learned",
+  "traits": {
+   "kor": {
+    "reach": -45,
+    "power": 1.06,
+    "chin": 1.1,
+    "guard": 0.98
+   },
+   "ayaz": {
+    "reach": 55,
+    "power": 0.96,
+    "chin": 0.98,
+    "guard": 1.02
+   }
+  },
+  "stats400FullHealth": {
+   "strikesPerRound": 90.1,
+   "hitsPerRound": 32.6,
+   "comboFollowUpsPerRound": 32.0,
+   "knockdownRate": "30.3%",
+   "stoppageRate": "0%",
+   "winKor": "52.8%",
+   "winAyaz": "47.3%"
+  },
+  "stats300Health650": {
+   "knockdownRate": "63.7%",
+   "stoppageRate": "15.0%",
+   "winKor": "52.7%",
+   "winAyaz": "47.3%"
+  }
+ },
+ "checks": {
+  "protocol": "111/111",
+  "webUnit": "100/100 incl. broadcast contact (>=99% of recorded hits/blocks land within 3 cm at the contact tick) and 60 Hz continuity (heads <12.5 m/s, hips/feet <9 m/s) over 10 bouts",
+  "realtimeUnit": "11/11",
+  "workerdContactV3": "pass",
+  "workerdContactV4": "pass, 16 checks (CONTACT_ENGINE=v4)",
+  "workerdRingsideV2": "pass",
+  "browserProductionPreview": "89/89 on wrangler preview :3001 (arena spec runs for Contact 4 and Contact 3)",
+  "readiness": "exit 2 (known gates open, expected)",
+  "typecheck": "web, realtime, protocol clean"
+ },
+ "presentationOnly": [
+  "hit-stop up to ~70 ms, catches up within 150 ms, never ahead of real time",
+  "knockdown replay (1.5 s at half speed) during the count; round highlight after the bell",
+  "referee drawn beside the pair, out of the camera corridor",
+  "fighters eased to >=1.05 m on the camera axis except in clinches",
+  "sound is opt-in and follows real time"
+ ],
+ "notVerified": [
+  "hosted deployment (v4 route and migration not deployed)",
+  "physical phone",
+  "user visual acceptance",
+  "Combat Club, /live/boxing, /game/boxing still use the 3D scene"
+ ],
+ "sourceSha256": {
+  "packages/protocol/src/combat-v4.ts": "e968f235ebee073c8f30807dda43b83fa15ea31655507a40327551806d62ab85",
+  "packages/protocol/src/combat-v3.ts": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+  "packages/protocol/src/ringside.ts": "80ac137a390b45e61fc6c48bbb647b82524a3dad6493e68cf162d47442c73ed9",
+  "packages/protocol/src/connectome-policy.ts": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+  "packages/protocol/test/contact-v4.test.ts": "20140f005d4aa2189d014a56bb3bd67dac851da04eda1f214ab12b07b11f6c44",
+  "apps/realtime/src/ringside-arena.ts": "96c12275e850b92113bc2d3b4de991c5a1e90b6e2a54cb8501df1d98b8ce3e2b",
+  "apps/realtime/src/index.ts": "7b8c387bfdd4ea24e9eee2601a4c9c205222242e14e621e5a57fae9eb1a53185",
+  "apps/realtime/wrangler.jsonc": "4fc3a346df154719f42cd8bb3a8d69874769079813944122b613d7b6620b1f01",
+  "apps/realtime/test/contact-arena.workerd.mjs": "14174982cc83c13288bad8bc7dac6139b2272c0c4089b3f50d2f056e0ea20cb6",
+  "apps/web/lib/ringside-night/broadcast.ts": "f6354d0574e1d8004b1b6fadd2649c263525df81a0b4da55ce374fd26ca53bbd",
+  "apps/web/lib/ringside-night/rig.ts": "1197b0b4b1a6bc13c45b902ff95a9553a5f68f34b97915e9698d68a4e6b5d069",
+  "apps/web/components/ringside-broadcast-scene.tsx": "2321685bf991ba5822823124f88024d79efbd1cb6c7202c3ff1043002bfe75ab",
+  "apps/web/components/ringside-arena.tsx": "784d95c1051443b3be8806b3f7652c00d9fd019c1916d73f838429679db653b1",
+  "apps/web/lib/use-ringside.ts": "8c2f918cb087e391648b81bc03218341c479b0942b2978ce8e1afeac33a4a0fb",
+  "apps/web/components/shell.tsx": "c3fc77ed83792542ab03134a92d79d8621613018caccb632a099c35817380e71",
+  "apps/web/tests/ringside-broadcast.test.ts": "f7c9608246b1595f70d20ad89f597404eececad69372855698efae285f7e3f75",
+  "apps/web/tests/browser/ringside-contact.spec.ts": "053e4e1eae244b86ddc1880632a21e432f7efbf7355f1044d42d7fd5a31c46b5"
+ },
+ "screens": {
+  "broadcast-round.png": "86abbf1fd2f418cf4b75dafc4a05837ee60c0227b5131e6517c81769d29df531",
+  "knockdown-replay-count.png": "1c29130042bcd2c490c8c158f0594a46355428053c9accf654b8e371b2c20b09",
+  "live-arena-desktop-v4.png": "e3239eded3019c41c9b7723ff0c8914c3662a011c0230487c537d7a0f6075884",
+  "live-arena-fixture-v4.png": "d6c51ddd92c19bbcf9d38e5324e975f5930eb2b703d60bb71efb0857d7b0853e",
+  "workerd-contact-arena-v4.json": "21f6c74cebf0b7c88b7c639b0e61e7222e34a28d714b71706725fd96e531237a"
+ }
+}

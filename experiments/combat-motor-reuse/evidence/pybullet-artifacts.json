@@ -1,0 +1,47 @@
+[
+  {
+    "path": "data/policies/humanoid3d/humanoid3d_spinkick.ckpt.index",
+    "sha256": "6f7335d2c23ff87a9d4dc98059259260fc2324142212b1708485349f1e8fb589",
+    "bytes": 1288
+  },
+  {
+    "path": "data/policies/humanoid3d/humanoid3d_spinkick.ckpt.data-00000-of-00001",
+    "sha256": "4f922f07a434a0a0969c257486cba8e292c9680001db26fcca10c78231b8adff",
+    "bytes": 5900116
+  },
+  {
+    "path": "data/motions/humanoid3d_spinkick.txt",
+    "sha256": "60ec9c200d96e0cd71693061f24db0bd8da9eb295daf487f6f60f8dfb324075a",
+    "bytes": 35643
+  },
+  {
+    "path": "data/policies/humanoid3d/humanoid3d_walk.ckpt.index",
+    "sha256": "e92d81f3142ff963398f7afc1a3d002cd98b4d670b8db0416df74d63c8e6bd96",
+    "bytes": 1288
+  },
+  {
+    "path": "data/policies/humanoid3d/humanoid3d_walk.ckpt.data-00000-of-00001",
+    "sha256": "9db666018be16a40e23e3c56bcbdeb6726b79dbc430341c18b9bf89ad849d5e5",
+    "bytes": 5900116
+  },
+  {
+    "path": "data/motions/humanoid3d_walk.txt",
+    "sha256": "32d082c3599bc40aac50b1afa196ff1e2cf3842bb40f0541ab088845f6328a41",
+    "bytes": 36185
+  },
+  {
+    "path": "data/policies/humanoid3d/humanoid3d_backflip.ckpt.index",
+    "sha256": "e3177514804ee4f77e50d6877db2173d8a97c3d9ac5d539eb297e14a456e8e98",
+    "bytes": 1288
+  },
+  {
+    "path": "data/policies/humanoid3d/humanoid3d_backflip.ckpt.data-00000-of-00001",
+    "sha256": "7c23babadd5d48deafe62d06172d0aa16ce82e70407933175cdeb93c44cad9d0",
+    "bytes": 5900116
+  },
+  {
+    "path": "data/motions/humanoid3d_backflip.txt",
+    "sha256": "ffc5e117f69364e239eeedc86d6a30ab854500a375a1c137a405f1b7652905e6",
+    "bytes": 13536
+  }
+]

@@ -1,0 +1,226 @@
+{
+  "at": "2026-10-02T23:46:18.151807+00:00",
+  "scope": "Contact v3 valueless DEMO release. Local tests and separate hosted observation; no remote GitHub CI or mainnet authorization.",
+  "buildId": "E0_AuJd5GJgtVyJllZ8fN",
+  "sourceSha256": {
+    "packages/protocol/src/combat-v3.ts": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+    "packages/protocol/src/connectome-policy.ts": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+    "packages/protocol/src/ringside.ts": "17b86d0dfc7467c7d31d2cb0fafd373fe2e65356ca296d5fafb8cf2067b5bf12",
+    "packages/protocol/src/pari-mutuel.ts": "75527f5e04edd319e837708ce81dae33e662d1fd8005710df14a3efbf933a3c6",
+    "apps/realtime/src/ringside-arena.ts": "8a8c2a14130035a1b1616d58547d86f0aec4f4fc8c7d8574cb4d83adf5498e21",
+    "apps/realtime/src/index.ts": "0182b726ba3e20c474cc4031d5001b2a77a2ec07a60ef2b1be0d575a4e4bc29a",
+    "apps/realtime/wrangler.jsonc": "d234b41d360859c070ed66caafd6a07ff5d1fb2c740cdb47f1ac3e0ee957c9c3",
+    "apps/web/components/ringside-arena.tsx": "058134139ef3aca9c5a1164dda004381aa98e256d9e7a6d0dc75c1345633edb3",
+    "apps/web/components/ringside-contact.module.css": "30755f6b49db00291e98f6de9b3a2d499fe5af69e84f5e154ea7ef5d29fc234d",
+    "apps/web/components/boxing-scene.tsx": "785278273074f47e7ae9b2485b5ffbd9b2a740aaf140da26e6d41cbc56ef271d",
+    "apps/web/components/boxing-scene-athletes.ts": "7a499c08df0f7d60139772fee57a65a383e6403e933cfd229eadd44d6299d86c",
+    "apps/web/components/boxing-scene-ik.ts": "be6e5d8580cd9082effd17991d10a033c9d382931eec9a76cdac930af358b941",
+    "apps/web/components/providers.tsx": "cdfcb785e81f01e5ffba4aa472cd7060f9e3e382fdbd6574522cea124f4cb53a",
+    "apps/web/components/wallet-dialog.tsx": "42f2d153edeac9e632521e554a7d773714c6e62f1ce9b18ffbfc924421864a39",
+    "apps/web/components/crash-game.tsx": "c11faaced3ddaa1f4ac9088f8509173dd0ba7d007413babbe496e67a7ba56b77",
+    "apps/web/components/coinflip-game.tsx": "cdf7b96d0307872a5d9d6f46a6c89ce2e2147fae9381560b1e9f9eb94dbf90d2",
+    "apps/web/components/chat-panel.tsx": "dc1de176c05fe903233fe395e8d9e4f14622c30aa3a3585baa18c6519079db88",
+    "apps/web/components/shell.tsx": "82c21de18fbb8c3220072f4729f57d4126352b3cd369c7ae9ad959bca6bdac9c",
+    "apps/web/lib/wallet.ts": "afd825d68f38096e0f36a1d85eb899e806b2e4bf0865419095c5dd8930558d1b",
+    "apps/web/lib/chat-auth.ts": "7fdd22bbe3e460175506b9d2da7cc6bafaf0e7aa2557a09fbe2d40decae72f55",
+    "apps/web/lib/demo.ts": "b790fe6c10759d845a0f321985e408bd11de0c78ebe6d0a04854f1779d5ae22d",
+    "apps/web/lib/use-ringside.ts": "43f760216ef5bb3c2720fb93e70e1fba3a108b5691b8e434b1531aa218678ad9",
+    "apps/web/app/globals.css": "0909df716541621cbe75cd820d06468da1653cf8ae736fe560d48fa329944323",
+    "apps/web/app/games/page.tsx": "e932084874d1d55a2e777a1b203e6db4a90c1321830603cffcd2b0ac99591a22",
+    "apps/web/tests/browser/ringside-contact.spec.ts": "7c3f367cd667cee8f42933ba19b47be205c8b19d9cbdca8d79e9045dbac2e46f",
+    "apps/web/tests/browser/ringside.spec.ts": "8c625221e575b965db9031c89bd340373fdc562938407f40b14ee7752aed7b49",
+    "apps/web/public/models/boxing/athlete.glb": "4f6408ef9aa249ef7043f36b2de15e60069cd656d0fc9abd6a1f5028002b66aa",
+    "apps/web/public/models/boxing/credits.json": "97c0d45bc3791e577bda0beb04db1031980a960c2cd0f04db3be07bc4b286e53",
+    "apps/web/public/models/boxing/ringside-contact-poster.png": "cab75532b68c0481259302b9a15944f44e723c1a88bf1ef8d5757e3d87b57d49",
+    ".github/workflows/verify.yml": "af2409e9ba86edccbca7b5f0eacb32071e32810631e4a78dcb96df8a45f946d9",
+    "docs/product/ringside-neuroarena-spec.md": "09327a6ddd3fb84b9d33ce2cad39509a63fb64b6708d6b87a02b310bc39e9426",
+    "experiments/connectome/evidence/policy-validation.json": "c2f98922cb3c8d1354dfddad57a70358ced5ee62b60dda762ea87b74df4fdd11",
+    "scripts/boxing-assets/evidence/contact-rig-cpu.json": "374973d6e6900b25fdfbaaf07a82278ddd6053ecffedc6a91bbdcc990a9575ee",
+    "apps/realtime/evidence/local-contact-arena.json": "07615430009d63201c94b55fd14a9863d0990bd673f6b6e1874309ec7b798966",
+    "apps/web/components/boxing-scene-framing.ts": "3498aca99dc3ede64a731a0cecbea88d0705ab80ab2887a5d0dc1ae51f796781",
+    "apps/web/components/ringside-classic-arena.tsx": "a9a8bad914b20ede0e94a85917f6ad9a417014afe79607a62c48d534340b5b97",
+    "apps/web/app/live/ringside-v2/page.tsx": "10632b1d3767d5fa47fac281343fffa1fdcb41d60c83e3fa1a77037b56c951bb",
+    "apps/web/app/live/ringside/page.tsx": "3a5e77b12f62ef1aeb7271b96d2ee9016ed80ec2b68ed5bd09c2ab3356b3c59e",
+    "apps/web/tests/browser/wallet-reconnect.spec.ts": "aacc054a45a06fc64466be831361eec6eceb11b0b8f49dc16275a13cb546f9a6",
+    "apps/web/tests/browser/solo-lifecycle.spec.ts": "b8873774f3a3ac75bed034e041ebb03b85a1ff65953f94ffa7523b248ab57f60",
+    "scripts/boxing-assets/test-replay.mjs": "e75a81c10bdf9391e74cf929d31767bd7a20a9e648e1beb5251e117b8ecb37b9",
+    "scripts/boxing-assets/prepare.py": "b75e4c293d1feb18499b74f20411560480736078522af65b4a96b27b4ba4485f",
+    "apps/realtime/package.json": "973db6579e52ec33029e490a6b8737a270b9dc3b24ed49f5398854e238064557"
+  },
+  "checks": {
+    "workspaceTypecheck": "PASS",
+    "unit": {
+      "protocol": 45,
+      "onchain": 45,
+      "realtime": 11,
+      "web": 41,
+      "worker": 22,
+      "total": 164,
+      "failed": 0
+    },
+    "productionBundleBrowser": {
+      "startTime": "2026-10-02T23:40:09.794Z",
+      "duration": 71332.124,
+      "expected": 65,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "operations": {
+      "passed": 28,
+      "failed": 0
+    },
+    "contactWorkerd": {
+      "passed": 16,
+      "failed": 0
+    },
+    "legacyWorkerd": {
+      "v1": 13,
+      "router": 12,
+      "v2": 12
+    },
+    "assets": {
+      "passed": 5,
+      "failed": 0
+    },
+    "realRigReplay": {
+      "passed": 9,
+      "failed": 0
+    },
+    "learning": {
+      "python": 29,
+      "typescriptParity": 4,
+      "reproducible": true
+    },
+    "nativeMetalPerformance": {
+      "at": "2026-10-02T23:45:24.838Z",
+      "scope": "Local production workerd bundle, native Metal on Apple M2, deterministic transport fixture; actual Contact v3 replay, IK, three rigs and instanced crowd. Not mobile hardware/global capacity.",
+      "firstReadyMs": 885,
+      "frames": 360,
+      "fps": 29.957608732023047,
+      "medianMs": 33.39999997615814,
+      "p95Ms": 34.80000001192093,
+      "errors": [],
+      "cleanup": {
+        "buffer": 122,
+        "bufferDelete": 122,
+        "texture": 40,
+        "textureDelete": 35,
+        "program": 25,
+        "programDelete": 17,
+        "canvas": 0
+      }
+    }
+  },
+  "financialGates": {
+    "schemaVersion": 1,
+    "checkedAt": "2026-10-02T23:30:16.233Z",
+    "status": "BLOCKED",
+    "productionApproved": false,
+    "scope": "Offline core-game evidence inventory; no RPC, credentials, transactions, licensing opinion or deployment authorization.",
+    "evidenceStatus": "CONSISTENT",
+    "records": [
+      {
+        "id": "recovery-local",
+        "path": "experiments/vrf-recovery/evidence.json",
+        "integrity": "CONSISTENT_WITH_CHECKED_FILES",
+        "sha256": "d5fe2ba9d50fb764605cec2fb82847126162a2a4715f097654f88535ee636b78",
+        "scope": "LOCAL_EXPERIMENT_ONLY",
+        "observedAt": "2026-10-01T19:40:11.894436+00:00",
+        "testsReported": 35
+      },
+      {
+        "id": "coinflip-provider-local",
+        "path": "experiments/vrf-recovery/games-provider-evidence.json",
+        "integrity": "CONSISTENT_WITH_CHECKED_FILES",
+        "sha256": "f69851b69dd0b1dc51ebbd90cb5365fda58fec8b63b4c7c5673a26b0944382c8",
+        "scope": "LOCAL_VM_QUEUE_TRANSPLANT_ONLY",
+        "observedAt": "2026-10-01T19:39:02.295131+00:00",
+        "testsReported": 6
+      },
+      {
+        "id": "per-limited-live",
+        "path": "experiments/per/evidence/probe-resume-initialized-latest.json",
+        "integrity": "CONSISTENT_WITH_CHECKED_FILES",
+        "sha256": "a0625f1be4d5e575e042fb9b6216af41891cd15ac2c1245afefc6ae451992936",
+        "scope": "HISTORICAL_LIMITED_LIVE_REPORT_ONLY",
+        "observedAt": "2026-10-01T14:49:45.283Z",
+        "httpRows": 95,
+        "blockedChecks": 10,
+        "failedChecks": 0,
+        "derivationObservations": 36,
+        "parsedVrfCandidates": 0,
+        "privacyProved": false,
+        "l1GamePayoutProved": false
+      },
+      {
+        "id": "per-identity-policy",
+        "path": "experiments/per/manifest.json",
+        "integrity": "CONSISTENT_WITH_CHECKED_FILES",
+        "sha256": "b49b3ef272a88ea1a9812abff0fbdfafb2c2dc605440919246c22e00545d2382",
+        "scope": "CONFIGURATION_OBSERVATION_ONLY",
+        "measurementPolicyPresent": false,
+        "approvedG0DeploymentPresent": false
+      }
+    ],
+    "gates": [
+      {
+        "id": "coinflip.same-proof-integration",
+        "status": "BLOCKED",
+        "reason": "Original input/key capture and both consumption paths are isolated experiments; root wagering integration and migration acceptance remain required."
+      },
+      {
+        "id": "coinflip.proof-availability",
+        "status": "BLOCKED",
+        "reason": "Retaining input/key verifies an available proof; it cannot produce a proof withheld by the oracle. No reroll or selective refund fallback."
+      },
+      {
+        "id": "coinflip.recovery-license",
+        "status": "BLOCKED",
+        "reason": "Pinned prover/verifier production-use clearance remains unresolved; local BSL experiment is not a production grant."
+      },
+      {
+        "id": "coinflip.live-provider",
+        "status": "BLOCKED",
+        "reason": "Local queue transplantation does not prove deployed source equivalence, live callback delivery, or a funded finalized payout."
+      },
+      {
+        "id": "crash.attestation",
+        "status": "BLOCKED",
+        "reason": "Independent approved measurement and quote-to-validator-to-program binding remain required."
+      },
+      {
+        "id": "crash.privacy",
+        "status": "BLOCKED",
+        "reason": "Full lifecycle/streaming/in-flight queue and independently bound VRF derivation observations remain incomplete."
+      },
+      {
+        "id": "crash.manual-cashout",
+        "status": "BLOCKED",
+        "reason": "Readonly probe commands are not timed cashout acceptance/order, concurrency or reconnect validation."
+      },
+      {
+        "id": "crash.payment-recovery",
+        "status": "BLOCKED",
+        "reason": "Exactly-once L1 game-payment rights and interruption recovery are not implemented by this probe."
+      },
+      {
+        "id": "launch.independent-review",
+        "status": "BLOCKED",
+        "reason": "A game/house audit, deployment-specific controls and operational launch approval are outside these experiment records."
+      }
+    ],
+    "limitations": [
+      "Hashes detect drift against checked local records, not authenticity or independent audit.",
+      "Historical live records are not revalidated against the network.",
+      "No record or test count can automatically authorize production; gate closure requires a separately reviewed implementation and new acceptance evidence."
+    ]
+  },
+  "remaining": [
+    "Full functional brain and self-play not implemented; learned imitation head on 128-node source subgraph.",
+    "No topology superiority established.",
+    "Authored CC0 clips + procedural IK, not new mocap or full mesh/ragdoll physics.",
+    "Physical iOS/Android and thousand-user load qualification not performed.",
+    "Mainnet, SOL wagers, token rewards and provider/privacy/payment gates remain closed."
+  ]
+}

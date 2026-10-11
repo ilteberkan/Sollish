@@ -1,0 +1,583 @@
+{
+ "matches": 12000,
+ "graph": "shuffled",
+ "rates": {
+  "actor": 0.1,
+  "critic": 0.05,
+  "fast": 0.5,
+  "entropy": 0.1
+ },
+ "tag": "v4bmain",
+ "seeds": "v4bmain:0..11999",
+ "pool": [
+  "pressure",
+  "jabber",
+  "counter",
+  "highGuard",
+  "random",
+  "self"
+ ],
+ "log": [
+  {
+   "matches": 600,
+   "seconds": 11,
+   "pressure": {
+    "win": 0.35,
+    "margin": -93
+   },
+   "jabber": {
+    "win": 0.64,
+    "margin": 63
+   },
+   "counter": {
+    "win": 0.64,
+    "margin": 41
+   },
+   "highGuard": {
+    "win": 0.765,
+    "margin": 105
+   },
+   "random": {
+    "win": 0.78,
+    "margin": 114
+   },
+   "self": {
+    "win": 0.58,
+    "margin": 28
+   }
+  },
+  {
+   "matches": 1200,
+   "seconds": 25,
+   "pressure": {
+    "win": 0.5,
+    "margin": -5
+   },
+   "jabber": {
+    "win": 0.745,
+    "margin": 117
+   },
+   "counter": {
+    "win": 0.685,
+    "margin": 83
+   },
+   "highGuard": {
+    "win": 0.77,
+    "margin": 124
+   },
+   "random": {
+    "win": 0.9,
+    "margin": 190
+   },
+   "self": {
+    "win": 0.435,
+    "margin": -38
+   }
+  },
+  {
+   "matches": 1800,
+   "seconds": 36,
+   "pressure": {
+    "win": 0.45,
+    "margin": -25
+   },
+   "jabber": {
+    "win": 0.75,
+    "margin": 98
+   },
+   "counter": {
+    "win": 0.81,
+    "margin": 118
+   },
+   "highGuard": {
+    "win": 0.84,
+    "margin": 164
+   },
+   "random": {
+    "win": 0.86,
+    "margin": 167
+   },
+   "self": {
+    "win": 0.54,
+    "margin": 34
+   }
+  },
+  {
+   "matches": 2400,
+   "seconds": 48,
+   "pressure": {
+    "win": 0.55,
+    "margin": 27
+   },
+   "jabber": {
+    "win": 0.755,
+    "margin": 108
+   },
+   "counter": {
+    "win": 0.83,
+    "margin": 121
+   },
+   "highGuard": {
+    "win": 0.84,
+    "margin": 167
+   },
+   "random": {
+    "win": 0.9,
+    "margin": 190
+   },
+   "self": {
+    "win": 0.57,
+    "margin": 44
+   }
+  },
+  {
+   "matches": 3000,
+   "seconds": 59,
+   "pressure": {
+    "win": 0.52,
+    "margin": 12
+   },
+   "jabber": {
+    "win": 0.815,
+    "margin": 117
+   },
+   "counter": {
+    "win": 0.83,
+    "margin": 126
+   },
+   "highGuard": {
+    "win": 0.9,
+    "margin": 175
+   },
+   "random": {
+    "win": 0.83,
+    "margin": 153
+   },
+   "self": {
+    "win": 0.46,
+    "margin": -5
+   }
+  },
+  {
+   "matches": 3600,
+   "seconds": 69,
+   "pressure": {
+    "win": 0.59,
+    "margin": 29
+   },
+   "jabber": {
+    "win": 0.75,
+    "margin": 129
+   },
+   "counter": {
+    "win": 0.84,
+    "margin": 166
+   },
+   "highGuard": {
+    "win": 0.88,
+    "margin": 172
+   },
+   "random": {
+    "win": 0.81,
+    "margin": 159
+   },
+   "self": {
+    "win": 0.47,
+    "margin": -27
+   }
+  },
+  {
+   "matches": 4200,
+   "seconds": 80,
+   "pressure": {
+    "win": 0.56,
+    "margin": 26
+   },
+   "jabber": {
+    "win": 0.74,
+    "margin": 105
+   },
+   "counter": {
+    "win": 0.9,
+    "margin": 171
+   },
+   "highGuard": {
+    "win": 0.94,
+    "margin": 225
+   },
+   "random": {
+    "win": 0.82,
+    "margin": 152
+   },
+   "self": {
+    "win": 0.58,
+    "margin": 20
+   }
+  },
+  {
+   "matches": 4800,
+   "seconds": 91,
+   "pressure": {
+    "win": 0.58,
+    "margin": 50
+   },
+   "jabber": {
+    "win": 0.78,
+    "margin": 118
+   },
+   "counter": {
+    "win": 0.9,
+    "margin": 184
+   },
+   "highGuard": {
+    "win": 0.92,
+    "margin": 186
+   },
+   "random": {
+    "win": 0.83,
+    "margin": 192
+   },
+   "self": {
+    "win": 0.475,
+    "margin": -13
+   }
+  },
+  {
+   "matches": 5400,
+   "seconds": 103,
+   "pressure": {
+    "win": 0.55,
+    "margin": 50
+   },
+   "jabber": {
+    "win": 0.78,
+    "margin": 115
+   },
+   "counter": {
+    "win": 0.85,
+    "margin": 189
+   },
+   "highGuard": {
+    "win": 0.98,
+    "margin": 225
+   },
+   "random": {
+    "win": 0.86,
+    "margin": 209
+   },
+   "self": {
+    "win": 0.5,
+    "margin": -23
+   }
+  },
+  {
+   "matches": 6000,
+   "seconds": 114,
+   "pressure": {
+    "win": 0.64,
+    "margin": 47
+   },
+   "jabber": {
+    "win": 0.87,
+    "margin": 177
+   },
+   "counter": {
+    "win": 0.92,
+    "margin": 182
+   },
+   "highGuard": {
+    "win": 0.91,
+    "margin": 216
+   },
+   "random": {
+    "win": 0.9,
+    "margin": 199
+   },
+   "self": {
+    "win": 0.52,
+    "margin": 24
+   }
+  },
+  {
+   "matches": 6600,
+   "seconds": 125,
+   "pressure": {
+    "win": 0.63,
+    "margin": 81
+   },
+   "jabber": {
+    "win": 0.88,
+    "margin": 171
+   },
+   "counter": {
+    "win": 0.85,
+    "margin": 181
+   },
+   "highGuard": {
+    "win": 0.94,
+    "margin": 227
+   },
+   "random": {
+    "win": 0.83,
+    "margin": 215
+   },
+   "self": {
+    "win": 0.54,
+    "margin": 32
+   }
+  },
+  {
+   "matches": 7200,
+   "seconds": 136,
+   "pressure": {
+    "win": 0.7,
+    "margin": 73
+   },
+   "jabber": {
+    "win": 0.88,
+    "margin": 201
+   },
+   "counter": {
+    "win": 0.95,
+    "margin": 201
+   },
+   "highGuard": {
+    "win": 0.96,
+    "margin": 271
+   },
+   "random": {
+    "win": 0.86,
+    "margin": 211
+   },
+   "self": {
+    "win": 0.47,
+    "margin": -4
+   }
+  },
+  {
+   "matches": 7800,
+   "seconds": 147,
+   "pressure": {
+    "win": 0.64,
+    "margin": 82
+   },
+   "jabber": {
+    "win": 0.82,
+    "margin": 143
+   },
+   "counter": {
+    "win": 0.92,
+    "margin": 228
+   },
+   "highGuard": {
+    "win": 0.9,
+    "margin": 244
+   },
+   "random": {
+    "win": 0.945,
+    "margin": 216
+   },
+   "self": {
+    "win": 0.42,
+    "margin": -21
+   }
+  },
+  {
+   "matches": 8400,
+   "seconds": 158,
+   "pressure": {
+    "win": 0.77,
+    "margin": 97
+   },
+   "jabber": {
+    "win": 0.8,
+    "margin": 143
+   },
+   "counter": {
+    "win": 0.94,
+    "margin": 223
+   },
+   "highGuard": {
+    "win": 0.98,
+    "margin": 266
+   },
+   "random": {
+    "win": 0.9,
+    "margin": 203
+   },
+   "self": {
+    "win": 0.55,
+    "margin": 21
+   }
+  },
+  {
+   "matches": 9000,
+   "seconds": 170,
+   "pressure": {
+    "win": 0.71,
+    "margin": 91
+   },
+   "jabber": {
+    "win": 0.91,
+    "margin": 180
+   },
+   "counter": {
+    "win": 0.96,
+    "margin": 248
+   },
+   "highGuard": {
+    "win": 0.97,
+    "margin": 279
+   },
+   "random": {
+    "win": 0.93,
+    "margin": 220
+   },
+   "self": {
+    "win": 0.46,
+    "margin": -19
+   }
+  },
+  {
+   "matches": 9600,
+   "seconds": 180,
+   "pressure": {
+    "win": 0.7,
+    "margin": 138
+   },
+   "jabber": {
+    "win": 0.8,
+    "margin": 149
+   },
+   "counter": {
+    "win": 0.94,
+    "margin": 255
+   },
+   "highGuard": {
+    "win": 0.995,
+    "margin": 332
+   },
+   "random": {
+    "win": 0.89,
+    "margin": 219
+   },
+   "self": {
+    "win": 0.34,
+    "margin": -49
+   }
+  },
+  {
+   "matches": 10200,
+   "seconds": 192,
+   "pressure": {
+    "win": 0.79,
+    "margin": 121
+   },
+   "jabber": {
+    "win": 0.89,
+    "margin": 204
+   },
+   "counter": {
+    "win": 0.94,
+    "margin": 242
+   },
+   "highGuard": {
+    "win": 0.97,
+    "margin": 311
+   },
+   "random": {
+    "win": 0.9,
+    "margin": 219
+   },
+   "self": {
+    "win": 0.54,
+    "margin": 4
+   }
+  },
+  {
+   "matches": 10800,
+   "seconds": 203,
+   "pressure": {
+    "win": 0.79,
+    "margin": 151
+   },
+   "jabber": {
+    "win": 0.86,
+    "margin": 188
+   },
+   "counter": {
+    "win": 0.94,
+    "margin": 242
+   },
+   "highGuard": {
+    "win": 0.98,
+    "margin": 300
+   },
+   "random": {
+    "win": 0.91,
+    "margin": 231
+   },
+   "self": {
+    "win": 0.5,
+    "margin": 17
+   }
+  },
+  {
+   "matches": 11400,
+   "seconds": 214,
+   "pressure": {
+    "win": 0.76,
+    "margin": 161
+   },
+   "jabber": {
+    "win": 0.88,
+    "margin": 172
+   },
+   "counter": {
+    "win": 0.97,
+    "margin": 253
+   },
+   "highGuard": {
+    "win": 0.98,
+    "margin": 312
+   },
+   "random": {
+    "win": 0.88,
+    "margin": 241
+   },
+   "self": {
+    "win": 0.45,
+    "margin": -27
+   }
+  },
+  {
+   "matches": 12000,
+   "seconds": 225,
+   "pressure": {
+    "win": 0.745,
+    "margin": 116
+   },
+   "jabber": {
+    "win": 0.88,
+    "margin": 189
+   },
+   "counter": {
+    "win": 0.94,
+    "margin": 248
+   },
+   "highGuard": {
+    "win": 0.99,
+    "margin": 280
+   },
+   "random": {
+    "win": 0.94,
+    "margin": 243
+   },
+   "self": {
+    "win": 0.5,
+    "margin": 2
+   }
+  }
+ ],
+ "seconds": 224.72757875
+}

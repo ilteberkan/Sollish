@@ -1,0 +1,148 @@
+{
+ "schema": "sollish.evidence.v1",
+ "at": "2026-10-05",
+ "status": "LOCAL_PRODUCTION_RUNTIME_VERIFIED_NOT_DEPLOYED",
+ "buildId": "RQQVZsiqtnBTkcFGuWvNz",
+ "scope": "Combat Club spectator (/lab/ringside/play), non-monetary: sparring-5 capsule contact + render contact resolver, referee steering and gait, NeuroBoxer v2 (neuro-2) learned strategist, TypeSafe Jev style layer with decision log. Four parallel sub-agents + coordinator integration. Hosted web unchanged (sparring-1 version 93645ad3-…).",
+ "versions": {
+  "engine": "sparring-5 (unpublished; sparring-4 frozen at experiments/combat-sparring-audit/baseline-sparring-4.ts)",
+  "controller": "neuro-2 product model connectome-s1 (theta d1e8f30d…; validation-rule pick was s3, see evidence-mirror-product.json)",
+  "styleLog": "style-log-1",
+  "jevModel": "jev-1.13.0"
+ },
+ "sourceSha256": {
+  "packages/protocol/src/combat-sparring.ts": "c1ca71f9c4a4877c1d5d8b1b175a7fae54053009a61cf5148d44a54d2d3ca950",
+  "packages/protocol/src/combat-capsules.ts": "9e02ecab8ba6cbc5832f1d1628c81920b186123e2dc51a618b5b9524a721aa82",
+  "packages/protocol/src/combat-referee.ts": "a49fe90b217f6fd1b186c8b13b966f94facf55dcb481244171111aa59d330e0a",
+  "packages/protocol/src/fight-style.ts": "8bcb9f7f1cb06d4d48382a5cbb058679374a1a2437768fa899ba14c84bdf26b0",
+  "packages/protocol/src/neuro-boxer-2.ts": "e9cde8c6ba27b47f17d6984f921663bbb085e27bb9f573a66084da1d11898bce",
+  "packages/protocol/src/neuro-boxer-2-model.ts": "b06ff63ff3704002047c14757079c2bbbc38762b0ce9243077a73445b1b647b8",
+  "packages/protocol/src/neuro-boxer.ts": "2d616fa84a30c863a0201d12d1bf2ef248ca4491c42e71b986219798d0d648e6",
+  "packages/protocol/src/neuro-boxer-model.ts": "4a97f03f64ce95460a94dfbf197eb275845077adddf28709526b35feb13a2c2a",
+  "packages/protocol/src/index.ts": "6515c21dde8bfaf5968581f019178ae55b509d2e90cffe3074ee442d5b9d6482",
+  "apps/web/components/boxing-sparring.tsx": "e570555ef878e3ac46a8b500b08833e4c07d25e489029847c3d4da262d509d26",
+  "apps/web/components/boxing-sparring.module.css": "d3c444bacad6ab5c1f6e1c8625a6c0effd5a09ef8c1df5f14f75c4650e37c889",
+  "apps/web/components/boxing-sparring-scene.tsx": "90e940f31a706c4c8aeadac9502cca2105e973d97d99538b3a06746a24b26786",
+  "apps/web/components/boxing-mixamo-athletes.ts": "59891a52874513e999c98bc60c19689737f81b4b9e7378ff925cdf50e651fc9c",
+  "apps/web/components/boxing-mocap-athletes.ts": "3b56ae054b6f5fc13c2656a6d7a7298c189719e5264978f0901356626320a547",
+  "apps/web/components/boxing-contact-resolver.ts": "207c2111b24c99d222dc578e1d348c5a877f442ae639ed8ee4ea947cfc99f999",
+  "apps/web/components/boxing-contact-capsules.json": "eb3786386a19b243ef81f96b958017a105c66469889a69b6ccd27132c2219863",
+  "apps/web/components/boxing-referee-motion.ts": "76a1b578a6aa1c3ab8d2eb67373a8240d16dd95dacc45297b9238c062fc1be88",
+  "apps/web/components/neuro-thinking-panel.tsx": "1dc151b70fe1b9775256929aac8cbfdadea5265f140c0af8e712f434dfdecf9e",
+  "apps/web/components/neuro-thinking-panel.module.css": "5bb4ebb3df14552fdd06af2025e0655d6b5ddfacce4bab912164e85de8174ca5",
+  "apps/web/lib/sparring-corners.ts": "c1dbf566e3d786fc1bb4a3ed84f08fe3e4f230de002f44cc224b322706c6fb52",
+  "apps/web/lib/jev-style-cache.json": "ef06cbb5db0778282590917af809bb0046a419b86aefbb3a5dde415662e8a61e",
+  "apps/web/lib/server/typesafe-style.ts": "5b5f1a6d03a5c4a83b001481307a51dd8e494c6a683a0818051f0927d0af58fe",
+  "apps/web/app/api/ringside/style/route.ts": "c39db3c784e1635b0b1da24fbac62bad2dd993961abeacd3e614c6d217ecad3e",
+  "experiments/decision-agent/typesafe-client.mjs": "88d2084889b6c7f62532a9a738135d98b3d531ab0a82a6701b2433aa1eb449d8",
+  "experiments/combat-sparring-audit/baseline-sparring-4.ts": "aac72f4dea4bde7ad3c7c9a4b1b7c64fdd0653f93ab52f75c679855071ef693e",
+  "experiments/neuro-boxer/evidence-style.json": "d7571f50a8fec56ca68ad49d77e49ce2d2b1b246743707ca5ccc92d8e230dc52",
+  "experiments/neuro-boxer/evidence-mirror-product.json": "91725ec30bd63592f7fbf6dfa3005f1895723c5d8a9e7a6d0f18c0eaec3c0b2d",
+  "experiments/combat-sparring-audit/sparring5-final-capture.mjs": "fcc39342b7c60dbaacc6d983cbf8aa7422afd47b2e2f0703c206292151ce339e",
+  "experiments/combat-sparring-audit/root-rate-ab.mjs": "f868b9da48a684d002681d96969085ad43ed6997736b35eed3df614aab3f8679"
+ },
+ "frozenUnchangedSha256": {
+  "packages/protocol/src/combat-v3.ts": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+  "packages/protocol/src/connectome-policy.ts": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+  "packages/protocol/src/ringside.ts": "17b86d0dfc7467c7d31d2cb0fafd373fe2e65356ca296d5fafb8cf2067b5bf12",
+  "packages/protocol/src/pari-mutuel.ts": "75527f5e04edd319e837708ce81dae33e662d1fd8005710df14a3efbf933a3c6",
+  "packages/protocol/src/live-round.ts": "64bf647babf69f80cd06fae24b2c56e2ec1e8448de258fc0ec3b3386e09870a8",
+  "packages/protocol/src/combat.ts": "aa3471a0e718f6431f3e22859eb102a92e96976de67146596061363fd7e23abf",
+  "apps/realtime/src/ringside-arena.ts": "8a8c2a14130035a1b1616d58547d86f0aec4f4fc8c7d8574cb4d83adf5498e21"
+ },
+ "tests": {
+  "protocol": "105/105",
+  "webUnit": "92/92",
+  "decisionAgent": "21/21",
+  "protocolTsc": "PASS",
+  "webTypecheck": "PASS (next typegen + tsc)",
+  "glbSparringReplay": "10/10 default, 10/10 mixamo, 10/10 mocap",
+  "glbRefereeMotion": "4/4 mixamo, 4/4 mocap",
+  "glbMixamoContact": "1/2 — thresholds FAIL (rate 3 m/s run; see contact.cpuGlb)",
+  "assets": "python 5+4 OK, combat-motion 3/3",
+  "browser": "81/81 on final build RQQVZsiqtnBTkcFGuWvNz (also 81/81 on u-nLTNMOzedC3FNs_eZTm and z1hdByVpSqy11xay8-mK3 before the root-rate changes), local workerd :3002, Jev route disabled, 2 workers, 3.8 min",
+  "readiness": "BLOCKED exit 2, productionApproved false, evidenceStatus CONSISTENT"
+ },
+ "contact": {
+  "engine": "PASS: trunk/head/thigh capsule overlap 14.1–14.4 cm → 0 (≤0.002 m), guarded glove ≤0.005 m, replay byte-identical (200 seeded bouts) — ops/evidence/ringside-sparring-contact-20261004/engine-contact.json",
+  "cpuGlb": "FAIL vs plan maxima (resolver with ROOT_RATE 3 m/s, smoothing on): torso-torso 0.0353 m max, p95 0.0324, 36 frames; head-body 0.0896 m max, p95 0.057, 468 frames; arm-torso 0.168 m max, p95 0.1025, 5823 frames; glove-glove/forearm 0.2308 m max, p95 0.1515, 60249 frames; leg-leg 0.2547 m max, p95 0.141, 2744 frames (without the rate limit 0.064 m / 1238 frames). Resolver off: torso 0.449, head 0.291, arm-torso 0.356, glove 0.236, leg 0.304. Root offset <=0.12 PASS; engine hashes identical on/off PASS — ops/evidence/ringside-sparring-contact-20261004/mixamo-contact-cpu.json, rate curve in ops/evidence/ringside-sparring5-20261005/root-rate-ab.json",
+  "realScene": {
+   "note": "final build, production runtime, default neuro-2 s1 vs s1, seed 7, ~30 s",
+   "frames": 1812,
+   "penetrationMaxM": 0.2295,
+   "penetrationP99M": 0.1836,
+   "framesOver1cm": 628,
+   "rawFramesOver1cm": 1371,
+   "dominantPairs": "glove/glove and glove/upper-arm (~95% of frames >5 mm); body-body 0 in the dev A/B at 3 m/s",
+   "rootJumpMaxM": {
+    "noRateLimit": 0.2311,
+    "rate1_5": 0.066,
+    "rate3Final": 0.0894
+   },
+   "boneSpeedP99RadS": 179.9302
+  },
+  "note": "The contact engineer measured <=0.002 m in the real scene with the passive s3 model; with the active s1 product model guards interleave and gloves/arms penetrate in ~35% of frames. Coordinator added a live root-offset rate limit (3 m/s, chosen from a measured 1.5/3/6 m/s curve): root pops 0.231 -> 0.089 m/frame, at the cost of more transient leg overlap (overlap-normal flips). A stable separation axis is the proper fix."
+ },
+ "referee": {
+  "engine": "PASS all: standing clearance 0.393→0.696 m, lying 0.108→0.662 m, crossings 0, |Δyaw| 3.13→0.050 rad/tick, |Δpos| 0.0316→0.0233 m/tick, |Δspeed| 1.73→0.0667 m/s/tick; fighters/events/winner identical (60 bouts) — experiments/combat-sparring-audit/evidence/referee-final.json",
+  "cpuGlb": "PASS: root ≤0.0243 m/frame, mean slide <0.01 mm, max slide/step 1.46–1.99 cm, 0 referee vertices outside camera bounds (before 51 300/56 430)",
+  "realScene": {
+   "frames": 1816,
+   "rootStepMaxM": 0.0242,
+   "footSlideMeanPerPlantedFrameM": 0.00008,
+   "steps": 112,
+   "footSlidePerStepP95M": 0.0067,
+   "footSlidePerStepMaxM": 0.0251
+  },
+  "realSceneVerdict": "foot slide per step max 2.51 cm vs <2 cm: FAIL; root step and mean slide PASS",
+  "risks": [
+   "engine tick 6.6→14.5 µs (referee runs in training rollouts)",
+   "camera-side share 2.0%→5.35%, can stand behind a clinch"
+  ]
+ },
+ "neuro2": {
+  "heldOut": "experiments/neuro-boxer/evidence-style.json: fixed pool 1.000 (saturated); strategist does not beat best fixed style (s1 −0.065, s2 −0.008, s3 0); tendency inputs no measurable effect; connectome advantage not shown (1 control seed each)",
+  "product": "s1 chosen on spectator criteria (mirror bouts 9000–9059): s1 85 round-1 attacks, 47.6 hits/bout, 3% draws; s3 (validation pick) 72% bouts without a round-1 attack, 82% draws; s2 93%/98%",
+  "limits": [
+   "no KO in any neuro-2 mirror bout",
+   "training budget cut (A30/B40/C30) because the capsule engine is ~4x slower",
+   "curriculum on the pre-contact engine"
+  ]
+ },
+ "jev": {
+  "realProviderCalls": 74,
+  "budget": 150,
+  "codes": "all OK (2 origin-rejected requests never reached the provider)",
+  "latency": "Node client p50 281 ms / p90 337 / max 481 (30 calls); browser end-to-end p50 389 ms (final model bout, dev); production runtime (workerd): 3 builds x 2 calls OK in scenario C",
+  "nondeterminism": "same observation can yield different styles; replay only from the committed log",
+  "keyHandling": "key only in .tooling/secrets/typesafe.env (600, gitignored); repo-wide and build-output scans 0 hits; client bundle has no endpoint/env names; local preview via wrangler dev --env-file (OpenNext preview does not forward --env-file); hosted needs wrangler secret put + DECISION_AGENT_ENABLED (owner approval)"
+ },
+ "realScene": {
+  "report": "ops/evidence/ringside-sparring5-20261005/report.json",
+  "scope": "local production runtime (OpenNext build served by wrangler dev/workerd), headless Chromium on this Mac with ANGLE/Metal; not hosted, not a device benchmark; screenshots stall rendering",
+  "mobile390": {
+   "viewport": "390x844",
+   "endTick": 540,
+   "noHorizontalOverflow": true,
+   "errors": []
+  },
+  "jevScenario": {
+   "routePosts": 2,
+   "chips": [
+    "jev:Mesafeci Jev",
+    "neuro:Kontracı öğrenilmiş"
+   ],
+   "errors": 0
+  },
+  "rootRateAB": "ops/evidence/ringside-sparring5-20261005/root-rate-ab.json"
+ },
+ "notClaimed": [
+  "hosted deployment",
+  "physical phone",
+  "GPU device benchmark",
+  "whole fly brain or consciousness",
+  "motion capture for resolver/referee foot placement",
+  "connectome advantage",
+  "Jev decision quality"
+ ]
+}

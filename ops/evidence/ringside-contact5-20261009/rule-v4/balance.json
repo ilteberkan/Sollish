@@ -1,0 +1,48 @@
+{
+ "params": "frozen",
+ "rates": "engine",
+ "seeds": "balance:0..299",
+ "N": 300,
+ "kor": 0.51,
+ "ayaz": 0.483,
+ "draw": 0.007,
+ "knockdown": 0.12,
+ "stoppage": 0.013,
+ "strikesPerRound": 55.843,
+ "minStrikes": 23,
+ "hitsPerRound": 28.14,
+ "techniques": {
+  "cross": 0.208,
+  "leadHook": 0.144,
+  "jab": 0.175,
+  "bodyHook": 0.25,
+  "uppercut": 0.078,
+  "rearHook": 0.145
+ },
+ "actionShare": {
+  "guard": 0.125,
+  "slip": 0.086,
+  "circle": 0.228,
+  "retreat": 0.087,
+  "advance": 0.117,
+  "roll": 0.085,
+  "cross": 0.047,
+  "leadHook": 0.031,
+  "jab": 0.031,
+  "bodyHook": 0.055,
+  "uppercut": 0.02,
+  "stagger": 0.017,
+  "rearHook": 0.038,
+  "clinch": 0.02,
+  "down": 0.006,
+  "neutral": 0.006,
+  "rise": 0
+ },
+ "msPerRound": 24.3,
+ "band": {
+  "korShare": true,
+  "punches": true,
+  "knockdowns": true
+ },
+ "pass": true
+}

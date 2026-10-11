@@ -1,0 +1,342 @@
+{
+  "status": "ADMISSION_TARGET_NOT_MET_LEDGER_VERIFIED",
+  "startedAt": "2026-10-03T03:10:32.392Z",
+  "finishedAt": "2026-10-03T03:12:59.461Z",
+  "hardware": {
+    "node": "v24.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2",
+    "logicalCpus": 8,
+    "totalMemoryBytes": 8589934592,
+    "wrangler": "4.145.0",
+    "runtime": "local workerd, real SQLite and WebSockets; shared development host"
+  },
+  "sourceHashes": {
+    "apps/realtime/src/ringside-arena.ts": "8a8c2a14130035a1b1616d58547d86f0aec4f4fc8c7d8574cb4d83adf5498e21",
+    "packages/protocol/src/ringside.ts": "17b86d0dfc7467c7d31d2cb0fafd373fe2e65356ca296d5fafb8cf2067b5bf12",
+    "packages/protocol/src/combat-v3.ts": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+    "packages/protocol/src/connectome-policy.ts": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+    "packages/protocol/src/pari-mutuel.ts": "75527f5e04edd319e837708ce81dae33e662d1fd8005710df14a3efbf933a3c6",
+    "pnpm-lock.yaml": "7744f516a98b94385a1cc45fde1e482d0f4b9c0907a00f1200e8b07fe61cf92d",
+    "experiments/load/runtime.mjs": "e38ac58cb33bf8226e926d48b0948a523b8e7416964276e086ac009d902fd1a0",
+    "experiments/load/contact-rooms.mjs": "f3af9061e64bb8e30af5a5232f7b5e7a95863ffab93955bdce81bb40ae2008f2"
+  },
+  "entrySha256": "e1bd7047c1cbce8ae0b85b200a28d0969f7c4162e897ef74be1e6c56db70e354",
+  "topology": {
+    "rooms": 5,
+    "independentLedgers": 5,
+    "simultaneousSessions": 1120,
+    "perRoom": 224
+  },
+  "clock": "Actual 20s open + 45s fight; no clock/seed/state override",
+  "joinMs": 52329,
+  "admission": {
+    "attempted": 1120,
+    "accepted": 616,
+    "acceptedPerRoom": [
+      224,
+      98,
+      98,
+      98,
+      98
+    ],
+    "duplicateFrames": 160,
+    "uniqueLedgerTickets": 616,
+    "latencyMs": {
+      "p50": 11064,
+      "p95": 16590,
+      "p99": 17113,
+      "max": 20613
+    }
+  },
+  "reconnect": {
+    "sessions": 160,
+    "sameTokenSameId": true,
+    "latencyMs": {
+      "p50": 3077,
+      "p95": 5783,
+      "p99": 6407,
+      "max": 6407
+    }
+  },
+  "late": {
+    "attempts": 80,
+    "rejected": 80
+  },
+  "ledger": [
+    {
+      "room": 0,
+      "roundId": "2",
+      "sessions": {
+        "n": 224,
+        "balance": 22395520
+      },
+      "tickets": {
+        "n": 224,
+        "stakes": 224000,
+        "payouts": 219520,
+        "pending": 0
+      },
+      "pools": [
+        {
+          "round": "2",
+          "market": "finish",
+          "n": 56,
+          "stakes": 56000,
+          "payouts": 54880,
+          "fee": 1120
+        },
+        {
+          "round": "2",
+          "market": "first-hit",
+          "n": 56,
+          "stakes": 56000,
+          "payouts": 54880,
+          "fee": 1120
+        },
+        {
+          "round": "2",
+          "market": "knockdown",
+          "n": 56,
+          "stakes": 56000,
+          "payouts": 54880,
+          "fee": 1120
+        },
+        {
+          "round": "2",
+          "market": "winner",
+          "n": 56,
+          "stakes": 56000,
+          "payouts": 54880,
+          "fee": 1120
+        }
+      ],
+      "fees": {
+        "total": 4480
+      }
+    },
+    {
+      "room": 1,
+      "roundId": "2",
+      "sessions": {
+        "n": 224,
+        "balance": 22398040
+      },
+      "tickets": {
+        "n": 98,
+        "stakes": 98000,
+        "payouts": 96040,
+        "pending": 0
+      },
+      "pools": [
+        {
+          "round": "2",
+          "market": "finish",
+          "n": 24,
+          "stakes": 24000,
+          "payouts": 23520,
+          "fee": 480
+        },
+        {
+          "round": "2",
+          "market": "first-hit",
+          "n": 25,
+          "stakes": 25000,
+          "payouts": 24500,
+          "fee": 500
+        },
+        {
+          "round": "2",
+          "market": "knockdown",
+          "n": 24,
+          "stakes": 24000,
+          "payouts": 23520,
+          "fee": 480
+        },
+        {
+          "round": "2",
+          "market": "winner",
+          "n": 25,
+          "stakes": 25000,
+          "payouts": 24500,
+          "fee": 500
+        }
+      ],
+      "fees": {
+        "total": 1960
+      }
+    },
+    {
+      "room": 2,
+      "roundId": "2",
+      "sessions": {
+        "n": 224,
+        "balance": 22398040
+      },
+      "tickets": {
+        "n": 98,
+        "stakes": 98000,
+        "payouts": 96040,
+        "pending": 0
+      },
+      "pools": [
+        {
+          "round": "2",
+          "market": "finish",
+          "n": 24,
+          "stakes": 24000,
+          "payouts": 23520,
+          "fee": 480
+        },
+        {
+          "round": "2",
+          "market": "first-hit",
+          "n": 25,
+          "stakes": 25000,
+          "payouts": 24500,
+          "fee": 500
+        },
+        {
+          "round": "2",
+          "market": "knockdown",
+          "n": 24,
+          "stakes": 24000,
+          "payouts": 23520,
+          "fee": 480
+        },
+        {
+          "round": "2",
+          "market": "winner",
+          "n": 25,
+          "stakes": 25000,
+          "payouts": 24500,
+          "fee": 500
+        }
+      ],
+      "fees": {
+        "total": 1960
+      }
+    },
+    {
+      "room": 3,
+      "roundId": "2",
+      "sessions": {
+        "n": 224,
+        "balance": 22398040
+      },
+      "tickets": {
+        "n": 98,
+        "stakes": 98000,
+        "payouts": 96040,
+        "pending": 0
+      },
+      "pools": [
+        {
+          "round": "2",
+          "market": "finish",
+          "n": 24,
+          "stakes": 24000,
+          "payouts": 23520,
+          "fee": 480
+        },
+        {
+          "round": "2",
+          "market": "first-hit",
+          "n": 25,
+          "stakes": 25000,
+          "payouts": 24500,
+          "fee": 500
+        },
+        {
+          "round": "2",
+          "market": "knockdown",
+          "n": 24,
+          "stakes": 24000,
+          "payouts": 23520,
+          "fee": 480
+        },
+        {
+          "round": "2",
+          "market": "winner",
+          "n": 25,
+          "stakes": 25000,
+          "payouts": 24500,
+          "fee": 500
+        }
+      ],
+      "fees": {
+        "total": 1960
+      }
+    },
+    {
+      "room": 4,
+      "roundId": "2",
+      "sessions": {
+        "n": 224,
+        "balance": 22398040
+      },
+      "tickets": {
+        "n": 98,
+        "stakes": 98000,
+        "payouts": 96040,
+        "pending": 0
+      },
+      "pools": [
+        {
+          "round": "2",
+          "market": "finish",
+          "n": 24,
+          "stakes": 24000,
+          "payouts": 23520,
+          "fee": 480
+        },
+        {
+          "round": "2",
+          "market": "first-hit",
+          "n": 25,
+          "stakes": 25000,
+          "payouts": 24500,
+          "fee": 500
+        },
+        {
+          "round": "2",
+          "market": "knockdown",
+          "n": 24,
+          "stakes": 24000,
+          "payouts": 23520,
+          "fee": 480
+        },
+        {
+          "round": "2",
+          "market": "winner",
+          "n": 25,
+          "stakes": 25000,
+          "payouts": 24500,
+          "fee": 500
+        }
+      ],
+      "fees": {
+        "total": 1960
+      }
+    }
+  ],
+  "metrics": {
+    "frames": 349544,
+    "bytes": 1230678908,
+    "invalidFrames": 0,
+    "unexpectedClose": 0,
+    "peakClientRss": 348585984,
+    "peakRuntimeTreeRss": 1330053120,
+    "guard": null,
+    "clientEventLoopDelayMs": {
+      "p95": 22,
+      "max": 73
+    },
+    "clientCpuMs": {
+      "user": 15791,
+      "system": 10759
+    }
+  },
+  "scope": "Local workerd and real SQLite/signature-free demo sessions. Five separate rounds; NOT one shared round or hosted/cloud/real-asset throughput. Other local development workloads may contend. Full source hashes and bounded resources retained; no production cap changes."
+}

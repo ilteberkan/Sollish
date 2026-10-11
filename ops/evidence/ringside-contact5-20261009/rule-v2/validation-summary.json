@@ -1,0 +1,10 @@
+{
+  "note": "The full rule-v2 validation reports (seeds val2:*) were overwritten by mistake on 2026-10-09 when rule-v3 reports with the same file names were moved here; they now live in ../rule-v3/. These are the rule-v2 numbers as printed by run-eval.sh at the time (paired bootstrap 95% intervals, learning minus frozen, n=150 per opponent, opponents mirror + rule-v1 checkpoints).",
+  "results": {
+    "fast2-actor0.5": { "margin": { "mean": 33.62, "lo": 11.47, "hi": 56.31 }, "win": { "mean": 0.05, "lo": -0.01, "hi": 0.10 } },
+    "fast2-actor1":   { "margin": { "mean": 43.18, "lo": 20.80, "hi": 64.83 }, "win": { "mean": 0.09, "lo": 0.04, "hi": 0.14 } },
+    "fast4-actor0.5": { "margin": { "mean": 31.37, "lo": 7.82,  "hi": 54.83 }, "win": { "mean": 0.08, "lo": 0.02, "hi": 0.14 } },
+    "fast4-actor1":   { "margin": { "mean": 26.87, "lo": 1.76,  "hi": 51.35 }, "win": { "mean": 0.09, "lo": 0.04, "hi": 0.15 } }
+  },
+  "selected": "fast 2, actor 1 (then failed on test2: margin 2.35, 95% CI -24.00..28.94)"
+}

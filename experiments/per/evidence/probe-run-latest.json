@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-01T14:36:15.344Z",
+  "scope": "Own PER probe run; no game/funds payout",
+  "mode": "run",
+  "status": "BLOCKED",
+  "productionApproval": false,
+  "G0": "BLOCKED",
+  "checks": [
+    {
+      "id": "execution-prerequisite-or-runtime",
+      "status": "BLOCKED",
+      "evidence": {
+        "classification": "HTTP_ERROR",
+        "errorSha256": "abf84a21b1ddfdf32c7fae75d3d5a14d68eff5e626b6e0d554841da86ad1646c",
+        "rawErrorPersisted": false
+      }
+    }
+  ],
+  "rows": [],
+  "transactions": [
+    {
+      "name": "initialize_round",
+      "role": "inspector",
+      "signature": "JGbQwCpFndvJkiDNLuvCvyVDASZwUzg9JUSMzUkci7jk4ypN1YHknTrQJeajsj1w4PAj8kG7Npw1fFEFXYduVyh",
+      "chain": "L1"
+    },
+    {
+      "name": "initialize_receipt",
+      "role": "playerA",
+      "signature": "C6iQLV2D8dsAFF6fXJa322wA8do6b1SDALvr6bfHi14gVdGkEW9YZy5Fp4TesuvEdjsevY7za1Aw9uACR8j8Gne",
+      "chain": "L1"
+    }
+  ],
+  "sessions": {
+    "inspector": {
+      "publicKey": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+      "expiresAt": 1790867177930,
+      "expirySource": "UNVERIFIED_JWT_LOCAL_DEADLINE",
+      "jwtSignatureVerified": false,
+      "authorizationGrantedLocally": false,
+      "tokenPersisted": false
+    },
+    "playerA": {
+      "publicKey": "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+      "expiresAt": 1790867178381,
+      "expirySource": "UNVERIFIED_JWT_LOCAL_DEADLINE",
+      "jwtSignatureVerified": false,
+      "authorizationGrantedLocally": false,
+      "tokenPersisted": false
+    },
+    "playerB": {
+      "publicKey": "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg",
+      "expiresAt": 1790867178831,
+      "expirySource": "UNVERIFIED_JWT_LOCAL_DEADLINE",
+      "jwtSignatureVerified": false,
+      "authorizationGrantedLocally": false,
+      "tokenPersisted": false
+    }
+  },
+  "leakSearch": [],
+  "localBinarySha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+  "clientSha256": "4301670e5b27ebdb1cf5966ac22d11967dc19899e0b7c2ff0bfeb7c5eeaf6c20",
+  "runnerSha256": "9c5ae705b3b18301d1d2f995cf04f4849db41529661702aae9b87ee7c608c683",
+  "vrfVisibilitySha256": "4b7560baf4c3f2e7bc0ef155c8396369eef0603c1da80034221f64dee7b68523",
+  "plan": {
+    "version": 1,
+    "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "roundId": "1790833165684",
+    "inspector": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+    "players": [
+      "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+      "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg"
+    ],
+    "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+    "permission": "8sdJs3MMobmKo6LutsFU93CSicxUiGKbrGYAGYWw6BTV",
+    "identity": "6buXn8ycBgN12n8S1R7ZaixZmBQMDor16TzgAobqiD9S",
+    "roundDelegation": {
+      "buffer": "2aqwWAkuxMBxqD3RuEWX96FgRpUX7QjzwLwr2ad2AnoP",
+      "record": "DeEoL1gzZRpJqJkfaVeYZhsTwnYECoS8NKvDx1SR6ViP",
+      "metadata": "21YetqvJy21Btkd1dDVh8buXYTsoG5cWUL1GBssLZoXT"
+    },
+    "receipts": [
+      {
+        "address": "AoMw5mU7VRtrYyKHt2BKHE1ayveGbnmTPQ8ks7mxmtkp",
+        "player": "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+        "buffer": "AyD45qzHDyuN8YVVArD6YHBFxGoDerxD166Wt89LgLgm",
+        "record": "AA4J28xFUTH7tVDzFLuo33t7U6ZMjVJLuccxULqpA8r6",
+        "metadata": "BNJqK4xukMmLGihvBLj2yTLn5XZzPKzYvH1qkY6NvjcY"
+      },
+      {
+        "address": "DXJn45JY4FUZmQYojqwoSS2ncsXN4fxC5iRRSCWTU7Ps",
+        "player": "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg",
+        "buffer": "8hujrmrfqUsengnofCgqzSkohkQ14LRSfiDhzyA2nViZ",
+        "record": "8sKbT19K2jryihudf9d9irq9VkAEhBT3PAEpxcmLnoNP",
+        "metadata": "4KNBDP5fB3REV5CJEqDYDHiEPNJycRcobH2Tn5GGt72W"
+      }
+    ]
+  },
+  "deployment": {
+    "genesis": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+    "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "programData": "3TjrsRtLukZwUfnWxFZchVXE2dAd2xp4UfkMe6h6RaAD",
+    "elfSha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+    "elfBytes": 292384,
+    "allocationPaddingBytes": 0,
+    "upgradeAuthority": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA"
+  },
+  "runOutcome": "BLOCKED",
+  "writeJournal": {
+    "version": 1,
+    "genesis": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+    "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+    "inspector": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+    "players": [
+      "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+      "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg"
+    ],
+    "feePolicy": {
+      "perTransaction": 100000,
+      "cumulative": 2000000,
+      "minimumL1Balance": 100000,
+      "minimumTeeBalance": 0
+    },
+    "entries": [
+      {
+        "action": "initialize_round",
+        "role": "inspector",
+        "chain": "L1",
+        "signature": "JGbQwCpFndvJkiDNLuvCvyVDASZwUzg9JUSMzUkci7jk4ypN1YHknTrQJeajsj1w4PAj8kG7Npw1fFEFXYduVyh",
+        "messageSha256": "3e6f6b39e7403036363e4ae967bb815f868c1fde79f06c13f497baacc64249d3",
+        "lastValidBlockHeight": 493552997,
+        "feeLamports": 5000,
+        "state": "confirmed"
+      },
+      {
+        "action": "initialize_receipt",
+        "role": "playerA",
+        "chain": "L1",
+        "signature": "C6iQLV2D8dsAFF6fXJa322wA8do6b1SDALvr6bfHi14gVdGkEW9YZy5Fp4TesuvEdjsevY7za1Aw9uACR8j8Gne",
+        "messageSha256": "7812504bb66b09758483cc85ec0a19253a01ab6a82437fd70c19eed10dd71fdf",
+        "lastValidBlockHeight": 493553005,
+        "feeLamports": 5000,
+        "state": "confirmed"
+      },
+      {
+        "action": "initialize_receipt",
+        "role": "playerB",
+        "chain": "L1",
+        "signature": "5vtC9Mb3N41w76XJVBwQVTkaEjXwLnQinTNd7pEZ6Usu3bBA2bviMgpp7yhG4FkbA2a2j539dqDNnHTwoSEu1T8c",
+        "messageSha256": "99182c7dc31ea837dfb83fa204df597b012c8b0e2dba6a6724700f6d73ec989b",
+        "lastValidBlockHeight": 493553013,
+        "feeLamports": 5000,
+        "state": "prepared"
+      }
+    ],
+    "rawResponsesPersisted": false,
+    "automaticRetry": false
+  },
+  "finishedAt": "2026-10-01T14:36:25.341Z"
+}

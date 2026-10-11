@@ -1,0 +1,29 @@
+✔ real idle, footwork and full-body attack clips move the body instead of solving a static guard (23.867958ms)
+ℹ neutral visible gear minimumY=-0.0117m relative to floor
+✔ hit feedback bends the torso while preserving authoritative root position and state (1.149042ms)
+✔ held block stays standing with both gloves protecting the upper body (0.638666ms)
+ℹ {"head":1.5911606920322943,"pelvis":0.9255299147625757,"left":1.5500000517899561,"right":1.5499999633885275}
+✔ seeking and repeated render rates produce identical bone poses without accumulated IK twist (18.583459ms)
+✔ airborne rendering follows engine height and cannot pin the jumping body to the arena floor (0.428292ms)
+✔ contact corrections are bounded through anticipation, active frames and recovery on both actors (83.11875ms)
+ℹ {"kickAtEnd":{"hip":[-0.6848539594847903,0.9347891601379553,-0.11546776069155908],"ankle":[-0.6000008313474916,1.1200005328796594,0.4199999751046577],"target":{"x":-0.5999999999999999,"y":1.12,"z":0.42}}}
+ℹ {"jab/0":{"maxContactError":1.4167700555339216e-7,"maxFrameTravel":0.3217265179194602},"jab/1":{"maxContactError":1.4581695116632087e-7,"maxFrameTravel":0.31435779132619834},"cross/0":{"maxContactError":0.06937216664603824,"maxFrameTravel":0.28582412271229385},"cross/1":{"maxContactError":0.06937216664603849,"maxFrameTravel":0.2858241227122937},"hook/0":{"maxContactError":0.1084690255987943,"maxFrameTravel":0.3035925653509745},"hook/1":{"maxContactError":0.1084690255987941,"maxFrameTravel":0.27271645222199997},"uppercut/0":{"maxContactError":0.0026690498280544876,"maxFrameTravel":0.18225910902979073},"uppercut/1":{"maxContactError":0.0026690498280550192,"maxFrameTravel":0.198472880085435},"roundhouse/0":{"maxContactError":0.03953689096237683,"maxFrameTravel":0.5392541390526998},"roundhouse/1":{"maxContactError":0.03953689092830181,"maxFrameTravel":0.5392541156567705}}
+✔ real engine hits overlap declared hurt spheres when sampled with rendered striking limbs (118.4595ms)
+ℹ {"actualEngineContactCoverage":{"jab/0":3,"jab/1":3,"cross/0":3,"cross/1":3,"hook/0":3,"hook/1":3,"uppercut/0":2,"uppercut/1":2,"roundhouse/0":3,"roundhouse/1":3},"scope":"declared sphere/limb overlap; not triangle mesh collision or a visual quality guarantee"}
+✔ all attacks and recoil keep real bones unstretched and visible skinned vertices inside camera bounds (47.388791ms)
+ℹ jab engine leftHand target to rendered left/right glove: 0.000/0.704m (visual observation, not a collision guarantee)
+ℹ cross engine rightHand target to rendered left/right glove: 0.305/0.000m (visual observation, not a collision guarantee)
+ℹ hook engine leftHand target to rendered left/right glove: 0.020/1.163m (visual observation, not a collision guarantee)
+ℹ uppercut engine rightHand target to rendered left/right glove: 0.231/0.000m (visual observation, not a collision guarantee)
+ℹ roundhouse engine rightFoot target to rendered left/right glove: 0.852/0.628m (visual observation, not a collision guarantee)
+ℹ roundhouse ankle reach-clamped target gap 0.008m
+✔ practice keeps the referee hidden and releases its own actors idempotently (1.414209ms)
+✔ a tampered motion file fails closed and cleans the already loaded cast (46.7055ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 515.938792

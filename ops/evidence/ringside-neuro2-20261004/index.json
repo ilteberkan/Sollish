@@ -1,0 +1,36 @@
+{
+ "at": "2026-10-05T03:34:08Z",
+ "scope": "local dev runtime: shared Next dev server http://127.0.0.1:3000 (Turbopack, not a production build, not hosted); headless Chromium with GPU WebGL (--use-angle=metal) on the Apple M2 dev machine; screenshots are presentation evidence only",
+ "page": "/lab/ringside/play?seed=42 (and ?seed=43 for desktop-v2-final); corners: default Sinek beyni v2 vs v2; desktop-external: KOR = neuro2-cache (Jev kaydı); desktop-v1: KOR = neuro1",
+ "model": {
+  "neuro2ThetaSha256": "c39c31073ea22b00dec404ab5de8e1301271d85b153272b76d6821668552dc09",
+  "neuroBoxer2ModelFileSha256": "ec68bc3e646cc0c4301d90a185d1d9a8d96fa682b68e166fabe1c9f0d441b6cd",
+  "neuroBoxer2SourceSha256": "e9cde8c6ba27b47f17d6984f921663bbb085e27bb9f573a66084da1d11898bce"
+ },
+ "ui": {
+  "neuroThinkingPanelSha256": "1dc151b70fe1b9775256929aac8cbfdadea5265f140c0af8e712f434dfdecf9e",
+  "panelCssSha256": "5bb4ebb3df14552fdd06af2025e0655d6b5ddfacce4bab912164e85de8174ca5",
+  "boxingSparringTsxSha256 (other engineer, at capture time)": "7d5a46135b29e6089e4b279f665ccd0a36461b86942fe813b05fc0f3487d3a4e"
+ },
+ "engine": {
+  "combatSparringSha256": "c1ca71f9c4a4877c1d5d8b1b175a7fae54053009a61cf5148d44a54d2d3ca950",
+  "combatCapsulesSha256": "9e02ecab8ba6cbc5832f1d1628c81920b186123e2dc51a618b5b9524a721aa82"
+ },
+ "files": {
+  "desktop-external-15.png": "full frame",
+  "desktop-external-panel.png": "panel crop",
+  "desktop-external-report.json": "per-capture panel text over time + JS errors (frames listed there that are not kept were moved out to save space)",
+  "desktop-v1-15.png": "full frame",
+  "desktop-v1-panel.png": "panel crop",
+  "desktop-v1-report.json": "per-capture panel text over time + JS errors (frames listed there that are not kept were moved out to save space)",
+  "desktop-v2-31.png": "full frame",
+  "desktop-v2-final-15.png": "full frame",
+  "desktop-v2-final-report.json": "per-capture panel text over time + JS errors (frames listed there that are not kept were moved out to save space)",
+  "desktop-v2-panel.png": "panel crop",
+  "desktop-v2-report.json": "per-capture panel text over time + JS errors (frames listed there that are not kept were moved out to save space)",
+  "mobile-v2-23.png": "full frame",
+  "mobile-v2-panel.png": "panel crop",
+  "mobile-v2-report.json": "per-capture panel text over time + JS errors (frames listed there that are not kept were moved out to save space)"
+ },
+ "observed": "desktop-v2: style Baskici held 1->24 s, reasons change over the bout; desktop-external: badge ONBELLEK TABLOSU - JEV-1.13.0 plus the learned head suggestion; mobile-v2: compact badge + top reason; desktop-v1: neuro-1 panel without strategist block; no page errors in any capture. Known: at 1280x720 the panel top (page CSS .brain top:128px) touches the page HUD .styleChip by ~2 px."
+}

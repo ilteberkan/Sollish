@@ -1,0 +1,200 @@
+{
+ "audit": "contact-audit",
+ "engine": "candidate",
+ "version": "sparring-5",
+ "bodyModel": "sparring-5 capsules on the current sparringPose",
+ "radii": {
+  "torso": 0.19,
+  "head": 0.135,
+  "upperArm": 0.12,
+  "forearm": 0.08,
+  "glove": 0.12,
+  "thigh": 0.15
+ },
+ "bout": {
+  "durationSeconds": 45,
+  "rounds": 3,
+  "breakSeconds": 8
+ },
+ "seeds": 12,
+ "firstSeed": 1,
+ "sides": "bots play both corners; neuro-vs-neuro once per seed (temperature 0.8, product sampling)",
+ "scope": "engine fixture: simplified capsules, not rendered meshes",
+ "rows": [
+  {
+   "matchup": "neuro-vs-neuro",
+   "bouts": 12,
+   "ticks": 109195,
+   "bodyCapsuleOverlapCm": {
+    "max": 0,
+    "p99OfOverlapTicks": 0,
+    "ticksOver2mm": 0,
+    "shareTicksOver2mm": 0,
+    "pairMaxCm": {
+     "thigh-thigh": 0
+    }
+   },
+   "strikingGloveVsGuardCm": {
+    "defenderGuarding": {
+     "ticks": 7710,
+     "max": 3.5,
+     "p95": 3.1
+    },
+    "defenderNotGuarding": {
+     "ticks": 25557,
+     "max": 19.1,
+     "p95": 17.1
+    }
+   },
+   "strikingGloveInHeadTorsoMaxCm": 0.2,
+   "nonStrikingArmInOtherTrunkMaxCm": 0,
+   "minRootDistanceM": 0.78,
+   "minDistanceToLyingBodyM": 0.638,
+   "perBout": {
+    "hits": 69.92,
+    "blocks": 99.33,
+    "knockdowns": 0.33
+   },
+   "hitsThatWouldMeetIdleGuardFirst": {
+    "count": 697,
+    "shareOfHits": 0.831
+   },
+   "methods": {
+    "decision": 9,
+    "ko": 2,
+    "draw": 1
+   }
+  },
+  {
+   "matchup": "balanced-vs-pressure",
+   "bouts": 24,
+   "ticks": 187517,
+   "bodyCapsuleOverlapCm": {
+    "max": 0,
+    "p99OfOverlapTicks": 0,
+    "ticksOver2mm": 0,
+    "shareTicksOver2mm": 0,
+    "pairMaxCm": {
+     "thigh-thigh": 0
+    }
+   },
+   "strikingGloveVsGuardCm": {
+    "defenderGuarding": {
+     "ticks": 6954,
+     "max": 3.4,
+     "p95": 2.7
+    },
+    "defenderNotGuarding": {
+     "ticks": 12480,
+     "max": 20.3,
+     "p95": 17.2
+    }
+   },
+   "strikingGloveInHeadTorsoMaxCm": 0.2,
+   "nonStrikingArmInOtherTrunkMaxCm": 0,
+   "minRootDistanceM": 0.78,
+   "minDistanceToLyingBodyM": 0.648,
+   "perBout": {
+    "hits": 38.63,
+    "blocks": 84.46,
+    "knockdowns": 1.54
+   },
+   "hitsThatWouldMeetIdleGuardFirst": {
+    "count": 769,
+    "shareOfHits": 0.83
+   },
+   "methods": {
+    "tko": 4,
+    "ko": 12,
+    "decision": 8
+   }
+  },
+  {
+   "matchup": "counter-vs-balanced",
+   "bouts": 24,
+   "ticks": 217440,
+   "bodyCapsuleOverlapCm": {
+    "max": 0,
+    "p99OfOverlapTicks": 0,
+    "ticksOver2mm": 0,
+    "shareTicksOver2mm": 0,
+    "pairMaxCm": {
+     "thigh-thigh": 0
+    }
+   },
+   "strikingGloveVsGuardCm": {
+    "defenderGuarding": {
+     "ticks": 15602,
+     "max": 3.4,
+     "p95": 2
+    },
+    "defenderNotGuarding": {
+     "ticks": 12719,
+     "max": 20.9,
+     "p95": 17
+    }
+   },
+   "strikingGloveInHeadTorsoMaxCm": 0.2,
+   "nonStrikingArmInOtherTrunkMaxCm": 0,
+   "minRootDistanceM": 0.78,
+   "minDistanceToLyingBodyM": null,
+   "perBout": {
+    "hits": 24.46,
+    "blocks": 123.42,
+    "knockdowns": 0
+   },
+   "hitsThatWouldMeetIdleGuardFirst": {
+    "count": 547,
+    "shareOfHits": 0.932
+   },
+   "methods": {
+    "decision": 19,
+    "draw": 5
+   }
+  },
+  {
+   "matchup": "pressure-vs-counter",
+   "bouts": 24,
+   "ticks": 201224,
+   "bodyCapsuleOverlapCm": {
+    "max": 0,
+    "p99OfOverlapTicks": 0,
+    "ticksOver2mm": 0,
+    "shareTicksOver2mm": 0,
+    "pairMaxCm": {
+     "thigh-thigh": 0
+    }
+   },
+   "strikingGloveVsGuardCm": {
+    "defenderGuarding": {
+     "ticks": 8690,
+     "max": 4.2,
+     "p95": 2.7
+    },
+    "defenderNotGuarding": {
+     "ticks": 14432,
+     "max": 20.8,
+     "p95": 17.1
+    }
+   },
+   "strikingGloveInHeadTorsoMaxCm": 0.2,
+   "nonStrikingArmInOtherTrunkMaxCm": 0,
+   "minRootDistanceM": 0.78,
+   "minDistanceToLyingBodyM": 0.65,
+   "perBout": {
+    "hits": 36.54,
+    "blocks": 95.58,
+    "knockdowns": 1.33
+   },
+   "hitsThatWouldMeetIdleGuardFirst": {
+    "count": 819,
+    "shareOfHits": 0.934
+   },
+   "methods": {
+    "ko": 8,
+    "decision": 11,
+    "tko": 5
+   }
+  }
+ ]
+}

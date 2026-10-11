@@ -1,0 +1,177 @@
+{
+ "at": "2026-10-04T03:54:26.565Z",
+ "seeds": "5000-5049, both corners",
+ "models": {
+  "connectome": {
+   "sha256": "fbe8c0fed5c0a40878a971bbfbf0b8b3a87e0446ad2829a61912c77693bd5929",
+   "generation": 300
+  },
+  "shuffled": {
+   "sha256": "1888512909f52904051f6e01d86a0904c45b8714f3833728aa8f578c25ff8692",
+   "generation": 300
+  },
+  "norecur": {
+   "sha256": "9879def74e56cca8c703261795ae3a770df3e380bea7ad3f4247579f20828166",
+   "generation": 300
+  }
+ },
+ "vsScriptedCorners": {
+  "connectome": {
+   "balanced": {
+    "score": 1,
+    "koWinShare": 0,
+    "knockdownsForPerBout": 0,
+    "knockdownsAgainstPerBout": 0,
+    "cleanHitsPerBout": 21.2,
+    "passivity": 0,
+    "techniqueEntropyBits": 1.45,
+    "techniqueShare": {
+     "jab": 0.531,
+     "cross": 0.369,
+     "uppercut": 0.051,
+     "hook": 0.049
+    }
+   },
+   "pressure": {
+    "score": 1,
+    "koWinShare": 0.91,
+    "knockdownsForPerBout": 1.2,
+    "knockdownsAgainstPerBout": 0,
+    "cleanHitsPerBout": 27.4,
+    "passivity": 0.001,
+    "techniqueEntropyBits": 1.02,
+    "techniqueShare": {
+     "jab": 0.569,
+     "cross": 0.428,
+     "hook": 0.002,
+     "uppercut": 0.001
+    }
+   },
+   "counter": {
+    "score": 1,
+    "koWinShare": 0,
+    "knockdownsForPerBout": 0,
+    "knockdownsAgainstPerBout": 0,
+    "cleanHitsPerBout": 20.9,
+    "passivity": 0,
+    "techniqueEntropyBits": 1.23,
+    "techniqueShare": {
+     "jab": 0.568,
+     "cross": 0.388,
+     "hook": 0.015,
+     "uppercut": 0.029
+    }
+   }
+  },
+  "shuffled": {
+   "balanced": {
+    "score": 0.98,
+    "koWinShare": 0,
+    "knockdownsForPerBout": 0,
+    "knockdownsAgainstPerBout": 0,
+    "cleanHitsPerBout": 15.8,
+    "passivity": 0,
+    "techniqueEntropyBits": 0.82,
+    "techniqueShare": {
+     "jab": 0.769,
+     "hook": 0.226,
+     "uppercut": 0.004,
+     "cross": 0.001
+    }
+   },
+   "pressure": {
+    "score": 0.99,
+    "koWinShare": 0,
+    "knockdownsForPerBout": 0,
+    "knockdownsAgainstPerBout": 0,
+    "cleanHitsPerBout": 20.2,
+    "passivity": 0.002,
+    "techniqueEntropyBits": 0.76,
+    "techniqueShare": {
+     "jab": 0.803,
+     "hook": 0.19,
+     "uppercut": 0.004,
+     "cross": 0.003
+    }
+   },
+   "counter": {
+    "score": 0.915,
+    "koWinShare": 0,
+    "knockdownsForPerBout": 0,
+    "knockdownsAgainstPerBout": 0,
+    "cleanHitsPerBout": 15.2,
+    "passivity": 0,
+    "techniqueEntropyBits": 0.84,
+    "techniqueShare": {
+     "jab": 0.756,
+     "hook": 0.238,
+     "uppercut": 0.006
+    }
+   }
+  },
+  "norecur": {
+   "balanced": {
+    "score": 0.86,
+    "koWinShare": 0,
+    "knockdownsForPerBout": 0,
+    "knockdownsAgainstPerBout": 0,
+    "cleanHitsPerBout": 20.1,
+    "passivity": 0,
+    "techniqueEntropyBits": 1.21,
+    "techniqueShare": {
+     "jab": 0.394,
+     "uppercut": 0.034,
+     "cross": 0.007,
+     "hook": 0.564
+    }
+   },
+   "pressure": {
+    "score": 0.975,
+    "koWinShare": 0.14,
+    "knockdownsForPerBout": 0.25,
+    "knockdownsAgainstPerBout": 0,
+    "cleanHitsPerBout": 26.6,
+    "passivity": 0,
+    "techniqueEntropyBits": 1.29,
+    "techniqueShare": {
+     "jab": 0.521,
+     "uppercut": 0.04,
+     "cross": 0.014,
+     "hook": 0.425
+    }
+   },
+   "counter": {
+    "score": 0.8,
+    "koWinShare": 0,
+    "knockdownsForPerBout": 0.03,
+    "knockdownsAgainstPerBout": 0,
+    "cleanHitsPerBout": 20.2,
+    "passivity": 0,
+    "techniqueEntropyBits": 1.18,
+    "techniqueShare": {
+     "jab": 0.373,
+     "uppercut": 0.034,
+     "cross": 0.004,
+     "hook": 0.59
+    }
+   }
+  }
+ },
+ "headToHead": {
+  "connectome_vs_shuffled": 1,
+  "connectome_vs_norecur": 1,
+  "norecur_vs_shuffled": 0.5
+ },
+ "baselinesVsScriptedCorners": {
+  "random": {
+   "balanced": 0,
+   "pressure": 0.02,
+   "counter": 0
+  },
+  "aggro": {
+   "balanced": 0,
+   "pressure": 0.24,
+   "counter": 0
+  }
+ }
+}

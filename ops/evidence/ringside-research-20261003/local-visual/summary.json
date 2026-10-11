@@ -1,0 +1,37 @@
+{
+  "finishedAt": "2026-10-03T03:48:31.320854+00:00",
+  "result": "PASS_REVIEWED_SCOPE",
+  "desktopEvidence": "report.json (1440, before final responsive physics-label/height-only change)",
+  "mobileEvidence": "report-mobile-fixed.json (390 and 320, after responsive fix)",
+  "screenshots": [
+    "learning-1440.png",
+    "physics-1440.png",
+    "physics-fixed-390.png",
+    "physics-fixed-320.png"
+  ],
+  "verified": [
+    "Actual Chromium ANGLE Metal rendering",
+    "Research paused replay stable under elapsed wall time and invalidation",
+    "Physics paused 1500ms has zero additional GPU draw calls and identical pixels",
+    "Long before/after buttons fit 320 and390 at44px height",
+    "Physics labels no longer overlap at320/390",
+    "No document horizontal overflow",
+    "SPA navigation removes research and physics canvases",
+    "No LIVE arena WebSocket and no pageerror"
+  ],
+  "limits": [
+    "Dev server, not production deployment",
+    "Viewport emulation, not physical mobile device or frame-rate certification",
+    "A few sampled poses do not prove collision/biomechanical correctness",
+    "Resource cleanup observes removed canvases and source disposal, not GPU-memory leak soak"
+  ],
+  "sourceHashesFinalMobile": {
+    "apps/web/components/ringside-research.tsx": "fef8018e1ca92469c55f0cb2d409ae414c6d0dcce0bf1d6d802a4c2564224210",
+    "apps/web/components/ringside-research.module.css": "38051eac77d7b22778859c56a2b1ee7cf832bfa45a2c1cf0b392201f30af3ff1",
+    "apps/web/components/boxing-scene.tsx": "a7c4125c5e24efcd74a264641345dbcab5797a9ea544c2f66670938f2f4519e6",
+    "apps/web/components/boxing-physics-lab.tsx": "ec70ca15ffe18b181f87354e8fc5f3d7d4fba8043c9e8dc585cd1fada1d12960",
+    "apps/web/public/research/ringside/manifest.json": "27e1ea2af90641169c33ce06d631384d4b7c3f285103fb0f7e64b14dc3c35e64",
+    "apps/web/public/research/ringside/physics-trace.json": "90b8aadf17a7571faea95809a2400f445d0b89f93dceac7689775ea8613fa724"
+  },
+  "skipLink": "Viewport DOM is hidden at y=-100 before/after full-page screenshot; full-page fixed-position capture artifact, not live overlap"
+}

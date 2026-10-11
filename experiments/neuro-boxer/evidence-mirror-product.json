@@ -1,0 +1,107 @@
+{
+ "schema": "sollish.evidence.v1",
+ "at": "2026-10-05T08:26:27.573Z",
+ "scope": "Coordinator product (watchability) check, NOT a held-out performance evaluation. Mirror bouts: the same model in both corners, product format 3x45 s rounds + 8 s breaks, seeded sampling temperature 0.8, learned strategist (no external style). Separate seed bank 9000-9059 (not the 5000/6000 held-out banks, not validation 2000+). Local CPU Node simulation.",
+ "engine": {
+  "version": "sparring-5",
+  "combatSparringSha256": "c1ca71f9c4a4877c1d5d8b1b175a7fae54053009a61cf5148d44a54d2d3ca950",
+  "combatCapsulesSha256": "9e02ecab8ba6cbc5832f1d1628c81920b186123e2dc51a618b5b9524a721aa82",
+  "note": "live engine includes referee-only edits after the training marker b5e3a11c; fighters/events verified identical by the contact and neuro-2 engineers"
+ },
+ "script": {
+  "path": "experiments/neuro-boxer/mirror-product.ts",
+  "sha256": "b70a57e50c258e8da90f17ff65b4c3c5619d062a972b055aeb844fb9ede34f00"
+ },
+ "thetaSha256": {
+  "s1": "d1e8f30daa69dfed9f05254688712aa51bfbf1ec1e0161b94be2881219200d95",
+  "s2": "c5462e01d3d9982b92f9a463f5e31b634457b614f73f7fbe19b1f122eef84430",
+  "s3": "c39c31073ea22b00dec404ab5de8e1301271d85b153272b76d6821668552dc09"
+ },
+ "neuro1ModelSha256": "4a97f03f64ce95460a94dfbf197eb275845077adddf28709526b35feb13a2c2a",
+ "results": {
+  "s1": {
+   "model": "s1",
+   "seeds": "9000-9059",
+   "bouts": 60,
+   "drawShare": 0.033,
+   "koShare": 0,
+   "decisionShare": 0.967,
+   "firstAttackTickMedian": 1,
+   "noAttackInRound1Share": 0,
+   "r1AttacksMean": 85.23,
+   "hitsMean": 47.58,
+   "blocksMean": 145.9,
+   "switchesPerBout": 20.2,
+   "boutSecondsMean": 151,
+   "topStyles": [
+    [
+     "counter",
+     60
+    ]
+   ]
+  },
+  "s2": {
+   "model": "s2",
+   "seeds": "9000-9059",
+   "bouts": 60,
+   "drawShare": 0.983,
+   "koShare": 0,
+   "decisionShare": 0.017,
+   "firstAttackTickMedian": 3205,
+   "noAttackInRound1Share": 0.933,
+   "r1AttacksMean": 0.12,
+   "hitsMean": 0.22,
+   "blocksMean": 0.27,
+   "switchesPerBout": 6.62,
+   "boutSecondsMean": 151,
+   "topStyles": [
+    [
+     "cautious",
+     60
+    ]
+   ]
+  },
+  "s3": {
+   "model": "s3",
+   "seeds": "9000-9059",
+   "bouts": 60,
+   "drawShare": 0.817,
+   "koShare": 0,
+   "decisionShare": 0.183,
+   "firstAttackTickMedian": 3257,
+   "noAttackInRound1Share": 0.717,
+   "r1AttacksMean": 1.85,
+   "hitsMean": 2.12,
+   "blocksMean": 2.98,
+   "switchesPerBout": 0.67,
+   "boutSecondsMean": 151,
+   "topStyles": [
+    [
+     "pressure",
+     60
+    ]
+   ]
+  },
+  "v1": {
+   "model": "v1",
+   "seeds": "9000-9059",
+   "bouts": 60,
+   "drawShare": 0.167,
+   "koShare": 0.3,
+   "decisionShare": 0.533,
+   "firstAttackTickMedian": 1,
+   "noAttackInRound1Share": 0,
+   "r1AttacksMean": 84.27,
+   "hitsMean": 71.08,
+   "blocksMean": 98.27,
+   "switchesPerBout": 0,
+   "boutSecondsMean": 152.2,
+   "topStyles": []
+  }
+ },
+ "decision": "Product model switched from s3 (validation-rule pick) to s1: s2 and s3 almost never attack in mirror bouts (no attack in round 1 in 93% / 72% of bouts; 0.2 / 2.1 hits per bout), which made the default fly-brain-vs-fly-brain bout a motionless points draw. s1 attacks from the first tick (85 round-1 attacks, 47.6 hits per bout, 3% draws) and switches style about 10 times per corner per bout. Held-out results of every seed stay as reported in evidence-style.json; s1 is weaker than s2/s3 against the held-out snapshots (0.543/0.578).",
+ "limits": [
+  "No KO in any neuro-2 mirror bout (neuro-1 mirror: 30% KO).",
+  "Spectator criteria were chosen after seeing the held-out results; this is a product choice, not a performance claim."
+ ]
+}

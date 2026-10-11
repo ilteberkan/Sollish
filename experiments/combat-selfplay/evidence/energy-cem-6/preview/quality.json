@@ -1,0 +1,498 @@
+{
+  "checks": {
+    "trainingCompleted": true,
+    "actualSelfPlay": true,
+    "originalWin": true,
+    "originalDamage": true,
+    "originalEntropy": true,
+    "originalNoStrike": true,
+    "improveWarmWin": true,
+    "improveWarmDamage": true,
+    "attackTypes": true,
+    "overrides": true,
+    "cleanHits": false,
+    "noContact": true,
+    "stateBounds": true
+  },
+  "old": {
+    "episodes": 576,
+    "winRate": 0.9131944444444444,
+    "drawRate": 0,
+    "lossRate": 0.08680555555555555,
+    "meanReward": 0.5117079412528451,
+    "meanDamageDealt": 482.97222222222223,
+    "meanDamageReceived": 265.1232638888889,
+    "meanStrikes": 26.416666666666668,
+    "meanContacts": 25.73611111111111,
+    "meanActionEntropy": 0.5810320900391603,
+    "meanUniqueActions": 5.107638888888889,
+    "maxActionShare": 0.5806451612903226,
+    "maxNoStrikeMs": 2700,
+    "maxNoContactMs": 8550,
+    "meanForcedFraction": 0.6217210988408772,
+    "ringViolations": 0,
+    "actions": {
+      "advance": 1056,
+      "circle": 0,
+      "guard": 18777,
+      "slip": 0,
+      "jab": 2474,
+      "cross": 114,
+      "hook": 4375,
+      "kick": 8253
+    },
+    "meanAttackEntropy": 0.6754582151441618,
+    "meanAttackTechniques": 2.9739583333333335,
+    "meanCleanHits": 14.98263888888889,
+    "meanLowStaminaAttackProposals": 17.203125,
+    "threeTechniqueEpisodeFraction": 0.9461805555555556,
+    "meanUnaffordableProposalFraction": 0.28298705855549894,
+    "meanBelowEngineEnergyRuleProposalFraction": 0.5125858098577202,
+    "interventionReasons": {
+      "approach": 1056,
+      "none": 13265,
+      "low-stamina": 17833,
+      "engagement-timeout": 2895
+    }
+  },
+  "new": {
+    "episodes": 576,
+    "winRate": 0.9079861111111112,
+    "drawRate": 0.001736111111111111,
+    "lossRate": 0.09027777777777778,
+    "meanReward": 4.212266026868014,
+    "meanDamageDealt": 383.0920138888889,
+    "meanDamageReceived": 257.3125,
+    "meanStrikes": 27.447916666666668,
+    "meanContacts": 26.553819444444443,
+    "meanActionEntropy": 0.7163977052931199,
+    "meanUniqueActions": 6.862847222222222,
+    "maxActionShare": 0.5384615384615384,
+    "maxNoStrikeMs": 2600,
+    "maxNoContactMs": 6300,
+    "meanForcedFraction": 0.08605953796780462,
+    "ringViolations": 0,
+    "actions": {
+      "advance": 1056,
+      "circle": 2800,
+      "guard": 17149,
+      "slip": 0,
+      "jab": 1550,
+      "cross": 5400,
+      "hook": 3222,
+      "kick": 5638
+    },
+    "meanAttackEntropy": 0.8176962552938477,
+    "meanAttackTechniques": 3.6024305555555554,
+    "meanCleanHits": 10.880208333333334,
+    "meanLowStaminaAttackProposals": 0.001736111111111111,
+    "threeTechniqueEpisodeFraction": 0.9583333333333334,
+    "meanUnaffordableProposalFraction": 0.00002800179211469534,
+    "meanBelowEngineEnergyRuleProposalFraction": 0.0009853719922887356,
+    "interventionReasons": {
+      "approach": 1056,
+      "none": 33657,
+      "engagement-timeout": 2067,
+      "low-stamina": 35
+    }
+  },
+  "perOpponent": {
+    "previous-guarded": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 7,
+        "4": 41
+      },
+      "strikeCounts": {
+        "jab": 182,
+        "cross": 190,
+        "hook": 271,
+        "kick": 622
+      },
+      "rawAttackProposals": 1250,
+      "affordableAttackProposals": 1249,
+      "unaffordableAttackProposals": 1
+    },
+    "cross-only": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 14,
+        "3": 21,
+        "4": 13
+      },
+      "strikeCounts": {
+        "jab": 48,
+        "cross": 1008,
+        "hook": 152,
+        "kick": 223
+      },
+      "rawAttackProposals": 1499,
+      "affordableAttackProposals": 1499,
+      "unaffordableAttackProposals": 0
+    },
+    "heldout-delayed-counter": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 23,
+        "4": 25
+      },
+      "strikeCounts": {
+        "jab": 77,
+        "cross": 540,
+        "hook": 323,
+        "kick": 396
+      },
+      "rawAttackProposals": 1417,
+      "affordableAttackProposals": 1417,
+      "unaffordableAttackProposals": 0
+    },
+    "heldout-combo": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 6,
+        "4": 42
+      },
+      "strikeCounts": {
+        "jab": 166,
+        "cross": 235,
+        "hook": 331,
+        "kick": 543
+      },
+      "rawAttackProposals": 1233,
+      "affordableAttackProposals": 1233,
+      "unaffordableAttackProposals": 0
+    },
+    "heldout-energy": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 1,
+        "3": 22,
+        "4": 25
+      },
+      "strikeCounts": {
+        "jab": 88,
+        "cross": 592,
+        "hook": 268,
+        "kick": 400
+      },
+      "rawAttackProposals": 1435,
+      "affordableAttackProposals": 1435,
+      "unaffordableAttackProposals": 0
+    },
+    "heldout-ring": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 3,
+        "3": 24,
+        "4": 21
+      },
+      "strikeCounts": {
+        "jab": 82,
+        "cross": 601,
+        "hook": 225,
+        "kick": 427
+      },
+      "rawAttackProposals": 1410,
+      "affordableAttackProposals": 1410,
+      "unaffordableAttackProposals": 0
+    },
+    "hook-only": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 1,
+        "3": 20,
+        "4": 27
+      },
+      "strikeCounts": {
+        "jab": 99,
+        "cross": 404,
+        "hook": 318,
+        "kick": 480
+      },
+      "rawAttackProposals": 1382,
+      "affordableAttackProposals": 1382,
+      "unaffordableAttackProposals": 0
+    },
+    "frozen-v3": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 1,
+        "3": 18,
+        "4": 29
+      },
+      "strikeCounts": {
+        "jab": 93,
+        "cross": 471,
+        "hook": 372,
+        "kick": 398
+      },
+      "rawAttackProposals": 1381,
+      "affordableAttackProposals": 1381,
+      "unaffordableAttackProposals": 0
+    },
+    "unseen-lowhigh": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 9,
+        "4": 39
+      },
+      "strikeCounts": {
+        "jab": 224,
+        "cross": 193,
+        "hook": 239,
+        "kick": 610
+      },
+      "rawAttackProposals": 1242,
+      "affordableAttackProposals": 1242,
+      "unaffordableAttackProposals": 0
+    },
+    "unseen-reactive-jab": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 3,
+        "3": 16,
+        "4": 29
+      },
+      "strikeCounts": {
+        "jab": 99,
+        "cross": 802,
+        "hook": 152,
+        "kick": 336
+      },
+      "rawAttackProposals": 1450,
+      "affordableAttackProposals": 1450,
+      "unaffordableAttackProposals": 0
+    },
+    "unseen-burst-rest": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 4,
+        "4": 44
+      },
+      "strikeCounts": {
+        "jab": 178,
+        "cross": 213,
+        "hook": 332,
+        "kick": 557
+      },
+      "rawAttackProposals": 1237,
+      "affordableAttackProposals": 1237,
+      "unaffordableAttackProposals": 0
+    },
+    "unseen-pressure": {
+      "games": 48,
+      "techniqueHistogram": {
+        "0": 0,
+        "1": 0,
+        "2": 1,
+        "3": 11,
+        "4": 36
+      },
+      "strikeCounts": {
+        "jab": 214,
+        "cross": 151,
+        "hook": 239,
+        "kick": 646
+      },
+      "rawAttackProposals": 1191,
+      "affordableAttackProposals": 1191,
+      "unaffordableAttackProposals": 0
+    }
+  },
+  "dominance": {
+    "mean": 0.500337652418283,
+    "max": 0.9032258064516129
+  },
+  "singleActionBaselines": {
+    "always-jab": {
+      "episodes": 576,
+      "winRate": 0,
+      "drawRate": 0,
+      "lossRate": 1,
+      "meanReward": -3.18851590772003,
+      "meanDamageDealt": 132.96354166666666,
+      "meanDamageReceived": 565.1510416666666,
+      "meanStrikes": 46.958333333333336,
+      "meanContacts": 44.32118055555556,
+      "meanActionEntropy": 0.3709310659615912,
+      "meanUniqueActions": 3,
+      "maxActionShare": 0.5802469135802469,
+      "maxNoStrikeMs": 1500,
+      "maxNoContactMs": 6950,
+      "meanForcedFraction": 0.4354196308651937,
+      "ringViolations": 0,
+      "actions": {
+        "advance": 1056,
+        "circle": 0,
+        "guard": 19812,
+        "slip": 0,
+        "jab": 27048,
+        "cross": 0,
+        "hook": 0,
+        "kick": 0
+      },
+      "meanAttackEntropy": 0,
+      "meanAttackTechniques": 1,
+      "meanCleanHits": 0,
+      "meanLowStaminaAttackProposals": 0,
+      "threeTechniqueEpisodeFraction": 0,
+      "meanUnaffordableProposalFraction": 0,
+      "meanBelowEngineEnergyRuleProposalFraction": 0.41338508152432757,
+      "interventionReasons": {
+        "approach": 1056,
+        "none": 27048,
+        "low-stamina": 19812
+      }
+    },
+    "always-cross": {
+      "episodes": 576,
+      "winRate": 0.2517361111111111,
+      "drawRate": 0.08333333333333333,
+      "lossRate": 0.6649305555555556,
+      "meanReward": -2.4787452896438067,
+      "meanDamageDealt": 191.37326388888889,
+      "meanDamageReceived": 249.12847222222223,
+      "meanStrikes": 32.145833333333336,
+      "meanContacts": 31.23090277777778,
+      "meanActionEntropy": 0.3832347609408807,
+      "meanUniqueActions": 3,
+      "maxActionShare": 0.5142857142857142,
+      "maxNoStrikeMs": 1950,
+      "maxNoContactMs": 6350,
+      "meanForcedFraction": 0.5290398148276657,
+      "ringViolations": 0,
+      "actions": {
+        "advance": 1056,
+        "circle": 0,
+        "guard": 19752,
+        "slip": 0,
+        "jab": 0,
+        "cross": 18516,
+        "hook": 0,
+        "kick": 0
+      },
+      "meanAttackEntropy": 0,
+      "meanAttackTechniques": 1,
+      "meanCleanHits": 2.657986111111111,
+      "meanLowStaminaAttackProposals": 4.25,
+      "threeTechniqueEpisodeFraction": 0,
+      "meanUnaffordableProposalFraction": 0.06222087100921055,
+      "meanBelowEngineEnergyRuleProposalFraction": 0.5021751011084251,
+      "interventionReasons": {
+        "approach": 1056,
+        "none": 18516,
+        "low-stamina": 19752
+      }
+    },
+    "always-hook": {
+      "episodes": 576,
+      "winRate": 0.4409722222222222,
+      "drawRate": 0.08159722222222222,
+      "lossRate": 0.4774305555555556,
+      "meanReward": -2.543696389624574,
+      "meanDamageDealt": 208.10243055555554,
+      "meanDamageReceived": 243.125,
+      "meanStrikes": 28.8125,
+      "meanContacts": 27.22048611111111,
+      "meanActionEntropy": 0.38623801670233815,
+      "meanUniqueActions": 3.0208333333333335,
+      "maxActionShare": 0.53125,
+      "maxNoStrikeMs": 2200,
+      "maxNoContactMs": 8500,
+      "meanForcedFraction": 0.5440939701855928,
+      "ringViolations": 0,
+      "actions": {
+        "advance": 1056,
+        "circle": 0,
+        "guard": 18732,
+        "slip": 0,
+        "jab": 12,
+        "cross": 0,
+        "hook": 16584,
+        "kick": 0
+      },
+      "meanAttackEntropy": 0.0022541347130340065,
+      "meanAttackTechniques": 1,
+      "meanCleanHits": 2.5729166666666665,
+      "meanLowStaminaAttackProposals": 10.6875,
+      "threeTechniqueEpisodeFraction": 0,
+      "meanUnaffordableProposalFraction": 0.16921427771713662,
+      "meanBelowEngineEnergyRuleProposalFraction": 0.5174108147965605,
+      "interventionReasons": {
+        "approach": 1056,
+        "none": 16584,
+        "low-stamina": 18732,
+        "engagement-timeout": 12
+      }
+    },
+    "always-kick": {
+      "episodes": 576,
+      "winRate": 0.9982638888888888,
+      "drawRate": 0,
+      "lossRate": 0.001736111111111111,
+      "meanReward": -0.9962930347638819,
+      "meanDamageDealt": 569.4149305555555,
+      "meanDamageReceived": 282.51909722222223,
+      "meanStrikes": 26.0625,
+      "meanContacts": 25.348958333333332,
+      "meanActionEntropy": 0.5022685029168168,
+      "meanUniqueActions": 4,
+      "maxActionShare": 0.5645161290322581,
+      "maxNoStrikeMs": 2650,
+      "maxNoContactMs": 4150,
+      "meanForcedFraction": 0.6783041856222591,
+      "ringViolations": 0,
+      "actions": {
+        "advance": 1056,
+        "circle": 0,
+        "guard": 18720,
+        "slip": 0,
+        "jab": 3828,
+        "cross": 0,
+        "hook": 0,
+        "kick": 11184
+      },
+      "meanAttackEntropy": 0.40596564405455665,
+      "meanAttackTechniques": 2,
+      "meanCleanHits": 18.975694444444443,
+      "meanLowStaminaAttackProposals": 24.541666666666668,
+      "threeTechniqueEpisodeFraction": 0,
+      "meanUnaffordableProposalFraction": 0.4064453094325397,
+      "meanBelowEngineEnergyRuleProposalFraction": 0.5410981219128579,
+      "interventionReasons": {
+        "approach": 1056,
+        "none": 11184,
+        "low-stamina": 18720,
+        "engagement-timeout": 3828
+      }
+    }
+  },
+  "scope": "Local fixed-evaluation research metrics only; no live/financial authority."
+}

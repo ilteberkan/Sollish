@@ -1,0 +1,218 @@
+{
+  "checkedAt": "2026-10-01T19:24:47.624Z",
+  "endpoint": "https://api.devnet.solana.com",
+  "sourceCommit": "1efbcbf87497ed6d75a9bda373766ab11c5b4501",
+  "program": "PoWSNH2hEZogtCg1Zgm51FnkmJperzYDgPK4fvs8taL",
+  "rpcCalls": 8,
+  "noMining": true,
+  "noSigning": true,
+  "noTransactions": true,
+  "genesis": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+  "sourceSlot": 506379044,
+  "faucets": [
+    {
+      "spec": "6zmJLu9GwVbPEhwnnyreGcqW7m3oo3tPGSnLfKG1zd2E",
+      "source": "4hiGoRK8bdi1cPf3Ze62YP6TwbQTfBxoPHz1shZyZMj8",
+      "difficulty": 1,
+      "rewardLamports": "500000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "cyFr7GVx8JBuAwotirTDFprhyiVtPBQw5Ycjyaa8WLM",
+      "source": "5NHijp3cQCTYpRJh9WayDHXzouvX7FQLqP8iNpJ946u7",
+      "difficulty": 2,
+      "rewardLamports": "100",
+      "balanceLamports": "999969700",
+      "canClaimFullReward": true
+    },
+    {
+      "spec": "2Z2JdmVzw2kDqyTzpsDHwG7aoze4Lb6EAfeJrtfSfnLK",
+      "source": "27Zd965iQ3avJfTRWoj4GQ8rQLEeYocY6ReMqU3znsD4",
+      "difficulty": 3,
+      "rewardLamports": "200000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "5x5WQScCCaCvFmJRFUUmUf7kFaSr9m4kGhKNhu5S7EWU",
+      "source": "AKDUUyPuHjwGqsX865vWKN6nY3SebNu7FsSoYysDzhDJ",
+      "difficulty": 3,
+      "rewardLamports": "50000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "6oH3fMxkht484fcEiBXEWmjSmeqHSPPRispyRKd53BBd",
+      "source": "3dJMCk7kFLXxgiBATVMzjbSidwkfUrs8DjbE1ciNMha9",
+      "difficulty": 3,
+      "rewardLamports": "10000000000000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "7QR2Vrhedq3PKUkT25hUaoXCwXr82i6BRds5ZXhfcyzw",
+      "source": "6yvwhesLJeE8fNWviosRoUtBP3VFUXE7SEhSP9fFRJ3Z",
+      "difficulty": 3,
+      "rewardLamports": "20000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "9Gnz4vehP3ZP5euVAYsYJ77LyBVbsygJn1LzZRTBhdU3",
+      "source": "7Uau53W1UAWkQ2wW1rjTfSdoRdpXnq7ZJPCNh26gbE8U",
+      "difficulty": 3,
+      "rewardLamports": "100000000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "CJoRaA4u2zv7j7pJ6WEJiPxjJuuaEfPDb1pmNYVS8oYM",
+      "source": "CX73EwLEjjfmYiRAbxTAwnJrZAr8MvWTGppYkjQAAYgC",
+      "difficulty": 3,
+      "rewardLamports": "1000000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "CwMtc42qdt8YXTTfoGJJsyjbreY8Pf6xYjiZXe7uzCW2",
+      "source": "Eg559KioNPCtbKAfzsJk4b8dyWH6zKuq1dZtHKEh87Dr",
+      "difficulty": 3,
+      "rewardLamports": "10000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "FKDedLjhJUMC3sHAiR6KEQ9SWewwUNby3AUye138nJRz",
+      "source": "CzYE7XDficgkVPz4ub4Lemfzq2HRqRKUt5YaeA13iibU",
+      "difficulty": 3,
+      "rewardLamports": "10000000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "GhMaCraw2m9SkLsiDJXJUGMLQZggJnDwyDkNW3AYbNTb",
+      "source": "AUdh8YiqFq3ry5Bdn8XTnWM93GnzjGUYKoXRVdseZtuz",
+      "difficulty": 3,
+      "rewardLamports": "100000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "GtPn8gYSBXVvp7f27ZncUfEkGEL9HnTLxpw7Us26FeEX",
+      "source": "BAY8y6GENc5S5UEyKbvSHkyJe2nuYvrJAk9rtb9AyMPW",
+      "difficulty": 3,
+      "rewardLamports": "500000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "8txQjU7YkBkKb5vxPGfFYB7sbJPT8uw3piiLGJs5rDDD",
+      "source": "FtMjifF6LEMKFuiMAAS2qZvHLBvsbQ9CDSV7tZKdbQYU",
+      "difficulty": 4,
+      "rewardLamports": "50000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "AghEbBBjwJjyuR6LuUj4cQ1Hu1ZKg2nnwdVjE7CJYDgG",
+      "source": "2pekXzx7WRPtdj4Gvtif1mzmHfc21zpNx2AvW9r4g7bo",
+      "difficulty": 4,
+      "rewardLamports": "20000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "BVHETxWQ1xN98HqgQmvnpBqLswGoZP5bK9D8GZpWeVkW",
+      "source": "B2g6sLEJVHcMiAEcQhcdFnwchLmLM7qcpSyCRu3gHG7h",
+      "difficulty": 4,
+      "rewardLamports": "1000000000000000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "EFqf5dXCerX1DAv9aYVzuv9Bvz8KYrS93GDZdRL2uvrg",
+      "source": "3Pum3FnfEu8LsEWnYLZLw8LyNf9qMJPfcpnHobXkR97P",
+      "difficulty": 4,
+      "rewardLamports": "200000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "EwDW788ckjQbXY1PDtKgsky8bxtPHVuHYSFztSci7Djf",
+      "source": "2ZWWaHmQeD3YrKZ3fmZr3AAU3ca7wtiqTLZWNzCASvvo",
+      "difficulty": 4,
+      "rewardLamports": "1000000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "7CYzCEsiWpKS7kgcjGyQbKyFxscsvsgHczE2RagqPhof",
+      "source": "CbWeC89FKgzZbo1wH8ydtfk4YmdhiudmNBWdaRngcY6Q",
+      "difficulty": 5,
+      "rewardLamports": "19000000",
+      "balanceLamports": "900000",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "BqTjHurLBBV9JJnW4aHjjuGJNGBsZ8gCbtxF2AzXKAUS",
+      "source": "6mUYFfHTgRPQHzJoMPun53ye6mLNZ9QCXmsRK9dCbbsU",
+      "difficulty": 5,
+      "rewardLamports": "20000000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "D1Vcj69xYVNcuMDCqikYADQ2M6kS7w8oNDgfZSuDZBx6",
+      "source": "95ohs8F3J3ZQkvbnuXEFd4jaJcmkmrLXVJ668dzyjzvv",
+      "difficulty": 5,
+      "rewardLamports": "1000000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "FjgzD25JGKREpHuS84yZXqy6oKFxNGBgRuUx7oxgAkV4",
+      "source": "HEAzxA4pnZDdhJJh184xK6tKKbHoTpmbnCc5vUcPTdj4",
+      "difficulty": 5,
+      "rewardLamports": "100000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "HeVQzWKALLDVnqdgbf8KVomYa6hjjxwz7sqhTS8ucif7",
+      "source": "5YobiWmSjz6o1CRnjATwoxgMqqmWhA4yQ71ZKqXBbE93",
+      "difficulty": 8,
+      "rewardLamports": "1000000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    },
+    {
+      "spec": "J2zCmaTUFirQqHMaFzr24pPxJE4gGtQkQBA8BF9nJXse",
+      "source": "6am8eWMH3pb6XyocQAUM4RbQ2tKF5BmXFiQWYhWCcG4v",
+      "difficulty": 20,
+      "rewardLamports": "1000000000",
+      "balanceLamports": "0",
+      "canClaimFullReward": false
+    }
+  ],
+  "conclusion": "No economically viable and sufficiently funded source for this deployment; no claim attempted.",
+  "scope": "Public account inspection, not live deployed binary/source equivalence or successful claim proof.",
+  "completedAt": "2026-10-01T19:26:03.502Z",
+  "receiptRentLamports": 650240,
+  "feeEvidence": {
+    "slot": 506379361,
+    "requiredSignatures": 2,
+    "lamports": 10000,
+    "unsignedOnly": true,
+    "noSimulation": true,
+    "placeholderProofNotMined": true
+  },
+  "economics": {
+    "allSourceBalanceLamports": "1000869700",
+    "reward100NetLamports": "-660140",
+    "partial900000NetLamports": "239760",
+    "receiptRentRecoverableInPinnedSource": false,
+    "conclusion": "NO_VIABLE_FUNDED_FAUCET_FOR_DEPLOYMENT",
+    "sourceBinaryMatchVerified": false
+  }
+}

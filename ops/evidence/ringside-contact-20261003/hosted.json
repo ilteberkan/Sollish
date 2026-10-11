@@ -1,0 +1,132 @@
+{
+  "at": "2026-10-02T23:44:01.332Z",
+  "scope": "Actual hosted Cloudflare V3, two independent browser sessions, no transport/clock/outcome fixtures. DEMO only.",
+  "build": "E0_AuJd5GJgtVyJllZ8fN",
+  "engine": "ringside-contact-3-f8cd1d1f",
+  "roundId": "1",
+  "bout": {
+    "id": "1",
+    "round": 1,
+    "score": {
+      "kor": 0,
+      "ayaz": 0
+    },
+    "initial": {
+      "health": {
+        "kor": 1000,
+        "ayaz": 1000
+      },
+      "stamina": {
+        "kor": 1000,
+        "ayaz": 1000
+      }
+    }
+  },
+  "initialBalances": [
+    100000,
+    100000
+  ],
+  "finalBalances": [
+    99960,
+    99960
+  ],
+  "fees": 80,
+  "pools": [
+    {
+      "market": "winner",
+      "total": 2000,
+      "count": 2,
+      "sides": {
+        "kor": 1000,
+        "ayaz": 1000,
+        "draw": 0
+      },
+      "fee": 40,
+      "distributed": 1960,
+      "status": "paid"
+    },
+    {
+      "market": "first-hit",
+      "total": 1000,
+      "count": 1,
+      "sides": {
+        "kor": 1000,
+        "ayaz": 0,
+        "simultaneous": 0,
+        "none": 0
+      },
+      "fee": 0,
+      "distributed": 1000,
+      "status": "refunded"
+    },
+    {
+      "market": "knockdown",
+      "total": 1000,
+      "count": 1,
+      "sides": {
+        "yes": 1000,
+        "no": 0
+      },
+      "fee": 0,
+      "distributed": 1000,
+      "status": "refunded"
+    },
+    {
+      "market": "finish",
+      "total": 2000,
+      "count": 2,
+      "sides": {
+        "stoppage": 1000,
+        "decision": 1000
+      },
+      "fee": 40,
+      "distributed": 1960,
+      "status": "paid"
+    }
+  ],
+  "results": {
+    "winner": "kor",
+    "first-hit": "kor",
+    "knockdown": "no",
+    "finish": "decision"
+  },
+  "nextRound": {
+    "id": "2",
+    "bout": {
+      "id": "1",
+      "round": 2,
+      "score": {
+        "kor": 1,
+        "ayaz": 0
+      },
+      "initial": {
+        "health": {
+          "kor": 984,
+          "ayaz": 862
+        },
+        "stamina": {
+          "kor": 1000,
+          "ayaz": 858
+        }
+      }
+    }
+  },
+  "online": 2,
+  "count": 6,
+  "total": 6000,
+  "auditCount": 6,
+  "commitmentVerified": true,
+  "fullscreenVerified": true,
+  "assets": [
+    {
+      "name": "athlete.glb",
+      "sha256": "4f6408ef9aa249ef7043f36b2de15e60069cd656d0fc9abd6a1f5028002b66aa"
+    },
+    {
+      "name": "credits.json",
+      "sha256": "97c0d45bc3791e577bda0beb04db1031980a960c2cd0f04db3be07bc4b286e53"
+    }
+  ],
+  "errors": [],
+  "mobileOverflow": false
+}

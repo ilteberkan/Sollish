@@ -1,0 +1,12 @@
+[workspace]
+members = ["program", "tests"]
+resolver = "2"
+
+[workspace.dependencies]
+solana-vrf-api = { git = "https://github.com/magicblock-labs/solana-vrf.git", rev = "52b103c5d55d72e07456a445044b3c006cb87c1a" }
+solana-vrf = { git = "https://github.com/magicblock-labs/solana-vrf.git", rev = "52b103c5d55d72e07456a445044b3c006cb87c1a" }
+
+[profile.release]
+overflow-checks = true
+lto = "thin"
+

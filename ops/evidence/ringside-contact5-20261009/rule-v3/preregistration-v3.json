@@ -1,0 +1,8 @@
+{
+  "written": "2026-10-09, before the rule-v3 held-out test run",
+  "why": "Rule v2 failed its pre-registered in-match claim (rule-v2/test2-learned.json). Rule v3: lifetime entropy 0.1, in-match entropy 0.03, clinch cooldown 100 ticks, knockdown reward 2, rebalanced V5_FIGHTERS (KOR reach -25 power 1.12 chin 1.12 guard 1; AYAZ reach 35 power .96 chin .98 guard 1.02).",
+  "validation": "seeds val4:*, opponents mirror + rule-v2 checkpoints. No in-match setting had a 95% interval above zero (validate-*.json and the context-dependent fast-weight probes listed in the version log). The product rule keeps actor 1, critic 0.05, fast 2, fastInputs 0, entropy 0.03.",
+  "testSeeds": "test3:<opponent>:<0..199>, never used before",
+  "opponents": { "learned": ["mirrorFrozen", "runs/heldout-a", "runs/heldout-b"], "scripted": ["switcher", "bodySnatcher", "slipper", "mover"] },
+  "claim": "In-match learning is claimed only if the paired 95% interval of (learning - frozen) margin over the learned opponents is above 0. Expected from validation: not claimed."
+}

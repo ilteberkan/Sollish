@@ -1,0 +1,128 @@
+{
+ "params": "frozen",
+ "rates": "engine",
+ "seeds": "balance:0..299",
+ "N": 300,
+ "kor": 0.52,
+ "ayaz": 0.48,
+ "draw": 0,
+ "knockdown": 0.183,
+ "stoppage": 0.003,
+ "strikesPerRound": 44.287,
+ "minStrikes": 13,
+ "hitsPerRound": 24.417,
+ "kicks": 4346,
+ "legHitsPerRound": 1.197,
+ "kneesFromClinch": 280,
+ "techniques": {
+  "bodyKick": 0.099,
+  "jab": 0.131,
+  "bodyHook": 0.1,
+  "cross": 0.159,
+  "rearHook": 0.136,
+  "teep": 0.094,
+  "lowKick": 0.04,
+  "leadHook": 0.093,
+  "knee": 0.027,
+  "headKick": 0.068,
+  "uppercut": 0.054
+ },
+ "outcomes": {
+  "bodyKick": {
+   "hit": 883,
+   "block": 176,
+   "miss": 52
+  },
+  "bodyHook": {
+   "hit": 895,
+   "block": 170,
+   "miss": 102
+  },
+  "cross": {
+   "hit": 1019,
+   "miss": 24,
+   "block": 519,
+   "dodge": 293
+  },
+  "rearHook": {
+   "block": 415,
+   "dodge": 148,
+   "hit": 845,
+   "miss": 101
+  },
+  "teep": {
+   "hit": 871,
+   "block": 190,
+   "miss": 58
+  },
+  "lowKick": {
+   "hit": 359,
+   "block": 73,
+   "miss": 22
+  },
+  "jab": {
+   "hit": 910,
+   "block": 402,
+   "dodge": 195,
+   "miss": 25
+  },
+  "leadHook": {
+   "hit": 623,
+   "block": 259,
+   "dodge": 88,
+   "miss": 70
+  },
+  "knee": {
+   "hit": 279,
+   "block": 59,
+   "miss": 12
+  },
+  "headKick": {
+   "block": 293,
+   "hit": 291,
+   "dodge": 75,
+   "miss": 38
+  },
+  "uppercut": {
+   "hit": 350,
+   "miss": 147,
+   "block": 76,
+   "dodge": 17
+  }
+ },
+ "actionShare": {
+  "guard": 0.121,
+  "slip": 0.08,
+  "circle": 0.241,
+  "retreat": 0.096,
+  "advance": 0.109,
+  "roll": 0.087,
+  "bodyKick": 0.029,
+  "jab": 0.018,
+  "stagger": 0.016,
+  "bodyHook": 0.018,
+  "cross": 0.029,
+  "rearHook": 0.029,
+  "teep": 0.025,
+  "lowKick": 0.01,
+  "leadHook": 0.016,
+  "clinch": 0.01,
+  "knee": 0.006,
+  "headKick": 0.021,
+  "uppercut": 0.011,
+  "down": 0.014,
+  "neutral": 0.015,
+  "rise": 0.001
+ },
+ "msPerRound": 73.5,
+ "kickShare": 0.327,
+ "missingTechniques": [],
+ "band": {
+  "eitherSideWins40to60": true,
+  "strikes40to65": true,
+  "kickShare15to35": true,
+  "knockdowns15to35": true,
+  "everyBlowUsed": true
+ },
+ "pass": true
+}

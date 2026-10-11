@@ -1,0 +1,13 @@
+
+Running 6 tests using 1 worker
+
+(node:50001) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › tests/browser/ringside-sparring.spec.ts:12:5 › explicit start, attack cost, pause and camera isolation without financial traffic (12.9s)
+  ✓  2 [chromium] › tests/browser/ringside-sparring.spec.ts:35:5 › input release survives focus changes; escape pauses and navigation disposes renderer (12.4s)
+  ✓  3 [chromium] › tests/browser/ringside-sparring.spec.ts:52:5 › watch combat progresses, reset restores both health meters, assets fail closed (12.5s)
+  ✓  4 [chromium] › tests/browser/ringside-sparring.spec.ts:65:5 › simulated narrow phone retains health, camera and touch controls without overflow (10.3s)
+  ✓  5 [chromium] › tests/browser/ringside-sparring.spec.ts:78:5 › keyboard hold controls work and lost WebGL prevents further play (10.1s)
+  ✓  6 [chromium] › tests/browser/ringside-sparring.spec.ts:102:5 › desktop combat status and every control fit without scrolling at 1280x720 (8.2s)
+
+  6 passed (1.1m)

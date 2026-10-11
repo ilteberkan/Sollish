@@ -1,0 +1,620 @@
+{
+ "version": 1,
+ "scale": 0.5,
+ "source": "Higgsfield GPT Image 2 part sheets (approved 10 Oct 2026), chroma-keyed by apps/web/scripts/ringside-sprites.mjs",
+ "characters": {
+  "kor": {
+   "parts": {
+    "head": {
+     "file": "head.webp",
+     "size": [
+      178,
+      222
+     ],
+     "anchors": {
+      "prox": [
+       92.2,
+       189.4
+      ],
+      "dist": [
+       88.3,
+       132.6
+      ]
+     },
+     "width": {
+      "prox": 60,
+      "dist": 156
+     },
+     "color": [
+      113,
+      71,
+      38
+     ],
+     "bytes": 10030
+    },
+    "forearm": {
+     "file": "forearm.webp",
+     "size": [
+      272,
+      129
+     ],
+     "anchors": {
+      "prox": [
+       8.3,
+       68.6
+      ],
+      "dist": [
+       221.2,
+       65.7
+      ]
+     },
+     "width": {
+      "prox": 94,
+      "dist": 124
+     },
+     "color": [
+      169,
+      79,
+      24
+     ],
+     "bytes": 7948
+    },
+    "boot": {
+     "file": "boot.webp",
+     "size": [
+      199,
+      187
+     ],
+     "anchors": {
+      "prox": [
+       47.1,
+       111.6
+      ],
+      "dist": [
+       193.1,
+       148.8
+      ]
+     },
+     "width": {
+      "prox": 179,
+      "dist": 35
+     },
+     "color": [
+      43,
+      32,
+      27
+     ],
+     "bytes": 7436
+    },
+    "torso": {
+     "file": "torso.webp",
+     "size": [
+      221,
+      310
+     ],
+     "anchors": {
+      "prox": [
+       127.3,
+       300.1
+      ],
+      "dist": [
+       97.9,
+       10.6
+      ]
+     },
+     "width": {
+      "prox": 162,
+      "dist": 126
+     },
+     "color": [
+      182,
+      105,
+      48
+     ],
+     "extra": {
+      "shoulder": [
+       66,
+       83.4
+      ]
+     },
+     "bytes": 12226
+    },
+    "upperArm": {
+     "file": "upperArm.webp",
+     "size": [
+      149,
+      298
+     ],
+     "anchors": {
+      "prox": [
+       65.6,
+       38.6
+      ],
+      "dist": [
+       91.7,
+       287.7
+      ]
+     },
+     "width": {
+      "prox": 126,
+      "dist": 89
+     },
+     "color": [
+      187,
+      113,
+      55
+     ],
+     "bytes": 8138
+    },
+    "thigh": {
+     "file": "thigh.webp",
+     "size": [
+      139,
+      338
+     ],
+     "anchors": {
+      "prox": [
+       58.4,
+       9.6
+      ],
+      "dist": [
+       47.4,
+       327.6
+      ]
+     },
+     "width": {
+      "prox": 115,
+      "dist": 71
+     },
+     "color": [
+      183,
+      108,
+      52
+     ],
+     "bytes": 8058
+    },
+    "shin": {
+     "file": "shin.webp",
+     "size": [
+      112,
+      296
+     ],
+     "anchors": {
+      "prox": [
+       53.2,
+       8.3
+      ],
+      "dist": [
+       49.8,
+       286.4
+      ]
+     },
+     "width": {
+      "prox": 85,
+      "dist": 76
+     },
+     "color": [
+      181,
+      108,
+      52
+     ],
+     "bytes": 6832
+    },
+    "shorts": {
+     "file": "shorts.webp",
+     "size": [
+      250,
+      310
+     ],
+     "anchors": {
+      "prox": [
+       130.3,
+       9
+      ],
+      "dist": [
+       122.1,
+       297.7
+      ]
+     },
+     "width": {
+      "prox": 160,
+      "dist": 234
+     },
+     "color": [
+      78,
+      39,
+      19
+     ],
+     "bytes": 13936
+    }
+   },
+   "order": []
+  },
+  "ayaz": {
+   "parts": {
+    "head": {
+     "file": "head.webp",
+     "size": [
+      173,
+      214
+     ],
+     "anchors": {
+      "prox": [
+       70.5,
+       185.2
+      ],
+      "dist": [
+       84.6,
+       127.8
+      ]
+     },
+     "width": {
+      "prox": 87,
+      "dist": 130
+     },
+     "color": [
+      129,
+      85,
+      59
+     ],
+     "bytes": 9188
+    },
+    "forearm": {
+     "file": "forearm.webp",
+     "size": [
+      228,
+      98
+     ],
+     "anchors": {
+      "prox": [
+       6.7,
+       55.6
+      ],
+      "dist": [
+       186.3,
+       50
+      ]
+     },
+     "width": {
+      "prox": 65,
+      "dist": 91
+     },
+     "color": [
+      97,
+      158,
+      154
+     ],
+     "bytes": 6112
+    },
+    "torso": {
+     "file": "torso.webp",
+     "size": [
+      162,
+      232
+     ],
+     "anchors": {
+      "prox": [
+       93.3,
+       224.5
+      ],
+      "dist": [
+       50.5,
+       7.5
+      ]
+     },
+     "width": {
+      "prox": 123,
+      "dist": 78
+     },
+     "color": [
+      201,
+      135,
+      87
+     ],
+     "extra": {
+      "shoulder": [
+       53.1,
+       62.4
+      ]
+     },
+     "bytes": 8004
+    },
+    "upperArm": {
+     "file": "upperArm.webp",
+     "size": [
+      103,
+      256
+     ],
+     "anchors": {
+      "prox": [
+       45.6,
+       33.1
+      ],
+      "dist": [
+       65,
+       247.2
+      ]
+     },
+     "width": {
+      "prox": 88,
+      "dist": 61
+     },
+     "color": [
+      209,
+      134,
+      84
+     ],
+     "bytes": 6202
+    },
+    "shin": {
+     "file": "shin.webp",
+     "size": [
+      175,
+      322
+     ],
+     "anchors": {
+      "prox": [
+       87,
+       6.4
+      ],
+      "dist": [
+       69.6,
+       231.1
+      ]
+     },
+     "width": {
+      "prox": 75,
+      "dist": 63
+     },
+     "color": [
+      179,
+      171,
+      154
+     ],
+     "bytes": 11776
+    },
+    "shorts": {
+     "file": "shorts.webp",
+     "size": [
+      168,
+      232
+     ],
+     "anchors": {
+      "prox": [
+       95.7,
+       6.5
+      ],
+      "dist": [
+       112.4,
+       222.7
+      ]
+     },
+     "width": {
+      "prox": 120,
+      "dist": 110
+     },
+     "color": [
+      29,
+      90,
+      114
+     ],
+     "bytes": 10280
+    },
+    "thigh": {
+     "file": "thigh.webp",
+     "size": [
+      139,
+      338
+     ],
+     "anchors": {
+      "prox": [
+       58.4,
+       9.6
+      ],
+      "dist": [
+       47.4,
+       327.6
+      ]
+     },
+     "width": {
+      "prox": 115,
+      "dist": 71
+     },
+     "color": [
+      213,
+      139,
+      87
+     ],
+     "bytes": 8920
+    }
+   },
+   "order": []
+  },
+  "referee": {
+   "parts": {
+    "head": {
+     "file": "head.webp",
+     "size": [
+      152,
+      185
+     ],
+     "anchors": {
+      "prox": [
+       72.7,
+       158
+      ],
+      "dist": [
+       74.8,
+       110.4
+      ]
+     },
+     "width": {
+      "prox": 86,
+      "dist": 121
+     },
+     "color": [
+      179,
+      143,
+      119
+     ],
+     "bytes": 9372
+    },
+    "torso": {
+     "file": "torso.webp",
+     "size": [
+      188,
+      506
+     ],
+     "anchors": {
+      "prox": [
+       93.5,
+       404
+      ],
+      "dist": [
+       102.9,
+       15.1
+      ]
+     },
+     "width": {
+      "prox": 160,
+      "dist": 105
+     },
+     "color": [
+      135,
+      131,
+      130
+     ],
+     "extra": {
+      "shoulder": [
+       50.5,
+       90.9
+      ]
+     },
+     "bytes": 15054
+    },
+    "upperArm": {
+     "file": "upperArm.webp",
+     "size": [
+      103,
+      325
+     ],
+     "anchors": {
+      "prox": [
+       50.4,
+       42.1
+      ],
+      "dist": [
+       63.5,
+       314.6
+      ]
+     },
+     "width": {
+      "prox": 96,
+      "dist": 46
+     },
+     "color": [
+      216,
+      181,
+      158
+     ],
+     "bytes": 8156
+    },
+    "forearm": {
+     "file": "forearm.webp",
+     "size": [
+      97,
+      289
+     ],
+     "anchors": {
+      "prox": [
+       33.6,
+       5.8
+      ],
+      "dist": [
+       48,
+       253.4
+      ]
+     },
+     "width": {
+      "prox": 56,
+      "dist": 66
+     },
+     "color": [
+      210,
+      151,
+      112
+     ],
+     "bytes": 6974
+    },
+    "thigh": {
+     "file": "thigh.webp",
+     "size": [
+      132,
+      409
+     ],
+     "anchors": {
+      "prox": [
+       65.5,
+       8.2
+      ],
+      "dist": [
+       65.5,
+       399.8
+      ]
+     },
+     "width": {
+      "prox": 115,
+      "dist": 84
+     },
+     "color": [
+      33,
+      31,
+      32
+     ],
+     "bytes": 5848
+    },
+    "shin": {
+     "file": "shin.webp",
+     "size": [
+      172,
+      381
+     ],
+     "anchors": {
+      "prox": [
+       85.5,
+       7.6
+      ],
+      "dist": [
+       77,
+       326.8
+      ]
+     },
+     "width": {
+      "prox": 94,
+      "dist": 88
+     },
+     "color": [
+      35,
+      33,
+      33
+     ],
+     "bytes": 7526
+    }
+   },
+   "order": []
+  }
+ },
+ "totalBytes": 188016,
+ "apron": {
+  "file": "ring-apron.webp",
+  "cropTop": 588
+ },
+ "canvas": {
+  "file": "ring-canvas.webp",
+  "note": "central square crop; the ring circle spans 88% of it"
+ },
+ "ringBytes": {
+  "canvas": 101820,
+  "apron": 22350
+ }
+}

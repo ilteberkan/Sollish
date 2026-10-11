@@ -1,0 +1,35 @@
+{
+  "observedAt": "2026-10-02T23:12:15.229Z",
+  "scope": "local Node CPU inference after1000warmup; 10000observations; NOT Cloudflare/phone/fighting benchmark",
+  "model": {
+    "version": "malecns-descending128-imitation-mlp-v2",
+    "modelSha256": "f8cd1d1feb8cf62f39eb2f1b11ebf95728deb8990f83594230d15709d2d9db9e",
+    "graphSha256": "284dca2f166169c47d50a489d96bb011ceab3ae01a73922c2dd4c44da041e37d",
+    "source": "male-cns:v1.0",
+    "license": "CC-BY-4.0",
+    "nodes": 128,
+    "edges": 4949,
+    "learnedReadout": true,
+    "wholeBrain": false,
+    "selfPlayTrained": false,
+    "biologicalDynamicsValidated": false,
+    "financialReadiness": false
+  },
+  "sourceSha256": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+  "runtime": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2"
+  },
+  "p50Ms": 0.018292000000002417,
+  "p95Ms": 0.021249999999994884,
+  "p99Ms": 0.025291999999978998,
+  "maxMs": 0.12174999999999159,
+  "totalMs": 188.97645799999998,
+  "budget": {
+    "criterion": "p95<1ms local; no nonfinite outputs",
+    "passed": true
+  },
+  "financialReadiness": false
+}

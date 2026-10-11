@@ -1,0 +1,157 @@
+{
+ "params": "experiments/ringside-learner/runs/main/params.json",
+ "rates": {
+  "actor": 0.1,
+  "critic": 0.05,
+  "fast": 0.5,
+  "entropy": 0.1
+ },
+ "matchRates": {
+  "actor": 1,
+  "critic": 0.05,
+  "fast": 2,
+  "entropy": 0.03,
+  "fastInputs": 0
+ },
+ "seeds": "test3",
+ "opps": "heldout",
+ "n": 200,
+ "summary": {
+  "learning": {
+   "switcher": {
+    "win": 0.745,
+    "margin": 304,
+    "adaptation": -158
+   },
+   "bodySnatcher": {
+    "win": 0.3,
+    "margin": -112,
+    "adaptation": -87
+   },
+   "slipper": {
+    "win": 0.745,
+    "margin": 199,
+    "adaptation": -133
+   },
+   "mover": {
+    "win": 0.943,
+    "margin": 406,
+    "adaptation": -95
+   }
+  },
+  "frozen": {
+   "switcher": {
+    "win": 0.765,
+    "margin": 298,
+    "adaptation": -117
+   },
+   "bodySnatcher": {
+    "win": 0.325,
+    "margin": -98,
+    "adaptation": -87
+   },
+   "slipper": {
+    "win": 0.65,
+    "margin": 124,
+    "adaptation": -128
+   },
+   "mover": {
+    "win": 0.885,
+    "margin": 303,
+    "adaptation": -97
+   }
+  },
+  "untrainedLearning": {
+   "switcher": {
+    "win": 0.18,
+    "margin": -251,
+    "adaptation": 17
+   },
+   "bodySnatcher": {
+    "win": 0.14,
+    "margin": -237,
+    "adaptation": -26
+   },
+   "slipper": {
+    "win": 0.205,
+    "margin": -233,
+    "adaptation": -68
+   },
+   "mover": {
+    "win": 0.18,
+    "margin": -204,
+    "adaptation": -49
+   }
+  },
+  "shuffledGraphLearning": {
+   "switcher": {
+    "win": 0.78,
+    "margin": 330,
+    "adaptation": -172
+   },
+   "bodySnatcher": {
+    "win": 0.305,
+    "margin": -94,
+    "adaptation": -120
+   },
+   "slipper": {
+    "win": 0.72,
+    "margin": 190,
+    "adaptation": -116
+   },
+   "mover": {
+    "win": 0.94,
+    "margin": 386,
+    "adaptation": -93
+   }
+  }
+ },
+ "comparisons": {
+  "learningVsFrozenMargin": {
+   "mean": 42.52,
+   "lo": 16.34,
+   "hi": 69.75
+  },
+  "learningVsFrozenWin": {
+   "mean": 0.03,
+   "lo": -0.01,
+   "hi": 0.06
+  },
+  "learningVsFrozenAdaptation": {
+   "mean": -10.9,
+   "lo": -24.4,
+   "hi": 2.7
+  },
+  "learningVsUntrainedMargin": {
+   "mean": 430.39,
+   "lo": 399.54,
+   "hi": 461.69
+  },
+  "malecnsVsShuffledMargin": {
+   "mean": -3.72,
+   "lo": -28.29,
+   "hi": 20.69
+  },
+  "learningVsFrozenMargin:switcher": {
+   "mean": 5.17,
+   "lo": -45.33,
+   "hi": 59.61
+  },
+  "learningVsFrozenMargin:bodySnatcher": {
+   "mean": -13.54,
+   "lo": -75.54,
+   "hi": 47.98
+  },
+  "learningVsFrozenMargin:slipper": {
+   "mean": 75.29,
+   "lo": 30.14,
+   "hi": 120.86
+  },
+  "learningVsFrozenMargin:mover": {
+   "mean": 103.17,
+   "lo": 60.01,
+   "hi": 148.42
+  }
+ },
+ "seconds": 58.2
+}

@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "experiment": "combat-selfplay-guarded-3",
+  "publishedAt": "2026-10-03T03:34:41.526Z",
+  "modelSha256": "5fa409248676cefbc20275700922f7dcc171c24236e8b9683131ce842c0f3b54",
+  "sourceSha256": "8e762fe950cf3d2c34a103ab10747af0d64fa4176335914f52d4073299e15488",
+  "promotionPassed": false,
+  "training": {
+    "episodes": 3600,
+    "generations": 20,
+    "method": "Yeni gard geometrisinde gerçek maç ödülüyle self-play refinement; önceki curriculum modelinden başlangıç, öğretmen etiketi yok",
+    "seconds": 69.560171917
+  },
+  "evaluation": {
+    "games": 256,
+    "beforeScore": 0.333984375,
+    "afterScore": 0.99609375,
+    "baseline": "Önceki eğitilmiş curriculum modeli; iki aday da aynı YENİ gard ortamında, aynı seed/rakip/taraflarda",
+    "scope": "16 yeni seed ×2 taraf ×8 rakip. Checkpoint yalnız validation ile seçildi; son test sonuçlarına göre politika veya eşik değiştirilmedi."
+  },
+  "limitations": [
+    "Kalite kapısı geçmedi: saldırı çeşitliliği ve motor override oranı hedefin dışında.",
+    "Ortalama 2,898 saldırı tekniği (hedef≥3), kararların %64,21’i motor tarafından değiştiriliyor (hedef≤%25).",
+    "Düşük enerjide gard motor kuralıdır; bu aday öğrenilmiş enerji yönetimi göstermedi.",
+    "Yeni yüksek gard ve önkol kapsülleri araştırma geometrisidir; tam rigid-body humanoid veya gerçekçi boks fiziği kanıtı değil.",
+    "128 gerçek MaleCNS düğümü, sabit varsayımsal dinamik ve öğrenilen çıktı ağırlıkları; bütün beyin veya bilinç değil.",
+    "Sadece çevrim dışı deney kaydı; canlı v3 motoru/biletleri değiştirilmedi, gerçek varlık kapıları kapalı."
+  ],
+  "cases": [
+    {
+      "id": "120000",
+      "label": "Sürekli cross rakibi",
+      "opponent": "cross-only",
+      "seed": "55cd8c301ebb8382c5401d5ac4f359e06e767460a6fb340043246839f1233349",
+      "runs": [
+        {
+          "id": "initial",
+          "label": "Önceki curriculum modeli",
+          "path": "/research/ringside/selfplay-guarded-120000-initial.json",
+          "sha256": "7bd4b7d91be20df0270d3b52ffb0001691d45c6aa12aefe6dffe04ca14a4812a",
+          "bytes": 1060564,
+          "trained": false
+        },
+        {
+          "id": "learned",
+          "label": "Gard ortamında yeniden eğitilen",
+          "path": "/research/ringside/selfplay-guarded-120000-learned.json",
+          "sha256": "b88cb169634bf8aa81ae2d75a166639fe169ab3dfcd2563fae2c1f8d97557e56",
+          "bytes": 1058493,
+          "trained": true
+        }
+      ]
+    },
+    {
+      "id": "120001",
+      "label": "Gecikmeli kontra rakibi",
+      "opponent": "heldout-delayed-counter",
+      "seed": "e0db83786f969b2012f8887baf98e637716b3f9ace280edfe5c3d89c1132161c",
+      "runs": [
+        {
+          "id": "initial",
+          "label": "Önceki curriculum modeli",
+          "path": "/research/ringside/selfplay-guarded-120001-initial.json",
+          "sha256": "6b4de7ef78f403e680aff48de1481e9991547eb1e05f8f2de7f2e967edf2f04a",
+          "bytes": 1057694,
+          "trained": false
+        },
+        {
+          "id": "learned",
+          "label": "Gard ortamında yeniden eğitilen",
+          "path": "/research/ringside/selfplay-guarded-120001-learned.json",
+          "sha256": "0a98327af2398d0a89308228f422c3b58ce9bd82dadd256a26404804508a64b1",
+          "bytes": 1056151,
+          "trained": true
+        }
+      ]
+    },
+    {
+      "id": "120002",
+      "label": "Kombinasyon rakibi",
+      "opponent": "heldout-combo",
+      "seed": "6106f492f52f4587c55bd51bdf308ef8dcf7eab4732b63f69a361bf7ffd1fa13",
+      "runs": [
+        {
+          "id": "initial",
+          "label": "Önceki curriculum modeli",
+          "path": "/research/ringside/selfplay-guarded-120002-initial.json",
+          "sha256": "c26e256ad45b17855b060f2881aaa9e6a3cb1ef732a42dbba582b4b596d798d1",
+          "bytes": 1063007,
+          "trained": false
+        },
+        {
+          "id": "learned",
+          "label": "Gard ortamında yeniden eğitilen",
+          "path": "/research/ringside/selfplay-guarded-120002-learned.json",
+          "sha256": "400957c986f4c7b6520991213904221a2f66b24e58e364bd43e7460adb990f9e",
+          "bytes": 1061100,
+          "trained": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "at": "2026-10-09T17:18:13.017Z",
+  "runtime": "local-workerd-sqlite",
+  "checks": 12,
+  "passed": [
+    "origin and URL credential rejection",
+    "private resumable sessions and distinct online count",
+    "ticket insert and debit failure roll back atomically without an ACK",
+    "concurrent same-session UUID deduplication and immutable ticket payload",
+    "four separate prop pools and server-unique payout IDs",
+    "last millisecond acceptance, exact cutoff denial and post-cutoff same-ticket retry",
+    "public tape contains pseudonyms only; private balances and tickets stay session-scoped",
+    "mid-settlement failure rolls back every pool, fee, ticket and session credit",
+    "simulation-derived settlement, per-pool conservation and one-sided refunds exactly once",
+    "workerd restart persists balances, results and post-settlement duplicate receipts",
+    "expired sessions cannot keep presence or erase unsettled escrow; owner still receives its refund",
+    "new session cleanup and anonymous handshake expiry are bounded"
+  ],
+  "timing": {
+    "openMs": 20000,
+    "fightMs": 60000,
+    "resultMs": 10000
+  },
+  "accounting": {
+    "initialGrantCents": 200000,
+    "roundStakeCents": 4900,
+    "finalBalanceCents": 199928,
+    "platformFeeCents": 72,
+    "settledTickets": 7,
+    "independentPools": 4
+  },
+  "scope": "Real local workerd, SQLite transactions, WebSockets, actual server CSPRNG, commitment/replay, durable restart and injected SQL failures. Only generated fixture advances its clock through actual production alarm/advance. No cloud load, real assets, VRF, trusted-server fairness proof or production readiness."
+}

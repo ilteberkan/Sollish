@@ -1,0 +1,73 @@
+{
+ "schema": "sollish.evidence.v1",
+ "at": "2026-10-04T03:40+03:00",
+ "status": "LOCAL_PRODUCTION_RUNTIME_VERIFIED_NOT_DEPLOYED",
+ "engineVersion": "sparring-4",
+ "buildId": "OGU2u_5wt9P6ZSKBu5mee",
+ "scope": "Spectator Combat Club bout structure: concussion (daze) knockdowns, referee count (0.75 s per number), get-up, mandatory eight, three-knockdown TKO, 3x45 s rounds with 8 s breaks, 10-point-must scoring, decision; presentation-only referee; auto camera direction; round/knockdown audio. Non-monetary.",
+ "sourceSha256": {
+  "packages/protocol/src/combat-sparring.ts": "1a6c7876c94b8f054a96126d935310b620daa444f273c7e32bc4eade6bd36dc3",
+  "packages/protocol/test/combat-sparring.test.ts": "f8497d8b4f9844487263214081f6f33242f086e2a37dc8436d433bf7aaf52296",
+  "apps/web/components/boxing-sparring.tsx": "f42599e89200c5f504369650269e05d5d8e8e0869d06faa2893205225133a1aa",
+  "apps/web/components/boxing-sparring-scene.tsx": "4da999d6d08ce9f259d9e0da46b144debb4d08bd3efb977ab8007bb980c8cee9",
+  "apps/web/components/boxing-mocap-athletes.ts": "df91d8b4ce58963fb0d2117700b008e0754cd48f84eb6e2af5d696401d4aa739",
+  "apps/web/components/boxing-sparring.module.css": "9a3a583753375731b3eb28c7c175f75f10fb3d0e32c74804d4d296d3b4a6c258",
+  "apps/web/lib/ringside-audio.ts": "5945fa35f1237034d0d42038925b6c730a3d774bcaea454bd49ea85bc4d5bc10",
+  "scripts/boxing-assets/sparring-replay.test.ts": "b5fcd0548aa9f0357935bc97c426d4df16c7d2c8143ffe13861f3b7ea0807ac0",
+  "scripts/boxing-assets/mixamo/export-in-page.js": "4011ad101f4cd59007edb76c2f7c10002383b21c2da3d9d0d6330a46bc8f98ef",
+  "experiments/combat-sparring-audit/baseline-sparring-3.ts": "bcc4b95c99495daed15eec57080bbdd495c86ed0e95de783e2561d782f6532ad",
+  "experiments/combat-sparring-audit/capture.mjs": "8e2f637d6a489fdbebacdcd31597d8b0e5b733679732efc48d930775c2b246b4"
+ },
+ "frozenLiveSourcesUnchanged": {
+  "packages/protocol/src/combat-v3.ts": true,
+  "packages/protocol/src/connectome-policy.ts": true,
+  "packages/protocol/src/ringside.ts": true,
+  "packages/protocol/src/pari-mutuel.ts": true,
+  "packages/protocol/src/live-round.ts": true,
+  "packages/protocol/src/combat.ts": true,
+  "apps/realtime/src/ringside-arena.ts": true,
+  "apps/realtime/src/index.ts": true
+ },
+ "checks": {
+  "protocolUnit": "71/71",
+  "webUnit": "76/76",
+  "typecheck": "PASS",
+  "glbClassic": "10/10",
+  "glbMocap": "10/10",
+  "browserFull": "77/77, workers=1, 5.9 min, log .tooling/sparring4-production-browser.log"
+ },
+ "mechanics": {
+  "heldOut": {
+   "file": "experiments/combat-sparring-audit/evidence/sparring4-heldout-1001-48seeds.json",
+   "sha256": "b4b4d1e59b2edad5c0d1f02bf639f9980af17cb988121bc70091e6c8fe2a44bf",
+   "runner": 0.0,
+   "jabSpam": 0.0,
+   "hitAndRun": "0.104-0.271",
+   "depthMaxCm": 0.2
+  },
+  "threeRoundBots80Bouts": {
+   "boutsWithKnockdown": 0.6875,
+   "knockdownsPerBout": 1.39,
+   "methods": {
+    "ko": 51,
+    "decision": 25,
+    "draw": 3,
+    "tko": 1
+   },
+   "firstKnockdownMedianS": 109.2,
+   "note": "tuning set (seeds 1-20, 4 corner pairings); KO here includes count-outs after exhausted health"
+  }
+ },
+ "images": {
+  "ops/evidence/ringside-sparring4-20261004/knockdown-count-seed7.jpg": "28bde966fb98d942cc1635fd200f93cd348362cb42ffa7d54d21fbbfafec9311"
+ },
+ "limits": [
+  "Knockdown fall/rise use authored Quaternius Death01/LayToIdle, not mocap",
+  "Count cadence 0.75 s (faster than real 1 s) for pacing",
+  "Early flash knockdowns (~3 s) occur in some seeds",
+  "Referee is a positional figure (walk/idle), no count gestures",
+  "Mixamo animation/character import pending browser scripting permission",
+  "Scripted corners; no learned policy",
+  "Not deployed; no wagering namespace"
+ ]
+}

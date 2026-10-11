@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-09",
+  "change": "Ringside Contact 5 moves from per-round pools to the match ledger ringside-match-1: one 30 s betting window before round 1, three match markets, no bets between rounds, every pool settled once when the bout ends. New arena UI from a Claude Design canvas.",
+  "engine": "ringside-contact-5-dfd179bd (unchanged fight engine and learning rule)",
+  "ledger": "ringside-match-1; realtime DO name ringside-match-v1 (not deployed; v5 was never deployed, local test storage only)",
+  "markets": {
+    "match-winner": ["kor", "draw", "ayaz"],
+    "match-method": ["kor-stop", "kor-points", "draw", "ayaz-points", "ayaz-stop"],
+    "match-knockdowns": ["0-1", "2", "3-plus"]
+  },
+  "fairness": "All three round seeds are drawn before the window opens; sha256('sollish:ringside-match-1:seed:<bout>:<n>:<seed>') hashes are published in every snapshot. Earlier rounds (seed, initial state, plan log) are published so a browser joining late replays the whole bout (verifyMatchHistory). Jev plans still arrive after cutoff: DEMO only.",
+  "marketDesign": {
+    "source": "ops/evidence/ringside-match-20261009/match-stats-300.json and a knockdown-count run on the same 300 seeds, fallback plans",
+    "rounds": "288 of 300 bouts go three rounds, 12 end in round 2",
+    "winner": "KOR 123, AYAZ 177, draw 0",
+    "method": "KOR stop 28, KOR points 95, AYAZ points 103, AYAZ stop 74",
+    "knockdownsPerMatch": {"0": 12, "1": 107, "2": 118, "3": 57, "4": 5, "5": 1},
+    "decision": "A yes/no knockdown market resolved 'yes' in 96% of bouts, so it was replaced by the knockdown count (0-1 / 2 / 3+, about 40/39/21%). '3+' is stored as '3-plus' because pool outcome ids allow only [A-Za-z0-9._:-] (caught by the workerd settlement test)."
+  },
+  "design": {
+    "tool": "Claude Design canvas (Design artifact type), six artboards: desktop betting, desktop live, result, phone betting, phone live, lobby",
+    "url": "https://claude.ai/artifact/Cu1K7TpsxUWFi73w6PpdM8",
+    "research": ["altenar.com sportsbook live UX (one-tap slip, instant feedback)", "pari-mutuel indicative odds patents US20120322541A1 (label projected payout, recompute per refresh)"]
+  },
+  "tests": {
+    "protocol": "128/128 (new test/ringside-match.test.ts: match results, snapshot window/lock/settle rules, history replay rejects swapped seed/log/score/carry, every outcome id settles)",
+    "realtimeWorkerdV5": "14/14 checks, ops/evidence/ringside-match-20261009/workerd-v5-match.json",
+    "realtimeWorkerdRegression": "contact (v3/v4) 16 checks, ringside v2 12 checks, after the base-class ledger hooks",
+    "realtimeUnit": "11/11",
+    "web": "38/38, tsc clean",
+    "browserRingside": "7/7 tests/browser/ringside-contact.spec.ts against next dev :3000 (WebSocket fixture, WebGL off): desktop slip, 320/390 bottom sheet, whole match settle-once, cutoff + locked-field tamper, seed/hash tamper, canvas pick rings",
+    "browserProduct": "14/14 including WCAG 2.2 AA axe checks at 390 and 1440",
+    "readiness": "exit 2 (known gates open)",
+    "liveLocal": "local wrangler dev with real Jev served match-ledger bouts to the browser pane (bout 13 rounds 1-3 replayed and verified)"
+  },
+  "screenshots": "ops/evidence/ringside-match-20261009/{desktop,mobile,mobile-collapsed,final,broadcast-betting}.png (dev build, fixture)",
+  "sourceSha256": {
+    "packages/protocol/src/ringside-match.ts": "82e16ab30bb20f40c3258e89d7d87c7b9145f9f053c9e5a7a04b19e57529e63d",
+    "packages/protocol/src/ringside.ts": "829a4f3d623cd72f55062f19515abc1b79e3e46c77dd859b3d0a110c1ab84585",
+    "apps/realtime/src/contact-arena-v5.ts": "9186345b0438ed2e76e61d0d3c36f3765849067c584051e3907a492b9ede3479",
+    "apps/realtime/src/ringside-arena.ts": "19b5b8e34a6b2a78b8fe6fde81e64e9888e346fd0fff9db8ae4f58e8a45af589",
+    "apps/web/lib/use-ringside.ts": "ccac9949a1883b8be27caab28e02c1978bc2084e5ee092ddd0ef46978c707532"
+  },
+  "limits": ["Not deployed; no hosted run.", "Browser tests ran against next dev, not the Cloudflare build.", "Phone 60 fps not measured.", "Live 'ahead/behind' ticket status is a display indicator from replayed frames, not a settlement input.", "No user visual acceptance yet."]
+}

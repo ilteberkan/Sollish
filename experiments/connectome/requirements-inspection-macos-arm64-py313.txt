@@ -1,0 +1,3 @@
+# Optional binary parser only for the recorded macOS ARM64 / CPython 3.13 inspection.
+# The offline CSV validator and its tests require no third-party packages.
+pyarrow==25.0.1 --hash=sha256:c7c534ec03c358a76ea3e505e74c1b6aef290af90c444dfd092dbfe23e755b85

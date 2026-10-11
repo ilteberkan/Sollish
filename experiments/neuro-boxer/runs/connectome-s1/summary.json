@@ -1,0 +1,11 @@
+{
+ "variant": "connectome",
+ "seed": 1,
+ "generations": 300,
+ "pairs": 24,
+ "sigma": 0.04,
+ "lr": 0.03,
+ "boutsPerCandidate": 4,
+ "thetaSha256": "8cde29cdc11542aabb2b348894477fc43b77503bb83870d4514541182c0e958e",
+ "seconds": 450
+}

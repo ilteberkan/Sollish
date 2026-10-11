@@ -1,0 +1,11 @@
+{
+ "variant": "norecur",
+ "seed": 3,
+ "generations": 300,
+ "pairs": 24,
+ "sigma": 0.04,
+ "lr": 0.03,
+ "boutsPerCandidate": 4,
+ "thetaSha256": "8cbbca29541cdd0118f4994891ee8b4aed89127193ef90756fd85ff1b8c2a46a",
+ "seconds": 314
+}

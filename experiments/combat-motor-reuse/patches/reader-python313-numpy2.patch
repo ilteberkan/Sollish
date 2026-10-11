@@ -1,0 +1,25 @@
+--- a/tensorflow_checkpoint_reader/numpy_util.py
++++ b/tensorflow_checkpoint_reader/numpy_util.py
+@@ -107,8 +107,8 @@
+   np.complex64: types_pb2.DT_COMPLEX64,
+   np.complex128: types_pb2.DT_COMPLEX128,
+   np.object_: types_pb2.DT_STRING,
+-  np.string_: types_pb2.DT_STRING,
+-  np.unicode_: types_pb2.DT_STRING,
++  np.bytes_: types_pb2.DT_STRING,
++  np.str_: types_pb2.DT_STRING,
+   np.bool_: types_pb2.DT_BOOL,
+   _np_qint8: types_pb2.DT_QINT8,
+   _np_quint8: types_pb2.DT_QUINT8,
+--- a/tensorflow_checkpoint_reader/tensorflow/python/util/tf_inspect.py
++++ b/tensorflow_checkpoint_reader/tensorflow/python/util/tf_inspect.py
+@@ -40,7 +40,8 @@
+ Parameter = _inspect.Parameter
+ Signature = _inspect.Signature
+ 
+-ArgSpec = _inspect.ArgSpec
++from collections import namedtuple
++ArgSpec = namedtuple("ArgSpec", "args varargs keywords defaults")
+ 
+ 
+ if hasattr(_inspect, 'FullArgSpec'):

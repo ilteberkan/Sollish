@@ -1,0 +1,34 @@
+✔ concurrent independent builders import complete exports and preserve the recorded guarded artifact (234.272667ms)
+✔ second pre-registration retains original thresholds, pins warm start and separates all partitions (11.756917ms)
+✔ real rollout attributes low-energy proposals, contacts and attack variety to engine events (254.950708ms)
+✔ held-out counters carry independent observable history and cannot mutate inputs (0.355417ms)
+✔ energy training evidence pins sources/models and preserves the held-out failure (55.939625ms)
+✔ new paired traces preserve research identity, exact hash, chronological frames and contact damage (194.818125ms)
+✔ zero residual preserves previous policy and its failures without hiding proposals (115.607167ms)
+✔ every action remains selectable even at zero energy; no legality mask (101.674584ms)
+✔ parameters are frozen and malformed observations fail (29.144916ms)
+✔ override reason retains low-energy and forced-approach failures (0.176166ms)
+✔ all original numeric acceptance thresholds remain unchanged (1.433458ms)
+✔ refinement preserves every gate and has fresh validation/final seeds (1.234917ms)
+✔ completed training evidence pins current sources and models and retains failure without weakening thresholds (20.928ms)
+✔ public preview has explicit research identity and hash-bound paired traces with coherent event damage (365.268834ms)
+✔ analysis clusters both sides and opponent types by seed, with a zero-difference control (2.732625ms)
+✔ later curriculum and guarded runs preserve source/model identity and display the correct learned baseline (13.139542ms)
+✔ finite capsule catches its shaft, endpoints, initial overlap and rejects misses (1.609125ms)
+✔ high guard elbows stay on measured two-link reach and striking arm cannot be a shield (0.395375ms)
+✔ specific center-high straight sweep fits old guard gap but meets the new guard before the head (0.479208ms)
+✔ research geometry has new identity and changes defense without rewriting frozen replay (285.689375ms)
+✔ adapter is pinned, default replay is identical to frozen engine and headless keeps all events/results (452.755833ms)
+✔ real graph policies use isolated episode state and reject nonfinite observations (8.322125ms)
+✔ policy choices produce actual different contact and damage outcomes; no teacher label path (70.210083ms)
+{"variant":"connectome","generation":1,"validation":-1.4068843633934127,"selectedGeneration":0,"episodes":8}
+{"variant":"connectome","generation":2,"validation":0.36855464895530643,"selectedGeneration":2,"episodes":16}
+✔ bounded ES actually changes parameters from episode rewards and uses immutable checkpoints (464.928167ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1141.083417

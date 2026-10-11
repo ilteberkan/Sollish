@@ -1,0 +1,6 @@
+
+> @sollish/web@0.1.0 typecheck /Users/macmini/Desktop/Sollish/apps/web
+> next typegen && tsc --noEmit
+
+Generating route types...
+✓ Types generated successfully

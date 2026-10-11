@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-01T00:28:47.791Z",
+  "scope": "Read only our dedicated wallet account with anonymous, valid and invalid auth; not a private-account proof",
+  "publicKey": "DUAfKmv1p78mVjZZKKkFpWdtPg5ofLtxLce1Y8BrcxRK",
+  "status": "BLOCKED",
+  "checks": [
+    {
+      "id": "own-wallet-auth",
+      "status": "PASS",
+      "evidence": {
+        "expiresAt": 1793406529192,
+        "tokenPersisted": false
+      }
+    },
+    {
+      "id": "malformed-token-rejection",
+      "status": "PASS",
+      "evidence": {
+        "outcome": "AUTH_REJECTED",
+        "meaning": "Only invalid-token rejection on this endpoint/method; an absent or public wallet account cannot demonstrate private state isolation."
+      }
+    },
+    {
+      "id": "tampered-issued-token-rejection",
+      "status": "PASS",
+      "evidence": {
+        "outcome": "AUTH_REJECTED",
+        "meaning": "Only invalid-token rejection on this endpoint/method; an absent or public wallet account cannot demonstrate private state isolation."
+      }
+    },
+    {
+      "id": "unsigned-expired-claims-rejection",
+      "status": "PASS",
+      "evidence": {
+        "outcome": "AUTH_REJECTED",
+        "meaning": "Only invalid-token rejection on this endpoint/method; an absent or public wallet account cannot demonstrate private state isolation."
+      }
+    },
+    {
+      "id": "genuinely-expired-issued-token",
+      "status": "BLOCKED",
+      "evidence": "No legitimately signed expired token available. An unsigned expired claim is also invalid-signature input and cannot isolate expiry enforcement."
+    },
+    {
+      "id": "private-counter-read-isolation",
+      "status": "BLOCKED",
+      "evidence": "No own deployed/delegated counter with initialized private permission exists. Only our public/absent wallet was queried."
+    },
+    {
+      "id": "G2",
+      "status": "BLOCKED",
+      "evidence": "No private VRF request/callback or role visibility matrix was exercised."
+    }
+  ],
+  "rows": [
+    {
+      "name": "anonymous",
+      "intentionallyInvalid": false,
+      "outcome": "ACCOUNT_ABSENT",
+      "slot": 406065572,
+      "account": {
+        "exists": false
+      }
+    },
+    {
+      "name": "valid-own-wallet",
+      "intentionallyInvalid": false,
+      "outcome": "ACCOUNT_ABSENT",
+      "slot": 406065598,
+      "account": {
+        "exists": false
+      }
+    },
+    {
+      "name": "malformed-token",
+      "intentionallyInvalid": true,
+      "outcome": "AUTH_REJECTED",
+      "httpStatus": 401
+    },
+    {
+      "name": "tampered-issued-token",
+      "intentionallyInvalid": true,
+      "outcome": "AUTH_REJECTED",
+      "httpStatus": 401
+    },
+    {
+      "name": "unsigned-expired-claims",
+      "intentionallyInvalid": true,
+      "outcome": "AUTH_REJECTED",
+      "httpStatus": 401
+    }
+  ],
+  "finishedAt": "2026-10-01T00:28:50.340Z"
+}

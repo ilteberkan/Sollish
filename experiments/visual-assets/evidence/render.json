@@ -1,0 +1,40 @@
+{
+  "at": "2026-10-03T11:22:19.893Z",
+  "scope": "Isolated WebGL asset review; no gameplay or financial validation",
+  "views": [
+    {
+      "name": "front",
+      "ready": true,
+      "triangles": 94174,
+      "calls": 31,
+      "loadMs": [
+        211.9000000357628,
+        81.39999997615814
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)"
+    },
+    {
+      "name": "cross",
+      "ready": true,
+      "triangles": 94174,
+      "calls": 31,
+      "loadMs": [
+        61.10000002384186,
+        82.80000001192093
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)"
+    },
+    {
+      "name": "back",
+      "ready": true,
+      "triangles": 94174,
+      "calls": 31,
+      "loadMs": [
+        58.80000001192093,
+        71.30000001192093
+      ],
+      "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,75 @@
+
+> @sollish/web@0.1.0 test /Users/macmini/Desktop/Sollish/apps/web
+> tsx --test tests/*.test.ts
+
+✔ two equal uint32 ranges select KOR or AYAZ without a floating point draw (0.989833ms)
+✔ winning and losing settlements conserve integer demo cents with a 1.96x gross return (0.339708ms)
+✔ double start and repeated deadline callbacks cannot duplicate settlement (0.31475ms)
+✔ round input is copied and locked against selection, amount or visual control changes (0.172125ms)
+✔ leaving before the deadline refunds once; late hidden-tab completion preserves the fixed outcome (0.906083ms)
+✔ background suspension and reduced-motion timing share the same exactly-once deadline (0.252208ms)
+✔ chat signing rejects a disconnected or same-address reconnected wallet before prompting (0.679417ms)
+✔ late SIWS signature cannot reach auth after disconnect, same-address reconnect, or unmount (0.207584ms)
+✔ unchanged explicit chat login passes its original signature; malformed results fail closed (0.178625ms)
+✔ chat requires gap recovery and never advances on a malformed event (1.552666ms)
+✔ snapshot validates sequence, message identity and bounded records (0.386208ms)
+✔ API URL never permits token-bearing URLs or insecure remote transport (0.293125ms)
+✔ every published self-play trace has its recorded content hash, identity and bounded anatomy (110.5095ms)
+✔ research parser rejects a live identity and malformed time or body data (70.863916ms)
+✔ artifact loader rejects an unpinned path before any network access (0.5435ms)
+✔ artifact loader verifies bytes and digest; corrupted or truncated streams fail (37.539459ms)
+✔ demo admission enforces bounded integer stake and one pending reservation (1.054083ms)
+✔ entropy failure occurs before debiting, and reuse cannot create a new reservation (0.3725ms)
+✔ forged settlement cannot consume the pending reservation or inflate credits (0.359417ms)
+✔ old completion cannot settle a newer round; local cancellation restores exactly its stake (0.098875ms)
+✔ payout uses exact intermediate integers and rejects overflow; invalid clock/point is rejected (0.177833ms)
+✔ demo amounts reject precision loss, exponents, signed values, overflow and limits (4.451666ms)
+✔ cashout is evaluated at current monotonic time, including missed animation frames (6.194334ms)
+✔ demo randomness has explicit bounds and does not force a win (0.515042ms)
+✔ local payout rounds down to demo cents (0.125667ms)
+✔ public incentive tickets are bound to account, configuration and action family (3.7315ms)
+✔ malformed and unbounded persisted tickets never enable a payment label (1.215583ms)
+(node:27014) [THREE_CJS_DEPRECATED] DeprecationWarning: `require("three")` is deprecated and will be removed.
+Replace `const THREE = require("three")` with `import * as THREE from "three"`.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ published learned-motor cases are actual bounded, hash-pinned artifacts; both retain failed quality gates (52.473416ms)
+✔ quality cannot be promoted by flipping booleans or omitting unsupported foot evidence (61.722709ms)
+✔ exact quality thresholds fail, and a fall prevents ready even when all three scalar thresholds pass (71.625167ms)
+✔ a short fragment or large missing interval cannot masquerade as a complete ten-second run (50.630416ms)
+✔ sampling returns exact boundary frames, bounded interpolation, and holds the short unsampled tail (12.189958ms)
+✔ malformed or unbounded transforms and solver/geometry sizes are rejected before renderer allocation (127.960833ms)
+✔ invalid skeleton ancestry and out-of-range PyBullet contact links do not pass as measured anatomy (102.096292ms)
+✔ URDF cylinder-length capsule basis produces the expected upright extent, not doubled length or sideways limbs (20.588625ms)
+✔ motor loader accepts its exact published digest and rejects a forged but otherwise parseable quality result (60.774875ms)
+✔ motor loader rejects external paths, traversal and excess declared bytes without touching the network (0.57225ms)
+✔ SOL parsing uses integer lamports without floating-point truncation (54.429458ms)
+✔ receipt tracking survives serialization with exact u64 and wallet identity (0.97075ms)
+✔ wallet adapter rejects unsupported devnet before invoking wallet methods (0.29675ms)
+✔ review is bound to the connection instance, including same-address reconnects (0.275208ms)
+✔ disconnect or navigation during asynchronous prepare prevents ticket admission and wallet invocation (0.281583ms)
+(node:27016) [THREE_CJS_DEPRECATED] DeprecationWarning: `require("three")` is deprecated and will be removed.
+Replace `const THREE = require("three")` with `import * as THREE from "three"`.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ retained CMU trace is pinned and retains its failed physics verdict (10.668ms)
+✔ CMU viewer rejects a passed label pasted over the unchanged failed measurements (33.624917ms)
+✔ browser build permits only publishable and legacy anon Supabase keys (1.76575ms)
+✔ token units preserve six decimals and reject overprecision and u64 overflow (31.815375ms)
+✔ hourly token periods are explicit UTC epochs, not a rolling hour (8.768ms)
+✔ staking access is independent from the Coinflip admission switch (0.346125ms)
+✔ no preference never silently selects even an already-authorized wallet (4.335709ms)
+✔ reload restores only the explicit selection, silently and without retaining any account or signature (1.073375ms)
+✔ late registration restores selected wallet once; duplicate labels require explicit choice (0.547167ms)
+✔ disconnect immediately forgets preference despite extension failure and does not restore on reload (0.70375ms)
+✔ disconnect or a newer selection invalidates an in-flight connect response (0.555667ms)
+✔ account events rotate connection identity; account loss forgets selection; unregister invalidates connection (0.236542ms)
+✔ disposed controller cannot publish a late result or subscribe to events (0.243333ms)
+✔ silent rejection never falls back to prompting; explicit retry still works (1.003958ms)
+✔ account decoder rejects mismatched address, malformed key and non-Solana chains (0.16ms)
+ℹ tests 57
+ℹ suites 0
+ℹ pass 57
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1036.55225

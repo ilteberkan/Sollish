@@ -1,0 +1,15 @@
+{
+  "name": "@sollish/protocol",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./neuro-boxer-model": "./src/neuro-boxer-model.ts",
+    "./neuro-boxer-2-model": "./src/neuro-boxer-2-model.ts"
+  },
+  "scripts": {
+    "test": "node --import tsx --test test/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  }
+}

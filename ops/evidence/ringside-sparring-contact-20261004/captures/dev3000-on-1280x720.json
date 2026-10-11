@@ -1,0 +1,100 @@
+{
+ "at": "2026-10-05T03:32:30.212Z",
+ "base": "http://127.0.0.1:3000",
+ "seed": 7,
+ "corners": "default",
+ "viewport": [
+  1280,
+  720
+ ],
+ "camera": "Yayın",
+ "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+ "rows": [
+  {
+   "target": 300,
+   "tickAtShot": 300,
+   "file": "seed7-1280x720-t00300.jpg",
+   "probe": {
+    "frames": 301,
+    "lastPenetration": 0.002,
+    "lastRaw": 0.0372
+   }
+  },
+  {
+   "target": 330,
+   "tickAtShot": 330,
+   "file": "seed7-1280x720-t00330.jpg",
+   "probe": {
+    "frames": 330,
+    "lastPenetration": 0.0019,
+    "lastRaw": 0.0346
+   }
+  },
+  {
+   "target": 360,
+   "tickAtShot": 360,
+   "file": "seed7-1280x720-t00360.jpg",
+   "probe": {
+    "frames": 360,
+    "lastPenetration": 0.0019,
+    "lastRaw": 0.0365
+   }
+  },
+  {
+   "target": 375,
+   "tickAtShot": 375,
+   "file": "seed7-1280x720-t00375.jpg",
+   "probe": {
+    "frames": 376,
+    "lastPenetration": 0.0018,
+    "lastRaw": 0.0381
+   }
+  },
+  {
+   "target": 390,
+   "tickAtShot": 390,
+   "file": "seed7-1280x720-t00390.jpg",
+   "probe": {
+    "frames": 391,
+    "lastPenetration": 0.0019,
+    "lastRaw": 0.0373
+   }
+  },
+  {
+   "target": 420,
+   "tickAtShot": 420,
+   "file": "seed7-1280x720-t00420.jpg",
+   "probe": {
+    "frames": 421,
+    "lastPenetration": 0.0018,
+    "lastRaw": 0.037
+   }
+  }
+ ],
+ "contact": {
+  "after": {
+   "frames": 422,
+   "p50": 0.0019,
+   "p95": 0.002,
+   "max": 0.002,
+   "over1cm": 0
+  },
+  "raw": {
+   "frames": 422,
+   "p50": 0.0365,
+   "p95": 0.0424,
+   "max": 0.1893,
+   "over1cm": 361
+  },
+  "rootOffsetMax": 0,
+  "worstContact": {
+   "depth": 0.002,
+   "pair": "glove_l/glove_r",
+   "tick": 62,
+   "shot": "broadcast"
+  },
+  "worstPairs": []
+ },
+ "errors": [],
+ "scope": "local dev runtime (next dev, Turbopack) headless Chromium with Metal WebGL; not a production build or hosted"
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "path": "LICENSE",
+    "bytes": 11344,
+    "sha256": "2b2bd6c7d987bec5bd492e9970d28d097005cc1bc318793f4b24677ff1ff2d9d",
+    "url": "https://raw.githubusercontent.com/xbpeng/MimicKit/2ed1e6c093bb0829f55d33cb4f7a1731cfe6cb69/LICENSE"
+  },
+  {
+    "path": "data/assets/humanoid/humanoid.xml",
+    "bytes": 9765,
+    "sha256": "c595f943910c455648e3b1089c8d5be5a2abb7850dbfc8feba952ca68fa67319",
+    "url": "https://raw.githubusercontent.com/xbpeng/MimicKit/2ed1e6c093bb0829f55d33cb4f7a1731cfe6cb69/data/assets/humanoid/humanoid.xml"
+  },
+  {
+    "path": "mimickit/engines/newton_engine.py",
+    "bytes": 44017,
+    "sha256": "e9a388876b5d35dde13569c206fed5e3f547ba26fa623c450c49726c8c302f22",
+    "url": "https://raw.githubusercontent.com/xbpeng/MimicKit/2ed1e6c093bb0829f55d33cb4f7a1731cfe6cb69/mimickit/engines/newton_engine.py"
+  },
+  {
+    "path": "mimickit/anim/motion.py",
+    "bytes": 1257,
+    "sha256": "c39508b07291169158838b68f39470fc956219f377fc72175982924837b6f9f7",
+    "url": "https://raw.githubusercontent.com/xbpeng/MimicKit/2ed1e6c093bb0829f55d33cb4f7a1731cfe6cb69/mimickit/anim/motion.py"
+  },
+  {
+    "path": "mimickit/learning/base_agent.py",
+    "bytes": 16736,
+    "sha256": "1f1f4f02413b4b35a2d0d3bd70730b15035c375234085106a7ca7e86b8eaa0e8",
+    "url": "https://raw.githubusercontent.com/xbpeng/MimicKit/2ed1e6c093bb0829f55d33cb4f7a1731cfe6cb69/mimickit/learning/base_agent.py"
+  }
+]

@@ -1,0 +1,98 @@
+{
+  "startedAt": "2026-10-03T03:29:15.274Z",
+  "plan": {
+    "schemaVersion": 1,
+    "experiment": "combat-selfplay-guarded-3",
+    "reason": "High guard and non-striking forearm collision geometry are a separate research environment; preserve previous failures",
+    "seed": 22471,
+    "warmStartModelSha256": "97e829991918e0285040d1ad3b1b7eda0bfee8198611d82bf3ef9d5f895f802b",
+    "generations": 20,
+    "directions": 15,
+    "episodesPerCandidate": 6,
+    "sigma": 0.12,
+    "learningRate": 0.02,
+    "validationEvery": 5,
+    "maxRunSeconds": 300,
+    "trainingSeeds": "guarded-train/generation*100 + 0,1,2; each seed both sides",
+    "trainingOpponents": [
+      "warm-learner",
+      "cross-only",
+      "counter",
+      "guard",
+      "punisher",
+      "mixed",
+      "historical-current-student"
+    ],
+    "validationSeeds": [
+      110000,
+      110001,
+      110002,
+      110003
+    ],
+    "validationOpponents": [
+      "warm-learner",
+      "cross-only",
+      "counter",
+      "mixed"
+    ],
+    "finalTestSeeds": [
+      120000,
+      120001,
+      120002,
+      120003,
+      120004,
+      120005,
+      120006,
+      120007,
+      120008,
+      120009,
+      120010,
+      120011,
+      120012,
+      120013,
+      120014,
+      120015
+    ],
+    "finalOpponents": [
+      "warm-learner",
+      "cross-only",
+      "heldout-delayed-counter",
+      "heldout-combo",
+      "heldout-energy",
+      "heldout-ring",
+      "hook-only",
+      "frozen-v3"
+    ],
+    "selection": "highest fixed-validation reward, ties retain earlier checkpoint; no final result affects model or reward",
+    "reward": "0.6*terminal + 0.0015*(damageDealt-damageReceived) + 0.9*attackEntropy + 0.5*(attackTechniquesWithAtLeast2Strikes/4) - 0.9*overrideFraction - 0.3*(maxNoContactMs/45000)",
+    "gate": {
+      "originalWinImprovementOverRandom": 0.05,
+      "originalDamageMarginImprovementOverRandom": 25,
+      "originalActionEntropyMinimum": 0.45,
+      "originalMaxNoStrikeMs": 6000,
+      "winImprovementOverWarm": 0.02,
+      "damageMarginImprovementOverWarm": 10,
+      "meanAttackTechniquesMinimum": 3,
+      "meanOverrideFractionMaximum": 0.25,
+      "meanCleanHitsMinimum": 12,
+      "maxNoContactMs": 8000,
+      "stateViolations": 0
+    },
+    "deploymentGate": "CLOSED; no full-brain, joint-level movement learning, financial readiness or robust tactical superiority claim",
+    "expectedEnvironmentSha256": "8e762fe950cf3d2c34a103ab10747af0d64fa4176335914f52d4073299e15488"
+  },
+  "planSha256": "7b8860f84609ce4c2b3009f12d7d032a2c9cbc2a87aa7851344f53c99d319dcc",
+  "sources": {
+    "guarded-training.mjs": "0dc10d6f8b6e26a050ee3334041c883e6552e06589ab32828a9ac17743494167",
+    "guarded-plan.json": "7b8860f84609ce4c2b3009f12d7d032a2c9cbc2a87aa7851344f53c99d319dcc",
+    "guard-geometry.mjs": "e22c47178209badd5efb0f87e357ec5922cc584aac979addff78b953ba1046d4",
+    "guarded-environment.mjs": "c2e7fccbaacc2c9034560498de240a60703828330ee2548609c414f76586c7d1",
+    "policy.mjs": "70de3a7db071702281cdfb662565b20bb7964a43f91fbd307f18a8fadd5a8c29",
+    "environment.mjs": "f1ec19b2703b020534f268837a0fd2e19ad2e3af28f2de1f7349e27038fa2f76",
+    "metrics.mjs": "1b4e7a476765490d78d3be2d187ebe407a04a5c9c7ea5c7bb47faeb9d007e769"
+  },
+  "engineSha256": "8e762fe950cf3d2c34a103ab10747af0d64fa4176335914f52d4073299e15488",
+  "adapterSha256": "044bd7838415c8d04f50b24d3525b72812a12629bceb502dd754608890e76fa1",
+  "baseEngineSha256": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+  "geometrySha256": "e22c47178209badd5efb0f87e357ec5922cc584aac979addff78b953ba1046d4"
+}

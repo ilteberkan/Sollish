@@ -1,0 +1,21 @@
+{
+  "declaredAt": "2026-10-03T11:26:52.192390+00:00",
+  "cases": [
+    [
+      260000,
+      "unseen-reactive-jab",
+      "Görünür hazırlığa yanıt veren jab rakibi"
+    ],
+    [
+      260001,
+      "unseen-lowhigh",
+      "Alçak ve yüksek saldırı karışımı"
+    ],
+    [
+      260002,
+      "unseen-pressure",
+      "Baskı ve enerji döngüsü"
+    ]
+  ],
+  "selection": "First three final seeds and these opponents fixed before final evaluation; no cherry-picking"
+}

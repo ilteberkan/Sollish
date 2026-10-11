@@ -1,0 +1,218 @@
+{
+  "observedAt": "2026-10-01T14:51:26.560Z",
+  "scope": "Own experimental devnet round only; read-only final check, no game or payout",
+  "genesis": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+  "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+  "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+  "productionApproval": false,
+  "sourceReport": "probe-resume-initialized-latest.json",
+  "l1Statuses": [
+    {
+      "name": "initialize_round",
+      "role": "inspector",
+      "chain": "L1",
+      "signature": "JGbQwCpFndvJkiDNLuvCvyVDASZwUzg9JUSMzUkci7jk4ypN1YHknTrQJeajsj1w4PAj8kG7Npw1fFEFXYduVyh",
+      "slot": 506305155,
+      "messageSha256": "3e6f6b39e7403036363e4ae967bb815f868c1fde79f06c13f497baacc64249d3",
+      "reconciledFromFinalized": true,
+      "confirmationStatus": "finalized",
+      "confirmations": null,
+      "err": null,
+      "status": {
+        "Ok": null
+      }
+    },
+    {
+      "name": "initialize_receipt",
+      "role": "playerA",
+      "chain": "L1",
+      "signature": "C6iQLV2D8dsAFF6fXJa322wA8do6b1SDALvr6bfHi14gVdGkEW9YZy5Fp4TesuvEdjsevY7za1Aw9uACR8j8Gne",
+      "slot": 506305163,
+      "messageSha256": "7812504bb66b09758483cc85ec0a19253a01ab6a82437fd70c19eed10dd71fdf",
+      "reconciledFromFinalized": true,
+      "confirmationStatus": "finalized",
+      "confirmations": null,
+      "err": null,
+      "status": {
+        "Ok": null
+      }
+    },
+    {
+      "name": "initialize_receipt",
+      "role": "playerB",
+      "chain": "L1",
+      "signature": "5vtC9Mb3N41w76XJVBwQVTkaEjXwLnQinTNd7pEZ6Usu3bBA2bviMgpp7yhG4FkbA2a2j539dqDNnHTwoSEu1T8c",
+      "slot": 506305172,
+      "messageSha256": "99182c7dc31ea837dfb83fa204df597b012c8b0e2dba6a6724700f6d73ec989b",
+      "reconciledFromFinalized": true,
+      "confirmationStatus": "finalized",
+      "confirmations": null,
+      "err": null,
+      "status": {
+        "Ok": null
+      }
+    },
+    {
+      "name": "delegate_receipt",
+      "role": "playerA",
+      "signature": "4ubiECwrXqyxQzFpiinan1q9RPhWsxKkAw2ZzS5ps843ncQaDPf3VgMgqhxvCrGNAA42opxA6r4BCipPu83X3ZBH",
+      "chain": "L1",
+      "confirmationStatus": "finalized",
+      "confirmations": null,
+      "err": null,
+      "slot": 506308048,
+      "status": {
+        "Ok": null
+      }
+    },
+    {
+      "name": "delegate_receipt",
+      "role": "playerB",
+      "signature": "3uQssMbg77fCXcoDqyNWYsuFYEQHvicB9V5CDCqX3NDCEUk2Vdneeq1YTEXgiW1FuApRehNYxW5oYnXcgr5q3MCi",
+      "chain": "L1",
+      "confirmationStatus": "finalized",
+      "confirmations": null,
+      "err": null,
+      "slot": 506308084,
+      "status": {
+        "Ok": null
+      }
+    },
+    {
+      "name": "delegate_round",
+      "role": "inspector",
+      "signature": "618Smei4EGpUaGJNKV2NQvZi9gzpoz18rjYfC9devG25bV2ThFCD7GSiWzz6miLahF11GUdP2V7VpBt6ogG5rxnQ",
+      "chain": "L1",
+      "confirmationStatus": "finalized",
+      "confirmations": null,
+      "err": null,
+      "slot": 506308105,
+      "status": {
+        "Ok": null
+      }
+    }
+  ],
+  "finalizedBalanceLamports": {
+    "inspector": 457510728,
+    "playerA": 21408600,
+    "playerB": 21408600
+  },
+  "l1AccountSnapshotSlot": 506308969,
+  "l1AccountOwners": [
+    "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+    "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+    "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh"
+  ],
+  "deployment": {
+    "genesis": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+    "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "programData": "3TjrsRtLukZwUfnWxFZchVXE2dAd2xp4UfkMe6h6RaAD",
+    "elfSha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+    "elfBytes": 292384,
+    "allocationPaddingBytes": 0,
+    "upgradeAuthority": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+    "teeCopy": {
+      "elfSha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+      "elfBytes": 292384,
+      "allocationPaddingBytes": 0
+    }
+  },
+  "teeStatuses": [
+    {
+      "name": "prepare_private",
+      "role": "inspector",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "chain": "TEE",
+      "observation": {
+        "slot": 411221043,
+        "confirmations": null,
+        "status": {
+          "Ok": null
+        },
+        "err": null,
+        "confirmationStatus": "finalized"
+      }
+    },
+    {
+      "name": "request_probe_randomness",
+      "role": "inspector",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "chain": "TEE",
+      "observation": {
+        "slot": 411222422,
+        "confirmations": null,
+        "status": {
+          "Ok": null
+        },
+        "err": null,
+        "confirmationStatus": "finalized"
+      }
+    },
+    {
+      "name": "submit_probe",
+      "role": "playerA",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "chain": "TEE",
+      "observation": {
+        "slot": 411223026,
+        "confirmations": null,
+        "status": {
+          "Ok": null
+        },
+        "err": null,
+        "confirmationStatus": "finalized"
+      }
+    },
+    {
+      "name": "submit_probe",
+      "role": "playerB",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "chain": "TEE",
+      "observation": {
+        "slot": 411224068,
+        "confirmations": null,
+        "status": {
+          "Ok": null
+        },
+        "err": null,
+        "confirmationStatus": "finalized"
+      }
+    },
+    {
+      "name": "reveal_probe",
+      "role": "inspector",
+      "signature": "5gLD2bPbuRg1jWMSkxQ1bbAwcWuAofR2drjgpokVPUmeXmZbjPbeXYkiKwxkv2dutHrs1N8GRanLZTiGcQyp8spE",
+      "chain": "TEE",
+      "observation": {
+        "slot": 411231034,
+        "confirmations": null,
+        "status": {
+          "Ok": null
+        },
+        "err": null,
+        "confirmationStatus": "finalized"
+      }
+    }
+  ],
+  "anonymousPostReveal": {
+    "rpcContextSlot": 411241287,
+    "status": 4,
+    "randomnessSha256": "17fefa2e8b12ec1013fc96b3c1af9edcd096ca9da695a0fef084b2e4b6cf8866",
+    "receipts": [
+      {
+        "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+        "player": "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+        "lastNonce": "1",
+        "acceptedCount": "1"
+      },
+      {
+        "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+        "player": "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg",
+        "lastNonce": "1",
+        "acceptedCount": "1"
+      }
+    ]
+  },
+  "rawRandomnessPersisted": false,
+  "limits": "Post-reveal anonymous visibility is expected; does not prove pre-reveal secrecy, attestation binding or L1 payout"
+}

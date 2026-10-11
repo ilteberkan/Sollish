@@ -1,0 +1,595 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-01T00:24:26.346Z",
+  "scope": "G0 read-only RPC/deployment/auth/attestation preflight; no transactions, no VRF request, no counter writes",
+  "node": "v24.9.0",
+  "manifest": {
+    "schemaVersion": 1,
+    "baseRpc": "https://api.devnet.solana.com",
+    "baseRpcAlternative": "https://rpc.magicblock.app/devnet",
+    "teeRpc": "https://devnet-tee.magicblock.app",
+    "erRpc": "https://devnet.magicblock.app",
+    "devnetGenesisHash": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+    "teeValidator": "MTEWGuqxUpYZGFJQcp8tLN7x5v9BSeoFHYWQQ3n3xzo",
+    "sdkVersion": "0.17.3",
+    "sources": {
+      "sdkCommit": "fb19a37c829f4c7487b4101a12ddd76577dbf668",
+      "examplesCommit": "e8393c60a82f73259a39abe807c6273a83659d0a",
+      "vrfCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+      "delegationCommit": "fb6668c7b5ffd6a89bedee1d13b16402fd0e65de"
+    },
+    "programs": {
+      "delegation": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+      "vrf": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+      "permission": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1",
+      "privateCounterSource": "9aXAUZm1SdXcX4m1W5SHAywp6CBUbUxymruMnkYvz9bR",
+      "privateCounterBundledIdl": "2WJiwbdnwo7qVC3zesZjFWEPUcU2NZbBXf8arMUJ6p89"
+    },
+    "queues": {
+      "baseDefault": "Cuj97ggrhhidhbu39TijNVqE74xvKJ69gDervRUXAxGh",
+      "delegated": "5hBR571xnXppuCPveTrctfTU7tJLSN94nq7kv7FRK5Tc"
+    },
+    "expectedTeeMeasurements": null,
+    "approvedOwnCounterDeployment": null
+  },
+  "checks": [
+    {
+      "id": "base-genesis",
+      "status": "PASS",
+      "evidence": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG"
+    },
+    {
+      "id": "base-version",
+      "status": "PASS",
+      "evidence": {
+        "feature-set": 3383571666,
+        "solana-core": "4.3.0"
+      }
+    },
+    {
+      "id": "base-identity",
+      "status": "PASS",
+      "evidence": {
+        "identity": "DhKciBn2jKLtbJm4AwU2qzJBqZsq9KmzJuJU2u2Ks6z7"
+      }
+    },
+    {
+      "id": "tee-version",
+      "status": "PASS",
+      "evidence": {
+        "feature-set": 3718597879,
+        "solana-core": "4.0.0",
+        "git-commit": "e66d914",
+        "magicblock-core": "0.16.0"
+      }
+    },
+    {
+      "id": "tee-identity",
+      "status": "PASS",
+      "evidence": {
+        "identity": "MTEWGuqxUpYZGFJQcp8tLN7x5v9BSeoFHYWQQ3n3xzo"
+      }
+    },
+    {
+      "id": "er-version",
+      "status": "PASS",
+      "evidence": {
+        "solana-core": "4.0.0",
+        "magicblock-core": "0.16.0",
+        "git-commit": "e66d914",
+        "feature-set": 3718597879
+      }
+    },
+    {
+      "id": "er-identity",
+      "status": "PASS",
+      "evidence": {
+        "identity": "MAS1Dt9qreoRMQ14YQuhg8UTZMMzDdKhmkZMECCzk57"
+      }
+    },
+    {
+      "id": "tee-reported-genesis",
+      "status": "PASS",
+      "evidence": "11111111111111111111111111111111"
+    },
+    {
+      "id": "counter-source-idl-alignment",
+      "status": "BLOCKED",
+      "evidence": {
+        "error": "Pinned source declare_id and bundled IDL address/owner_program disagree; regenerate IDL for an owned deployment"
+      }
+    },
+    {
+      "id": "fresh-quote-cryptographic-verification",
+      "status": "PASS",
+      "evidence": {
+        "sdk": "0.17.3",
+        "verification": "Official SDK DCAP collateral + reportData/challenge checks returned without error; no measurement allowlist check."
+      }
+    },
+    {
+      "id": "cached-quote-cryptographic-verification",
+      "status": "PASS",
+      "evidence": {
+        "sdk": "0.17.3",
+        "verification": "Official SDK DCAP collateral + reportData/challenge checks returned without error; no measurement allowlist check."
+      }
+    },
+    {
+      "id": "expected-tee-application-measurement",
+      "status": "BLOCKED",
+      "evidence": "No independently approved measurement/RTMR/MRTD policy or validator-to-quote deployment binding has been supplied. A valid quote alone cannot approve the running game code."
+    },
+    {
+      "id": "tee-auth",
+      "status": "PASS",
+      "evidence": {
+        "expiresAt": 1793406273153,
+        "tokenPersisted": false,
+        "ownMessageSignatureOnly": true
+      }
+    },
+    {
+      "id": "base-account-snapshot",
+      "status": "PASS",
+      "evidence": {
+        "slot": 506087003,
+        "count": 7,
+        "missing": []
+      }
+    },
+    {
+      "id": "tee-anonymous-account-snapshot",
+      "status": "PASS",
+      "evidence": {
+        "slot": 406040058,
+        "count": 7,
+        "missing": []
+      }
+    },
+    {
+      "id": "tee-authenticated-account-snapshot",
+      "status": "PASS",
+      "evidence": {
+        "slot": 406040231,
+        "count": 7,
+        "missing": []
+      }
+    },
+    {
+      "id": "delegation-deployment-observed",
+      "status": "PASS",
+      "evidence": {
+        "baseExists": true,
+        "baseExecutable": true,
+        "teeExists": true,
+        "teeExecutable": true,
+        "scope": "Presence/metadata only, not source or permission compatibility."
+      }
+    },
+    {
+      "id": "vrf-deployment-observed",
+      "status": "PASS",
+      "evidence": {
+        "baseExists": true,
+        "baseExecutable": true,
+        "teeExists": true,
+        "teeExecutable": true,
+        "scope": "Presence/metadata only, not source or permission compatibility."
+      }
+    },
+    {
+      "id": "permission-deployment-observed",
+      "status": "PASS",
+      "evidence": {
+        "baseExists": true,
+        "baseExecutable": true,
+        "teeExists": true,
+        "teeExecutable": true,
+        "scope": "Presence/metadata only, not source or permission compatibility."
+      }
+    },
+    {
+      "id": "tee-vrf-queue-support",
+      "status": "BLOCKED",
+      "evidence": {
+        "base": {
+          "address": "5hBR571xnXppuCPveTrctfTU7tJLSN94nq7kv7FRK5Tc",
+          "exists": true,
+          "owner": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+          "executable": false,
+          "lamports": 67010880,
+          "dataBytes": 9500,
+          "accountDataSha256": "91d3824771ad539afd0e2b6f2c2365e3e7e4312cfbec9705e56a2fe33347f9c0"
+        },
+        "tee": {
+          "address": "5hBR571xnXppuCPveTrctfTU7tJLSN94nq7kv7FRK5Tc",
+          "exists": true,
+          "owner": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+          "executable": false,
+          "lamports": 67010880,
+          "dataBytes": 9500,
+          "accountDataSha256": "2f89a5cd54f1d3a219641278edeb527e21a3e4bc555257cdb4040b96d81eea29"
+        },
+        "reason": "Queue existence/owner is only an observation. No oracle binding, delegated state decode, private request, or callback was exercised."
+      }
+    },
+    {
+      "id": "owned-counter-deployment",
+      "status": "BLOCKED",
+      "evidence": "No owned program has been built/deployed; mismatched bundled IDL is not trusted or silently rewritten. No transaction sent to third-party examples."
+    },
+    {
+      "id": "deployed-source-binary-match",
+      "status": "BLOCKED",
+      "evidence": "Recorded hashes require reproducible builds and reviewed deployment/version bindings."
+    },
+    {
+      "id": "G0",
+      "status": "BLOCKED",
+      "evidence": {
+        "required": [
+          "base-genesis",
+          "tee-identity",
+          "counter-source-idl-alignment",
+          "fresh-quote-cryptographic-verification",
+          "expected-tee-application-measurement",
+          "tee-auth",
+          "delegation-deployment-observed",
+          "vrf-deployment-observed",
+          "permission-deployment-observed",
+          "tee-vrf-queue-support",
+          "owned-counter-deployment",
+          "deployed-source-binary-match"
+        ]
+      }
+    },
+    {
+      "id": "G1",
+      "status": "BLOCKED",
+      "evidence": "Not run: preflight prerequisites unresolved; no privacy, VRF, cash-out or payout claim."
+    },
+    {
+      "id": "G2",
+      "status": "BLOCKED",
+      "evidence": "Not run: preflight prerequisites unresolved; no privacy, VRF, cash-out or payout claim."
+    },
+    {
+      "id": "G3",
+      "status": "BLOCKED",
+      "evidence": "Not run: preflight prerequisites unresolved; no privacy, VRF, cash-out or payout claim."
+    },
+    {
+      "id": "G4",
+      "status": "BLOCKED",
+      "evidence": "Not run: preflight prerequisites unresolved; no privacy, VRF, cash-out or payout claim."
+    },
+    {
+      "id": "G5",
+      "status": "BLOCKED",
+      "evidence": "Not run: preflight prerequisites unresolved; no privacy, VRF, cash-out or payout claim."
+    },
+    {
+      "id": "G6",
+      "status": "BLOCKED",
+      "evidence": "Not run: preflight prerequisites unresolved; no privacy, VRF, cash-out or payout claim."
+    },
+    {
+      "id": "G7",
+      "status": "BLOCKED",
+      "evidence": "Not run: preflight prerequisites unresolved; no privacy, VRF, cash-out or payout claim."
+    },
+    {
+      "id": "G8",
+      "status": "BLOCKED",
+      "evidence": "Not run: preflight prerequisites unresolved; no privacy, VRF, cash-out or payout claim."
+    }
+  ],
+  "snapshots": {
+    "base": {
+      "slot": 506087003,
+      "accounts": {
+        "delegation": {
+          "address": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+          "exists": true,
+          "owner": "BPFLoaderUpgradeab1e11111111111111111111111",
+          "executable": true,
+          "lamports": 1141440,
+          "dataBytes": 36,
+          "accountDataSha256": "a803af19e848316cef1f63ee8351bb03f5733751e79ec9642ad9c97c31b6a9c9",
+          "programDataAddress": "Ew1j4p6jU82qmLFLJe2SVp5ZKoNokMP6J1Bf5LaZ6GyE",
+          "deployment": {
+            "observedSlot": 506087003,
+            "lastDeploySlot": "458511904",
+            "upgradeAuthority": "3FwNxjbCqdD7G6MkrAdwTd5Zf6R3tHoapam4Pv1X2KBB",
+            "binaryBytesIncludingAllocationPadding": 459416,
+            "binarySha256IncludingAllocationPadding": "e940763c05d5151ac3f6fa4b0ee4c882361eff653fa25e19bc6087e908d1b4fd",
+            "hashMeaning": "Observed deployed bytes excluding 45-byte loader metadata, including allocation padding; not a reproducible source-build match."
+          }
+        },
+        "vrf": {
+          "address": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+          "exists": true,
+          "owner": "BPFLoaderUpgradeab1e11111111111111111111111",
+          "executable": true,
+          "lamports": 7001141440,
+          "dataBytes": 36,
+          "accountDataSha256": "74c041089d4bb45092869cbe9bb34dacafaf4f4d3e271f38786ced1cd84cd5c3",
+          "programDataAddress": "CrMJ8fvhdUDTUmvY9rV24gQ6gBdqAjx5P4YZbEkduhp1",
+          "deployment": {
+            "observedSlot": 506087003,
+            "lastDeploySlot": "500204569",
+            "upgradeAuthority": "3FwNxjbCqdD7G6MkrAdwTd5Zf6R3tHoapam4Pv1X2KBB",
+            "binaryBytesIncludingAllocationPadding": 318752,
+            "binarySha256IncludingAllocationPadding": "5ce6715cc338c135c996f04b13d1f1652d95e51ee52bd7c2eb0a31d09282950e",
+            "hashMeaning": "Observed deployed bytes excluding 45-byte loader metadata, including allocation padding; not a reproducible source-build match."
+          }
+        },
+        "permission": {
+          "address": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1",
+          "exists": true,
+          "owner": "BPFLoaderUpgradeab1e11111111111111111111111",
+          "executable": true,
+          "lamports": 101141440,
+          "dataBytes": 36,
+          "accountDataSha256": "83975896643a10cae7a33756b7aadb6c38c897dbad5ee1d94ee9654ece1e7cef",
+          "programDataAddress": "EcJMNG82d9XAAz97yDdfQLjZf17Xj3Kh5JzjZxrbt9ZQ",
+          "deployment": {
+            "observedSlot": 506087003,
+            "lastDeploySlot": "505846744",
+            "upgradeAuthority": "5Hs51hUxpr9cBz8gwbsFNVcJqdtPeJR8MoUNxoUSGP8a",
+            "binaryBytesIncludingAllocationPadding": 215928,
+            "binarySha256IncludingAllocationPadding": "8bfb0d271dcc54e539d9ec430bdc7ccf63a28cb7168f359ba819120e21ddad06",
+            "hashMeaning": "Observed deployed bytes excluding 45-byte loader metadata, including allocation padding; not a reproducible source-build match."
+          }
+        },
+        "privateCounterSource": {
+          "address": "9aXAUZm1SdXcX4m1W5SHAywp6CBUbUxymruMnkYvz9bR",
+          "exists": true,
+          "owner": "BPFLoaderUpgradeab1e11111111111111111111111",
+          "executable": true,
+          "lamports": 1141440,
+          "dataBytes": 36,
+          "accountDataSha256": "fba7411e428a0f12313b09cbc1ebb93b85b96fa2de38c70bafcc456ba9694fc9",
+          "programDataAddress": "Bo4YN7kodDzFwC4CnE2u7xRvGTmhkfrTiKzcu4j7UeDv",
+          "deployment": {
+            "observedSlot": 506087003,
+            "lastDeploySlot": "467135491",
+            "upgradeAuthority": "5Hs51hUxpr9cBz8gwbsFNVcJqdtPeJR8MoUNxoUSGP8a",
+            "binaryBytesIncludingAllocationPadding": 344560,
+            "binarySha256IncludingAllocationPadding": "82ab9ba912abab74953cb634293f6714f5e27d9e120229ca1334f52fe45eaf5f",
+            "hashMeaning": "Observed deployed bytes excluding 45-byte loader metadata, including allocation padding; not a reproducible source-build match."
+          }
+        },
+        "privateCounterBundledIdl": {
+          "address": "2WJiwbdnwo7qVC3zesZjFWEPUcU2NZbBXf8arMUJ6p89",
+          "exists": true,
+          "owner": "BPFLoaderUpgradeab1e11111111111111111111111",
+          "executable": true,
+          "lamports": 1141440,
+          "dataBytes": 36,
+          "accountDataSha256": "f22c78fcff005bb4cc9b72602b95a52cb9d27a4819ce8aa4fc248d8d9f2caec6",
+          "programDataAddress": "Egr7dopn6nEKWrqRbykkPcdegDSsT6ZwC7h4fD9kXgGc",
+          "deployment": {
+            "observedSlot": 506087003,
+            "lastDeploySlot": "466982737",
+            "upgradeAuthority": "EyBRt4Acr7b4s3exfnVvJ4EgL8oa6Lc4JK1Leonud34W",
+            "binaryBytesIncludingAllocationPadding": 344560,
+            "binarySha256IncludingAllocationPadding": "9b6c6ec46740995fd2ed53951d871ae8d4547db2960d430c07eb5bad32bcfbda",
+            "hashMeaning": "Observed deployed bytes excluding 45-byte loader metadata, including allocation padding; not a reproducible source-build match."
+          }
+        },
+        "baseDefault": {
+          "address": "Cuj97ggrhhidhbu39TijNVqE74xvKJ69gDervRUXAxGh",
+          "exists": true,
+          "owner": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+          "executable": false,
+          "lamports": 209705880,
+          "dataBytes": 30000,
+          "accountDataSha256": "94ac5b6caa39963938a8dee73f0bbf6fe325d13f01b790b197bce52af2e4fe56"
+        },
+        "delegated": {
+          "address": "5hBR571xnXppuCPveTrctfTU7tJLSN94nq7kv7FRK5Tc",
+          "exists": true,
+          "owner": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+          "executable": false,
+          "lamports": 67010880,
+          "dataBytes": 9500,
+          "accountDataSha256": "91d3824771ad539afd0e2b6f2c2365e3e7e4312cfbec9705e56a2fe33347f9c0"
+        }
+      }
+    },
+    "tee-anonymous": {
+      "slot": 406040058,
+      "accounts": {
+        "delegation": {
+          "address": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+          "exists": true,
+          "owner": "LoaderV411111111111111111111111111111111111",
+          "executable": true,
+          "lamports": 2334727360,
+          "dataBytes": 459464,
+          "accountDataSha256": "bbc998568fbdc5cb56004804132a9207b031f406ad0b9d4e65bf23b9f1795c2d"
+        },
+        "vrf": {
+          "address": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+          "exists": true,
+          "owner": "LoaderV411111111111111111111111111111111111",
+          "executable": true,
+          "lamports": 1620154240,
+          "dataBytes": 318800,
+          "accountDataSha256": "620178cfafb0772c0f3e8174acdbdf82bc258371f8fbd3c621224c6940ccaf09"
+        },
+        "permission": {
+          "address": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1",
+          "exists": true,
+          "owner": "LoaderV411111111111111111111111111111111111",
+          "executable": true,
+          "lamports": 1097808320,
+          "dataBytes": 215976,
+          "accountDataSha256": "e01a388f1a7f1e686a488809e7143333a9b98028d258aea2727f9f310636b545"
+        },
+        "privateCounterSource": {
+          "address": "9aXAUZm1SdXcX4m1W5SHAywp6CBUbUxymruMnkYvz9bR",
+          "exists": true,
+          "owner": "LoaderV411111111111111111111111111111111111",
+          "executable": true,
+          "lamports": 1751258880,
+          "dataBytes": 344608,
+          "accountDataSha256": "c16d708252f906c2f4dda7c1344bbe4327620af68d8beb41fc7b99bcbde02e8f"
+        },
+        "privateCounterBundledIdl": {
+          "address": "2WJiwbdnwo7qVC3zesZjFWEPUcU2NZbBXf8arMUJ6p89",
+          "exists": true,
+          "owner": "LoaderV411111111111111111111111111111111111",
+          "executable": true,
+          "lamports": 1751258880,
+          "dataBytes": 344608,
+          "accountDataSha256": "ce2503f3c56419d3d08c5f3fd3f1b1020290e9c1b57310dbfaa79dc236654858"
+        },
+        "baseDefault": {
+          "address": "Cuj97ggrhhidhbu39TijNVqE74xvKJ69gDervRUXAxGh",
+          "exists": true,
+          "owner": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+          "executable": false,
+          "lamports": 209705880,
+          "dataBytes": 30000,
+          "accountDataSha256": "94ac5b6caa39963938a8dee73f0bbf6fe325d13f01b790b197bce52af2e4fe56"
+        },
+        "delegated": {
+          "address": "5hBR571xnXppuCPveTrctfTU7tJLSN94nq7kv7FRK5Tc",
+          "exists": true,
+          "owner": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+          "executable": false,
+          "lamports": 67010880,
+          "dataBytes": 9500,
+          "accountDataSha256": "2f89a5cd54f1d3a219641278edeb527e21a3e4bc555257cdb4040b96d81eea29"
+        }
+      }
+    },
+    "tee-authenticated": {
+      "slot": 406040231,
+      "accounts": {
+        "delegation": {
+          "address": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+          "exists": true,
+          "owner": "LoaderV411111111111111111111111111111111111",
+          "executable": true,
+          "lamports": 2334727360,
+          "dataBytes": 459464,
+          "accountDataSha256": "bbc998568fbdc5cb56004804132a9207b031f406ad0b9d4e65bf23b9f1795c2d"
+        },
+        "vrf": {
+          "address": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+          "exists": true,
+          "owner": "LoaderV411111111111111111111111111111111111",
+          "executable": true,
+          "lamports": 1620154240,
+          "dataBytes": 318800,
+          "accountDataSha256": "620178cfafb0772c0f3e8174acdbdf82bc258371f8fbd3c621224c6940ccaf09"
+        },
+        "permission": {
+          "address": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1",
+          "exists": true,
+          "owner": "LoaderV411111111111111111111111111111111111",
+          "executable": true,
+          "lamports": 1097808320,
+          "dataBytes": 215976,
+          "accountDataSha256": "e01a388f1a7f1e686a488809e7143333a9b98028d258aea2727f9f310636b545"
+        },
+        "privateCounterSource": {
+          "address": "9aXAUZm1SdXcX4m1W5SHAywp6CBUbUxymruMnkYvz9bR",
+          "exists": true,
+          "owner": "LoaderV411111111111111111111111111111111111",
+          "executable": true,
+          "lamports": 1751258880,
+          "dataBytes": 344608,
+          "accountDataSha256": "c16d708252f906c2f4dda7c1344bbe4327620af68d8beb41fc7b99bcbde02e8f"
+        },
+        "privateCounterBundledIdl": {
+          "address": "2WJiwbdnwo7qVC3zesZjFWEPUcU2NZbBXf8arMUJ6p89",
+          "exists": true,
+          "owner": "LoaderV411111111111111111111111111111111111",
+          "executable": true,
+          "lamports": 1751258880,
+          "dataBytes": 344608,
+          "accountDataSha256": "ce2503f3c56419d3d08c5f3fd3f1b1020290e9c1b57310dbfaa79dc236654858"
+        },
+        "baseDefault": {
+          "address": "Cuj97ggrhhidhbu39TijNVqE74xvKJ69gDervRUXAxGh",
+          "exists": true,
+          "owner": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+          "executable": false,
+          "lamports": 209705880,
+          "dataBytes": 30000,
+          "accountDataSha256": "94ac5b6caa39963938a8dee73f0bbf6fe325d13f01b790b197bce52af2e4fe56"
+        },
+        "delegated": {
+          "address": "5hBR571xnXppuCPveTrctfTU7tJLSN94nq7kv7FRK5Tc",
+          "exists": true,
+          "owner": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+          "executable": false,
+          "lamports": 67010880,
+          "dataBytes": 9500,
+          "accountDataSha256": "2f89a5cd54f1d3a219641278edeb527e21a3e4bc555257cdb4040b96d81eea29"
+        }
+      }
+    }
+  },
+  "quotes": [
+    {
+      "method": "/quote",
+      "httpStatus": 200,
+      "requestedChallengeBase64": "IJBBy6traoH/EX+21pBozfOEC68l5QHpn3qxngmJLjxBcYsTQDiXA0NrRMv9Dm07sXdmiFhYV2/jAsd+431DCQ==",
+      "body": {
+        "quote": "BAACAIEAAAAAAAAAk5pyM/ecTKmUCg2zlX8GBwAAAAAAAAAAAAAAAAAAAAAAAAAADwEKAAAAAAAAAAAAAAAAAKtiVhoXOsvRjuUP83dQ20QYTGz16IbfdCR8xXXhY7BMNLnhg3R1fCNa/6YU1BJ/awAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAADnAgYAAAAAAMHunBbjr8UGz+BCxbhGo2hSjzs3YY6vsnRpvBFM+RTpIiyRYYRw5/KyisNgloJwpQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAETuruJ2jdmzpStBdHNn5XUbGPdlPwh/69feEb/6u9HXXU/zU6aBVFQSFYY+5/wpAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMHx8r/zOxbRRpE0mH/N8Oo72XBzUMxw5z8IbGNaX8Tpbg0hSn93VgjmTSUTgvIFZLT+h1Hl2Wtyag2ruGuoIXg2JtgGOMr2ygBF8x9eTE6Q4grulvynEUIdtb3GDlyR7VHAm3InbIvNDidIZafgpAjulWpsz66LTt1DRn11hf81K7ieKPXLYhBRFMrXIl4R7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCQQcura2qB/xF/ttaQaM3zhAuvJeUB6Z96sZ4JiS48QXGLE0A4lwNDa0TL/Q5tO7F3ZohYWFdv4wLHfuN9QwnLEAAAm4HKA+TjQqNQFjaw3DRutvu1mmcja4i3qPHB9Bpw2wyHqmrjpg4BSYvk5cnTSUIQ6ffTEY95MZu4hH8HaspADRvgxf+QrlH8/lVw0DLRZqVS1NJAJbRcCniMTIEqOMS1rVB04/6X+u9WI5GPeVDjxncaAeezPgwFQZtVTwhNGD4GAEUQAAAKCv8bBv8ABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVAAAAAAAAAOcAAAAAAAAA5aOntdgwwpU7mFNMbFmjo0/cNOkz9/WJjwqFzwiEa8oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANyeKnxvlI8XR040p/xD7QMPfBVj8bq932NAyC4OVKjFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMF1BkyUVD1esRiUdxshfp5AxyMYoLpnqjEaEowZbHkvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADQ7uqOhrdw/zs7SbrbDReVB/4NeYADRLzivPi9gHgpeGiIdcFiENDst9zrr851ufZjO5lK1ZVJHzvfgGk1i1SsIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAXQ4AAC0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlFOFRDQ0JKZWdBd0lCQWdJVkFMOXkxUjFyMVFsV3V3VjZJS1RIWEd6eVl6TjhNQW9HQ0NxR1NNNDlCQU1DCk1IQXhJakFnQmdOVkJBTU1HVWx1ZEdWc0lGTkhXQ0JRUTBzZ1VHeGhkR1p2Y20wZ1EwRXhHakFZQmdOVkJBb00KRVVsdWRHVnNJRU52Y25CdmNtRjBhVzl1TVJRd0VnWURWUVFIREF0VFlXNTBZU0JEYkdGeVlURUxNQWtHQTFVRQpDQXdDUTBFeEN6QUpCZ05WQkFZVEFsVlRNQjRYRFRJMk1EY3pNREE0TXpNeU5Wb1hEVE16TURjek1EQTRNek15Ck5Wb3djREVpTUNBR0ExVUVBd3daU1c1MFpXd2dVMGRZSUZCRFN5QkRaWEowYVdacFkyRjBaVEVhTUJnR0ExVUUKQ2d3UlNXNTBaV3dnUTI5eWNHOXlZWFJwYjI0eEZEQVNCZ05WQkFjTUMxTmhiblJoSUVOc1lYSmhNUXN3Q1FZRApWUVFJREFKRFFURUxNQWtHQTFVRUJoTUNWVk13V1RBVEJnY3Foa2pPUFFJQkJnZ3Foa2pPUFFNQkJ3TkNBQVErCnJxTmJ6d1NqaENDYm9aa0p0YndzSDZua3hGRUZJc0t5eGFicUhzU0NHYjc1eHB3dU14aHc3Snd0d2dFcjlnL0cKOXpDYzJHaGhUN0NXQVVsNEZVTTFvNElERERDQ0F3Z3dId1lEVlIwakJCZ3dGb0FVbFc5ZHpiMGI0ZWxBU2NuVQo5RFBPQVZjTDNsUXdhd1lEVlIwZkJHUXdZakJnb0Y2Z1hJWmFhSFIwY0hNNkx5OWhjR2t1ZEhKMWMzUmxaSE5sCmNuWnBZMlZ6TG1sdWRHVnNMbU52YlM5elozZ3ZZMlZ5ZEdsbWFXTmhkR2x2Ymk5Mk5DOXdZMnRqY213L1kyRTkKY0d4aGRHWnZjbTBtWlc1amIyUnBibWM5WkdWeU1CMEdBMVVkRGdRV0JCUktIK29MRDJuempBaWpmYU5OUjBLQwovUjRlSnpBT0JnTlZIUThCQWY4RUJBTUNCc0F3REFZRFZSMFRBUUgvQkFJd0FEQ0NBamtHQ1NxR1NJYjRUUUVOCkFRU0NBaW93Z2dJbU1CNEdDaXFHU0liNFRRRU5BUUVFRUIxRzUvb3VKQXBKaWZPWkVUZDlzcHd3Z2dGakJnb3EKaGtpRytFMEJEUUVDTUlJQlV6QVFCZ3NxaGtpRytFMEJEUUVDQVFJQkNUQVFCZ3NxaGtpRytFMEJEUUVDQWdJQgpDVEFRQmdzcWhraUcrRTBCRFFFQ0F3SUJBakFRQmdzcWhraUcrRTBCRFFFQ0JBSUJBakFRQmdzcWhraUcrRTBCCkRRRUNCUUlCQkRBUUJnc3Foa2lHK0UwQkRRRUNCZ0lCQVRBUUJnc3Foa2lHK0UwQkRRRUNCd0lCQURBUUJnc3EKaGtpRytFMEJEUUVDQ0FJQkJqQVFCZ3NxaGtpRytFMEJEUUVDQ1FJQkFEQVFCZ3NxaGtpRytFMEJEUUVDQ2dJQgpBREFRQmdzcWhraUcrRTBCRFFFQ0N3SUJBREFRQmdzcWhraUcrRTBCRFFFQ0RBSUJBREFRQmdzcWhraUcrRTBCCkRRRUNEUUlCQURBUUJnc3Foa2lHK0UwQkRRRUNEZ0lCQURBUUJnc3Foa2lHK0UwQkRRRUNEd0lCQURBUUJnc3EKaGtpRytFMEJEUUVDRUFJQkFEQVFCZ3NxaGtpRytFMEJEUUVDRVFJQkN6QWZCZ3NxaGtpRytFMEJEUUVDRWdRUQpDUWtDQWdRQkFBWUFBQUFBQUFBQUFEQVFCZ29xaGtpRytFMEJEUUVEQkFJQUFEQVVCZ29xaGtpRytFMEJEUUVFCkJBWUFnRzhGQUFBd0R3WUtLb1pJaHZoTkFRMEJCUW9CQVRBZUJnb3Foa2lHK0UwQkRRRUdCQkE0Yi8wQlJNY2gKUTZTVE1vTFUwWkNMTUVRR0NpcUdTSWI0VFFFTkFRY3dOakFRQmdzcWhraUcrRTBCRFFFSEFRRUIvekFRQmdzcQpoa2lHK0UwQkRRRUhBZ0VCQURBUUJnc3Foa2lHK0UwQkRRRUhBd0VCL3pBS0JnZ3Foa2pPUFFRREFnTklBREJGCkFpQmh3Z0R4dGhFSHRCZW45eXJwdGZ5N0RoWUJobVpNcFB2a3NTUmhBbjdQcVFJaEFOdWZ2OEhhYWZjdWdITlYKaHJvSzRoU1ZEUXNsb3ZQbVQ3V25DV0JsU3o3SgotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCi0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlDbGpDQ0FqMmdBd0lCQWdJVkFKVnZYYzI5RytIcFFFbkoxUFF6emdGWEM5NVVNQW9HQ0NxR1NNNDlCQU1DCk1HZ3hHakFZQmdOVkJBTU1FVWx1ZEdWc0lGTkhXQ0JTYjI5MElFTkJNUm93R0FZRFZRUUtEQkZKYm5SbGJDQkQKYjNKd2IzSmhkR2x2YmpFVU1CSUdBMVVFQnd3TFUyRnVkR0VnUTJ4aGNtRXhDekFKQmdOVkJBZ01Ba05CTVFzdwpDUVlEVlFRR0V3SlZVekFlRncweE9EQTFNakV4TURVd01UQmFGdzB6TXpBMU1qRXhNRFV3TVRCYU1IQXhJakFnCkJnTlZCQU1NR1VsdWRHVnNJRk5IV0NCUVEwc2dVR3hoZEdadmNtMGdRMEV4R2pBWUJnTlZCQW9NRVVsdWRHVnMKSUVOdmNuQnZjbUYwYVc5dU1SUXdFZ1lEVlFRSERBdFRZVzUwWVNCRGJHRnlZVEVMTUFrR0ExVUVDQXdDUTBFeApDekFKQmdOVkJBWVRBbFZUTUZrd0V3WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFTlNCLzd0MjFsWFNPCjJDdXpweHc3NGVKQjcyRXlER2dXNXJYQ3R4MnRWVExxNmhLazZ6K1VpUlpDbnFSN3BzT3ZncUZlU3hsbVRsSmwKZVRtaTJXWXozcU9CdXpDQnVEQWZCZ05WSFNNRUdEQVdnQlFpWlF6V1dwMDBpZk9EdEpWU3YxQWJPU2NHckRCUwpCZ05WSFI4RVN6QkpNRWVnUmFCRGhrRm9kSFJ3Y3pvdkwyTmxjblJwWm1sallYUmxjeTUwY25WemRHVmtjMlZ5CmRtbGpaWE11YVc1MFpXd3VZMjl0TDBsdWRHVnNVMGRZVW05dmRFTkJMbVJsY2pBZEJnTlZIUTRFRmdRVWxXOWQKemIwYjRlbEFTY25VOURQT0FWY0wzbFF3RGdZRFZSMFBBUUgvQkFRREFnRUdNQklHQTFVZEV3RUIvd1FJTUFZQgpBZjhDQVFBd0NnWUlLb1pJemowRUF3SURSd0F3UkFJZ1hzVmtpMHcraTZWWUdXM1VGLzIydWFYZTBZSkRqMVVlCm5BK1RqRDFhaTVjQ0lDWWIxU0FtRDV4a2ZUVnB2bzRVb3lpU1l4ckRXTG1VUjRDSTlOS3lmUE4rCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNqekNDQWpTZ0F3SUJBZ0lVSW1VTTFscWROSW56ZzdTVlVyOVFHemtuQnF3d0NnWUlLb1pJemowRUF3SXcKYURFYU1CZ0dBMVVFQXd3UlNXNTBaV3dnVTBkWUlGSnZiM1FnUTBFeEdqQVlCZ05WQkFvTUVVbHVkR1ZzSUVOdgpjbkJ2Y21GMGFXOXVNUlF3RWdZRFZRUUhEQXRUWVc1MFlTQkRiR0Z5WVRFTE1Ba0dBMVVFQ0F3Q1EwRXhDekFKCkJnTlZCQVlUQWxWVE1CNFhEVEU0TURVeU1URXdORFV4TUZvWERUUTVNVEl6TVRJek5UazFPVm93YURFYU1CZ0cKQTFVRUF3d1JTVzUwWld3Z1UwZFlJRkp2YjNRZ1EwRXhHakFZQmdOVkJBb01FVWx1ZEdWc0lFTnZjbkJ2Y21GMAphVzl1TVJRd0VnWURWUVFIREF0VFlXNTBZU0JEYkdGeVlURUxNQWtHQTFVRUNBd0NRMEV4Q3pBSkJnTlZCQVlUCkFsVlRNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUVDNm5Fd01ESVlaT2ovaVBXc0N6YUVLaTcKMU9pT1NMUkZoV0dqYm5CVkpmVm5rWTR1M0lqa0RZWUwwTXhPNG1xc3lZamxCYWxUVll4RlAyc0pCSzV6bEtPQgp1ekNCdURBZkJnTlZIU01FR0RBV2dCUWlaUXpXV3AwMGlmT0R0SlZTdjFBYk9TY0dyREJTQmdOVkhSOEVTekJKCk1FZWdSYUJEaGtGb2RIUndjem92TDJObGNuUnBabWxqWVhSbGN5NTBjblZ6ZEdWa2MyVnlkbWxqWlhNdWFXNTAKWld3dVkyOXRMMGx1ZEdWc1UwZFlVbTl2ZEVOQkxtUmxjakFkQmdOVkhRNEVGZ1FVSW1VTTFscWROSW56ZzdTVgpVcjlRR3prbkJxd3dEZ1lEVlIwUEFRSC9CQVFEQWdFR01CSUdBMVVkRXdFQi93UUlNQVlCQWY4Q0FRRXdDZ1lJCktvWkl6ajBFQXdJRFNRQXdSZ0loQU9XLzVRa1IrUzlDaVNEY05vb3dMdVBSTHNXR2YvWWk3R1NYOTRCZ3dUd2cKQWlFQTRKMGxySG9NcytYbzVvL3NYNk85UVd4SFJBdlpVR09kUlE3Y3ZxUlhhcUk9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+      },
+      "quoteSha256": "bb9a90cffe80a20b14333bc07946fc01230ca535dad5b73e81c75b1a25dcfef5"
+    },
+    {
+      "method": "/fast-quote",
+      "httpStatus": 200,
+      "requestedChallengeBase64": "QOC731fapSlOnF0DYoW6kVqw0DEQQaEpejVuPeSproE+r17M3MgcKUHqWf2FHLTHyUbOmRTQFbQKEws8B1xTOA==",
+      "body": {
+        "quote": "BAACAIEAAAAAAAAAk5pyM/ecTKmUCg2zlX8GBwAAAAAAAAAAAAAAAAAAAAAAAAAADwEKAAAAAAAAAAAAAAAAAKtiVhoXOsvRjuUP83dQ20QYTGz16IbfdCR8xXXhY7BMNLnhg3R1fCNa/6YU1BJ/awAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAADnAgYAAAAAAMHunBbjr8UGz+BCxbhGo2hSjzs3YY6vsnRpvBFM+RTpIiyRYYRw5/KyisNgloJwpQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAETuruJ2jdmzpStBdHNn5XUbGPdlPwh/69feEb/6u9HXXU/zU6aBVFQSFYY+5/wpAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMHx8r/zOxbRRpE0mH/N8Oo72XBzUMxw5z8IbGNaX8Tpbg0hSn93VgjmTSUTgvIFZLT+h1Hl2Wtyag2ruGuoIXg2JtgGOMr2ygBF8x9eTE6Q4grulvynEUIdtb3GDlyR7VHAm3InbIvNDidIZafgpAjulWpsz66LTt1DRn11hf81K7ieKPXLYhBRFMrXIl4R7wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMkvkU+r8QY5HikWDTp8/gdW5PryyLIZ581h1uyVPnjN4krqbg8cf1eISThVs6mZ+gVWPq0F1+jbNLTvB7WDjjXLEAAA8KsO4GeMQ9YJjbcuYVRjBmw7av8d7GMT8cFJXL96/XVWVr72dWlxjQHSf3dahexJuyfnMIyf4GOfPi762reHgRvgxf+QrlH8/lVw0DLRZqVS1NJAJbRcCniMTIEqOMS1rVB04/6X+u9WI5GPeVDjxncaAeezPgwFQZtVTwhNGD4GAEUQAAAKCv8bBv8ABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVAAAAAAAAAOcAAAAAAAAA5aOntdgwwpU7mFNMbFmjo0/cNOkz9/WJjwqFzwiEa8oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANyeKnxvlI8XR040p/xD7QMPfBVj8bq932NAyC4OVKjFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMF1BkyUVD1esRiUdxshfp5AxyMYoLpnqjEaEowZbHkvAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADGZezVv3cKf07HWhIidYmN6MYG0a97G+toaI+Uf+ZxmGePiV3NAn29UToC9Lp/SV/1go90s9puvx0vEo9kueVVIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUAXQ4AAC0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlFOFRDQ0JKZWdBd0lCQWdJVkFMOXkxUjFyMVFsV3V3VjZJS1RIWEd6eVl6TjhNQW9HQ0NxR1NNNDlCQU1DCk1IQXhJakFnQmdOVkJBTU1HVWx1ZEdWc0lGTkhXQ0JRUTBzZ1VHeGhkR1p2Y20wZ1EwRXhHakFZQmdOVkJBb00KRVVsdWRHVnNJRU52Y25CdmNtRjBhVzl1TVJRd0VnWURWUVFIREF0VFlXNTBZU0JEYkdGeVlURUxNQWtHQTFVRQpDQXdDUTBFeEN6QUpCZ05WQkFZVEFsVlRNQjRYRFRJMk1EY3pNREE0TXpNeU5Wb1hEVE16TURjek1EQTRNek15Ck5Wb3djREVpTUNBR0ExVUVBd3daU1c1MFpXd2dVMGRZSUZCRFN5QkRaWEowYVdacFkyRjBaVEVhTUJnR0ExVUUKQ2d3UlNXNTBaV3dnUTI5eWNHOXlZWFJwYjI0eEZEQVNCZ05WQkFjTUMxTmhiblJoSUVOc1lYSmhNUXN3Q1FZRApWUVFJREFKRFFURUxNQWtHQTFVRUJoTUNWVk13V1RBVEJnY3Foa2pPUFFJQkJnZ3Foa2pPUFFNQkJ3TkNBQVErCnJxTmJ6d1NqaENDYm9aa0p0YndzSDZua3hGRUZJc0t5eGFicUhzU0NHYjc1eHB3dU14aHc3Snd0d2dFcjlnL0cKOXpDYzJHaGhUN0NXQVVsNEZVTTFvNElERERDQ0F3Z3dId1lEVlIwakJCZ3dGb0FVbFc5ZHpiMGI0ZWxBU2NuVQo5RFBPQVZjTDNsUXdhd1lEVlIwZkJHUXdZakJnb0Y2Z1hJWmFhSFIwY0hNNkx5OWhjR2t1ZEhKMWMzUmxaSE5sCmNuWnBZMlZ6TG1sdWRHVnNMbU52YlM5elozZ3ZZMlZ5ZEdsbWFXTmhkR2x2Ymk5Mk5DOXdZMnRqY213L1kyRTkKY0d4aGRHWnZjbTBtWlc1amIyUnBibWM5WkdWeU1CMEdBMVVkRGdRV0JCUktIK29MRDJuempBaWpmYU5OUjBLQwovUjRlSnpBT0JnTlZIUThCQWY4RUJBTUNCc0F3REFZRFZSMFRBUUgvQkFJd0FEQ0NBamtHQ1NxR1NJYjRUUUVOCkFRU0NBaW93Z2dJbU1CNEdDaXFHU0liNFRRRU5BUUVFRUIxRzUvb3VKQXBKaWZPWkVUZDlzcHd3Z2dGakJnb3EKaGtpRytFMEJEUUVDTUlJQlV6QVFCZ3NxaGtpRytFMEJEUUVDQVFJQkNUQVFCZ3NxaGtpRytFMEJEUUVDQWdJQgpDVEFRQmdzcWhraUcrRTBCRFFFQ0F3SUJBakFRQmdzcWhraUcrRTBCRFFFQ0JBSUJBakFRQmdzcWhraUcrRTBCCkRRRUNCUUlCQkRBUUJnc3Foa2lHK0UwQkRRRUNCZ0lCQVRBUUJnc3Foa2lHK0UwQkRRRUNCd0lCQURBUUJnc3EKaGtpRytFMEJEUUVDQ0FJQkJqQVFCZ3NxaGtpRytFMEJEUUVDQ1FJQkFEQVFCZ3NxaGtpRytFMEJEUUVDQ2dJQgpBREFRQmdzcWhraUcrRTBCRFFFQ0N3SUJBREFRQmdzcWhraUcrRTBCRFFFQ0RBSUJBREFRQmdzcWhraUcrRTBCCkRRRUNEUUlCQURBUUJnc3Foa2lHK0UwQkRRRUNEZ0lCQURBUUJnc3Foa2lHK0UwQkRRRUNEd0lCQURBUUJnc3EKaGtpRytFMEJEUUVDRUFJQkFEQVFCZ3NxaGtpRytFMEJEUUVDRVFJQkN6QWZCZ3NxaGtpRytFMEJEUUVDRWdRUQpDUWtDQWdRQkFBWUFBQUFBQUFBQUFEQVFCZ29xaGtpRytFMEJEUUVEQkFJQUFEQVVCZ29xaGtpRytFMEJEUUVFCkJBWUFnRzhGQUFBd0R3WUtLb1pJaHZoTkFRMEJCUW9CQVRBZUJnb3Foa2lHK0UwQkRRRUdCQkE0Yi8wQlJNY2gKUTZTVE1vTFUwWkNMTUVRR0NpcUdTSWI0VFFFTkFRY3dOakFRQmdzcWhraUcrRTBCRFFFSEFRRUIvekFRQmdzcQpoa2lHK0UwQkRRRUhBZ0VCQURBUUJnc3Foa2lHK0UwQkRRRUhBd0VCL3pBS0JnZ3Foa2pPUFFRREFnTklBREJGCkFpQmh3Z0R4dGhFSHRCZW45eXJwdGZ5N0RoWUJobVpNcFB2a3NTUmhBbjdQcVFJaEFOdWZ2OEhhYWZjdWdITlYKaHJvSzRoU1ZEUXNsb3ZQbVQ3V25DV0JsU3o3SgotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCi0tLS0tQkVHSU4gQ0VSVElGSUNBVEUtLS0tLQpNSUlDbGpDQ0FqMmdBd0lCQWdJVkFKVnZYYzI5RytIcFFFbkoxUFF6emdGWEM5NVVNQW9HQ0NxR1NNNDlCQU1DCk1HZ3hHakFZQmdOVkJBTU1FVWx1ZEdWc0lGTkhXQ0JTYjI5MElFTkJNUm93R0FZRFZRUUtEQkZKYm5SbGJDQkQKYjNKd2IzSmhkR2x2YmpFVU1CSUdBMVVFQnd3TFUyRnVkR0VnUTJ4aGNtRXhDekFKQmdOVkJBZ01Ba05CTVFzdwpDUVlEVlFRR0V3SlZVekFlRncweE9EQTFNakV4TURVd01UQmFGdzB6TXpBMU1qRXhNRFV3TVRCYU1IQXhJakFnCkJnTlZCQU1NR1VsdWRHVnNJRk5IV0NCUVEwc2dVR3hoZEdadmNtMGdRMEV4R2pBWUJnTlZCQW9NRVVsdWRHVnMKSUVOdmNuQnZjbUYwYVc5dU1SUXdFZ1lEVlFRSERBdFRZVzUwWVNCRGJHRnlZVEVMTUFrR0ExVUVDQXdDUTBFeApDekFKQmdOVkJBWVRBbFZUTUZrd0V3WUhLb1pJemowQ0FRWUlLb1pJemowREFRY0RRZ0FFTlNCLzd0MjFsWFNPCjJDdXpweHc3NGVKQjcyRXlER2dXNXJYQ3R4MnRWVExxNmhLazZ6K1VpUlpDbnFSN3BzT3ZncUZlU3hsbVRsSmwKZVRtaTJXWXozcU9CdXpDQnVEQWZCZ05WSFNNRUdEQVdnQlFpWlF6V1dwMDBpZk9EdEpWU3YxQWJPU2NHckRCUwpCZ05WSFI4RVN6QkpNRWVnUmFCRGhrRm9kSFJ3Y3pvdkwyTmxjblJwWm1sallYUmxjeTUwY25WemRHVmtjMlZ5CmRtbGpaWE11YVc1MFpXd3VZMjl0TDBsdWRHVnNVMGRZVW05dmRFTkJMbVJsY2pBZEJnTlZIUTRFRmdRVWxXOWQKemIwYjRlbEFTY25VOURQT0FWY0wzbFF3RGdZRFZSMFBBUUgvQkFRREFnRUdNQklHQTFVZEV3RUIvd1FJTUFZQgpBZjhDQVFBd0NnWUlLb1pJemowRUF3SURSd0F3UkFJZ1hzVmtpMHcraTZWWUdXM1VGLzIydWFYZTBZSkRqMVVlCm5BK1RqRDFhaTVjQ0lDWWIxU0FtRDV4a2ZUVnB2bzRVb3lpU1l4ckRXTG1VUjRDSTlOS3lmUE4rCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KLS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNqekNDQWpTZ0F3SUJBZ0lVSW1VTTFscWROSW56ZzdTVlVyOVFHemtuQnF3d0NnWUlLb1pJemowRUF3SXcKYURFYU1CZ0dBMVVFQXd3UlNXNTBaV3dnVTBkWUlGSnZiM1FnUTBFeEdqQVlCZ05WQkFvTUVVbHVkR1ZzSUVOdgpjbkJ2Y21GMGFXOXVNUlF3RWdZRFZRUUhEQXRUWVc1MFlTQkRiR0Z5WVRFTE1Ba0dBMVVFQ0F3Q1EwRXhDekFKCkJnTlZCQVlUQWxWVE1CNFhEVEU0TURVeU1URXdORFV4TUZvWERUUTVNVEl6TVRJek5UazFPVm93YURFYU1CZ0cKQTFVRUF3d1JTVzUwWld3Z1UwZFlJRkp2YjNRZ1EwRXhHakFZQmdOVkJBb01FVWx1ZEdWc0lFTnZjbkJ2Y21GMAphVzl1TVJRd0VnWURWUVFIREF0VFlXNTBZU0JEYkdGeVlURUxNQWtHQTFVRUNBd0NRMEV4Q3pBSkJnTlZCQVlUCkFsVlRNRmt3RXdZSEtvWkl6ajBDQVFZSUtvWkl6ajBEQVFjRFFnQUVDNm5Fd01ESVlaT2ovaVBXc0N6YUVLaTcKMU9pT1NMUkZoV0dqYm5CVkpmVm5rWTR1M0lqa0RZWUwwTXhPNG1xc3lZamxCYWxUVll4RlAyc0pCSzV6bEtPQgp1ekNCdURBZkJnTlZIU01FR0RBV2dCUWlaUXpXV3AwMGlmT0R0SlZTdjFBYk9TY0dyREJTQmdOVkhSOEVTekJKCk1FZWdSYUJEaGtGb2RIUndjem92TDJObGNuUnBabWxqWVhSbGN5NTBjblZ6ZEdWa2MyVnlkbWxqWlhNdWFXNTAKWld3dVkyOXRMMGx1ZEdWc1UwZFlVbTl2ZEVOQkxtUmxjakFkQmdOVkhRNEVGZ1FVSW1VTTFscWROSW56ZzdTVgpVcjlRR3prbkJxd3dEZ1lEVlIwUEFRSC9CQVFEQWdFR01CSUdBMVVkRXdFQi93UUlNQVlCQWY4Q0FRRXdDZ1lJCktvWkl6ajBFQXdJRFNRQXdSZ0loQU9XLzVRa1IrUzlDaVNEY05vb3dMdVBSTHNXR2YvWWk3R1NYOTRCZ3dUd2cKQWlFQTRKMGxySG9NcytYbzVvL3NYNk85UVd4SFJBdlpVR09kUlE3Y3ZxUlhhcUk9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0KAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+        "pubkey": "PeV1Ots93z3PgAO3hLX80yODvOB+j8hjK7/2SP4R9vo=",
+        "challenge": "QOC731fapSlOnF0DYoW6kVqw0DEQQaEpejVuPeSproE+r17M3MgcKUHqWf2FHLTHyUbOmRTQFbQKEws8B1xTOA==",
+        "signature": "mBuE3f/nzf7ylnSDExC3+XRvIhm0PmkyJjNYxhWyplipG4IsJ3Zg3TG1hrs2XcrMPDqj5IfPCxiSM7/LmCgyDQ==",
+        "reportDataSha256": "UBikJnbCU9EBfrEqsK1P5YURlLftsOK3geLSq/ne958="
+      },
+      "quoteSha256": "41876e21a029a19e80f5fed9cec6a8f22f3694a441efe473c49822897f67f712"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/magicblock-labs/magicblock-engine-examples/e8393c60a82f73259a39abe807c6273a83659d0a/private-counter/anchor/programs/private-counter/src/lib.rs",
+      "sha256": "1e363cd2576ac53f171abc91d9d5c0338a4b231e979ebb472a1be2f3205fda32"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/magicblock-labs/magicblock-engine-examples/e8393c60a82f73259a39abe807c6273a83659d0a/private-counter/anchor/app/src/idl/private_counter.json",
+      "sha256": "fa9ed5d83743900bf0bd8c0884c65d0da52e6c571829e7b8c9e46f6799e71ef6"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/magicblock-labs/magicblock-engine-examples/e8393c60a82f73259a39abe807c6273a83659d0a/private-counter/anchor/Anchor.toml",
+      "sha256": "c4eaa808ff5411f66607413dc945c7ae7777a4cd091814a546946306e1b5b4d4"
+    }
+  ],
+  "limitations": [
+    "A successful RPC response or HTTPS connection is not attestation.",
+    "Observed binary hashes do not prove a match to pinned source; no reproducible build was compared.",
+    "SDK quote verification does not check an expected application measurement allowlist.",
+    "No private counter, VRF callback, cash-out, settlement, or outage experiment is implemented by this preflight."
+  ],
+  "counterReference": {
+    "sourceId": "9aXAUZm1SdXcX4m1W5SHAywp6CBUbUxymruMnkYvz9bR",
+    "bundledIdlAddress": "2WJiwbdnwo7qVC3zesZjFWEPUcU2NZbBXf8arMUJ6p89",
+    "ownerProgram": "2WJiwbdnwo7qVC3zesZjFWEPUcU2NZbBXf8arMUJ6p89",
+    "anchorTomlDefinesDevnetProgram": false
+  },
+  "testWallet": {
+    "publicKey": "DUAfKmv1p78mVjZZKKkFpWdtPg5ofLtxLce1Y8BrcxRK",
+    "role": "Dedicated, locally generated, devnet-only experiment wallet; private key excluded from evidence."
+  },
+  "status": "BLOCKED",
+  "finishedAt": "2026-10-01T00:24:37.570Z"
+}

@@ -1,0 +1,198 @@
+{
+ "audit": "contact-audit",
+ "engine": "sparring4",
+ "version": "sparring-4",
+ "bodyModel": "sparring-5 capsules on the current sparringPose",
+ "radii": {
+  "torso": 0.19,
+  "head": 0.135,
+  "upperArm": 0.12,
+  "forearm": 0.08,
+  "glove": 0.12,
+  "thigh": 0.15
+ },
+ "bout": {
+  "durationSeconds": 45,
+  "rounds": 3,
+  "breakSeconds": 8
+ },
+ "seeds": 12,
+ "firstSeed": 1,
+ "sides": "bots play both corners; neuro-vs-neuro once per seed (temperature 0.8, product sampling)",
+ "scope": "engine fixture: simplified capsules, not rendered meshes",
+ "rows": [
+  {
+   "matchup": "neuro-vs-neuro",
+   "bouts": 12,
+   "ticks": 109717,
+   "bodyCapsuleOverlapCm": {
+    "max": 14.4,
+    "p99OfOverlapTicks": 12.7,
+    "ticksOver2mm": 86023,
+    "shareTicksOver2mm": 0.784,
+    "pairMaxCm": {
+     "thigh-thigh": 14.4
+    }
+   },
+   "strikingGloveVsGuardCm": {
+    "defenderGuarding": {
+     "ticks": 12837,
+     "max": 19.5,
+     "p95": 19.1
+    },
+    "defenderNotGuarding": {
+     "ticks": 41765,
+     "max": 19.9,
+     "p95": 18.4
+    }
+   },
+   "strikingGloveInHeadTorsoMaxCm": 0.2,
+   "nonStrikingArmInOtherTrunkMaxCm": 0,
+   "minRootDistanceM": 0.78,
+   "minDistanceToLyingBodyM": 0.63,
+   "perBout": {
+    "hits": 67.42,
+    "blocks": 97.58,
+    "knockdowns": 0.5
+   },
+   "hitsThatWouldMeetIdleGuardFirst": {
+    "count": 699,
+    "shareOfHits": 0.864
+   },
+   "methods": {
+    "decision": 7,
+    "draw": 2,
+    "ko": 3
+   }
+  },
+  {
+   "matchup": "balanced-vs-pressure",
+   "bouts": 24,
+   "ticks": 187159,
+   "bodyCapsuleOverlapCm": {
+    "max": 14.1,
+    "p99OfOverlapTicks": 13.8,
+    "ticksOver2mm": 72207,
+    "shareTicksOver2mm": 0.3858,
+    "pairMaxCm": {
+     "thigh-thigh": 14.1
+    }
+   },
+   "strikingGloveVsGuardCm": {
+    "defenderGuarding": {
+     "ticks": 19404,
+     "max": 21.8,
+     "p95": 18.6
+    },
+    "defenderNotGuarding": {
+     "ticks": 24925,
+     "max": 22,
+     "p95": 17.6
+    }
+   },
+   "strikingGloveInHeadTorsoMaxCm": 0.2,
+   "nonStrikingArmInOtherTrunkMaxCm": 0,
+   "minRootDistanceM": 0.78,
+   "minDistanceToLyingBodyM": 0.63,
+   "perBout": {
+    "hits": 58.71,
+    "blocks": 54.17,
+    "knockdowns": 2.42
+   },
+   "hitsThatWouldMeetIdleGuardFirst": {
+    "count": 1185,
+    "shareOfHits": 0.841
+   },
+   "methods": {
+    "ko": 22,
+    "tko": 2
+   }
+  },
+  {
+   "matchup": "counter-vs-balanced",
+   "bouts": 24,
+   "ticks": 218520,
+   "bodyCapsuleOverlapCm": {
+    "max": 14.2,
+    "p99OfOverlapTicks": 14,
+    "ticksOver2mm": 110409,
+    "shareTicksOver2mm": 0.5053,
+    "pairMaxCm": {
+     "thigh-thigh": 14.2
+    }
+   },
+   "strikingGloveVsGuardCm": {
+    "defenderGuarding": {
+     "ticks": 41048,
+     "max": 21.8,
+     "p95": 18.6
+    },
+    "defenderNotGuarding": {
+     "ticks": 19206,
+     "max": 21.2,
+     "p95": 17.4
+    }
+   },
+   "strikingGloveInHeadTorsoMaxCm": 0.2,
+   "nonStrikingArmInOtherTrunkMaxCm": 0,
+   "minRootDistanceM": 0.78,
+   "minDistanceToLyingBodyM": 0.63,
+   "perBout": {
+    "hits": 32.63,
+    "blocks": 112.25,
+    "knockdowns": 0.13
+   },
+   "hitsThatWouldMeetIdleGuardFirst": {
+    "count": 739,
+    "shareOfHits": 0.944
+   },
+   "methods": {
+    "decision": 22,
+    "draw": 2
+   }
+  },
+  {
+   "matchup": "pressure-vs-counter",
+   "bouts": 24,
+   "ticks": 174225,
+   "bodyCapsuleOverlapCm": {
+    "max": 14.1,
+    "p99OfOverlapTicks": 13.7,
+    "ticksOver2mm": 75781,
+    "shareTicksOver2mm": 0.435,
+    "pairMaxCm": {
+     "thigh-thigh": 14.1
+    }
+   },
+   "strikingGloveVsGuardCm": {
+    "defenderGuarding": {
+     "ticks": 20591,
+     "max": 21.7,
+     "p95": 18.2
+    },
+    "defenderNotGuarding": {
+     "ticks": 24476,
+     "max": 21.5,
+     "p95": 17.5
+    }
+   },
+   "strikingGloveInHeadTorsoMaxCm": 0.2,
+   "nonStrikingArmInOtherTrunkMaxCm": 0,
+   "minRootDistanceM": 0.78,
+   "minDistanceToLyingBodyM": 0.63,
+   "perBout": {
+    "hits": 48.04,
+    "blocks": 58.63,
+    "knockdowns": 1.67
+   },
+   "hitsThatWouldMeetIdleGuardFirst": {
+    "count": 1099,
+    "shareOfHits": 0.953
+   },
+   "methods": {
+    "ko": 21,
+    "decision": 3
+   }
+  }
+ ]
+}

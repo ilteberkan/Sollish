@@ -1,0 +1,204 @@
+{
+ "version": "style-log-1",
+ "engine": "sparring-5",
+ "seed": 20261045,
+ "bout": {
+  "durationSeconds": 45,
+  "rounds": 3,
+  "breakSeconds": 8
+ },
+ "corners": [
+  {
+   "controller": "neuro-2@0.8",
+   "model": "c39c31073ea22b00dec404ab5de8e1301271d85b153272b76d6821668552dc09",
+   "strategist": "jev"
+  },
+  {
+   "controller": "neuro-2@0.8",
+   "model": "c39c31073ea22b00dec404ab5de8e1301271d85b153272b76d6821668552dc09",
+   "strategist": "jev"
+  }
+ ],
+ "decisions": [
+  {
+   "side": 0,
+   "requestTick": 0,
+   "applyTick": 0,
+   "style": "pressure",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.37,
+   "obsHash": "3c07d098173ff5c20b2f67acfa85836df08dae353c40df7bd4d93f5da1a3f734"
+  },
+  {
+   "side": 1,
+   "requestTick": 0,
+   "applyTick": 0,
+   "style": "pressure",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.43,
+   "obsHash": "3c07d098173ff5c20b2f67acfa85836df08dae353c40df7bd4d93f5da1a3f734"
+  },
+  {
+   "side": 0,
+   "requestTick": 900,
+   "applyTick": 1020,
+   "style": "outboxer",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.3,
+   "obsHash": "1d31a209e25625f0a9e100bdffa17d8475e42f6b0754849bb2ad3de08d869860"
+  },
+  {
+   "side": 1,
+   "requestTick": 900,
+   "applyTick": 1020,
+   "style": "outboxer",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.33,
+   "obsHash": "1d31a209e25625f0a9e100bdffa17d8475e42f6b0754849bb2ad3de08d869860"
+  },
+  {
+   "side": 0,
+   "requestTick": 1800,
+   "applyTick": 1920,
+   "style": "outboxer",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.33,
+   "obsHash": "c6bd525db859fa1edc51e0d1457165d714808b2112e4ab2852f6712971c74eed"
+  },
+  {
+   "side": 1,
+   "requestTick": 1800,
+   "applyTick": 1920,
+   "style": "pressure",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.31,
+   "obsHash": "c6bd525db859fa1edc51e0d1457165d714808b2112e4ab2852f6712971c74eed"
+  },
+  {
+   "side": 0,
+   "requestTick": 2700,
+   "applyTick": 3180,
+   "style": "outboxer",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.33,
+   "obsHash": "844a30f78cee0183661bd402c594afd9e98200290dba77cb27b67a66a31a550b"
+  },
+  {
+   "side": 1,
+   "requestTick": 2700,
+   "applyTick": 3180,
+   "style": "outboxer",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.35,
+   "obsHash": "844a30f78cee0183661bd402c594afd9e98200290dba77cb27b67a66a31a550b"
+  },
+  {
+   "side": 0,
+   "requestTick": 4080,
+   "applyTick": 4200,
+   "style": "outboxer",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.35,
+   "obsHash": "5ff2a6ad76bc56925a5eee193f69e29fd2e74c795ade3248d253573414d6883a"
+  },
+  {
+   "side": 1,
+   "requestTick": 4080,
+   "applyTick": 4200,
+   "style": "outboxer",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.32,
+   "obsHash": "5ff2a6ad76bc56925a5eee193f69e29fd2e74c795ade3248d253573414d6883a"
+  },
+  {
+   "side": 0,
+   "requestTick": 4980,
+   "applyTick": 5100,
+   "style": "counter",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.76,
+   "obsHash": "745e3562ef1092e9433f1b7ad3844118a7e62156474d748c141a3f8f2b705525"
+  },
+  {
+   "side": 1,
+   "requestTick": 4980,
+   "applyTick": 5100,
+   "style": "counter",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.6,
+   "obsHash": "f0db6b4e4bc155e9f49a0053e3b2f1e07cb44e3e4411764ed9816f196fccbf58"
+  },
+  {
+   "side": 0,
+   "requestTick": 5880,
+   "applyTick": 6360,
+   "style": "counter",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.53,
+   "obsHash": "f518ce60162bb6d46418a74fc4e22d1df29a210e17fc8e03c675717c832b09ff"
+  },
+  {
+   "side": 1,
+   "requestTick": 5880,
+   "applyTick": 6360,
+   "style": "counter",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.63,
+   "obsHash": "f5d9b76c572c5e727d3a76fd1997ad2fd62748fa27d1d3f64cd4901412c0c618"
+  },
+  {
+   "side": 0,
+   "requestTick": 7260,
+   "applyTick": 7380,
+   "style": "counter",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.44,
+   "obsHash": "e5eef5e41b24f3021f091a7f075fed45aed0a274b44471cf2314ae1852076bff"
+  },
+  {
+   "side": 1,
+   "requestTick": 7260,
+   "applyTick": 7380,
+   "style": "counter",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.46,
+   "obsHash": "7660088cc31e876abe2beea87df6fa89483e8b1d28c5c1c1eb69a6629ce4f13d"
+  },
+  {
+   "side": 0,
+   "requestTick": 8160,
+   "applyTick": 8280,
+   "style": "counter",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.24,
+   "obsHash": "af33e5d4bf585f52b41c1c72d3aa5c1e6849616e0e3fc9a1eee7a682318e819c"
+  },
+  {
+   "side": 1,
+   "requestTick": 8160,
+   "applyTick": 8280,
+   "style": "counter",
+   "source": "jev",
+   "model": "jev-1.13.0",
+   "confidence": 0.21,
+   "obsHash": "af33e5d4bf585f52b41c1c72d3aa5c1e6849616e0e3fc9a1eee7a682318e819c"
+  }
+ ]
+}

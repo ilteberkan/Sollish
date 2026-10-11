@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-01T19:32:44.663Z",
+  "status": "PASS",
+  "checks": [
+    "exact-direct-project-host-role",
+    "trusted-ca-loaded",
+    "verified-tls",
+    "dedicated-unprivileged-login",
+    "no-role-memberships",
+    "read-only-transaction",
+    "five-function-grants",
+    "no-private-or-auth-table-privileges",
+    "actual-private-select-denied",
+    "actual-auth-select-denied",
+    "empty-chain-cursor-readable",
+    "session-advisory-lock-released"
+  ],
+  "scope": "Read-only managed DB acceptance; no facts/cursor/outbox writes. Only listed checks succeeded.",
+  "runtime": "Node 24.21.0, Debian ARM64, sollish-worker uid",
+  "artifactSha256": "1e18e9312fcb5973ef62201af7a91093617376f48af1631ff7d62d4542942a92",
+  "caPath": "/etc/sollish-ca/supabase-root-2021.crt"
+}

@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "scope": "Numeric schema, hashes, immutable physics frames and honest fixed gate labels; not quality-gate PASS",
+  "traces": [
+    {
+      "path": "spinkick-1200hz-50iterations-render-trace.json",
+      "sha256": "10238c1bce7ace601fa93932cd532f539d5312e5710319181d5cf93e43104c9c",
+      "frames": 600,
+      "bones": 16,
+      "colliders": 15,
+      "qualityReady": false,
+      "independentBalanceObserved": true
+    },
+    {
+      "path": "spinkick-240hz-10iterations-render-trace.json",
+      "sha256": "bc826de04dffb84ac71f2a95762f8bf19b2a9f98d798489bb7bf54d5b0b97f6c",
+      "frames": 600,
+      "bones": 16,
+      "colliders": 15,
+      "qualityReady": false,
+      "independentBalanceObserved": true
+    },
+    {
+      "path": "spinkick-600hz-10iterations-render-trace.json",
+      "sha256": "e10005a6f9902f18d2a1f6462053fb14762efb173639552ed33d5a1292bfb9bc",
+      "frames": 600,
+      "bones": 16,
+      "colliders": 15,
+      "qualityReady": false,
+      "independentBalanceObserved": true
+    },
+    {
+      "path": "walk-1200hz-50iterations-render-trace.json",
+      "sha256": "c0bb27902b0bfa45b7a43cddea2d7ce9c9f8e1c93fb5b32c2a376318c37362c1",
+      "frames": 600,
+      "bones": 16,
+      "colliders": 15,
+      "qualityReady": false,
+      "independentBalanceObserved": false
+    },
+    {
+      "path": "walk-240hz-10iterations-render-trace.json",
+      "sha256": "f8510d89c91cba700c7b10735f0cc5d69f204c36233a718e49db6875359e4693",
+      "frames": 600,
+      "bones": 16,
+      "colliders": 15,
+      "qualityReady": false,
+      "independentBalanceObserved": true
+    },
+    {
+      "path": "walk-600hz-10iterations-render-trace.json",
+      "sha256": "d1acb70d75e7447529f56b8a328bca5b1df26183709f966b833a8484fe9c378d",
+      "frames": 600,
+      "bones": 16,
+      "colliders": 15,
+      "qualityReady": false,
+      "independentBalanceObserved": true
+    }
+  ]
+}

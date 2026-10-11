@@ -1,0 +1,19 @@
+test_exact_clips_unit_quaternions_and_finite_monotonic_keys (__main__.CombatMotion.test_exact_clips_unit_quaternions_and_finite_monotonic_keys) ... ok
+test_existing_target_bind_transforms_and_hierarchy_preserved (__main__.CombatMotion.test_existing_target_bind_transforms_and_hierarchy_preserved) ... ok
+test_license_integrity_and_no_external_payload (__main__.CombatMotion.test_license_integrity_and_no_external_payload) ... ok
+test_root_is_in_place_and_pelvis_uses_vertical_local_z (__main__.CombatMotion.test_root_is_in_place_and_pelvis_uses_vertical_local_z) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.056s
+
+OK
+test_clipped_hems_and_normalized_interpolated_skinning (__main__.Assets.test_clipped_hems_and_normalized_interpolated_skinning) ... ok
+test_clips_bind_to_existing_bones_and_monotonic_times (__main__.Assets.test_clips_bind_to_existing_bones_and_monotonic_times) ... ok
+test_integrity_license_and_embedded_resources (__main__.Assets.test_integrity_license_and_embedded_resources) ... ok
+test_real_mesh_rig_and_required_attachments (__main__.Assets.test_real_mesh_rig_and_required_attachments) ... ok
+test_skin_variants_are_real_embedded_images (__main__.Assets.test_skin_variants_are_real_embedded_images) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.120s
+
+OK

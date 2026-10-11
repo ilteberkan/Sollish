@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-01T09:16:26.947Z",
+  "scope": "One free devnet faucet request to our dedicated wallet only",
+  "status": "BLOCKED",
+  "checks": [
+    {
+      "id": "faucet",
+      "status": "BLOCKED",
+      "evidence": "RPC -32603: Internal error"
+    }
+  ],
+  "publicKey": "DUAfKmv1p78mVjZZKKkFpWdtPg5ofLtxLce1Y8BrcxRK",
+  "before": {
+    "context": {
+      "apiVersion": "4.3.0",
+      "slot": 506223197
+    },
+    "value": 0
+  },
+  "requestedDevnetLamports": 2000000000,
+  "finishedAt": "2026-10-01T09:16:30.438Z"
+}

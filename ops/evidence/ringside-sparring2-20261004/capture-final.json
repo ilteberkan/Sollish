@@ -1,0 +1,20 @@
+{
+ "at": "2026-10-03T23:07:14.329Z",
+ "base": "http://localhost:3001",
+ "viewport": {
+  "width": 1280,
+  "height": 720
+ },
+ "camera": "Yayın",
+ "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+ "activeWindowS": 23.605,
+ "renderedFps": 59.902563016310104,
+ "simTicksPerSecond": 59.98729082821436,
+ "finalHealth": [
+  476,
+  826
+ ],
+ "finished": false,
+ "errors": [],
+ "note": "Headless Chromium on this Mac; screenshot calls stall rendering, so FPS is a lower bound, not a device benchmark."
+}

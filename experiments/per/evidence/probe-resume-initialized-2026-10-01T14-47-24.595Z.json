@@ -1,0 +1,2975 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-01T14:47:24.595Z",
+  "scope": "Own PER probe resume-initialized; no game/funds payout",
+  "mode": "resume-initialized",
+  "status": "BLOCKED",
+  "productionApproval": false,
+  "G0": "BLOCKED",
+  "checks": [
+    {
+      "id": "same-round-finalized-initializers",
+      "status": "PASS",
+      "evidence": {
+        "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+        "accountSnapshotSlot": 506307993,
+        "confirmed": [
+          {
+            "name": "initialize_round",
+            "role": "inspector",
+            "chain": "L1",
+            "signature": "JGbQwCpFndvJkiDNLuvCvyVDASZwUzg9JUSMzUkci7jk4ypN1YHknTrQJeajsj1w4PAj8kG7Npw1fFEFXYduVyh",
+            "slot": 506305155,
+            "messageSha256": "3e6f6b39e7403036363e4ae967bb815f868c1fde79f06c13f497baacc64249d3",
+            "reconciledFromFinalized": true
+          },
+          {
+            "name": "initialize_receipt",
+            "role": "playerA",
+            "chain": "L1",
+            "signature": "C6iQLV2D8dsAFF6fXJa322wA8do6b1SDALvr6bfHi14gVdGkEW9YZy5Fp4TesuvEdjsevY7za1Aw9uACR8j8Gne",
+            "slot": 506305163,
+            "messageSha256": "7812504bb66b09758483cc85ec0a19253a01ab6a82437fd70c19eed10dd71fdf",
+            "reconciledFromFinalized": true
+          },
+          {
+            "name": "initialize_receipt",
+            "role": "playerB",
+            "chain": "L1",
+            "signature": "5vtC9Mb3N41w76XJVBwQVTkaEjXwLnQinTNd7pEZ6Usu3bBA2bviMgpp7yhG4FkbA2a2j539dqDNnHTwoSEu1T8c",
+            "slot": 506305172,
+            "messageSha256": "99182c7dc31ea837dfb83fa204df597b012c8b0e2dba6a6724700f6d73ec989b",
+            "reconciledFromFinalized": true
+          }
+        ],
+        "initializationRebroadcast": false
+      }
+    },
+    {
+      "id": "private-prepared-before-vrf",
+      "status": "PASS",
+      "evidence": "Own program confirmed prepare_private then inspector observed state PRIVATE_PREPARED; VRF request has not been sent yet"
+    },
+    {
+      "id": "prepared-anonymous-round-read-isolation",
+      "status": "BLOCKED",
+      "evidence": {
+        "httpStatus": 200,
+        "outcome": "ABSENT_OR_FILTERED",
+        "responseBytes": 77,
+        "responseSha256": "56bc9e04b1df82cf374167f59e7111c6712b9d57e44c770100b330332e6e6a3c"
+      }
+    },
+    {
+      "id": "prepared-anonymous-receiptA-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "prepared-anonymous-receiptB-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "prepared-inspector-receiptA-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "prepared-inspector-receiptB-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "prepared-playerA-round-read-isolation",
+      "status": "BLOCKED",
+      "evidence": {
+        "httpStatus": 200,
+        "outcome": "ABSENT_OR_FILTERED",
+        "responseBytes": 77,
+        "responseSha256": "49eab6a4c1e7e9952d00ac0d95c72c7de4d554f03a1d2c1e3fc6afd47641d867"
+      }
+    },
+    {
+      "id": "prepared-playerA-receiptA-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "prepared-playerA-receiptB-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "prepared-playerB-round-read-isolation",
+      "status": "BLOCKED",
+      "evidence": {
+        "httpStatus": 200,
+        "outcome": "ABSENT_OR_FILTERED",
+        "responseBytes": 77,
+        "responseSha256": "87f20da702d018f5833ac3c5fab198b2227fa720586c1cced8389a0a66150e0b"
+      }
+    },
+    {
+      "id": "prepared-playerB-receiptA-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "prepared-playerB-receiptB-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "own-scoped-callback-ready",
+      "status": "PASS",
+      "evidence": "Own account reached READY; binary only enters READY through scoped callback. Transaction/history exposure is a separate check."
+    },
+    {
+      "id": "playerA-submit-with-readonly-private-round",
+      "status": "PASS",
+      "evidence": {
+        "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+        "player": "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+        "lastNonce": "1",
+        "acceptedCount": "1"
+      }
+    },
+    {
+      "id": "playerB-submit-with-readonly-private-round",
+      "status": "PASS",
+      "evidence": {
+        "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+        "player": "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg",
+        "lastNonce": "1",
+        "acceptedCount": "1"
+      }
+    },
+    {
+      "id": "ready-anonymous-round-read-isolation",
+      "status": "BLOCKED",
+      "evidence": {
+        "httpStatus": 200,
+        "outcome": "ABSENT_OR_FILTERED",
+        "responseBytes": 77,
+        "responseSha256": "7e9e2a0cf5e711f84469093cef94d62e3d8afa50ef2d6588658dbf13952dbd91"
+      }
+    },
+    {
+      "id": "ready-anonymous-receiptA-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "ready-anonymous-receiptB-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "ready-inspector-receiptA-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "ready-inspector-receiptB-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "ready-playerA-round-read-isolation",
+      "status": "BLOCKED",
+      "evidence": {
+        "httpStatus": 200,
+        "outcome": "ABSENT_OR_FILTERED",
+        "responseBytes": 77,
+        "responseSha256": "d26d7aa3acb240385d9febd01f12e0b4f5400daab0dcb35bd8931c2f0cf375e8"
+      }
+    },
+    {
+      "id": "ready-playerA-receiptA-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "ready-playerA-receiptB-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "ready-playerB-round-read-isolation",
+      "status": "BLOCKED",
+      "evidence": {
+        "httpStatus": 200,
+        "outcome": "ABSENT_OR_FILTERED",
+        "responseBytes": 77,
+        "responseSha256": "4c9aad9e37019c003d76ba0889711a07a615f6a5f32c3c713bfb95ebc839caa2"
+      }
+    },
+    {
+      "id": "ready-playerB-receiptA-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "ready-playerB-receiptB-public-read",
+      "status": "PASS"
+    },
+    {
+      "id": "captured-responses-secret-scan",
+      "status": "PASS",
+      "evidence": "Only captured JSON strings, base64/base58 byte payloads and byte arrays; absence is not a complete confidentiality proof"
+    },
+    {
+      "id": "vrf-output-derived-secret-scan",
+      "status": "BLOCKED",
+      "evidence": {
+        "observations": 36,
+        "ownScopedCandidates": 0,
+        "meaning": "Pinned ProvideRandomness ABI, own program/queue/round/scoped identity, SHA256(output32) comparison only. The combined request input was not independently reconstructed; account scope is an inference. No proof verification, shared-queue or streaming coverage. No-match or unavailable data cannot establish G2."
+      }
+    },
+    {
+      "id": "streaming-log-and-account-subscriptions",
+      "status": "BLOCKED",
+      "evidence": "HTTP transaction meta.logMessages were queried. WebSocket subscriptions and subscription-time filtering are not implemented here."
+    },
+    {
+      "id": "vrf-queue-inflight-own-request-visibility",
+      "status": "BLOCKED",
+      "evidence": "Own round callback/history only; shared queue contents were deliberately not collected or decoded."
+    },
+    {
+      "id": "G1-G3-production-acceptance",
+      "status": "BLOCKED",
+      "evidence": "Expected application measurement, full RPC streaming matrix and upgrade/outage boundaries remain unapproved."
+    }
+  ],
+  "rows": [
+    {
+      "phase": "prepared",
+      "role": "base-public",
+      "method": "getAccountInfo",
+      "account": "round",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 495,
+      "responseSha256": "5de8ab80f8f24522059187c336130a098f75f12e11588414bb7caaa41b9ffed2"
+    },
+    {
+      "phase": "prepared",
+      "role": "anonymous",
+      "method": "getAccountInfo",
+      "account": "round",
+      "httpStatus": 200,
+      "outcome": "ABSENT_OR_FILTERED",
+      "responseBytes": 77,
+      "responseSha256": "56bc9e04b1df82cf374167f59e7111c6712b9d57e44c770100b330332e6e6a3c"
+    },
+    {
+      "phase": "prepared",
+      "role": "anonymous",
+      "method": "getAccountInfo",
+      "account": "receiptA",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "7cf67d7ceb3a211b567418ba95943dab694531e324d61274fd597fb31def9486"
+    },
+    {
+      "phase": "prepared",
+      "role": "anonymous",
+      "method": "getAccountInfo",
+      "account": "receiptB",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "b81ccde7e598afcf11da358afeaae1c90b62a081a8c79a55f38586d346839236"
+    },
+    {
+      "phase": "prepared",
+      "role": "inspector",
+      "method": "getAccountInfo",
+      "account": "round",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 473,
+      "responseSha256": "511e9bec64ae596da46d4936578b2c002c7cc5046380b872591c77d2d9a56364"
+    },
+    {
+      "phase": "prepared",
+      "role": "inspector",
+      "method": "getAccountInfo",
+      "account": "receiptA",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "bae462e9db0a8174b46861d2288dc9198e2cae218e4f21e64438fb92330aa993"
+    },
+    {
+      "phase": "prepared",
+      "role": "inspector",
+      "method": "getAccountInfo",
+      "account": "receiptB",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "e449d8658feb6fc049f08edf2a791adb4e5b55a1daaa2af2c33fa0d753850221"
+    },
+    {
+      "phase": "prepared",
+      "role": "playerA",
+      "method": "getAccountInfo",
+      "account": "round",
+      "httpStatus": 200,
+      "outcome": "ABSENT_OR_FILTERED",
+      "responseBytes": 77,
+      "responseSha256": "49eab6a4c1e7e9952d00ac0d95c72c7de4d554f03a1d2c1e3fc6afd47641d867"
+    },
+    {
+      "phase": "prepared",
+      "role": "playerA",
+      "method": "getAccountInfo",
+      "account": "receiptA",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "b2333e5233fc4ba2619177a2948a96f59673debff3945753fb4692222e70ef72"
+    },
+    {
+      "phase": "prepared",
+      "role": "playerA",
+      "method": "getAccountInfo",
+      "account": "receiptB",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "3efab42aec60934f827d4375614b8d2448e5212122b652a65b4ad3bf6f1103b2"
+    },
+    {
+      "phase": "prepared",
+      "role": "playerB",
+      "method": "getAccountInfo",
+      "account": "round",
+      "httpStatus": 200,
+      "outcome": "ABSENT_OR_FILTERED",
+      "responseBytes": 77,
+      "responseSha256": "87f20da702d018f5833ac3c5fab198b2227fa720586c1cced8389a0a66150e0b"
+    },
+    {
+      "phase": "prepared",
+      "role": "playerB",
+      "method": "getAccountInfo",
+      "account": "receiptA",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "923e5e787d4cc472815a7b38f26562e87b0df7195099ca28990e7ce62f174d2d"
+    },
+    {
+      "phase": "prepared",
+      "role": "playerB",
+      "method": "getAccountInfo",
+      "account": "receiptB",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "c118d43cd5f79eee7fb361de9fea8be29408b1dae90ab1158d66cf2484257806"
+    },
+    {
+      "phase": "ready",
+      "role": "base-public",
+      "method": "getAccountInfo",
+      "account": "round",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 495,
+      "responseSha256": "3a5600a40513c8e6d349986fbb4d54402bb6cc82aa6d44d82fb65bc461e2e424"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getAccountInfo",
+      "account": "round",
+      "httpStatus": 200,
+      "outcome": "ABSENT_OR_FILTERED",
+      "responseBytes": 77,
+      "responseSha256": "7e9e2a0cf5e711f84469093cef94d62e3d8afa50ef2d6588658dbf13952dbd91"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getAccountInfo",
+      "account": "receiptA",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "a1f3e0056d2e79bee5f1bb65407f226b8a127be71c417e317afb30e122fd9ee2"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getAccountInfo",
+      "account": "receiptB",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "eb47cfeda62544d513df568d4450ed34abdb06b37e33c7c1a9fb957930bd9ebd"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getAccountInfo",
+      "account": "round",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 473,
+      "responseSha256": "3b28daf176eb74643d3d0d977f1fb65cf4c9360247811a000b7217db23ca4ab7"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getAccountInfo",
+      "account": "receiptA",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "f3d20f00d831bbcc66a18b2c78b5c56dacfb3780acec1fefd22daba08b716e56"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getAccountInfo",
+      "account": "receiptB",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "b4a96cd82bba148a84b637395159685756b75b4f4a8ac4bc2827c452bd1be276"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getAccountInfo",
+      "account": "round",
+      "httpStatus": 200,
+      "outcome": "ABSENT_OR_FILTERED",
+      "responseBytes": 77,
+      "responseSha256": "d26d7aa3acb240385d9febd01f12e0b4f5400daab0dcb35bd8931c2f0cf375e8"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getAccountInfo",
+      "account": "receiptA",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "f7e622110b86323cf09906ec0c727afaed585abe739a8ae8a16ba55e17449b1e"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getAccountInfo",
+      "account": "receiptB",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "10c420aaefe17c2d7ec28bd6b780dbea9ef020ceec37408c543cf78fa4cbe245"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getAccountInfo",
+      "account": "round",
+      "httpStatus": 200,
+      "outcome": "ABSENT_OR_FILTERED",
+      "responseBytes": 77,
+      "responseSha256": "4c9aad9e37019c003d76ba0889711a07a615f6a5f32c3c713bfb95ebc839caa2"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getAccountInfo",
+      "account": "receiptA",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "393ea34365e4bad64c924a2eaf9d08d6f01ad470f9239ba0c812438cf54bc48d"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getAccountInfo",
+      "account": "receiptB",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "4f7ff7001d32951728d75bc30b08505b20f0000937984db6143aea15a1963394"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getSignaturesForAddress",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1366,
+      "responseSha256": "33dc2d7caac70eb186da56a033d0e8fd7f5bd0d755aec713f080ea4af519de74"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getSignaturesForAddress",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 36,
+      "responseSha256": "46ab8616d277a8ac1afefc4c2e1c9e17889c6695d8d43848aab55f0257b0ad42"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "47b81080e37f67142c78fa8a16c01d4cad04358259f3b69f6bd74a789dc2efd1"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "271b4cd198ab2d13b297db9894e6b29547414d8984e74c3a1175999408a97b6a"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "c480a511962d16c9c8156dba25fb300a8fbf6be212dfb97ee06f3888abbb84cf"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "a8bb1cb1839cb589d422f70a8b942c7161fba4c4ccf5039821ea522891157b55"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 703,
+      "responseSha256": "2ad2ca05d216e309e2a453dae7486ea2922420ce64b9fcca9a5e02bd52861b51"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 715,
+      "responseSha256": "49ed3a43d77de86f3d909a1a0c13258ebb2af0066c6a5fb6ca9fa32368efeece"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "44365b22d103a29292e093682d62b2fb41f50d317a4304df2429f1f006366b4c"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "30c511ab69b2d26b18a0a1a324d37475f5b058b934b37e6a41870f163010c977"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "e934605b8b59b2b98a0352c43b2f1b13a32a09698014ad55a0e1c1734e12f7f8"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "e2c16c5e32e96ee67920c086afa0184b285e2c97786a1543561d3893ad33cf18"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "a708411220f1364bf05d80ddb25e5794bd0a28c1e57885a8e79d850e3296f179"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "f4dd44c1104b7cc4a686e8d55a70daa21cec40648b068f138a4833d1a94b55d4"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "simulateTransaction",
+      "variant": "readonly",
+      "signedPlayer": 0,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptA"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "c21c40ef38f5f39f8b95eb272965619fca54d6dc249bd4c1c7a4ff22792beb3f"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "simulateTransaction",
+      "variant": "writable-promoted",
+      "signedPlayer": 0,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptA"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "de84b51023f151725491132fd719ac74f87a11b4040b22fb6b7217473db17f12"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "simulateTransaction",
+      "variant": "readonly",
+      "signedPlayer": 1,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptB"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "d50daeea43a4a4d433236a2529a1a2a6679f3ac82a891e9a9f748d6c647b64fe"
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "simulateTransaction",
+      "variant": "writable-promoted",
+      "signedPlayer": 1,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptB"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "45ec7c20a3599b425ae593bf2225916ea9bfb96c4f7146471f722117c5f0c5a2"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getSignaturesForAddress",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1366,
+      "responseSha256": "33dc2d7caac70eb186da56a033d0e8fd7f5bd0d755aec713f080ea4af519de74"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1311,
+      "responseSha256": "9e13b7ffe05cdff214d5d312feea6a9a9d3416d97e27076648fdcb32e0e43aa8"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1068,
+      "responseSha256": "77eda71d2b99b05581e67312a6b3f0ebe2117e0cc1285ae89a6ef622f4f1e675"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1311,
+      "responseSha256": "865d4bb6ec088908bba1d6c27854ba0df59f41d6f56e72d152479dffc1980c29"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1068,
+      "responseSha256": "b23597f3834828cd4bd173f337ca9c0229bef35ea4320cd3c98235407f6b8218"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 2389,
+      "responseSha256": "1adc80d251c30f6dde48be4aebba3ddc10de91d47b4c5638b42b6149f7576a9b"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 2074,
+      "responseSha256": "0269dbbd0eeebe08bdc2eccc5917c5a979b0292337e83b53c9d9d99742854eac"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 2153,
+      "responseSha256": "31a378bae92f56f0aac53621a29415bfe1ef86816d941e175bbafdf714bb946e"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1902,
+      "responseSha256": "335438598cbc1a59d71b8e3791850de3b999ce6a9d1892648d265a070c09e772"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 2162,
+      "responseSha256": "ba60e408e0085d45bb61e2d314bb6b0f554a536c96fe6f165a85659ea5db386a"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1909,
+      "responseSha256": "d34397ef9beb4807243f225bc6ff711a21c03a7517435de9e7cb5e609d24d064"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1946,
+      "responseSha256": "8da06edb1b48dfaf528cc27f26e9d90ed582c06ecded04444a8ceb7245dfa6ad"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1704,
+      "responseSha256": "4255dda75a4d22f6a21ee8758f3815d0ddfe864d2b66ef1d2007435140b34b37"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "simulateTransaction",
+      "variant": "readonly",
+      "signedPlayer": 0,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptA"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1294,
+      "responseSha256": "39b830e3f632a38b0b7a1a33db9bede445d4c00609c150a69dd74e1b2123f2e8"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "simulateTransaction",
+      "variant": "writable-promoted",
+      "signedPlayer": 0,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptA"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1294,
+      "responseSha256": "0521c4b96c4fbce60b6a0ed7074c7bb90727fd6aa28728178e11289d541ea4c9"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "simulateTransaction",
+      "variant": "readonly",
+      "signedPlayer": 1,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptB"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1294,
+      "responseSha256": "7233c94d0766734e7e7dbfd5cff6770b19162317205a72bdf5a640709731f631"
+    },
+    {
+      "phase": "ready",
+      "role": "inspector",
+      "method": "simulateTransaction",
+      "variant": "writable-promoted",
+      "signedPlayer": 1,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptB"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 1294,
+      "responseSha256": "dd26f24f0033fec655a4c22e0e507f804c8ce3c7f6763036ebaa00cdd0c1cd70"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getSignaturesForAddress",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 36,
+      "responseSha256": "46ab8616d277a8ac1afefc4c2e1c9e17889c6695d8d43848aab55f0257b0ad42"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "47b81080e37f67142c78fa8a16c01d4cad04358259f3b69f6bd74a789dc2efd1"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "271b4cd198ab2d13b297db9894e6b29547414d8984e74c3a1175999408a97b6a"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "c480a511962d16c9c8156dba25fb300a8fbf6be212dfb97ee06f3888abbb84cf"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "a8bb1cb1839cb589d422f70a8b942c7161fba4c4ccf5039821ea522891157b55"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 703,
+      "responseSha256": "2ad2ca05d216e309e2a453dae7486ea2922420ce64b9fcca9a5e02bd52861b51"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 715,
+      "responseSha256": "49ed3a43d77de86f3d909a1a0c13258ebb2af0066c6a5fb6ca9fa32368efeece"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "44365b22d103a29292e093682d62b2fb41f50d317a4304df2429f1f006366b4c"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "30c511ab69b2d26b18a0a1a324d37475f5b058b934b37e6a41870f163010c977"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "e934605b8b59b2b98a0352c43b2f1b13a32a09698014ad55a0e1c1734e12f7f8"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "e2c16c5e32e96ee67920c086afa0184b285e2c97786a1543561d3893ad33cf18"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "a708411220f1364bf05d80ddb25e5794bd0a28c1e57885a8e79d850e3296f179"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "f4dd44c1104b7cc4a686e8d55a70daa21cec40648b068f138a4833d1a94b55d4"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "simulateTransaction",
+      "variant": "readonly",
+      "signedPlayer": 0,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptA"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "48853ab535bef8191f86f51c03025e12ee03bc423be4f65d51ab6b311307ff12"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "simulateTransaction",
+      "variant": "writable-promoted",
+      "signedPlayer": 0,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptA"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "2b98b4ef3768a4cf1081cbd7157e2ceab0c03902419882649d3f656c4559cd6b"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "simulateTransaction",
+      "variant": "readonly",
+      "signedPlayer": 1,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptB"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "fe7f49d4a3ff77d66226065df7c325ea36e2b230b640256c3c6efd9259436ee7"
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "simulateTransaction",
+      "variant": "writable-promoted",
+      "signedPlayer": 1,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptB"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "369e2e5ab1846ff710752e94dc4768f2fa523fb86b2431f2c951b15f19b88a66"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getSignaturesForAddress",
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 36,
+      "responseSha256": "46ab8616d277a8ac1afefc4c2e1c9e17889c6695d8d43848aab55f0257b0ad42"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "47b81080e37f67142c78fa8a16c01d4cad04358259f3b69f6bd74a789dc2efd1"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "271b4cd198ab2d13b297db9894e6b29547414d8984e74c3a1175999408a97b6a"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "c480a511962d16c9c8156dba25fb300a8fbf6be212dfb97ee06f3888abbb84cf"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "a8bb1cb1839cb589d422f70a8b942c7161fba4c4ccf5039821ea522891157b55"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 703,
+      "responseSha256": "2ad2ca05d216e309e2a453dae7486ea2922420ce64b9fcca9a5e02bd52861b51"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 715,
+      "responseSha256": "49ed3a43d77de86f3d909a1a0c13258ebb2af0066c6a5fb6ca9fa32368efeece"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "44365b22d103a29292e093682d62b2fb41f50d317a4304df2429f1f006366b4c"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "30c511ab69b2d26b18a0a1a324d37475f5b058b934b37e6a41870f163010c977"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "e934605b8b59b2b98a0352c43b2f1b13a32a09698014ad55a0e1c1734e12f7f8"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "e2c16c5e32e96ee67920c086afa0184b285e2c97786a1543561d3893ad33cf18"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "json",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 704,
+      "responseSha256": "a708411220f1364bf05d80ddb25e5794bd0a28c1e57885a8e79d850e3296f179"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction",
+      "encoding": "base64",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "includesLogsAndInnerInstructions": true,
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 716,
+      "responseSha256": "f4dd44c1104b7cc4a686e8d55a70daa21cec40648b068f138a4833d1a94b55d4"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "simulateTransaction",
+      "variant": "readonly",
+      "signedPlayer": 0,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptA"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "fb8dbcbe9c4085c02211a28cfdf585474e617771d106d0d8cb258acc0b0befdd"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "simulateTransaction",
+      "variant": "writable-promoted",
+      "signedPlayer": 0,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptA"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "065375bd890220ea11130bbdfea47cd1d75bc783d4a537682650fec10eab2133"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "simulateTransaction",
+      "variant": "readonly",
+      "signedPlayer": 1,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptB"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "310cc82da324a975e185671c5a9a988d0dfecd12d54d0d90aee77e3bb3211b10"
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "simulateTransaction",
+      "variant": "writable-promoted",
+      "signedPlayer": 1,
+      "nonce": "2",
+      "simulationSucceeded": true,
+      "simulationError": {
+        "classification": "NONE",
+        "errorSha256": null,
+        "rawErrorPersisted": false
+      },
+      "requestedReturnAccounts": [
+        "round",
+        "receiptB"
+      ],
+      "httpStatus": 200,
+      "outcome": "RESULT",
+      "responseBytes": 352,
+      "responseSha256": "cd6aa53320e8ac83cdee0e799bf4f35fa63027356260eb12c027b4dc6392ba37"
+    }
+  ],
+  "transactions": [
+    {
+      "name": "initialize_round",
+      "role": "inspector",
+      "chain": "L1",
+      "signature": "JGbQwCpFndvJkiDNLuvCvyVDASZwUzg9JUSMzUkci7jk4ypN1YHknTrQJeajsj1w4PAj8kG7Npw1fFEFXYduVyh",
+      "slot": 506305155,
+      "messageSha256": "3e6f6b39e7403036363e4ae967bb815f868c1fde79f06c13f497baacc64249d3",
+      "reconciledFromFinalized": true
+    },
+    {
+      "name": "initialize_receipt",
+      "role": "playerA",
+      "chain": "L1",
+      "signature": "C6iQLV2D8dsAFF6fXJa322wA8do6b1SDALvr6bfHi14gVdGkEW9YZy5Fp4TesuvEdjsevY7za1Aw9uACR8j8Gne",
+      "slot": 506305163,
+      "messageSha256": "7812504bb66b09758483cc85ec0a19253a01ab6a82437fd70c19eed10dd71fdf",
+      "reconciledFromFinalized": true
+    },
+    {
+      "name": "initialize_receipt",
+      "role": "playerB",
+      "chain": "L1",
+      "signature": "5vtC9Mb3N41w76XJVBwQVTkaEjXwLnQinTNd7pEZ6Usu3bBA2bviMgpp7yhG4FkbA2a2j539dqDNnHTwoSEu1T8c",
+      "slot": 506305172,
+      "messageSha256": "99182c7dc31ea837dfb83fa204df597b012c8b0e2dba6a6724700f6d73ec989b",
+      "reconciledFromFinalized": true
+    },
+    {
+      "name": "delegate_receipt",
+      "role": "playerA",
+      "signature": "4ubiECwrXqyxQzFpiinan1q9RPhWsxKkAw2ZzS5ps843ncQaDPf3VgMgqhxvCrGNAA42opxA6r4BCipPu83X3ZBH",
+      "chain": "L1"
+    },
+    {
+      "name": "delegate_receipt",
+      "role": "playerB",
+      "signature": "3uQssMbg77fCXcoDqyNWYsuFYEQHvicB9V5CDCqX3NDCEUk2Vdneeq1YTEXgiW1FuApRehNYxW5oYnXcgr5q3MCi",
+      "chain": "L1"
+    },
+    {
+      "name": "delegate_round",
+      "role": "inspector",
+      "signature": "618Smei4EGpUaGJNKV2NQvZi9gzpoz18rjYfC9devG25bV2ThFCD7GSiWzz6miLahF11GUdP2V7VpBt6ogG5rxnQ",
+      "chain": "L1"
+    },
+    {
+      "name": "prepare_private",
+      "role": "inspector",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "chain": "TEE"
+    },
+    {
+      "name": "request_probe_randomness",
+      "role": "inspector",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "chain": "TEE"
+    },
+    {
+      "name": "submit_probe",
+      "role": "playerA",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "chain": "TEE"
+    },
+    {
+      "name": "submit_probe",
+      "role": "playerB",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "chain": "TEE"
+    },
+    {
+      "name": "reveal_probe",
+      "role": "inspector",
+      "signature": "5gLD2bPbuRg1jWMSkxQ1bbAwcWuAofR2drjgpokVPUmeXmZbjPbeXYkiKwxkv2dutHrs1N8GRanLZTiGcQyp8spE",
+      "chain": "TEE"
+    }
+  ],
+  "sessions": {
+    "inspector": {
+      "publicKey": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+      "expiresAt": 1790867852900,
+      "expirySource": "UNVERIFIED_JWT_LOCAL_DEADLINE",
+      "jwtSignatureVerified": false,
+      "authorizationGrantedLocally": false,
+      "tokenPersisted": false
+    },
+    "playerA": {
+      "publicKey": "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+      "expiresAt": 1790867853735,
+      "expirySource": "UNVERIFIED_JWT_LOCAL_DEADLINE",
+      "jwtSignatureVerified": false,
+      "authorizationGrantedLocally": false,
+      "tokenPersisted": false
+    },
+    "playerB": {
+      "publicKey": "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg",
+      "expiresAt": 1790867854932,
+      "expirySource": "UNVERIFIED_JWT_LOCAL_DEADLINE",
+      "jwtSignatureVerified": false,
+      "authorizationGrantedLocally": false,
+      "tokenPersisted": false
+    }
+  },
+  "leakSearch": [
+    {
+      "phase": "prepared",
+      "role": "base-public",
+      "method": "getAccountInfo:round",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "prepared",
+      "role": "anonymous",
+      "method": "getAccountInfo:round",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "prepared",
+      "role": "anonymous",
+      "method": "getAccountInfo:receiptA",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "prepared",
+      "role": "anonymous",
+      "method": "getAccountInfo:receiptB",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "prepared",
+      "role": "playerA",
+      "method": "getAccountInfo:round",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "prepared",
+      "role": "playerA",
+      "method": "getAccountInfo:receiptA",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "prepared",
+      "role": "playerA",
+      "method": "getAccountInfo:receiptB",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "prepared",
+      "role": "playerB",
+      "method": "getAccountInfo:round",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "prepared",
+      "role": "playerB",
+      "method": "getAccountInfo:receiptA",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "prepared",
+      "role": "playerB",
+      "method": "getAccountInfo:receiptB",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "base-public",
+      "method": "getAccountInfo:round",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getAccountInfo:round",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getAccountInfo:receiptA",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getAccountInfo:receiptB",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getAccountInfo:round",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getAccountInfo:receiptA",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getAccountInfo:receiptB",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getAccountInfo:round",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getAccountInfo:receiptA",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getAccountInfo:receiptB",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getSignaturesForAddress",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "simulateTransaction:readonly:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "simulateTransaction:writable-promoted:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "simulateTransaction:readonly:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "anonymous",
+      "method": "simulateTransaction:writable-promoted:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getSignaturesForAddress",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "simulateTransaction:readonly:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "simulateTransaction:writable-promoted:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "simulateTransaction:readonly:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerA",
+      "method": "simulateTransaction:writable-promoted:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getSignaturesForAddress",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "PMLWf3fyXkCXQDUNNAbpcsXSXJ1fLy45qazRBuHWsGHWNxNi2PixNKSxtCVffkz3PCbi5o9TWFW7EnrKg2Gm4Zd",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:json:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "getTransaction:base64:message+logs+innerInstructions",
+      "kind": "VRF_OUTPUT_DERIVATION",
+      "signature": "4EKRUR6tXbmZcQKY9bGbtFAkXueWw9VYWTn9KqHgAJFZBFX5RPZKNpZVqbcGGWk4zczpoo8Cu5DyBuQ58AvVpPP3",
+      "revealedRandomnessFound": false,
+      "observation": {
+        "sourceCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+        "proofVerified": false,
+        "status": "BLOCKED",
+        "exposed": false,
+        "inputBinding": "ACCOUNT_SCOPE_ONLY_INPUT_NOT_INDEPENDENTLY_BOUND",
+        "candidates": [],
+        "limitations": [
+          "Pinned source ABI is not a deployed-provider reproducible-build proof",
+          "RPC data/transaction execution metadata are observations, not a locally verified VRF proof"
+        ],
+        "outcome": "UNPARSEABLE_OR_INCOMPLETE",
+        "reason": "Invalid message signature header"
+      }
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "simulateTransaction:readonly:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "simulateTransaction:writable-promoted:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "simulateTransaction:readonly:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    },
+    {
+      "phase": "ready",
+      "role": "playerB",
+      "method": "simulateTransaction:writable-promoted:logs+returnData+accounts",
+      "revealedRandomnessFound": false
+    }
+  ],
+  "localBinarySha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+  "clientSha256": "1b783efc527253a08dd2191ddaefd19487a68492407b716c12911be16fdd99c4",
+  "runnerSha256": "1b5f12168e04ed97b60c4283f57029c60a0b3878017394aae5b9b74d8875dfc3",
+  "vrfVisibilitySha256": "4b7560baf4c3f2e7bc0ef155c8396369eef0603c1da80034221f64dee7b68523",
+  "plan": {
+    "version": 1,
+    "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "roundId": "1790833165684",
+    "inspector": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+    "players": [
+      "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+      "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg"
+    ],
+    "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+    "permission": "8sdJs3MMobmKo6LutsFU93CSicxUiGKbrGYAGYWw6BTV",
+    "identity": "6buXn8ycBgN12n8S1R7ZaixZmBQMDor16TzgAobqiD9S",
+    "roundDelegation": {
+      "buffer": "2aqwWAkuxMBxqD3RuEWX96FgRpUX7QjzwLwr2ad2AnoP",
+      "record": "DeEoL1gzZRpJqJkfaVeYZhsTwnYECoS8NKvDx1SR6ViP",
+      "metadata": "21YetqvJy21Btkd1dDVh8buXYTsoG5cWUL1GBssLZoXT"
+    },
+    "receipts": [
+      {
+        "address": "AoMw5mU7VRtrYyKHt2BKHE1ayveGbnmTPQ8ks7mxmtkp",
+        "player": "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+        "buffer": "AyD45qzHDyuN8YVVArD6YHBFxGoDerxD166Wt89LgLgm",
+        "record": "AA4J28xFUTH7tVDzFLuo33t7U6ZMjVJLuccxULqpA8r6",
+        "metadata": "BNJqK4xukMmLGihvBLj2yTLn5XZzPKzYvH1qkY6NvjcY"
+      },
+      {
+        "address": "DXJn45JY4FUZmQYojqwoSS2ncsXN4fxC5iRRSCWTU7Ps",
+        "player": "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg",
+        "buffer": "8hujrmrfqUsengnofCgqzSkohkQ14LRSfiDhzyA2nViZ",
+        "record": "8sKbT19K2jryihudf9d9irq9VkAEhBT3PAEpxcmLnoNP",
+        "metadata": "4KNBDP5fB3REV5CJEqDYDHiEPNJycRcobH2Tn5GGt72W"
+      }
+    ]
+  },
+  "deployment": {
+    "genesis": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+    "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "programData": "3TjrsRtLukZwUfnWxFZchVXE2dAd2xp4UfkMe6h6RaAD",
+    "elfSha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+    "elfBytes": 292384,
+    "allocationPaddingBytes": 0,
+    "upgradeAuthority": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA"
+  },
+  "reveal": {
+    "randomnessSha256": "17fefa2e8b12ec1013fc96b3c1af9edcd096ca9da695a0fef084b2e4b6cf8866",
+    "publicRound": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+    "rawRandomnessPersisted": false
+  },
+  "runOutcome": "COMPLETED_LIMITED_EXPERIMENT",
+  "writeJournal": {
+    "version": 1,
+    "genesis": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+    "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+    "inspector": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+    "players": [
+      "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+      "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg"
+    ],
+    "feePolicy": {
+      "perTransaction": 100000,
+      "cumulative": 2000000,
+      "minimumL1Balance": 100000,
+      "minimumTeeBalance": 0
+    },
+    "entries": [
+      {
+        "action": "initialize_round",
+        "role": "inspector",
+        "chain": "L1",
+        "signature": "JGbQwCpFndvJkiDNLuvCvyVDASZwUzg9JUSMzUkci7jk4ypN1YHknTrQJeajsj1w4PAj8kG7Npw1fFEFXYduVyh",
+        "messageSha256": "3e6f6b39e7403036363e4ae967bb815f868c1fde79f06c13f497baacc64249d3",
+        "lastValidBlockHeight": 493552997,
+        "feeLamports": 5000,
+        "state": "confirmed"
+      },
+      {
+        "action": "initialize_receipt",
+        "role": "playerA",
+        "chain": "L1",
+        "signature": "C6iQLV2D8dsAFF6fXJa322wA8do6b1SDALvr6bfHi14gVdGkEW9YZy5Fp4TesuvEdjsevY7za1Aw9uACR8j8Gne",
+        "messageSha256": "7812504bb66b09758483cc85ec0a19253a01ab6a82437fd70c19eed10dd71fdf",
+        "lastValidBlockHeight": 493553005,
+        "feeLamports": 5000,
+        "state": "confirmed"
+      },
+      {
+        "action": "initialize_receipt",
+        "role": "playerB",
+        "chain": "L1",
+        "signature": "5vtC9Mb3N41w76XJVBwQVTkaEjXwLnQinTNd7pEZ6Usu3bBA2bviMgpp7yhG4FkbA2a2j539dqDNnHTwoSEu1T8c",
+        "messageSha256": "99182c7dc31ea837dfb83fa204df597b012c8b0e2dba6a6724700f6d73ec989b",
+        "lastValidBlockHeight": 493553013,
+        "feeLamports": 5000,
+        "state": "confirmed"
+      },
+      {
+        "action": "delegate_receipt",
+        "role": "playerA",
+        "chain": "L1",
+        "signature": "4ubiECwrXqyxQzFpiinan1q9RPhWsxKkAw2ZzS5ps843ncQaDPf3VgMgqhxvCrGNAA42opxA6r4BCipPu83X3ZBH",
+        "messageSha256": "93528ad40dd6a0fa0cc7721be089a6bf282ca492a15e6b71147d1fffa6d7906c",
+        "lastValidBlockHeight": 493555883,
+        "feeLamports": 5000,
+        "state": "confirmed"
+      },
+      {
+        "action": "delegate_receipt",
+        "role": "playerB",
+        "chain": "L1",
+        "signature": "3uQssMbg77fCXcoDqyNWYsuFYEQHvicB9V5CDCqX3NDCEUk2Vdneeq1YTEXgiW1FuApRehNYxW5oYnXcgr5q3MCi",
+        "messageSha256": "a3237c969ac4a5795ff694f5be285a151bd33c9d3d772bd25ed22332382dea19",
+        "lastValidBlockHeight": 493555911,
+        "feeLamports": 5000,
+        "state": "confirmed"
+      },
+      {
+        "action": "delegate_round",
+        "role": "inspector",
+        "chain": "L1",
+        "signature": "618Smei4EGpUaGJNKV2NQvZi9gzpoz18rjYfC9devG25bV2ThFCD7GSiWzz6miLahF11GUdP2V7VpBt6ogG5rxnQ",
+        "messageSha256": "674d11db2dfb4272122290416bf548a338432ecaa0c800be700b19add8d58772",
+        "lastValidBlockHeight": 493555941,
+        "feeLamports": 5000,
+        "state": "confirmed"
+      },
+      {
+        "action": "prepare_private",
+        "role": "inspector",
+        "chain": "TEE",
+        "signature": "5U636sxMuqaSD96y6LMzvEuf4V58pTTootDSFKoSP3q4uFksVVhHwjoqWtSwsTgtc1TEvPaFy2TRm8YwBHGWsjAT",
+        "messageSha256": "a6bdf90f4a6a9538f132254846712bc32aeb4ad93480368cc11576a408f58bab",
+        "lastValidBlockHeight": 411226846,
+        "feeLamports": 0,
+        "state": "confirmed"
+      },
+      {
+        "action": "request_probe_randomness",
+        "role": "inspector",
+        "chain": "TEE",
+        "signature": "2dcdaDsnTo6vwnSbbJvvKNd7acNUejCkfUDCjpR45xwdzWSQ8bgnZDdVS22TY8ZbnEN2Kra5CQhp9wXkUnz6MBDL",
+        "messageSha256": "9664fdd322da2ac0941f5ae48f5f80252df6bae40fa05f89c6a3e0f334df387c",
+        "lastValidBlockHeight": 411228215,
+        "feeLamports": 0,
+        "state": "confirmed"
+      },
+      {
+        "action": "submit_probe",
+        "role": "playerA",
+        "chain": "TEE",
+        "signature": "63STdkmZ3BptcfpxSXVxFaoR5uSYEEbgtxh4U2PcYec8EJUVdZBABBd9pQw2ebXJqeai2N2odoaoTeGQsnusUTnP",
+        "messageSha256": "d289063e81da7aab61f0aa54cc98b1a7d2b40b6db9562dd68f47e31bb8aa1272",
+        "lastValidBlockHeight": 411228818,
+        "feeLamports": 0,
+        "state": "confirmed"
+      },
+      {
+        "action": "submit_probe",
+        "role": "playerB",
+        "chain": "TEE",
+        "signature": "25nSoouTzLyfh7ZcqgFFNgXCJFuF57w8k5J8g7ZGJCjpfpcWS6JQMxCh5DQx7TnaAuVidHYoq9baYjGpEvJc5aPy",
+        "messageSha256": "a44f1d6e61b060b8a554105acb6d8654d060eb4edacc6a36ccf389b4e4d34be3",
+        "lastValidBlockHeight": 411229916,
+        "feeLamports": 0,
+        "state": "confirmed"
+      },
+      {
+        "action": "reveal_probe",
+        "role": "inspector",
+        "chain": "TEE",
+        "signature": "5gLD2bPbuRg1jWMSkxQ1bbAwcWuAofR2drjgpokVPUmeXmZbjPbeXYkiKwxkv2dutHrs1N8GRanLZTiGcQyp8spE",
+        "messageSha256": "69839d8af5be98d6359b733b8cabe172fa9d9c45812bd90cc947298cf0db13e2",
+        "lastValidBlockHeight": 411236851,
+        "feeLamports": 0,
+        "state": "confirmed"
+      }
+    ],
+    "rawResponsesPersisted": false,
+    "automaticRetry": false
+  },
+  "finishedAt": "2026-10-01T14:49:45.283Z"
+}

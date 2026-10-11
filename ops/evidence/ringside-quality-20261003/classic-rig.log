@@ -1,0 +1,18 @@
+{"scope":"real-GLB CPU pose; image decoding stubbed; not WebGL or financial verification","maxHand":1.716185492847843e-7,"maxFoot":0.0000011109135842606303,"maxHead":3.505157969961792e-9,"maxImpact":0.0000010947545268428968,"impacts":47,"failures":[]}
+✔ real rigs follow mm positions and the referee exists only for replay (6.087709ms)
+✔ same kick frame and arbitrary seek produce identical skeletal poses (6.328167ms)
+✔ actual animated mesh vertices fit the joint plus skin margin camera box (89.4845ms)
+✔ two-bone solver meets reachable hand targets without stretching and clamps impossible reach (0.918167ms)
+✔ actual posed body picking returns a fighter identity, not the referee (35.2225ms)
+✔ v3 shared contacts drive real glove/ankle markers and keep the referee authoritative (566.825916ms)
+✔ v3 actual skinned vertices fit all three cameras at 320, 390 and 1440 widths (200.114084ms)
+✔ OPEN contactMode uses a neutral human-scale pose without a seed or result (1.44575ms)
+✔ finished replay samples final state; cleanup removes all three figures (1.165084ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1069.80925

@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-01T20:17:17.906Z",
+  "status": "BLOCKED",
+  "productionApproved": false,
+  "scope": "Offline core-game evidence inventory; no RPC, credentials, transactions, licensing opinion or deployment authorization.",
+  "evidenceStatus": "CONSISTENT",
+  "records": [
+    {
+      "id": "recovery-local",
+      "path": "experiments/vrf-recovery/evidence.json",
+      "integrity": "CONSISTENT_WITH_CHECKED_FILES",
+      "sha256": "d5fe2ba9d50fb764605cec2fb82847126162a2a4715f097654f88535ee636b78",
+      "scope": "LOCAL_EXPERIMENT_ONLY",
+      "observedAt": "2026-10-01T19:40:11.894436+00:00",
+      "testsReported": 35
+    },
+    {
+      "id": "coinflip-provider-local",
+      "path": "experiments/vrf-recovery/games-provider-evidence.json",
+      "integrity": "CONSISTENT_WITH_CHECKED_FILES",
+      "sha256": "f69851b69dd0b1dc51ebbd90cb5365fda58fec8b63b4c7c5673a26b0944382c8",
+      "scope": "LOCAL_VM_QUEUE_TRANSPLANT_ONLY",
+      "observedAt": "2026-10-01T19:39:02.295131+00:00",
+      "testsReported": 6
+    },
+    {
+      "id": "per-limited-live",
+      "path": "experiments/per/evidence/probe-resume-initialized-latest.json",
+      "integrity": "CONSISTENT_WITH_CHECKED_FILES",
+      "sha256": "a0625f1be4d5e575e042fb9b6216af41891cd15ac2c1245afefc6ae451992936",
+      "scope": "HISTORICAL_LIMITED_LIVE_REPORT_ONLY",
+      "observedAt": "2026-10-01T14:49:45.283Z",
+      "httpRows": 95,
+      "blockedChecks": 10,
+      "failedChecks": 0,
+      "derivationObservations": 36,
+      "parsedVrfCandidates": 0,
+      "privacyProved": false,
+      "l1GamePayoutProved": false
+    },
+    {
+      "id": "per-identity-policy",
+      "path": "experiments/per/manifest.json",
+      "integrity": "CONSISTENT_WITH_CHECKED_FILES",
+      "sha256": "b49b3ef272a88ea1a9812abff0fbdfafb2c2dc605440919246c22e00545d2382",
+      "scope": "CONFIGURATION_OBSERVATION_ONLY",
+      "measurementPolicyPresent": false,
+      "approvedG0DeploymentPresent": false
+    }
+  ],
+  "gates": [
+    {
+      "id": "coinflip.same-proof-integration",
+      "status": "BLOCKED",
+      "reason": "Original input/key capture and both consumption paths are isolated experiments; root wagering integration and migration acceptance remain required."
+    },
+    {
+      "id": "coinflip.proof-availability",
+      "status": "BLOCKED",
+      "reason": "Retaining input/key verifies an available proof; it cannot produce a proof withheld by the oracle. No reroll or selective refund fallback."
+    },
+    {
+      "id": "coinflip.recovery-license",
+      "status": "BLOCKED",
+      "reason": "Pinned prover/verifier production-use clearance remains unresolved; local BSL experiment is not a production grant."
+    },
+    {
+      "id": "coinflip.live-provider",
+      "status": "BLOCKED",
+      "reason": "Local queue transplantation does not prove deployed source equivalence, live callback delivery, or a funded finalized payout."
+    },
+    {
+      "id": "crash.attestation",
+      "status": "BLOCKED",
+      "reason": "Independent approved measurement and quote-to-validator-to-program binding remain required."
+    },
+    {
+      "id": "crash.privacy",
+      "status": "BLOCKED",
+      "reason": "Full lifecycle/streaming/in-flight queue and independently bound VRF derivation observations remain incomplete."
+    },
+    {
+      "id": "crash.manual-cashout",
+      "status": "BLOCKED",
+      "reason": "Readonly probe commands are not timed cashout acceptance/order, concurrency or reconnect validation."
+    },
+    {
+      "id": "crash.payment-recovery",
+      "status": "BLOCKED",
+      "reason": "Exactly-once L1 game-payment rights and interruption recovery are not implemented by this probe."
+    },
+    {
+      "id": "launch.independent-review",
+      "status": "BLOCKED",
+      "reason": "A game/house audit, deployment-specific controls and operational launch approval are outside these experiment records."
+    }
+  ],
+  "limitations": [
+    "Hashes detect drift against checked local records, not authenticity or independent audit.",
+    "Historical live records are not revalidated against the network.",
+    "No record or test count can automatically authorize production; gate closure requires a separately reviewed implementation and new acceptance evidence."
+  ]
+}

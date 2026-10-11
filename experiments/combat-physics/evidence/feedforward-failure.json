@@ -1,0 +1,28 @@
+{
+  "observedAt": "2026-10-03T03:06:44Z",
+  "platform": "macOS-27.0-arm64-arm-64bit-Mach-O",
+  "engine": "MuJoCo 3.14.0",
+  "sourceSha256": "24efe49cc97292cbce871bec7ed3a2413118da63d435b9ad46a57e7eb81eafbb",
+  "metrics": {
+    "steps": 4800,
+    "physicsDt": 0.0016666666666666668,
+    "runtimeSeconds": 2.1423501670360565,
+    "simulatedSeconds": 8,
+    "meanJointPositionErrorMeters": 0.5814042542960675,
+    "p95JointPositionErrorMeters": 0.9326972717919688,
+    "maxContactPenetrationMeters": 0.055269582325763844,
+    "groundAndBagContactsOver1N": 587,
+    "bagContactsOver1N": 70,
+    "p95LowFootHorizontalSpeedMps": 14.11040500954865,
+    "maxNonRootGeneralizedTorqueNm": 95.0,
+    "finite": true,
+    "stateSha256": "b0085740e80bdc2f92f06cb87fb7bfab0e640878411d5703e35b754791aa8db2"
+  },
+  "limitations": [
+    "Assisted tracking: pelvis has a bounded six-DOF support wrench; not an independently balanced controller.",
+    "Ball joint swing limits are 175 degrees, not a validated anatomical human model.",
+    "Self collision disabled; floor and passive bag collisions active.",
+    "One CMU boxing capture; noisy fingers/toes preserved as non-colliding branches.",
+    "No opponent, scoring, learned policy, wager, payout or production authority."
+  ]
+}

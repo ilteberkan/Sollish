@@ -1,0 +1,233 @@
+{
+ "params": "experiments/ringside-learner/runs/rule-v5m/main/params.json",
+ "rates": {
+  "actor": 0.1,
+  "critic": 0.05,
+  "fast": 0.5,
+  "entropy": 0.1
+ },
+ "matchRates": {
+  "actor": 1,
+  "critic": 0.05,
+  "fast": 2,
+  "entropy": 0.03,
+  "fastInputs": 0
+ },
+ "seeds": "test7",
+ "opps": "learned",
+ "n": 200,
+ "summary": {
+  "learning": {
+   "mirrorFrozen": {
+    "win": 0.55,
+    "margin": 76,
+    "adaptation": -10,
+    "kickShare": 0.384,
+    "roundMargin": [
+     8,
+     25,
+     42
+    ]
+   },
+   "checkpoint0": {
+    "win": 0.465,
+    "margin": -13,
+    "adaptation": 19,
+    "kickShare": 0.361,
+    "roundMargin": [
+     -13,
+     6,
+     -6
+    ]
+   },
+   "checkpoint1": {
+    "win": 0.655,
+    "margin": 155,
+    "adaptation": -28,
+    "kickShare": 0.374,
+    "roundMargin": [
+     60,
+     44,
+     51
+    ]
+   }
+  },
+  "frozen": {
+   "mirrorFrozen": {
+    "win": 0.477,
+    "margin": 23,
+    "adaptation": -3,
+    "kickShare": 0.421,
+    "roundMargin": [
+     -1,
+     13,
+     10
+    ]
+   },
+   "checkpoint0": {
+    "win": 0.465,
+    "margin": -63,
+    "adaptation": 15,
+    "kickShare": 0.405,
+    "roundMargin": [
+     -2,
+     -37,
+     -24
+    ]
+   },
+   "checkpoint1": {
+    "win": 0.662,
+    "margin": 144,
+    "adaptation": -25,
+    "kickShare": 0.415,
+    "roundMargin": [
+     51,
+     41,
+     52
+    ]
+   }
+  },
+  "untrainedLearning": {
+   "mirrorFrozen": {
+    "win": 0.278,
+    "margin": -220,
+    "adaptation": 43,
+    "kickShare": 0.559,
+    "roundMargin": [
+     -82,
+     -70,
+     -68
+    ]
+   },
+   "checkpoint0": {
+    "win": 0.235,
+    "margin": -296,
+    "adaptation": 86,
+    "kickShare": 0.555,
+    "roundMargin": [
+     -119,
+     -72,
+     -105
+    ]
+   },
+   "checkpoint1": {
+    "win": 0.37,
+    "margin": -121,
+    "adaptation": 25,
+    "kickShare": 0.546,
+    "roundMargin": [
+     -48,
+     -26,
+     -47
+    ]
+   }
+  },
+  "shuffledGraphLearning": {
+   "mirrorFrozen": {
+    "win": 0.507,
+    "margin": -1,
+    "adaptation": -27,
+    "kickShare": 0.349,
+    "roundMargin": [
+     -10,
+     -6,
+     15
+    ]
+   },
+   "checkpoint0": {
+    "win": 0.487,
+    "margin": -11,
+    "adaptation": 6,
+    "kickShare": 0.348,
+    "roundMargin": [
+     1,
+     -15,
+     3
+    ]
+   },
+   "checkpoint1": {
+    "win": 0.655,
+    "margin": 176,
+    "adaptation": -60,
+    "kickShare": 0.356,
+    "roundMargin": [
+     62,
+     58,
+     56
+    ]
+   }
+  }
+ },
+ "comparisons": {
+  "learningVsFrozenMargin": {
+   "mean": 37.97,
+   "lo": -1.86,
+   "hi": 73.71
+  },
+  "learningVsFrozenWin": {
+   "mean": 0.02,
+   "lo": -0.04,
+   "hi": 0.08
+  },
+  "learningVsFrozenAdaptation": {
+   "mean": -1.72,
+   "lo": -24.82,
+   "hi": 20.02
+  },
+  "learningVsUntrainedMargin": {
+   "mean": 284.48,
+   "lo": 245.15,
+   "hi": 323.4
+  },
+  "malecnsVsShuffledMargin": {
+   "mean": 17.86,
+   "lo": -21.45,
+   "hi": 57.38
+  },
+  "learningVsFrozenMargin:mirrorFrozen": {
+   "mean": 52.95,
+   "lo": -11.1,
+   "hi": 117
+  },
+  "learningVsFrozenMargin:checkpoint0": {
+   "mean": 50.13,
+   "lo": -14.97,
+   "hi": 116.19
+  },
+  "learningVsFrozenMargin:checkpoint1": {
+   "mean": 10.83,
+   "lo": -51.28,
+   "hi": 74.29
+  },
+  "exploratoryPerRound": [
+   {
+    "round": 1,
+    "n": 600,
+    "mean": 2.35,
+    "lo": -14.56,
+    "hi": 19.18
+   },
+   {
+    "round": 2,
+    "n": 600,
+    "mean": 19.29,
+    "lo": -1.52,
+    "hi": 39.75
+   },
+   {
+    "round": 3,
+    "n": 599,
+    "mean": 16.41,
+    "lo": -6.66,
+    "hi": 38.27
+   }
+  ],
+  "exploratoryGrowthRound3MinusRound1": {
+   "n": 599,
+   "mean": 14.57,
+   "lo": -13.89,
+   "hi": 42.32
+  }
+ },
+ "seconds": 212.4
+}

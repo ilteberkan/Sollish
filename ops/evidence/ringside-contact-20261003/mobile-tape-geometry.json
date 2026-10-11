@@ -1,0 +1,73 @@
+{
+  "scope": "WebSocket ledger fixture; WebGL disabled; dev browser DOM only",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "scrollWidth": 390,
+  "elements": {
+    "stage": {
+      "x": 10,
+      "y": 229.53125,
+      "width": 370,
+      "height": 236.3125,
+      "visible": true,
+      "fullyInViewport": true
+    },
+    "clock": {
+      "x": 161.4765625,
+      "y": 240.53125,
+      "width": 67.046875,
+      "height": 47.578125,
+      "visible": true,
+      "fullyInViewport": true
+    },
+    "volume": {
+      "x": 196.34375,
+      "y": 169.59375,
+      "width": 39.375,
+      "height": 15.9375,
+      "visible": true,
+      "fullyInViewport": true
+    },
+    "entry": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "visible": false,
+      "fullyInViewport": false
+    },
+    "amount": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "visible": false,
+      "fullyInViewport": false
+    },
+    "submit": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "visible": false,
+      "fullyInViewport": false
+    },
+    "tape": {
+      "x": 10,
+      "y": 541.84375,
+      "width": 370,
+      "height": 257,
+      "visible": true,
+      "fullyInViewport": true
+    }
+  },
+  "sourceHashes": {
+    "apps/web/components/ringside-arena.tsx": "058134139ef3aca9c5a1164dda004381aa98e256d9e7a6d0dc75c1345633edb3",
+    "apps/web/components/ringside-contact.module.css": "30755f6b49db00291e98f6de9b3a2d499fe5af69e84f5e154ea7ef5d29fc234d",
+    "apps/web/lib/use-ringside.ts": "43f760216ef5bb3c2720fb93e70e1fba3a108b5691b8e434b1531aa218678ad9",
+    "packages/protocol/src/ringside.ts": "17b86d0dfc7467c7d31d2cb0fafd373fe2e65356ca296d5fafb8cf2067b5bf12"
+  },
+  "productionBuild": false
+}

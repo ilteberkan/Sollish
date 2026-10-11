@@ -1,0 +1,20 @@
+{
+ "ok": true,
+ "engine": "ringside-contact-5-dfd179bd",
+ "checks": [
+  "match opens a 30 s window with three seed hashes; only match markets are accepted",
+  "plan 0 comes from Jev at cutoff and is broadcast in the chained log",
+  "duplicate alarms do not repeat a provider call or a plan",
+  "a transient provider error is retried once and the Jev plan still arrives on time",
+  "malformed Jev answers (after one retry) commit the deterministic fallback",
+  "missed plan deadlines are filled with fallback plans, never left open",
+  "provider timeout commits the fallback within the deadline",
+  "round 1 result is replayable from the published log; pools stay locked until the bout ends",
+  "the provider key never appears in frames or logs",
+  "restart keeps the log; the next round starts from the replayed final state",
+  "no bets between rounds; earlier rounds are published and replay in the browser",
+  "call budget exhaustion falls back without calling the provider",
+  "bout ends after 3 round(s); match pools settle on the replayed bout result and conserve",
+  "the next match opens a fresh betting window"
+ ]
+}

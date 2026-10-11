@@ -1,0 +1,127 @@
+{
+ "schema": "sollish.evidence.v1",
+ "at": "2026-10-04",
+ "status": "LOCAL_PRODUCTION_RUNTIME_VERIFIED_NOT_DEPLOYED",
+ "buildId": "FKpFLGsfHJMj3vu0V220b",
+ "scope": "Combat Club spectator: Mixamo motion set, smoothness work, sparring-4 timing, NeuroBoxer learned controller with live thinking panel. Non-monetary.",
+ "sourceSha256": {
+  "packages/protocol/src/neuro-boxer.ts": "2d616fa84a30c863a0201d12d1bf2ef248ca4491c42e71b986219798d0d648e6",
+  "packages/protocol/src/neuro-boxer-model.ts": "4a97f03f64ce95460a94dfbf197eb275845077adddf28709526b35feb13a2c2a",
+  "packages/protocol/src/combat-sparring.ts": "aac72f4dea4bde7ad3c7c9a4b1b7c64fdd0653f93ab52f75c679855071ef693e",
+  "packages/protocol/test/neuro-boxer.test.ts": "bb135fe30ea2f6fdf35afa36be2992fe003c74d3d60f17cf6c1cc5109b99528f",
+  "apps/web/components/boxing-mixamo-athletes.ts": "e465679f86d52bc69ad8d245b2f6975762073e1e22f4053c229da091f3aba454",
+  "apps/web/components/boxing-sparring.tsx": "78e873a3c6134fbc11b8e056a318908d83f62234b37609d4860c29a822f0783a",
+  "apps/web/components/boxing-sparring-scene.tsx": "57698a5a4f62ab40836b18a178684e6385cf731ec087dd4afb581800ff040613",
+  "apps/web/components/neuro-thinking-panel.tsx": "983009958ac60d6ab1c0760fc9e1ac74b92e5e53c082e30651379bfc663c20f3",
+  "apps/web/public/models/boxing/mixamo-boxing-v1.glb": "14c2829cd581fab64bba312f047fc96cdd51cf3079bb07ff69a7e1cab35feed2",
+  "apps/web/public/models/boxing/mixamo-boxing-v1.json": "53ff9a55ee376caf0f66f3541b651c422fc2198339200dc7e50702e72522f450",
+  "apps/web/public/models/boxing/mixamo-boxing-v1-credits.json": "0e1067122dfe7873869a92b9b093ca0f07425447d0dc9662e321afd931c8e5d4",
+  "experiments/neuro-boxer/evidence-heldout.json": "7665dcfde57237e6370279801aa61ce406839ba39c7deb3507237af9645dbb0a",
+  "experiments/neuro-boxer/graph.json": "4c411b31c5fc60ac2ae969064d256fa16276e59d3b37f26a9250c74a2dbe37c0",
+  "experiments/neuro-boxer/baselines.ts": "91badcd5d35b1218d397ed3d7c5552c4b83d5dba5dce8fadff90e5d149f70a8d",
+  "experiments/neuro-boxer/env.ts": "5f071c0d9a1c71f2d657b2a3b57930903d59ff297dca8248407bbf2c8085240f",
+  "experiments/neuro-boxer/evaluate.ts": "4aacb5191e168c7b1d0cbde42beb08ac1cb688311c043237317dce09db1d8aab",
+  "experiments/neuro-boxer/export.ts": "7420658e958c3b73419d68b5c9e917f2c0e0adf78e48987a9eb189c46c3565e0",
+  "experiments/neuro-boxer/train.ts": "502e34a192689d9bb9b27fe73b68b7a110e4211afc4f53161eac3ba8d0775652",
+  "experiments/neuro-boxer/worker.ts": "e57a797416e6238f5277bdc4b60fb113c095357305595d10be66db87b4ea3305",
+  "scripts/boxing-assets/mixamo/bake-run.mjs": "685cd5b863167317b6b4b511b2d5cb1cccd9e8f578fa4971998e0eddd7494716",
+  "scripts/boxing-assets/mixamo/bake.html": "82fd1903e2a2f3dc7bd848809ca4a633e74668e216832819c653ea419a78bcb8",
+  "scripts/boxing-assets/mixamo/export-in-page.js": "65860afc41c5b8f41db67ccff9d743e7ecdd1b0a2bec5da58396e57d17843bfe",
+  "scripts/boxing-assets/mixamo/inspect.html": "849f10eee2375f8c674c5958630dad3619205dd34ad4e57b299ef2b4f2e78d27",
+  "scripts/boxing-assets/mixamo/retarget-mixamo.js": "5d67c3801f28aa03db4b54f03c06bc62c3a92b19ab96ff99505e96de2988a3a4",
+  "scripts/boxing-assets/mixamo/sheet.html": "fe65e66523935d345a32109497b9a6e4cce38e0e149bffb20e7b6df71a7d2180"
+ },
+ "frozenLiveSourcesUnchanged": {
+  "packages/protocol/src/combat-v3.ts": true,
+  "packages/protocol/src/connectome-policy.ts": true,
+  "packages/protocol/src/ringside.ts": true,
+  "packages/protocol/src/pari-mutuel.ts": true,
+  "packages/protocol/src/live-round.ts": true,
+  "packages/protocol/src/combat.ts": true,
+  "apps/realtime/src/ringside-arena.ts": true,
+  "apps/realtime/src/index.ts": true
+ },
+ "neuroBoxer": {
+  "byArchitecture": {
+   "connectome": {
+    "scoreMean": 0.991,
+    "scoreSd": 0.016,
+    "entropyMean": 1.01,
+    "hitsMean": 24.3
+   },
+   "shuffled": {
+    "scoreMean": 1,
+    "scoreSd": 0,
+    "entropyMean": 1.2,
+    "hitsMean": 23.6
+   },
+   "norecur": {
+    "scoreMean": 0.971,
+    "scoreSd": 0.051,
+    "entropyMean": 1.23,
+    "hitsMean": 25
+   }
+  },
+  "headToHead": {
+   "connectome_vs_shuffled": 0.5,
+   "connectome_vs_norecur": 0.333,
+   "norecur_vs_shuffled": 0
+  },
+  "shippedModel": {
+   "connectomeTrainingSeed": 1,
+   "mirrorBout": "3x45 s, temperature 0.8 seeded sampling, bout seeds 7000-7199",
+   "korWinShare": 0.4,
+   "koShare": 0.23,
+   "meanBoutSeconds": 144.2,
+   "distinctOutcomes": 199
+  },
+  "baselines": {
+   "random": {
+    "balanced": 0,
+    "pressure": 0.02,
+    "counter": 0
+   },
+   "aggro": {
+    "balanced": 0,
+    "pressure": 0.24,
+    "counter": 0
+   }
+  },
+  "cornerBalance600": {
+   "korShare": 0.505,
+   "z": 0.24,
+   "boutSeeds": "9000-9599"
+  },
+  "conclusion": "learning shown vs baselines; connectome advantage over shuffled/no-recurrence controls NOT shown"
+ },
+ "smoothnessProbeSeed7": {
+  "camJumpMaxM": 0.0388,
+  "boneSpeedP99RadS": 82.9,
+  "before": {
+   "camJumpMaxM": 4.61,
+   "boneSpeedP99RadS": 162.3
+  },
+  "note": "M2 Metal, no screenshots during probe; brain-vs-brain default bout"
+ },
+ "checks": {
+  "protocolUnit": "74/74",
+  "webUnit": "76/76",
+  "typecheck": "PASS",
+  "glbClassic": "10/10",
+  "glbMixamo": "10/10",
+  "browserFull": "77 passed + 1 failed (outdated brain-panel test assumption); test updated, sparring spec rerun 7/7 PASS on the same build; full suite not rerun",
+  "sparring4HeldOut": "runner 0.000, hitAndRun 0.115-0.188, jabSpam 0.000-0.010, depth max 0.2 cm"
+ },
+ "images": {
+  "ops/evidence/ringside-neuro-20261004/brain-vs-brain.jpg": "09967f43273c8b0739feb08bec6e6f191b44f47f3c893149bf1cd370dc9fbe30"
+ },
+ "limits": [
+  "User visual acceptance open",
+  "Quaternius character mesh unchanged",
+  "Connectome topology advantage not demonstrated",
+  "Scripted corners saturated; stronger opponent pool needed",
+  "Not deployed; no wagering namespace",
+  "Physical phone pending",
+  "Nine real-asset gates closed"
+ ]
+}

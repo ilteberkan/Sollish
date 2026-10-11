@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-01T21:03:38.735Z",
+  "status": "PASS_BOUNDED_LOCAL_TARGET",
+  "runtime": {
+    "node": "v24.21.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpuModel": "Apple M2",
+    "logicalCpus": 8,
+    "memoryGiB": 8,
+    "wrangler": "4.145.0",
+    "engine": "local workerd SQLite"
+  },
+  "sockets": {
+    "connected": 256,
+    "capacity": 256,
+    "nextConnectionStatus": 503,
+    "unexpectedlyClosed": 0,
+    "admissionMs": 6064
+  },
+  "round": {
+    "id": "2",
+    "betWindowMs": 5000,
+    "sameWinnerForAll": true
+  },
+  "bets": {
+    "independentPlayers": 64,
+    "requestFramesIncludingRetries": 128,
+    "uniqueAccepted": 64,
+    "acknowledgedWithinFiveSeconds": 64,
+    "lateAttempts": 32,
+    "lateRejected": 32
+  },
+  "acknowledgementLatencyMs": {
+    "p50": 849,
+    "p95": 1470,
+    "max": 1537
+  },
+  "ledger": {
+    "aggregateExact": true,
+    "noOverspend": true,
+    "noLateDebit": true,
+    "tickets": 64,
+    "settled": 64,
+    "totalStakeCents": 64000,
+    "totalGrossPayoutCents": 62720,
+    "finalAggregateBalanceCents": 25598720
+  },
+  "allServerFramesValid": true,
+  "scope": "One localhost machine and one Durable Object. Native workerd, real CSPRNG and SQLite; read-only aggregate fixture only. 256 authenticated anonymous-demo sessions, not wallets; resettable credits. No cloud load, paid services, financial transactions, global geography, sustained soak, reconnect storm or thousands-of-users claim."
+}

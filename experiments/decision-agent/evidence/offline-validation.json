@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-10-01T22:19:18.112Z",
+  "node": "v24.21.0",
+  "command": "bash scripts/use-node.sh node --test experiments/decision-agent/test/*.test.mjs",
+  "tests": 16,
+  "passed": 16,
+  "failed": 0,
+  "mode": "offline mocked transport; global fetch rejects",
+  "authenticatedProviderRequests": 0,
+  "latencyBenchmark": "NOT_RUN",
+  "files": [
+    {
+      "file": "typesafe-client.mjs",
+      "sha256": "a67a017489cd13c581f82c710113b682ef0eba5ebaa246aaf6a9033e5a2638a7"
+    },
+    {
+      "file": "test/typesafe-client.test.mjs",
+      "sha256": "4cdb5744bdc9dcf715f72bd1339c97c76570d321ea795d2ddcd228ed1a9d26a5"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "sources": [
+    {
+      "file": "environment.mjs",
+      "sha256": "f1ec19b2703b020534f268837a0fd2e19ad2e3af28f2de1f7349e27038fa2f76",
+      "reason": "Preserved pre-atomic-cache source; compiled simulation behavior must remain unchanged."
+    },
+    {
+      "file": "guarded-environment.mjs",
+      "sha256": "c2e7fccbaacc2c9034560498de240a60703828330ee2548609c414f76586c7d1",
+      "reason": "Preserved pre-atomic-cache source; compiled simulation behavior must remain unchanged."
+    }
+  ]
+}

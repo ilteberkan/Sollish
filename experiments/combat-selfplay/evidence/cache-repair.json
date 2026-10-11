@@ -1,0 +1,33 @@
+{
+  "observedAt": "2026-10-03T11:40:30.791761+00:00",
+  "change": "Atomic temporary file + rename before dynamic import; original loader bytes preserved by SHA",
+  "beforeSources": [
+    {
+      "file": "environment.mjs",
+      "sha256": "f1ec19b2703b020534f268837a0fd2e19ad2e3af28f2de1f7349e27038fa2f76",
+      "reason": "Preserved pre-atomic-cache source; compiled simulation behavior must remain unchanged."
+    },
+    {
+      "file": "guarded-environment.mjs",
+      "sha256": "c2e7fccbaacc2c9034560498de240a60703828330ee2548609c414f76586c7d1",
+      "reason": "Preserved pre-atomic-cache source; compiled simulation behavior must remain unchanged."
+    }
+  ],
+  "afterSources": {
+    "environment.mjs": "786b4e88142b52dff673a0c4e96db4d28894e955a4084f31b371ab4d274ba9d6",
+    "guarded-environment.mjs": "1db66e308b5497fc19bcedc01cc8a4cf00ea528cae4e4391e83d409cab19c722",
+    "atomic-module.mjs": "23a1c364fa09f90e7ee4a7ca93e2f565ea1b3e4069d4edd2534e42621edfe836",
+    "atomic-module.test.mjs": "faf06c2ebfef7866a1511231b6f87e5231ac2bfcc8b4f52772ff743fcdb07c4d"
+  },
+  "unchangedGuardedEngineSha256": "8e762fe950cf3d2c34a103ab10747af0d64fa4176335914f52d4073299e15488",
+  "unchangedGuardedAdapterSha256": "044bd7838415c8d04f50b24d3525b72812a12629bceb502dd754608890e76fa1",
+  "validation": {
+    "independentChildProcesses": 4,
+    "parallelBuildImports": 16,
+    "entireSuiteTests": 24,
+    "entireSuiteResult": "PASS",
+    "testLog": ".tooling/combat-selfplay/energy-tests-atomic.log"
+  },
+  "modelUnchangedSha256": "eb270b099c4c0d64bebc55f1d74ee06e92c6d24335370f501011ee6c7a8f5dee",
+  "limits": "The earlier partial module import is an observed failure; concurrent truncate/read is the identified exposure. New test stresses concurrent builders, not every OS failure."
+}

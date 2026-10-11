@@ -1,0 +1,10 @@
+import {createServer} from 'node:http';
+import {readFile,writeFile,mkdir} from 'node:fs/promises';
+import {createRequire} from 'node:module';
+import {fileURLToPath} from 'node:url';
+import path from 'node:path';
+const root=path.resolve(fileURLToPath(new URL('../..',import.meta.url))),here=path.join(root,'experiments/visual-assets');
+const require=createRequire(path.join(root,'apps/web/package.json'));const {chromium}=require('@playwright/test');const three=path.dirname(path.dirname(require.resolve('three')));
+const server=createServer(async(req,res)=>{try{const p=new URL(req.url,'http://localhost').pathname;let file;if(p==='/')file=path.join(here,'preview.html');else if(p==='/candidate.glb')file=path.join(here,'output/athlete-fightkit-v1.glb');else if(p==='/original.glb')file=path.join(root,'apps/web/public/models/boxing/athlete.glb');else if(p.startsWith('/three/')){file=path.resolve(three,p.slice(7));if(!file.startsWith(three+path.sep))throw Error('Path');}else throw Error('Path');res.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':file.endsWith('.html')?'text/html':'application/octet-stream');res.end(await readFile(file));}catch{res.writeHead(404);res.end();}});
+await new Promise(r=>server.listen(18904,'127.0.0.1',r));const browser=await chromium.launch({headless:true,args:['--use-angle=metal']});const report={at:new Date().toISOString(),scope:'Isolated WebGL asset review; no gameplay or financial validation',views:[],errors:[]};
+try{const page=await browser.newPage({viewport:{width:1440,height:1000}});page.on('pageerror',e=>report.errors.push(String(e)));for(const[name,query]of[['front',''],['cross','?clip=Punch_Cross&time=.35'],['back','?back=1']]){await page.goto('http://127.0.0.1:18904/'+query);await page.waitForFunction(()=>window.review?.ready);await page.screenshot({path:path.join(here,'evidence',name+'.png')});report.views.push({name,...await page.evaluate(()=>{const{pose,...r}=window.review;return r;})});}await writeFile(path.join(here,'evidence/render.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report,null,2));}finally{await browser.close();await new Promise(r=>server.close(r));}

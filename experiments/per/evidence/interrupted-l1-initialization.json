@@ -1,0 +1,77 @@
+{
+  "observedAt": "2026-10-01T14:38:04.377Z",
+  "scope": "Own interrupted L1 initialization read-only reconciliation",
+  "finalizedBlockHeight": 493553287,
+  "statusSlot": 506305586,
+  "entries": [
+    {
+      "action": "initialize_round",
+      "role": "inspector",
+      "signature": "JGbQwCpFndvJkiDNLuvCvyVDASZwUzg9JUSMzUkci7jk4ypN1YHknTrQJeajsj1w4PAj8kG7Npw1fFEFXYduVyh",
+      "lastValidBlockHeight": 493552997,
+      "status": {
+        "confirmationStatus": "finalized",
+        "confirmations": null,
+        "err": null,
+        "slot": 506305155,
+        "status": {
+          "Ok": null
+        }
+      }
+    },
+    {
+      "action": "initialize_receipt",
+      "role": "playerA",
+      "signature": "C6iQLV2D8dsAFF6fXJa322wA8do6b1SDALvr6bfHi14gVdGkEW9YZy5Fp4TesuvEdjsevY7za1Aw9uACR8j8Gne",
+      "lastValidBlockHeight": 493553005,
+      "status": {
+        "confirmationStatus": "finalized",
+        "confirmations": null,
+        "err": null,
+        "slot": 506305163,
+        "status": {
+          "Ok": null
+        }
+      }
+    },
+    {
+      "action": "initialize_receipt",
+      "role": "playerB",
+      "signature": "5vtC9Mb3N41w76XJVBwQVTkaEjXwLnQinTNd7pEZ6Usu3bBA2bviMgpp7yhG4FkbA2a2j539dqDNnHTwoSEu1T8c",
+      "lastValidBlockHeight": 493553013,
+      "status": {
+        "confirmationStatus": "finalized",
+        "confirmations": null,
+        "err": null,
+        "slot": 506305172,
+        "status": {
+          "Ok": null
+        }
+      }
+    }
+  ],
+  "accountsSlot": 506305587,
+  "accounts": [
+    {
+      "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+      "owner": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+      "lamports": 1559632,
+      "dataBytes": 178,
+      "dataSha256": "f76aa0cc339d7ef484b2979fef56ccf045204ee6f6b6a6c1c7ca30b2461be4e5"
+    },
+    {
+      "address": "AoMw5mU7VRtrYyKHt2BKHE1ayveGbnmTPQ8ks7mxmtkp",
+      "owner": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+      "lamports": 1102360,
+      "dataBytes": 89,
+      "dataSha256": "ef6c749b43f81599ddc6711df4a47d68518028ab6e13efe07b442d2aadbddeac"
+    },
+    {
+      "address": "DXJn45JY4FUZmQYojqwoSS2ncsXN4fxC5iRRSCWTU7Ps",
+      "owner": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+      "lamports": 1102360,
+      "dataBytes": 89,
+      "dataSha256": "53b68e6bfa3c43ab9f37c421a901c315cb87416ed85bba8ddcee2321c39a4bb2"
+    }
+  ]
+}

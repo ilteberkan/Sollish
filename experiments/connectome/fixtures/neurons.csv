@@ -1,0 +1,5 @@
+neuron_id,cell_type,nt_type
+1,synthetic_sensory,acetylcholine
+2,synthetic_interneuron,gaba
+3,synthetic_interneuron,unknown
+4,synthetic_motor_label,acetylcholine

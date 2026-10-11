@@ -1,0 +1,70 @@
+{
+  "at": "2026-10-03T03:52:37.498Z",
+  "scope": "Hosted read-only research UI on desktop Apple M2 / Chromium ANGLE Metal. Mobile viewports are emulation, not physical phones. No wagers or wallet requests.",
+  "url": "https://sollish-web-devnet.sollish-web.workers.dev/lab/ringside",
+  "assets": [
+    {
+      "path": "manifest.json",
+      "bytes": 4296,
+      "sha256": "27e1ea2af90641169c33ce06d631384d4b7c3f285103fb0f7e64b14dc3c35e64"
+    },
+    {
+      "path": "physics-trace.json",
+      "bytes": 2823074,
+      "sha256": "90b8aadf17a7571faea95809a2400f445d0b89f93dceac7689775ea8613fa724"
+    },
+    {
+      "path": "/research/ringside/selfplay-guarded-120000-initial.json",
+      "bytes": 1060564,
+      "sha256": "7bd4b7d91be20df0270d3b52ffb0001691d45c6aa12aefe6dffe04ca14a4812a"
+    },
+    {
+      "path": "/research/ringside/selfplay-guarded-120000-learned.json",
+      "bytes": 1058493,
+      "sha256": "b88cb169634bf8aa81ae2d75a166639fe169ab3dfcd2563fae2c1f8d97557e56"
+    },
+    {
+      "path": "/research/ringside/selfplay-guarded-120001-initial.json",
+      "bytes": 1057694,
+      "sha256": "6b4de7ef78f403e680aff48de1481e9991547eb1e05f8f2de7f2e967edf2f04a"
+    },
+    {
+      "path": "/research/ringside/selfplay-guarded-120001-learned.json",
+      "bytes": 1056151,
+      "sha256": "0a98327af2398d0a89308228f422c3b58ce9bd82dadd256a26404804508a64b1"
+    },
+    {
+      "path": "/research/ringside/selfplay-guarded-120002-initial.json",
+      "bytes": 1063007,
+      "sha256": "c26e256ad45b17855b060f2881aaa9e6a3cb1ef732a42dbba582b4b596d798d1"
+    },
+    {
+      "path": "/research/ringside/selfplay-guarded-120002-learned.json",
+      "bytes": 1061100,
+      "sha256": "400957c986f4c7b6520991213904221a2f66b24e58e364bd43e7460adb990f9e"
+    }
+  ],
+  "views": [
+    {
+      "width": 1440,
+      "learningAdvanced": true,
+      "physicsPauseStable": true,
+      "overflow": false,
+      "canvasAfterNavigation": 0,
+      "liveArenaSockets": 0,
+      "errors": [],
+      "htmlBuildId": null
+    },
+    {
+      "width": 390,
+      "learningAdvanced": true,
+      "physicsPauseStable": true,
+      "overflow": false,
+      "canvasAfterNavigation": 0,
+      "liveArenaSockets": 0,
+      "errors": [],
+      "htmlBuildId": null
+    }
+  ],
+  "finishedAt": "2026-10-03T03:52:58.652Z"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "sollish-contact-webgl-lifecycle-v1",
+  "observedAt": "2026-10-02T23:33:29.793Z",
+  "scope": "local bundled real scene; Chromium ANGLE Metal 1280x800 DPR1; not hosted, Safari or mobile hardware",
+  "selected": [
+    "ayaz",
+    "kor"
+  ],
+  "cleanup": {
+    "buffersCreated": 122,
+    "buffersDeleted": 122,
+    "texturesCreated": 40,
+    "texturesDeleted": 35,
+    "programsCreated": 25,
+    "programsDeleted": 17,
+    "canvases": 0,
+    "contextLost": true,
+    "isContextLost": true
+  },
+  "errors": []
+}

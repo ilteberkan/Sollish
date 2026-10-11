@@ -1,0 +1,129 @@
+{
+ "params": "experiments/ringside-learner/runs/main/params.json",
+ "rates": {
+  "actor": 1,
+  "critic": 0.05,
+  "fast": 4
+ },
+ "matchRates": {
+  "actor": 1,
+  "critic": 0.05,
+  "fast": 4
+ },
+ "seeds": "test",
+ "opps": "learned",
+ "n": 200,
+ "summary": {
+  "learning": {
+   "mirrorFrozen": {
+    "win": 0.583,
+    "margin": 30,
+    "adaptation": 4
+   },
+   "checkpoint0": {
+    "win": 0.625,
+    "margin": 47,
+    "adaptation": -10
+   },
+   "checkpoint1": {
+    "win": 0.975,
+    "margin": 367,
+    "adaptation": -46
+   }
+  },
+  "frozen": {
+   "mirrorFrozen": {
+    "win": 0.472,
+    "margin": -8,
+    "adaptation": -4
+   },
+   "checkpoint0": {
+    "win": 0.527,
+    "margin": 8,
+    "adaptation": -16
+   },
+   "checkpoint1": {
+    "win": 0.95,
+    "margin": 309,
+    "adaptation": -63
+   }
+  },
+  "untrainedLearning": {
+   "mirrorFrozen": {
+    "win": 0.01,
+    "margin": -483,
+    "adaptation": 84
+   },
+   "checkpoint0": {
+    "win": 0.018,
+    "margin": -478,
+    "adaptation": 88
+   },
+   "checkpoint1": {
+    "win": 0.055,
+    "margin": -376,
+    "adaptation": 103
+   }
+  },
+  "shuffledGraphLearning": {
+   "mirrorFrozen": {
+    "win": 0.635,
+    "margin": 59,
+    "adaptation": -5
+   },
+   "checkpoint0": {
+    "win": 0.665,
+    "margin": 70,
+    "adaptation": -15
+   },
+   "checkpoint1": {
+    "win": 0.995,
+    "margin": 387,
+    "adaptation": -38
+   }
+  }
+ },
+ "comparisons": {
+  "learningVsFrozenMargin": {
+   "mean": 44.81,
+   "lo": 31.05,
+   "hi": 58.17
+  },
+  "learningVsFrozenWin": {
+   "mean": 0.08,
+   "lo": 0.04,
+   "hi": 0.12
+  },
+  "learningVsFrozenAdaptation": {
+   "mean": 10.62,
+   "lo": -1.99,
+   "hi": 23.06
+  },
+  "learningVsUntrainedMargin": {
+   "mean": 593.58,
+   "lo": 571.1,
+   "hi": 615.26
+  },
+  "malecnsVsShuffledMargin": {
+   "mean": -24.22,
+   "lo": -37.72,
+   "hi": -9.68
+  },
+  "learningVsFrozenMargin:mirrorFrozen": {
+   "mean": 37.62,
+   "lo": 15.19,
+   "hi": 59.72
+  },
+  "learningVsFrozenMargin:checkpoint0": {
+   "mean": 38.52,
+   "lo": 11.59,
+   "hi": 64.58
+  },
+  "learningVsFrozenMargin:checkpoint1": {
+   "mean": 58.31,
+   "lo": 33.72,
+   "hi": 82.31
+  }
+ },
+ "seconds": 51.4
+}

@@ -1,0 +1,126 @@
+{
+  "schema": "sollish-learned-runtime-provenance-v1",
+  "python": "3.13.7",
+  "sdist": {
+    "url": "https://files.pythonhosted.org/packages/de/95/b9a98cd4ed948d4f25a7d0b13cb0c1f87e58dc6d113be9e18940641eb25f/pybullet-3.2.7.tar.gz",
+    "sha256": "042879db8d101ac7590dee475fc6aded508b85fe1273fdbbfde1d88bd200e14f",
+    "bytes": 80508379,
+    "expandedBytes": 186616662
+  },
+  "readerSdist": {
+    "url": "https://files.pythonhosted.org/packages/5c/47/4e899bc2b91ef385d9baf11ebd2f2a8771c545ac89ffd86886e01903cdab/tensorflow-checkpoint-reader-0.2.2.tar.gz",
+    "sha256": "8c6d8eee9f297c24af84e410001dd45e2f5b21122033f4077f225003684f16d5",
+    "bytes": 629127
+  },
+  "installedSourceFiles": [
+    {
+      "path": "pybullet_envs/deep_mimic/testrl.py",
+      "sha256": "76bc1f79b8b9ef95b8695c33b8a8c8810ad10e2fbcda2c769db162a24c6a7d75",
+      "bytes": 3112
+    },
+    {
+      "path": "pybullet_envs/deep_mimic/env/pybullet_deep_mimic_env.py",
+      "sha256": "35b552e66d8bdf8f85e4f5f10af3b4d8a1c9312ffcaf6ac28d7fdaecd7b71155",
+      "bytes": 13185
+    },
+    {
+      "path": "pybullet_envs/deep_mimic/env/humanoid_stable_pd.py",
+      "sha256": "24b5fe239e2ca815e8ce552f2c9363da5009a6d2e07ba12efc4fbbd790a7dffa",
+      "bytes": 42338
+    },
+    {
+      "path": "pybullet_envs/deep_mimic/env/humanoid_pose_interpolator.py",
+      "sha256": "9a93a1474d52dd02c42294cc8334f4c8862ae5ade0be0197c4f3cbb90edcd77a",
+      "bytes": 14135
+    },
+    {
+      "path": "pybullet_envs/deep_mimic/env/motion_capture_data.py",
+      "sha256": "8b37f47f3020608f583549a5f8ef883cbaf15c12be80b0971ae12f954492f6f9",
+      "bytes": 1252
+    },
+    {
+      "path": "pybullet_envs/deep_mimic/learning/pg_agent.py",
+      "sha256": "f8f839d490df057572489eb0d39b6064c16196c06e63a0754d438e4cc0dde2b7",
+      "bytes": 12889
+    },
+    {
+      "path": "pybullet_envs/deep_mimic/learning/tf_normalizer.py",
+      "sha256": "031676643193a9abcc8d986449ea57f1d17124f796e9483c193d5fdf65461c0b",
+      "bytes": 2638
+    },
+    {
+      "path": "pybullet_envs/deep_mimic/learning/nets/fc_2layers_1024units.py",
+      "sha256": "22dad660349f22d02a5e7d4d0d76aa08dc2ed61f71b1022857b9e78d90fc1156",
+      "bytes": 422
+    },
+    {
+      "path": "pybullet_utils/pd_controller_stable.py",
+      "sha256": "d8de86f13b7b880610d8913cd3d8e1e57b84eb350f9e77fa8d48e007cbb1d134",
+      "bytes": 7798
+    },
+    {
+      "path": "pybullet_data/humanoid/humanoid.urdf",
+      "sha256": "4a449f923dcbd242c1c6a3ad15e62047c6cb2fc1d275bf31a339bf60d27a6894",
+      "bytes": 9809
+    },
+    {
+      "path": "pybullet_data/plane_implicit.urdf",
+      "sha256": "e9166320ec75908ee8a9adda5e7440441619ee3c5b559b9d46080d8b3339a7c3",
+      "bytes": 774
+    },
+    {
+      "path": "pybullet_data/data/motions/humanoid3d_spinkick.txt",
+      "sha256": "60ec9c200d96e0cd71693061f24db0bd8da9eb295daf487f6f60f8dfb324075a",
+      "bytes": 35643
+    },
+    {
+      "path": "pybullet_data/data/motions/humanoid3d_walk.txt",
+      "sha256": "32d082c3599bc40aac50b1afa196ff1e2cf3842bb40f0541ab088845f6328a41",
+      "bytes": 36185
+    },
+    {
+      "path": "pybullet_data/args/run_humanoid3d_spinkick_args.txt",
+      "sha256": "fe41f334db692261ee2c6b794bbf146a77dd72a2245b10a446cc42d61c51cd3b",
+      "bytes": 652
+    },
+    {
+      "path": "pybullet_data/args/run_humanoid3d_walk_args.txt",
+      "sha256": "47108f61354acf5789e033e690ac76327ad79679f80705a83900adc8332162d9",
+      "bytes": 644
+    }
+  ],
+  "nativeExtensionSha256": "78c2100ebcd1778c2fb89e81567adfbecaa074437df4e4ae90f0bdfc0d0fea72",
+  "packages": {
+    "pybullet": "3.2.7",
+    "numpy": "2.5.3",
+    "protobuf": "3.18.3",
+    "six": "1.17.0",
+    "setuptools": "80.9.0",
+    "wheel": "0.45.1"
+  },
+  "checkpointOrigin": {
+    "description": "Bullet-distributed DeepMimic pretrained policy; not byte-identical to original XBPeng checkpoint",
+    "bulletCommit": "63c4d67e337017f9d8b298c900e9aabdb69296e7",
+    "path": "examples/pybullet/gym/pybullet_data/data/policies/humanoid3d/humanoid3d_spinkick.ckpt.data-00000-of-00001",
+    "localGitBlobSha1": "e499b1f261528e5ee4d35abcb2b7c882b4ce2083",
+    "officialBulletGitBlobSha1": "e499b1f261528e5ee4d35abcb2b7c882b4ce2083",
+    "originalDeepMimicInitialCommit": "3ca04d38285ec3556dc0423f466477e96d934787",
+    "originalInitialCheckpointGitBlobSha1": "58acc3dd9283fac3115c345b4e5bd7352da3bd6a"
+  },
+  "buildChanges": [
+    "One compiler process instead of CPU-count parallel compilation",
+    "Darwin fdopen macro guard: uses system POSIX fdopen, no physics source change"
+  ],
+  "readerChanges": [
+    "NumPy2 bytes_/str_ aliases",
+    "Python3.13 ArgSpec namedtuple compatibility"
+  ],
+  "safeLoad": {
+    "pickle": false,
+    "tensorflowGraph": false,
+    "tensorflowInstalled": false,
+    "torchInstalled": false,
+    "numericTensorsOnly": true
+  },
+  "scope": "Observed local runtime identity. Not bit-identical TensorFlow parity or reproducible original C++ build proof."
+}

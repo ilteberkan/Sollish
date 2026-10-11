@@ -1,0 +1,40 @@
+{
+  "verifiedAt": "2026-10-03T03:53:48.040Z",
+  "source": "Cloudflare MCP read-back",
+  "workers": [
+    {
+      "name": "sollish-web-devnet",
+      "success": true,
+      "status": 200,
+      "deployment": [
+        {
+          "id": "7c97d6ee-459b-4116-a682-242c180eb942",
+          "created_on": "2026-10-03T03:52:14.654786Z",
+          "versions": [
+            {
+              "version_id": "9335f817-49e2-4e02-9e32-54fa2559db30",
+              "percentage": 100
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sollish-realtime",
+      "success": true,
+      "status": 200,
+      "deployment": [
+        {
+          "id": "5a7add8e-9b57-42cb-a7f7-38085612a98d",
+          "created_on": "2026-10-02T23:27:46.461695Z",
+          "versions": [
+            {
+              "version_id": "fd489ab1-98ab-4aa9-8dc7-d010717747c9",
+              "percentage": 100
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

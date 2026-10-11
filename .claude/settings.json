@@ -1,0 +1,17 @@
+{
+  "enabledPlugins": {
+    "superpowers@claude-plugins-official": false,
+    "stripe@claude-plugins-official": false,
+    "airtable@synced": false,
+    "cowork-plugin-management@synced": false,
+    "desktop-commander@synced": false,
+    "legal@synced": false,
+    "product-management@synced": false,
+    "productivity@synced": false,
+    "sales@synced": false,
+    "searchfit-seo@synced": false,
+    "servicenow-sdk@synced": false,
+    "twilio-developer-kit@synced": false,
+    "vpai@synced": false
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "computeUnits": 68230,
+  "house": "9iZHJfWLvMePnwXtFV6ESMR1exCHsoiLfkWP47Pim34A",
+  "packetBytes": 658,
+  "scope": "Actual LiteSVM runtime logs from house/games SBF and LOCAL MOCK VRF; not devnet or real proof. RPC message projection: instruction dataBytes is raw bytes, not RPC base58 data.",
+  "signature": "9NWhFisN4toKfnwGnusYZd958JCFHJLYAqExXDtqVnskwfqFJH2UXhfh4pUcxFgxZDSvZHvPoBXubhqcS59pVEJ",
+  "transaction": {
+    "meta": {
+      "err": null,
+      "logMessages": [
+        "Program 8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ invoke [1]",
+        "Program log: Instruction: PlaceCoinflip",
+        "Program 11111111111111111111111111111111 invoke [2]",
+        "Program 11111111111111111111111111111111 success",
+        "Program 9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2 invoke [2]",
+        "Program log: Instruction: ReserveBet",
+        "Program 11111111111111111111111111111111 invoke [3]",
+        "Program 11111111111111111111111111111111 success",
+        "Program 11111111111111111111111111111111 invoke [3]",
+        "Program 11111111111111111111111111111111 success",
+        "Program data: qQ1TPWMz1xKBgs8Xlh/u2ALgwjZvkXibGdy4yszIvAtUWZ/AslfGL5jJyMgCn6lk2lESEU+ryN/vgUFn8RTpPRzcH2Qag2vK3rG+Nl26OHrFx8eHTZb9nAWZKEdV9ztMQQ+eb1wfT8gTbA3s6KjKyPv4zmkoS26kDFuBmSNEJhAMFy1RCYVxbgIAAAAAAAAAgJaYAAAAAACAEisBAAAAAAB8kgAAAAAAAHySAAAAAAA=",
+        "Program 9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2 consumed 23638 of 168420 compute units",
+        "Program 9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2 success",
+        "Program Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz invoke [2]",
+        "Program 11111111111111111111111111111111 invoke [3]",
+        "Program 11111111111111111111111111111111 success",
+        "Program Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz consumed 6484 of 140342 compute units",
+        "Program Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz success",
+        "Program data: wjiVNsbDQ0uBgs8Xlh/u2ALgwjZvkXibGdy4yszIvAtUWZ/AslfGL5jJyMgCn6lk2lESEU+ryN/vgUFn8RTpPRzcH2Qag2vKbJi13LRCaGiIV7ofQlPXwGz95Ps/qO0MbZ4gHouDzS4TbA3s6KjKyPv4zmkoS26kDFuBmSNEJhAMFy1RCYVxbgIAAAAAAAAAgJaYAAAAAAABgBIrAQAAAABsmLXctEJoaIhXuh9CU9fAbP3k+z+o7QxtniAei4PNLgAAAAAAAAAA",
+        "Program 8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ consumed 68230 of 200000 compute units",
+        "Program 8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ success"
+      ]
+    },
+    "slot": 435888000,
+    "transaction": {
+      "message": {
+        "accountKeys": [
+          "2JpJzDp4mBXt6ZHtKQP2sCnjvCcSsVB6L3zxmCZaoKq7",
+          "8Jv6B6nFuA44aqaq1hpZ1jmfXFuQh4vo5MxDDYZb4su7",
+          "BHRRtZKD2j1HdSZu9BCYZF9wf6UhDNSjdGxKH2ddY4Vo",
+          "Cuj97ggrhhidhbu39TijNVqE74xvKJ69gDervRUXAxGh",
+          "DEanwq116ZnRqMu7eNk1gwq4KcHFsQsbnda6SxQBzLYr",
+          "FzJhw54rfzmqirRi1NyUGUG5QbnVxQPxQM6fyYkwuz8F",
+          "11111111111111111111111111111111",
+          "SysvarS1otHashes111111111111111111111111111",
+          "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+          "21w2ox9cs9Ymc6r1Nc98yGuvim8eftdQRAtnuDkqKehk",
+          "37gJHYJPDpexX5r6RuztWRk9Ed5BK2VtJu3sJMyYN1kv",
+          "4vVpN1C6GFuPcX1hx5PdFwv6dPQz3afMxhtVPSCmXhvQ",
+          "8V4v7SqwVqx6aZUf2kFwJWdbSKBhqn5vdR4YeqZsfcQJ",
+          "9bHnYHRGiNP8umiqtpAsALJYgcAJu3dKWVE1voGfqAu2",
+          "9iZHJfWLvMePnwXtFV6ESMR1exCHsoiLfkWP47Pim34A",
+          "HXkKvUG5BF2BZUzum2Vfa2cN1yqjkrg4iWkUVPDqh7vo"
+        ],
+        "instructions": [
+          {
+            "accounts": [
+              0,
+              14,
+              10,
+              2,
+              5,
+              4,
+              1,
+              12,
+              15,
+              11,
+              3,
+              8,
+              7,
+              13,
+              6,
+              9
+            ],
+            "dataBytes": [
+              31,
+              251,
+              249,
+              238,
+              97,
+              213,
+              84,
+              53,
+              2,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              1,
+              128,
+              150,
+              152,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "programIdIndex": 12
+          }
+        ]
+      },
+      "signatures": [
+        "9NWhFisN4toKfnwGnusYZd958JCFHJLYAqExXDtqVnskwfqFJH2UXhfh4pUcxFgxZDSvZHvPoBXubhqcS59pVEJ"
+      ]
+    }
+  }
+}

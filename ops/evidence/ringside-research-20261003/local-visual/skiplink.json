@@ -1,0 +1,30 @@
+{
+  "before": {
+    "active": "BODY",
+    "focused": false,
+    "top": "-100px",
+    "position": "fixed",
+    "rect": {
+      "x": 16,
+      "y": -100,
+      "width": 150.203125,
+      "height": 47.1875
+    },
+    "scrollY": 513,
+    "visibleInViewport": false
+  },
+  "after": {
+    "active": "BODY",
+    "focused": false,
+    "top": "-100px",
+    "position": "fixed",
+    "rect": {
+      "x": 16,
+      "y": -100,
+      "width": 150.203125,
+      "height": 47.1875
+    },
+    "scrollY": 513,
+    "visibleInViewport": false
+  }
+}

@@ -1,0 +1,590 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-01T21:22:41.942Z",
+  "release": "Ringside authored characters and shared LIVE DEMO",
+  "productionApproved": false,
+  "buildId": "OUxcWsuLLUZnba-PokTs0",
+  "deployments": {
+    "observedAt": "2026-10-01T21:21:27.033Z",
+    "rows": [
+      {
+        "name": "sollish-realtime",
+        "status": 200,
+        "deployment": [
+          {
+            "id": "09b77bb5-5e3c-4fd8-839a-1f001cf5cfd0",
+            "created_on": "2026-10-01T21:04:47.803713Z",
+            "versions": [
+              {
+                "version_id": "86360c1d-e404-49b5-bbea-7254610bc53f",
+                "percentage": 100
+              }
+            ]
+          }
+        ],
+        "bindings": [
+          {
+            "name": "ADMISSION",
+            "type": "durable_object_namespace"
+          },
+          {
+            "name": "ALLOWED_ORIGINS",
+            "type": "plain_text"
+          },
+          {
+            "name": "BUCKETS",
+            "type": "durable_object_namespace"
+          },
+          {
+            "name": "FANOUT_BUCKETS",
+            "type": "plain_text"
+          },
+          {
+            "name": "LIVE_ARENA",
+            "type": "durable_object_namespace"
+          },
+          {
+            "name": "LIVE_ARENA_ENABLED",
+            "type": "plain_text"
+          },
+          {
+            "name": "PUBLISH_SIGNING_KEY",
+            "type": "secret_text"
+          },
+          {
+            "name": "ROOMS",
+            "type": "durable_object_namespace"
+          },
+          {
+            "name": "SUPABASE_ANON_KEY",
+            "type": "secret_text"
+          },
+          {
+            "name": "SUPABASE_SERVICE_ROLE_KEY",
+            "type": "secret_text"
+          },
+          {
+            "name": "SUPABASE_URL",
+            "type": "secret_text"
+          }
+        ]
+      },
+      {
+        "name": "sollish-web-devnet",
+        "status": 200,
+        "deployment": [
+          {
+            "id": "8811b358-316e-4065-9ec3-1bb99463e031",
+            "created_on": "2026-10-01T21:20:56.715478Z",
+            "versions": [
+              {
+                "version_id": "f3cca8af-bfe8-42ab-84b2-d3c4b6c54095",
+                "percentage": 100
+              }
+            ]
+          }
+        ],
+        "bindings": [
+          {
+            "name": "ASSETS",
+            "type": "assets"
+          },
+          {
+            "name": "NEXTJS_ENV",
+            "type": "plain_text"
+          },
+          {
+            "name": "WORKER_SELF_REFERENCE",
+            "type": "service"
+          }
+        ]
+      }
+    ]
+  },
+  "sourceSha256": {
+    "apps/realtime/src/live-arena.ts": "daf0cf9648619caef277f4e15f29682221dcbf0585c10de6e3305acaff751541",
+    "apps/realtime/src/live-arena-state.ts": "35c1fa0a00d065c964e9acd12d833abbba865f6a36538e3bf110e0cb08c2d79a",
+    "apps/realtime/src/index.ts": "d34dbf7e6adb8bcd04f352ea1cd5e899e20560da3540208f1900f2e09de8b70d",
+    "apps/realtime/wrangler.jsonc": "60b7416a66229f89d19781dcd592e8c47b37eca7c9b2eae328de9d78f2302a4b",
+    "packages/protocol/src/live-round.ts": "64bf647babf69f80cd06fae24b2c56e2ec1e8448de258fc0ec3b3386e09870a8",
+    "packages/protocol/test/live-round.test.ts": "dd9208c02aa24837f2db3e89f564fe26aa317f9cafc468cc41d31160e775df82",
+    "apps/web/components/boxing-scene.tsx": "bd55416d264611b5f933956ddc67d50c023fe5531684d9e00d5d4f99afa9ea25",
+    "apps/web/components/boxing-scene-athletes.ts": "f4341aedd872be79d3805b27256b12835ed376e19c10781814c0a48ceec9eb27",
+    "apps/web/components/live-boxing.tsx": "f166a1b9330cffd74bec8f594c8179bf0a190b471daf098b99f9769f9751f51d",
+    "apps/web/components/live-boxing.module.css": "b54167f3a054d8d3fabb670fc8d8d3ef7b5425b844e49ceb599e942b348dd8de",
+    "apps/web/lib/use-live-arena.ts": "fc07606e71079c9d7b01b0fc9f9c8bea7bb43b09668f43e86f8bb0ca67438f10",
+    "apps/web/app/games/page.tsx": "ac8cabb8995eb089e92fa06a60f260475bd37e59355d91268df81cb309e42697",
+    "apps/web/app/games/page.module.css": "a642e2321f1906b2edf9d529f5c3270a4c61d5b175faae4406e8c02a0924f171",
+    "apps/web/components/shell.tsx": "53a609036c67379965244eaebe6b10d9cae763c056bbab4f162e89db696b783e",
+    "apps/web/tests/browser/live-arena.spec.ts": "78d264673a4e7f8ddeea48c1b4101b16ce7101d03f18d2647cf90f4d75c25f9b",
+    "scripts/boxing-assets/prepare.py": "0d7830ef4bd8a6add472ba87b10a9382d7a4158202ea49a39d049acaacb6ed72",
+    "scripts/boxing-assets/test_assets.py": "b214b8da694e534ddb4464301c406a6d7872ba99bf4314e0e76e1cac6f20e14d",
+    ".github/workflows/verify.yml": "c475c0aec64a2a71398bd4ba49ae7ae6a058157defad6f6d98f457e7dc358365"
+  },
+  "tests": {
+    "workspace": {
+      "passed": 113,
+      "scope": "Protocol11 + onchain45 + realtime11 + web24 + worker22; no Rust program changes."
+    },
+    "operations": {
+      "passed": 28
+    },
+    "binaryAssets": {
+      "passed": 5
+    },
+    "productionBrowser": {
+      "startTime": "2026-10-01T21:18:52.141Z",
+      "duration": 69606.79699999999,
+      "expected": 44,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "durableObject": {
+      "at": "2026-10-01T20:57:35.802Z",
+      "runtime": "local-workerd-sqlite",
+      "checks": 13,
+      "sharedRoundId": "1",
+      "timing": {
+        "windowMs": 5000,
+        "fightMs": 8800,
+        "resultMs": 4000
+      },
+      "scope": "Two independent anonymous demo players plus same-token concurrent reconnect. Real workerd alarms/SQLite, actual server CSPRNG, injected SQL failure, restart persistence. Not hosted load, VRF, financial settlement, Sybil resistance or production readiness."
+    },
+    "router": {
+      "at": "2026-10-01T21:00:02.663Z",
+      "runtime": "local-workerd-production-router",
+      "checks": 12,
+      "scope": "Default-off flag, origin, query, upgrade, actual IP admission 30/min under concurrent handshake, 10s anonymous close initiation and removal from fanout, unchanged unavailable chat/financial status. Node/workerd full close handshake may complete later. Local headers simulate the Cloudflare edge IP; no hosted bot resistance or global capacity claim."
+    }
+  },
+  "boundedLoad": {
+    "at": "2026-10-01T21:03:38.735Z",
+    "status": "PASS_BOUNDED_LOCAL_TARGET",
+    "runtime": {
+      "node": "v24.21.0",
+      "platform": "darwin",
+      "arch": "arm64",
+      "cpuModel": "Apple M2",
+      "logicalCpus": 8,
+      "memoryGiB": 8,
+      "wrangler": "4.145.0",
+      "engine": "local workerd SQLite"
+    },
+    "sockets": {
+      "connected": 256,
+      "capacity": 256,
+      "nextConnectionStatus": 503,
+      "unexpectedlyClosed": 0,
+      "admissionMs": 6064
+    },
+    "round": {
+      "id": "2",
+      "betWindowMs": 5000,
+      "sameWinnerForAll": true
+    },
+    "bets": {
+      "independentPlayers": 64,
+      "requestFramesIncludingRetries": 128,
+      "uniqueAccepted": 64,
+      "acknowledgedWithinFiveSeconds": 64,
+      "lateAttempts": 32,
+      "lateRejected": 32
+    },
+    "acknowledgementLatencyMs": {
+      "p50": 849,
+      "p95": 1470,
+      "max": 1537
+    },
+    "ledger": {
+      "aggregateExact": true,
+      "noOverspend": true,
+      "noLateDebit": true,
+      "tickets": 64,
+      "settled": 64,
+      "totalStakeCents": 64000,
+      "totalGrossPayoutCents": 62720,
+      "finalAggregateBalanceCents": 25598720
+    },
+    "allServerFramesValid": true,
+    "scope": "One localhost machine and one Durable Object. Native workerd, real CSPRNG and SQLite; read-only aggregate fixture only. 256 authenticated anonymous-demo sessions, not wallets; resettable credits. No cloud load, paid services, financial transactions, global geography, sustained soak, reconnect storm or thousands-of-users claim."
+  },
+  "hosted": {
+    "observedAt": "2026-10-01T21:22:03.772Z",
+    "base": "https://sollish-web-devnet.sollish-web.workers.dev",
+    "status": "PASS",
+    "scope": "Two independent hosted browser sessions, actual deployed WebSocket service/server CSPRNG/SQLite demo credits; no financial transactions or hosted load test.",
+    "round": "#10",
+    "oppositeSelections": true,
+    "balances": [
+      "990 DEMO",
+      "1.009,6 DEMO"
+    ],
+    "results": [
+      "Bilet: KOR · 10 DEMO · 0 brüt dönüş",
+      "Bilet: AYAZ · 10 DEMO · 19,6 brüt dönüş"
+    ],
+    "refreshPreservedTicket": true,
+    "renderer": "native Chromium ANGLE Metal",
+    "pageErrors": [],
+    "assets": [
+      {
+        "file": "athlete.glb",
+        "status": 200,
+        "bytes": 6588604,
+        "sha256": "abe7b575d5ce898d81954566eadfa4815e9e0d45df51c63df32b587f8cc33e66"
+      },
+      {
+        "file": "hair_buzzed.glb",
+        "status": 200,
+        "bytes": 625568,
+        "sha256": "d934bca8639a6780c728baef69cc0a7763e457df7db0518c31bc5a256de55679"
+      },
+      {
+        "file": "hair_simpleparted.glb",
+        "status": 200,
+        "bytes": 637708,
+        "sha256": "24924732e079b33665468363b176515106447cede968ae0ef3384210f3317e19"
+      },
+      {
+        "file": "credits.json",
+        "status": 200,
+        "bytes": 3204,
+        "sha256": "6f286cbc7518ae4faf5731e5e2219b1de14555ef795c664adb53e5b57f346390"
+      },
+      {
+        "file": "ringside-poster.png",
+        "status": 200,
+        "bytes": 290867,
+        "sha256": "d4496ac6c38e91446d819df641d4a6d8411197a5adcd3254f9f5d070dafe92e0"
+      }
+    ],
+    "realGames": [
+      {
+        "id": "coinflip",
+        "available": false,
+        "reason": "WALLET_TO_CHAIN_DEPLOYMENT_REQUIRES_VERIFICATION"
+      },
+      {
+        "id": "crash",
+        "available": false,
+        "reason": "PER_SECURITY_ACCEPTANCE_PENDING"
+      }
+    ],
+    "realRewardsAvailable": false
+  },
+  "hostedBuild": {
+    "observedAt": "2026-10-01T21:22:04.862Z",
+    "buildId": "OUxcWsuLLUZnba-PokTs0",
+    "http": 200,
+    "securityHeaders": {
+      "x-content-type-options": "nosniff",
+      "referrer-policy": "strict-origin-when-cross-origin",
+      "x-frame-options": "DENY",
+      "permissions-policy": "camera=(), microphone=(), geolocation=()"
+    },
+    "overflow": false
+  },
+  "graphics": {
+    "schema": "sollish-local-boxing-performance-v2",
+    "startedAt": "2026-10-01T21:20:34.651Z",
+    "baseURL": "http://127.0.0.1:3001",
+    "mode": "metal",
+    "viewport": {
+      "width": 1440,
+      "height": 1000,
+      "deviceScaleFactor": 1
+    },
+    "readiness": "PASS",
+    "wallReadyMs": 1328.001959,
+    "initial": {
+      "contextsCreated": 1,
+      "contextAt": 579.9000000059605,
+      "readyAt": 1081.300000011921,
+      "firstMainClearAt": 949.0999999940395,
+      "programsCreated": 20,
+      "programsDeleted": 6,
+      "shaderCompileCalls": 40,
+      "buffersCreated": 108,
+      "buffersDeleted": 28,
+      "texturesCreated": 35,
+      "texturesDeleted": 1,
+      "mainClears": [
+        949.0999999940395
+      ],
+      "draws": 195,
+      "mainDraws": 111,
+      "canvas": {
+        "width": 1062,
+        "height": 562,
+        "cssWidth": 1062,
+        "cssHeight": 562
+      },
+      "arena": {
+        "x": 37,
+        "y": 351.796875,
+        "width": 1062,
+        "height": 561.59375
+      },
+      "gpuRenderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+      "memory": {
+        "usedJSHeapSize": 37300000,
+        "totalJSHeapSize": 47400000,
+        "jsHeapSizeLimit": 3760000000
+      }
+    },
+    "animation": {
+      "sampleMs": 5012.899999976158,
+      "mainClears": 150,
+      "approximateMainFramesPerSecond": 29.922799178262764,
+      "mainDrawCalls": 16650,
+      "allDrawCalls": 22350,
+      "medianFrameIntervalMs": 33.39999997615814,
+      "p95FrameIntervalMs": 34.099999994039536
+    },
+    "teardown": {
+      "navigation": "React client navigation (no page reload)",
+      "markedWebglCanvases": 0,
+      "contextsCreated": 1,
+      "buffersCreated": 108,
+      "buffersDeleted": 108,
+      "texturesCreated": 35,
+      "texturesDeleted": 30,
+      "programsCreated": 24,
+      "programsDeleted": 16
+    },
+    "errors": [
+      "Access to fetch at 'https://sollish-realtime.sollish-web.workers.dev/v1/chat/history?after=0' from origin 'http://127.0.0.1:3001' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED"
+    ],
+    "note": "",
+    "limitations": [
+      "Local server, one page per launch, other system/browser workloads may coexist; production/dev depends on server command.",
+      "Software or desktop rendering only; not evidence of mobile hardware FPS.",
+      "Lightweight WebGL method wrappers add measurement overhead; framebuffer bindings are tracked without per-draw GPU queries.",
+      "Main framebuffer clear counts approximate rendered frames; not presented GPU frame completion.",
+      "Chromium JS heap is browser-reported and is not GPU or device total memory."
+    ]
+  },
+  "mobileFit": {
+    "schema": "sollish-boxing-mobile-projection-v1",
+    "status": "PASS",
+    "sourceSha256": "bd55416d264611b5f933956ddc67d50c023fe5531684d9e00d5d4f99afa9ea25",
+    "assetSha256": "abe7b575d5ce898d81954566eadfa4815e9e0d45df51c63df32b587f8cc33e66",
+    "samplesPerOutcome": 145,
+    "minimumMarginPx": 8,
+    "rows": [
+      {
+        "mode": "broadcast",
+        "width": 278,
+        "height": 405,
+        "dx": -0.035,
+        "dy": -0.025,
+        "leftPx": 16.52,
+        "rightPx": 11.71
+      },
+      {
+        "mode": "broadcast",
+        "width": 278,
+        "height": 405,
+        "dx": -0.035,
+        "dy": 0.025,
+        "leftPx": 16.59,
+        "rightPx": 11.8
+      },
+      {
+        "mode": "broadcast",
+        "width": 278,
+        "height": 405,
+        "dx": 0.035,
+        "dy": -0.025,
+        "leftPx": 16.77,
+        "rightPx": 11.81
+      },
+      {
+        "mode": "broadcast",
+        "width": 278,
+        "height": 405,
+        "dx": 0.035,
+        "dy": 0.025,
+        "leftPx": 16.85,
+        "rightPx": 11.9
+      },
+      {
+        "mode": "broadcast",
+        "width": 348,
+        "height": 405,
+        "dx": -0.035,
+        "dy": -0.025,
+        "leftPx": 21.56,
+        "rightPx": 14.13
+      },
+      {
+        "mode": "broadcast",
+        "width": 348,
+        "height": 405,
+        "dx": -0.035,
+        "dy": 0.025,
+        "leftPx": 21.69,
+        "rightPx": 14.27
+      },
+      {
+        "mode": "broadcast",
+        "width": 348,
+        "height": 405,
+        "dx": 0.035,
+        "dy": -0.025,
+        "leftPx": 21.98,
+        "rightPx": 14.25
+      },
+      {
+        "mode": "broadcast",
+        "width": 348,
+        "height": 405,
+        "dx": 0.035,
+        "dy": 0.025,
+        "leftPx": 22.1,
+        "rightPx": 14.39
+      },
+      {
+        "mode": "ringside",
+        "width": 278,
+        "height": 405,
+        "dx": -0.035,
+        "dy": -0.025,
+        "leftPx": 13.65,
+        "rightPx": 11.87
+      },
+      {
+        "mode": "ringside",
+        "width": 278,
+        "height": 405,
+        "dx": -0.035,
+        "dy": 0.025,
+        "leftPx": 13.71,
+        "rightPx": 11.92
+      },
+      {
+        "mode": "ringside",
+        "width": 278,
+        "height": 405,
+        "dx": 0.035,
+        "dy": -0.025,
+        "leftPx": 13.87,
+        "rightPx": 11.91
+      },
+      {
+        "mode": "ringside",
+        "width": 278,
+        "height": 405,
+        "dx": 0.035,
+        "dy": 0.025,
+        "leftPx": 13.92,
+        "rightPx": 11.97
+      },
+      {
+        "mode": "ringside",
+        "width": 348,
+        "height": 405,
+        "dx": -0.035,
+        "dy": -0.025,
+        "leftPx": 17.49,
+        "rightPx": 14.73
+      },
+      {
+        "mode": "ringside",
+        "width": 348,
+        "height": 405,
+        "dx": -0.035,
+        "dy": 0.025,
+        "leftPx": 17.58,
+        "rightPx": 14.82
+      },
+      {
+        "mode": "ringside",
+        "width": 348,
+        "height": 405,
+        "dx": 0.035,
+        "dy": -0.025,
+        "leftPx": 17.86,
+        "rightPx": 14.76
+      },
+      {
+        "mode": "ringside",
+        "width": 348,
+        "height": 405,
+        "dx": 0.035,
+        "dy": 0.025,
+        "leftPx": 17.95,
+        "rightPx": 14.86
+      }
+    ],
+    "scope": "Read-only CPU projection of actual skinned GLB mesh and glove/thumb geometry at 60Hz fall samples, both losers, both camera modes, 320/390 viewport inner widths and extreme camera sway. Excludes separate hair and cuff meshes (inside extremity bounds), browser rasterization, HTML overlays and dynamic camera switching. Root browser QA required."
+  },
+  "publicAssetCredentialComparison": {
+    "observedAt": "2026-10-01T21:20:34.456Z",
+    "scope": "Exact comparison of available local server credential values against all public Cloudflare assets. Does not claim generalized secret detection.",
+    "files": 46,
+    "privateValuesCompared": 3,
+    "matches": 0
+  },
+  "financialReadiness": {
+    "status": "BLOCKED",
+    "evidenceStatus": "CONSISTENT",
+    "gates": [
+      {
+        "id": "coinflip.same-proof-integration",
+        "status": "BLOCKED",
+        "reason": "Original input/key capture and both consumption paths are isolated experiments; root wagering integration and migration acceptance remain required."
+      },
+      {
+        "id": "coinflip.proof-availability",
+        "status": "BLOCKED",
+        "reason": "Retaining input/key verifies an available proof; it cannot produce a proof withheld by the oracle. No reroll or selective refund fallback."
+      },
+      {
+        "id": "coinflip.recovery-license",
+        "status": "BLOCKED",
+        "reason": "Pinned prover/verifier production-use clearance remains unresolved; local BSL experiment is not a production grant."
+      },
+      {
+        "id": "coinflip.live-provider",
+        "status": "BLOCKED",
+        "reason": "Local queue transplantation does not prove deployed source equivalence, live callback delivery, or a funded finalized payout."
+      },
+      {
+        "id": "crash.attestation",
+        "status": "BLOCKED",
+        "reason": "Independent approved measurement and quote-to-validator-to-program binding remain required."
+      },
+      {
+        "id": "crash.privacy",
+        "status": "BLOCKED",
+        "reason": "Full lifecycle/streaming/in-flight queue and independently bound VRF derivation observations remain incomplete."
+      },
+      {
+        "id": "crash.manual-cashout",
+        "status": "BLOCKED",
+        "reason": "Readonly probe commands are not timed cashout acceptance/order, concurrency or reconnect validation."
+      },
+      {
+        "id": "crash.payment-recovery",
+        "status": "BLOCKED",
+        "reason": "Exactly-once L1 game-payment rights and interruption recovery are not implemented by this probe."
+      },
+      {
+        "id": "launch.independent-review",
+        "status": "BLOCKED",
+        "reason": "A game/house audit, deployment-specific controls and operational launch approval are outside these experiment records."
+      }
+    ]
+  },
+  "limitations": [
+    "DEMO credits only; no VRF, SOL, wallet settlement or token entitlement in the shared arena.",
+    "256 local sockets and 64 concurrent unique wagers do not prove hosted/global/thousands-user capacity.",
+    "Published Cloudflare versions and asset/build hashes are observed; local source hashes detect drift, not independent attestation or audit.",
+    "Desktop Metal graphics measurements are not mobile-device or full GPU-memory guarantees.",
+    "No remote GitHub CI execution is claimed."
+  ]
+}

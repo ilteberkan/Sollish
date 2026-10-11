@@ -1,0 +1,24 @@
+[package]
+name = "vrf-recovery-experiment"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "vrf_recovery_experiment"
+
+[features]
+default = []
+no-entrypoint = []
+test-fixture = []
+
+[dependencies]
+solana-vrf-api.workspace = true
+solana-program = "=3.0.0"
+solana-curve25519 = "=3.0.0"
+bytemuck = "=1.25.2"
+borsh = "=1.8.1"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(target_os, values("solana"))', 'cfg(feature, values("custom-heap", "custom-panic"))'] }

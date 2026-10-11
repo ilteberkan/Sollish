@@ -1,0 +1,11 @@
+{
+ "variant": "shuffled",
+ "seed": 1,
+ "generations": 300,
+ "pairs": 24,
+ "sigma": 0.04,
+ "lr": 0.03,
+ "boutsPerCandidate": 4,
+ "thetaSha256": "9e3e2a69c696c344aa06720f145158d063a5ddf46a154c6c0f4db7bf45aec35a",
+ "seconds": 429
+}

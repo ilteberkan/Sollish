@@ -1,0 +1,143 @@
+{
+  "skill": "walk",
+  "inputFiles": [
+    {
+      "path": "data/policies/humanoid3d/humanoid3d_walk.ckpt.index",
+      "sha256": "e92d81f3142ff963398f7afc1a3d002cd98b4d670b8db0416df74d63c8e6bd96",
+      "bytes": 1288
+    },
+    {
+      "path": "data/policies/humanoid3d/humanoid3d_walk.ckpt.data-00000-of-00001",
+      "sha256": "9db666018be16a40e23e3c56bcbdeb6726b79dbc430341c18b9bf89ad849d5e5",
+      "bytes": 5900116
+    },
+    {
+      "path": "data/motions/humanoid3d_walk.txt",
+      "sha256": "32d082c3599bc40aac50b1afa196ff1e2cf3842bb40f0541ab088845f6328a41",
+      "bytes": 36185
+    }
+  ],
+  "reader": "tensorflow-checkpoint-reader0.2.2 with documented Python/NumPy compatibility aliases",
+  "tensorShapes": {
+    "agent/main/actor/0/dense/bias": [
+      1024
+    ],
+    "agent/main/actor/0/dense/kernel": [
+      197,
+      1024
+    ],
+    "agent/main/actor/1/dense/bias": [
+      512
+    ],
+    "agent/main/actor/1/dense/kernel": [
+      1024,
+      512
+    ],
+    "agent/main/actor/dense/bias": [
+      36
+    ],
+    "agent/main/actor/dense/kernel": [
+      512,
+      36
+    ],
+    "agent/main/critic/0/dense/bias": [
+      1024
+    ],
+    "agent/main/critic/0/dense/kernel": [
+      197,
+      1024
+    ],
+    "agent/main/critic/1/dense/bias": [
+      512
+    ],
+    "agent/main/critic/1/dense/kernel": [
+      1024,
+      512
+    ],
+    "agent/main/critic/dense/bias": [
+      1
+    ],
+    "agent/main/critic/dense/kernel": [
+      512,
+      1
+    ],
+    "agent/resource/a_norm/count": [
+      1
+    ],
+    "agent/resource/a_norm/count_ph": [
+      1
+    ],
+    "agent/resource/a_norm/mean": [
+      36
+    ],
+    "agent/resource/a_norm/mean_ph": [
+      36
+    ],
+    "agent/resource/a_norm/std": [
+      36
+    ],
+    "agent/resource/a_norm/std_ph": [
+      36
+    ],
+    "agent/resource/g_norm/count": [
+      1
+    ],
+    "agent/resource/g_norm/count_ph": [
+      1
+    ],
+    "agent/resource/g_norm/mean": [
+      0
+    ],
+    "agent/resource/g_norm/mean_ph": [
+      0
+    ],
+    "agent/resource/g_norm/std": [
+      0
+    ],
+    "agent/resource/g_norm/std_ph": [
+      0
+    ],
+    "agent/resource/s_norm/count": [
+      1
+    ],
+    "agent/resource/s_norm/count_ph": [
+      1
+    ],
+    "agent/resource/s_norm/mean": [
+      197
+    ],
+    "agent/resource/s_norm/mean_ph": [
+      197
+    ],
+    "agent/resource/s_norm/std": [
+      197
+    ],
+    "agent/resource/s_norm/std_ph": [
+      197
+    ],
+    "agent/resource/val_norm/count": [
+      1
+    ],
+    "agent/resource/val_norm/count_ph": [
+      1
+    ],
+    "agent/resource/val_norm/mean": [
+      1
+    ],
+    "agent/resource/val_norm/mean_ph": [
+      1
+    ],
+    "agent/resource/val_norm/std": [
+      1
+    ],
+    "agent/resource/val_norm/std_ph": [
+      1
+    ]
+  },
+  "outputSha256": "3e208b1973f4206500ea4ac1fba28784a62580417e95518eeda33c3ecfe81943",
+  "tensorCount": 36,
+  "finiteNumericOnly": true,
+  "graphExecuted": false,
+  "pickleUsed": false,
+  "tensorflowInstalled": false
+}

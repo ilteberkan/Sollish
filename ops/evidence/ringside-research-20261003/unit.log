@@ -1,0 +1,223 @@
+
+> sollish@0.1.0 test /Users/macmini/Desktop/Sollish
+> pnpm -r --if-present test
+
+Scope: 5 of 6 workspace projects
+packages/onchain test$ node --import tsx --test test/*.test.ts
+packages/protocol test$ node --import tsx --test test/*.test.ts
+packages/protocol test: ✔ replay is deterministic and independent of browser time, bets and frame rate (38.448125ms)
+packages/protocol test: ✔ 300 seeded bouts obey physical, event and mirrored-fighter invariants (452.763542ms)
+packages/protocol test: ✔ frozen model matches 20 Python recurrent-state/logit/action reference steps (9.1495ms)
+packages/protocol test: ✔ independent fighter states reset exactly and do not mutate input observations (2.79675ms)
+packages/protocol test: ✔ invalid inputs and state fail before changing recurrent memory (0.419416ms)
+packages/protocol test: ✔ bounded extreme and sustained observations stay finite with legal action vocabulary (290.13ms)
+packages/protocol test: ✔ contact sweep catches between-frame hits, tangent and initial overlap without inventing distant hits (0.478334ms)
+packages/protocol test: ✔ overlap projection separates coincident bodies symmetrically at integer coordinates (0.170625ms)
+packages/protocol test: ✔ replay is deterministic with fixed initial state and pinned learned-model identity (328.16575ms)
+packages/protocol test: ✔ every health decrement across sampled replays comes from same-tick recorded contact damage (344.996417ms)
+packages/protocol test: ✔ first clean hit and finish markets derive only from complete event history (341.676958ms)
+packages/protocol test: ✔ actual low-health contact freezes combat facts after stoppage while presentation may recover (15.30275ms)
+packages/protocol test: ✔ invalid external seed or initial fighter state fails before simulation (0.468583ms)
+packages/protocol test: ✔ v3 parser requires coherent bout score/id, bounded carried state and engine-specific duration (1.296042ms)
+packages/protocol test: ✔ open v3 frames cannot reveal future seed/result or smuggle private session data (0.240584ms)
+packages/protocol test: ✔ commitment binds engine, round, seed, bout, previous score and every initial-state field (0.298083ms)
+packages/protocol test: ✔ five-second admission is inclusive at opening and exclusive at the exact deadline (0.485208ms)
+packages/protocol test: ✔ strict commands reject client timestamps, chosen balances, invalid amounts and secrets (0.736458ms)
+packages/protocol test: ✔ gross payout includes principal, floors per bet and rejects unsafe integer domains (0.259334ms)
+packages/protocol test: ✔ correlated 100-bet outcome is fully reserved; balanced sides only reduce a future pooled model (0.340333ms)
+packages/protocol test: ✔ both shared outcomes conserve stakes plus reserved house collateral across skew and rounding (0.321916ms)
+packages/protocol test: ✔ global reservations share one bankroll without double counting, including rent and buffer (2.638625ms)
+packages/protocol test: ✔ server snapshots bind version, exact schedule and never carry an outcome before the cutoff (0.378959ms)
+packages/protocol test: ✔ private server messages validate ticket economics and reject arbitrary outcome/payment claims (0.507667ms)
+packages/protocol test: ✔ balanced pool deducts the explicit fee once and pays only from escrow (7.705875ms)
+packages/protocol test: ✔ skew changes the dividend and a correct favorite need not recover its principal (2.968792ms)
+packages/protocol test: ✔ largest fractional remainder wins before a larger stake or earlier ticket ID (0.293208ms)
+packages/protocol test: ✔ equal remainders use ASCII ID order and do not depend on input order (0.461833ms)
+packages/protocol test: ✔ void, empty and one-sided pools refund every stake without a fee (0.295125ms)
+packages/protocol test: ✔ generic three-outcome props refund when the actual outcome has no winning tickets (0.235125ms)
+packages/protocol test: ✔ duplicate tickets and outcomes fail even on a refund path (0.603ms)
+packages/protocol test: ✔ recorded escrow must match its own stakes exactly, including for voids (0.330292ms)
+packages/protocol test: ✔ u64 boundary remains exact despite a u128-sized intermediate and rejects aggregate overflow (0.247833ms)
+packages/protocol test: ✔ amounts, fees and identifiers fail closed without Number coercion or locale normalization (0.727375ms)
+packages/protocol test: ✔ pool fees floor only once and no house-funded minimum return is manufactured (0.190292ms)
+packages/protocol test: ✔ multiple prop pools preserve independent reserves and reject duplicate pool IDs (12.73075ms)
+packages/protocol test: ✔ input stays untouched and returned accounting cannot be mutated (2.454125ms)
+packages/protocol test: ✔ bounded adversarial enumeration conserves each pool and satisfies each winner's floor-or-ceiling quota (104.645042ms)
+packages/protocol test: ✔ strict public event allowlist excludes financial/secret fields and unknown versions (0.6975ms)
+packages/protocol test: ✔ chat commands cannot choose wallet/role and bytes/control characters are bounded (0.149ms)
+packages/protocol test: ✔ reconnect cursor distinguishes duplicate, exact next and missing interval (0.086042ms)
+packages/protocol test: ✔ v2 commands close the money/state/identity allowlist and separate markets (9.653416ms)
+packages/protocol test: ✔ snapshot binds schedule, engine, public pool sums, unique markets and admission-only tape (1.836375ms)
+packages/protocol test: ✔ result frames require pool conservation; audit has no private identities or unbounded history (0.855917ms)
+packages/protocol test: ✔ pooled payout may exceed fixed odds; refunds equal stake and private tickets are bounded (0.273833ms)
+packages/protocol test: ℹ tests 45
+packages/protocol test: ℹ suites 0
+packages/protocol test: ℹ pass 45
+packages/protocol test: ℹ fail 0
+packages/protocol test: ℹ cancelled 0
+packages/protocol test: ℹ skipped 0
+packages/protocol test: ℹ todo 0
+packages/protocol test: ℹ duration_ms 1244.307333
+packages/protocol test: Done
+packages/onchain test: ✔ first wallet bet atomically initializes both permanent accounts and signs only as player (26.09325ms)
+packages/onchain test: ✔ wrong network and disabled deployment cannot reach wallet or RPC (0.927709ms)
+packages/onchain test: ✔ untrusted account rejected: house owner (2.701ms)
+packages/onchain test: ✔ untrusted account rejected: house paused (1.8305ms)
+packages/onchain test: ✔ untrusted account rejected: wrong authority (2.03025ms)
+packages/onchain test: ✔ untrusted account rejected: wrong stored bump (2.356833ms)
+packages/onchain test: ✔ untrusted account rejected: wrong VRF queue owner (2.16425ms)
+packages/onchain test: ✔ untrusted account rejected: out of collateral (5.440084ms)
+packages/onchain test: ✔ untrusted account rejected: unsafe RPC lamports (3.347708ms)
+packages/onchain test: ✔ untrusted account rejected: wrong discriminator (2.109708ms)
+packages/onchain test: ✔ untrusted account rejected: noncanonical bool (1.861709ms)
+packages/onchain test: ✔ strict next nonce above JavaScript safe integers retains exact u64 precision (7.54575ms)
+packages/onchain test: ✔ invalid wagers and failed simulation cannot prompt a wallet (7.79225ms)
+packages/onchain test: ✔ wallet sends once; returned confirmation means admission, never payout (8.229042ms)
+packages/onchain test: ✔ RPC loss after wallet submission returns trackable uncertainty without retry (5.62675ms)
+packages/onchain test: ✔ wallet bridge failure preserves the exact bet nonce for recovery without a signature (4.667083ms)
+packages/onchain test: ✔ public tracking is persisted before any wallet call and storage failure fails closed (9.605875ms)
+packages/onchain test: ✔ confirmed unrelated signature does not masquerade as the prepared bet (6.434583ms)
+packages/onchain test: ✔ missing receipts remain unknown and finalized is the default read commitment (1.655417ms)
+packages/onchain test: ✔ keeper cannot set payout or recipient; instruction is precisely the generated account order (1.188292ms)
+packages/onchain test: ✔ fixed account decoding rejects trailing bytes and truncation (0.473917ms)
+packages/onchain test: ✔ finalized outcome decoding accepts exactly the contract win/loss payout relation (11.32125ms)
+packages/onchain test: ✔ inconsistent owned bet snapshots cannot be presented as valid payouts (12.886417ms)
+packages/onchain test: ✔ confirmed admission requires explicit success metadata and matching returned signature (45.657875ms)
+packages/onchain test: ✔ missing and malformed simulation success never opens the Coinflip wallet (37.484833ms)
+packages/onchain test: ✔ checked-in client schema preserves nested admission/claim ABI order and signer boundaries (1.042416ms)
+packages/onchain test: ✔ staking raw Rust layouts decode and projected rewards use exact integer accumulator while house paused (18.525708ms)
+packages/onchain test: ✔ hourly quote is qualified-volume pro-rata, uses completed UTC epoch, and is claimable before first seal (25.120834ms)
+packages/onchain test: ✔ stake/unstake/claim builders bind wallet ATA and nested reward transfer accounts (63.274333ms)
+packages/onchain test: ✔ missing position initializes only on stake; missing wallet ATA is idempotently created for exits (44.05375ms)
+packages/onchain test: ✔ official ATA idempotent ABI fixes wallet, mint, token program and six account order (0.845041ms)
+packages/onchain test: ✔ reject wrong genesis, disabled deployment, noncanonical IDs and mutable or unsupported mint (60.722375ms)
+packages/onchain test: ✔ foreign pools/positions/receipt links, underfunded vaults and redirected token owners fail closed (61.5025ms)
+packages/onchain test: ✔ Token-2022 permits inert metadata and immutable owner, rejects fees/delegates/frozen state (14.714958ms)
+packages/onchain test: ✔ zero, overflow, insufficient balances/stake and expired admission reject before wallet (69.265625ms)
+packages/onchain test: ✔ missing hourly receipt is not paid evidence and uncompleted epoch cannot be claimed (25.004417ms)
+packages/onchain test: ✔ one wallet call, durable ticket precedes broadcast, finalized message is checked (27.847917ms)
+packages/onchain test: ✔ wallet bridge failure and RPC uncertainty retain exact public ticket and never rebroadcast (39.391708ms)
+packages/onchain test: ✔ tracking rejects tampered action/amount/root/wallet and unrelated transactions; no signature remains unknown (35.880833ms)
+packages/onchain test: ✔ rewarded coinflip requires explicit opt-in and funded active canonical phase (32.482375ms)
+packages/onchain test: ✔ stale RPC snapshots, epoch rollover and simulation from an older bank fail before signing (34.946167ms)
+packages/onchain test: ✔ malformed, duplicate and value-changing Token-2022 TLVs cannot pass the allowlist (30.142041ms)
+packages/onchain test: ✔ tracking never treats confirmed-only or missing transaction history as finalized payment (20.027958ms)
+packages/onchain test: ✔ finalized proof requires explicit consistent metadata and returned first signature binding (114.364875ms)
+packages/onchain test: ✔ missing and malformed simulation success never opens the incentives wallet (60.931208ms)
+packages/onchain test: ℹ tests 45
+packages/onchain test: ℹ suites 0
+packages/onchain test: ℹ pass 45
+packages/onchain test: ℹ fail 0
+packages/onchain test: ℹ cancelled 0
+packages/onchain test: ℹ skipped 0
+packages/onchain test: ℹ todo 0
+packages/onchain test: ℹ duration_ms 2138.864333
+packages/onchain test: Done
+apps/worker test$ node --import tsx --test test/*.test.ts
+apps/realtime test$ node --import tsx --test test/*.test.ts
+apps/web test$ tsx --test tests/*.test.ts
+apps/realtime test: ✔ OPEN is exactly five seconds; exact cutoff and stale alarm cannot extend admission (0.775958ms)
+apps/realtime test: ✔ result cannot be created before durable caller transition to CLOSED; closed never reopens after clock regression (2.21ms)
+apps/realtime test: ✔ duplicate UUID is a receipt retry after cutoff, while changed payload conflicts without another debit (0.14275ms)
+apps/realtime test: ✔ concurrent commands serialize against a cloned committed ledger; one ticket, no double debit (0.166167ms)
+apps/realtime test: ✔ a rejected persistence step does not mutate pure caller state or yield a successful acknowledgement (0.336792ms)
+apps/realtime test: ✔ wrong round, amount, empty balance, expiry and invalid side are rejected (0.166459ms)
+apps/realtime test: ✔ disconnect does not settle/refund; completion pays gross once; loss remains debited (0.105375ms)
+apps/realtime test: ✔ exact origin and auth endpoint scheme configuration is fail closed (0.98825ms)
+apps/realtime test: ✔ service publisher binds exact body, freshness and request ID (122.752458ms)
+apps/realtime test: ✔ untrusted RPC errors never escape as raw provider data (44.878375ms)
+apps/realtime test: ✔ chunked publisher body cancels immediately at byte limit; invalid UTF8 rejected (15.594ms)
+apps/web test: ✔ two equal uint32 ranges select KOR or AYAZ without a floating point draw (3.915125ms)
+apps/web test: ✔ winning and losing settlements conserve integer demo cents with a 1.96x gross return (0.388333ms)
+apps/web test: ✔ double start and repeated deadline callbacks cannot duplicate settlement (0.172709ms)
+apps/web test: ✔ round input is copied and locked against selection, amount or visual control changes (0.226625ms)
+apps/web test: ✔ leaving before the deadline refunds once; late hidden-tab completion preserves the fixed outcome (0.92525ms)
+apps/web test: ✔ background suspension and reduced-motion timing share the same exactly-once deadline (0.258333ms)
+apps/realtime test: ℹ tests 11
+apps/realtime test: ℹ suites 0
+apps/realtime test: ℹ pass 11
+apps/realtime test: ℹ fail 0
+apps/realtime test: ℹ cancelled 0
+apps/realtime test: ℹ skipped 0
+apps/realtime test: ℹ todo 0
+apps/realtime test: ℹ duration_ms 455.869375
+apps/realtime test: Done
+apps/web test: ✔ chat signing rejects a disconnected or same-address reconnected wallet before prompting (1.055334ms)
+apps/web test: ✔ late SIWS signature cannot reach auth after disconnect, same-address reconnect, or unmount (0.255125ms)
+apps/web test: ✔ unchanged explicit chat login passes its original signature; malformed results fail closed (0.409375ms)
+apps/web test: ✔ chat requires gap recovery and never advances on a malformed event (0.771084ms)
+apps/web test: ✔ snapshot validates sequence, message identity and bounded records (0.179417ms)
+apps/web test: ✔ API URL never permits token-bearing URLs or insecure remote transport (0.249916ms)
+apps/web test: ✔ every published self-play trace has its recorded content hash, identity and bounded anatomy (245.931709ms)
+apps/web test: ✔ research parser rejects a live identity and malformed time or body data (73.600709ms)
+apps/web test: ✔ artifact loader rejects an unpinned path before any network access (0.56075ms)
+apps/web test: ✔ artifact loader verifies bytes and digest; corrupted or truncated streams fail (45.724584ms)
+apps/web test: ✔ demo admission enforces bounded integer stake and one pending reservation (1.095125ms)
+apps/web test: ✔ entropy failure occurs before debiting, and reuse cannot create a new reservation (0.385625ms)
+apps/web test: ✔ forged settlement cannot consume the pending reservation or inflate credits (0.446542ms)
+apps/web test: ✔ old completion cannot settle a newer round; local cancellation restores exactly its stake (0.170791ms)
+apps/web test: ✔ payout uses exact intermediate integers and rejects overflow; invalid clock/point is rejected (0.350833ms)
+apps/web test: ✔ demo amounts reject precision loss, exponents, signed values, overflow and limits (1.168333ms)
+apps/web test: ✔ cashout is evaluated at current monotonic time, including missed animation frames (0.91725ms)
+apps/web test: ✔ demo randomness has explicit bounds and does not force a win (0.338792ms)
+apps/web test: ✔ local payout rounds down to demo cents (0.212042ms)
+apps/web test: ✔ public incentive tickets are bound to account, configuration and action family (4.707042ms)
+apps/web test: ✔ malformed and unbounded persisted tickets never enable a payment label (0.319542ms)
+apps/worker test: ✔ exact admission/settlement ABI and canonical own bet bind facts (44.395708ms)
+apps/worker test: ✔ failed transaction, above-finalized head and truncated stack cannot become facts (1.918959ms)
+apps/worker test: ✔ spoofed text and other program event are ignored; failed CPI rolls back its event (1.947708ms)
+apps/worker test: ✔ v0 loaded key resolution and canonical base64 reject malformed input (1.221167ms)
+apps/worker test: ✔ deployment verifies devnet, loader-derived ProgramData and pinned deployed bytes (1.005583ms)
+apps/worker test: ✔ missing credentials stay offline; privileged DB identity and non-TLS endpoints rejected (2.05275ms)
+apps/worker test: ✔ actual client instruction ordering retains outer indexes across logless ComputeBudget and precompiles (1.122583ms)
+apps/web test: ✔ SOL parsing uses integer lamports without floating-point truncation (129.785417ms)
+apps/web test: ✔ receipt tracking survives serialization with exact u64 and wallet identity (0.63575ms)
+apps/web test: ✔ wallet adapter rejects unsupported devnet before invoking wallet methods (0.161ms)
+apps/web test: ✔ review is bound to the connection instance, including same-address reconnects (0.232709ms)
+apps/web test: ✔ disconnect or navigation during asynchronous prepare prevents ticket admission and wallet invocation (0.232667ms)
+apps/worker test: ✔ actual LiteSVM SBF first/repeat wallet and settlement fixtures decode; optional native logs preserve outer index (19.084541ms)
+apps/web test: ✔ browser build permits only publishable and legacy anon Supabase keys (10.172917ms)
+apps/web test: ✔ token units preserve six decimals and reject overprecision and u64 overflow (119.03225ms)
+apps/web test: ✔ hourly token periods are explicit UTC epochs, not a rolling hour (18.754959ms)
+apps/web test: ✔ staking access is independent from the Coinflip admission switch (0.328667ms)
+apps/web test: ✔ no preference never silently selects even an already-authorized wallet (5.772667ms)
+apps/web test: ✔ reload restores only the explicit selection, silently and without retaining any account or signature (0.795208ms)
+apps/web test: ✔ late registration restores selected wallet once; duplicate labels require explicit choice (0.801042ms)
+apps/web test: ✔ disconnect immediately forgets preference despite extension failure and does not restore on reload (1.855292ms)
+apps/web test: ✔ disconnect or a newer selection invalidates an in-flight connect response (0.94375ms)
+apps/web test: ✔ account events rotate connection identity; account loss forgets selection; unregister invalidates connection (0.475041ms)
+apps/web test: ✔ disposed controller cannot publish a late result or subscribe to events (0.261709ms)
+apps/web test: ✔ silent rejection never falls back to prompting; explicit retry still works (1.578583ms)
+apps/web test: ✔ account decoder rejects mismatched address, malformed key and non-Solana chains (0.155875ms)
+apps/web test: ℹ tests 45
+apps/web test: ℹ suites 0
+apps/web test: ℹ pass 45
+apps/web test: ℹ fail 0
+apps/web test: ℹ cancelled 0
+apps/web test: ℹ skipped 0
+apps/web test: ℹ todo 0
+apps/web test: ℹ duration_ms 728.966375
+apps/web test: Done
+apps/worker test: ✔ actual worker process without credentials starts only localhost health and remains unavailable (2746.524209ms)
+apps/worker test: ✔ ESM source entrypoint follows a release symlink while normal imports remain inert (2389.753791ms)
+apps/worker test: ✔ keeper disabled by default; explicit integer fee budgets required (0.881125ms)
+apps/worker test: ✔ fee key mode/ownership and private journal lock fail closed (11.563834ms)
+apps/worker test: ✔ one signed canonical settle, no transfer/close, concurrent tick and repeated scan cannot resend (69.2905ms)
+apps/worker test: ✔ unknown send outcome is durably tracked across restart and never automatically retried (40.731875ms)
+apps/worker test: ✔ mainnet, privileged fee keys, bad simulation, excess fees and minimum balance never broadcast (73.337833ms)
+apps/worker test: ✔ candidate cannot redirect player, shard or deterministic bet address (11.464333ms)
+apps/worker test: ✔ finalized outcome tracking and lifetime reservation persist rather than refunding failed fees (59.103166ms)
+apps/worker test: ✔ two different bets across ticks cannot spend pending fees below the minimum balance (49.908125ms)
+apps/worker test: ✔ finalized fees leave the balance reserve only with a persisted minimum bank slot (212.7805ms)
+apps/worker test: ✔ legacy terminal attempts without a known finalized slot remain conservatively reserved (37.417291ms)
+apps/worker test: ✔ missing or malformed simulation errors never authorize journal reservation or send (95.847416ms)
+apps/worker test: ✔ malformed finalized outcome or slot cannot release pending fee reservations (229.290209ms)
+apps/worker test: ℹ tests 22
+apps/worker test: ℹ suites 0
+apps/worker test: ℹ pass 22
+apps/worker test: ℹ fail 0
+apps/worker test: ℹ cancelled 0
+apps/worker test: ℹ skipped 0
+apps/worker test: ℹ todo 0
+apps/worker test: ℹ duration_ms 5253.778375
+apps/worker test: Done

@@ -1,0 +1,55 @@
+{
+  "status": "TARGET_NOT_MET",
+  "startedAt": "2026-10-03T03:04:58.014Z",
+  "finishedAt": "2026-10-03T03:06:37.583Z",
+  "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n+   118,\n+   118,\n+   118,\n+   32,\n+   0\n-   224,\n-   224,\n-   224,\n-   224,\n-   224\n  ]\n",
+  "hardware": {
+    "node": "v24.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2",
+    "logicalCpus": 8,
+    "totalMemoryBytes": 8589934592,
+    "wrangler": "4.145.0",
+    "runtime": "local workerd, real SQLite and WebSockets; shared development host"
+  },
+  "sourceHashes": {
+    "apps/realtime/src/ringside-arena.ts": "8a8c2a14130035a1b1616d58547d86f0aec4f4fc8c7d8574cb4d83adf5498e21",
+    "packages/protocol/src/ringside.ts": "17b86d0dfc7467c7d31d2cb0fafd373fe2e65356ca296d5fafb8cf2067b5bf12",
+    "packages/protocol/src/combat-v3.ts": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+    "packages/protocol/src/connectome-policy.ts": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+    "packages/protocol/src/pari-mutuel.ts": "75527f5e04edd319e837708ce81dae33e662d1fd8005710df14a3efbf933a3c6",
+    "pnpm-lock.yaml": "7744f516a98b94385a1cc45fde1e482d0f4b9c0907a00f1200e8b07fe61cf92d",
+    "experiments/load/runtime.mjs": "e38ac58cb33bf8226e926d48b0948a523b8e7416964276e086ac009d902fd1a0",
+    "experiments/load/contact-rooms.mjs": "992a615ea856bde6f9b8821eefc1b59432e54658f465a32e02828077e94d33e1"
+  },
+  "metrics": {
+    "frames": 224292,
+    "bytes": 562672251,
+    "invalidFrames": 0,
+    "unexpectedClose": 0,
+    "peakClientRss": 296239104,
+    "peakRuntimeTreeRss": 1118879744,
+    "guard": null,
+    "clientEventLoopDelayMs": {
+      "p95": 22,
+      "max": 216
+    },
+    "clientCpuMs": {
+      "user": 9076,
+      "system": 6840
+    }
+  },
+  "clientsConnected": 1120,
+  "acceptedPerRoom": [
+    118,
+    118,
+    118,
+    32,
+    0
+  ],
+  "errorCodes": [
+    "ROUND_CLOSED"
+  ],
+  "scope": "Failed bounded local target retained; no throughput claim."
+}

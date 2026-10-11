@@ -1,0 +1,9 @@
+{
+  "experiment": "energy-controller-4-audit",
+  "declaredBeforeFinalEvaluation": true,
+  "purpose": "Report remaining single-action exploits independently; this audit never selects a checkpoint or modifies the policy.",
+  "comparators": ["always-jab", "always-cross", "always-hook", "always-kick"],
+  "partition": "Same once-frozen energy-final seed/opponent bank for paired comparisons after model selection",
+  "additionalDiversityGate": {"meanDominantAttackShareMaximum": 0.7},
+  "limits": "A higher score than a constant policy is not general intelligence. Original gates stay unchanged. Audit failure is retained, not used to tune this run."
+}

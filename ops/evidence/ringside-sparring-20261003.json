@@ -1,0 +1,175 @@
+{
+  "schema": "sollish-sparring-release-v1",
+  "at": "2026-10-03T14:03:07.475946+00:00",
+  "status": "DEPLOYED_PRACTICE_VERIFIED",
+  "scope": "Non-monetary, input-driven practice. Not LIVE economics promotion, learned brain, AA certification, mesh physics, physical-phone acceptance, mainnet readiness or remote GitHub CI.",
+  "sourceIdentity": "Working-directory SHA256; no committed baseline",
+  "buildId": "yTTEY4MG5gmewPMEL9MsM",
+  "sourceSha256": {
+    "packages/protocol/src/combat-sparring.ts": "5396da655410e0932a4b1a78cd13ccaa2e6a2fed097005cce098679177558dd1",
+    "packages/protocol/src/index.ts": "3b637b53ace4293f536200a753863a8107cbc76b245a03e4c820246bce9efbef",
+    "packages/protocol/test/combat-sparring.test.ts": "6707c6edb67f3849c919581a1a6e24ef0410f0c000b5c57678cbcf75c733f90a",
+    "apps/web/components/boxing-sparring.tsx": "63ae93da877361b06baa8b891d4b8d10c486c83b0f13a543b798ff386c301c32",
+    "apps/web/components/boxing-sparring-scene.tsx": "1f4a91be9fbd7612a06a538183d9d5d1d47f819ca21a5fb79858f4dbaa9f469d",
+    "apps/web/components/boxing-sparring-athletes.ts": "f1faf4565ebeb82538551c22df5ba11fae8c56395b86f2eaf0978c318dc372de",
+    "apps/web/components/boxing-sparring.module.css": "7137cea38d585434d3fd3870beb7fce0b38ff0251e17608130bac3d283a8dfab",
+    "apps/web/components/boxing-scene-athletes.ts": "2b76892ead23215d8ff21fef0be3c1662422d165c3e3e4e159d347bcf284b80e",
+    "apps/web/components/ringside-research.tsx": "ab457872801f4128557e797d068d075da2181b812e15a4e0e77f7733044d8e8c",
+    "apps/web/components/shell.tsx": "3669021911dba7889bb802e12b8c2c7bb0acbc74b6ce7bdacf013ef7942217f0",
+    "apps/web/lib/sparring-controls.ts": "47b2e3a58d392209316e6d82edb022b7d0a118625c23a7a51b55e4d587d86668",
+    "apps/web/lib/sparring-camera.ts": "69df3c65b252a3a2aca2ea4a4d76ee559b9ebad800d597f629be596fef9a40b8",
+    "apps/web/app/lab/ringside/play/page.tsx": "218231d5d014ecb4283d104c156c3de045faf0137791c70297e787635dc320d5",
+    "apps/web/app/games/page.tsx": "a2336cfd3a1f4fb981be09f226c299b67fe27cefb5dec19a07c4b5bd7a488910",
+    "apps/web/app/globals.css": "9b3c75e2954d9d9f1d4066dc1aeec438fb77d9fc1de265d37c0f766e5be20d01",
+    "apps/web/tests/browser/ringside-sparring.spec.ts": "98700c0d5ad0a02296e57afee13b2400fdc9c4470b8327a933f0e8974606448f",
+    "apps/web/tests/sparring-camera.test.ts": "4bc3caff146153b46ee7e8e9f413332ac1fb6191a1d0cb3bf505eeff856db9b6",
+    "apps/web/tests/sparring-controls.test.ts": "bbd27844fcfdb6b94112c200c2892dfc6efc134b7f681c404c6b5c5b155c5c9a",
+    "apps/web/public/models/boxing/combat-motion-v1.glb": "8ab9688e12a625ed3d4ec3c7ab752f4f465d90b33d3eef1580b276bc1e3cff39",
+    "apps/web/public/models/boxing/athlete-fightkit-v1.glb": "3acefb55468c8201e7ad5376e7e04103f1fab0d56359b94b1b35d813fd54a69f"
+  },
+  "frozenLiveSourcesMatchPriorRelease": {
+    "packages/protocol/src/combat-v3.ts": true,
+    "packages/protocol/src/connectome-policy.ts": true,
+    "packages/protocol/src/ringside.ts": true,
+    "packages/protocol/src/pari-mutuel.ts": true,
+    "apps/realtime/src/ringside-arena.ts": true,
+    "apps/realtime/src/index.ts": true
+  },
+  "localChecks": {
+    "webUnit": {
+      "passed": 76,
+      "log": "ringside-sparring-20261003/web-unit.log"
+    },
+    "protocolUnit": {
+      "passed": 61,
+      "log": "ringside-sparring-20261003/protocol-unit.log"
+    },
+    "realRig": {
+      "passed": 10,
+      "evidence": "ringside-sparring-20261003/rig/evidence.json"
+    },
+    "assetPython": {
+      "passed": 9,
+      "log": "ringside-sparring-20261003/asset-python.log"
+    },
+    "assetThree": {
+      "passed": 3,
+      "log": "ringside-sparring-20261003/asset-node.log"
+    },
+    "typecheck": {
+      "status": "PASS",
+      "log": "ringside-sparring-20261003/typecheck.log"
+    },
+    "openNextBuild": {
+      "status": "PASS",
+      "log": "ringside-sparring-20261003/build.log"
+    },
+    "browser": {
+      "passed": 33,
+      "failed": 0,
+      "runtime": "Actual local OpenNext Cloudflare/workerd production bundle; Playwright Chromium, one worker",
+      "log": "ringside-sparring-20261003/browser-production.log",
+      "limits": "LIVE HTTP/WebSocket and wallet adapters are fixtures in those pre-existing regression tests; no remote settlement or physical phone proof.",
+      "newSparringTests": 6,
+      "regressions": 27,
+      "buildId": "5BsK4Lr38e6HYczgYrth8",
+      "scope": "Pre-cutaway full regression; final renderer camera-only change separately rechecked in browserFinalSparring"
+    },
+    "browserFinalSparring": {
+      "passed": 6,
+      "failed": 0,
+      "buildId": "yTTEY4MG5gmewPMEL9MsM",
+      "runtime": "Actual local OpenNext/workerd production build; Playwright Chromium",
+      "log": "ringside-sparring-20261003/browser-final-sparring.log"
+    }
+  },
+  "launchReadiness": {
+    "status": "BLOCKED",
+    "productionApproved": false,
+    "evidenceStatus": "CONSISTENT",
+    "report": "ringside-sparring-20261003/launch-readiness.json"
+  },
+  "referenceObservations": {
+    "fightArena": "Entered tutorial hall, pause menu observed; reliable sustained keyboard/mouse combat could not be verified through nested Unity iframe.",
+    "punchers": "Animated 3D menu observed; FIGHT native coordinate click did not begin a match.",
+    "claim": "Not full playthroughs or 1:1 physics equivalence."
+  },
+  "independentSourceReview": {
+    "blockersFound": 0,
+    "scope": "Source review only; no independent financial audit or mainnet certification",
+    "findingsResolved": [
+      "Input release across focus",
+      "Paused camera pointer interception",
+      "Static-scene rendering cost",
+      "Catch-up impact presentation",
+      "Keyboard hold buttons",
+      "Mobile corner camera fit",
+      "Paused HUD snapshot",
+      "Fullscreen API availability"
+    ]
+  },
+  "manualLocalObservations": {
+    "buildId": "swcZK_F_DBL3e--iASKMX",
+    "scope": "Before final CSS height adjustment; actual local IAB WebGL and input observation",
+    "observed": [
+      "Human jab→cross combination: 2 hits, opponent health866, own energy835",
+      "Roundhouse command entered startup",
+      "Bot-vs-bot reached KO and explicit terminal winner",
+      "No JavaScript errors in local probe"
+    ],
+    "screenshot": "ringside-sparring-20261003/desktop-production.jpg",
+    "activeFps": "INCONCLUSIVE; intervals included terminal idle"
+  },
+  "manualFinalLocalObservations": {
+    "buildId": "yTTEY4MG5gmewPMEL9MsM",
+    "scope": "CUA actual WebGL inspection",
+    "observed": [
+      "Overhead camera no longer has ceiling beams between camera and fighters",
+      "Chase camera renders both fighters",
+      "No JavaScript errors in local final camera probe"
+    ],
+    "screenshot": "ringside-sparring-20261003/final-overhead-clear.jpg"
+  },
+  "deployment": {
+    "url": "https://sollish-web-devnet.sollish-web.workers.dev/lab/ringside/play",
+    "version": "93645ad3-1955-4f7d-b947-c495d6b604f6",
+    "deploymentId": "bb9914b8-c62e-4679-a97a-32778b649c77",
+    "trafficPercent": 100,
+    "mcpEvidence": "ringside-sparring-20261003/cloudflare-deployments.json",
+    "cliLog": "ringside-sparring-20261003/deploy.log",
+    "realtimeUnchanged": true
+  },
+  "manualFinalHostedObservations": {
+    "buildId": "yTTEY4MG5gmewPMEL9MsM",
+    "runtime": "Actual IAB WebGL, 1280x720 desktop viewport",
+    "observed": [
+      "Pinned motion asset loaded and both full-body rigs rendered",
+      "Bot combat progressed; health, stamina, hit count, clock and events updated",
+      "Pause/resume worked",
+      "Overhead ceiling cutaway and broadcast camera observed",
+      "No horizontal document overflow",
+      "No JavaScript error logs"
+    ],
+    "screenshot": "ringside-sparring-20261003/hosted-final.jpg",
+    "renderSnapshot": {
+      "renderer": "webgl-sparring",
+      "three": "r186",
+      "drawCalls": 158,
+      "triangles": 120336
+    },
+    "limits": "Static render snapshot is not an active FPS measurement. Hosted viewport was 1280x720; 390px acceptance belongs to automated local browser tests."
+  },
+  "remainingAcceptanceLimits": [
+    "No completed reference-game combat playthrough or 1:1 equivalence proof",
+    "No AA/mocap character certification",
+    "Simplified swept hurt volumes and bounded IK, not full mesh/body physics",
+    "New practice bots are scripted; previous learned policy/motor experiments are not integrated",
+    "Active combat FPS measurement inconclusive",
+    "Physical phone and thousands-user capacity not proven by this local mode",
+    "All existing real-asset protocol/oracle/privacy/payment gates remain closed"
+  ],
+  "verificationLimitations": {
+    "directCliHttp": "Public URL probe returned 403; no success claimed; browser and MCP used for final hosted verification",
+    "githubCi": "Not run or claimed"
+  }
+}

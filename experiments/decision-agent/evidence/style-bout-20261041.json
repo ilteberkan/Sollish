@@ -1,0 +1,498 @@
+{
+ "observedAt": "2026-10-04T22:36:33.499Z",
+ "scope": "local dev runtime http://127.0.0.1:3000 (next dev, Turbopack), headless Chromium with GPU WebGL (ANGLE Metal); not a production build, not hosted",
+ "page": "http://127.0.0.1:3000/lab/ringside/play?seed=20261041",
+ "mode": "both corners Sinek beyni v2 · Jev (canlı)",
+ "viewport": [
+  1280,
+  720
+ ],
+ "finished": true,
+ "finalTick": 9060,
+ "neuro2Model": {
+  "theta": "f1726c7bde980214c3fa7b9017f6d49eadbfedac9b58c0cce2437cc65e89baa2",
+  "provisional": true
+ },
+ "realProviderCalls": 18,
+ "browserPosts": [
+  {
+   "atS": 4.2,
+   "status": 200,
+   "endToEndMs": 1503,
+   "source": "jev",
+   "code": null,
+   "style": "pressure",
+   "confidence": 0.36
+  },
+  {
+   "atS": 4.3,
+   "status": 200,
+   "endToEndMs": 1524,
+   "source": "jev",
+   "code": null,
+   "style": "pressure",
+   "confidence": 0.31
+  },
+  {
+   "atS": 20,
+   "status": 200,
+   "endToEndMs": 602,
+   "source": "jev",
+   "code": null,
+   "style": "cautious",
+   "confidence": 0.94
+  },
+  {
+   "atS": 20,
+   "status": 200,
+   "endToEndMs": 603,
+   "source": "jev",
+   "code": null,
+   "style": "cautious",
+   "confidence": 0.17
+  },
+  {
+   "atS": 34.8,
+   "status": 200,
+   "endToEndMs": 456,
+   "source": "jev",
+   "code": null,
+   "style": "outboxer",
+   "confidence": 0.21
+  },
+  {
+   "atS": 34.8,
+   "status": 200,
+   "endToEndMs": 464,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.46
+  },
+  {
+   "atS": 50,
+   "status": 200,
+   "endToEndMs": 558,
+   "source": "jev",
+   "code": null,
+   "style": "cautious",
+   "confidence": 0.34
+  },
+  {
+   "atS": 50,
+   "status": 200,
+   "endToEndMs": 566,
+   "source": "jev",
+   "code": null,
+   "style": "pressure",
+   "confidence": 0.26
+  },
+  {
+   "atS": 72.8,
+   "status": 200,
+   "endToEndMs": 469,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.38
+  },
+  {
+   "atS": 72.8,
+   "status": 200,
+   "endToEndMs": 465,
+   "source": "jev",
+   "code": null,
+   "style": "cautious",
+   "confidence": 0.85
+  },
+  {
+   "atS": 88,
+   "status": 200,
+   "endToEndMs": 638,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.35
+  },
+  {
+   "atS": 88,
+   "status": 200,
+   "endToEndMs": 649,
+   "source": "jev",
+   "code": null,
+   "style": "pressure",
+   "confidence": 0.51
+  },
+  {
+   "atS": 102.7,
+   "status": 200,
+   "endToEndMs": 407,
+   "source": "jev",
+   "code": null,
+   "style": "outboxer",
+   "confidence": 0.11
+  },
+  {
+   "atS": 102.8,
+   "status": 200,
+   "endToEndMs": 446,
+   "source": "jev",
+   "code": null,
+   "style": "cautious",
+   "confidence": 0.7
+  },
+  {
+   "atS": 125.9,
+   "status": 200,
+   "endToEndMs": 563,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.47
+  },
+  {
+   "atS": 125.9,
+   "status": 200,
+   "endToEndMs": 584,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.4
+  },
+  {
+   "atS": 141.2,
+   "status": 200,
+   "endToEndMs": 742,
+   "source": "jev",
+   "code": null,
+   "style": "counter",
+   "confidence": 0.76
+  },
+  {
+   "atS": 141.2,
+   "status": 200,
+   "endToEndMs": 733,
+   "source": "jev",
+   "code": null,
+   "style": "outboxer",
+   "confidence": 0.4
+  }
+ ],
+ "providerAttempts": [
+  {
+   "code": "OK",
+   "ms": 815,
+   "inputTokens": 852,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 1221,
+   "inputTokens": 852,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 499,
+   "inputTokens": 849,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 493,
+   "inputTokens": 849,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 392,
+   "inputTokens": 849,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 398,
+   "inputTokens": 849,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 356,
+   "inputTokens": 850,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 395,
+   "inputTokens": 850,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 407,
+   "inputTokens": 849,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 392,
+   "inputTokens": 849,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 542,
+   "inputTokens": 850,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 519,
+   "inputTokens": 850,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 347,
+   "inputTokens": 851,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 375,
+   "inputTokens": 851,
+   "outputTokens": 67
+  },
+  {
+   "code": "OK",
+   "ms": 376,
+   "inputTokens": 852,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 505,
+   "inputTokens": 852,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 484,
+   "inputTokens": 852,
+   "outputTokens": 65
+  },
+  {
+   "code": "OK",
+   "ms": 534,
+   "inputTokens": 852,
+   "outputTokens": 67
+  }
+ ],
+ "waitingSamples": 2,
+ "pageErrors": [],
+ "log": {
+  "version": "style-log-1",
+  "engine": "sparring-5",
+  "seed": 20261043,
+  "bout": {
+   "durationSeconds": 45,
+   "rounds": 3,
+   "breakSeconds": 8
+  },
+  "corners": [
+   {
+    "controller": "neuro-2@0.8",
+    "model": "f1726c7bde980214c3fa7b9017f6d49eadbfedac9b58c0cce2437cc65e89baa2",
+    "strategist": "jev"
+   },
+   {
+    "controller": "neuro-2@0.8",
+    "model": "f1726c7bde980214c3fa7b9017f6d49eadbfedac9b58c0cce2437cc65e89baa2",
+    "strategist": "jev"
+   }
+  ],
+  "decisions": [
+   {
+    "side": 0,
+    "requestTick": 0,
+    "applyTick": 0,
+    "style": "pressure",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.36,
+    "obsHash": "3c07d098173ff5c20b2f67acfa85836df08dae353c40df7bd4d93f5da1a3f734"
+   },
+   {
+    "side": 1,
+    "requestTick": 0,
+    "applyTick": 0,
+    "style": "pressure",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.31,
+    "obsHash": "3c07d098173ff5c20b2f67acfa85836df08dae353c40df7bd4d93f5da1a3f734"
+   },
+   {
+    "side": 0,
+    "requestTick": 900,
+    "applyTick": 1020,
+    "style": "cautious",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.94,
+    "obsHash": "c36af8041eaf08f56ce4624c79492d2df81ac835294af86aba188039cb3937a0"
+   },
+   {
+    "side": 1,
+    "requestTick": 900,
+    "applyTick": 1020,
+    "style": "cautious",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.17,
+    "obsHash": "38ea3df2bbac2e40e545b83b1e297cb0f88597cc7441f90f543dba3ef2e757d6"
+   },
+   {
+    "side": 0,
+    "requestTick": 1800,
+    "applyTick": 1920,
+    "style": "counter",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.46,
+    "obsHash": "6a99e13da3fa0b9d565fe1f8fbc51f81ac272e26c96c5860e34d223999d29080"
+   },
+   {
+    "side": 1,
+    "requestTick": 1800,
+    "applyTick": 1920,
+    "style": "outboxer",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.21,
+    "obsHash": "7cf299e709ee0dd22998c69347d4b6d2becab3dc000231c83e885b2ff107b7c9"
+   },
+   {
+    "side": 0,
+    "requestTick": 2700,
+    "applyTick": 3180,
+    "style": "pressure",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.26,
+    "obsHash": "c3503b63e0b661340cb303dacca4496d481a07ce71275fcd080fea5b34a93ca3"
+   },
+   {
+    "side": 1,
+    "requestTick": 2700,
+    "applyTick": 3180,
+    "style": "cautious",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.34,
+    "obsHash": "33f0b81ab57e0a9904c9085834a83d1521ba8f43869ec8d866dde1920d844002"
+   },
+   {
+    "side": 0,
+    "requestTick": 4080,
+    "applyTick": 4200,
+    "style": "counter",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.38,
+    "obsHash": "a575af3e705f5aa29f91adf37256f63b82bb049d6361cc3636ebbedbc6ba74ba"
+   },
+   {
+    "side": 1,
+    "requestTick": 4080,
+    "applyTick": 4200,
+    "style": "cautious",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.85,
+    "obsHash": "2003a741fbffdcd97ea33aefb7702bb8b9abdde837edca37f39fa94017754619"
+   },
+   {
+    "side": 0,
+    "requestTick": 4980,
+    "applyTick": 5100,
+    "style": "counter",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.35,
+    "obsHash": "e1fb0e6cbf910e41879a01fe20e38a6d08e0c850c542860b15ca0e86c4efb721"
+   },
+   {
+    "side": 1,
+    "requestTick": 4980,
+    "applyTick": 5100,
+    "style": "pressure",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.51,
+    "obsHash": "0550d96b56c58a8d20e71472e775b29e1e9f5ade18906264a84ef578b3e17998"
+   },
+   {
+    "side": 0,
+    "requestTick": 5880,
+    "applyTick": 6360,
+    "style": "cautious",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.7,
+    "obsHash": "815b8ce39acb6ebd254c67096e35574869f9955f0ecb68710582b9c5a9806f30"
+   },
+   {
+    "side": 1,
+    "requestTick": 5880,
+    "applyTick": 6360,
+    "style": "outboxer",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.11,
+    "obsHash": "68b60eaf2c8c26481c673f0238473710d45d0afb08d3568ccacc23b832578a0b"
+   },
+   {
+    "side": 0,
+    "requestTick": 7260,
+    "applyTick": 7380,
+    "style": "counter",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.47,
+    "obsHash": "0a81bdd3bac62e0555dfa7ecdf998361fe3832cf02ee1a81e4a66e8b711883a4"
+   },
+   {
+    "side": 1,
+    "requestTick": 7260,
+    "applyTick": 7380,
+    "style": "counter",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.4,
+    "obsHash": "627106b9f3afa9067d97e3b385b84b3bd7058fd47efb252691a57a40c38bc88b"
+   },
+   {
+    "side": 0,
+    "requestTick": 8160,
+    "applyTick": 8280,
+    "style": "counter",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.76,
+    "obsHash": "d2cb22f01cbe6686d153d741452fec3f41a66f3054798ba5ec61267364290fe4"
+   },
+   {
+    "side": 1,
+    "requestTick": 8160,
+    "applyTick": 8280,
+    "style": "outboxer",
+    "source": "jev",
+    "model": "jev-1.13.0",
+    "confidence": 0.4,
+    "obsHash": "ce465d247aed66f40ce556e3fa4d6ed4f4962a582cb423ab12cd9d7b38234fb7"
+   }
+  ]
+ },
+ "note": "Counts and timings only: no request/response bodies, ids or keys. endToEndMs = browser request start to response end through the next dev route; providerAttempts ms = route-measured TypeSafe call incl. body read."
+}

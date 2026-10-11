@@ -1,0 +1,344 @@
+{
+  "candidate": "fightkit-v1",
+  "status": "EXPERIMENTAL_NOT_PROMOTED",
+  "file": "athlete-fightkit-v1.glb",
+  "bytes": 12335340,
+  "sha256": "3acefb55468c8201e7ad5376e7e04103f1fab0d56359b94b1b35d813fd54a69f",
+  "base": {
+    "file": "apps/web/public/models/boxing/athlete.glb",
+    "sha256": "4f6408ef9aa249ef7043f36b2de15e60069cd656d0fc9abd6a1f5028002b66aa",
+    "author": "Quaternius",
+    "license": "CC0-1.0"
+  },
+  "textureSource": {
+    "author": "Rob Tuytel / Poly Haven",
+    "asset": "leather_white",
+    "sourceUrl": "https://polyhaven.com/a/leather_white",
+    "license": "CC0-1.0",
+    "licenseUrl": "https://polyhaven.com/license",
+    "files": [
+      {
+        "file": "leather_white_diff_1k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leather_white/leather_white_diff_1k.jpg",
+        "bytes": 728363,
+        "sha256": "4d916dfe89c9d2b88bf52e0c70c6a9798a5c29c8c2fcb6ba1ab7b7ded9ef3ed5"
+      },
+      {
+        "file": "leather_white_nor_gl_1k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leather_white/leather_white_nor_gl_1k.jpg",
+        "bytes": 670610,
+        "sha256": "51bdac4b76da70dc54c288cffea4ecaf837ebb6ed9264664bf5c9a1fc79aa074"
+      },
+      {
+        "file": "leather_white_arm_1k.jpg",
+        "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/leather_white/leather_white_arm_1k.jpg",
+        "bytes": 899257,
+        "sha256": "e5fdcd8010a5a881229ec06fbc116974bdedd36464d20c6bef20ad4d42259542"
+      }
+    ]
+  },
+  "addedParts": [
+    {
+      "name": "FightKitSinglet",
+      "vertices": 5250,
+      "triangles": 1750,
+      "material": "FightKitTeamFabric"
+    },
+    {
+      "name": "FightKitNeckPiping",
+      "vertices": 540,
+      "triangles": 180,
+      "material": "FightKitIvoryTrim"
+    },
+    {
+      "name": "FightKitShorts",
+      "vertices": 3156,
+      "triangles": 1052,
+      "material": "FightKitDarkFabric"
+    },
+    {
+      "name": "FightKitWaistband",
+      "vertices": 930,
+      "triangles": 310,
+      "material": "FightKitIvoryTrim"
+    },
+    {
+      "name": "FightKitShortSidePanels",
+      "vertices": 732,
+      "triangles": 244,
+      "material": "FightKitTeamFabric"
+    },
+    {
+      "name": "FightKitShortHem",
+      "vertices": 588,
+      "triangles": 196,
+      "material": "FightKitIvoryTrim"
+    },
+    {
+      "name": "FightKitBoots",
+      "vertices": 5964,
+      "triangles": 1988,
+      "material": "FightKitBlackLeather"
+    },
+    {
+      "name": "FightKitBootCuffs",
+      "vertices": 720,
+      "triangles": 240,
+      "material": "FightKitIvoryTrim"
+    },
+    {
+      "name": "FightKitHeadguardBrow",
+      "vertices": 1242,
+      "triangles": 414,
+      "material": "FightKitTeamLeather"
+    },
+    {
+      "name": "FightKitHeadguardRear",
+      "vertices": 1200,
+      "triangles": 400,
+      "material": "FightKitTeamLeather"
+    },
+    {
+      "name": "FightKitEarPadL",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitTeamLeather"
+    },
+    {
+      "name": "FightKitEarInsetL",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitDarkFabric"
+    },
+    {
+      "name": "FightKitGloveL",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitTeamLeather"
+    },
+    {
+      "name": "FightKitGloveThumbL",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitTeamLeather"
+    },
+    {
+      "name": "FightKitGloveCuffL",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitIvoryTrim"
+    },
+    {
+      "name": "FightKitEarPadR",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitTeamLeather"
+    },
+    {
+      "name": "FightKitEarInsetR",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitDarkFabric"
+    },
+    {
+      "name": "FightKitGloveR",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitTeamLeather"
+    },
+    {
+      "name": "FightKitGloveThumbR",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitTeamLeather"
+    },
+    {
+      "name": "FightKitGloveCuffR",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitIvoryTrim"
+    },
+    {
+      "name": "FightKitLaceL0A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceL0B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceL1A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceL1B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceL2A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceL2B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceL3A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceL3B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceL4A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceL4B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceL5A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceL5B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR0A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR0B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR1A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR1B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR2A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR2B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR3A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR3B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR4A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR4B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR5A",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitLaceR5B",
+      "vertices": 36,
+      "triangles": 12,
+      "material": "FightKitLaces"
+    },
+    {
+      "name": "FightKitToeCapL",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitBlackLeather"
+    },
+    {
+      "name": "FightKitToeCapR",
+      "vertices": 2016,
+      "triangles": 672,
+      "material": "FightKitBlackLeather"
+    }
+  ],
+  "addedDrawGroups": 6,
+  "skeletonJoints": 65,
+  "authoredClips": [
+    "Death01",
+    "Hit_Chest",
+    "Hit_Head",
+    "Idle_Loop",
+    "Punch_Cross",
+    "Punch_Jab",
+    "Walk_Formal_Loop",
+    "Walk_Loop",
+    "Hit_Knockback",
+    "Idle_FoldArms_Loop",
+    "LayToIdle",
+    "Melee_Hook",
+    "Melee_Hook_Rec",
+    "Yes"
+  ],
+  "motionCapture": false,
+  "newAnatomy": false,
+  "rigCompatible": true,
+  "limitations": [
+    "Artist-authored parametric equipment and body-fitted cloth, not simulated fabric.",
+    "Requires disabling the runtime legacy gloves and choosing team materials explicitly.",
+    "No automatic production substitution; camera, pose and mobile budget review required."
+  ]
+}

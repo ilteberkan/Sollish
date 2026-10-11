@@ -1,0 +1,10 @@
+{
+  "written": "2026-10-09, before any rule-v4b checkpoint was trained",
+  "why": "Rule v4 (engine ringside-contact-5-579c86bc) passed its pre-registered claim and the balance band, but knockdowns were 12 % overall and about 1 % in fresh first rounds, too rare for the live show. Rule v4b changes only the published chins: KOR 1.09 -> 1.03, AYAZ 1.05 -> 1.00. Tuned on probe seeds (training tags probe8, probe9; balance seeds probe:*), never on test seeds. Everything else is rule v4.",
+  "inMatchRule": "unchanged: actor 1, critic 0.05, fast 2, fastInputs 0, entropy 0.03",
+  "lifetime": "as rule v4 (main and shuffled-control 12000 rounds; heldoutA, heldoutB 6000), new training tags v4b*",
+  "testSeeds": "test5:<opponent>:<0..199>, never used before",
+  "opponents": { "learned": ["mirrorFrozen", "runs/rule-v4b/heldout-a", "runs/rule-v4b/heldout-b"], "scripted": ["switcher", "bodySnatcher", "slipper", "mover"] },
+  "claim": "In-match learning is claimed only if the paired 95% interval of (learning - frozen) margin over the learned opponents is above 0. No hyperparameter is selected on these results. If it fails, the product text says so.",
+  "balanceBand": "KOR 40-60 %, 40-65 punches per round, knockdowns 10-60 % (balance:0..299)"
+}

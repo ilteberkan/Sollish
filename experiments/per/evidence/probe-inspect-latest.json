@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-01T05:40:53.543Z",
+  "scope": "Own PER probe inspect; no game/funds payout",
+  "mode": "inspect",
+  "status": "BLOCKED",
+  "productionApproval": false,
+  "G0": "BLOCKED",
+  "checks": [
+    {
+      "id": "execution-prerequisite-or-runtime",
+      "status": "BLOCKED",
+      "evidence": "Own probe is not deployed"
+    }
+  ],
+  "rows": [],
+  "transactions": [],
+  "sessions": {},
+  "leakSearch": [],
+  "plan": {
+    "version": 1,
+    "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "roundId": "1790833165684",
+    "inspector": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+    "players": [
+      "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+      "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg"
+    ],
+    "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+    "permission": "8sdJs3MMobmKo6LutsFU93CSicxUiGKbrGYAGYWw6BTV",
+    "identity": "6buXn8ycBgN12n8S1R7ZaixZmBQMDor16TzgAobqiD9S",
+    "roundDelegation": {
+      "buffer": "2aqwWAkuxMBxqD3RuEWX96FgRpUX7QjzwLwr2ad2AnoP",
+      "record": "DeEoL1gzZRpJqJkfaVeYZhsTwnYECoS8NKvDx1SR6ViP",
+      "metadata": "21YetqvJy21Btkd1dDVh8buXYTsoG5cWUL1GBssLZoXT"
+    },
+    "receipts": [
+      {
+        "address": "AoMw5mU7VRtrYyKHt2BKHE1ayveGbnmTPQ8ks7mxmtkp",
+        "player": "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+        "buffer": "AyD45qzHDyuN8YVVArD6YHBFxGoDerxD166Wt89LgLgm",
+        "record": "AA4J28xFUTH7tVDzFLuo33t7U6ZMjVJLuccxULqpA8r6",
+        "metadata": "BNJqK4xukMmLGihvBLj2yTLn5XZzPKzYvH1qkY6NvjcY"
+      },
+      {
+        "address": "DXJn45JY4FUZmQYojqwoSS2ncsXN4fxC5iRRSCWTU7Ps",
+        "player": "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg",
+        "buffer": "8hujrmrfqUsengnofCgqzSkohkQ14LRSfiDhzyA2nViZ",
+        "record": "8sKbT19K2jryihudf9d9irq9VkAEhBT3PAEpxcmLnoNP",
+        "metadata": "4KNBDP5fB3REV5CJEqDYDHiEPNJycRcobH2Tn5GGt72W"
+      }
+    ]
+  },
+  "runOutcome": "BLOCKED",
+  "finishedAt": "2026-10-01T05:40:53.952Z"
+}

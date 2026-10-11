@@ -1,0 +1,205 @@
+{
+  "startedAt": "2026-10-01T19:03:13.328Z",
+  "projectRef": "lutwdmwkogtzajxvbuiy",
+  "sdkVersion": "2.117.2",
+  "authBase": "https://lutwdmwkogtzajxvbuiy.supabase.co",
+  "realtimeBase": "https://sollish-realtime.sollish-web.workers.dev",
+  "canonicalUri": "https://sollish-web-devnet.sollish-web.workers.dev/game/crash",
+  "wallet": {
+    "reusedDisposable": true,
+    "addressSha256": "7b45ca050145b5973ce38c01b8ce33f1a8a0e63ca94ef7879a90304f9adec6ac",
+    "originalReport": ".tooling/siws-preflight/report.json",
+    "fundedByHarness": false
+  },
+  "budget": {
+    "loginAttempts": 1,
+    "logoutAttempts": 1,
+    "httpRequests": 6,
+    "websocketConnections": 4,
+    "automaticRetries": 0,
+    "solanaRpcCalls": 0,
+    "transactions": 0
+  },
+  "requests": [
+    {
+      "method": "GET",
+      "url": "https://sollish-realtime.sollish-web.workers.dev/v1/chat/history",
+      "startedAt": "2026-10-01T19:03:13.355Z",
+      "status": 200,
+      "requestId": null
+    },
+    {
+      "method": "GET",
+      "url": "https://sollish-realtime.sollish-web.workers.dev/v1/public/status",
+      "startedAt": "2026-10-01T19:03:13.866Z",
+      "status": 200,
+      "requestId": null
+    },
+    {
+      "method": "POST",
+      "url": "https://lutwdmwkogtzajxvbuiy.supabase.co/auth/v1/token?grant_type=web3",
+      "startedAt": "2026-10-01T19:03:13.990Z",
+      "status": 200,
+      "requestId": "01a0f8d9-6dba-7155-99b3-2ee2639575ba"
+    },
+    {
+      "method": "GET",
+      "url": "https://lutwdmwkogtzajxvbuiy.supabase.co/auth/v1/.well-known/jwks.json",
+      "startedAt": "2026-10-01T19:03:14.566Z",
+      "status": 200,
+      "requestId": "01a0f8d9-6f8f-78a0-8238-eff8299e22b1"
+    },
+    {
+      "method": "GET",
+      "url": "https://lutwdmwkogtzajxvbuiy.supabase.co/auth/v1/user",
+      "startedAt": "2026-10-01T19:03:14.618Z",
+      "status": 200,
+      "requestId": "01a0f8d9-6fc2-7428-92d5-d8da05570212"
+    },
+    {
+      "method": "POST",
+      "url": "https://lutwdmwkogtzajxvbuiy.supabase.co/auth/v1/logout?scope=local",
+      "startedAt": "2026-10-01T19:03:17.561Z",
+      "status": 204,
+      "requestId": "01a0f8d9-7b41-722f-b485-3bc75f0ac35a"
+    }
+  ],
+  "sockets": [
+    {
+      "name": "cross_origin_handshake",
+      "origin": "https://untrusted.invalid",
+      "frames": [],
+      "handshakeStatus": 403,
+      "transportError": true,
+      "closedCode": 1006
+    },
+    {
+      "name": "invalid_jwt",
+      "origin": "https://sollish-web-devnet.sollish-web.workers.dev",
+      "frames": [
+        {
+          "type": "auth.required"
+        },
+        {
+          "type": "error",
+          "code": "AUTH_INVALID"
+        }
+      ],
+      "closedCode": 4001
+    },
+    {
+      "name": "valid_session",
+      "origin": "https://sollish-web-devnet.sollish-web.workers.dev",
+      "frames": [
+        {
+          "type": "auth.required"
+        },
+        {
+          "type": "hello",
+          "walletMatches": true,
+          "stream": "lobby"
+        },
+        {
+          "type": "snapshot",
+          "stream": "lobby",
+          "seq": 0,
+          "eventCount": 0,
+          "truncated": true
+        },
+        {
+          "type": "error",
+          "code": "CHAT_UNAVAILABLE"
+        },
+        {
+          "type": "error",
+          "code": "AUTH_INVALID"
+        }
+      ],
+      "closedCode": 4001
+    },
+    {
+      "name": "revoked_session_new_connection",
+      "origin": "https://sollish-web-devnet.sollish-web.workers.dev",
+      "frames": [
+        {
+          "type": "auth.required"
+        },
+        {
+          "type": "error",
+          "code": "AUTH_INVALID"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "name": "siws_jwt_identity",
+      "pass": true
+    },
+    {
+      "name": "cross_origin_denied",
+      "pass": true
+    },
+    {
+      "name": "invalid_jwt_denied",
+      "pass": true
+    },
+    {
+      "name": "websocket_auth_snapshot",
+      "pass": true
+    },
+    {
+      "name": "unfunded_chat_denied",
+      "pass": true,
+      "observedCode": "CHAT_UNAVAILABLE",
+      "expectedFromInitialStatus": "CHAT_UNAVAILABLE"
+    },
+    {
+      "name": "logout_own_session",
+      "pass": true
+    },
+    {
+      "name": "existing_socket_revoked_session_denied",
+      "pass": true
+    },
+    {
+      "name": "new_socket_revoked_session_denied",
+      "pass": true
+    }
+  ],
+  "stage": "revoked_session_denials",
+  "publicStatus": {
+    "chatAvailable": false,
+    "minimumWagerConfigured": false,
+    "lastIndexedSlotPresent": false
+  },
+  "signedMessage": {
+    "sha256": "cb41ab9192cc870e35c3cd95277df8c39edf5e25c12239ec7f92a53d455721bd",
+    "localSignatureVerified": true
+  },
+  "session": {
+    "jwtCryptographicallyVerified": true,
+    "alg": "ES256",
+    "role": "authenticated",
+    "sessionIdSha256": "706efec456954a2778fda56365758cd4f6f605607c3d42e8cece5dca1b07f128",
+    "expiresAt": 1790884994,
+    "liveAuthUserMatched": true,
+    "identityCount": 1,
+    "exactSolanaIdentityMatches": 1,
+    "identityDataFields": [
+      "custom_claims",
+      "email_verified",
+      "phone_verified",
+      "sub"
+    ],
+    "customClaimsFields": [
+      "address",
+      "chain",
+      "domain",
+      "network",
+      "statement"
+    ]
+  },
+  "outcome": "PASS_BOUNDED_HOSTED_AUTH_AND_DENIALS",
+  "completedAt": "2026-10-01T19:03:18.545Z"
+}

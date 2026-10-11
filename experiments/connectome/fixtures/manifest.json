@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "dataset": {"id": "sollish-four-node-synthetic-fixture", "kind": "synthetic-fixture", "release": "fixture-v1", "is_synthetic": true},
+  "provenance": {
+    "source_url": null,
+    "license_id": "LicenseRef-Sollish-Fixture",
+    "license_url": null,
+    "reviewed_at": "2026-10-02",
+    "attribution": "Sollish authored test fixture; no recorded biological data",
+    "derivation": "Four invented nodes and four invented directed edges; see NOTICE.md",
+    "upstream_sha256": null
+  },
+  "files": {
+    "neurons": {"path": "neurons.csv", "sha256": "0962f0f2fd54ed011b543be184ebf02b16dbf81b9f78777dcdf4fbb0febec55c"},
+    "edges": {"path": "edges.csv", "sha256": "5a6aadd6cbb47bf24caf0608f92b15fb785e5381592a9879637130ff80ba62d6"}
+  },
+  "expected": {"neurons": 4, "edges": 4},
+  "usage": {"scope": "isolated-research", "commercial_permission": "unresolved", "financial_integration": false, "consciousness_claim": false, "biological_fidelity": "not-validated"}
+}

@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "experiment": "combat-selfplay-curriculum-2",
+  "publishedAt": "2026-10-03T03:24:27.834Z",
+  "modelSha256": "97e829991918e0285040d1ad3b1b7eda0bfee8198611d82bf3ef9d5f895f802b",
+  "sourceSha256": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+  "promotionPassed": false,
+  "training": {
+    "episodes": 9600,
+    "generations": 40,
+    "method": "Geçmiş öğrenci + saldırı sömürücü rakip curriculum; reward tabanlı ES, açık çeşitlilik/override regularizasyonu, öğretmen etiketi yok",
+    "seconds": 173.693372125
+  },
+  "evaluation": {
+    "games": 512,
+    "beforeScore": 0.60546875,
+    "afterScore": 0.8486328125,
+    "baseline": "Önceki öğrenilmiş v1 kontrolcüsü; aynı yeni seed/rakip/taraflar",
+    "scope": "32 yeni seed ×2 taraf ×8 rakip. Son testte ağırlık veya eşik değişmedi."
+  },
+  "limitations": [
+    "Araştırma kalite kapısı geçmedi; sonuçlar başarısız denemeyi de gösterir.",
+    "Sekiz hazır eylem seçimi öğrenildi. Eklem torku, fiziksel teknik veya bütün beyin öğrenilmedi.",
+    "128 gerçek MaleCNS düğümü; sabit varsayımsal dinamik ve öğrenilen çıkış readout’u.",
+    "Yaklaşma/düşük enerjide gard/anti-stall kuralları motor tarafından zorlanır.",
+    "Yeni kıyasın rakipleri yine küçük ve öngörülebilir; gerçek insan veya farklı fizik genellemesi kanıtlanmadı.",
+    "Yalnız çevrim dışı yerel araştırma kaydı; bahis veya gerçek varlık yetkisi yok."
+  ],
+  "cases": [
+    {
+      "id": "90000",
+      "label": "Sürekli cross rakibi",
+      "opponent": "cross-only",
+      "seed": "81413fa2a38d0673857612b7463b2bc09dfeebe19bc5b1cd8320d6e82160ffbc",
+      "runs": [
+        {
+          "id": "v1",
+          "label": "Önceki öğrenilmiş model",
+          "path": "/research/ringside/curriculum-90000-v1.json",
+          "sha256": "39330fe64bdee275467a10b5bd6381b859d74e165aa2827c10afb56da6d60cf6",
+          "bytes": 1066724,
+          "trained": false
+        },
+        {
+          "id": "curriculum",
+          "label": "Curriculum adayı",
+          "path": "/research/ringside/curriculum-90000-curriculum.json",
+          "sha256": "000a68abd37d8a95529b4c8f3822d84ec9cfd08af3d989b6edfd8067a727e7a6",
+          "bytes": 1060957,
+          "trained": true
+        }
+      ]
+    },
+    {
+      "id": "90001",
+      "label": "Gecikmeli kontra rakibi",
+      "opponent": "heldout-delayed-counter",
+      "seed": "6767dd5d2bd727c107c33d766ce68d5841d5cb45f03ef1fd5ce3a11a30acc243",
+      "runs": [
+        {
+          "id": "v1",
+          "label": "Önceki öğrenilmiş model",
+          "path": "/research/ringside/curriculum-90001-v1.json",
+          "sha256": "595fdcbe16ca03be45b4715e0b702d833f248e971b6517d81598c7982bfd5167",
+          "bytes": 1063301,
+          "trained": false
+        },
+        {
+          "id": "curriculum",
+          "label": "Curriculum adayı",
+          "path": "/research/ringside/curriculum-90001-curriculum.json",
+          "sha256": "0f726b3ad693620806e724af6deb13344655ea63946ce01e7de5682c5d89309a",
+          "bytes": 1059789,
+          "trained": true
+        }
+      ]
+    },
+    {
+      "id": "90002",
+      "label": "Görülmemiş kombinasyon rakibi",
+      "opponent": "heldout-combo",
+      "seed": "ec65411e6522f2b80cad708d2f3bf7a207cff54ab5df1d0c3d1fb6515d16ae14",
+      "runs": [
+        {
+          "id": "v1",
+          "label": "Önceki öğrenilmiş model",
+          "path": "/research/ringside/curriculum-90002-v1.json",
+          "sha256": "77213c20dc635f10ebf22f4c0a54b47d97c324500518af2d994d77372b8b2f05",
+          "bytes": 1063527,
+          "trained": false
+        },
+        {
+          "id": "curriculum",
+          "label": "Curriculum adayı",
+          "path": "/research/ringside/curriculum-90002-curriculum.json",
+          "sha256": "63247c25d2f39bfcbe54ae81f446059cbbeefd6157955a48a54fe4223a3a73c4",
+          "bytes": 1063663,
+          "trained": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "scope": "Read-only devnet rent/fee inspection and one signature-verified initialization-only simulation. No deployment, transfer, faucet request, new key, or sendTransaction call.",
+  "observedAt": "2026-10-01T14:06:43.705Z",
+  "observedSlot": 506297563,
+  "genesisHash": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+  "cliVersion": "solana-cli 4.1.2 (src:182084b8; feat:c763ae0a, client:Agave)",
+  "sourceCommit": "182084b82aae88b1b0731540f63bf7416f27773a",
+  "programId": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+  "binaryBytes": 292384,
+  "binarySha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+  "payerBalanceLamports": 2000000000,
+  "rpcRentLamports": {
+    "program36Bytes": 833120,
+    "buffer292421Bytes": 1486148920,
+    "programData292429Bytes": 1486189560,
+    "probeRound178Bytes": 1554480,
+    "probeReceipt89Bytes": 1102360
+  },
+  "sourceFindings": {
+    "cliInitialBufferFundingLamports": 1486189560,
+    "bufferFundedAtProgramDataRent": true,
+    "loaderDrainsBufferToPayerBeforeProgramDataCreation": true,
+    "cliFeeCheckCountsProgramDataRentOnce": true,
+    "cliFeeCheckOmitsSeparateProgramAccountRent": true,
+    "programAccountRentIncludedInThisAnalysis": true,
+    "explicitMaxSignAttemptsOneAllowsOneWriteSigningRound": true,
+    "deployCliSupportsSignOnlyDryRun": false
+  },
+  "chosenScenario": {
+    "maxLen": 292384,
+    "payerEqualsUpgradeAuthority": true,
+    "bufferAndProgramAreDistinctSigners": true,
+    "computeUnitPriceMicroLamports": 0,
+    "computeUnitPriceFlagExplicit": true,
+    "maxSignAttempts": 1,
+    "useRpc": true,
+    "skipPreflight": false,
+    "emptyWriteSerializedTransactionBytes": 271,
+    "chunkBytes": 960,
+    "nonzeroWriteChunks": 305,
+    "allZeroChunksSkipped": 0,
+    "initialTransactionSignatures": 2,
+    "writeTransactionSignatures": 1,
+    "finalTransactionSignatures": 2,
+    "getFeeForMessageLamports": { "initial": 10000, "write": 5000, "final": 10000 },
+    "oneSuccessfulPassFeesLamports": 1545000,
+    "permanentRentLamports": 1487022680,
+    "rentPlusOneSuccessfulPassFeesLamports": 1488567680,
+    "remainingFrom2SolLamports": 511432320
+  },
+  "withoutComputeUnitPriceFlagComparison": {
+    "emptyWriteSerializedTransactionBytes": 219,
+    "chunkBytes": 1012,
+    "nonzeroWriteChunks": 289,
+    "oneSuccessfulPassFeesLamports": 1465000,
+    "rentPlusOneSuccessfulPassFeesLamports": 1488487680
+  },
+  "simulation": {
+    "observedAt": "2026-10-01T14:07:37.523Z",
+    "slot": 506297793,
+    "scope": "Only create_buffer plus explicit zero-price compute-budget instructions. Existing unfunded player A key served as a simulated buffer alias; no dedicated buffer key was created. Does not simulate upload or final ELF deployment.",
+    "sigVerify": true,
+    "err": null,
+    "unitsConsumed": 2820,
+    "simulatedPayerLamports": 513800440,
+    "simulatedBufferLamports": 1486189560,
+    "simulatedBufferDataBytes": 292421,
+    "actualBufferStillAbsentAfterSimulation": true,
+    "actualPayerBalanceAfterSimulationLamports": 2000000000
+  },
+  "limitations": [
+    "Fees are live getFeeForMessage quotes for reconstructed official instruction messages with distinct account roles, not a signed CLI deployment quote.",
+    "A successful first pass is assumed. Failure, manual resume, further calls, RPC changes, provider charges, permission/delegation accounts and player funding are additional.",
+    "The older 2.973171600 SOL sum includes both temporary and permanent rents; it is a conservative envelope, not the CLI minimum because the loader reuses the buffer lamports.",
+    "Signed initialization simulation does not prove full deployment compatibility or PER/TEE/VRF acceptance. No program was deployed by this investigation."
+  ],
+  "sources": {
+    "bufferFunding": "https://github.com/anza-xyz/agave/blob/182084b82aae88b1b0731540f63bf7416f27773a/cli/src/program.rs#L2556-L2569",
+    "feeCheck": "https://github.com/anza-xyz/agave/blob/182084b82aae88b1b0731540f63bf7416f27773a/cli/src/program.rs#L3046-L3077",
+    "chunkSize": "https://github.com/anza-xyz/agave/blob/182084b82aae88b1b0731540f63bf7416f27773a/cli/src/program.rs#L2521-L2531",
+    "bufferReuse": "https://github.com/anza-xyz/agave/blob/182084b82aae88b1b0731540f63bf7416f27773a/programs/bpf_loader/src/lib.rs#L279-L302",
+    "computeBudget": "https://github.com/anza-xyz/agave/blob/182084b82aae88b1b0731540f63bf7416f27773a/cli/src/compute_budget.rs#L124-L148",
+    "oneSigningRound": "https://github.com/anza-xyz/agave/blob/182084b82aae88b1b0731540f63bf7416f27773a/client/src/send_and_confirm_transactions_in_parallel.rs#L489-L506"
+  }
+}

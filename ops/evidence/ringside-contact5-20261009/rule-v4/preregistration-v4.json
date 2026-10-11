@@ -1,0 +1,10 @@
+{
+  "written": "2026-10-09, before any rule-v4 checkpoint was trained",
+  "why": "Owner feedback after the live test: tempo too high, punches started before the fighters were in range. Rule v4 keeps the frozen in-match learning rule of v3 and changes only physical rhythm: V5_TEMPO (strike legal only within reach + 100 mm, at most 3 punches per combination, reset 10 + 12 ticks per punch after a combination unless a counter window is open, stamina recovery 3/tick, 0 while punching, stun decays 2/tick, footwork spans advance 8, retreat 8, circle 12, guard 8, slip 7, roll 8), corner plans every 180 ticks (5 per round, 18 s observation window), V5_FIGHTERS KOR reach -25 power 1.06 chin 1.09 guard 1; AYAZ reach 35 power 1 chin 1.05 guard 1.02. Values were tuned on probe seeds (tempo:*, probe:*, probe1..7 training tags) only for tempo and balance, never on test seeds.",
+  "inMatchRule": "unchanged from v3: actor 1, critic 0.05, fast 2, fastInputs 0, entropy 0.03",
+  "lifetime": "main and shuffled-control 12000 rounds (actor 0.1, critic 0.05, fast 0.5, entropy 0.1); held-out learned opponents heldoutA (6000, actor 0.2 critic 0.1 fast 1 entropy 0.05) and heldoutB (6000, actor 0.05 critic 0.025 fast 0 entropy 0.15)",
+  "testSeeds": "test4:<opponent>:<0..199>, never used before",
+  "opponents": { "learned": ["mirrorFrozen", "runs/rule-v4/heldout-a", "runs/rule-v4/heldout-b"], "scripted": ["switcher", "bodySnatcher", "slipper", "mover"] },
+  "claim": "In-match learning is claimed only if the paired 95% interval of (learning - frozen) margin over the learned opponents is above 0. No hyperparameter is selected on these results.",
+  "balanceBand": "KOR 40-60 %, 40-65 punches per round, knockdowns 10-60 % (balance:0..299)"
+}

@@ -1,0 +1,20 @@
+{
+  "observedAt": "2026-10-01T14:35:40.279Z",
+  "scope": "RPC identity and copied ELF equality only; not hardware/application attestation",
+  "status": "TEE_COPY_MATCH",
+  "deployment": {
+    "genesis": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+    "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "programData": "3TjrsRtLukZwUfnWxFZchVXE2dAd2xp4UfkMe6h6RaAD",
+    "elfSha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+    "elfBytes": 292384,
+    "allocationPaddingBytes": 0,
+    "upgradeAuthority": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+    "teeCopy": {
+      "elfSha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+      "elfBytes": 292384,
+      "allocationPaddingBytes": 0
+    }
+  },
+  "productionApproval": false
+}

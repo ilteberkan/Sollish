@@ -1,0 +1,45 @@
+{
+  "sourceSha256": {
+    "apps/realtime/src/ringside-arena.ts": "156265fa7521a561a1e811a03e3e7d7835ca47364e349bb3a6a51801ef500fd2",
+    "packages/protocol/src/combat-v3.ts": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+    "packages/protocol/src/combat-v4.ts": "e968f235ebee073c8f30807dda43b83fa15ea31655507a40327551806d62ab85",
+    "packages/protocol/src/ringside.ts": "a571960005ef710b37b80b37d6a89b14bccfa254391cb136e310e98b49228d5d",
+    "packages/protocol/src/connectome-policy.ts": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+    "apps/realtime/test/contact-arena.workerd.mjs": "14174982cc83c13288bad8bc7dac6139b2272c0c4089b3f50d2f056e0ea20cb6"
+  },
+  "at": "2026-10-09T12:10:26.654Z",
+  "runtime": "local-workerd-sqlite",
+  "checks": 16,
+  "passed": [
+    "origin and URL credential rejection",
+    "private resumable sessions and distinct online count",
+    "v2 namespace rejects v3 session token and preserves its separate ledger",
+    "ticket insert and debit failure roll back atomically without an ACK",
+    "concurrent same-session UUID deduplication and immutable ticket payload",
+    "four separate prop pools and server-unique payout IDs",
+    "last millisecond acceptance, exact cutoff denial and post-cutoff same-ticket retry",
+    "public tape contains pseudonyms only; private balances and tickets stay session-scoped",
+    "mid-settlement failure rolls back every pool, fee, ticket and session credit",
+    "simulation-derived settlement, per-pool conservation and one-sided refunds exactly once",
+    "workerd restart persists balances, results and post-settlement duplicate receipts",
+    "bout round two carries only actual prior health stamina and score after bounded recovery",
+    "expired sessions cannot keep presence or erase unsettled escrow; owner still receives its refund",
+    "new session cleanup and anonymous handshake expiry are bounded",
+    "healthy initial-state branch fixture: third decision round ends bout without a stoppage",
+    "actual first-round low-health contact KO starts a new full-health bout before the three-round limit"
+  ],
+  "timing": {
+    "openMs": 20000,
+    "fightMs": 45000,
+    "resultMs": 10000
+  },
+  "accounting": {
+    "initialGrantCents": 200000,
+    "roundStakeCents": 4900,
+    "finalBalanceCents": 199908,
+    "platformFeeCents": 92,
+    "settledTickets": 7,
+    "independentPools": 4
+  },
+  "scope": "Real local workerd, SQLite transactions, WebSockets, production entropy and explicitly labeled fixed-seed/full-health/low-health branch fixtures, commitment/replay, durable restart and injected SQL failures. Only generated fixture advances its clock through actual production alarm/advance. No cloud load, real assets, VRF, trusted-server fairness proof or production readiness."
+}

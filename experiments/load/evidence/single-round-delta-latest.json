@@ -1,0 +1,160 @@
+{
+  "status": "PASS_BOUNDED_LOCAL_TARGET",
+  "startedAt": "2026-10-03T03:20:14.425Z",
+  "finishedAt": "2026-10-03T03:21:19.864Z",
+  "hardware": {
+    "node": "v24.9.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M2",
+    "logicalCpus": 8,
+    "totalMemoryBytes": 8589934592,
+    "wrangler": "4.145.0",
+    "runtime": "local workerd, real SQLite and WebSockets; shared development host"
+  },
+  "sourceHashes": {
+    "apps/realtime/src/ringside-arena.ts": "8a8c2a14130035a1b1616d58547d86f0aec4f4fc8c7d8574cb4d83adf5498e21",
+    "packages/protocol/src/ringside.ts": "17b86d0dfc7467c7d31d2cb0fafd373fe2e65356ca296d5fafb8cf2067b5bf12",
+    "packages/protocol/src/combat-v3.ts": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+    "packages/protocol/src/connectome-policy.ts": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+    "packages/protocol/src/pari-mutuel.ts": "75527f5e04edd319e837708ce81dae33e662d1fd8005710df14a3efbf933a3c6",
+    "pnpm-lock.yaml": "7744f516a98b94385a1cc45fde1e482d0f4b9c0907a00f1200e8b07fe61cf92d",
+    "experiments/load/runtime.mjs": "e38ac58cb33bf8226e926d48b0948a523b8e7416964276e086ac009d902fd1a0",
+    "experiments/load/public-delta-worker.ts": "aa7ed16f9ac146a6553f271f97c9e626b8bb6f1049a381f9e272d17444dcf255",
+    "experiments/load/public-delta.ts": "116e099179610bc24252a85a6b462eb6b1ffda6c6f8d863b0158622531df7f53",
+    "experiments/load/delta-viewers.mjs": "d7a05e82095c9c659a87ddc37f8d8a9b2004be72d094d4582c10b3cbf1511840",
+    "experiments/load/single-round-delta.mjs": "a469f64b825f46024d5a46e54d6150b9c425f1b24e90893718ee52420158409a"
+  },
+  "entrySha256": "492d97be19038f0757c46ea6fa33b9f2c17ab752925657c7fdb6d482290d5926",
+  "topology": {
+    "authoritativeLedgers": 1,
+    "publicFanoutObjects": 4,
+    "simultaneousSpectators": 1000,
+    "simultaneousBettors": 64,
+    "privateRelaySession": 1,
+    "spectatorFinancialSessions": 0
+  },
+  "clock": "Actual 20s open + 45s fight; no clock/seed/state override",
+  "joinMs": 3521,
+  "admission": {
+    "accepted": 64,
+    "duplicateFrames": 64,
+    "uniqueLedgerTickets": 64,
+    "latencyMs": {
+      "p50": 504,
+      "p95": 943,
+      "p99": 979,
+      "max": 979
+    }
+  },
+  "reconnect": {
+    "bettors": 64,
+    "spectators": 40,
+    "sameTokenSameId": true,
+    "latencyMs": {
+      "p50": 305,
+      "p95": 589,
+      "p99": 629,
+      "max": 638
+    }
+  },
+  "late": {
+    "attempts": 16,
+    "rejected": 16
+  },
+  "broadcast": {
+    "all1064SameRoundAndOutcome": true,
+    "strictPublicSchema": true,
+    "viewerCommandCannotWrite": true,
+    "transport": {
+      "maxFlushHz": 4,
+      "snapshots": 1060,
+      "deltas": 28132,
+      "gaps": 20,
+      "resyncs": 20,
+      "deliberatelyDropped": 20,
+      "privateLeaks": 0,
+      "wireBytes": 15772772,
+      "wireFrames": 29193
+    },
+    "snapshotDeliveryLagMs": {
+      "p50": 98,
+      "p95": 324,
+      "p99": 350,
+      "max": 360
+    },
+    "settlementReceiptLagMs": {
+      "p50": 119,
+      "p95": 119,
+      "p99": 119,
+      "max": 119
+    }
+  },
+  "ledger": {
+    "sessions": {
+      "n": 65,
+      "balance": 6498720
+    },
+    "tickets": {
+      "n": 64,
+      "stakes": 64000,
+      "payouts": 62720,
+      "pending": 0
+    },
+    "pools": [
+      {
+        "round": "1",
+        "market": "finish",
+        "n": 16,
+        "stakes": 16000,
+        "payouts": 15680,
+        "fee": 320
+      },
+      {
+        "round": "1",
+        "market": "first-hit",
+        "n": 16,
+        "stakes": 16000,
+        "payouts": 15680,
+        "fee": 320
+      },
+      {
+        "round": "1",
+        "market": "knockdown",
+        "n": 16,
+        "stakes": 16000,
+        "payouts": 15680,
+        "fee": 320
+      },
+      {
+        "round": "1",
+        "market": "winner",
+        "n": 16,
+        "stakes": 16000,
+        "payouts": 15680,
+        "fee": 320
+      }
+    ],
+    "fees": {
+      "total": 1280
+    }
+  },
+  "metrics": {
+    "frames": 44030,
+    "bytes": 78878401,
+    "invalidFrames": 0,
+    "unexpectedClose": 0,
+    "peakClientRss": 278069248,
+    "peakRuntimeTreeRss": 742670336,
+    "guard": null,
+    "clientEventLoopDelayMs": {
+      "p95": 23,
+      "max": 164
+    },
+    "clientCpuMs": {
+      "user": 4018,
+      "system": 1954
+    }
+  },
+  "scope": "EXPERIMENTAL 4Hz public delta loopback adapter only; 20 deliberate client-side delta omissions test resync, not packet loss or server restart. 1000 viewers observe one unchanged ledger and 64 real local demo admissions. Does not raise production ticket/session caps, deploy fanout, validate cloud geography/soak/failure recovery or authorize real assets. Spectator count is NOT fabricated into ledger online/participants."
+}

@@ -1,0 +1,36 @@
+[package]
+name = "per-probe"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+members = [".", "runtime-tests", "runtime-tests/callback-fixture"]
+resolver = "2"
+
+[lib]
+crate-type = ["cdylib", "lib"]
+name = "per_probe"
+
+[features]
+default = []
+cpi = ["no-entrypoint"]
+no-entrypoint = []
+no-idl = []
+no-log-ix-name = []
+idl-build = ["anchor-lang/idl-build"]
+
+[dependencies]
+anchor-lang = "=1.2.0"
+ephemeral-rollups-sdk = { version = "=0.16.2", features = ["anchor", "access-control"] }
+ephemeral-vrf-sdk = { version = "=0.4.1", features = ["anchor-modern"] }
+
+[profile.release]
+overflow-checks = true
+lto = "thin"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = [
+    'cfg(target_os, values("solana"))',
+    'cfg(feature, values("anchor-debug", "custom-heap", "custom-panic"))',
+] }

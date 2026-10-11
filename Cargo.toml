@@ -1,0 +1,11 @@
+[workspace]
+members = [
+    "crates/game-math", "crates/reward-math", "crates/house-tests", "crates/games-tests",
+    "programs/house", "programs/games", "programs/incentives", "crates/incentives-tests",
+    "tests/fixtures/mock-game", "tests/fixtures/mock-vrf",
+]
+resolver = "2"
+
+[profile.release]
+overflow-checks = true
+lto = "thin"

@@ -1,0 +1,109 @@
+{
+ "params": "experiments/ringside-learner/runs/main/params.json",
+ "rates": {
+  "actor": 0.1,
+  "critic": 0.05,
+  "fast": 0.5,
+  "entropy": 0.1
+ },
+ "matchRates": {
+  "actor": 1,
+  "critic": 0.05,
+  "fast": 4,
+  "entropy": 0.03
+ },
+ "seeds": "val4",
+ "opps": "learned",
+ "n": 150,
+ "summary": {
+  "learning": {
+   "mirrorFrozen": {
+    "win": 0.477,
+    "margin": -37,
+    "adaptation": 3
+   },
+   "checkpoint0": {
+    "win": 0.287,
+    "margin": -165,
+    "adaptation": 64
+   },
+   "checkpoint1": {
+    "win": 0.76,
+    "margin": 201,
+    "adaptation": -61
+   }
+  },
+  "frozen": {
+   "mirrorFrozen": {
+    "win": 0.513,
+    "margin": -6,
+    "adaptation": -6
+   },
+   "checkpoint0": {
+    "win": 0.277,
+    "margin": -140,
+    "adaptation": 56
+   },
+   "checkpoint1": {
+    "win": 0.88,
+    "margin": 280,
+    "adaptation": -42
+   }
+  },
+  "untrainedLearning": {
+   "mirrorFrozen": {
+    "win": 0.05,
+    "margin": -425,
+    "adaptation": 74
+   },
+   "checkpoint0": {
+    "win": 0.033,
+    "margin": -595,
+    "adaptation": 61
+   },
+   "checkpoint1": {
+    "win": 0.287,
+    "margin": -141,
+    "adaptation": 33
+   }
+  }
+ },
+ "comparisons": {
+  "learningVsFrozenMargin": {
+   "mean": -44.56,
+   "lo": -75.16,
+   "hi": -12.41
+  },
+  "learningVsFrozenWin": {
+   "mean": -0.05,
+   "lo": -0.11,
+   "hi": 0.01
+  },
+  "learningVsFrozenAdaptation": {
+   "mean": -0.66,
+   "lo": -19.88,
+   "hi": 18.79
+  },
+  "learningVsUntrainedMargin": {
+   "mean": 386.91,
+   "lo": 355.32,
+   "hi": 418.48
+  },
+  "learningVsFrozenMargin:mirrorFrozen": {
+   "mean": -30.61,
+   "lo": -84.53,
+   "hi": 24.42
+  },
+  "learningVsFrozenMargin:checkpoint0": {
+   "mean": -24.63,
+   "lo": -81.73,
+   "hi": 32.28
+  },
+  "learningVsFrozenMargin:checkpoint1": {
+   "mean": -78.43,
+   "lo": -124.71,
+   "hi": -32.21
+  }
+ },
+ "seconds": 35.2
+}

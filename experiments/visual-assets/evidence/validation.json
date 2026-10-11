@@ -1,0 +1,20 @@
+{
+  "at": "2026-10-03T11:25:59.878789+00:00",
+  "scope": "local candidate asset only",
+  "tests": {
+    "groups": 5,
+    "passed": 5,
+    "command": "python3 -m unittest discover -s experiments/visual-assets -p 'test_*.py' -v"
+  },
+  "python": "3.13.7",
+  "sourceHashes": {
+    "build_fightkit.py": "d6fe98f9ee2348cf3ee4c87fd4f1c7193a1c8ee1f95d15faa2531a4e5f30c9c3",
+    "test_fightkit.py": "ab7a69a7fafb4b30757ecb2c30d288892192784b26632b36a96fbb423d7e7bc4",
+    "preview.mjs": "354bd65efa919a62544166198dbff68da5f99284f78b50f9260b27bef6fcdee8",
+    "preview.html": "ad26d6550509410965fcdd77d9f8373ab3b47241e3e094459213095953d15cff",
+    "output/athlete-fightkit-v1.glb": "3acefb55468c8201e7ad5376e7e04103f1fab0d56359b94b1b35d813fd54a69f",
+    "output/manifest.json": "954d62bf9efa46fe0dfef365b4f36a444947d364f2d5f62fcd7ec9de43852787",
+    "sources/manifest.json": "43ae8a7cc659ed64c9a2ff8f2f1208b669c309d1584cfd6909b95d20539a5137",
+    "NOTICE.md": "5b74a8b9527159d96d885d2ef66b6aa53e39fe8654e159fe72dd761535032765"
+  }
+}

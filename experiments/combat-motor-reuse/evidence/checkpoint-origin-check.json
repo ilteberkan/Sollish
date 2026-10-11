@@ -1,0 +1,14 @@
+[
+  {
+    "url": "https://api.github.com/repos/bulletphysics/bullet3/contents/examples/pybullet/gym/pybullet_data/data/policies/humanoid3d/humanoid3d_spinkick.ckpt.data-00000-of-00001?ref=63c4d67e337017f9d8b298c900e9aabdb69296e7",
+    "sha": "e499b1f261528e5ee4d35abcb2b7c882b4ce2083",
+    "size": 5900116,
+    "path": "examples/pybullet/gym/pybullet_data/data/policies/humanoid3d/humanoid3d_spinkick.ckpt.data-00000-of-00001"
+  },
+  {
+    "url": "https://api.github.com/repos/xbpeng/DeepMimic/contents/data/policies/humanoid3d/humanoid3d_spinkick.ckpt.data-00000-of-00001?ref=3ca04d38285ec3556dc0423f466477e96d934787",
+    "sha": "58acc3dd9283fac3115c345b4e5bd7352da3bd6a",
+    "size": 5900116,
+    "path": "data/policies/humanoid3d/humanoid3d_spinkick.ckpt.data-00000-of-00001"
+  }
+]

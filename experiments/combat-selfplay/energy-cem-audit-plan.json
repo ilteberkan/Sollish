@@ -1,0 +1,17 @@
+{
+  "experiment": "energy-cem-6-audit",
+  "declaredBeforeFinalEvaluation": true,
+  "purpose": "Report remaining single-action exploits independently; this audit never selects a checkpoint or modifies the policy.",
+  "comparators": [
+    "always-jab",
+    "always-cross",
+    "always-hook",
+    "always-kick"
+  ],
+  "partition": "Same energy6-final partition, frozen before first final evaluation",
+  "additionalDiversityGate": {
+    "meanDominantAttackShareMaximum": 0.7
+  },
+  "limits": "A higher score than a constant policy is not general intelligence. Original gates stay unchanged. Audit failure is retained, not used to tune this run.",
+  "declaredAt": "2026-10-03T11:25:49.693355+00:00"
+}

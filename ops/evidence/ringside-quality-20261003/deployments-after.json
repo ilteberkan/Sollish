@@ -1,0 +1,32 @@
+[
+  {
+    "name": "sollish-web-devnet",
+    "success": true,
+    "status": 200,
+    "deployment": {
+      "id": "e56cd4c3-2c00-40b3-a49a-63cdc1ab2847",
+      "created_on": "2026-10-03T11:51:28.287689Z",
+      "versions": [
+        {
+          "version_id": "1ab9a7f7-797b-49d5-8612-309b5ff69aee",
+          "percentage": 100
+        }
+      ]
+    }
+  },
+  {
+    "name": "sollish-realtime",
+    "success": true,
+    "status": 200,
+    "deployment": {
+      "id": "5a7add8e-9b57-42cb-a7f7-38085612a98d",
+      "created_on": "2026-10-02T23:27:46.461695Z",
+      "versions": [
+        {
+          "version_id": "fd489ab1-98ab-4aa9-8dc7-d010717747c9",
+          "percentage": 100
+        }
+      ]
+    }
+  }
+]

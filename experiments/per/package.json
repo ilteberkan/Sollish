@@ -1,0 +1,31 @@
+{
+  "name": "sollish-per-preflight",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "preflight": "node preflight.mjs",
+    "faucet": "node faucet.mjs",
+    "read-matrix": "node read-matrix.mjs",
+    "probe:prepare": "node probe-runner.mjs prepare",
+    "probe:inspect": "node probe-runner.mjs inspect",
+    "probe:run": "node probe-runner.mjs run",
+    "deployment-plan": "node deployment-plan.mjs",
+    "test:artifacts": "node --test test/artifacts/*.test.mjs",
+    "test:clean": "node test/clean-checkout.mjs"
+  },
+  "dependencies": {
+    "@magicblock-labs/ephemeral-rollups-sdk": "0.17.3",
+    "@phala/dcap-qvl": "0.3.9",
+    "@solana/web3.js": "1.99.0"
+  },
+  "overrides": {
+    "jayson": {
+      "uuid": "11.1.1"
+    }
+  }
+}

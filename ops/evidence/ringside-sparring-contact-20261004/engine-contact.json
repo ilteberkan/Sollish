@@ -1,0 +1,753 @@
+{
+ "schema": "sollish.evidence.v1",
+ "at": "2026-10-05T03:30:46.541Z",
+ "status": "LOCAL_FIXTURE_VERIFIED_NOT_DEPLOYED",
+ "engineVersion": "sparring-5 (unpublished; sparring-4 frozen at experiments/combat-sparring-audit/baseline-sparring-4.ts)",
+ "scope": "Engine fixture level: deterministic 60 Hz rollouts in Node with simplified capsules; non-monetary Combat Club only. Not rendered meshes, not a browser, not hosted.",
+ "sourceSha256": {
+  "packages/protocol/src/combat-sparring.ts": "c1ca71f9c4a4877c1d5d8b1b175a7fae54053009a61cf5148d44a54d2d3ca950",
+  "packages/protocol/src/combat-capsules.ts": "9e02ecab8ba6cbc5832f1d1628c81920b186123e2dc51a618b5b9524a721aa82",
+  "packages/protocol/test/combat-sparring.test.ts": "436a13af7a1922b70dc4caf480fb5c397c91c6d7f25067d7851feef35112dd95",
+  "packages/protocol/test/combat-capsules.test.ts": "d42ecf9e839276b58aa29966960026c479888e09a2cfbeb4b8c3bf7780055eb0",
+  "experiments/combat-sparring-audit/contact-audit.ts": "769a05d4d8ed2095a7630e2957956554533909e151dfca2cd9587d1bc68427a3",
+  "experiments/combat-sparring-audit/audit-sparring5.ts": "a2fe8c55125a82d3d62e44920faf265be6fb53b2e1e5f55da854c8c05062b71a",
+  "experiments/combat-sparring-audit/baseline-sparring-4.ts": "aac72f4dea4bde7ad3c7c9a4b1b7c64fdd0653f93ab52f75c679855071ef693e"
+ },
+ "auditedEngineSha256": {
+  "packages/protocol/src/combat-sparring.ts": "b5e3a11c9b1b21e8dc281bf7df6cfbf15ba8e9e5184ecf79ec95cd724cf1e471",
+  "packages/protocol/src/combat-capsules.ts": "9e02ecab8ba6cbc5832f1d1628c81920b186123e2dc51a618b5b9524a721aa82",
+  "note": "Audits and the engine-contact-ready marker used these. The current combat-sparring.ts differs only in refereeWorld() (referee engineer); fighters/events/scores verified identical over 24 bot bouts / 201 613 ticks."
+ },
+ "bodyModel": {
+  "radiiM": {
+   "torso": 0.19,
+   "head": 0.135,
+   "upperArm": 0.12,
+   "forearm": 0.08,
+   "glove": 0.12,
+   "thigh": 0.15
+  },
+  "planEstimatesM": {
+   "torso": 0.17,
+   "head": 0.12,
+   "upperArm": 0.06,
+   "forearm": 0.055,
+   "glove": 0.095,
+   "thigh": 0.08
+  },
+  "renderedFitM": "apps/web/components/boxing-contact-capsules.json (torso .177, upper chest halves .233/.216, head .134 incl. headgear, upper arm .123, forearm .079, glove .118, thigh .152, calf .107)",
+  "legs": "lead knee 0.31 m ahead of the root (rendered mean 0.316), thigh capsule ends at 3/4 of hip->knee (rendered thigh keeps r .15 over that span, .088 at the knee)",
+  "handedness": "The engine pose is mirrored relative to the rig (engine leftHand/lead foot on local -x, rig left on +x); contact is symmetric under that mirror; not changed."
+ },
+ "deviationsFromPlan": [
+  "Guard capsules (forearms + gloves) are solid only while the defender holds guard with stamina >= 15. Read literally (always solid), 89-95 % of sparring-4 landed hits would have met the idle gloves first (hitsThatWouldMeetIdleGuardFirst), turning nearly every punch into a block.",
+  "The sparring-3 0.78 m root floor is kept as the first test (and gameplay spacing) before the capsule narrowphase; square-on bodies now meet at ~0.80 m (lead thighs).",
+  "Lying-body separation is a ground-plane test (lying capsule r 0.18 + standing footprint 0.35 = 0.53 m): a 3D capsule at floor height never meets standing thighs, so it would allow standing on the body.",
+  "Swept glove vs capsule uses conservative advancement (deterministic, cannot tunnel) instead of fixed sampling."
+ ],
+ "contactAudit_sparring4_vs_sparring5": {
+  "file": [
+   "experiments/combat-sparring-audit/evidence/contact-sparring4-baseline-12seeds.json",
+   "experiments/combat-sparring-audit/evidence/contact-sparring5-12seeds.json"
+  ],
+  "seeds": "1-12, bots both corners, neuro-1 vs neuro-1 once per seed, 3 x 45 s",
+  "note": "strikingGloveInRaisedGuardMaxCm includes gloves already resting against a raised guard at ~0.8 m before any punch moves (arms never separate roots); strike-driven penetration of a raised guard is <= 0.5 cm in the 200-bout protocol test.",
+  "rows": [
+   {
+    "matchup": "neuro-vs-neuro",
+    "bouts": 12,
+    "bodyCapsuleOverlapMaxCm": [
+     14.4,
+     0
+    ],
+    "shareTicksOver2mm": [
+     0.784,
+     0
+    ],
+    "strikingGloveInRaisedGuardMaxCm": [
+     19.5,
+     3.5
+    ],
+    "strikingGloveInHeadTorsoMaxCm": [
+     0.2,
+     0.2
+    ],
+    "perBout": {
+     "hits": [
+      67.42,
+      69.92
+     ],
+     "blocks": [
+      97.58,
+      99.33
+     ],
+     "knockdowns": [
+      0.5,
+      0.33
+     ]
+    },
+    "methods": [
+     {
+      "decision": 7,
+      "draw": 2,
+      "ko": 3
+     },
+     {
+      "decision": 9,
+      "ko": 2,
+      "draw": 1
+     }
+    ],
+    "minDistanceToLyingBodyM": [
+     0.63,
+     0.638
+    ],
+    "hitsThatWouldMeetIdleGuardFirstInSparring4": {
+     "count": 699,
+     "shareOfHits": 0.864
+    }
+   },
+   {
+    "matchup": "balanced-vs-pressure",
+    "bouts": 24,
+    "bodyCapsuleOverlapMaxCm": [
+     14.1,
+     0
+    ],
+    "shareTicksOver2mm": [
+     0.3858,
+     0
+    ],
+    "strikingGloveInRaisedGuardMaxCm": [
+     21.8,
+     3.4
+    ],
+    "strikingGloveInHeadTorsoMaxCm": [
+     0.2,
+     0.2
+    ],
+    "perBout": {
+     "hits": [
+      58.71,
+      38.63
+     ],
+     "blocks": [
+      54.17,
+      84.46
+     ],
+     "knockdowns": [
+      2.42,
+      1.54
+     ]
+    },
+    "methods": [
+     {
+      "ko": 22,
+      "tko": 2
+     },
+     {
+      "tko": 4,
+      "ko": 12,
+      "decision": 8
+     }
+    ],
+    "minDistanceToLyingBodyM": [
+     0.63,
+     0.648
+    ],
+    "hitsThatWouldMeetIdleGuardFirstInSparring4": {
+     "count": 1185,
+     "shareOfHits": 0.841
+    }
+   },
+   {
+    "matchup": "counter-vs-balanced",
+    "bouts": 24,
+    "bodyCapsuleOverlapMaxCm": [
+     14.2,
+     0
+    ],
+    "shareTicksOver2mm": [
+     0.5053,
+     0
+    ],
+    "strikingGloveInRaisedGuardMaxCm": [
+     21.8,
+     3.4
+    ],
+    "strikingGloveInHeadTorsoMaxCm": [
+     0.2,
+     0.2
+    ],
+    "perBout": {
+     "hits": [
+      32.63,
+      24.46
+     ],
+     "blocks": [
+      112.25,
+      123.42
+     ],
+     "knockdowns": [
+      0.13,
+      0
+     ]
+    },
+    "methods": [
+     {
+      "decision": 22,
+      "draw": 2
+     },
+     {
+      "decision": 19,
+      "draw": 5
+     }
+    ],
+    "minDistanceToLyingBodyM": [
+     0.63,
+     null
+    ],
+    "hitsThatWouldMeetIdleGuardFirstInSparring4": {
+     "count": 739,
+     "shareOfHits": 0.944
+    }
+   },
+   {
+    "matchup": "pressure-vs-counter",
+    "bouts": 24,
+    "bodyCapsuleOverlapMaxCm": [
+     14.1,
+     0
+    ],
+    "shareTicksOver2mm": [
+     0.435,
+     0
+    ],
+    "strikingGloveInRaisedGuardMaxCm": [
+     21.7,
+     4.2
+    ],
+    "strikingGloveInHeadTorsoMaxCm": [
+     0.2,
+     0.2
+    ],
+    "perBout": {
+     "hits": [
+      48.04,
+      36.54
+     ],
+     "blocks": [
+      58.63,
+      95.58
+     ],
+     "knockdowns": [
+      1.67,
+      1.33
+     ]
+    },
+    "methods": [
+     {
+      "ko": 21,
+      "decision": 3
+     },
+     {
+      "ko": 8,
+      "decision": 11,
+      "tko": 5
+     }
+    ],
+    "minDistanceToLyingBodyM": [
+     0.63,
+     0.65
+    ],
+    "hitsThatWouldMeetIdleGuardFirstInSparring4": {
+     "count": 1099,
+     "shareOfHits": 0.953
+    }
+   }
+  ]
+ },
+ "mechanicsAudit": {
+  "tuningSeeds1to24": [
+   {
+    "matchup": "balanced-vs-pressure",
+    "aScore": [
+     0.677,
+     0.927
+    ],
+    "koShare": [
+     0.188,
+     0.021
+    ],
+    "aCleanHits": [
+     22.19,
+     15.81
+    ],
+    "bCleanHits": [
+     18.54,
+     9.44
+    ]
+   },
+   {
+    "matchup": "balanced-vs-counter",
+    "aScore": [
+     0.292,
+     0.333
+    ],
+    "koShare": [
+     0,
+     0
+    ],
+    "aCleanHits": [
+     7.54,
+     5.77
+    ],
+    "bCleanHits": [
+     9.23,
+     6.69
+    ]
+   },
+   {
+    "matchup": "runner-vs-pressure",
+    "aScore": [
+     0,
+     0
+    ],
+    "koShare": [
+     1,
+     1
+    ],
+    "aCleanHits": [
+     0,
+     0
+    ],
+    "bCleanHits": [
+     42.1,
+     42.1
+    ]
+   },
+   {
+    "matchup": "runner-vs-balanced",
+    "aScore": [
+     0,
+     0
+    ],
+    "koShare": [
+     1,
+     1
+    ],
+    "aCleanHits": [
+     0,
+     0
+    ],
+    "bCleanHits": [
+     32.4,
+     32.4
+    ]
+   },
+   {
+    "matchup": "hitAndRun-vs-pressure",
+    "aScore": [
+     0.198,
+     0.302
+    ],
+    "koShare": [
+     0.271,
+     0
+    ],
+    "aCleanHits": [
+     19.81,
+     12.75
+    ],
+    "bCleanHits": [
+     25.85,
+     16.71
+    ]
+   },
+   {
+    "matchup": "hitAndRun-vs-balanced",
+    "aScore": [
+     0.083,
+     0.281
+    ],
+    "koShare": [
+     0,
+     0
+    ],
+    "aCleanHits": [
+     8.73,
+     9.15
+    ],
+    "bCleanHits": [
+     12.46,
+     11.88
+    ]
+   },
+   {
+    "matchup": "kickSpam-vs-balanced",
+    "aScore": [
+     0,
+     0
+    ],
+    "koShare": [
+     1,
+     1
+    ],
+    "aCleanHits": [
+     0,
+     0
+    ],
+    "bCleanHits": [
+     30.23,
+     30.17
+    ]
+   },
+   {
+    "matchup": "kickSpam-vs-pressure",
+    "aScore": [
+     0,
+     0
+    ],
+    "koShare": [
+     1,
+     1
+    ],
+    "aCleanHits": [
+     0,
+     0
+    ],
+    "bCleanHits": [
+     31.46,
+     31.6
+    ]
+   },
+   {
+    "matchup": "kickSpam-vs-counter",
+    "aScore": [
+     0,
+     0
+    ],
+    "koShare": [
+     0.979,
+     0.979
+    ],
+    "aCleanHits": [
+     0,
+     0
+    ],
+    "bCleanHits": [
+     29.21,
+     29.35
+    ]
+   },
+   {
+    "matchup": "jabSpam-vs-balanced",
+    "aScore": [
+     0,
+     0
+    ],
+    "koShare": [
+     0.417,
+     0.729
+    ],
+    "aCleanHits": [
+     25.73,
+     11.65
+    ],
+    "bCleanHits": [
+     25.56,
+     26.21
+    ]
+   },
+   {
+    "matchup": "jabSpam-vs-pressure",
+    "aScore": [
+     0.021,
+     0
+    ],
+    "koShare": [
+     0.25,
+     0.563
+    ],
+    "aCleanHits": [
+     37.08,
+     32.25
+    ],
+    "bCleanHits": [
+     24.27,
+     25.63
+    ]
+   },
+   {
+    "matchup": "jabSpam-vs-counter",
+    "aScore": [
+     0,
+     0
+    ],
+    "koShare": [
+     0.625,
+     0.771
+    ],
+    "aCleanHits": [
+     19.73,
+     11.88
+    ],
+    "bCleanHits": [
+     26.25,
+     26.29
+    ]
+   }
+  ],
+  "heldOut1001to1048": {
+   "runOnce": true,
+   "rows": [
+    {
+     "matchup": "balanced-vs-pressure",
+     "aScore": [
+      0.74,
+      0.979
+     ],
+     "koShare": [
+      0.219,
+      0.01
+     ],
+     "aCleanHits": [
+      23.01,
+      16.68
+     ],
+     "bCleanHits": [
+      19.16,
+      8.47
+     ]
+    },
+    {
+     "matchup": "balanced-vs-counter",
+     "aScore": [
+      0.375,
+      0.443
+     ],
+     "koShare": [
+      0,
+      0
+     ],
+     "aCleanHits": [
+      7.95,
+      5.79
+     ],
+     "bCleanHits": [
+      8.91,
+      6.3
+     ]
+    },
+    {
+     "matchup": "runner-vs-pressure",
+     "aScore": [
+      0,
+      0
+     ],
+     "koShare": [
+      1,
+      1
+     ],
+     "aCleanHits": [
+      0,
+      0
+     ],
+     "bCleanHits": [
+      43.25,
+      43.25
+     ]
+    },
+    {
+     "matchup": "runner-vs-balanced",
+     "aScore": [
+      0,
+      0
+     ],
+     "koShare": [
+      1,
+      1
+     ],
+     "aCleanHits": [
+      0,
+      0
+     ],
+     "bCleanHits": [
+      32.38,
+      32.36
+     ]
+    },
+    {
+     "matchup": "hitAndRun-vs-pressure",
+     "aScore": [
+      0.188,
+      0.302
+     ],
+     "koShare": [
+      0.229,
+      0
+     ],
+     "aCleanHits": [
+      20.33,
+      12.32
+     ],
+     "bCleanHits": [
+      25.59,
+      16.53
+     ]
+    },
+    {
+     "matchup": "hitAndRun-vs-balanced",
+     "aScore": [
+      0.115,
+      0.255
+     ],
+     "koShare": [
+      0,
+      0
+     ],
+     "aCleanHits": [
+      8.57,
+      8.04
+     ],
+     "bCleanHits": [
+      12.02,
+      10.77
+     ]
+    },
+    {
+     "matchup": "kickSpam-vs-balanced",
+     "aScore": [
+      0,
+      0
+     ],
+     "koShare": [
+      1,
+      1
+     ],
+     "aCleanHits": [
+      0,
+      0
+     ],
+     "bCleanHits": [
+      30.38,
+      30.41
+     ]
+    },
+    {
+     "matchup": "kickSpam-vs-pressure",
+     "aScore": [
+      0,
+      0
+     ],
+     "koShare": [
+      1,
+      1
+     ],
+     "aCleanHits": [
+      0,
+      0
+     ],
+     "bCleanHits": [
+      31.81,
+      31.79
+     ]
+    },
+    {
+     "matchup": "kickSpam-vs-counter",
+     "aScore": [
+      0,
+      0
+     ],
+     "koShare": [
+      0.99,
+      0.99
+     ],
+     "aCleanHits": [
+      0,
+      0
+     ],
+     "bCleanHits": [
+      29.16,
+      29.25
+     ]
+    },
+    {
+     "matchup": "jabSpam-vs-balanced",
+     "aScore": [
+      0,
+      0
+     ],
+     "koShare": [
+      0.438,
+      0.708
+     ],
+     "aCleanHits": [
+      24.23,
+      10.59
+     ],
+     "bCleanHits": [
+      25.52,
+      26.13
+     ]
+    },
+    {
+     "matchup": "jabSpam-vs-pressure",
+     "aScore": [
+      0.01,
+      0
+     ],
+     "koShare": [
+      0.219,
+      0.333
+     ],
+     "aCleanHits": [
+      37.09,
+      33.17
+     ],
+     "bCleanHits": [
+      23.7,
+      24.29
+     ]
+    },
+    {
+     "matchup": "jabSpam-vs-counter",
+     "aScore": [
+      0,
+      0
+     ],
+     "koShare": [
+      0.521,
+      0.594
+     ],
+     "aCleanHits": [
+      21.18,
+      12.05
+     ],
+     "bCleanHits": [
+      25.5,
+      25.84
+     ]
+    }
+   ]
+  },
+  "note": "audit.ts probes and metrics unchanged (copy audit-sparring5.ts adds the sparring-4 engine); its penetration column still measures sparring-4 spheres, not sparring-5 capsules."
+ },
+ "tests": {
+  "protocolUnit": "105/105",
+  "protocolTypecheck": "PASS",
+  "webTypecheck": "PASS",
+  "webUnit": "92/92",
+  "sparring5Tests": [
+   "200 seeded bot bouts every tick: trunk/head/thigh capsule overlap <= 0.002 m; strike-driven glove entry into a raised guard <= 0.005 m; glove in head/torso <= 0.0025 m; standing root >= 0.53 m from the lying body; replay byte-identical (8 seeds re-run)",
+   "raised guard blocks every boxing punch on forearm/glove; idle hands do not",
+   "square-on pressing cannot push lead legs through each other (meet at 0.79-0.82 m)",
+   "standing fighter placed on the lying body is moved clear inside the ropes"
+  ]
+ },
+ "limits": [
+  "Capsules approximate bodies; arms are not part of root separation, so engine-level arm-vs-arm contact is not prevented (renderer resolver handles visuals).",
+  "Balance shifted: scripted corners block more and knock out less; hitAndRun scores more than in sparring-4 but still loses (< 0.5). Probes are the tuning strategies; no human playtest.",
+  "neuro-1 was trained on sparring-4; any learned controller must be (re)trained/evaluated on sparring-5."
+ ]
+}

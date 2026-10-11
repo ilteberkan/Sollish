@@ -1,0 +1,81 @@
+
+> @sollish/web@0.1.0 build:cloudflare /Users/macmini/Desktop/Sollish/apps/web
+> opennextjs-cloudflare build
+
+
+┌─────────────────────────────┐
+│ OpenNext — Cloudflare build │
+└─────────────────────────────┘
+
+Monorepo detected at /Users/macmini/Desktop/Sollish
+App directory: /Users/macmini/Desktop/Sollish/apps/web
+Next.js version : 16.3.8
+@opennextjs/cloudflare version: 1.20.7
+@opennextjs/aws version: 4.1.6
+workerd compatibility_date: 2026-10-01
+
+┌─────────────────────────────────┐
+│ OpenNext — Building Next.js app │
+└─────────────────────────────────┘
+
+
+> @sollish/web@0.1.0 build /Users/macmini/Desktop/Sollish/apps/web
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+- Environments: .env.production.local
+✓ Running next.config.ts took 17ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 893ms
+  Running TypeScript ...
+  Finished TypeScript in 2.2s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/13) ...
+  Generating static pages using 7 workers (3/13) 
+  Generating static pages using 7 workers (6/13) 
+  Generating static pages using 7 workers (9/13) 
+✓ Generating static pages using 7 workers (13/13) in 186ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /game/boxing
+├ ○ /game/coinflip
+├ ○ /game/crash
+├ ○ /games
+├ ○ /lab/ringside
+├ ○ /live/boxing
+├ ○ /live/ringside
+├ ○ /live/ringside-v2
+├ ○ /rewards
+└ ○ /stake
+
+
+○  (Static)  prerendered as static content
+
+
+┌──────────────────────────────┐
+│ OpenNext — Generating bundle │
+└──────────────────────────────┘
+
+Bundling middleware function...
+Bundling static assets...
+Bundling cache assets...
+Building server function: default...
+Applying code patches: 1.605s
+# copyPackageTemplateFiles
+[35m⚙️ Bundling the OpenNext server...
+[0m
+▲ [WARNING] Comparison with -0 using the "===" operator will also match 0 [equals-negative-zero]
+
+    .open-next/server-functions/default/apps/web/.next/server/chunks/ssr/[root-of-the-server]__07s5z6b._.js:8:148159:
+      8 │ ....unsigned){if(h<0)h+=e;else if(-0===h)return 0}return h}}b.expor...
+        ╵                                   ~~
+
+  Floating-point equality is defined such that 0 and -0 are equal, so "x === -0" returns true for both 0 and -0. You need to use "Object.is(x, -0)" instead to test for -0.
+
+[35mWorker saved in `.open-next/worker.js` 🚀
+[0m
+OpenNext build complete.

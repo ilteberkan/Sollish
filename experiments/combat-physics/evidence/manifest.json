@@ -1,0 +1,17 @@
+{
+  "schema": "sollish-combat-physics-build-v1",
+  "observedAt": "2026-10-03T03:47:02.400018+00:00",
+  "hashes": {
+    "experiments/combat-physics/bvh.py": "72bef3dc5be0c96ac7253fff6dab83ca530bd8ddf6e9259be662dc0373caeade",
+    "experiments/combat-physics/run.py": "bd1b0fa6a98d417927885becd73b1ab89cfbbfbcb935a2fec95fdf7d81c6957e",
+    "experiments/combat-physics/requirements.txt": "e1f681c689faea89e50b0c8b10c9ad77209cce7c2e20510671e15d19699c75d6",
+    "experiments/combat-physics/evidence/trace.json": "90b8aadf17a7571faea95809a2400f445d0b89f93dceac7689775ea8613fa724",
+    "experiments/combat-physics/evidence/model.xml": "fa9bbda6f0aabb70b557d616a6ca99a3fa42dea5506a7c18f56b4d33b5af8472",
+    "apps/web/components/boxing-physics-lab.tsx": "ec70ca15ffe18b181f87354e8fc5f3d7d4fba8043c9e8dc585cd1fada1d12960",
+    "apps/web/public/models/boxing/athlete.glb": "4f6408ef9aa249ef7043f36b2de15e60069cd656d0fc9abd6a1f5028002b66aa"
+  },
+  "traceBytes": 2823074,
+  "sourceBvhSha256": "24efe49cc97292cbce871bec7ed3a2413118da63d435b9ad46a57e7eb81eafbb",
+  "readyForLive": false,
+  "presentationRevision": "Paused GPU draw skip with resize invalidation; responsive side labels and compact portrait stage. Trace and physics unchanged."
+}

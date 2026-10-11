@@ -1,0 +1,27 @@
+{
+  "schema": "sollish-motor-asset-access-v1",
+  "atUtc": "2026-10-03T03:34:49.916534+00:00",
+  "upstreamCommit": "2ed1e6c093bb0829f55d33cb4f7a1731cfe6cb69",
+  "sourceUrl": "https://1sfu-my.sharepoint.com/:u:/g/personal/xbpeng_sfu_ca/EclKq9pwdOBAl-17SogfMW0Bved4sodZBQ_5eZCiz9O--w?e=bqXBaa",
+  "observations": [
+    {
+      "variant": "official-url",
+      "httpStatus": 401,
+      "bytesRead": 0,
+      "prefixSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "loginRedirect": false
+    },
+    {
+      "variant": "official-download",
+      "httpStatus": 401,
+      "bytesRead": 0,
+      "prefixSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "loginRedirect": false
+    }
+  ],
+  "modelBytesAcquired": 0,
+  "motionBytesAcquired": 0,
+  "credentialsUsed": false,
+  "maxResponseBytesPerRequest": 65536,
+  "status": "BLOCKED"
+}

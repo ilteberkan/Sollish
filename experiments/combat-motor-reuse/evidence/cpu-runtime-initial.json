@@ -1,0 +1,37 @@
+{
+  "schema": "sollish-motor-reuse-runtime-v1",
+  "device": "cpu",
+  "host": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "python": "3.13.7"
+  },
+  "versions": {
+    "newton": "1.0.0",
+    "warp-lang": "1.17.0",
+    "mujoco": "3.5.0",
+    "mujoco-warp": "3.5.0.2",
+    "numpy": "2.5.3"
+  },
+  "runtime": "PASS",
+  "learnedInference": "BLOCKED_MODEL_DOWNLOAD_AUTH",
+  "controller": "none",
+  "secondsSimulated": 5,
+  "steps": 1200,
+  "bodies": 15,
+  "dofs": 34,
+  "initializationSeconds": 11.378149166004732,
+  "steppingSeconds": 0.2752470420091413,
+  "stepP50Ms": 0.22093747975304723,
+  "stepP95Ms": 0.2551312412833795,
+  "traceSha256": "be735eceae8bf23b329c404bbba1536ff3c2b721f677deea01b397b00da94231",
+  "traceBytes": 331705,
+  "finite": true,
+  "qualityEvaluated": false,
+  "limitations": [
+    "No weights or motion loaded; no policy inference.",
+    "A passive fall only proves this CPU backend can step this model.",
+    "No balancing, combat, visual quality or live-game readiness claim.",
+    "Not the full MimicKit agent/environment path."
+  ]
+}

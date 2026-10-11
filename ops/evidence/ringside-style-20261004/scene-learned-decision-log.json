@@ -1,0 +1,44 @@
+{
+ "version": "style-log-1",
+ "engine": "sparring-5",
+ "seed": 4242,
+ "bout": {
+  "durationSeconds": 45,
+  "rounds": 3,
+  "breakSeconds": 8
+ },
+ "corners": [
+  {
+   "controller": "neuro-2@0.8",
+   "model": "f1726c7bde980214c3fa7b9017f6d49eadbfedac9b58c0cce2437cc65e89baa2",
+   "strategist": "learned"
+  },
+  {
+   "controller": "neuro-2@0.8",
+   "model": "f1726c7bde980214c3fa7b9017f6d49eadbfedac9b58c0cce2437cc65e89baa2",
+   "strategist": "learned"
+  }
+ ],
+ "decisions": [
+  {
+   "side": 0,
+   "requestTick": 0,
+   "applyTick": 0,
+   "style": "outboxer",
+   "source": "neuro",
+   "model": "neuro-2",
+   "confidence": 0.1503,
+   "obsHash": "b1a3ad8ccd601cd99b37932746b9cf11eedbc97653013c1a37d0333bac2fd275"
+  },
+  {
+   "side": 1,
+   "requestTick": 0,
+   "applyTick": 0,
+   "style": "counter",
+   "source": "neuro",
+   "model": "neuro-2",
+   "confidence": 0.1567,
+   "obsHash": "b1a3ad8ccd601cd99b37932746b9cf11eedbc97653013c1a37d0333bac2fd275"
+  }
+ ]
+}

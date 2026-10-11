@@ -1,0 +1,33 @@
+{
+  "name": "sollish",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.18.2",
+  "engines": {
+    "node": ">=24.9.0 <25"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @sollish/web dev",
+    "build": "pnpm -r --if-present build",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "test": "pnpm -r --if-present test",
+    "test:contracts": "bash scripts/test-contracts.sh",
+    "test:browser": "pnpm --filter @sollish/web test:browser",
+    "test:per": "npm --prefix experiments/per test",
+    "test:database": "bash supabase/tests/local-postgres.sh",
+    "build:worker": "node scripts/build-worker.mjs",
+    "test:worker-bundle": "node --test scripts/test-worker-bundle.mjs",
+    "test:operations": "node --test scripts/agent-instructions.test.mjs scripts/devnet-deployment/plan.test.mjs scripts/check-managed-db.test.mjs scripts/check-launch-readiness.test.mjs",
+    "check:readiness": "node scripts/check-launch-readiness.mjs",
+    "check": "pnpm typecheck && pnpm test && pnpm build",
+    "idl:sync": "node packages/onchain/scripts/sync-idl.mjs",
+    "idl:check": "node packages/onchain/scripts/sync-idl.mjs --check"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.0",
+    "esbuild": "0.28.2",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3"
+  }
+}

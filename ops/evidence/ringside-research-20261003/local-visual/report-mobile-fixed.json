@@ -1,0 +1,134 @@
+{
+  "at": "2026-10-03T03:47:28.434Z",
+  "url": "http://127.0.0.1:3002/lab/ringside",
+  "runtime": "Playwright Chromium headless ANGLE Metal; desktop host, not physical mobile",
+  "viewports": [
+    {
+      "width": 390,
+      "labelBounds": [
+        {
+          "label": "Önceki curriculum modeli",
+          "rect": {
+            "x": 14,
+            "width": 181,
+            "height": 44
+          },
+          "scroll": 181,
+          "client": 181
+        },
+        {
+          "label": "Gard ortamında yeniden eğitilen",
+          "rect": {
+            "x": 195,
+            "width": 181,
+            "height": 44
+          },
+          "scroll": 181,
+          "client": 181
+        }
+      ],
+      "overflow": false,
+      "learningPause": {
+        "samePixels": true,
+        "position": "7500"
+      },
+      "physicsPause": {
+        "drawBefore": 2927,
+        "drawAfter": 2927,
+        "newDraws": 0,
+        "samePixels": true
+      },
+      "physicsLabels": {
+        "rects": [
+          {
+            "text": "MUJOCO · DESTEKLİ FİZİK",
+            "x": 30,
+            "y": 451.34375,
+            "width": 155,
+            "height": 18
+          },
+          {
+            "text": "CMU · GERÇEK MOCAP",
+            "x": 205,
+            "y": 451.34375,
+            "width": 155,
+            "height": 18
+          }
+        ],
+        "overlap": false
+      },
+      "physicsOverflow": false,
+      "cleanupCanvasCount": 0,
+      "liveSockets": 0,
+      "errors": []
+    },
+    {
+      "width": 320,
+      "labelBounds": [
+        {
+          "label": "Önceki curriculum modeli",
+          "rect": {
+            "x": 14,
+            "width": 146,
+            "height": 44
+          },
+          "scroll": 146,
+          "client": 146
+        },
+        {
+          "label": "Gard ortamında yeniden eğitilen",
+          "rect": {
+            "x": 160,
+            "width": 146,
+            "height": 44
+          },
+          "scroll": 146,
+          "client": 146
+        }
+      ],
+      "overflow": false,
+      "learningPause": {
+        "samePixels": true,
+        "position": "7500"
+      },
+      "physicsPause": {
+        "drawBefore": 2897,
+        "drawAfter": 2897,
+        "newDraws": 0,
+        "samePixels": true
+      },
+      "physicsLabels": {
+        "rects": [
+          {
+            "text": "MUJOCO · DESTEKLİ FİZİK",
+            "x": 30,
+            "y": 469.34375,
+            "width": 120,
+            "height": 36
+          },
+          {
+            "text": "CMU · GERÇEK MOCAP",
+            "x": 170,
+            "y": 469.34375,
+            "width": 120,
+            "height": 36
+          }
+        ],
+        "overlap": false
+      },
+      "physicsOverflow": false,
+      "cleanupCanvasCount": 0,
+      "liveSockets": 0,
+      "errors": []
+    }
+  ],
+  "sourceHashes": {
+    "apps/web/components/ringside-research.tsx": "fef8018e1ca92469c55f0cb2d409ae414c6d0dcce0bf1d6d802a4c2564224210",
+    "apps/web/components/ringside-research.module.css": "38051eac77d7b22778859c56a2b1ee7cf832bfa45a2c1cf0b392201f30af3ff1",
+    "apps/web/components/boxing-scene.tsx": "a7c4125c5e24efcd74a264641345dbcab5797a9ea544c2f66670938f2f4519e6",
+    "apps/web/components/boxing-physics-lab.tsx": "ec70ca15ffe18b181f87354e8fc5f3d7d4fba8043c9e8dc585cd1fada1d12960",
+    "apps/web/public/research/ringside/manifest.json": "27e1ea2af90641169c33ce06d631384d4b7c3f285103fb0f7e64b14dc3c35e64",
+    "apps/web/public/research/ringside/physics-trace.json": "90b8aadf17a7571faea95809a2400f445d0b89f93dceac7689775ea8613fa724"
+  },
+  "finishedAt": "2026-10-03T03:47:37.697Z"
+}

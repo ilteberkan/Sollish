@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "scope": "isolated local closed-loop research; ContactReplay shape only, not a deployed v3 match",
+  "engineSha256": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+  "adapterSha256": "7e898ef4509d4383154e76801b1a603b2a55bf1e9fc2042b40570a78d8a985d6",
+  "modelSha256": "ff0f938d6e7b3061281039cc043454a9be9f35552d9c535c6e11d7ec0f1dfec8",
+  "selectedGeneration": 8,
+  "researchGate": "FAIL",
+  "traces": [
+    {
+      "label": "initial",
+      "file": "trace-initial-counter-40000.json",
+      "sha256": "123774f149ab37e20f5e2a877b36a71658f024b47f818857607d12079e262f5d",
+      "seed": "f1fd247635d4c5d9aaec3dcb5869901a3401514516d14567f226ca5f38add559",
+      "opponent": "counter",
+      "player": "kor",
+      "metrics": {
+        "reward": -1.0870381351217084,
+        "win": 0,
+        "draw": 0,
+        "loss": 1,
+        "damageDealt": 94,
+        "damageReceived": 172,
+        "strikes": 34,
+        "contacts": 14,
+        "entropy": 0.6964124325219445,
+        "uniqueActions": 6,
+        "maxActionShare": 0.3595505617977528,
+        "noStrikeMs": 2600,
+        "noContactMs": 10650,
+        "forcedFraction": 0.5168539325842697,
+        "decisions": 89,
+        "counts": {
+          "advance": 2,
+          "circle": 27,
+          "guard": 9,
+          "slip": 17,
+          "jab": 32,
+          "cross": 0,
+          "hook": 0,
+          "kick": 2
+        },
+        "proposed": {
+          "advance": 30,
+          "circle": 0,
+          "guard": 0,
+          "slip": 25,
+          "jab": 34,
+          "cross": 0,
+          "hook": 0,
+          "kick": 0
+        },
+        "ringViolations": 0
+      }
+    },
+    {
+      "label": "learned",
+      "file": "trace-learned-counter-40000.json",
+      "sha256": "506b16869a4f23b2b3b6b9942fbd0add1fea3a001900bf0fb1d0834a0166c46e",
+      "seed": "f1fd247635d4c5d9aaec3dcb5869901a3401514516d14567f226ca5f38add559",
+      "opponent": "counter",
+      "player": "kor",
+      "metrics": {
+        "reward": 1.3346243255377,
+        "win": 1,
+        "draw": 0,
+        "loss": 0,
+        "damageDealt": 408,
+        "damageReceived": 270,
+        "strikes": 32,
+        "contacts": 27,
+        "entropy": 0.47193994802911066,
+        "uniqueActions": 5,
+        "maxActionShare": 0.4852941176470588,
+        "noStrikeMs": 1850,
+        "noContactMs": 3650,
+        "forcedFraction": 0.5294117647058824,
+        "decisions": 68,
+        "counts": {
+          "advance": 2,
+          "circle": 1,
+          "guard": 33,
+          "slip": 0,
+          "jab": 0,
+          "cross": 30,
+          "hook": 2,
+          "kick": 0
+        },
+        "proposed": {
+          "advance": 2,
+          "circle": 0,
+          "guard": 0,
+          "slip": 0,
+          "jab": 0,
+          "cross": 64,
+          "hook": 2,
+          "kick": 0
+        },
+        "ringViolations": 0
+      }
+    }
+  ]
+}

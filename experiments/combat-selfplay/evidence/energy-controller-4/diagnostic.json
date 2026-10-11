@@ -1,0 +1,289 @@
+{
+  "experiment": "energy-diagnostic-4",
+  "at": "2026-10-03T11:06:40.849Z",
+  "sourceModelSha256": "5fa409248676cefbc20275700922f7dcc171c24236e8b9683131ce842c0f3b54",
+  "environmentSha256": "8e762fe950cf3d2c34a103ab10747af0d64fa4176335914f52d4073299e15488",
+  "reasons": {
+    "approach": 60,
+    "none": 708,
+    "low-stamina": 1026,
+    "engagement-timeout": 158
+  },
+  "pairs": {
+    "kick->advance": 60,
+    "kick->guard": 524,
+    "kick->jab": 92,
+    "hook->guard": 501,
+    "hook->jab": 47,
+    "hook->kick": 20
+  },
+  "byEnergy": {
+    "0": {
+      "decisions": 109,
+      "overrides": 109
+    },
+    "1": {
+      "decisions": 92,
+      "overrides": 60
+    },
+    "0.8": {
+      "decisions": 32,
+      "overrides": 0
+    },
+    "0.7": {
+      "decisions": 32,
+      "overrides": 0
+    },
+    "0.6": {
+      "decisions": 32,
+      "overrides": 0
+    },
+    "0.4": {
+      "decisions": 32,
+      "overrides": 0
+    },
+    "0.3": {
+      "decisions": 41,
+      "overrides": 3
+    },
+    "0.2": {
+      "decisions": 748,
+      "overrides": 252
+    },
+    "0.1": {
+      "decisions": 829,
+      "overrides": 820
+    },
+    "0.5": {
+      "decisions": 5,
+      "overrides": 0
+    }
+  },
+  "rows": [
+    {
+      "opponent": "cross-only",
+      "seed": 0,
+      "side": 0,
+      "decisions": 65,
+      "overrides": 43
+    },
+    {
+      "opponent": "cross-only",
+      "seed": 0,
+      "side": 1,
+      "decisions": 59,
+      "overrides": 38
+    },
+    {
+      "opponent": "cross-only",
+      "seed": 1,
+      "side": 0,
+      "decisions": 62,
+      "overrides": 40
+    },
+    {
+      "opponent": "cross-only",
+      "seed": 1,
+      "side": 1,
+      "decisions": 62,
+      "overrides": 42
+    },
+    {
+      "opponent": "cross-only",
+      "seed": 2,
+      "side": 0,
+      "decisions": 61,
+      "overrides": 41
+    },
+    {
+      "opponent": "cross-only",
+      "seed": 2,
+      "side": 1,
+      "decisions": 61,
+      "overrides": 39
+    },
+    {
+      "opponent": "cross-only",
+      "seed": 3,
+      "side": 0,
+      "decisions": 60,
+      "overrides": 38
+    },
+    {
+      "opponent": "cross-only",
+      "seed": 3,
+      "side": 1,
+      "decisions": 62,
+      "overrides": 41
+    },
+    {
+      "opponent": "counter",
+      "seed": 0,
+      "side": 0,
+      "decisions": 63,
+      "overrides": 45
+    },
+    {
+      "opponent": "counter",
+      "seed": 0,
+      "side": 1,
+      "decisions": 60,
+      "overrides": 38
+    },
+    {
+      "opponent": "counter",
+      "seed": 1,
+      "side": 0,
+      "decisions": 60,
+      "overrides": 38
+    },
+    {
+      "opponent": "counter",
+      "seed": 1,
+      "side": 1,
+      "decisions": 60,
+      "overrides": 41
+    },
+    {
+      "opponent": "counter",
+      "seed": 2,
+      "side": 0,
+      "decisions": 58,
+      "overrides": 36
+    },
+    {
+      "opponent": "counter",
+      "seed": 2,
+      "side": 1,
+      "decisions": 62,
+      "overrides": 43
+    },
+    {
+      "opponent": "counter",
+      "seed": 3,
+      "side": 0,
+      "decisions": 59,
+      "overrides": 37
+    },
+    {
+      "opponent": "counter",
+      "seed": 3,
+      "side": 1,
+      "decisions": 61,
+      "overrides": 41
+    },
+    {
+      "opponent": "mixed",
+      "seed": 0,
+      "side": 0,
+      "decisions": 66,
+      "overrides": 38
+    },
+    {
+      "opponent": "mixed",
+      "seed": 0,
+      "side": 1,
+      "decisions": 58,
+      "overrides": 36
+    },
+    {
+      "opponent": "mixed",
+      "seed": 1,
+      "side": 0,
+      "decisions": 63,
+      "overrides": 36
+    },
+    {
+      "opponent": "mixed",
+      "seed": 1,
+      "side": 1,
+      "decisions": 61,
+      "overrides": 35
+    },
+    {
+      "opponent": "mixed",
+      "seed": 2,
+      "side": 0,
+      "decisions": 61,
+      "overrides": 41
+    },
+    {
+      "opponent": "mixed",
+      "seed": 2,
+      "side": 1,
+      "decisions": 62,
+      "overrides": 30
+    },
+    {
+      "opponent": "mixed",
+      "seed": 3,
+      "side": 0,
+      "decisions": 60,
+      "overrides": 39
+    },
+    {
+      "opponent": "mixed",
+      "seed": 3,
+      "side": 1,
+      "decisions": 61,
+      "overrides": 38
+    },
+    {
+      "opponent": "heldout-energy",
+      "seed": 0,
+      "side": 0,
+      "decisions": 63,
+      "overrides": 38
+    },
+    {
+      "opponent": "heldout-energy",
+      "seed": 0,
+      "side": 1,
+      "decisions": 58,
+      "overrides": 39
+    },
+    {
+      "opponent": "heldout-energy",
+      "seed": 1,
+      "side": 0,
+      "decisions": 63,
+      "overrides": 39
+    },
+    {
+      "opponent": "heldout-energy",
+      "seed": 1,
+      "side": 1,
+      "decisions": 61,
+      "overrides": 42
+    },
+    {
+      "opponent": "heldout-energy",
+      "seed": 2,
+      "side": 0,
+      "decisions": 60,
+      "overrides": 39
+    },
+    {
+      "opponent": "heldout-energy",
+      "seed": 2,
+      "side": 1,
+      "decisions": 61,
+      "overrides": 37
+    },
+    {
+      "opponent": "heldout-energy",
+      "seed": 3,
+      "side": 0,
+      "decisions": 59,
+      "overrides": 38
+    },
+    {
+      "opponent": "heldout-energy",
+      "seed": 3,
+      "side": 1,
+      "decisions": 60,
+      "overrides": 38
+    }
+  ],
+  "scope": "Diagnostic partition only; not validation/final evaluation; no engine or reward changes."
+}

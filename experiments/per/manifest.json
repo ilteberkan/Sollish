@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "baseRpc": "https://api.devnet.solana.com",
+  "baseRpcAlternative": "https://rpc.magicblock.app/devnet",
+  "teeRpc": "https://devnet-tee.magicblock.app",
+  "erRpc": "https://devnet.magicblock.app",
+  "devnetGenesisHash": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG",
+  "teeValidator": "MTEWGuqxUpYZGFJQcp8tLN7x5v9BSeoFHYWQQ3n3xzo",
+  "sdkVersion": "0.17.3",
+  "sources": {
+    "sdkCommit": "fb19a37c829f4c7487b4101a12ddd76577dbf668",
+    "examplesCommit": "e8393c60a82f73259a39abe807c6273a83659d0a",
+    "vrfCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+    "delegationCommit": "fb6668c7b5ffd6a89bedee1d13b16402fd0e65de"
+  },
+  "programs": {
+    "delegation": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+    "vrf": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+    "permission": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1",
+    "privateCounterSource": "9aXAUZm1SdXcX4m1W5SHAywp6CBUbUxymruMnkYvz9bR",
+    "privateCounterBundledIdl": "2WJiwbdnwo7qVC3zesZjFWEPUcU2NZbBXf8arMUJ6p89"
+  },
+  "queues": {
+    "baseDefault": "Cuj97ggrhhidhbu39TijNVqE74xvKJ69gDervRUXAxGh",
+    "delegated": "5hBR571xnXppuCPveTrctfTU7tJLSN94nq7kv7FRK5Tc"
+  },
+  "expectedTeeMeasurements": null,
+  "approvedOwnCounterDeployment": null,
+  "ownProbeBuild": {
+    "programId": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "artifactReport": "program/artifacts/own-probe-build.json",
+    "scope": "Local SBF/IDL build record; observed deployment is recorded separately and is not G0 or production approval"
+  },
+  "observedOwnProbeDeployment": {
+    "observedAt": "2026-10-01T14:35:21.138Z",
+    "programId": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "report": "evidence/own-probe-deployment.json",
+    "teeCopyReport": "evidence/own-probe-tee-copy.json",
+    "initializationReport": "evidence/interrupted-l1-initialization.json",
+    "limitedExperimentReport": "evidence/probe-resume-initialized-latest.json",
+    "finalReadbackReport": "evidence/own-probe-final-readback.json",
+    "limitedExperimentOutcome": "COMPLETED_LIMITED_EXPERIMENT",
+    "scope": "Finalized owned devnet ELF deployment and completed limited same-round probe; RPC-observed TEE ELF equality and callback/command/reveal results are not attestation, privacy, G0, game or payment approval; TEE finalized status is not L1 commitment",
+    "productionApproval": false
+  }
+}

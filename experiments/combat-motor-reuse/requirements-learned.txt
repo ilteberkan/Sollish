@@ -1,0 +1,6 @@
+# Additional numeric-reader/build dependencies; source archives are separately SHA-pinned.
+numpy==2.5.3
+protobuf==3.18.3
+six==1.17.0
+setuptools==80.9.0
+wheel==0.45.1

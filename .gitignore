@@ -1,0 +1,26 @@
+**/target/
+/.tooling/
+node_modules/
+.next/
+.open-next/
+.wrangler/
+.env
+.env.*
+!.env.example
+**/*keypair*.json
+.DS_Store
+.dev.vars
+.dev.vars.*
+dist/
+playwright-report/
+test-results/
+*.tsbuildinfo
+.tooling-dry-run/
+
+# Local Python research caches
+__pycache__/
+*.py[cod]
+
+# Personal Claude Code files
+.claude/settings.local.json
+CLAUDE.local.md

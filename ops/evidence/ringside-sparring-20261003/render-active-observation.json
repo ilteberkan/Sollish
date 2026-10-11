@@ -1,0 +1,18 @@
+{
+  "start": {
+    "at": 1791034651335,
+    "frames": 5619,
+    "tick": 30
+  },
+  "end": {
+    "at": 1791034674134,
+    "frames": 7387,
+    "tick": 787
+  },
+  "scope": "Mixed active/terminal interval; no active or sustained FPS claim.",
+  "intervalCompletedFight": true,
+  "averageIsNotActiveFPS": true,
+  "status": "INCONCLUSIVE_FOR_ACTIVE_FPS",
+  "reason": "Measurement interval included match completion and on-demand idle rendering. Do not interpret average rendering count as active or sustained FPS.",
+  "rawRenderingRateIncludingTerminalIdle": 77.5472608447739
+}

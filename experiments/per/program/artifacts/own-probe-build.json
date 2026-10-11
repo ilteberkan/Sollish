@@ -1,0 +1,46 @@
+{
+  "generatedAt": "2026-10-01T05:34:29.187Z",
+  "scope": "LOCAL BUILD ONLY; NOT DEPLOYED",
+  "localArtifactConsistency": "PASS",
+  "programId": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+  "binaryBytes": 292384,
+  "binarySha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+  "sourceSha256": "674254f64675dac516f5f566534db97ad3c1f1460fcb99c6f8603fe5a7d73449",
+  "idlSha256": "d71cf0464d04a123d15fd743968e6e15cbadc6a6083fd3e2c9e333bebc51717e",
+  "cargoLockSha256": "84a0690471d94decb41794b22925c4e42fbc57ca5a0ed53c95eeac6cc3ded490",
+  "programIds": {
+    "source": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "idl": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "ownedKey": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "anchorConfigurations": [
+      "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+      "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va"
+    ]
+  },
+  "sdk": {
+    "anchor": "1.2.0",
+    "ephemeralRollups": "0.16.2",
+    "ephemeralVrf": "0.4.1",
+    "hostRust": "1.95.0"
+  },
+  "commitFrequencyMs": 4294967295,
+  "commitFrequencyMeaning": "Finite interval (~49.7 days); automatic commit disabled is NOT proven",
+  "instructions": [
+    "consume_probe_randomness",
+    "delegate_receipt",
+    "delegate_round",
+    "initialize_receipt",
+    "initialize_round",
+    "prepare_private",
+    "process_undelegation",
+    "request_probe_randomness",
+    "reveal_probe",
+    "submit_probe"
+  ],
+  "G0OwnedDeployment": "BLOCKED: no devnet deployment",
+  "G1": "BLOCKED: not run on PER",
+  "G2": "BLOCKED: not run on PER",
+  "G3": "BLOCKED: not run on PER",
+  "inspectorCanRead": true,
+  "operatorBlindClaim": false
+}

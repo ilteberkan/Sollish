@@ -1,0 +1,703 @@
+{
+ "matches": 12000,
+ "graph": "malecns",
+ "rates": {
+  "actor": 0.1,
+  "critic": 0.05,
+  "fast": 0.5,
+  "entropy": 0.1
+ },
+ "tag": "v5ktune1",
+ "seeds": "v5ktune1:0..11999",
+ "pool": [
+  "pressure",
+  "jabber",
+  "counter",
+  "highGuard",
+  "random",
+  "self"
+ ],
+ "log": [
+  {
+   "matches": 600,
+   "seconds": 13,
+   "pressure": {
+    "win": 0.275,
+    "margin": -103,
+    "kicks": 0.414
+   },
+   "jabber": {
+    "win": 0.645,
+    "margin": 49,
+    "kicks": 0.53
+   },
+   "counter": {
+    "win": 0.82,
+    "margin": 135,
+    "kicks": 0.534
+   },
+   "highGuard": {
+    "win": 0.545,
+    "margin": 17,
+    "kicks": 0.488
+   },
+   "random": {
+    "win": 0.64,
+    "margin": 62,
+    "kicks": 0.551
+   },
+   "self": {
+    "win": 0.51,
+    "margin": 8,
+    "kicks": 0.605
+   }
+  },
+  {
+   "matches": 1200,
+   "seconds": 25,
+   "pressure": {
+    "win": 0.35,
+    "margin": -72,
+    "kicks": 0.364
+   },
+   "jabber": {
+    "win": 0.66,
+    "margin": 40,
+    "kicks": 0.456
+   },
+   "counter": {
+    "win": 0.865,
+    "margin": 147,
+    "kicks": 0.458
+   },
+   "highGuard": {
+    "win": 0.6,
+    "margin": 51,
+    "kicks": 0.43
+   },
+   "random": {
+    "win": 0.66,
+    "margin": 72,
+    "kicks": 0.536
+   },
+   "self": {
+    "win": 0.56,
+    "margin": 23,
+    "kicks": 0.489
+   }
+  },
+  {
+   "matches": 1800,
+   "seconds": 38,
+   "pressure": {
+    "win": 0.41,
+    "margin": -60,
+    "kicks": 0.336
+   },
+   "jabber": {
+    "win": 0.5,
+    "margin": 5,
+    "kicks": 0.441
+   },
+   "counter": {
+    "win": 0.885,
+    "margin": 163,
+    "kicks": 0.468
+   },
+   "highGuard": {
+    "win": 0.69,
+    "margin": 51,
+    "kicks": 0.399
+   },
+   "random": {
+    "win": 0.685,
+    "margin": 77,
+    "kicks": 0.496
+   },
+   "self": {
+    "win": 0.42,
+    "margin": -9,
+    "kicks": 0.495
+   }
+  },
+  {
+   "matches": 2400,
+   "seconds": 51,
+   "pressure": {
+    "win": 0.32,
+    "margin": -53,
+    "kicks": 0.32
+   },
+   "jabber": {
+    "win": 0.66,
+    "margin": 44,
+    "kicks": 0.434
+   },
+   "counter": {
+    "win": 0.78,
+    "margin": 129,
+    "kicks": 0.425
+   },
+   "highGuard": {
+    "win": 0.77,
+    "margin": 109,
+    "kicks": 0.406
+   },
+   "random": {
+    "win": 0.74,
+    "margin": 98,
+    "kicks": 0.452
+   },
+   "self": {
+    "win": 0.405,
+    "margin": -31,
+    "kicks": 0.416
+   }
+  },
+  {
+   "matches": 3000,
+   "seconds": 63,
+   "pressure": {
+    "win": 0.39,
+    "margin": -48,
+    "kicks": 0.339
+   },
+   "jabber": {
+    "win": 0.64,
+    "margin": 34,
+    "kicks": 0.416
+   },
+   "counter": {
+    "win": 0.84,
+    "margin": 150,
+    "kicks": 0.467
+   },
+   "highGuard": {
+    "win": 0.68,
+    "margin": 49,
+    "kicks": 0.405
+   },
+   "random": {
+    "win": 0.73,
+    "margin": 73,
+    "kicks": 0.444
+   },
+   "self": {
+    "win": 0.44,
+    "margin": -21,
+    "kicks": 0.458
+   }
+  },
+  {
+   "matches": 3600,
+   "seconds": 75,
+   "pressure": {
+    "win": 0.37,
+    "margin": -49,
+    "kicks": 0.316
+   },
+   "jabber": {
+    "win": 0.62,
+    "margin": 42,
+    "kicks": 0.419
+   },
+   "counter": {
+    "win": 0.89,
+    "margin": 178,
+    "kicks": 0.437
+   },
+   "highGuard": {
+    "win": 0.64,
+    "margin": 52,
+    "kicks": 0.38
+   },
+   "random": {
+    "win": 0.71,
+    "margin": 79,
+    "kicks": 0.441
+   },
+   "self": {
+    "win": 0.5,
+    "margin": 1,
+    "kicks": 0.455
+   }
+  },
+  {
+   "matches": 4200,
+   "seconds": 87,
+   "pressure": {
+    "win": 0.38,
+    "margin": -54,
+    "kicks": 0.316
+   },
+   "jabber": {
+    "win": 0.57,
+    "margin": 25,
+    "kicks": 0.413
+   },
+   "counter": {
+    "win": 0.88,
+    "margin": 171,
+    "kicks": 0.406
+   },
+   "highGuard": {
+    "win": 0.68,
+    "margin": 56,
+    "kicks": 0.39
+   },
+   "random": {
+    "win": 0.76,
+    "margin": 104,
+    "kicks": 0.426
+   },
+   "self": {
+    "win": 0.57,
+    "margin": 17,
+    "kicks": 0.427
+   }
+  },
+  {
+   "matches": 4800,
+   "seconds": 101,
+   "pressure": {
+    "win": 0.5,
+    "margin": -12,
+    "kicks": 0.299
+   },
+   "jabber": {
+    "win": 0.69,
+    "margin": 58,
+    "kicks": 0.385
+   },
+   "counter": {
+    "win": 0.905,
+    "margin": 169,
+    "kicks": 0.421
+   },
+   "highGuard": {
+    "win": 0.68,
+    "margin": 69,
+    "kicks": 0.392
+   },
+   "random": {
+    "win": 0.74,
+    "margin": 86,
+    "kicks": 0.466
+   },
+   "self": {
+    "win": 0.495,
+    "margin": -6,
+    "kicks": 0.407
+   }
+  },
+  {
+   "matches": 5400,
+   "seconds": 113,
+   "pressure": {
+    "win": 0.41,
+    "margin": -34,
+    "kicks": 0.312
+   },
+   "jabber": {
+    "win": 0.62,
+    "margin": 55,
+    "kicks": 0.388
+   },
+   "counter": {
+    "win": 0.91,
+    "margin": 183,
+    "kicks": 0.447
+   },
+   "highGuard": {
+    "win": 0.81,
+    "margin": 122,
+    "kicks": 0.381
+   },
+   "random": {
+    "win": 0.78,
+    "margin": 113,
+    "kicks": 0.426
+   },
+   "self": {
+    "win": 0.52,
+    "margin": 10,
+    "kicks": 0.404
+   }
+  },
+  {
+   "matches": 6000,
+   "seconds": 126,
+   "pressure": {
+    "win": 0.45,
+    "margin": -19,
+    "kicks": 0.322
+   },
+   "jabber": {
+    "win": 0.665,
+    "margin": 52,
+    "kicks": 0.431
+   },
+   "counter": {
+    "win": 0.94,
+    "margin": 191,
+    "kicks": 0.431
+   },
+   "highGuard": {
+    "win": 0.755,
+    "margin": 97,
+    "kicks": 0.397
+   },
+   "random": {
+    "win": 0.79,
+    "margin": 110,
+    "kicks": 0.44
+   },
+   "self": {
+    "win": 0.49,
+    "margin": 6,
+    "kicks": 0.427
+   }
+  },
+  {
+   "matches": 6600,
+   "seconds": 138,
+   "pressure": {
+    "win": 0.45,
+    "margin": -29,
+    "kicks": 0.329
+   },
+   "jabber": {
+    "win": 0.65,
+    "margin": 66,
+    "kicks": 0.384
+   },
+   "counter": {
+    "win": 0.92,
+    "margin": 167,
+    "kicks": 0.432
+   },
+   "highGuard": {
+    "win": 0.81,
+    "margin": 110,
+    "kicks": 0.406
+   },
+   "random": {
+    "win": 0.77,
+    "margin": 97,
+    "kicks": 0.44
+   },
+   "self": {
+    "win": 0.465,
+    "margin": -22,
+    "kicks": 0.419
+   }
+  },
+  {
+   "matches": 7200,
+   "seconds": 150,
+   "pressure": {
+    "win": 0.42,
+    "margin": -36,
+    "kicks": 0.343
+   },
+   "jabber": {
+    "win": 0.71,
+    "margin": 84,
+    "kicks": 0.399
+   },
+   "counter": {
+    "win": 0.93,
+    "margin": 182,
+    "kicks": 0.425
+   },
+   "highGuard": {
+    "win": 0.79,
+    "margin": 116,
+    "kicks": 0.386
+   },
+   "random": {
+    "win": 0.73,
+    "margin": 92,
+    "kicks": 0.419
+   },
+   "self": {
+    "win": 0.46,
+    "margin": -12,
+    "kicks": 0.396
+   }
+  },
+  {
+   "matches": 7800,
+   "seconds": 162,
+   "pressure": {
+    "win": 0.42,
+    "margin": -43,
+    "kicks": 0.313
+   },
+   "jabber": {
+    "win": 0.77,
+    "margin": 94,
+    "kicks": 0.412
+   },
+   "counter": {
+    "win": 0.95,
+    "margin": 213,
+    "kicks": 0.452
+   },
+   "highGuard": {
+    "win": 0.84,
+    "margin": 109,
+    "kicks": 0.423
+   },
+   "random": {
+    "win": 0.745,
+    "margin": 82,
+    "kicks": 0.441
+   },
+   "self": {
+    "win": 0.41,
+    "margin": -3,
+    "kicks": 0.402
+   }
+  },
+  {
+   "matches": 8400,
+   "seconds": 174,
+   "pressure": {
+    "win": 0.48,
+    "margin": -27,
+    "kicks": 0.334
+   },
+   "jabber": {
+    "win": 0.7,
+    "margin": 68,
+    "kicks": 0.421
+   },
+   "counter": {
+    "win": 0.93,
+    "margin": 182,
+    "kicks": 0.467
+   },
+   "highGuard": {
+    "win": 0.75,
+    "margin": 90,
+    "kicks": 0.42
+   },
+   "random": {
+    "win": 0.765,
+    "margin": 96,
+    "kicks": 0.429
+   },
+   "self": {
+    "win": 0.48,
+    "margin": -23,
+    "kicks": 0.416
+   }
+  },
+  {
+   "matches": 9000,
+   "seconds": 187,
+   "pressure": {
+    "win": 0.46,
+    "margin": -29,
+    "kicks": 0.32
+   },
+   "jabber": {
+    "win": 0.75,
+    "margin": 95,
+    "kicks": 0.438
+   },
+   "counter": {
+    "win": 0.94,
+    "margin": 198,
+    "kicks": 0.455
+   },
+   "highGuard": {
+    "win": 0.82,
+    "margin": 107,
+    "kicks": 0.426
+   },
+   "random": {
+    "win": 0.775,
+    "margin": 101,
+    "kicks": 0.425
+   },
+   "self": {
+    "win": 0.405,
+    "margin": -17,
+    "kicks": 0.413
+   }
+  },
+  {
+   "matches": 9600,
+   "seconds": 198,
+   "pressure": {
+    "win": 0.43,
+    "margin": -12,
+    "kicks": 0.316
+   },
+   "jabber": {
+    "win": 0.745,
+    "margin": 92,
+    "kicks": 0.426
+   },
+   "counter": {
+    "win": 0.94,
+    "margin": 203,
+    "kicks": 0.429
+   },
+   "highGuard": {
+    "win": 0.785,
+    "margin": 111,
+    "kicks": 0.397
+   },
+   "random": {
+    "win": 0.67,
+    "margin": 80,
+    "kicks": 0.427
+   },
+   "self": {
+    "win": 0.42,
+    "margin": -41,
+    "kicks": 0.4
+   }
+  },
+  {
+   "matches": 10200,
+   "seconds": 211,
+   "pressure": {
+    "win": 0.44,
+    "margin": -16,
+    "kicks": 0.313
+   },
+   "jabber": {
+    "win": 0.69,
+    "margin": 89,
+    "kicks": 0.414
+   },
+   "counter": {
+    "win": 0.93,
+    "margin": 206,
+    "kicks": 0.449
+   },
+   "highGuard": {
+    "win": 0.77,
+    "margin": 115,
+    "kicks": 0.395
+   },
+   "random": {
+    "win": 0.7,
+    "margin": 91,
+    "kicks": 0.391
+   },
+   "self": {
+    "win": 0.5,
+    "margin": -4,
+    "kicks": 0.435
+   }
+  },
+  {
+   "matches": 10800,
+   "seconds": 224,
+   "pressure": {
+    "win": 0.43,
+    "margin": -11,
+    "kicks": 0.303
+   },
+   "jabber": {
+    "win": 0.78,
+    "margin": 114,
+    "kicks": 0.392
+   },
+   "counter": {
+    "win": 0.91,
+    "margin": 209,
+    "kicks": 0.435
+   },
+   "highGuard": {
+    "win": 0.85,
+    "margin": 128,
+    "kicks": 0.393
+   },
+   "random": {
+    "win": 0.79,
+    "margin": 112,
+    "kicks": 0.431
+   },
+   "self": {
+    "win": 0.52,
+    "margin": 12,
+    "kicks": 0.407
+   }
+  },
+  {
+   "matches": 11400,
+   "seconds": 236,
+   "pressure": {
+    "win": 0.57,
+    "margin": 7,
+    "kicks": 0.283
+   },
+   "jabber": {
+    "win": 0.725,
+    "margin": 82,
+    "kicks": 0.382
+   },
+   "counter": {
+    "win": 0.91,
+    "margin": 218,
+    "kicks": 0.406
+   },
+   "highGuard": {
+    "win": 0.83,
+    "margin": 123,
+    "kicks": 0.363
+   },
+   "random": {
+    "win": 0.855,
+    "margin": 143,
+    "kicks": 0.392
+   },
+   "self": {
+    "win": 0.46,
+    "margin": -2,
+    "kicks": 0.368
+   }
+  },
+  {
+   "matches": 12000,
+   "seconds": 248,
+   "pressure": {
+    "win": 0.39,
+    "margin": -34,
+    "kicks": 0.314
+   },
+   "jabber": {
+    "win": 0.66,
+    "margin": 78,
+    "kicks": 0.385
+   },
+   "counter": {
+    "win": 0.955,
+    "margin": 211,
+    "kicks": 0.421
+   },
+   "highGuard": {
+    "win": 0.75,
+    "margin": 104,
+    "kicks": 0.382
+   },
+   "random": {
+    "win": 0.74,
+    "margin": 116,
+    "kicks": 0.408
+   },
+   "self": {
+    "win": 0.56,
+    "margin": 24,
+    "kicks": 0.396
+   }
+  }
+ ],
+ "seconds": 248.486080416
+}

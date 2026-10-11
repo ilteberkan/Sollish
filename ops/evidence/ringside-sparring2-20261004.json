@@ -1,0 +1,136 @@
+{
+ "schema": "sollish.evidence.v1",
+ "at": "2026-10-04T02:10+03:00",
+ "status": "LOCAL_PRODUCTION_RUNTIME_VERIFIED_NOT_DEPLOYED",
+ "scope": "Combat Club /lab/ringside/play engine sparring-1 -> sparring-2. Non-monetary; no wagers, wallets, LIVE rounds or accepted tickets use this engine.",
+ "engineVersion": "sparring-2",
+ "supersedes": "sparring-1 (ops/evidence/ringside-sparring-20261003.json, kept as historical record)",
+ "buildId": "58nJGPuyJ2rBqjbkcA3_N",
+ "runtime": "OpenNext Cloudflare build + wrangler/workerd local preview http://localhost:3001",
+ "deployment": "NOT DEPLOYED in this session. Hosted Worker remains version 93645ad3-1955-4f7d-b947-c495d6b604f6 (sparring-1).",
+ "sourceSha256": {
+  "packages/protocol/src/combat-sparring.ts": "e50a99b603069f903afa3f3fb3bfaf5e75a69fc75e2b2f88e518c8e8f80e5b08",
+  "packages/protocol/test/combat-sparring.test.ts": "a63b1afc2a8ff484ae5250dcc66586e43728741c6046658e351a7e3265453d60",
+  "apps/web/components/boxing-sparring.tsx": "9508dc55214005419fc6c82a5d1fd50a336d80401d174df726862bbd41c01bdc",
+  "apps/web/components/boxing-sparring-scene.tsx": "d435bcc9810416ece7ee56e4a16d126022460853879222c833f8d2576157a317",
+  "apps/web/components/boxing-sparring-athletes.ts": "5ac1135ce36f4d6fb4aee266b0750680e15c0bf1914740a1940b3421a6cf5572",
+  "apps/web/components/boxing-sparring.module.css": "17f948dc98a10617a85f57affd6df9d670bb73aba2a5a15d19fe969b7deb2706",
+  "apps/web/lib/sparring-camera.ts": "16a80930c4bad67d8c78484b05852fa3a835557fa9ef063fd0e7df9787feda26",
+  "apps/web/lib/sparring-controls.ts": "47b2e3a58d392209316e6d82edb022b7d0a118625c23a7a51b55e4d587d86668",
+  "apps/web/tests/sparring-camera.test.ts": "e7e3f30fc0e0dd878d57f72c60b1308d2f3f5f1c55cb23b4a2434fb219d3ec89",
+  "apps/web/tests/sparring-controls.test.ts": "69564ae294ea8ea273aef0076c2f6c02adfe49f003c30460a98441641a9e9e2b",
+  "apps/web/tests/browser/ringside-sparring.spec.ts": "98700c0d5ad0a02296e57afee13b2400fdc9c4470b8327a933f0e8974606448f",
+  "scripts/boxing-assets/sparring-replay.test.ts": "746f4d88dcbcd08e5a6360a861e0bdb21473c9081f7b990a7c3e53a3feca5245",
+  "scripts/boxing-assets/test-sparring-replay.mjs": "c4b6cff7562b591c77109aa89bc2f923e6ec5955d229da82a436f30767de9072",
+  "apps/web/public/models/boxing/combat-motion-v1.glb": "8ab9688e12a625ed3d4ec3c7ab752f4f465d90b33d3eef1580b276bc1e3cff39",
+  "experiments/combat-sparring-audit/audit.ts": "ef7629e6d99add320ea30cd4aad181ba2f2010f10969467ed5c132692649be53",
+  "experiments/combat-sparring-audit/baseline-sparring-1.ts": "5396da655410e0932a4b1a78cd13ccaa2e6a2fed097005cce098679177558dd1",
+  "experiments/combat-sparring-audit/capture.mjs": "ae2ead1f7f2cc50a8f4b96b8416e14e8613864318e971cf2340f1c8a9572c6e7",
+  "experiments/combat-sparring-audit/README.md": "59d90abffda87e91c3dacb2b1a5837f8ce542d7a553c296c459809814f0a7c6d"
+ },
+ "frozenLiveSourcesUnchanged": {
+  "packages/protocol/src/combat-v3.ts": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
+  "packages/protocol/src/connectome-policy.ts": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+  "packages/protocol/src/ringside.ts": "17b86d0dfc7467c7d31d2cb0fafd373fe2e65356ca296d5fafb8cf2067b5bf12",
+  "packages/protocol/src/pari-mutuel.ts": "75527f5e04edd319e837708ce81dae33e662d1fd8005710df14a3efbf933a3c6",
+  "packages/protocol/src/live-round.ts": "64bf647babf69f80cd06fae24b2c56e2ec1e8448de258fc0ec3b3386e09870a8",
+  "packages/protocol/src/combat.ts": "aa3471a0e718f6431f3e22859eb102a92e96976de67146596061363fd7e23abf",
+  "apps/realtime/src/ringside-arena.ts": "8a8c2a14130035a1b1616d58547d86f0aec4f4fc8c7d8574cb4d83adf5498e21",
+  "apps/realtime/src/index.ts": "0182b726ba3e20c474cc4031d5001b2a77a2ec07a60ef2b1be0d575a4e4bc29a"
+ },
+ "frozenLiveCheck": "All 8 frozen LIVE/protocol sources match hashes recorded in prior ops/evidence files.",
+ "mechanicsAudit": {
+  "method": "experiments/combat-sparring-audit/README.md",
+  "tuningSeeds": "1-24",
+  "heldOutSeeds": "1001-1048 run once after tuning; no further change",
+  "files": {
+   "baseline-24seeds.json": "2467d8b10cd82dd03ff2d3630694640f53f3b4076e9b3efe1b9887dbded49cdb",
+   "candidate-24seeds.json": "39aee82697f7453d1c61167ed1508e5cd20c3197e14f13a6d0436c5b7090b852",
+   "baseline-heldout-1001-48seeds.json": "d05a82e54f8877e137fab3e183204455529542fa7e36110b7bf27d32af67e2ef",
+   "candidate-heldout-1001-48seeds.json": "de5f41221abcbc4881e875e2492dbe00b6171ad480e6ece6f08e229728ae86e4"
+  },
+  "heldOutSummary": {
+   "limbDepthInsideDeclaredHurtSpheresCm": {
+    "sparring1_p95": "14.3-18.3",
+    "sparring1_max": 21.4,
+    "sparring2_p95": 0.2,
+    "sparring2_max": 0.2,
+    "note": "0.2 cm is bisection tolerance; spheres only, not triangle mesh/limb collision"
+   },
+   "runnerNeverAttacks": {
+    "sparring1": "0 contacts in 90 s, draw (0.500)",
+    "sparring2": "0.000; KO 95-96 %"
+   },
+   "hitAndRun": {
+    "sparring1": 0.677,
+    "sparring2": "0.188-0.380"
+   },
+   "jabSpam": {
+    "sparring1": "0.865-0.885",
+    "sparring2": 0.0
+   },
+   "kickSpam": {
+    "sparring1": 0.0,
+    "sparring2": 0.0,
+    "note": "kick exploit not reproduced in this engine; still open in self-play research env"
+   },
+   "botVsBotMedianBoutS": {
+    "sparring1": "23.5-27.7",
+    "sparring2": "59.9 (balanced/pressure); 90 decision-heavy (balanced/counter, KO 22 %)"
+   }
+  }
+ },
+ "localChecks": {
+  "protocolUnit": "65/65 PASS (61 prior + 4 new sparring-2 regressions; the 4 new tests FAIL against frozen sparring-1, verified)",
+  "webUnit": "76/76 PASS",
+  "webTypecheck": "PASS",
+  "realGlbRig": "10/10 PASS (contact = touching within 4 mm; hook rendered gap fixed via torso rotation)",
+  "assetPython": "test_assets.py OK; test_combat_motion.py OK",
+  "threeMotion": "3/3 PASS",
+  "browserFullSuiteOnBuild": "77/77 PASS, 0 fail/flaky/skip, workers=1, 3.9 min, build 58nJGPuyJ2rBqjbkcA3_N, log .tooling/sparring2-production-browser.log",
+  "notRun": [
+   "realtime/contact/arena/integration suites (realtime code unchanged)",
+   "database/worker/operations/contracts (unchanged)",
+   "GitHub CI (not run; local only)"
+  ]
+ },
+ "motionCaptures": {
+  "method": "experiments/combat-sparring-audit/capture.mjs; headless Chromium with ANGLE Metal on Apple M2; watch mode, same seed; 23.5-23.7 s window ending before any finish",
+  "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2)",
+  "activeCombatAverageFps": {
+   "broadcast1280x720_build58nJ": 59.9,
+   "chase1280x720_build58nJ": 60.0,
+   "top1280x720_build8RVt": 59.9,
+   "mobileViewport390x844_build2b6Qc": 60.0
+  },
+  "fpsLimits": "Average over frame counter only (vsync-bound); p95 frame time, memory and GPU time not measured; screenshot calls stall rendering. Desktop M2 only; 390x844 is viewport emulation on the same Mac, not phone performance.",
+  "images": {
+   "ops/evidence/ringside-sparring2-20261004/broadcast-before-layout-grid.jpg": "sparring-2 engine, OLD layout/camera (370 px stage), build penNFkHjs6WeGSdYkLxGN",
+   "ops/evidence/ringside-sparring2-20261004/broadcast-final-grid.jpg": "final, build 58nJGPuyJ2rBqjbkcA3_N (468 px stage, lower/closer camera)",
+   "ops/evidence/ringside-sparring2-20261004/chase-final-grid.jpg": "final three-quarter chase + rope cutaway, build 58nJGPuyJ2rBqjbkcA3_N",
+   "ops/evidence/ringside-sparring2-20261004/mobile-390-grid.jpg": "390x844 emulation, build 2b6-QcICcyYZHjDE0I-Je (before rope cutaway; broadcast camera unaffected)",
+   "ops/evidence/ringside-sparring2-20261004/contact-detail.jpg": "crop showing jab stopping at head surface, build lD1N4SQnLv7I2kzjFbzBc"
+  },
+  "imageSha256": {
+   "ops/evidence/ringside-sparring2-20261004/broadcast-before-layout-grid.jpg": "dd24198999cd4fc32b2571518115486e2ef83731f321f249726cb340fc357399",
+   "ops/evidence/ringside-sparring2-20261004/broadcast-final-grid.jpg": "f2d60b49a36af3563a71d0cb68439992b872191af910bad58baf463dde981ae8",
+   "ops/evidence/ringside-sparring2-20261004/capture-chase.json": "225e45094ed1603563d5101f8c519a453ee6ee1eb2d8cc24ab57c3f134c9123c",
+   "ops/evidence/ringside-sparring2-20261004/capture-final.json": "4e17b7450886892141dffe8ebc39e8ee70a546633aa7981649b6b79a568d2f70",
+   "ops/evidence/ringside-sparring2-20261004/capture-mobile.json": "2834f1f41e674daedf7e9a09d14f78f446adad43681469398898f4e3cc0aaa7e",
+   "ops/evidence/ringside-sparring2-20261004/capture-top.json": "0afffd89b093f35c76ddac42cb0a5951cd90adbadbebe69394f7b5eb07470ec4",
+   "ops/evidence/ringside-sparring2-20261004/chase-final-grid.jpg": "3ffffff18a08918823f4d6f5fe7ff8fe1aac2bff126d4c810ab378cdd8936f2f",
+   "ops/evidence/ringside-sparring2-20261004/contact-detail.jpg": "c2e27cae13b311b32ae1c02f9140450f1208f204e9f577655b77556a030e9bc7",
+   "ops/evidence/ringside-sparring2-20261004/mobile-390-grid.jpg": "5c7e3282f654892b66a05dca705fd4cdfc6264121c7fe9ee222629bb8f1fc099"
+  }
+ },
+ "remainingAcceptanceLimits": [
+  "User visual/feel acceptance still open; no human playtest of sparring-2",
+  "Exploit probes reused from tuning; only seeds held out",
+  "Hurt volumes are spheres; no triangle-mesh, arm or leg collision",
+  "Bots are scripted heuristics, not learned; Energy6/LIVE imitation/DeepMimic not integrated",
+  "Character art and animation unchanged (Quaternius rig, authored + procedural clips); no AA/mocap",
+  "Kick exploit in self-play research env, Energy6 clean-hit gate and three physics gates remain FAIL/open",
+  "Physical phone QA pending (user-deferred)",
+  "All nine real-asset launch gates unchanged and closed"
+ ]
+}

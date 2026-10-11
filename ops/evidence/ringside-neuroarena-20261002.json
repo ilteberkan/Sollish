@@ -1,0 +1,359 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-10-01T22:45:42.318Z",
+  "kind": "ringside-neuroarena-demo-v2",
+  "url": "https://sollish-web-devnet.sollish-web.workers.dev/live/ringside",
+  "productionApproved": false,
+  "sourcePins": {
+    "packages/protocol/src/combat.ts": "aa3471a0e718f6431f3e22859eb102a92e96976de67146596061363fd7e23abf",
+    "packages/protocol/src/ringside.ts": "58222fdb4479409962e5d72983101fdbc95b1261ce1550bcf688eb578a521fbe",
+    "packages/protocol/src/pari-mutuel.ts": "75527f5e04edd319e837708ce81dae33e662d1fd8005710df14a3efbf933a3c6",
+    "packages/protocol/src/index.ts": "5a311d609f34b764d59196ed2a34892640a5faf2bd4adca62cb5baceb3dd2271",
+    "apps/realtime/src/ringside-arena.ts": "7cc9fd1708449ed66f38bebe3dab8194a80b2a9b7b1befea6ad3d65918cca36c",
+    "apps/realtime/src/index.ts": "99d08bc30ff7dfa243dbce4e9636ed01a93419211f4aa36f36f4944583f0c330",
+    "apps/realtime/wrangler.jsonc": "5bafe37ab4b8dbc2feb354da8e43093591790c5b62244cdf48c3339e43732c22",
+    "apps/web/lib/use-ringside.ts": "f9501a1e349fef47e2bf12680d40efd4f88baf36e3326274bbdd67f360c63e4a",
+    "apps/web/components/ringside-arena.tsx": "ec88ab28499eb737b6a9894b86978c877382f09481399e4a7136e93da03f283a",
+    "apps/web/components/ringside-arena.module.css": "89c33214c2a2bf779048848744e066bb245aa6b4843d80d8547ccad7ee6281bd",
+    "apps/web/components/boxing-scene.tsx": "1c21427f23b0b18239ed5bd13d1ab01df363c6cc0b871047bfbc3b92cd2e0384",
+    "apps/web/components/boxing-scene-athletes.ts": "e78c16d6a81976f6a14e368b85a5e60ea141dea81d250ae03e1f6a96402aec47",
+    "apps/web/app/live/ringside/page.tsx": "79bf27a012fe173044f8d8c3f75d24e66cd0a13c7d18b0dad3cdea7f1c220245",
+    "apps/web/app/games/page.tsx": "51b0d1c6f5393b4e2d9196d69c13e49dc506907e85f53b85699f6daf6fa471f3",
+    "apps/web/components/shell.tsx": "3a82d5dec1e511277ee098a32dd26177758d09df8baeb326569a317983883fc6",
+    "apps/web/public/models/boxing/athlete.glb": "990250562245860eb91864c076412ea4f224a4181d4b7d55738a76c25490dea6",
+    "apps/web/public/models/boxing/credits.json": "ec4cb597388dace604da495f636b31b1a772ecd68d89b961832e23d2e7268bcc",
+    "experiments/decision-agent/typesafe-client.mjs": "a67a017489cd13c581f82c710113b682ef0eba5ebaa246aaf6a9033e5a2638a7",
+    "experiments/connectome/inspect_malecns.py": "b519f6fb3ec45555b6e1cefac59fae09859ea65a9b59dc22ba2adaa072a5840a",
+    "experiments/connectome/validate_dataset.py": "758b9f6de2fb8d8feeb7bd0029ee262fcf2a7caf0271139ac91418cc29bc710b",
+    "docs/product/ringside-neuroarena-spec.md": "41e35e1d15e1bb5192a6374d0f520c982758329badf02eff0260ed44d2b87e95",
+    "AGENTS.md": "a5cce3c2f51e104c7de0e66ed7f4d2afa3daace8692d1c44b17a87c8c4ddb09d"
+  },
+  "deployments": [
+    {
+      "name": "sollish-realtime",
+      "success": true,
+      "deploymentId": "ad64f3e7-253b-4dca-acb8-05e3caf943fb",
+      "createdOn": "2026-10-01T22:37:40.865659Z",
+      "versions": [
+        {
+          "version_id": "514ed724-0995-486b-84ce-1355d11faf8f",
+          "percentage": 100
+        }
+      ],
+      "bindings": [
+        {
+          "name": "ADMISSION",
+          "type": "durable_object_namespace"
+        },
+        {
+          "name": "ALLOWED_ORIGINS",
+          "type": "plain_text"
+        },
+        {
+          "name": "BUCKETS",
+          "type": "durable_object_namespace"
+        },
+        {
+          "name": "FANOUT_BUCKETS",
+          "type": "plain_text"
+        },
+        {
+          "name": "LIVE_ARENA",
+          "type": "durable_object_namespace"
+        },
+        {
+          "name": "LIVE_ARENA_ENABLED",
+          "type": "plain_text"
+        },
+        {
+          "name": "PUBLISH_SIGNING_KEY",
+          "type": "secret_text"
+        },
+        {
+          "name": "RINGSIDE_ARENA",
+          "type": "durable_object_namespace"
+        },
+        {
+          "name": "ROOMS",
+          "type": "durable_object_namespace"
+        },
+        {
+          "name": "SUPABASE_ANON_KEY",
+          "type": "secret_text"
+        },
+        {
+          "name": "SUPABASE_SERVICE_ROLE_KEY",
+          "type": "secret_text"
+        },
+        {
+          "name": "SUPABASE_URL",
+          "type": "secret_text"
+        }
+      ]
+    },
+    {
+      "name": "sollish-web-devnet",
+      "success": true,
+      "deploymentId": "547cbbd1-9269-4e25-94a3-13f1745c9209",
+      "createdOn": "2026-10-01T22:39:46.842927Z",
+      "versions": [
+        {
+          "version_id": "302f65e6-411e-41fc-8d20-6c12f1db06f0",
+          "percentage": 100
+        }
+      ],
+      "bindings": [
+        {
+          "name": "ASSETS",
+          "type": "assets"
+        },
+        {
+          "name": "NEXTJS_ENV",
+          "type": "plain_text"
+        },
+        {
+          "name": "WORKER_SELF_REFERENCE",
+          "type": "service"
+        }
+      ]
+    }
+  ],
+  "buildId": "oqLqVSjR_8Zo-U4sTf3dC",
+  "tests": {
+    "typecheck": "PASS",
+    "workspace": {
+      "passed": 133,
+      "groups": {
+        "protocol": 31,
+        "onchain": 45,
+        "realtime": 11,
+        "web": 24,
+        "worker": 22
+      }
+    },
+    "operations": 28,
+    "realV2Sqlite": {
+      "at": "2026-10-01T22:33:38.852Z",
+      "runtime": "local-workerd-sqlite",
+      "checks": 12,
+      "passed": [
+        "origin and URL credential rejection",
+        "private resumable sessions and distinct online count",
+        "ticket insert and debit failure roll back atomically without an ACK",
+        "concurrent same-session UUID deduplication and immutable ticket payload",
+        "four separate prop pools and server-unique payout IDs",
+        "last millisecond acceptance, exact cutoff denial and post-cutoff same-ticket retry",
+        "public tape contains pseudonyms only; private balances and tickets stay session-scoped",
+        "mid-settlement failure rolls back every pool, fee, ticket and session credit",
+        "simulation-derived settlement, per-pool conservation and one-sided refunds exactly once",
+        "workerd restart persists balances, results and post-settlement duplicate receipts",
+        "expired sessions cannot keep presence or erase unsettled escrow; owner still receives its refund",
+        "new session cleanup and anonymous handshake expiry are bounded"
+      ],
+      "timing": {
+        "openMs": 20000,
+        "fightMs": 60000,
+        "resultMs": 10000
+      },
+      "accounting": {
+        "initialGrantCents": 200000,
+        "roundStakeCents": 4900,
+        "finalBalanceCents": 199968,
+        "platformFeeCents": 32,
+        "settledTickets": 7,
+        "independentPools": 4
+      },
+      "scope": "Real local workerd, SQLite transactions, WebSockets, actual server CSPRNG, commitment/replay, durable restart and injected SQL failures. Only generated fixture advances its clock through actual production alarm/advance. No cloud load, real assets, VRF, trusted-server fairness proof or production readiness."
+    },
+    "previousV1State": {
+      "at": "2026-10-01T22:36:54.760Z",
+      "runtime": "local-workerd-sqlite",
+      "checks": 13,
+      "sharedRoundId": "1",
+      "timing": {
+        "windowMs": 5000,
+        "fightMs": 8800,
+        "resultMs": 4000
+      },
+      "scope": "Two independent anonymous demo players plus same-token concurrent reconnect. Real workerd alarms/SQLite, actual server CSPRNG, injected SQL failure, restart persistence. Not hosted load, VRF, financial settlement, Sybil resistance or production readiness."
+    },
+    "previousV1Router": {
+      "at": "2026-10-01T22:37:15.873Z",
+      "runtime": "local-workerd-production-router",
+      "checks": 12,
+      "scope": "Default-off flag, origin, query, upgrade, actual IP admission 30/min under concurrent handshake, 10s anonymous close initiation and removal from fanout, unchanged unavailable chat/financial status. Node/workerd full close handshake may complete later. Local headers simulate the Cloudflare edge IP; no hosted bot resistance or global capacity claim."
+    },
+    "productionBrowser": {
+      "startTime": "2026-10-01T22:37:30.672Z",
+      "duration": 62990.679000000004,
+      "expected": 50,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "assetBinary": 5,
+    "assetReplay": 4,
+    "decisionAdapterOffline": 16,
+    "connectome": {
+      "stdlibPassed": 17,
+      "optionalArrowPassed": 6,
+      "optionalSkippedWithoutArrow": 6
+    },
+    "remoteGitHubCiRunClaimed": false
+  },
+  "hosted": {
+    "at": "2026-10-01T22:42:04.275Z",
+    "scope": "Actual hosted Cloudflare V2 + independent browser sessions, no mocked outcome/clock/transport, DEMO only.",
+    "build": "oqLqVSjR_8Zo-U4sTf3dC",
+    "roundId": "1",
+    "initialBalances": [
+      100000,
+      100000
+    ],
+    "finalBalances": [
+      99960,
+      99960
+    ],
+    "poolFees": 80,
+    "pools": [
+      {
+        "market": "winner",
+        "total": 2000,
+        "count": 2,
+        "sides": {
+          "kor": 1000,
+          "ayaz": 1000,
+          "draw": 0
+        },
+        "fee": 40,
+        "distributed": 1960,
+        "status": "paid"
+      },
+      {
+        "market": "first-hit",
+        "total": 1000,
+        "count": 1,
+        "sides": {
+          "kor": 1000,
+          "ayaz": 0,
+          "simultaneous": 0,
+          "none": 0
+        },
+        "fee": 0,
+        "distributed": 1000,
+        "status": "refunded"
+      },
+      {
+        "market": "knockdown",
+        "total": 1000,
+        "count": 1,
+        "sides": {
+          "yes": 1000,
+          "no": 0
+        },
+        "fee": 0,
+        "distributed": 1000,
+        "status": "refunded"
+      },
+      {
+        "market": "finish",
+        "total": 2000,
+        "count": 2,
+        "sides": {
+          "stoppage": 1000,
+          "decision": 1000
+        },
+        "fee": 40,
+        "distributed": 1960,
+        "status": "paid"
+      }
+    ],
+    "results": {
+      "winner": "kor",
+      "first-hit": "kor",
+      "knockdown": "no",
+      "finish": "decision"
+    },
+    "online": 2,
+    "participants": 2,
+    "acceptedCount": 6,
+    "acceptedTotal": 6000,
+    "auditCount": 6,
+    "commitmentVerified": true,
+    "fullscreenVerified": true,
+    "assets": [
+      {
+        "name": "athlete.glb",
+        "sha256": "990250562245860eb91864c076412ea4f224a4181d4b7d55738a76c25490dea6"
+      },
+      {
+        "name": "credits.json",
+        "sha256": "ec4cb597388dace604da495f636b31b1a772ecd68d89b961832e23d2e7268bcc"
+      }
+    ],
+    "errors": [],
+    "mobileOverflow": false
+  },
+  "performance": {
+    "at": "2026-10-01T22:41:48.496Z",
+    "scope": "Local production workerd bundle, native Metal on Apple M2, deterministic transport fixture; actual 3D replay with three rigs. Not mobile hardware/global capacity.",
+    "firstReadyMs": 1297,
+    "frames": 361,
+    "fps": 30.049080164253354,
+    "medianMs": 33.39999997615814,
+    "p95Ms": 33.900000005960464,
+    "errors": [],
+    "cleanup": {
+      "buffer": 116,
+      "bufferDelete": 116,
+      "texture": 40,
+      "textureDelete": 35,
+      "program": 24,
+      "programDelete": 16,
+      "canvas": 0
+    }
+  },
+  "publicAssetCredentialScan": {
+    "observedAt": "2026-10-01T22:37:15.284Z",
+    "scope": "Exact comparison of available local server credential values against all public Cloudflare assets. Does not claim generalized secret detection.",
+    "files": 49,
+    "privateValuesCompared": 3,
+    "matches": 0
+  },
+  "research": {
+    "dataInspectionPath": "experiments/connectome/evidence/malecns-inspection.json",
+    "dataInspectionSha256": "f4d9532602f3f85b8e0531fb35992cc5beac8ad7b434e682ea4b4fee1a16049e",
+    "completeConnectomeGraphDownloadedAndScanned": true,
+    "trainedConnectomeController": false,
+    "neuralDynamicsImplemented": false,
+    "csrRuntime": false,
+    "consciousnessClaim": false,
+    "typesafeLiveRequests": 0,
+    "apiKeyPersisted": false
+  },
+  "financial": {
+    "realMoneyEnabled": false,
+    "newSolanaPooledContract": false,
+    "coreEvidenceStatus": "CONSISTENT",
+    "coreBlockedGates": [
+      "coinflip.same-proof-integration",
+      "coinflip.proof-availability",
+      "coinflip.recovery-license",
+      "coinflip.live-provider",
+      "crash.attestation",
+      "crash.privacy",
+      "crash.manual-cashout",
+      "crash.payment-recovery",
+      "launch.independent-review"
+    ],
+    "coreProductionApproved": false,
+    "collateralModel": "Independent valueless DEMO pari-mutuel pools; no house-funded payout obligation; not a net-profit guarantee"
+  },
+  "limitations": [
+    "Reactive integer kinematic baseline, not trained biological controller or high fidelity collision physics.",
+    "Seed commitment/replay does not prove honest operator randomness or independent execution; no VRF.",
+    "256 socket/256-ticket pilot; thousands of concurrent V2 players not measured.",
+    "Physical mobile performance, licensed combat mocap, learned policy and real-money protocol remain open.",
+    "Hosted check used two actual independent sessions and DEMO only; no funds or token entitlements."
+  ]
+}

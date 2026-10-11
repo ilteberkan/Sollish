@@ -1,0 +1,169 @@
+{
+ "date": "2026-10-09",
+ "engine": "ringside-contact-5-78ccfa82",
+ "weightsSha256": "78ccfa8295c4e89ce6c6eabeb779eca61e3d3dd8b5792b319b1cb2a282cee45a",
+ "scope": "local only; nothing deployed; DEMO only",
+ "decisions": {
+  "inMatchLearning": "approved by owner: frozen rule/initial weights/hyperparameters, deterministic updates from observable events",
+  "jev": "corner coach, one call per 6 s for both corners, hash-chained log, deterministic fallback",
+  "key": "stored in .tooling/secrets/typesafe.env only; not on Cloudflare",
+  "animation": "show both prototypes first (/lab/ringside/motion)"
+ },
+ "learner": {
+  "reservoir": "MaleCNS v1.0 descending-128 graph (copied from Contact 4 policy, readout dropped)",
+  "rule": "reservoir actor-critic TD(0) + fast per-action bias + entropy bonus; deterministic tanh/exp/log",
+  "inMatchRates": {
+   "actor": 1,
+   "critic": 0.05,
+   "fast": 2,
+   "fastDecay": 0.02,
+   "entropy": 0.03
+  },
+  "checkpoint": "experiments/ringside-learner/runs/main (12000 lifetime rounds, entropy 0.1)"
+ },
+ "heldOutTests": {
+  "rule-v1": {
+   "learnedOpponents": {
+    "mean": 44.81,
+    "lo": 31.05,
+    "hi": 58.17
+   },
+   "scripts": {
+    "mean": -0.89,
+    "lo": -14.58,
+    "hi": 12.83
+   },
+   "malecnsVsShuffled": {
+    "mean": -24.22,
+    "lo": -37.72,
+    "hi": -9.68
+   },
+   "verdict": "in-match claim passed, but mirror bouts unwatchable (33% clinch, knockdowns 0.7%); not shipped"
+  },
+  "rule-v2": {
+   "learnedOpponents": {
+    "mean": 2.35,
+    "lo": -24,
+    "hi": 28.94
+   },
+   "verdict": "in-match claim failed"
+  },
+  "rule-v3 (shipped locally)": {
+   "learnedOpponents": {
+    "mean": -2.59,
+    "lo": -28.41,
+    "hi": 24.24
+   },
+   "learnedWin": {
+    "mean": 0.01,
+    "lo": -0.04,
+    "hi": 0.05
+   },
+   "scripts": {
+    "mean": 42.52,
+    "lo": 16.34,
+    "hi": 69.75
+   },
+   "scriptsBySlipper": {
+    "mean": 75.29,
+    "lo": 30.14,
+    "hi": 120.86
+   },
+   "scriptsByMover": {
+    "mean": 103.17,
+    "lo": 60.01,
+    "hi": 148.42
+   },
+   "malecnsVsShuffled": {
+    "mean": 5.46,
+    "lo": -18.01,
+    "hi": 29.22
+   },
+   "verdict": "pre-registered primary claim NOT met (learned opponents); secondary: in-match learning beats its frozen copy against held-out fixed-style opponents; connectome superiority not shown"
+  }
+ },
+ "balance": {
+  "seeds": "balance2:0..299",
+  "kor": 0.473,
+  "ayaz": 0.523,
+  "draw": 0.003,
+  "knockdown": 0.41,
+  "stoppage": 0.043,
+  "strikesPerRound": 97.033,
+  "hitsPerRound": 34.023,
+  "techniques": {
+   "bodyHook": 0.114,
+   "rearHook": 0.121,
+   "leadHook": 0.148,
+   "cross": 0.254,
+   "jab": 0.261,
+   "uppercut": 0.102
+  },
+  "band": {
+   "korShare": true,
+   "punches": true,
+   "knockdowns": true
+  },
+  "pass": true
+ },
+ "tests": {
+  "protocol": "124/124",
+  "web": "100/100",
+  "realtime unit": "11/11",
+  "workerd contact-v5": "10/10 checks (Jev ok, malformed, timeout, missed deadlines, duplicate alarm, budget, settlement from log, key not leaked, restart)",
+  "workerd contact v3/v4": "16/16 each",
+  "workerd ringside v2": "pass",
+  "typecheck": "protocol, realtime, web clean",
+  "instructionBudgets": "6/6"
+ },
+ "motionPrototype": {
+  "page": "/lab/ringside/motion (local next dev :3000)",
+  "probe": "60 Hz sweep of a full round in the real browser, 2701 frames, 39 contacts",
+  "contactGapCm": {
+   "p95": 1.0,
+   "max": 3.7,
+   "over3cm": "1/39 (blocked cross)"
+  },
+  "glovePenetration": {
+   "max_mm": 14.1,
+   "framesOver5mm": "0.07%"
+  },
+  "supportFootSlideCmPerStep": 0.63,
+  "jointSpeedP99RadS": 45,
+  "worldBoneSpeedP99RadS": 119,
+  "updateMsPerFrame": 0.48,
+  "notMeasured": "fps on a mid-range phone (browser pane was hidden, rAF throttled); user visual acceptance",
+  "screenshots": [
+   "motion-ab/ab-overview.jpg",
+   "motion-ab/ab-cross-2850ms.png",
+   "motion-ab/ab-leadhook-4300ms.png"
+  ]
+ },
+ "open": [
+  "phone 60 fps not measured",
+  "Mixamo terms forbid redistributing standalone animation files; the public animation-only GLB needs a licence review before hosting"
+ ],
+ "realJevCall": {
+  "count": 17,
+  "key": "new owner key from .tooling/secrets/typesafe.env (not printed)",
+  "model": "jev-1.13.0",
+  "elapsedMs": 545,
+  "usage": {
+   "inputTokens": 2281,
+   "outputTokens": 280
+  },
+  "parsed": "strict closed schema passed for all six questions",
+  "minConfidence": 0.02,
+  "note": "one call answers both corners; 8 calls per 45 s round at most"
+ },
+ "liveBrowserTest": {
+  "date": "2026-10-09",
+  "setup": "local wrangler dev realtime :8787 (real TYPESAFE key from .tooling/secrets via --env-file, JEV_CALL_BUDGET 16) + existing next dev :3000 with a temporary .env.development.local (deleted after)",
+  "result": "one 3-round bout: rounds 1-2 every plan from Jev (16/16 OK, 326-572 ms), round 3 BUDGET_EXHAUSTED -> deterministic fallback shown as 'yedek plan'; browser verified commitment, plan chain and results by replay (no mismatch alert); DEMO tickets settled; corner board moved below the stage after the test showed it covering the fighters",
+  "notTested": "hosted Cloudflare, phone, Playwright suite for v5",
+  "files": [
+   "live-v5-round2.jpg",
+   "live-v5-jev-calls.jsonl"
+  ]
+ }
+}

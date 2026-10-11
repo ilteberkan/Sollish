@@ -1,0 +1,93 @@
+{
+ "at": "2026-10-05T15:07:06.736Z",
+ "base": "http://localhost:3002",
+ "scope": "local production runtime (OpenNext build served by wrangler dev/workerd), headless Chromium on this Mac with ANGLE/Metal; not hosted, not a device benchmark; screenshots stall rendering",
+ "scenarioA": {
+  "viewport": "1280x720",
+  "query": "?probe=1&seed=7",
+  "gl": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+  "endTick": 1815,
+  "meters": {
+   "KOR sağlık": 731,
+   "KOR enerji": 556,
+   "AYAZ sağlık": 872,
+   "AYAZ enerji": 393
+  },
+  "chips": [
+   {
+    "label": "KOR dövüş stili",
+    "source": "neuro",
+    "text": "Kontracı öğrenilmiş"
+   },
+   {
+    "label": "AYAZ dövüş stili",
+    "source": "neuro",
+    "text": "Kontracı öğrenilmiş"
+   }
+  ],
+  "shots": [
+   {
+    "file": "A-desktop-0.jpg",
+    "tick": 365
+   },
+   {
+    "file": "A-desktop-1.jpg",
+    "tick": 965
+   },
+   {
+    "file": "A-desktop-2.jpg",
+    "tick": 1810
+   }
+  ],
+  "errors": [],
+  "fighterProbe": {
+   "frames": 1812,
+   "dtMsP50": 16.7,
+   "dtMsP99": 16.8,
+   "rootJumpMaxM": 0.0894,
+   "boneSpeedP99RadS": 179.9302,
+   "camJumpMaxM": 0.0481,
+   "penetrationMaxM": 0.2295,
+   "penetrationP99M": 0.1836,
+   "framesOver1cm": 628,
+   "rawPenetrationMaxM": 0.3501,
+   "rawFramesOver1cm": 1371,
+   "rootOffsetMaxM": 0.12
+  },
+  "refereeProbe": {
+   "frames": 1816,
+   "rootStepMaxM": 0.0242,
+   "footSlideMeanPerPlantedFrameM": 0.00008,
+   "steps": 112,
+   "footSlidePerStepP95M": 0.0067,
+   "footSlidePerStepMaxM": 0.0251
+  }
+ },
+ "scenarioB": {
+  "viewport": "390x844",
+  "endTick": 540,
+  "noHorizontalOverflow": true,
+  "errors": []
+ },
+ "scenarioC": {
+  "viewport": "1280x720",
+  "query": "?seed=20261051",
+  "korCorner": "neuro2-jev",
+  "endTick": 1295,
+  "routePosts": 2,
+  "chips": [
+   {
+    "label": "KOR dövüş stili",
+    "source": "jev",
+    "text": "Mesafeci Jev"
+   },
+   {
+    "label": "AYAZ dövüş stili",
+    "source": "neuro",
+    "text": "Kontracı öğrenilmiş"
+   }
+  ],
+  "decisionLogText": "Stil kararlarıCANLIKaydı indirKayıt yükle00:15t900KORMesafeciJev%3700:00t0AYAZKontracıöğrenilmiş%2200:00t0KORBaskıcıJev%39",
+  "errors": []
+ }
+}

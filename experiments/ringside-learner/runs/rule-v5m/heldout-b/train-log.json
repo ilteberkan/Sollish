@@ -1,0 +1,126 @@
+{
+ "matches": 2000,
+ "unit": "bouts of up to three rounds, learner carry threaded",
+ "graph": "malecns",
+ "rates": {
+  "actor": 0.05,
+  "critic": 0.025,
+  "fast": 0,
+  "entropy": 0.15
+ },
+ "tag": "v5mheldoutB",
+ "seeds": "v5mheldoutB:0..1999",
+ "pool": [
+  "pressure",
+  "jabber",
+  "counter",
+  "highGuard",
+  "random",
+  "self"
+ ],
+ "log": [
+  {
+   "matches": 600,
+   "seconds": 40,
+   "pressure": {
+    "win": 0.21,
+    "margin": -314,
+    "kicks": 0.426
+   },
+   "jabber": {
+    "win": 0.5,
+    "margin": 21,
+    "kicks": 0.525
+   },
+   "counter": {
+    "win": 0.94,
+    "margin": 366,
+    "kicks": 0.526
+   },
+   "highGuard": {
+    "win": 0.445,
+    "margin": -12,
+    "kicks": 0.48
+   },
+   "random": {
+    "win": 0.665,
+    "margin": 108,
+    "kicks": 0.57
+   },
+   "self": {
+    "win": 0.57,
+    "margin": 46,
+    "kicks": 0.559
+   }
+  },
+  {
+   "matches": 1200,
+   "seconds": 80,
+   "pressure": {
+    "win": 0.21,
+    "margin": -287,
+    "kicks": 0.396
+   },
+   "jabber": {
+    "win": 0.425,
+    "margin": -27,
+    "kicks": 0.488
+   },
+   "counter": {
+    "win": 0.89,
+    "margin": 341,
+    "kicks": 0.497
+   },
+   "highGuard": {
+    "win": 0.355,
+    "margin": -78,
+    "kicks": 0.456
+   },
+   "random": {
+    "win": 0.66,
+    "margin": 116,
+    "kicks": 0.524
+   },
+   "self": {
+    "win": 0.6,
+    "margin": 40,
+    "kicks": 0.52
+   }
+  },
+  {
+   "matches": 1800,
+   "seconds": 124,
+   "pressure": {
+    "win": 0.27,
+    "margin": -176,
+    "kicks": 0.397
+   },
+   "jabber": {
+    "win": 0.465,
+    "margin": -23,
+    "kicks": 0.464
+   },
+   "counter": {
+    "win": 0.93,
+    "margin": 425,
+    "kicks": 0.49
+   },
+   "highGuard": {
+    "win": 0.435,
+    "margin": -12,
+    "kicks": 0.443
+   },
+   "random": {
+    "win": 0.71,
+    "margin": 222,
+    "kicks": 0.499
+   },
+   "self": {
+    "win": 0.535,
+    "margin": 33,
+    "kicks": 0.492
+   }
+  }
+ ],
+ "seconds": 138.398545708
+}

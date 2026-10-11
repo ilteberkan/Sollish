@@ -1,0 +1,152 @@
+{
+  "at": "2026-10-03T13:28:44.374282+00:00",
+  "scope": "Actual local GLB, AnimationMixer, skeletal skin and new practice engine; image decoding stubbed. No GPU, browser, hosted, funds, mesh-collision or production readiness claim.",
+  "checks": [
+    {
+      "name": "cpu",
+      "exitCode": 0,
+      "command": [
+        "node",
+        "scripts/boxing-assets/test-sparring-replay.mjs"
+      ],
+      "log": "ops/evidence/ringside-sparring-20261003/rig/cpu.log"
+    },
+    {
+      "name": "unit",
+      "exitCode": 0,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@sollish/web",
+        "exec",
+        "tsx",
+        "--test",
+        "tests/sparring-motion.test.ts"
+      ],
+      "log": "ops/evidence/ringside-sparring-20261003/rig/unit.log"
+    },
+    {
+      "name": "typecheck",
+      "exitCode": 1,
+      "command": [
+        "pnpm",
+        "--filter",
+        "@sollish/web",
+        "exec",
+        "tsc",
+        "--noEmit",
+        "--incremental",
+        "false"
+      ],
+      "log": null,
+      "status": "pending-root-final",
+      "diagnostic": "During the isolated final attempt, root-owned boxing-sparring-scene.tsx imported @/lib/sparring-camera before that parallel work was on disk. Root will run final typecheck after camera completion. This evidence does not claim a passing final typecheck."
+    }
+  ],
+  "counts": {
+    "rigCpu": 10,
+    "motionUnit": 2
+  },
+  "sourceSha256": {
+    "packages/protocol/src/combat-sparring.ts": "5396da655410e0932a4b1a78cd13ccaa2e6a2fed097005cce098679177558dd1",
+    "apps/web/components/boxing-sparring-athletes.ts": "f1faf4565ebeb82538551c22df5ba11fae8c56395b86f2eaf0978c318dc372de",
+    "apps/web/components/boxing-scene-athletes.ts": "2b76892ead23215d8ff21fef0be3c1662422d165c3e3e4e159d347bcf284b80e",
+    "apps/web/components/boxing-scene-ik.ts": "be6e5d8580cd9082effd17991d10a033c9d382931eec9a76cdac930af358b941",
+    "apps/web/public/models/boxing/athlete.glb": "4f6408ef9aa249ef7043f36b2de15e60069cd656d0fc9abd6a1f5028002b66aa",
+    "apps/web/public/models/boxing/athlete-fightkit-v1.glb": "3acefb55468c8201e7ad5376e7e04103f1fab0d56359b94b1b35d813fd54a69f",
+    "apps/web/public/models/boxing/combat-motion-v1.glb": "8ab9688e12a625ed3d4ec3c7ab752f4f465d90b33d3eef1580b276bc1e3cff39",
+    "apps/web/tests/sparring-motion.test.ts": "48d94e59977fe04e7db555189d75a9e154f94a8eb8b896291b26a0f4867a58cc",
+    "scripts/boxing-assets/sparring-replay.test.ts": "7318060c83afadf6db91a7d53576d3f0df111a0055ff6675b0094e62bba8cd82",
+    "scripts/boxing-assets/test-sparring-replay.mjs": "c4b6cff7562b591c77109aa89bc2f923e6ec5955d229da82a436f30767de9072"
+  },
+  "observations": [
+    {
+      "head": 1.5911606920322943,
+      "pelvis": 0.9255299147625757,
+      "left": 1.5500000517899561,
+      "right": 1.5499999633885275
+    },
+    {
+      "kickAtEnd": {
+        "hip": [
+          -0.6848539594847903,
+          0.9347891601379553,
+          -0.11546776069155908
+        ],
+        "ankle": [
+          -0.6000008313474916,
+          1.1200005328796594,
+          0.4199999751046577
+        ],
+        "target": {
+          "x": -0.5999999999999999,
+          "y": 1.12,
+          "z": 0.42
+        }
+      }
+    },
+    {
+      "jab/0": {
+        "maxContactError": 1.4167700555339216e-07,
+        "maxFrameTravel": 0.3217265179194602
+      },
+      "jab/1": {
+        "maxContactError": 1.4581695116632087e-07,
+        "maxFrameTravel": 0.31435779132619834
+      },
+      "cross/0": {
+        "maxContactError": 0.06937216664603824,
+        "maxFrameTravel": 0.28582412271229385
+      },
+      "cross/1": {
+        "maxContactError": 0.06937216664603849,
+        "maxFrameTravel": 0.2858241227122937
+      },
+      "hook/0": {
+        "maxContactError": 0.1084690255987943,
+        "maxFrameTravel": 0.3035925653509745
+      },
+      "hook/1": {
+        "maxContactError": 0.1084690255987941,
+        "maxFrameTravel": 0.27271645222199997
+      },
+      "uppercut/0": {
+        "maxContactError": 0.0026690498280544876,
+        "maxFrameTravel": 0.18225910902979073
+      },
+      "uppercut/1": {
+        "maxContactError": 0.0026690498280550192,
+        "maxFrameTravel": 0.198472880085435
+      },
+      "roundhouse/0": {
+        "maxContactError": 0.03953689096237683,
+        "maxFrameTravel": 0.5392541390526998
+      },
+      "roundhouse/1": {
+        "maxContactError": 0.03953689092830181,
+        "maxFrameTravel": 0.5392541156567705
+      }
+    },
+    {
+      "actualEngineContactCoverage": {
+        "jab/0": 3,
+        "jab/1": 3,
+        "cross/0": 3,
+        "cross/1": 3,
+        "hook/0": 3,
+        "hook/1": 3,
+        "uppercut/0": 2,
+        "uppercut/1": 2,
+        "roundhouse/0": 3,
+        "roundhouse/1": 3
+      },
+      "scope": "declared sphere/limb overlap; not triangle mesh collision or a visual quality guarantee"
+    }
+  ],
+  "limits": [
+    "Maximum free-air endpoint error is measured, without inventing an acceptance threshold.",
+    "28 actual successful hits were checked for rendered striking-limb swept-sphere overlap with the declared engine head/chest spheres. This is not full triangle-mesh penetration validation.",
+    "Uppercut, roundhouse and jump include explicitly procedural visual overlays; licensed authored full-body clips are used for the other actions.",
+    "Frozen LIVE engine/economics and original model bytes are not changed."
+  ]
+}

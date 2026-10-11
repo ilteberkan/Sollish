@@ -1,0 +1,34 @@
+{
+ "label": "before-mobile-390x844",
+ "base": "http://127.0.0.1:3001",
+ "viewport": {
+  "width": 390,
+  "height": 844
+ },
+ "gl": "ANGLE (Apple, ANGLE Metal Renderer: Apple M2, Unspecified Version)",
+ "maxTick": 3970,
+ "countSeen": true,
+ "shots": [
+  "t00000.jpg",
+  "t00610.jpg",
+  "t01220.jpg",
+  "t01830.jpg",
+  "t02435.jpg",
+  "t03045.jpg",
+  "t03470-count.jpg",
+  "t03520-count.jpg",
+  "t03570-count.jpg",
+  "t03620-count.jpg",
+  "t03670-count.jpg",
+  "t03720-count.jpg",
+  "t03770-count.jpg"
+ ],
+ "refereeProbe": null,
+ "fighterProbe": {
+  "frames": 3971,
+  "dtMsP50": 16.7,
+  "dtMsP99": 16.8
+ },
+ "errors": [],
+ "scope": "local runtime, headless Chromium on this Mac (GPU WebGL via ANGLE/Metal); screenshots stall rendering, so frame pacing is not a device benchmark"
+}

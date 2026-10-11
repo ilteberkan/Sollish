@@ -1,0 +1,20 @@
+[package]
+name = "house-tests"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dev-dependencies]
+anchor-lang = "=1.2.0"
+house = { path = "../../programs/house", features = ["no-entrypoint"] }
+litesvm = "=0.15.2"
+solana-account = "=4.3.0"
+solana-address = "=2.6.1"
+solana-instruction = "=3.4.0"
+solana-instruction-error = "=2.4.0"
+solana-keypair = "=3.1.2"
+solana-message = "=4.4.0"
+solana-signer = "=3.0.1"
+solana-system-interface = { version = "=3.2.0", features = ["bincode"] }
+solana-transaction = "=4.1.5"
+solana-transaction-error = "=3.3.1"

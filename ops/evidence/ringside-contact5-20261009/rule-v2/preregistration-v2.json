@@ -1,0 +1,10 @@
+{
+  "written": "2026-10-09, before the rule-v2 held-out test run",
+  "why": "Rule v1 passed its in-match test (rule-v1/test-learned.json) but its mirror bouts were unwatchable: ~33% clinch, body hooks dominant, hooks/uppercuts ~0, knockdowns 0.7%. Rule v2 adds an entropy bonus (0.1), a 100-tick clinch cooldown and knockdown reward 2. Rule-v1 test seeds 'test:*' are not reused.",
+  "checkpoint": "experiments/ringside-learner/runs/main/params.json (12000 rounds, seeds main:*, actor 0.1, critic 0.05, fast 0.5, entropy 0.1)",
+  "inMatchRule": "actor 1, critic 0.05, fast 2, fastDecay 0.02, entropy 0.1; chosen on seeds 'val2:*' against the frozen copy and rule-v1 checkpoints (validate-*.json)",
+  "testSeeds": "test2:<opponent>:<0..199>, never used before",
+  "opponents": { "learned": ["mirrorFrozen", "checkpoint0 = runs/heldout-a (heldoutA:*, actor 0.2, fast 1, entropy 0.05)", "checkpoint1 = runs/heldout-b (heldoutB:*, actor 0.05, fast 0, entropy 0.15)"], "scripted": ["switcher", "bodySnatcher", "slipper", "mover"] },
+  "claim": "In-match learning is claimed only if the paired bootstrap 95% interval of (learning - frozen) point margin over the learned opponents has a lower bound above 0.",
+  "secondary": ["held-out scripts", "MaleCNS vs shuffled-graph control; superiority only if lower bound > 0", "live balance band (KOR 40-60%, >70 punches, knockdowns 10-60%) on seeds 'balance2:*'"]
+}

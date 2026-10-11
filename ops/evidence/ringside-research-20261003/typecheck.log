@@ -1,0 +1,17 @@
+
+> sollish@0.1.0 typecheck /Users/macmini/Desktop/Sollish
+> pnpm -r --if-present typecheck
+
+Scope: 5 of 6 workspace projects
+packages/onchain typecheck$ tsc --noEmit
+packages/protocol typecheck$ tsc --noEmit
+packages/protocol typecheck: Done
+packages/onchain typecheck: Done
+apps/realtime typecheck$ tsc --noEmit
+apps/web typecheck$ next typegen && tsc --noEmit
+apps/worker typecheck$ tsc --noEmit
+apps/realtime typecheck: Done
+apps/worker typecheck: Done
+apps/web typecheck: Generating route types...
+apps/web typecheck: ✓ Types generated successfully
+apps/web typecheck: Done

@@ -1,0 +1,75 @@
+{
+  "at": "2026-10-03T03:43:40.686Z",
+  "url": "http://127.0.0.1:3002/lab/ringside",
+  "runtime": "Playwright Chromium headless ANGLE Metal; desktop host, not physical mobile",
+  "viewports": [
+    {
+      "width": 1440,
+      "labelBounds": [
+        {
+          "label": "Önceki curriculum modeli",
+          "rect": {
+            "x": 763.046875,
+            "width": 176.46875,
+            "height": 44
+          },
+          "scroll": 176,
+          "client": 176
+        },
+        {
+          "label": "Gard ortamında yeniden eğitilen",
+          "rect": {
+            "x": 939.515625,
+            "width": 176.484375,
+            "height": 44
+          },
+          "scroll": 176,
+          "client": 176
+        }
+      ],
+      "overflow": false,
+      "learningPause": {
+        "samePixels": true,
+        "position": "7500"
+      },
+      "physicsPause": {
+        "drawBefore": 2927,
+        "drawAfter": 2927,
+        "newDraws": 0,
+        "samePixels": true
+      },
+      "physicsLabels": {
+        "rects": [
+          {
+            "text": "MUJOCO · DESTEKLİ FİZİK",
+            "x": 36,
+            "y": 417.6875,
+            "width": 173.5,
+            "height": 23.1875
+          },
+          {
+            "text": "CMU · GERÇEK MOCAP",
+            "x": 952.28125,
+            "y": 417.6875,
+            "width": 147.71875,
+            "height": 23.1875
+          }
+        ],
+        "overlap": false
+      },
+      "physicsOverflow": false,
+      "cleanupCanvasCount": 0,
+      "liveSockets": 0,
+      "errors": []
+    }
+  ],
+  "sourceHashes": {
+    "apps/web/components/ringside-research.tsx": "fef8018e1ca92469c55f0cb2d409ae414c6d0dcce0bf1d6d802a4c2564224210",
+    "apps/web/components/ringside-research.module.css": "38051eac77d7b22778859c56a2b1ee7cf832bfa45a2c1cf0b392201f30af3ff1",
+    "apps/web/components/boxing-scene.tsx": "a7c4125c5e24efcd74a264641345dbcab5797a9ea544c2f66670938f2f4519e6",
+    "apps/web/components/boxing-physics-lab.tsx": "8df6e71d0d08c5c2cb18b58eff1bea5504348f5712194de7210fca9190ea2fd4",
+    "apps/web/public/research/ringside/manifest.json": "27e1ea2af90641169c33ce06d631384d4b7c3f285103fb0f7e64b14dc3c35e64",
+    "apps/web/public/research/ringside/physics-trace.json": "90b8aadf17a7571faea95809a2400f445d0b89f93dceac7689775ea8613fa724"
+  },
+  "finishedAt": "2026-10-03T03:44:19.822Z"
+}

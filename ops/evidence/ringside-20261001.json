@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-01T20:25:12.356Z",
+  "scope": "Ringside local-credit demo and web regression; no real wager, new contract deployment or production wagering approval",
+  "route": "https://sollish-web-devnet.sollish-web.workers.dev/game/boxing",
+  "buildId": "5UGyERrkht7uJcXHgTddZ",
+  "cloudflare": {
+    "id": "204105fe-04c4-4533-a7ad-766af412f520",
+    "created_on": "2026-10-01T20:21:34.398831Z",
+    "versions": [
+      {
+        "version_id": "39ff9f3b-9839-49a3-a5e7-0bfc4465a340",
+        "percentage": 100
+      }
+    ]
+  },
+  "tests": {
+    "workspace": 98,
+    "operations": 28,
+    "localBrowserBeforeFinalDisposalPatch": 33,
+    "localBoxingAfterFinalDisposalPatch": 11,
+    "hostedBrowser": 33
+  },
+  "sourceSha256": {
+    "apps/web/components/boxing-scene.tsx": "7536e59a5a288c898fae55dd86758c597c5af3adc74f2dce31cc9adb4a4ebe2c",
+    "apps/web/components/boxing-game.tsx": "d993bef8e3899688fbcfcfb09f02d5951b93464091fc75612ba0f30e8a39fbd5",
+    "apps/web/components/boxing-game.module.css": "8d63212a1a1f29f7cdbb6220c81d53cd769abee0da449281c988214f9d6e158a",
+    "apps/web/app/game/boxing/page.tsx": "09224aed5012e31770a0be71e6423938fe5b1a99201f3233f9f1d33278566098",
+    "apps/web/lib/boxing.ts": "c7c41e52aac8635fd7ad7f43db6d6e614cc7882aedca298034361a339fbaf620",
+    "apps/web/tests/boxing.test.ts": "e6f7d5d735c6697a2ac0fd83937b74a15229c5e46fb8a4a0354bed748def7f3a",
+    "apps/web/tests/browser/boxing.spec.ts": "cdddb86164563641cac08b8d8b98735356e71d1086cfd422beb963bfd3cf4082",
+    "apps/web/tests/browser/boxing-lifecycle.spec.ts": "b69d758099304dd3f85643889c188a9d7992e84e42c4d751cac138f3e262194f",
+    "apps/web/tests/browser/demo-entropy.spec.ts": "86fc439e53f0f20ecd03dfec0258f7838c4c75bf12cefaf39b11326e072c5d28",
+    "apps/web/components/crash-game.tsx": "668543cfe0cb3a1b9dc65e56b70993e913af65cec6f73691a50799fa024bf926",
+    "apps/web/components/coinflip-game.tsx": "5a79a9e09d967b5fff4cf4d2093ee6cf3c654a7cb53aae34e616e6f35890e3fa",
+    "apps/web/components/shell.tsx": "49b263f7cdba3a91747921398e641ab8292e215d0bffe5bf61219cfcfe9fcca6",
+    "apps/web/components/providers.tsx": "de1fa4b6d05d752dcdf8f48b596282728f6761f6c503d7ca695fe221bf0b0c4c",
+    "apps/web/app/globals.css": "29a1d17eccf0bf8926af9d50fe224428629fe0161918f2cd68b867057703cf12",
+    "apps/web/package.json": "c3da1045612941f241afcea2b8f72e4bcf844758591da59d01befa30d3b899ad",
+    "pnpm-lock.yaml": "7744f516a98b94385a1cc45fde1e482d0f4b9c0907a00f1200e8b07fe61cf92d"
+  },
+  "evidenceSha256": {
+    ".tooling/ringside-hosted-browser.log": "bae8ce7d2a83f02ec96f425fa08a0b8bea02b21c83be9f77e09b9bde724beddc",
+    ".tooling/ringside-final-production-browser.log": "d9983e0309ba4389145df4e7e533d7eb2114f5b8f7b8fc3950fe9effc79497c3",
+    ".tooling/ringside-workspace-tests.log": "dfeab7303ed84b731254561c2ed5ce4f2487eccbd4c233b324f92efa046d44c9",
+    ".tooling/ringside-operations-tests.log": "091c19d8d77f90048fb4b7bde8ef286b21860dc0607a43f7d3cfb9bdf7cc5a14",
+    ".tooling/boxing-review/report.json": "dba1e36f37a1520e19672a04a4cc6819a80d66d42fac5afc4499568ddf8f74dd",
+    ".tooling/boxing-performance-v2/metal.json": "c658c1445305c1c256c0fd9fd5080701208f1795b29ecdb9a23e28c534d50837"
+  },
+  "http": {
+    "observedAt": "2026-10-01T20:23:32.734Z",
+    "web": {
+      "status": 200,
+      "buildId": "5UGyERrkht7uJcXHgTddZ",
+      "buildMatches": true,
+      "headers": {
+        "x-content-type-options": "nosniff",
+        "x-frame-options": "DENY",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()"
+      }
+    },
+    "api": {
+      "status": 200,
+      "body": {
+        "v": 1,
+        "chain": "solana-devnet",
+        "finality": "finalized",
+        "availability": "unavailable",
+        "now": "2026-10-01T20:23:32.253Z",
+        "lastIndexedSlot": null,
+        "games": [
+          {
+            "id": "coinflip",
+            "available": false,
+            "reason": "WALLET_TO_CHAIN_DEPLOYMENT_REQUIRES_VERIFICATION"
+          },
+          {
+            "id": "crash",
+            "available": false,
+            "reason": "PER_SECURITY_ACCEPTANCE_PENDING"
+          }
+        ],
+        "chat": {
+          "available": false,
+          "windowSeconds": 3600,
+          "minWagerLamports": null
+        },
+        "rewards": {
+          "available": false,
+          "claimable": null,
+          "authority": "on-chain",
+          "reason": "READ_VERIFIED_CONTRACT_ACCOUNTS"
+        }
+      }
+    }
+  },
+  "visual": {
+    "screenshotsReviewed": [
+      "idle320",
+      "idle390",
+      "idle1024",
+      "idle1440",
+      "ringside-camera",
+      "fighting",
+      "finished"
+    ],
+    "pageErrors": 0,
+    "oneDemoRecord": 1,
+    "initialJavaScriptGzipBytes": {
+      "/game/crash": 175958,
+      "/game/boxing": 324380
+    },
+    "note": "Node gzip recompression of response bytes, not CDN transfer size or Core Web Vitals"
+  },
+  "localPerformance": {
+    "device": "Apple M2 / Chromium ANGLE Metal,1440x1000,DPR1",
+    "firstSceneWallMs": 969.776834,
+    "approximateFramesPerSecond": 29.914444688120653,
+    "frameP95Ms": 34.30000001192093,
+    "jsHeapBytes": 10000000,
+    "teardown": {
+      "navigation": "React client navigation (no page reload)",
+      "markedWebglCanvases": 0,
+      "contextsCreated": 1,
+      "buffersCreated": 65,
+      "buffersDeleted": 65,
+      "texturesCreated": 12,
+      "texturesDeleted": 7,
+      "programsCreated": 14,
+      "programsDeleted": 13
+    },
+    "consoleErrors": [
+      "Access to fetch at 'https://sollish-realtime.sollish-web.workers.dev/v1/chat/history?after=0' from origin 'http://127.0.0.1:3001' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.",
+      "Failed to load resource: net::ERR_FAILED"
+    ],
+    "limitations": [
+      "Local server, one page per launch, other system/browser workloads may coexist; production/dev depends on server command.",
+      "Software or desktop rendering only; not evidence of mobile hardware FPS.",
+      "Lightweight WebGL method wrappers add measurement overhead; framebuffer bindings are tracked without per-draw GPU queries.",
+      "Main framebuffer clear counts approximate rendered frames; not presented GPU frame completion.",
+      "Chromium JS heap is browser-reported and is not GPU or device total memory."
+    ]
+  },
+  "featureFlags": {
+    "coinflip": false,
+    "incentives": false,
+    "ringsideRealWager": false
+  },
+  "productionApproved": false,
+  "remaining": [
+    "Funded verified House/Games/Incentives devnet deployments",
+    "Live oracle and same-proof interruption recovery acceptance",
+    "Manual Crash privacy,attestation,ordering and L1 payment",
+    "Real finalized wager eligibility/chat/outbox/token rights integration",
+    "Independent production and operating review"
+  ]
+}

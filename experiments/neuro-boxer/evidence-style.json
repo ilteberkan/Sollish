@@ -1,0 +1,1536 @@
+{
+ "at": "2026-10-04T23:40:27.313Z",
+ "dry": false,
+ "scope": "local CPU simulation in Node (no rendering) on a pinned copy of the engine files; not a browser, production build or hosted run",
+ "engine": {
+  "version": "sparring-5",
+  "combatSparringSha256": "b5e3a11c9b1b21e8dc281bf7df6cfbf15ba8e9e5184ecf79ec95cd724cf1e471",
+  "combatRefereeSha256": "e950443eb484e59476a58c06332e4904e342e8002d9aefc39c42d304de611dc3",
+  "neuroBoxer2Sha256": "e9cde8c6ba27b47f17d6984f921663bbb085e27bb9f573a66084da1d11898bce",
+  "liveCombatSparringSha256": "c1ca71f9c4a4877c1d5d8b1b175a7fae54053009a61cf5148d44a54d2d3ca950",
+  "contactMarker": {
+   "packages/protocol/src/combat-sparring.ts": "b5e3a11c9b1b21e8dc281bf7df6cfbf15ba8e9e5184ecf79ec95cd724cf1e471",
+   "packages/protocol/src/combat-capsules.ts": "9e02ecab8ba6cbc5832f1d1628c81920b186123e2dc51a618b5b9524a721aa82",
+   "at": "2026-10-04T17:50:24Z",
+   "engineVersion": "sparring-5 (unpublished)",
+   "summary": "sparring-5 capsule body contact is final for training. Body: torso pelvis->chest r.19, head r.135, thighs hip->3/4 knee r.15 (lead knee 0.31 m ahead, on the centre line); arms never push roots. constrain(): 0.78 m root floor kept, then deepest trunk/head/thigh overlap resolved along its horizontal normal (<=3 iterations, wall-room split); square-on bodies now meet at ~0.80 m. Strikes: swept glove sphere (r.12) vs head/torso capsules; while the defender holds guard with stamina>=15 its forearms/gloves are solid and meeting them first is a block (idle hands are not solid). Count: standing root kept >=0.53 m from the lying body. Tuning seeds 1-24: runner 0.000 (KO 100%), jabSpam 0.000, kickSpam 0.000, hitAndRun 0.302/0.281 (s4 0.198/0.083); neuro-1 vs neuro-1 hits 67.4->69.9, blocks 97.6->99.3 per 3x45 s bout; scripted bots block more (guard now physical). Protocol tests 105/105. Referee-only edits by the referee engineer (refereeWorld/updateReferee) can change this file hash without changing fighter behaviour.",
+   "evidence": [
+    "experiments/combat-sparring-audit/evidence/sparring5-24seeds.json",
+    "experiments/combat-sparring-audit/evidence/contact-sparring5-12seeds.json"
+   ]
+  }
+ },
+ "protocol": {
+  "format": {
+   "seconds": 45,
+   "rounds": 3,
+   "breakSeconds": 8
+  },
+  "temperature": 0.8,
+  "heldOutSeeds": "5000-5049 and 6000-6099, both corners",
+  "classifierSplit": "train on bank 1 (5000-5049), test on bank 2 (6000-6099)",
+  "ablationOpponents": "neuro1 + the two held-out snapshots (the scripted pool is saturated)",
+  "mirrorSeeds": "7000-7599",
+  "opponents": [
+   "bot:balanced",
+   "bot:pressure",
+   "bot:counter",
+   "script:cautious",
+   "script:outboxer",
+   "neuro1",
+   "heldout:styleLocked",
+   "heldout:strategist"
+  ]
+ },
+ "models": {
+  "connectome-s1": {
+   "thetaSha256": "d1e8f30daa69dfed9f05254688712aa51bfbf1ec1e0161b94be2881219200d95",
+   "stageSha256": {
+    "A": "57bef7a831668ff280e172cb55a6d9da17cf63142f5bb3cb8cd16116d822e0fb",
+    "B": "20a39e5d2270e12526001208ebf59d4bd2fa3583c4c087be59ac872e2acc0be1",
+    "C": "d1e8f30daa69dfed9f05254688712aa51bfbf1ec1e0161b94be2881219200d95"
+   },
+   "trainedOnEngineSha256": "b5e3a11c9b1b21e8dc281bf7df6cfbf15ba8e9e5184ecf79ec95cd724cf1e471",
+   "trainedOnEvaluatedEngine": true,
+   "validationWide": 1,
+   "validationOutcome": 1.538
+  },
+  "connectome-s2": {
+   "thetaSha256": "c5462e01d3d9982b92f9a463f5e31b634457b614f73f7fbe19b1f122eef84430",
+   "stageSha256": {
+    "A": "ade0dee35c4721c0ccf32fd8b731e5fcd2ace9f6df13eda123b4a780524fdee3",
+    "B": "b830db2c12fc6a7d6012b1dc62ea83abbc74761fd580ae5d693acead6d486425",
+    "C": "c5462e01d3d9982b92f9a463f5e31b634457b614f73f7fbe19b1f122eef84430"
+   },
+   "trainedOnEngineSha256": "b5e3a11c9b1b21e8dc281bf7df6cfbf15ba8e9e5184ecf79ec95cd724cf1e471",
+   "trainedOnEvaluatedEngine": true,
+   "validationWide": 1,
+   "validationOutcome": 1.741
+  },
+  "connectome-s3": {
+   "thetaSha256": "c39c31073ea22b00dec404ab5de8e1301271d85b153272b76d6821668552dc09",
+   "stageSha256": {
+    "A": "b091c81ca0e3c3632dd0f54bc12de7d0557015224085876eb73cccb878ec16b8",
+    "B": "91a5306d2c759e9a04a54a87c98d8f3a67789cfb772928d82ee16809fb25cec6",
+    "C": "c39c31073ea22b00dec404ab5de8e1301271d85b153272b76d6821668552dc09"
+   },
+   "trainedOnEngineSha256": "b5e3a11c9b1b21e8dc281bf7df6cfbf15ba8e9e5184ecf79ec95cd724cf1e471",
+   "trainedOnEvaluatedEngine": true,
+   "validationWide": 1,
+   "validationOutcome": 1.757
+  },
+  "shuffled-s1": {
+   "thetaSha256": "38fcfce2083dfcfdb90cdc7aceb32ca67ceb06efdf1bd798b8c3e23f314fdede",
+   "stageSha256": {
+    "A": "ac5eedfc2019760799e38dd29f347ccef628b0888667db5267420645e02d3395",
+    "B": "0f20cd0effc72267cf5f944bbf0f0d41cc5bf5a41ab81a1554411035a41cde3d",
+    "C": "38fcfce2083dfcfdb90cdc7aceb32ca67ceb06efdf1bd798b8c3e23f314fdede"
+   },
+   "trainedOnEngineSha256": "b5e3a11c9b1b21e8dc281bf7df6cfbf15ba8e9e5184ecf79ec95cd724cf1e471",
+   "trainedOnEvaluatedEngine": true,
+   "validationWide": 0.425,
+   "validationOutcome": 0.353
+  },
+  "norecur-s1": {
+   "thetaSha256": "d85c0f9bf0091cef45e06a38e6badd21d70e7f947331eb0600f8158938a001c5",
+   "stageSha256": {
+    "A": "33a2d529ba219c5c31cb878253b6169410a1f07a5dc65863db5d8f49b6c7b03a",
+    "B": "70297b8b01229d68db13eeed11e0e85a74807358a3abe9515bedc03f445d08b9",
+    "C": "d85c0f9bf0091cef45e06a38e6badd21d70e7f947331eb0600f8158938a001c5"
+   },
+   "trainedOnEngineSha256": "b5e3a11c9b1b21e8dc281bf7df6cfbf15ba8e9e5184ecf79ec95cd724cf1e471",
+   "trainedOnEvaluatedEngine": true,
+   "validationWide": 1,
+   "validationOutcome": 1.635
+  },
+  "heldout-styleLocked(connectome-s101 stage A)": {
+   "thetaSha256": "0091a4951e03f60e509323f0d32b7fbd69ce78c96e257d61ace58d9655caa550",
+   "stageSha256": {
+    "A": "0091a4951e03f60e509323f0d32b7fbd69ce78c96e257d61ace58d9655caa550",
+    "B": "b3923ec62b70187ebd3f768c6448a367d3dd3befa086329cbbec53e37e436992",
+    "C": "d91a3ebd9191daa417489725997296fa4ebaf195e887f1c2e64f012a71a6e96d"
+   },
+   "trainedOnEngineSha256": "b5e3a11c9b1b21e8dc281bf7df6cfbf15ba8e9e5184ecf79ec95cd724cf1e471",
+   "trainedOnEvaluatedEngine": true,
+   "validationWide": 1,
+   "validationOutcome": 1.563
+  },
+  "heldout-strategist(connectome-s101)": {
+   "thetaSha256": "d91a3ebd9191daa417489725997296fa4ebaf195e887f1c2e64f012a71a6e96d",
+   "stageSha256": {
+    "A": "0091a4951e03f60e509323f0d32b7fbd69ce78c96e257d61ace58d9655caa550",
+    "B": "b3923ec62b70187ebd3f768c6448a367d3dd3befa086329cbbec53e37e436992",
+    "C": "d91a3ebd9191daa417489725997296fa4ebaf195e887f1c2e64f012a71a6e96d"
+   },
+   "trainedOnEngineSha256": "b5e3a11c9b1b21e8dc281bf7df6cfbf15ba8e9e5184ecf79ec95cd724cf1e471",
+   "trainedOnEvaluatedEngine": true,
+   "validationWide": 1,
+   "validationOutcome": 1.563
+  }
+ },
+ "graphs": {
+  "connectomeArraysSha256": "7232453f0a33a8caed5a896a02f853852c9355ac39c4998e1170ba64520ccfce",
+  "shuffledArraysSha256": "5e1b861967a837eb1b9257669709d37f135c6955a90f47e6e057fd10dc763db3",
+  "graphFileSha256": "4c411b31c5fc60ac2ae969064d256fa16276e59d3b37f26a9250c74a2dbe37c0",
+  "graphSha256": "284dca2f166169c47d50a489d96bb011ceab3ae01a73922c2dd4c44da041e37d"
+ },
+ "neuro1": {
+  "modelFileSha256": "4a97f03f64ce95460a94dfbf197eb275845077adddf28709526b35feb13a2c2a",
+  "sourceSha256": "2d616fa84a30c863a0201d12d1bf2ef248ca4491c42e71b986219798d0d648e6"
+ },
+ "strategist": {
+  "connectome-s1": {
+   "bouts": 2400,
+   "score": 0.89,
+   "winRate": 0.856,
+   "koWins": 0.526,
+   "byOpponent": {
+    "bot:balanced": 1,
+    "bot:pressure": 1,
+    "bot:counter": 1,
+    "script:cautious": 1,
+    "script:outboxer": 1,
+    "neuro1": 1,
+    "heldout:styleLocked": 0.543,
+    "heldout:strategist": 0.578
+   },
+   "switching": {
+    "switchesPerRound": 3.296,
+    "boutsWithSwitch": 1,
+    "completedHoldSeconds": {
+     "n": 21033,
+     "p10": 3,
+     "median": 6,
+     "p90": 34.733333333333334
+    },
+    "finalHoldSecondsMedian": 10.383333333333333,
+    "distinctStylesPerBout": 4.035,
+    "timeShare": {
+     "pressure": 0.021,
+     "counter": 0.621,
+     "cautious": 0.124,
+     "outboxer": 0.064,
+     "body": 0.166,
+     "finisher": 0.004
+    },
+    "firstStyle": {
+     "pressure": 1120,
+     "counter": 544,
+     "cautious": 184,
+     "outboxer": 328,
+     "body": 144,
+     "finisher": 80
+    },
+    "trackGaps": 0
+   }
+  },
+  "connectome-s2": {
+   "bouts": 2400,
+   "score": 0.997,
+   "winRate": 0.994,
+   "koWins": 0.676,
+   "byOpponent": {
+    "bot:balanced": 1,
+    "bot:pressure": 1,
+    "bot:counter": 1,
+    "script:cautious": 1,
+    "script:outboxer": 1,
+    "neuro1": 1,
+    "heldout:styleLocked": 0.98,
+    "heldout:strategist": 0.993
+   },
+   "switching": {
+    "switchesPerRound": 3.007,
+    "boutsWithSwitch": 0.983,
+    "completedHoldSeconds": {
+     "n": 16859,
+     "p10": 3,
+     "median": 6,
+     "p90": 33.53333333333333
+    },
+    "finalHoldSecondsMedian": 16.1,
+    "distinctStylesPerBout": 3.12,
+    "timeShare": {
+     "pressure": 0.705,
+     "counter": 0.001,
+     "cautious": 0.229,
+     "outboxer": 0.004,
+     "body": 0.023,
+     "finisher": 0.038
+    },
+    "firstStyle": {
+     "pressure": 432,
+     "counter": 40,
+     "cautious": 120,
+     "outboxer": 240,
+     "body": 1168,
+     "finisher": 400
+    },
+    "trackGaps": 0
+   }
+  },
+  "connectome-s3": {
+   "bouts": 2400,
+   "score": 1,
+   "winRate": 0.999,
+   "koWins": 0.715,
+   "byOpponent": {
+    "bot:balanced": 1,
+    "bot:pressure": 1,
+    "bot:counter": 1,
+    "script:cautious": 1,
+    "script:outboxer": 1,
+    "neuro1": 1,
+    "heldout:styleLocked": 0.998,
+    "heldout:strategist": 0.998
+   },
+   "switching": {
+    "switchesPerRound": 0.216,
+    "boutsWithSwitch": 0.427,
+    "completedHoldSeconds": {
+     "n": 1302,
+     "p10": 3,
+     "median": 3,
+     "p90": 68
+    },
+    "finalHoldSecondsMedian": 102.7,
+    "distinctStylesPerBout": 1.453,
+    "timeShare": {
+     "pressure": 0.985,
+     "counter": 0.007,
+     "cautious": 0.002,
+     "outboxer": 0.002,
+     "body": 0.001,
+     "finisher": 0.003
+    },
+    "firstStyle": {
+     "pressure": 1480,
+     "counter": 576,
+     "cautious": 112,
+     "outboxer": 144,
+     "body": 40,
+     "finisher": 48
+    },
+    "trackGaps": 0
+   }
+  },
+  "shuffled-s1": {
+   "bouts": 2400,
+   "score": 0.403,
+   "winRate": 0.357,
+   "koWins": 0,
+   "byOpponent": {
+    "bot:balanced": 0.795,
+    "bot:pressure": 0.998,
+    "bot:counter": 0.263,
+    "script:cautious": 0.398,
+    "script:outboxer": 0.768,
+    "neuro1": 0,
+    "heldout:styleLocked": 0,
+    "heldout:strategist": 0
+   },
+   "switching": {
+    "switchesPerRound": 2.924,
+    "boutsWithSwitch": 0.996,
+    "completedHoldSeconds": {
+     "n": 21047,
+     "p10": 3,
+     "median": 7.2,
+     "p90": 34.666666666666664
+    },
+    "finalHoldSecondsMedian": 13.8,
+    "distinctStylesPerBout": 3.874,
+    "timeShare": {
+     "pressure": 0.11,
+     "counter": 0.053,
+     "cautious": 0.079,
+     "outboxer": 0.678,
+     "body": 0.001,
+     "finisher": 0.079
+    },
+    "firstStyle": {
+     "pressure": 816,
+     "counter": 416,
+     "cautious": 440,
+     "outboxer": 536,
+     "body": 104,
+     "finisher": 88
+    },
+    "trackGaps": 0
+   }
+  },
+  "norecur-s1": {
+   "bouts": 2400,
+   "score": 0.786,
+   "winRate": 0.77,
+   "koWins": 0.492,
+   "byOpponent": {
+    "bot:balanced": 1,
+    "bot:pressure": 1,
+    "bot:counter": 1,
+    "script:cautious": 1,
+    "script:outboxer": 1,
+    "neuro1": 1,
+    "heldout:styleLocked": 0.235,
+    "heldout:strategist": 0.052
+   },
+   "switching": {
+    "switchesPerRound": 0.237,
+    "boutsWithSwitch": 0.601,
+    "completedHoldSeconds": {
+     "n": 1476,
+     "p10": 3,
+     "median": 3,
+     "p90": 3.2666666666666666
+    },
+    "finalHoldSecondsMedian": 147.73333333333332,
+    "distinctStylesPerBout": 1.613,
+    "timeShare": {
+     "pressure": 0.006,
+     "counter": 0.001,
+     "cautious": 0.009,
+     "outboxer": 0.002,
+     "body": 0.981,
+     "finisher": 0.001
+    },
+    "firstStyle": {
+     "pressure": 472,
+     "counter": 64,
+     "cautious": 624,
+     "outboxer": 176,
+     "body": 960,
+     "finisher": 104
+    },
+    "trackGaps": 0
+   }
+  }
+ },
+ "ablations": {
+  "connectome-s1": {
+   "opponents": [
+    "neuro1",
+    "heldout:styleLocked",
+    "heldout:strategist"
+   ],
+   "strategist": {
+    "bouts": 900,
+    "score": 0.707,
+    "winRate": 0.616,
+    "koWins": 0.316,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 0.543,
+     "heldout:strategist": 0.578
+    }
+   },
+   "fixedStyles": {
+    "pressure": {
+     "bouts": 900,
+     "score": 0.701,
+     "winRate": 0.604,
+     "koWins": 0.329,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.592,
+      "heldout:strategist": 0.512
+     }
+    },
+    "counter": {
+     "bouts": 900,
+     "score": 0.755,
+     "winRate": 0.672,
+     "koWins": 0.322,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.618,
+      "heldout:strategist": 0.647
+     }
+    },
+    "cautious": {
+     "bouts": 900,
+     "score": 0.637,
+     "winRate": 0.52,
+     "koWins": 0.323,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.412,
+      "heldout:strategist": 0.498
+     }
+    },
+    "outboxer": {
+     "bouts": 900,
+     "score": 0.737,
+     "winRate": 0.648,
+     "koWins": 0.324,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.573,
+      "heldout:strategist": 0.638
+     }
+    },
+    "body": {
+     "bouts": 900,
+     "score": 0.772,
+     "winRate": 0.689,
+     "koWins": 0.321,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.648,
+      "heldout:strategist": 0.668
+     }
+    },
+    "finisher": {
+     "bouts": 900,
+     "score": 0.421,
+     "winRate": 0.364,
+     "koWins": 0.264,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.143,
+      "heldout:strategist": 0.12
+     }
+    }
+   },
+   "bestFixedOnHeldOut": {
+    "style": "body",
+    "score": 0.772,
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": -0.065,
+     "ci95": [
+      -0.094,
+      -0.036
+     ]
+    },
+    "note": "selected on the held-out bank itself (optimistic for the ablation)"
+   },
+   "randomSwitching": {
+    "bouts": 900,
+    "score": 0.642,
+    "winRate": 0.556,
+    "koWins": 0.327,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 0.453,
+     "heldout:strategist": 0.472
+    },
+    "switching": {
+     "switchesPerRound": 11.75,
+     "boutsWithSwitch": 1,
+     "completedHoldSeconds": {
+      "n": 30502,
+      "p10": 3,
+      "median": 3,
+      "p90": 6.6
+     },
+     "finalHoldSecondsMedian": 2.4,
+     "distinctStylesPerBout": 5.998,
+     "timeShare": {
+      "pressure": 0.167,
+      "counter": 0.166,
+      "cautious": 0.168,
+      "outboxer": 0.166,
+      "body": 0.167,
+      "finisher": 0.166
+     },
+     "firstStyle": {
+      "pressure": 171,
+      "counter": 156,
+      "cautious": 147,
+      "outboxer": 126,
+      "body": 156,
+      "finisher": 144
+     },
+     "trackGaps": 0
+    },
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": 0.066,
+     "ci95": [
+      0.036,
+      0.095
+     ]
+    }
+   },
+   "ruleStrategist": {
+    "bouts": 900,
+    "score": 0.651,
+    "winRate": 0.547,
+    "koWins": 0.326,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 0.475,
+     "heldout:strategist": 0.478
+    },
+    "switching": {
+     "switchesPerRound": 3.729,
+     "boutsWithSwitch": 1,
+     "completedHoldSeconds": {
+      "n": 9836,
+      "p10": 3,
+      "median": 6.666666666666667,
+      "p90": 28.4
+     },
+     "finalHoldSecondsMedian": 9.283333333333333,
+     "distinctStylesPerBout": 4.281,
+     "timeShare": {
+      "pressure": 0.095,
+      "counter": 0.106,
+      "cautious": 0.301,
+      "outboxer": 0.11,
+      "body": 0.252,
+      "finisher": 0.136
+     },
+     "firstStyle": {
+      "pressure": 0,
+      "counter": 0,
+      "cautious": 900,
+      "outboxer": 0,
+      "body": 0,
+      "finisher": 0
+     },
+     "trackGaps": 0
+    },
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": 0.056,
+     "ci95": [
+      0.027,
+      0.085
+     ]
+    }
+   },
+   "tendenciesZeroed": {
+    "bouts": 900,
+    "score": 0.696,
+    "winRate": 0.601,
+    "koWins": 0.321,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 0.522,
+     "heldout:strategist": 0.565
+    },
+    "switching": {
+     "switchesPerRound": 2.871,
+     "boutsWithSwitch": 1,
+     "completedHoldSeconds": {
+      "n": 7499,
+      "p10": 3,
+      "median": 6.266666666666667,
+      "p90": 40.8
+     },
+     "finalHoldSecondsMedian": 10.7,
+     "distinctStylesPerBout": 3.787,
+     "timeShare": {
+      "pressure": 0.013,
+      "counter": 0.656,
+      "cautious": 0.208,
+      "outboxer": 0.074,
+      "body": 0.046,
+      "finisher": 0.003
+     },
+     "firstStyle": {
+      "pressure": 387,
+      "counter": 237,
+      "cautious": 102,
+      "outboxer": 96,
+      "body": 48,
+      "finisher": 30
+     },
+     "trackGaps": 0
+    },
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": 0.012,
+     "ci95": [
+      -0.005,
+      0.028
+     ]
+    }
+   }
+  },
+  "connectome-s2": {
+   "opponents": [
+    "neuro1",
+    "heldout:styleLocked",
+    "heldout:strategist"
+   ],
+   "strategist": {
+    "bouts": 900,
+    "score": 0.991,
+    "winRate": 0.983,
+    "koWins": 0.471,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 0.98,
+     "heldout:strategist": 0.993
+    }
+   },
+   "fixedStyles": {
+    "pressure": {
+     "bouts": 900,
+     "score": 0.993,
+     "winRate": 0.988,
+     "koWins": 0.481,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.99,
+      "heldout:strategist": 0.99
+     }
+    },
+    "counter": {
+     "bouts": 900,
+     "score": 0.997,
+     "winRate": 0.994,
+     "koWins": 0.332,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.995,
+      "heldout:strategist": 0.997
+     }
+    },
+    "cautious": {
+     "bouts": 900,
+     "score": 0.985,
+     "winRate": 0.972,
+     "koWins": 0.41,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.977,
+      "heldout:strategist": 0.978
+     }
+    },
+    "outboxer": {
+     "bouts": 900,
+     "score": 0.988,
+     "winRate": 0.978,
+     "koWins": 0.352,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.982,
+      "heldout:strategist": 0.983
+     }
+    },
+    "body": {
+     "bouts": 900,
+     "score": 0.999,
+     "winRate": 0.998,
+     "koWins": 0.371,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 1,
+      "heldout:strategist": 0.997
+     }
+    },
+    "finisher": {
+     "bouts": 900,
+     "score": 0.997,
+     "winRate": 0.994,
+     "koWins": 0.384,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.995,
+      "heldout:strategist": 0.997
+     }
+    }
+   },
+   "bestFixedOnHeldOut": {
+    "style": "body",
+    "score": 0.999,
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": -0.008,
+     "ci95": [
+      -0.013,
+      -0.003
+     ]
+    },
+    "note": "selected on the held-out bank itself (optimistic for the ablation)"
+   },
+   "randomSwitching": {
+    "bouts": 900,
+    "score": 0.996,
+    "winRate": 0.992,
+    "koWins": 0.383,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 0.988,
+     "heldout:strategist": 1
+    },
+    "switching": {
+     "switchesPerRound": 11.856,
+     "boutsWithSwitch": 1,
+     "completedHoldSeconds": {
+      "n": 29568,
+      "p10": 3,
+      "median": 3,
+      "p90": 6.2
+     },
+     "finalHoldSecondsMedian": 3,
+     "distinctStylesPerBout": 5.988,
+     "timeShare": {
+      "pressure": 0.166,
+      "counter": 0.168,
+      "cautious": 0.163,
+      "outboxer": 0.168,
+      "body": 0.171,
+      "finisher": 0.164
+     },
+     "firstStyle": {
+      "pressure": 171,
+      "counter": 156,
+      "cautious": 147,
+      "outboxer": 126,
+      "body": 156,
+      "finisher": 144
+     },
+     "trackGaps": 0
+    },
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": -0.005,
+     "ci95": [
+      -0.01,
+      0
+     ]
+    }
+   },
+   "ruleStrategist": {
+    "bouts": 900,
+    "score": 0.987,
+    "winRate": 0.973,
+    "koWins": 0.381,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 0.975,
+     "heldout:strategist": 0.985
+    },
+    "switching": {
+     "switchesPerRound": 3.094,
+     "boutsWithSwitch": 0.964,
+     "completedHoldSeconds": {
+      "n": 7948,
+      "p10": 3,
+      "median": 9,
+      "p90": 27
+     },
+     "finalHoldSecondsMedian": 18.633333333333333,
+     "distinctStylesPerBout": 2.862,
+     "timeShare": {
+      "pressure": 0.014,
+      "counter": 0.212,
+      "cautious": 0.628,
+      "outboxer": 0.001,
+      "body": 0.001,
+      "finisher": 0.144
+     },
+     "firstStyle": {
+      "pressure": 0,
+      "counter": 0,
+      "cautious": 900,
+      "outboxer": 0,
+      "body": 0,
+      "finisher": 0
+     },
+     "trackGaps": 0
+    },
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": 0.004,
+     "ci95": [
+      -0.002,
+      0.011
+     ]
+    }
+   },
+   "tendenciesZeroed": {
+    "bouts": 900,
+    "score": 0.991,
+    "winRate": 0.983,
+    "koWins": 0.467,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 0.98,
+     "heldout:strategist": 0.993
+    },
+    "switching": {
+     "switchesPerRound": 3.4,
+     "boutsWithSwitch": 1,
+     "completedHoldSeconds": {
+      "n": 8228,
+      "p10": 3,
+      "median": 6,
+      "p90": 32
+     },
+     "finalHoldSecondsMedian": 11.733333333333333,
+     "distinctStylesPerBout": 3.202,
+     "timeShare": {
+      "pressure": 0.604,
+      "counter": 0.002,
+      "cautious": 0.342,
+      "outboxer": 0.002,
+      "body": 0.013,
+      "finisher": 0.037
+     },
+     "firstStyle": {
+      "pressure": 138,
+      "counter": 24,
+      "cautious": 48,
+      "outboxer": 69,
+      "body": 408,
+      "finisher": 213
+     },
+     "trackGaps": 0
+    },
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": 0,
+     "ci95": [
+      -0.003,
+      0.003
+     ]
+    }
+   }
+  },
+  "connectome-s3": {
+   "opponents": [
+    "neuro1",
+    "heldout:styleLocked",
+    "heldout:strategist"
+   ],
+   "strategist": {
+    "bouts": 900,
+    "score": 0.999,
+    "winRate": 0.998,
+    "koWins": 0.24,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 0.998,
+     "heldout:strategist": 0.998
+    }
+   },
+   "fixedStyles": {
+    "pressure": {
+     "bouts": 900,
+     "score": 0.999,
+     "winRate": 0.998,
+     "koWins": 0.24,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.998,
+      "heldout:strategist": 0.998
+     }
+    },
+    "counter": {
+     "bouts": 900,
+     "score": 0.985,
+     "winRate": 0.977,
+     "koWins": 0.063,
+     "byOpponent": {
+      "neuro1": 0.997,
+      "heldout:styleLocked": 0.982,
+      "heldout:strategist": 0.977
+     }
+    },
+    "cautious": {
+     "bouts": 900,
+     "score": 0.999,
+     "winRate": 0.998,
+     "koWins": 0.154,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 1,
+      "heldout:strategist": 0.997
+     }
+    },
+    "outboxer": {
+     "bouts": 900,
+     "score": 0.998,
+     "winRate": 0.997,
+     "koWins": 0.167,
+     "byOpponent": {
+      "neuro1": 0.998,
+      "heldout:styleLocked": 1,
+      "heldout:strategist": 0.997
+     }
+    },
+    "body": {
+     "bouts": 900,
+     "score": 0.997,
+     "winRate": 0.994,
+     "koWins": 0.064,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.995,
+      "heldout:strategist": 0.995
+     }
+    },
+    "finisher": {
+     "bouts": 900,
+     "score": 0.989,
+     "winRate": 0.981,
+     "koWins": 0.08,
+     "byOpponent": {
+      "neuro1": 1,
+      "heldout:styleLocked": 0.988,
+      "heldout:strategist": 0.98
+     }
+    }
+   },
+   "bestFixedOnHeldOut": {
+    "style": "pressure",
+    "score": 0.999,
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    },
+    "note": "selected on the held-out bank itself (optimistic for the ablation)"
+   },
+   "randomSwitching": {
+    "bouts": 900,
+    "score": 0.994,
+    "winRate": 0.989,
+    "koWins": 0.116,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 0.993,
+     "heldout:strategist": 0.988
+    },
+    "switching": {
+     "switchesPerRound": 12.215,
+     "boutsWithSwitch": 1,
+     "completedHoldSeconds": {
+      "n": 32821,
+      "p10": 3,
+      "median": 3,
+      "p90": 6.333333333333333
+     },
+     "finalHoldSecondsMedian": 2.6,
+     "distinctStylesPerBout": 5.997,
+     "timeShare": {
+      "pressure": 0.166,
+      "counter": 0.168,
+      "cautious": 0.166,
+      "outboxer": 0.164,
+      "body": 0.168,
+      "finisher": 0.168
+     },
+     "firstStyle": {
+      "pressure": 171,
+      "counter": 156,
+      "cautious": 147,
+      "outboxer": 126,
+      "body": 156,
+      "finisher": 144
+     },
+     "trackGaps": 0
+    },
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": 0.005,
+     "ci95": [
+      0.001,
+      0.009
+     ]
+    }
+   },
+   "ruleStrategist": {
+    "bouts": 900,
+    "score": 0.999,
+    "winRate": 0.998,
+    "koWins": 0.081,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 1,
+     "heldout:strategist": 0.997
+    },
+    "switching": {
+     "switchesPerRound": 3.622,
+     "boutsWithSwitch": 1,
+     "completedHoldSeconds": {
+      "n": 9733,
+      "p10": 3,
+      "median": 9,
+      "p90": 27.533333333333335
+     },
+     "finalHoldSecondsMedian": 18,
+     "distinctStylesPerBout": 3.737,
+     "timeShare": {
+      "pressure": 0.018,
+      "counter": 0.081,
+      "cautious": 0.555,
+      "outboxer": 0.036,
+      "body": 0.006,
+      "finisher": 0.305
+     },
+     "firstStyle": {
+      "pressure": 0,
+      "counter": 0,
+      "cautious": 900,
+      "outboxer": 0,
+      "body": 0,
+      "finisher": 0
+     },
+     "trackGaps": 0
+    },
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": 0,
+     "ci95": [
+      -0.002,
+      0.002
+     ]
+    }
+   },
+   "tendenciesZeroed": {
+    "bouts": 900,
+    "score": 0.999,
+    "winRate": 0.998,
+    "koWins": 0.243,
+    "byOpponent": {
+     "neuro1": 1,
+     "heldout:styleLocked": 0.998,
+     "heldout:strategist": 0.998
+    },
+    "switching": {
+     "switchesPerRound": 0.347,
+     "boutsWithSwitch": 0.552,
+     "completedHoldSeconds": {
+      "n": 931,
+      "p10": 3,
+      "median": 3,
+      "p90": 119.26666666666667
+     },
+     "finalHoldSecondsMedian": 148,
+     "distinctStylesPerBout": 1.654,
+     "timeShare": {
+      "pressure": 0.977,
+      "counter": 0.004,
+      "cautious": 0.004,
+      "outboxer": 0.002,
+      "body": 0,
+      "finisher": 0.012
+     },
+     "firstStyle": {
+      "pressure": 516,
+      "counter": 168,
+      "cautious": 87,
+      "outboxer": 87,
+      "body": 12,
+      "finisher": 30
+     },
+     "trackGaps": 0
+    },
+    "strategistMinusIt": {
+     "n": 900,
+     "meanDiff": 0,
+     "ci95": [
+      0,
+      0
+     ]
+    }
+   }
+  }
+ },
+ "signatures": {
+  "connectome-s1": {
+   "pressure": {
+    "distance": 1.323,
+    "attackRate": 0.753,
+    "guardRate": 0.419,
+    "forwardRatio": 0.154,
+    "bodyShare": 0,
+    "counterShare": 0.724,
+    "shapingOwnStyle": 0.32
+   },
+   "counter": {
+    "distance": 1.317,
+    "attackRate": 0.72,
+    "guardRate": 0.335,
+    "forwardRatio": 0.148,
+    "bodyShare": 0,
+    "counterShare": 0.676,
+    "shapingOwnStyle": 0.248
+   },
+   "cautious": {
+    "distance": 1.345,
+    "attackRate": 0.599,
+    "guardRate": 0.414,
+    "forwardRatio": 0.124,
+    "bodyShare": 0,
+    "counterShare": 0.616,
+    "shapingOwnStyle": 0.619
+   },
+   "outboxer": {
+    "distance": 1.296,
+    "attackRate": 0.723,
+    "guardRate": 0.375,
+    "forwardRatio": 0.144,
+    "bodyShare": 0,
+    "counterShare": 0.666,
+    "shapingOwnStyle": 0.499
+   },
+   "body": {
+    "distance": 1.285,
+    "attackRate": 0.765,
+    "guardRate": 0.283,
+    "forwardRatio": 0.155,
+    "bodyShare": 0,
+    "counterShare": 0.751,
+    "shapingOwnStyle": 0.001
+   },
+   "finisher": {
+    "distance": 1.338,
+    "attackRate": 0.692,
+    "guardRate": 0.356,
+    "forwardRatio": 0.142,
+    "bodyShare": 0,
+    "counterShare": 0.645,
+    "shapingOwnStyle": 0.197
+   }
+  },
+  "connectome-s2": {
+   "pressure": {
+    "distance": 1.136,
+    "attackRate": 0.681,
+    "guardRate": 0.199,
+    "forwardRatio": 0.858,
+    "bodyShare": 0,
+    "counterShare": 0.981,
+    "shapingOwnStyle": 0.606
+   },
+   "counter": {
+    "distance": 1.152,
+    "attackRate": 0.608,
+    "guardRate": 0.285,
+    "forwardRatio": 0.877,
+    "bodyShare": 0,
+    "counterShare": 0.978,
+    "shapingOwnStyle": 0.601
+   },
+   "cautious": {
+    "distance": 1.124,
+    "attackRate": 0.654,
+    "guardRate": 0.191,
+    "forwardRatio": 0.825,
+    "bodyShare": 0,
+    "counterShare": 0.969,
+    "shapingOwnStyle": 0.821
+   },
+   "outboxer": {
+    "distance": 1.121,
+    "attackRate": 0.634,
+    "guardRate": 0.232,
+    "forwardRatio": 0.825,
+    "bodyShare": 0,
+    "counterShare": 0.977,
+    "shapingOwnStyle": 0.601
+   },
+   "body": {
+    "distance": 1.143,
+    "attackRate": 0.726,
+    "guardRate": 0.203,
+    "forwardRatio": 0.841,
+    "bodyShare": 0,
+    "counterShare": 0.973,
+    "shapingOwnStyle": 0.01
+   },
+   "finisher": {
+    "distance": 1.131,
+    "attackRate": 0.666,
+    "guardRate": 0.212,
+    "forwardRatio": 0.841,
+    "bodyShare": 0,
+    "counterShare": 0.975,
+    "shapingOwnStyle": 0.284
+   }
+  },
+  "connectome-s3": {
+   "pressure": {
+    "distance": 1.284,
+    "attackRate": 0.659,
+    "guardRate": 0.684,
+    "forwardRatio": 0.762,
+    "bodyShare": 0,
+    "counterShare": 0.888,
+    "shapingOwnStyle": 0.546
+   },
+   "counter": {
+    "distance": 1.288,
+    "attackRate": 0.617,
+    "guardRate": 0.663,
+    "forwardRatio": 0.768,
+    "bodyShare": 0,
+    "counterShare": 0.797,
+    "shapingOwnStyle": 0.417
+   },
+   "cautious": {
+    "distance": 1.265,
+    "attackRate": 0.661,
+    "guardRate": 0.672,
+    "forwardRatio": 0.883,
+    "bodyShare": 0,
+    "counterShare": 0.904,
+    "shapingOwnStyle": 0.703
+   },
+   "outboxer": {
+    "distance": 1.291,
+    "attackRate": 0.693,
+    "guardRate": 0.596,
+    "forwardRatio": 0.882,
+    "bodyShare": 0,
+    "counterShare": 0.892,
+    "shapingOwnStyle": 0.616
+   },
+   "body": {
+    "distance": 1.33,
+    "attackRate": 0.659,
+    "guardRate": 0.633,
+    "forwardRatio": 0.654,
+    "bodyShare": 0,
+    "counterShare": 0.907,
+    "shapingOwnStyle": 0.003
+   },
+   "finisher": {
+    "distance": 1.311,
+    "attackRate": 0.643,
+    "guardRate": 0.684,
+    "forwardRatio": 0.714,
+    "bodyShare": 0,
+    "counterShare": 0.9,
+    "shapingOwnStyle": 0.116
+   }
+  }
+ },
+ "styleClassifier": {
+  "connectome-s1": {
+   "train": 1800,
+   "test": 3600,
+   "chance": 0.167,
+   "nearestCentroidAccuracy": 0.351,
+   "logisticAccuracy": 0.499,
+   "logisticConfusion": {
+    "rows": "true style",
+    "cols": "predicted",
+    "order": [
+     "pressure",
+     "counter",
+     "cautious",
+     "outboxer",
+     "body",
+     "finisher"
+    ],
+    "matrix": [
+     [
+      381,
+      6,
+      65,
+      91,
+      29,
+      28
+     ],
+     [
+      85,
+      141,
+      38,
+      63,
+      129,
+      144
+     ],
+     [
+      26,
+      11,
+      455,
+      57,
+      9,
+      42
+     ],
+     [
+      127,
+      40,
+      69,
+      172,
+      82,
+      110
+     ],
+     [
+      58,
+      21,
+      42,
+      78,
+      378,
+      23
+     ],
+     [
+      69,
+      66,
+      108,
+      57,
+      30,
+      270
+     ]
+    ]
+   }
+  },
+  "connectome-s2": {
+   "train": 1800,
+   "test": 3600,
+   "chance": 0.167,
+   "nearestCentroidAccuracy": 0.322,
+   "logisticAccuracy": 0.361,
+   "logisticConfusion": {
+    "rows": "true style",
+    "cols": "predicted",
+    "order": [
+     "pressure",
+     "counter",
+     "cautious",
+     "outboxer",
+     "body",
+     "finisher"
+    ],
+    "matrix": [
+     [
+      152,
+      52,
+      116,
+      96,
+      150,
+      34
+     ],
+     [
+      25,
+      459,
+      33,
+      58,
+      6,
+      19
+     ],
+     [
+      118,
+      42,
+      194,
+      98,
+      116,
+      32
+     ],
+     [
+      49,
+      177,
+      100,
+      228,
+      10,
+      36
+     ],
+     [
+      184,
+      14,
+      148,
+      28,
+      208,
+      18
+     ],
+     [
+      99,
+      99,
+      123,
+      97,
+      124,
+      58
+     ]
+    ]
+   }
+  },
+  "connectome-s3": {
+   "train": 1800,
+   "test": 3600,
+   "chance": 0.167,
+   "nearestCentroidAccuracy": 0.458,
+   "logisticAccuracy": 0.671,
+   "logisticConfusion": {
+    "rows": "true style",
+    "cols": "predicted",
+    "order": [
+     "pressure",
+     "counter",
+     "cautious",
+     "outboxer",
+     "body",
+     "finisher"
+    ],
+    "matrix": [
+     [
+      335,
+      95,
+      42,
+      2,
+      79,
+      47
+     ],
+     [
+      36,
+      348,
+      11,
+      21,
+      149,
+      35
+     ],
+     [
+      3,
+      17,
+      532,
+      48,
+      0,
+      0
+     ],
+     [
+      1,
+      12,
+      116,
+      471,
+      0,
+      0
+     ],
+     [
+      37,
+      46,
+      7,
+      0,
+      381,
+      129
+     ],
+     [
+      85,
+      34,
+      57,
+      5,
+      69,
+      350
+     ]
+    ]
+   }
+  }
+ },
+ "controls": {
+  "connectome": 0.962,
+  "shuffled": 0.403,
+  "norecur": 0.786,
+  "perSeed": {
+   "connectome-s1": 0.89,
+   "connectome-s2": 0.997,
+   "connectome-s3": 1,
+   "shuffled-s1": 0.403,
+   "norecur-s1": 0.786
+  }
+ },
+ "shipped": {
+  "model": "connectome-s3",
+  "thetaSha256": "c39c31073ea22b00dec404ab5de8e1301271d85b153272b76d6821668552dc09",
+  "chosenBy": "validation seeds 2000-2009 both corners (score, then outcome), not the held-out banks",
+  "mirror": {
+   "bouts": 600,
+   "korWins": 47,
+   "ayazWins": 39,
+   "draws": 514,
+   "korWinShareExDraws": 0.547,
+   "z": 0.863,
+   "koShare": 0,
+   "meanBoutSeconds": 151,
+   "distinctOutcomes": 218,
+   "switching": {
+    "switchesPerRound": 0.108,
+    "boutsWithSwitch": 0.32,
+    "completedHoldSeconds": {
+     "n": 194,
+     "p10": 3,
+     "median": 3,
+     "p90": 3
+    },
+    "finalHoldSecondsMedian": 151,
+    "distinctStylesPerBout": 1.32,
+    "timeShare": {
+     "pressure": 0.993,
+     "counter": 0.004,
+     "cautious": 0.001,
+     "outboxer": 0.001,
+     "body": 0,
+     "finisher": 0.001
+    },
+    "firstStyle": {
+     "pressure": 410,
+     "counter": 98,
+     "cautious": 33,
+     "outboxer": 38,
+     "body": 7,
+     "finisher": 14
+    },
+    "trackGaps": 0
+   }
+  }
+ },
+ "seconds": 2189
+}

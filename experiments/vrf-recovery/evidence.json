@@ -1,0 +1,66 @@
+{
+  "scope": "NON-PRODUCTION local SBF experiment; no Coinflip integration or network transactions",
+  "verified_at_utc": "2026-10-01T19:40:11.894436+00:00",
+  "upstream_commit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+  "command": "bash experiments/vrf-recovery/run-local.sh",
+  "tests_passed": 35,
+  "tests_failed": 0,
+  "test_groups": {
+    "capture_unit": 12,
+    "provider_vm": 8,
+    "proof_vm": 15
+  },
+  "clippy_deny_warnings": "passed",
+  "rustfmt": "passed",
+  "canonical_recovery_compute_units": 23797,
+  "provider_admission_compute_units": 38055,
+  "provider_callback_compute_units": 31911,
+  "queue_load": [
+    {
+      "account_bytes": 9500,
+      "short_fixture_records": 30,
+      "compute_units": 41828
+    },
+    {
+      "account_bytes": 30000,
+      "short_fixture_records": 120,
+      "compute_units": 52802
+    },
+    {
+      "account_bytes": 512000,
+      "short_fixture_records": 1000,
+      "compute_units": 162367
+    },
+    {
+      "account_bytes": 512000,
+      "short_fixture_records": 4800,
+      "compute_units": 618367
+    }
+  ],
+  "default_budget_exhausted_cu": 200000,
+  "artifact_bytes": 76656,
+  "artifact_sha256": "7c770c6d53826b8a7427da644f0253cbbe0b3ef8cd3260cd356fac4f247fa678",
+  "provider_artifact_sha256": "d4033cbd7b2e0f0b852a317a6a24f64a9e1fd30c4b773119efc16703a06220d7",
+  "source_sha256": {
+    "program/src/capture/tests.rs": "c8f7afd22692195a911e467f056b51044aa7d7ee2325c2b51b767b9b2798b6e9",
+    "program/src/capture.rs": "abf8713081bf27bb52779a44c9f058e5c808d07fb30a1d7c55420f63932fbf92",
+    "program/src/lib.rs": "beeb1d73e62a898ebc7f43c90f83c7e102a2f742c46cd3cf52f3e94575d88a17",
+    "program/src/provider.rs": "d15a7e57ecd2e6fa6a5fd761fe3c609429f24e8da065c32734c95ac520e362df"
+  },
+  "test_sha256": {
+    "tests/tests/provider.rs": "b1419259164de8cef1122f2040bf92f2262231577902d8abe8e2f6ff64707cc5",
+    "tests/tests/recovery.rs": "40f1a1c25ea3d1de3f3396dbcad2e14ae9155cda95ef6c1d344eb0c7ed49d6ad",
+    "tests/tests/root_games_provider.rs": "b78b2aa3c955220eab34d0834cdfe5713f4b72be344517b0fc110fedc5b9cdf4"
+  },
+  "cargo_lock_sha256": "49a67b7e1d9ac0114ec0a8e5d2e64f205b07e2389a9741e87f30dba5bdb1bc58",
+  "verification_log_sha256": "a45f45e32b296e14c4148d8374942fba50e25959417d5310cdabaea4dea34886",
+  "license_sha256": "82eca11982eae39315286ad6caff60b9d2825ce7387b0db203144666ead35258",
+  "limitations": [
+    "Provider SBF and pure parser are local tests, not a live deployment/oracle verification",
+    "Snapshot account and ProgramData authority are VM genesis fixtures",
+    "Queue occupancy uses short synthetic records, not concurrent users or worst-case payloads",
+    "Some adversarial key/input mutations are explicit VM fault injections",
+    "No Coinflip wagering, payment, PER or TDX integration",
+    "Cannot recover an undisclosed oracle proof; BSL production rights unresolved"
+  ]
+}

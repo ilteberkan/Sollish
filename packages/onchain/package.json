@@ -1,0 +1,12 @@
+{
+  "name": "@sollish/onchain",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test test/*.test.ts"
+  },
+  "dependencies": { "@solana/web3.js": "1.99.0", "buffer": "6.0.3", "bs58": "6.0.0" }
+}

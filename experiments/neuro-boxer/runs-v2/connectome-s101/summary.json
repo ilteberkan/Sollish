@@ -1,0 +1,74 @@
+{
+ "version": "neuro-2",
+ "variant": "connectome",
+ "seed": 101,
+ "generations": {
+  "A": 30,
+  "B": 20,
+  "C": 0
+ },
+ "pairs": 24,
+ "sigma": 0.04,
+ "lr": {
+  "A": 0.03,
+  "B": 0.03,
+  "C": 0.01
+ },
+ "decay": 0.005,
+ "temperature": 0.8,
+ "formats": {
+  "A": {
+   "seconds": 20,
+   "rounds": 3,
+   "breakSeconds": 1
+  },
+  "BC": {
+   "seconds": 30,
+   "rounds": 3,
+   "breakSeconds": 2
+  }
+ },
+ "boutsPerCandidate": {
+  "A": 6,
+  "B": 3,
+  "C": 4
+ },
+ "shapingWeight": 0.5,
+ "init": "/Users/macmini/Desktop/Sollish/experiments/neuro-boxer/runs-v2/curriculum-precontact/connectome-s101/stageA.json",
+ "thetaSha256": "d91a3ebd9191daa417489725997296fa4ebaf195e887f1c2e64f012a71a6e96d",
+ "stageSha256": {
+  "A": "0091a4951e03f60e509323f0d32b7fbd69ce78c96e257d61ace58d9655caa550",
+  "B": "b3923ec62b70187ebd3f768c6448a367d3dd3befa086329cbbec53e37e436992",
+  "C": "d91a3ebd9191daa417489725997296fa4ebaf195e887f1c2e64f012a71a6e96d"
+ },
+ "engine": {
+  "version": "sparring-5",
+  "combatSparringSha256": "b5e3a11c9b1b21e8dc281bf7df6cfbf15ba8e9e5184ecf79ec95cd724cf1e471",
+  "combatRefereeSha256": "e950443eb484e59476a58c06332e4904e342e8002d9aefc39c42d304de611dc3",
+  "neuroBoxer2Sha256": "e9cde8c6ba27b47f17d6984f921663bbb085e27bb9f573a66084da1d11898bce"
+ },
+ "engineChangedDuringRun": false,
+ "validationWide": {
+  "score": 1,
+  "outcome": 1.563,
+  "byOpponent": {
+   "bot:balanced": 1,
+   "bot:pressure": 1,
+   "bot:counter": 1,
+   "script:cautious": 1,
+   "script:outboxer": 1,
+   "neuro1": 1
+  },
+  "styleShare": {
+   "pressure": 0.006,
+   "counter": 0.071,
+   "cautious": 0.425,
+   "outboxer": 0.458,
+   "body": 0.005,
+   "finisher": 0.036
+  },
+  "switchesPerRound": 1.444,
+  "trackGaps": 0
+ },
+ "seconds": 365
+}

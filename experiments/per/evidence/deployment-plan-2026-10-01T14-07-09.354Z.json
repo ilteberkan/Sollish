@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-01T14:07:09.354Z",
+  "scope": "Read-only own-probe rent and funding inspection; no transaction, faucet, key creation or deployment",
+  "status": "BLOCKED",
+  "checks": [
+    {
+      "id": "local-artifacts",
+      "status": "PASS"
+    },
+    {
+      "id": "devnet-genesis",
+      "status": "PASS",
+      "evidence": "EtWTRABZaYq6iMfeYKouRu166VU2xqa1wcaWoxPkrZBG"
+    },
+    {
+      "id": "rent-envelope",
+      "status": "BLOCKED",
+      "evidence": {
+        "permanentRentLamports": 1487022680,
+        "intermediateBufferRentLamports": 1486148920,
+        "conservativeRentEnvelopeLamports": 2973171600,
+        "payerBalanceLamports": 2000000000,
+        "rentEnvelopeShortfallLamports": 973171600,
+        "feesAndExperimentFundingIncluded": false,
+        "meaning": "Sum of program, exact-size ProgramData, and temporary buffer rent. Conservative envelope, not the minimum CLI balance: loader may recycle buffer lamports. Transaction fees and player/permission funding are additional; this is not a spending authorization."
+      }
+    },
+    {
+      "id": "deployment-readiness",
+      "status": "BLOCKED",
+      "evidence": "Fees, experimental account funding, live deployment verification and TEE acceptance are separate. This report never approves deployment or production."
+    }
+  ],
+  "programId": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+  "binaryBytes": 292384,
+  "binarySha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+  "maxLenBytes": 292384,
+  "payer": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+  "rentAccounts": {
+    "program": {
+      "dataBytes": 36,
+      "lamports": 833120
+    },
+    "buffer": {
+      "dataBytes": 292421,
+      "lamports": 1486148920
+    },
+    "programData": {
+      "dataBytes": 292429,
+      "lamports": 1486189560
+    }
+  },
+  "observedSlot": 506297679,
+  "funding": {
+    "permanentRentLamports": 1487022680,
+    "intermediateBufferRentLamports": 1486148920,
+    "conservativeRentEnvelopeLamports": 2973171600,
+    "payerBalanceLamports": 2000000000,
+    "rentEnvelopeShortfallLamports": 973171600,
+    "feesAndExperimentFundingIncluded": false,
+    "meaning": "Sum of program, exact-size ProgramData, and temporary buffer rent. Conservative envelope, not the minimum CLI balance: loader may recycle buffer lamports. Transaction fees and player/permission funding are additional; this is not a spending authorization."
+  },
+  "finishedAt": "2026-10-01T14:07:10.249Z"
+}

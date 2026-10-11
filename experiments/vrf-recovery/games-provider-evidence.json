@@ -1,0 +1,61 @@
+{
+  "scope": "NON-PRODUCTION LOCAL VM; REAL PINNED PROVIDER SBF; CALLBACK USES EXPLICIT QUEUE TRANSPLANT; NOT LIVE DEVNET PROOF",
+  "verifiedAtUtc": "2026-10-01T19:39:02.295131+00:00",
+  "command": "bash experiments/vrf-recovery/run-games-provider.sh",
+  "testsPassed": 6,
+  "testsFailed": 0,
+  "skipped": 0,
+  "signatureVerificationEnabled": true,
+  "mockOracleUsed": false,
+  "firstWallet": {
+    "computeUnits": 99005,
+    "legacyTransactionBytes": 728,
+    "providerFeeLamports": 500000,
+    "vmAccountRentLamports": 8184960
+  },
+  "vmTransplantCallbacks": [
+    {
+      "computeUnits": 33741,
+      "settleCloseComputeUnits": 83915,
+      "payoutLamports": 19600000
+    },
+    {
+      "computeUnits": 33741,
+      "settleCloseComputeUnits": 83381,
+      "payoutLamports": 0
+    }
+  ],
+  "deliberatelyInsufficientBudgetComputeUnits": 160000,
+  "syntheticQueueOccupancy": [
+    {
+      "allocatedBytes": 30000,
+      "shortFixtureRecords": 120,
+      "computeUnits": 102202,
+      "accepted": true
+    },
+    {
+      "allocatedBytes": 512000,
+      "shortFixtureRecords": 4800,
+      "computeUnits": 223167,
+      "accepted": true
+    }
+  ],
+  "providerCommit": "52b103c5d55d72e07456a445044b3c006cb87c1a",
+  "providerArtifactSha256": "d4033cbd7b2e0f0b852a317a6a24f64a9e1fd30c4b773119efc16703a06220d7",
+  "rootArtifacts": {
+    "house": "0383273a5d2f62ef1ba1d69e5820d8b2e7b31385f8c3f41c5b40b4833e2bdc06",
+    "games": "730a1b56fb12b25038723162c64ae218376d3e16c90ee175af4909727c65a1b5"
+  },
+  "testSha256": "b78b2aa3c955220eab34d0834cdfe5713f4b72be344517b0fc110fedc5b9cdf4",
+  "cargoLockSha256": "49a67b7e1d9ac0114ec0a8e5d2e64f205b07e2389a9741e87f30dba5bdb1bc58",
+  "verificationLogSha256": "0f4b82b0dbe19aad850b5c7f9bbbc6db0b34816b3185a01bf833a594edb8f35a",
+  "limitations": [
+    "Provider upgrade authority, local oracle key, clock/slot hashes and initial queue accounts are VM fixtures",
+    "Default queue admission is genuine provider SBF; callback request bytes are transplanted to a test-oracle canonical queue",
+    "No provider private key impersonation, transaction signature bypass, or Games/House state replacement",
+    "No proof of deployed provider binary matching this source, live delivery, concurrency/TPS, or timeout recovery",
+    "VM rent schedule is measured locally and differs from current devnet rent; fetch current RPC rent before funding",
+    "Oracle queue purge leaves an Awaiting bet and reserved SOL; production recovery gate remains unresolved",
+    "BSL upstream source remains a local non-production test dependency only"
+  ]
+}

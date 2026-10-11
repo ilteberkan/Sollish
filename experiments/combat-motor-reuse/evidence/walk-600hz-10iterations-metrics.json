@@ -1,0 +1,28 @@
+{
+  "physicsHz": 600,
+  "solverIterations": 10,
+  "seconds": 10,
+  "runtimeSeconds": 1.0328398330020718,
+  "modelSha256": "9db666018be16a40e23e3c56bcbdeb6726b79dbc430341c18b9bf89ad849d5e5",
+  "controller": "published learned mean actor + upstream joint stable PD",
+  "freeBaseMass": 0.0001,
+  "rootAssistApplied": false,
+  "p95JointPositionErrorMeters": 1.4148928046333646,
+  "p95RootRelativeJointPositionErrorMeters": 0.08809603772163103,
+  "maxContactPenetrationMeters": 0.004305159781897143,
+  "p95SupportedFootHorizontalSpeedMps": 0.5882133763101607,
+  "firstDisallowedGroundContactSeconds": null,
+  "actionCount": 300,
+  "inferenceP50Ms": 0.0314170029014349,
+  "inferenceP95Ms": 0.058091329992748804,
+  "peakRssBytes": 86147072,
+  "finite": true,
+  "qualityGates": {
+    "trackingP95Under5cm": false,
+    "penetrationUnder5mm": true,
+    "supportedFootSpeedP95Under10cmps": false
+  },
+  "independentBalanceObserved": true,
+  "qualityReady": false,
+  "traceSha256": "840f716ee4c2c0567d0d0fc1c856ed1ca3fe499b15bf5e66f5499f8ecdbb78d2"
+}

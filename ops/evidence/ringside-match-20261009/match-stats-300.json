@@ -1,0 +1,29 @@
+{
+ "matches": 300,
+ "seeds": "sha256(match-stats-i-k)",
+ "plans": "deterministic fallback",
+ "roundsPlayed": {
+  "1": 0,
+  "2": 12,
+  "3": 288
+ },
+ "outcomes": {
+  "match-winner": {
+   "kor": 123,
+   "draw": 0,
+   "ayaz": 177
+  },
+  "match-method": {
+   "kor-stop": 28,
+   "kor-points": 95,
+   "draw": 0,
+   "ayaz-points": 103,
+   "ayaz-stop": 74
+  },
+  "match-knockdown": {
+   "yes": 288,
+   "no": 12
+  }
+ },
+ "ms": 22598
+}

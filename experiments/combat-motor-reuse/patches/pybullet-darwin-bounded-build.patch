@@ -1,0 +1,22 @@
+--- a/setup.py
++++ b/setup.py
+@@ -28,7 +28,7 @@
+       output_dir, macros, include_dirs, sources, depends, extra_postargs)
+   cc_args = self._get_cc_args(pp_opts, debug, extra_preargs)
+   # parallel code
+-  N = 2 * multiprocessing.cpu_count()  # number of parallel compilations
++  N = 1  # Sollish bounded CPU build: one compiler process
+   try:
+     # On Unix-like platforms attempt to obtain the total memory in the
+     # machine and limit the number of parallel jobs to the number of Gbs
+--- a/examples/ThirdPartyLibs/zlib/zutil.h
++++ b/examples/ThirdPartyLibs/zlib/zutil.h
+@@ -124,7 +124,7 @@
+ #if defined(__MWERKS__) && __dest_os != __be_os && __dest_os != __win32_os
+ #include <unix.h> /* for fdopen */
+ #else
+-#ifndef fdopen
++#if !defined(fdopen) && !defined(__APPLE__) /* Darwin provides POSIX fdopen. */
+ #define fdopen(fd, mode) NULL /* No fdopen() */
+ #endif
+ #endif

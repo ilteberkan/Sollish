@@ -1,0 +1,18 @@
+{
+  "start": {
+    "at": 1791034578708,
+    "frames": 4712,
+    "tick": 1340
+  },
+  "end": {
+    "at": 1791034622505,
+    "frames": 5568,
+    "tick": 1639
+  },
+  "scope": "Observed local Codex IAB desktop interval; not physical phone, p95 latency or sustained performance certification",
+  "includesFinishedIdle": true,
+  "averageIsNotActiveFPS": true,
+  "status": "INCONCLUSIVE_FOR_ACTIVE_FPS",
+  "reason": "Measurement interval included match completion and on-demand idle rendering. Do not interpret average rendering count as active or sustained FPS.",
+  "rawRenderingRateIncludingTerminalIdle": 19.54471767472658
+}

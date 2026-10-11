@@ -1,0 +1,26 @@
+{
+ "providerCalls": 0,
+ "provider": [],
+ "at": "2026-10-04T22:39:59.021Z",
+ "scope": "local dev runtime http://127.0.0.1:3000 (next dev, Turbopack), headless Chromium with GPU WebGL (ANGLE Metal); not a production build, not hosted",
+ "mode": "learned",
+ "seed": 20261042,
+ "viewport": [
+  390,
+  844
+ ],
+ "finished": true,
+ "stage": {
+  "tick": 9060,
+  "decisions": 2
+ },
+ "waitingSamples": 0,
+ "posts": [
+  {
+   "failed": "net::ERR_ABORTED"
+  }
+ ],
+ "errors": [],
+ "logText": "Stil kararları\nCANLI\nKaydı indir\nKayıt yükle\n00:00\nt0\nAYAZ\nGövdeci\nÖĞRENİLMİŞ\n%18\n00:00\nt0\nKOR\nTemkinli\nÖĞRENİLMİŞ\n%17",
+ "logFile": "/private/tmp/claude-501/-Users-macmini-Desktop-Sollish/021e099c-5b54-43d5-9578-0302c917ae37/scratchpad/agent-style/scene-learned-390/decision-log.json"
+}

@@ -1,0 +1,540 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-10-01T05:39:25.638Z",
+  "scope": "Own PER probe prepare; no game/funds payout",
+  "mode": "prepare",
+  "status": "BLOCKED",
+  "productionApproval": false,
+  "G0": "BLOCKED",
+  "checks": [
+    {
+      "id": "offline-key-idl-account-plan",
+      "status": "PASS"
+    },
+    {
+      "id": "remote-execution",
+      "status": "BLOCKED",
+      "evidence": "No network requests or signed transactions were submitted by prepare"
+    }
+  ],
+  "rows": [],
+  "transactions": [],
+  "sessions": {},
+  "leakSearch": [],
+  "sequence": [
+    {
+      "chain": "L1",
+      "role": "inspector",
+      "instruction": "initialize_round",
+      "dataBytes": 80,
+      "dataSha256": "bf9811b40fa0bcb73b608ba021475c5e9a26500f2ec0f76c9f9346889aa1644b",
+      "accounts": [
+        {
+          "name": "inspector",
+          "address": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+          "signer": true,
+          "writable": true
+        },
+        {
+          "name": "round",
+          "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111",
+          "signer": false,
+          "writable": false
+        }
+      ]
+    },
+    {
+      "chain": "L1",
+      "role": "playerA",
+      "instruction": "initialize_receipt",
+      "dataBytes": 8,
+      "dataSha256": "679acf6b42a17e74c2e34e4bf64a095c8a9f0a7f229c82615e1dd6242f3bd821",
+      "accounts": [
+        {
+          "name": "player",
+          "address": "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+          "signer": true,
+          "writable": true
+        },
+        {
+          "name": "round",
+          "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "receipt",
+          "address": "AoMw5mU7VRtrYyKHt2BKHE1ayveGbnmTPQ8ks7mxmtkp",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111",
+          "signer": false,
+          "writable": false
+        }
+      ]
+    },
+    {
+      "chain": "L1",
+      "role": "playerB",
+      "instruction": "initialize_receipt",
+      "dataBytes": 8,
+      "dataSha256": "679acf6b42a17e74c2e34e4bf64a095c8a9f0a7f229c82615e1dd6242f3bd821",
+      "accounts": [
+        {
+          "name": "player",
+          "address": "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg",
+          "signer": true,
+          "writable": true
+        },
+        {
+          "name": "round",
+          "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "receipt",
+          "address": "DXJn45JY4FUZmQYojqwoSS2ncsXN4fxC5iRRSCWTU7Ps",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111",
+          "signer": false,
+          "writable": false
+        }
+      ]
+    },
+    {
+      "chain": "L1",
+      "role": "playerA",
+      "instruction": "delegate_receipt",
+      "dataBytes": 8,
+      "dataSha256": "d04cecff225d4e3d1bd549b36a9870863172b7f426a76247da49522b05adac15",
+      "accounts": [
+        {
+          "name": "player",
+          "address": "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+          "signer": true,
+          "writable": true
+        },
+        {
+          "name": "round",
+          "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "buffer_receipt",
+          "address": "AyD45qzHDyuN8YVVArD6YHBFxGoDerxD166Wt89LgLgm",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "delegation_record_receipt",
+          "address": "AA4J28xFUTH7tVDzFLuo33t7U6ZMjVJLuccxULqpA8r6",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "delegation_metadata_receipt",
+          "address": "BNJqK4xukMmLGihvBLj2yTLn5XZzPKzYvH1qkY6NvjcY",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "receipt",
+          "address": "AoMw5mU7VRtrYyKHt2BKHE1ayveGbnmTPQ8ks7mxmtkp",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "owner_program",
+          "address": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "delegation_program",
+          "address": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111",
+          "signer": false,
+          "writable": false
+        }
+      ]
+    },
+    {
+      "chain": "L1",
+      "role": "playerB",
+      "instruction": "delegate_receipt",
+      "dataBytes": 8,
+      "dataSha256": "d04cecff225d4e3d1bd549b36a9870863172b7f426a76247da49522b05adac15",
+      "accounts": [
+        {
+          "name": "player",
+          "address": "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg",
+          "signer": true,
+          "writable": true
+        },
+        {
+          "name": "round",
+          "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "buffer_receipt",
+          "address": "8hujrmrfqUsengnofCgqzSkohkQ14LRSfiDhzyA2nViZ",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "delegation_record_receipt",
+          "address": "8sKbT19K2jryihudf9d9irq9VkAEhBT3PAEpxcmLnoNP",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "delegation_metadata_receipt",
+          "address": "4KNBDP5fB3REV5CJEqDYDHiEPNJycRcobH2Tn5GGt72W",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "receipt",
+          "address": "DXJn45JY4FUZmQYojqwoSS2ncsXN4fxC5iRRSCWTU7Ps",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "owner_program",
+          "address": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "delegation_program",
+          "address": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111",
+          "signer": false,
+          "writable": false
+        }
+      ]
+    },
+    {
+      "chain": "L1",
+      "role": "inspector",
+      "instruction": "delegate_round",
+      "dataBytes": 16,
+      "dataSha256": "cde700d0919fcfbde83ccae2b40dc989dbcb3c4617cac58f81be9d7166bfc2cd",
+      "accounts": [
+        {
+          "name": "inspector",
+          "address": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+          "signer": true,
+          "writable": true
+        },
+        {
+          "name": "buffer_round",
+          "address": "2aqwWAkuxMBxqD3RuEWX96FgRpUX7QjzwLwr2ad2AnoP",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "delegation_record_round",
+          "address": "DeEoL1gzZRpJqJkfaVeYZhsTwnYECoS8NKvDx1SR6ViP",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "delegation_metadata_round",
+          "address": "21YetqvJy21Btkd1dDVh8buXYTsoG5cWUL1GBssLZoXT",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "round",
+          "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "owner_program",
+          "address": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "delegation_program",
+          "address": "DELeGGvXpWV2fqJUhqcF5ZSYMS4JTLjteaAMARRSaeSh",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111",
+          "signer": false,
+          "writable": false
+        }
+      ]
+    },
+    {
+      "chain": "TEE",
+      "role": "inspector",
+      "instruction": "prepare_private",
+      "dataBytes": 8,
+      "dataSha256": "78f434ba1f22093042fb9b7a9ff45b97888bc47cbad4f4435f9559bbb04b041a",
+      "accounts": [
+        {
+          "name": "inspector",
+          "address": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+          "signer": true,
+          "writable": true
+        },
+        {
+          "name": "round",
+          "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "permission",
+          "address": "8sdJs3MMobmKo6LutsFU93CSicxUiGKbrGYAGYWw6BTV",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "permission_program",
+          "address": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "ephemeral_vault",
+          "address": "MagicVau1t999999999999999999999999999999999",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "magic_program",
+          "address": "Magic11111111111111111111111111111111111111",
+          "signer": false,
+          "writable": false
+        }
+      ]
+    },
+    {
+      "chain": "TEE",
+      "role": "inspector",
+      "instruction": "request_probe_randomness",
+      "dataBytes": 8,
+      "dataSha256": "47579eb4cd288c92ef1e690b81c02451b994177e7a3681b175ec3250a6fe914f",
+      "accounts": [
+        {
+          "name": "inspector",
+          "address": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+          "signer": true,
+          "writable": true
+        },
+        {
+          "name": "round",
+          "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "permission",
+          "address": "8sdJs3MMobmKo6LutsFU93CSicxUiGKbrGYAGYWw6BTV",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "oracle_queue",
+          "address": "5hBR571xnXppuCPveTrctfTU7tJLSN94nq7kv7FRK5Tc",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "program_identity",
+          "address": "6buXn8ycBgN12n8S1R7ZaixZmBQMDor16TzgAobqiD9S",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "vrf_program",
+          "address": "Vrf1RNUjXmQGjmQrQLvJHs9SNkvDJEsRVFPkfSQUwGz",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "slot_hashes",
+          "address": "SysvarS1otHashes111111111111111111111111111",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111",
+          "signer": false,
+          "writable": false
+        }
+      ]
+    },
+    {
+      "chain": "TEE",
+      "role": "playerA",
+      "instruction": "submit_probe",
+      "dataBytes": 16,
+      "dataSha256": "91658b8fa4257f5068fd78721f6df6227fe03c0dacd2c5c6a663878d2a387521",
+      "accounts": [
+        {
+          "name": "player",
+          "address": "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+          "signer": true,
+          "writable": false
+        },
+        {
+          "name": "round",
+          "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "receipt",
+          "address": "AoMw5mU7VRtrYyKHt2BKHE1ayveGbnmTPQ8ks7mxmtkp",
+          "signer": false,
+          "writable": true
+        }
+      ]
+    },
+    {
+      "chain": "TEE",
+      "role": "playerB",
+      "instruction": "submit_probe",
+      "dataBytes": 16,
+      "dataSha256": "91658b8fa4257f5068fd78721f6df6227fe03c0dacd2c5c6a663878d2a387521",
+      "accounts": [
+        {
+          "name": "player",
+          "address": "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg",
+          "signer": true,
+          "writable": false
+        },
+        {
+          "name": "round",
+          "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "receipt",
+          "address": "DXJn45JY4FUZmQYojqwoSS2ncsXN4fxC5iRRSCWTU7Ps",
+          "signer": false,
+          "writable": true
+        }
+      ]
+    },
+    {
+      "chain": "TEE",
+      "role": "inspector",
+      "instruction": "reveal_probe",
+      "dataBytes": 8,
+      "dataSha256": "990458dbc5d3c8b56e6bf57dd97feae0dfbe2ddb391dca9724ba504afdf40760",
+      "accounts": [
+        {
+          "name": "inspector",
+          "address": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+          "signer": true,
+          "writable": true
+        },
+        {
+          "name": "round",
+          "address": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "permission",
+          "address": "8sdJs3MMobmKo6LutsFU93CSicxUiGKbrGYAGYWw6BTV",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "permission_program",
+          "address": "ACLseoPoyC3cBqoUtkbjZ4aDrkurZW86v19pXz2XQnp1",
+          "signer": false,
+          "writable": false
+        },
+        {
+          "name": "ephemeral_vault",
+          "address": "MagicVau1t999999999999999999999999999999999",
+          "signer": false,
+          "writable": true
+        },
+        {
+          "name": "magic_program",
+          "address": "Magic11111111111111111111111111111111111111",
+          "signer": false,
+          "writable": false
+        }
+      ]
+    }
+  ],
+  "runOutcome": "PREPARED_OFFLINE",
+  "plan": {
+    "version": 1,
+    "program": "AHyeBQPUTEStC4CVunyBc4f4CPGVH2c3XoKFXcB3F3va",
+    "roundId": "1790833165684",
+    "inspector": "2By6MdhFoXhCxdhQMPt15PLPJo8Q3Ge3pw1QAJ2J4waA",
+    "players": [
+      "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+      "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg"
+    ],
+    "round": "3a3Ar74sNKUScYvhDaqPNcnhHvfzB6cSm5Dj1bh64nqF",
+    "permission": "8sdJs3MMobmKo6LutsFU93CSicxUiGKbrGYAGYWw6BTV",
+    "identity": "6buXn8ycBgN12n8S1R7ZaixZmBQMDor16TzgAobqiD9S",
+    "roundDelegation": {
+      "buffer": "2aqwWAkuxMBxqD3RuEWX96FgRpUX7QjzwLwr2ad2AnoP",
+      "record": "DeEoL1gzZRpJqJkfaVeYZhsTwnYECoS8NKvDx1SR6ViP",
+      "metadata": "21YetqvJy21Btkd1dDVh8buXYTsoG5cWUL1GBssLZoXT"
+    },
+    "receipts": [
+      {
+        "address": "AoMw5mU7VRtrYyKHt2BKHE1ayveGbnmTPQ8ks7mxmtkp",
+        "player": "Hj3r7UVvxt1AdKKXnmVc8g6WswAdNc2DmtZcttU39qW9",
+        "buffer": "AyD45qzHDyuN8YVVArD6YHBFxGoDerxD166Wt89LgLgm",
+        "record": "AA4J28xFUTH7tVDzFLuo33t7U6ZMjVJLuccxULqpA8r6",
+        "metadata": "BNJqK4xukMmLGihvBLj2yTLn5XZzPKzYvH1qkY6NvjcY"
+      },
+      {
+        "address": "DXJn45JY4FUZmQYojqwoSS2ncsXN4fxC5iRRSCWTU7Ps",
+        "player": "5D7be2tbA3m7o3N3er6MrtNtoS7cwPMezE6RZvP3nEWg",
+        "buffer": "8hujrmrfqUsengnofCgqzSkohkQ14LRSfiDhzyA2nViZ",
+        "record": "8sKbT19K2jryihudf9d9irq9VkAEhBT3PAEpxcmLnoNP",
+        "metadata": "4KNBDP5fB3REV5CJEqDYDHiEPNJycRcobH2Tn5GGt72W"
+      }
+    ]
+  },
+  "localBinarySha256": "197a965662b28971bca434633abfaaf2d5d826bdc3ce2f54a1d746554cd99aae",
+  "finishedAt": "2026-10-01T05:39:25.715Z"
+}

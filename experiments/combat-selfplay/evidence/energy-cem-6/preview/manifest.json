@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "experiment": "combat-selfplay-energy-cem-6",
+  "publishedAt": "2026-10-03T11:35:50.758Z",
+  "modelSha256": "eb270b099c4c0d64bebc55f1d74ee06e92c6d24335370f501011ee6c7a8f5dee",
+  "sourceSha256": "8e762fe950cf3d2c34a103ab10747af0d64fa4176335914f52d4073299e15488",
+  "promotionPassed": false,
+  "training": {
+    "episodes": 26640,
+    "generations": 115,
+    "seconds": 534.872541291,
+    "method": "Üç aşamada gerçek maç ödülüyle enerji/teknik residual öğrenmesi; önceki guarded modelden başlangıç. Öğretmen etiketi ve legality mask yok."
+  },
+  "evaluation": {
+    "games": 576,
+    "beforeScore": 0.9131944444444444,
+    "afterScore": 0.9088541666666667,
+    "baseline": "Önceki eğitilmiş guarded self-play modeli; aynı fizik, aynı yeni seed/rakip/taraflarda. Rastgele başlangıç değildir.",
+    "scope": "24 yeni seed ×2 taraf ×12 rakip. Final yalnız model seçimi dondurulduktan sonra açıldı; son test sonucuna göre ayar yapılmadı."
+  },
+  "limitations": [
+    "Kalite koşulları geçmedi: cleanHits.",
+    "Ortalama 3.602 teknik (hedef≥3); motor müdahalesi %8.61 (hedef≤25); temiz isabet 10.88 (hedef≥12).",
+    "Karşılanamayan maliyetle ham saldırı önerisi %0.003; bu sayı hiçbir maske ile gizlenmedi.",
+    "128 gerçek MaleCNS düğümü ve varsayımsal sabit dinamik; yeni128 residual parametrenin16sı son aşamada eğitildi. Tam beyin, bilinç veya eklem-tork öğrenmesi değildir.",
+    "Mesafe/low-stamina/anti-stall motor kuralları korunur ve müdahaleleri ayrıca ölçülür; yüksek skor tek başına genel dövüş becerisi kanıtı değildir.",
+    "Sadece çevrim dışı kayıt; frozen canlı v3, kabul edilen biletler ve gerçek varlık kapıları değişmedi.",
+    "Sürekli-kick baseline aynı testte %99.826 kazanırken öğrenci %90.799 kazandı; tek-tekme sömürüsü ortamda hâlâ var, genel taktik üstünlüğü gösterilmedi.",
+    "Öğrencinin baskın saldırı payı ortalama %50.03, tek maçta en fazla %90.32; her maçta dengeli çeşitlilik garanti edilmez."
+  ],
+  "cases": [
+    {
+      "id": "260000",
+      "label": "Görünür hazırlığa yanıt veren jab rakibi",
+      "opponent": "unseen-reactive-jab",
+      "seed": "8fa6514228c6e340e923edeb3b344e5a9053c4602b11190139811b8195abe16a",
+      "runs": [
+        {
+          "id": "initial",
+          "label": "Önceki guarded self-play modeli",
+          "path": "/research/ringside/selfplay-energy6-260000-initial.json",
+          "sha256": "2811bcb47a797f7ade357090756f053ba67c98f432118bc971a8da3714d0735e",
+          "bytes": 1062753,
+          "trained": false
+        },
+        {
+          "id": "learned",
+          "label": "Enerji ve teknik seçimi yeniden öğrenilen",
+          "path": "/research/ringside/selfplay-energy6-260000-learned.json",
+          "sha256": "1a06ccca8a259843f779c7ea77065b74aefb55f28890ffc31ab937a6fb7d9347",
+          "bytes": 1059664,
+          "trained": true
+        }
+      ]
+    },
+    {
+      "id": "260001",
+      "label": "Alçak ve yüksek saldırı karışımı",
+      "opponent": "unseen-lowhigh",
+      "seed": "c3e22c5bb4ea4e989cbc5cf940ea21686a1e25c985f43ac7bd0699daf9a52830",
+      "runs": [
+        {
+          "id": "initial",
+          "label": "Önceki guarded self-play modeli",
+          "path": "/research/ringside/selfplay-energy6-260001-initial.json",
+          "sha256": "5b61cce17d1d8e6587b5bbc5a34804d87e326f351f133438c50d85aa6ce0ae74",
+          "bytes": 1060111,
+          "trained": false
+        },
+        {
+          "id": "learned",
+          "label": "Enerji ve teknik seçimi yeniden öğrenilen",
+          "path": "/research/ringside/selfplay-energy6-260001-learned.json",
+          "sha256": "00d0a37dd4738c36080e2a4b2056839154ba9997a72eeb44ea78b7421bf133f2",
+          "bytes": 1063969,
+          "trained": true
+        }
+      ]
+    },
+    {
+      "id": "260002",
+      "label": "Baskı ve enerji döngüsü",
+      "opponent": "unseen-pressure",
+      "seed": "f84fe768900860a923ab71f2b0fce245128d9f3a39a0b54245fde44bf715191d",
+      "runs": [
+        {
+          "id": "initial",
+          "label": "Önceki guarded self-play modeli",
+          "path": "/research/ringside/selfplay-energy6-260002-initial.json",
+          "sha256": "fb61d1f4064a7c82a97c446d534de41d6641ba4d8505b1e79e6b3daf8d734a22",
+          "bytes": 1055535,
+          "trained": false
+        },
+        {
+          "id": "learned",
+          "label": "Enerji ve teknik seçimi yeniden öğrenilen",
+          "path": "/research/ringside/selfplay-energy6-260002-learned.json",
+          "sha256": "f40dad22b4929a3b2c9ba64a6b3becff0c2aa62506576ddf700bea2809c6798f",
+          "bytes": 1057711,
+          "trained": true
+        }
+      ]
+    }
+  ]
+}

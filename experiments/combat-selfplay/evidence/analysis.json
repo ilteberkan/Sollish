@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "evaluationSha256": "4ce1dabb6f2db209730a52f861bfc215ccbc85f6c37c0248457574ef52f9bdfa",
+  "variants": {
+    "connectome": {
+      "initialScore": 0.47265625,
+      "learnedScore": 0.9921875,
+      "researchGate": "FAIL",
+      "attackCounts": {
+        "jab": 0,
+        "cross": 7489,
+        "hook": 686,
+        "kick": 2
+      },
+      "largestAttackShare": 0.9158615629203865,
+      "proposals": {
+        "advance": 78,
+        "circle": 0,
+        "guard": 0,
+        "slip": 0,
+        "jab": 0,
+        "cross": 15626,
+        "hook": 1509,
+        "kick": 0
+      },
+      "clustered": {
+        "seedClusters": 16,
+        "scoreImprovement": 0.51953125,
+        "bootstrap95": [
+          0.49609375,
+          0.54296875
+        ],
+        "scope": "Seed-cluster resampling includes both sides/all opponent types. One optimizer seed only; not uncertainty across training runs or physical-world transfer."
+      },
+      "unseenOpponentTypes": [
+        "kick-only",
+        "counter",
+        "alternating",
+        "turtle",
+        "evasive",
+        "frozen-v3"
+      ]
+    },
+    "scrambled": {
+      "initialScore": 0.486328125,
+      "learnedScore": 0.984375,
+      "researchGate": "PASS",
+      "attackCounts": {
+        "jab": 0,
+        "cross": 1312,
+        "hook": 6141,
+        "kick": 5
+      },
+      "largestAttackShare": 0.8234111021721641,
+      "proposals": {
+        "advance": 117,
+        "circle": 0,
+        "guard": 0,
+        "slip": 0,
+        "jab": 0,
+        "cross": 2797,
+        "hook": 13242,
+        "kick": 2
+      },
+      "clustered": {
+        "seedClusters": 16,
+        "scoreImprovement": 0.498046875,
+        "bootstrap95": [
+          0.47265625,
+          0.525390625
+        ],
+        "scope": "Seed-cluster resampling includes both sides/all opponent types. One optimizer seed only; not uncertainty across training runs or physical-world transfer."
+      },
+      "unseenOpponentTypes": [
+        "kick-only",
+        "counter",
+        "alternating",
+        "turtle",
+        "evasive",
+        "frozen-v3"
+      ]
+    },
+    "no-recurrence": {
+      "initialScore": 0.50390625,
+      "learnedScore": 0.9921875,
+      "researchGate": "FAIL",
+      "attackCounts": {
+        "jab": 11,
+        "cross": 8231,
+        "hook": 3,
+        "kick": 2
+      },
+      "largestAttackShare": 0.9980599005699042,
+      "proposals": {
+        "advance": 81,
+        "circle": 0,
+        "guard": 0,
+        "slip": 0,
+        "jab": 0,
+        "cross": 17218,
+        "hook": 57,
+        "kick": 0
+      },
+      "clustered": {
+        "seedClusters": 16,
+        "scoreImprovement": 0.48828125,
+        "bootstrap95": [
+          0.4609375,
+          0.515625
+        ],
+        "scope": "Seed-cluster resampling includes both sides/all opponent types. One optimizer seed only; not uncertainty across training runs or physical-world transfer."
+      },
+      "unseenOpponentTypes": [
+        "kick-only",
+        "counter",
+        "alternating",
+        "turtle",
+        "evasive",
+        "frozen-v3"
+      ]
+    }
+  },
+  "limitations": [
+    "Anatomical topology superiority is not established by this single optimizer seed.",
+    "Per-episode intervals in raw evaluation.json are exploratory; prefer seed-cluster intervals here because the two sides share seeds.",
+    "Scripted baseline policies are deliberately small and predictable. Strong unseen learned adversaries, different physics and privileged-information audits remain future work.",
+    "Action safety and max no-strike partly follow hard engine overrides, not learned competence."
+  ]
+}

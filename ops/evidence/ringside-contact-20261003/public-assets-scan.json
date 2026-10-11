@@ -1,0 +1,7 @@
+{
+  "observedAt": "2026-10-02T23:40:00.526Z",
+  "scope": "Exact comparison of available local server credential values against all public Cloudflare assets. Does not claim generalized secret detection.",
+  "files": 52,
+  "privateValuesCompared": 3,
+  "matches": 0
+}

@@ -1,0 +1,6 @@
+{
+  "at": "2026-10-02T23:30:53.652Z",
+  "runtime": "local-workerd-production-router",
+  "checks": 12,
+  "scope": "Default-off flag, origin, query, upgrade, actual IP admission 30/min under concurrent handshake, 10s anonymous close initiation and removal from fanout, unchanged unavailable chat/financial status. Node/workerd full close handshake may complete later. Local headers simulate the Cloudflare edge IP; no hosted bot resistance or global capacity claim."
+}

@@ -1,0 +1,19 @@
+{
+  "at": "2026-10-02T23:45:24.838Z",
+  "scope": "Local production workerd bundle, native Metal on Apple M2, deterministic transport fixture; actual Contact v3 replay, IK, three rigs and instanced crowd. Not mobile hardware/global capacity.",
+  "firstReadyMs": 885,
+  "frames": 360,
+  "fps": 29.957608732023047,
+  "medianMs": 33.39999997615814,
+  "p95Ms": 34.80000001192093,
+  "errors": [],
+  "cleanup": {
+    "buffer": 122,
+    "bufferDelete": 122,
+    "texture": 40,
+    "textureDelete": 35,
+    "program": 25,
+    "programDelete": 17,
+    "canvas": 0
+  }
+}

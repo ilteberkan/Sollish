@@ -1,0 +1,224 @@
+{
+ "schema": "sollish.evidence.v1",
+ "at": "2026-10-05T15:01:20.443Z",
+ "scope": "CPU skin; not GPU or browser",
+ "method": "Real fightkit-v1 skinned rig + Mixamo/Mesh2Motion clips through loadMixamoAthletes (smoothing on, as the live viewer) in Node; per-bone capsules with radii fitted from the real skin (90th percentile, weight > 0.5); every engine tick rendered at alpha 0, .25, .5, .75 (240 Hz, a superset of 120 Hz). Penetration = r1 + r2 - segment distance.",
+ "engineVersion": "sparring-5",
+ "assets": {
+  "apps/web/public/models/boxing/athlete-fightkit-v1.glb": "3acefb55468c8201e7ad5376e7e04103f1fab0d56359b94b1b35d813fd54a69f",
+  "apps/web/public/models/boxing/mixamo-boxing-v1.glb": "14c2829cd581fab64bba312f047fc96cdd51cf3079bb07ff69a7e1cab35feed2",
+  "apps/web/public/models/boxing/mixamo-boxing-v1.json": "53ff9a55ee376caf0f66f3541b651c422fc2198339200dc7e50702e72522f450",
+  "apps/web/public/models/boxing/combat-motion-v1.glb": "8ab9688e12a625ed3d4ec3c7ab752f4f465d90b33d3eef1580b276bc1e3cff39"
+ },
+ "capsuleRadii": {
+  "torso": 0.177,
+  "chest_l": 0.233,
+  "chest_r": 0.216,
+  "head": 0.134,
+  "upperarm_l": 0.123,
+  "lowerarm_l": 0.079,
+  "glove_l": 0.118,
+  "thigh_l": 0.152,
+  "calf_l": 0.107,
+  "upperarm_r": 0.124,
+  "lowerarm_r": 0.079,
+  "glove_r": 0.118,
+  "thigh_r": 0.152,
+  "calf_r": 0.107
+ },
+ "bouts": [
+  {
+   "seed": 7,
+   "corners": [
+    "neuro",
+    "neuro"
+   ],
+   "rounds": "3 x 45 s",
+   "engineStateSha256": "b43243ab334a8d6d364bcc1c8425b81c3197d33c7cade85b7271ea026c9ff688"
+  },
+  {
+   "seed": 11,
+   "corners": [
+    "neuro",
+    "neuro"
+   ],
+   "rounds": "3 x 45 s",
+   "engineStateSha256": "e1d0029dfb9d87a5c7b24a4a9547dec808aa45102c688cd8371695eff127bf49"
+  },
+  {
+   "seed": 4,
+   "corners": [
+    "pressure",
+    "balanced"
+   ],
+   "rounds": "3 x 45 s",
+   "engineStateSha256": "78b4fc3c63a91fcd76fd82869fedc9de65f941f400d7cca42f2d1040a38f1d6a"
+  }
+ ],
+ "ticksLimit": null,
+ "frames": 103760,
+ "framesWithAFighterDown": 6608,
+ "cpuSecondsResolverOn": 151.424,
+ "thresholdsM": {
+  "torsoTorso": 0.01,
+  "headBody": 0.01,
+  "armTorso": 0.015,
+  "gloveGloveForearm": 0.02,
+  "legLeg": 0.015,
+  "fallingBodyOverStanding": 0,
+  "rootOffset": 0.12
+ },
+ "resolverOff": {
+  "torsoTorso": {
+   "maxM": 0.4489,
+   "p95OfOverlapFramesM": 0.4068,
+   "overlapFrames": 20719
+  },
+  "headBody": {
+   "maxM": 0.291,
+   "p95OfOverlapFramesM": 0.2521,
+   "overlapFrames": 10134
+  },
+  "armTorso": {
+   "maxM": 0.356,
+   "p95OfOverlapFramesM": 0.2946,
+   "overlapFrames": 54189
+  },
+  "gloveGloveForearm": {
+   "maxM": 0.236,
+   "p95OfOverlapFramesM": 0.185,
+   "overlapFrames": 59834
+  },
+  "gloveBody": {
+   "maxM": 0.351,
+   "p95OfOverlapFramesM": 0.2898,
+   "overlapFrames": 63530
+  },
+  "legLeg": {
+   "maxM": 0.304,
+   "p95OfOverlapFramesM": 0.2673,
+   "overlapFrames": 39761
+  },
+  "armArm": {
+   "maxM": 0.2469,
+   "p95OfOverlapFramesM": 0.2376,
+   "overlapFrames": 67675
+  },
+  "other": {
+   "maxM": 0.265,
+   "p95OfOverlapFramesM": 0.1636,
+   "overlapFrames": 13516
+  }
+ },
+ "resolverOn": {
+  "torsoTorso": {
+   "maxM": 0.0353,
+   "p95OfOverlapFramesM": 0.0324,
+   "overlapFrames": 36
+  },
+  "headBody": {
+   "maxM": 0.0896,
+   "p95OfOverlapFramesM": 0.057,
+   "overlapFrames": 468
+  },
+  "armTorso": {
+   "maxM": 0.168,
+   "p95OfOverlapFramesM": 0.1025,
+   "overlapFrames": 5823
+  },
+  "gloveGloveForearm": {
+   "maxM": 0.2308,
+   "p95OfOverlapFramesM": 0.1515,
+   "overlapFrames": 60249
+  },
+  "gloveBody": {
+   "maxM": 0.2208,
+   "p95OfOverlapFramesM": 0.1488,
+   "overlapFrames": 11777
+  },
+  "legLeg": {
+   "maxM": 0.2547,
+   "p95OfOverlapFramesM": 0.141,
+   "overlapFrames": 2744
+  },
+  "armArm": {
+   "maxM": 0.2376,
+   "p95OfOverlapFramesM": 0.147,
+   "overlapFrames": 22185
+  },
+  "other": {
+   "maxM": 0.229,
+   "p95OfOverlapFramesM": 0.2039,
+   "overlapFrames": 509
+  }
+ },
+ "fallingBodyOverStandingM": {
+  "off": 0.2905,
+  "on": 0.2214,
+  "worstOn": {
+   "depth": 0.22142928390871708,
+   "pair": [
+    "head",
+    "calf_l"
+   ],
+   "tick": 7358.5,
+   "seed": 4,
+   "down": "knockdown:231"
+  },
+  "worstOff": {
+   "depth": 0.29051513003015095,
+   "pair": [
+    "torso",
+    "glove_r"
+   ],
+   "tick": 8886,
+   "seed": 7,
+   "down": "knockdown:3"
+  },
+  "downedArmsM": {
+   "off": 0.3447,
+   "on": 0.229
+  },
+  "note": "downed trunk/head/legs vs any capsule of the standing fighter, every frame either fighter is in knockdown or getup"
+ },
+ "rootOffsetMaxM": 0.12,
+ "strikeGapAtContactM": {
+  "note": "rendered striking glove to the struck capsule at engine hit/block ticks; > 0 short of it, < 0 inside it",
+  "off": {
+   "p05": -0.1691,
+   "p50": -0.0877,
+   "p95": 0.1708,
+   "n": 447
+  },
+  "on": {
+   "p05": -0.099,
+   "p50": -0.0017,
+   "p95": 0.0198,
+   "n": 447
+  }
+ },
+ "worstPairOn": {
+  "depth": 0.2546534569212322,
+  "pair": [
+   "thigh_l",
+   "thigh_l"
+  ],
+  "tick": 3975,
+  "seed": 11
+ },
+ "worstPairOff": {
+  "depth": 0.44889251240464867,
+  "pair": [
+   "chest_r",
+   "chest_l"
+  ],
+  "tick": 8505.5,
+  "seed": 11
+ },
+ "engineHashesEqualOnOff": true,
+ "limits": [
+  "Capsules, not triangle meshes; 10 % of each part's vertices lie outside its capsule by construction.",
+  "Mixamo clips are authored; the resolver is a procedural correction, not motion capture of real contact.",
+  "No GPU, browser, frame-rate or visual-quality claim; see the real-scene captures for that."
+ ]
+}

@@ -1,0 +1,74 @@
+{
+ "version": "neuro-2",
+ "variant": "connectome",
+ "seed": 101,
+ "generations": {
+  "A": 125,
+  "B": 0,
+  "C": 0
+ },
+ "pairs": 24,
+ "sigma": 0.04,
+ "lr": {
+  "A": 0.03,
+  "B": 0.03,
+  "C": 0.01
+ },
+ "decay": 0.005,
+ "temperature": 0.8,
+ "formats": {
+  "A": {
+   "seconds": 20,
+   "rounds": 3,
+   "breakSeconds": 1
+  },
+  "BC": {
+   "seconds": 45,
+   "rounds": 3,
+   "breakSeconds": 2
+  }
+ },
+ "boutsPerCandidate": {
+  "A": 6,
+  "B": 4,
+  "C": 4
+ },
+ "shapingWeight": 0.5,
+ "init": "random",
+ "thetaSha256": "603d3ff985b6aa2193ac754ae9c50bf173bb2151c53e1e9d9a8c209d7cf5afcf",
+ "stageSha256": {
+  "A": "7341298d2d7aaf7577b01d537842ef5828380db83c7aff7e8d6f630596322248",
+  "B": "5ff0609ceac633a896cfd706d2cbe0b85bff7b85bf86b0ae691533aad21f9f8b",
+  "C": "603d3ff985b6aa2193ac754ae9c50bf173bb2151c53e1e9d9a8c209d7cf5afcf"
+ },
+ "engine": {
+  "version": "sparring-4",
+  "combatSparringSha256": "aac72f4dea4bde7ad3c7c9a4b1b7c64fdd0653f93ab52f75c679855071ef693e",
+  "combatRefereeSha256": null,
+  "neuroBoxer2Sha256": "e9cde8c6ba27b47f17d6984f921663bbb085e27bb9f573a66084da1d11898bce"
+ },
+ "engineChangedDuringRun": false,
+ "validationWide": {
+  "score": 0.996,
+  "outcome": 1.741,
+  "byOpponent": {
+   "bot:balanced": 1,
+   "bot:pressure": 1,
+   "bot:counter": 1,
+   "script:cautious": 1,
+   "script:outboxer": 1,
+   "neuro1": 0.97
+  },
+  "styleShare": {
+   "pressure": 0.25,
+   "counter": 0.25,
+   "cautious": 0.15,
+   "outboxer": 0.15,
+   "body": 0.15,
+   "finisher": 0.05
+  },
+  "switchesPerRound": 0,
+  "trackGaps": 0
+ },
+ "seconds": 390
+}

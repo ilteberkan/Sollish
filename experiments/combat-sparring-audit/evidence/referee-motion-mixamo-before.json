@@ -1,0 +1,67 @@
+{
+ "schema": "sollish.referee-motion.v1",
+ "renderer": "mixamo",
+ "mode": "before: sparring-4 official + pre-change module",
+ "engineVersion": "sparring-5",
+ "scope": "CPU real-GLB (Three.js skinning in Node, image decoding stubbed); not GPU, browser or device evidence",
+ "smoothing": true,
+ "results": {
+  "seed3-balanced-pressure-round1+break": {
+   "frames": 3000,
+   "rootStepMaxM": 0.0477,
+   "yawStepMaxRad": 0.1298,
+   "plantedFrames": 3674,
+   "footSlideMeanPerPlantedFrameM": 0.0268,
+   "footSlideMeanPerPlantedFrameWhileWalkingM": 0.0295,
+   "walkingPlantedFrames": 2871,
+   "steps": 159,
+   "footSlidePerStepP95M": 2.1405,
+   "footSlidePerStepMaxM": 2.5878,
+   "boundsVerticesInspected": 56430,
+   "boundsVerticesOutside": 51300
+  },
+  "seed7-counter-pressure-round1+break": {
+   "frames": 3000,
+   "rootStepMaxM": 0.0422,
+   "yawStepMaxRad": 0.0704,
+   "plantedFrames": 3476,
+   "footSlideMeanPerPlantedFrameM": 0.0282,
+   "footSlideMeanPerPlantedFrameWhileWalkingM": 0.0321,
+   "walkingPlantedFrames": 2546,
+   "steps": 163,
+   "footSlidePerStepP95M": 1.7932,
+   "footSlidePerStepMaxM": 3.1964,
+   "boundsVerticesInspected": 56430,
+   "boundsVerticesOutside": 51300
+  },
+  "forced-knockdown-count": {
+   "frames": 900,
+   "rootStepMaxM": 0.0301,
+   "yawStepMaxRad": 3.1166,
+   "plantedFrames": 1583,
+   "footSlideMeanPerPlantedFrameM": 0.0026,
+   "footSlideMeanPerPlantedFrameWhileWalkingM": 0.0138,
+   "walkingPlantedFrames": 260,
+   "steps": 8,
+   "footSlidePerStepP95M": 1.3554,
+   "footSlidePerStepMaxM": 1.3554,
+   "boundsVerticesInspected": 17100,
+   "boundsVerticesOutside": 36
+  },
+  "120Hz-seed3-balanced-pressure-round1+break": {
+   "frames": 3000,
+   "rootStepMaxM": 0.0372,
+   "yawStepMaxRad": 0.0126,
+   "plantedFrames": 3724,
+   "footSlideMeanPerPlantedFrameM": 0.0161,
+   "footSlideMeanPerPlantedFrameWhileWalkingM": 0.0158,
+   "walkingPlantedFrames": 3255,
+   "steps": 123,
+   "footSlidePerStepP95M": 1.958,
+   "footSlidePerStepMaxM": 2.8225,
+   "boundsVerticesInspected": 0,
+   "boundsVerticesOutside": 0
+  }
+ },
+ "at": "2026-10-04T22:36:28.209Z"
+}

@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-02T23:30:32.646Z",
+  "runtime": "local-workerd-sqlite",
+  "checks": 13,
+  "sharedRoundId": "1",
+  "timing": {
+    "windowMs": 5000,
+    "fightMs": 8800,
+    "resultMs": 4000
+  },
+  "scope": "Two independent anonymous demo players plus same-token concurrent reconnect. Real workerd alarms/SQLite, actual server CSPRNG, injected SQL failure, restart persistence. Not hosted load, VRF, financial settlement, Sybil resistance or production readiness."
+}

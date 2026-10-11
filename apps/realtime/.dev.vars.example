@@ -1,0 +1,7 @@
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_ANON_KEY=replace-with-publishable-or-anon-key
+SUPABASE_SERVICE_ROLE_KEY=replace-with-server-only-service-key
+PUBLISH_SIGNING_KEY=replace-with-random-at-least-32-byte-secret
+ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000,http://localhost:3001
+# Allow HTTP only for an explicit loopback auth fixture; never production.
+ALLOW_LOCAL_AUTH=false

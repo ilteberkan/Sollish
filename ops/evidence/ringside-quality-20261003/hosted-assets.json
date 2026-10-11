@@ -1,0 +1,119 @@
+{
+  "at": "2026-10-03T11:54:02.817Z",
+  "base": "https://sollish-web-devnet.sollish-web.workers.dev",
+  "files": [
+    {
+      "path": "/research/ringside/manifest.json",
+      "status": 200,
+      "bytes": 4766,
+      "sha256": "4cef8101d262c7919e3436c85d6c844c30590594b53cfff9f1ca31204081340e",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/energy6-quality.json",
+      "status": 200,
+      "bytes": 13080,
+      "sha256": "cfdae2202e3f7dbf8751c3afb8a28e14bd5247f4fe464e6f9fd6b458d0e2854d",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/motor-manifest.json",
+      "status": 200,
+      "bytes": 584,
+      "sha256": "ca6b14ba66f9ccaa9f61cc1909ec3641c644b67b1d4a52cb583a1d350c62c9d8",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/motor-credits.json",
+      "status": 200,
+      "bytes": 5947,
+      "sha256": "b8ebbbb72016d6e59a56ebc884414e3c913008e6c5b7510110eab1698412f86d",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/physics-manifest.json",
+      "status": 200,
+      "bytes": 154,
+      "sha256": "e8374a8c6618777b807dce963eac33c218fbdfcb8444f7be883019becc1cf9a6",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/physics-trace.json",
+      "status": 200,
+      "bytes": 2823074,
+      "sha256": "90b8aadf17a7571faea95809a2400f445d0b89f93dceac7689775ea8613fa724",
+      "matched": true
+    },
+    {
+      "path": "/models/boxing/athlete-fightkit-v1.glb",
+      "status": 200,
+      "bytes": 12335340,
+      "sha256": "3acefb55468c8201e7ad5376e7e04103f1fab0d56359b94b1b35d813fd54a69f",
+      "matched": true
+    },
+    {
+      "path": "/models/boxing/fightkit-v1-credits.json",
+      "status": 200,
+      "bytes": 8229,
+      "sha256": "954d62bf9efa46fe0dfef365b4f36a444947d364f2d5f62fcd7ec9de43852787",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/selfplay-energy6-260000-initial.json",
+      "status": 200,
+      "bytes": 1062753,
+      "sha256": "2811bcb47a797f7ade357090756f053ba67c98f432118bc971a8da3714d0735e",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/selfplay-energy6-260000-learned.json",
+      "status": 200,
+      "bytes": 1059664,
+      "sha256": "1a06ccca8a259843f779c7ea77065b74aefb55f28890ffc31ab937a6fb7d9347",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/selfplay-energy6-260001-initial.json",
+      "status": 200,
+      "bytes": 1060111,
+      "sha256": "5b61cce17d1d8e6587b5bbc5a34804d87e326f351f133438c50d85aa6ce0ae74",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/selfplay-energy6-260001-learned.json",
+      "status": 200,
+      "bytes": 1063969,
+      "sha256": "00d0a37dd4738c36080e2a4b2056839154ba9997a72eeb44ea78b7421bf133f2",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/selfplay-energy6-260002-initial.json",
+      "status": 200,
+      "bytes": 1055535,
+      "sha256": "fb61d1f4064a7c82a97c446d534de41d6641ba4d8505b1e79e6b3daf8d734a22",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/selfplay-energy6-260002-learned.json",
+      "status": 200,
+      "bytes": 1057711,
+      "sha256": "f40dad22b4929a3b2c9ba64a6b3becff0c2aa62506576ddf700bea2809c6798f",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/motor-walk-240hz-v1.json",
+      "status": 200,
+      "bytes": 3223001,
+      "sha256": "f8510d89c91cba700c7b10735f0cc5d69f204c36233a718e49db6875359e4693",
+      "matched": true
+    },
+    {
+      "path": "/research/ringside/motor-spinkick-240hz-v1.json",
+      "status": 200,
+      "bytes": 3097956,
+      "sha256": "bc826de04dffb84ac71f2a95762f8bf19b2a9f98d798489bb7bf54d5b0b97f6c",
+      "matched": true
+    }
+  ],
+  "transportNote": "Node fetch. Python urllib returned403; no security settings changed."
+}

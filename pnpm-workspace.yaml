@@ -1,0 +1,13 @@
+packages:
+  - apps/*
+  - packages/*
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - workerd
+overrides:
+  jayson>uuid: 11.1.1
+  # Optional native accelerator only. Node 24/ws 8 uses buffer.isUtf8;
+  # ws 7 retains its complete JS UTF-8 validator. Avoid incompatible optional
+  # native major versions and native compilation on ARM worker deployments.
+  utf-8-validate: '-'

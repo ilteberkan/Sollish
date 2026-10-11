@@ -1,0 +1,152 @@
+{
+ "at": "2026-10-04T05:06:59.568Z",
+ "heldOutBoutSeeds": "5000-5049, both corners, greedy",
+ "models": {
+  "connectome-s1": {
+   "sha256": "8cde29cdc11542aabb2b348894477fc43b77503bb83870d4514541182c0e958e",
+   "generation": 300,
+   "validationScore": 1
+  },
+  "connectome-s2": {
+   "sha256": "ba4069befaf6ecf701fbb94ead21dd88b71eaa689cb3ef65afb9d22d70721a83",
+   "generation": 300,
+   "validationScore": 0.944
+  },
+  "connectome-s3": {
+   "sha256": "e6537cdb24967e85e64331c3ee071e95cafc083b213927e44366d61e3b596c36",
+   "generation": 300,
+   "validationScore": 1
+  },
+  "shuffled-s1": {
+   "sha256": "9e3e2a69c696c344aa06720f145158d063a5ddf46a154c6c0f4db7bf45aec35a",
+   "generation": 300,
+   "validationScore": 1
+  },
+  "shuffled-s2": {
+   "sha256": "37aa0e5b061eeb4edc6def6e787a33758864e57955cef49ec71dec912f0d6123",
+   "generation": 300,
+   "validationScore": 1
+  },
+  "shuffled-s3": {
+   "sha256": "558f8dfa91d238d850679d78f689cd9fe9640f0bb692d19cd1da76ee710f4083",
+   "generation": 300,
+   "validationScore": 1
+  },
+  "norecur-s1": {
+   "sha256": "e15ae8428c6f9608c0123acbedf956e73e90f12e994d12e81cf9d6c4f7947ffe",
+   "generation": 300,
+   "validationScore": 0.861
+  },
+  "norecur-s2": {
+   "sha256": "810aff197f18725d90f9e106bab420a82f8b53366ef8adb78de9b9bfd7da66ff",
+   "generation": 300,
+   "validationScore": 1
+  },
+  "norecur-s3": {
+   "sha256": "8cbbca29541cdd0118f4994891ee8b4aed89127193ef90756fd85ff1b8c2a46a",
+   "generation": 300,
+   "validationScore": 1
+  }
+ },
+ "vsScriptedCornersPerModel": {
+  "connectome-s1": {
+   "score": 1,
+   "entropy": 1,
+   "hits": 23.7,
+   "koWins": 0.253
+  },
+  "connectome-s2": {
+   "score": 0.973,
+   "entropy": 1.02,
+   "hits": 21.1,
+   "koWins": 0.02
+  },
+  "connectome-s3": {
+   "score": 1,
+   "entropy": 1.01,
+   "hits": 28,
+   "koWins": 0.323
+  },
+  "shuffled-s1": {
+   "score": 1,
+   "entropy": 1.36,
+   "hits": 21.1,
+   "koWins": 0.437
+  },
+  "shuffled-s2": {
+   "score": 1,
+   "entropy": 1.25,
+   "hits": 26.4,
+   "koWins": 0.293
+  },
+  "shuffled-s3": {
+   "score": 1,
+   "entropy": 0.98,
+   "hits": 23.3,
+   "koWins": 0.253
+  },
+  "norecur-s1": {
+   "score": 0.912,
+   "entropy": 1.19,
+   "hits": 21.9,
+   "koWins": 0.093
+  },
+  "norecur-s2": {
+   "score": 1,
+   "entropy": 1.46,
+   "hits": 25.8,
+   "koWins": 0.333
+  },
+  "norecur-s3": {
+   "score": 1,
+   "entropy": 1.03,
+   "hits": 27.3,
+   "koWins": 0.15
+  }
+ },
+ "byArchitecture": {
+  "connectome": {
+   "scoreMean": 0.991,
+   "scoreSd": 0.016,
+   "entropyMean": 1.01,
+   "hitsMean": 24.3
+  },
+  "shuffled": {
+   "scoreMean": 1,
+   "scoreSd": 0,
+   "entropyMean": 1.2,
+   "hitsMean": 23.6
+  },
+  "norecur": {
+   "scoreMean": 0.971,
+   "scoreSd": 0.051,
+   "entropyMean": 1.23,
+   "hitsMean": 25
+  }
+ },
+ "headToHead": {
+  "connectome_vs_shuffled": 0.5,
+  "connectome_vs_norecur": 0.333,
+  "norecur_vs_shuffled": 0
+ },
+ "shippedModel": {
+  "connectomeTrainingSeed": 1,
+  "mirrorBout": "3x45 s, temperature 0.8 seeded sampling, bout seeds 7000-7199",
+  "korWinShare": 0.4,
+  "koShare": 0.23,
+  "meanBoutSeconds": 144.2,
+  "distinctOutcomes": 199
+ },
+ "baselinesVsScriptedCorners": {
+  "random": {
+   "balanced": 0,
+   "pressure": 0.02,
+   "counter": 0
+  },
+  "aggro": {
+   "balanced": 0,
+   "pressure": 0.24,
+   "counter": 0
+  }
+ }
+}

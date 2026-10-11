@@ -1,0 +1,38 @@
+[
+  {
+    "path": "spinkick-1200hz-50iterations-render-trace.json",
+    "sha256": "10238c1bce7ace601fa93932cd532f539d5312e5710319181d5cf93e43104c9c",
+    "bytes": 3039564,
+    "rawTraceSha256": "47783e3f00b7018364edf00b0bbfe610333453ff86b6359533f07daec8e7c6d6"
+  },
+  {
+    "path": "spinkick-240hz-10iterations-render-trace.json",
+    "sha256": "bc826de04dffb84ac71f2a95762f8bf19b2a9f98d798489bb7bf54d5b0b97f6c",
+    "bytes": 3097956,
+    "rawTraceSha256": "e0231e4935d4675abe7618c02c2404615d360015d0fa562b9b81287e955a1bdb"
+  },
+  {
+    "path": "spinkick-600hz-10iterations-render-trace.json",
+    "sha256": "e10005a6f9902f18d2a1f6462053fb14762efb173639552ed33d5a1292bfb9bc",
+    "bytes": 3066142,
+    "rawTraceSha256": "f3621252f572da5f872e121c6447f7f9e4d7e0f185968062a57aa14a2fad05ef"
+  },
+  {
+    "path": "walk-1200hz-50iterations-render-trace.json",
+    "sha256": "c0bb27902b0bfa45b7a43cddea2d7ce9c9f8e1c93fb5b32c2a376318c37362c1",
+    "bytes": 3334010,
+    "rawTraceSha256": "4b49b6e2c195ad26f156deb819fa2bd66d87c8700881188c622a6bc30e11399e"
+  },
+  {
+    "path": "walk-240hz-10iterations-render-trace.json",
+    "sha256": "f8510d89c91cba700c7b10735f0cc5d69f204c36233a718e49db6875359e4693",
+    "bytes": 3223001,
+    "rawTraceSha256": "4fe64ff6c7fda32357907e8d5d14fa1076149f32187825fdb2c7088e81a28ee3"
+  },
+  {
+    "path": "walk-600hz-10iterations-render-trace.json",
+    "sha256": "d1acb70d75e7447529f56b8a328bca5b1df26183709f966b833a8484fe9c378d",
+    "bytes": 3131395,
+    "rawTraceSha256": "840f716ee4c2c0567d0d0fc1c856ed1ca3fe499b15bf5e66f5499f8ecdbb78d2"
+  }
+]

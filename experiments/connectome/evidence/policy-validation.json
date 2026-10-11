@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-10-02T23:20:23.293315+00:00",
+  "scope": "local offline training/import/inference validation only",
+  "sources": {
+    "experiments/connectome/extract_subgraph.py": "4156fad3213ec0781efa3d876fab2e187756dcb2f7369080d749922a811b0fb7",
+    "experiments/connectome/train_policy.py": "ec79ae5b0fa66d0a39012b8fe4555c2c4215f81b0beac38c6c8213829adf7e7f",
+    "experiments/connectome/train_nonlinear_policy.py": "e24122eab3fdbbcba3dc825f60dfb6ea0d81c27b404548dcd540b82b524ffbb7",
+    "experiments/connectome/export_policy.py": "a33717b7194abbe55fdafefb7cb109050e19231cb893259c4988bf4309c3e7be",
+    "experiments/connectome/requirements-learning-macos-arm64-py313.txt": "b891f8310f080b063857edb48a58adb0a7bc9628700c424afabb49af7df07151",
+    "experiments/connectome/evidence/descending-128.json": "d1e5c9b2554b5f898e3075de505794b06cf4fdce8196dd762c6247b35b38e272",
+    "experiments/connectome/evidence/policy-mlp-model.json": "eb1fe24f5830eb6541b9a1c91c3de28882b9f7783f3411bb6e41e9c772b5512c",
+    "experiments/connectome/evidence/policy-mlp-evaluation.json": "01886544f1c2e3947bed8c62fab99dcde1ec0d868526daee85d36b998d69709e",
+    "experiments/connectome/evidence/policy-mlp-parity.json": "da096e81869dc7f2f4dd6b2fe131247e78b4648f93d1dc27c48e267e5f7b4928",
+    "packages/protocol/src/connectome-policy.ts": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
+    "packages/protocol/test/connectome-policy.test.ts": "4073b24a6714d1ce6abfe9d82c16997d9a05582acaf0c52aeefa1dda2a1bb467"
+  },
+  "checks": {
+    "pythonOptionalEnvironment": {
+      "passed": 29,
+      "failed": 0
+    },
+    "pythonStandardLibrary": {
+      "passed": 20,
+      "skipped": 9,
+      "failed": 0
+    },
+    "typescriptPolicyTests": {
+      "passed": 4,
+      "failed": 0
+    },
+    "protocolTypecheck": "PASS",
+    "pythonTypescriptParity": {
+      "steps": 20,
+      "stateTolerance": 1e-10,
+      "logitTolerance": 1e-08,
+      "actionsExact": true
+    },
+    "localTrainingRerunModelBytesIdentical": true,
+    "exportRegenerationBytesIdentical": true
+  },
+  "runtimeEvidence": "policy-runtime.json",
+  "closedLoopCombatValidatedHere": false,
+  "githubCiExecuted": false,
+  "financialReadiness": false
+}

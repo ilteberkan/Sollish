@@ -1,0 +1,93 @@
+{
+  "schema": "sollish-motor-reuse-manifest-v1",
+  "atUtc": "2026-10-03T03:36:46.204202+00:00",
+  "upstreamCommit": "2ed1e6c093bb0829f55d33cb4f7a1731cfe6cb69",
+  "learnedPolicyLoaded": false,
+  "modelSha256": null,
+  "motionSha256": null,
+  "weightsLicense": "UNVERIFIED_ARCHIVE_INACCESSIBLE",
+  "networkLimitBytes": 500000000,
+  "selectedWheelBytes": 50913662,
+  "networkAccounting": "Selected wheel sizes; some cached. Not a packet-level measurement. Two pip passes plus small source/metadata/HTML remain under 110MB conservative estimate.",
+  "isolatedWorkspaceFileBytes": 214914178,
+  "freeDiskBytes": 14314459136,
+  "minimumFreeDiskBytes": 10000000000,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 8628,
+      "sha256": "79a7005561d58579b14b2558a73de3fb319ef58a4ae45cb1163d00cd46a7e724"
+    },
+    {
+      "path": "cpu_probe.py",
+      "bytes": 5241,
+      "sha256": "d4629ad7aeab328c6ad586f32040c11f79bdad20e1a20ea4bc9185bac0bfc212"
+    },
+    {
+      "path": "evidence/asset-access.json",
+      "bytes": 891,
+      "sha256": "ec0b4b794232a2cad93c9fa295241b04dc34dc1e9fb7a8468e98b814460c8174"
+    },
+    {
+      "path": "evidence/cpu-runtime-initial.json",
+      "bytes": 1065,
+      "sha256": "fc19c97643abd7b1d0914e388f3aa864d6a6372db0ebbaeb8790b0515e9acd69"
+    },
+    {
+      "path": "evidence/cpu-runtime.json",
+      "bytes": 1172,
+      "sha256": "04eec8f7523c83958f4895496b442c5e4a09ecad6cc713ef37e7fc284305a2c1"
+    },
+    {
+      "path": "evidence/deepmimic-download.json",
+      "bytes": 4367,
+      "sha256": "3654529129697a23f9a4452675d3692129f023a775744f0fc3a48d2f257aea74"
+    },
+    {
+      "path": "evidence/package-provenance.json",
+      "bytes": 4253,
+      "sha256": "117469f2413fe2af5c0c781d15acdd0aa1f2cf341d060e89cda5e867071472f5"
+    },
+    {
+      "path": "evidence/passive-trace.json",
+      "bytes": 331705,
+      "sha256": "be735eceae8bf23b329c404bbba1536ff3c2b721f677deea01b397b00da94231"
+    },
+    {
+      "path": "evidence/source-provenance.json",
+      "bytes": 1415,
+      "sha256": "386046970e0547c31b6aefede761bca197267ee80b3bfabe6e87be4d91e565f7"
+    },
+    {
+      "path": "inspect_assets.py",
+      "bytes": 2508,
+      "sha256": "4d7600d5b81508c2699a411b3ae83ec6b4cb7d013ceb8f056ed62ab0dea35067"
+    },
+    {
+      "path": "prepare_sources.py",
+      "bytes": 1236,
+      "sha256": "ae6b72a233fa33648b24b225274ec3cbbb7aab50b201fb69397a642c832c1342"
+    },
+    {
+      "path": "requirements.lock",
+      "bytes": 1245,
+      "sha256": "282c723117aebb5166503f8426c793cc06d845dc9efe9b0cdd8b7d5bf5f910c3"
+    },
+    {
+      "path": "safe_artifacts.py",
+      "bytes": 3580,
+      "sha256": "0534b966c31d42629d96051bbed0e4f87cd5011dc988ebde323de43983a86930"
+    },
+    {
+      "path": "test_safe_artifacts.py",
+      "bytes": 2050,
+      "sha256": "1a32152e2677ef8d5b73f7926f4863d8022fbd822ef4c29a20776f4400c99ccb"
+    }
+  ],
+  "unitTests": {
+    "passed": 5,
+    "scope": "data-only parsing, rejection, artifact SHA/byte limits; no neural inference"
+  },
+  "laterDeepMimicArtifactAcquired": true,
+  "laterDeepMimicModelLoaded": false
+}

@@ -1,0 +1,76 @@
+
+ ⛅️ wrangler 4.145.0 (update available 4.147.0)
+───────────────────────────────────────────────
+OpenNext project detected, calling `opennextjs-cloudflare deploy`
+
+┌──────────────────────────────┐
+│ OpenNext — Cloudflare deploy │
+└──────────────────────────────┘
+
+Monorepo detected at /Users/macmini/Desktop/Sollish
+Incremental cache does not need populating
+Tag cache does not need populating
+
+ ⛅️ wrangler 4.145.0 (update available 4.147.0)
+───────────────────────────────────────────────
+🌀 Building list of assets...
+✨ Read 93 files from the assets directory /Users/macmini/Desktop/Sollish/apps/web/.open-next/assets
+🌀 Starting asset upload...
+🌀 Found 29 new or modified static assets to upload. Proceeding with upload...
++ /BUILD_ID
++ /models/boxing/fightkit-v1-NOTICE.txt
++ /research/ringside/motor-credits.json
++ /research/ringside/energy6-quality.json
++ /_next/static/chunks/1yftrvyyucq33.js
++ /_next/static/chunks/3u4gcfvbxrfe2.js
++ /_next/static/chunks/3r83xso5w93tp.js
++ /research/ringside/selfplay-energy6-260002-learned.json
++ /research/ringside/selfplay-energy6-260000-initial.json
++ /research/ringside/motor-walk-240hz-v1.json
++ /research/ringside/physics-manifest.json
++ /research/ringside/manifest.json
++ /models/boxing/fightkit-v1-credits.json
++ /_next/static/chunks/1ygshtkfik__g.js
++ /_next/static/chunks/3gefijhj3ftgk.js
++ /_next/static/chunks/1aj908u_m1ytn.js
++ /_next/static/chunks/3ti2uee_m82iw.js
++ /research/ringside/selfplay-energy6-260000-learned.json
++ /research/ringside/selfplay-energy6-260001-learned.json
++ /models/boxing/athlete-fightkit-v1.glb
++ /research/ringside/motor-manifest.json
++ /_next/static/chunks/3-b5_b6nobxu9.css
++ /_next/static/chunks/0hk1yz50y0dr0.js
++ /_next/static/chunks/3ms0pha2limt8.css
++ /_next/static/chunks/17kaq_-ynqnnl.js
++ /_next/static/chunks/109dun8wa6mne.js
++ /research/ringside/selfplay-energy6-260002-initial.json
++ /research/ringside/selfplay-energy6-260001-initial.json
++ /research/ringside/motor-spinkick-240hz-v1.json
+Uploaded 10 of 29 assets
+Uploaded 19 of 29 assets
+Uploaded 29 of 29 assets
+✨ Success! Uploaded 29 files (53 already uploaded) (16.59 sec)
+
+Total Upload: 6406.02 KiB / gzip: 1358.32 KiB
+Worker Startup Time: 18 ms
+Your Worker has access to the following bindings:
+Binding                                             Resource                  
+env.WORKER_SELF_REFERENCE (sollish-web-devnet)      Worker                    
+env.ASSETS                                          Assets                    
+env.NEXTJS_ENV ("production")                       Environment Variable      
+
+Uploaded sollish-web-devnet (28.57 sec)
+Deployed sollish-web-devnet triggers (2.11 sec)
+  https://sollish-web-devnet.sollish-web.workers.dev
+Current Version ID: 1ab9a7f7-797b-49d5-8612-309b5ff69aee
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mComparison with -0 using the "===" operator will also match 0[0m [equals-negative-zero]
+
+    .open-next/server-functions/default/apps/web/handler.mjs:771:89385:
+[37m      771 │ ...ned){if(h<0)h+=e2;else if(h===[32m-0[37m)return 0}return h}}b.exports=...
+          ╵                                  [32m~~[0m
+
+  Floating-point equality is defined such that 0 and -0 are equal, so "x === -0" returns true for both 0 and -0. You need to use "Object.is(x, -0)" instead to test for -0.
+
+
+(node:27674) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
