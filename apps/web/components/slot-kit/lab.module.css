@@ -1,0 +1,21 @@
+/* Layout for the dev-only slot kit lab page (not part of the kit itself). */
+.lab { display: flex; flex-direction: column; gap: 22px; max-width: 1280px; margin: 0 auto; padding: 8px 0 56px; color: #f1f5f8; }
+.lead { max-width: 70ch; color: #aebfcb; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 20px; align-items: start; }
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 22px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(36, 49, 66, 0.9), rgba(14, 20, 30, 0.95));
+  box-shadow: 0 0 0 1px rgba(233, 179, 93, 0.28), inset 0 1px 0 rgba(255, 231, 176, 0.14), 0 24px 50px -28px rgba(0, 0, 0, 0.8);
+}
+.card > h2 { font-size: 13px; letter-spacing: 1.6px; text-transform: uppercase; color: #e9b35d; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.stage { display: flex; align-items: center; gap: 18px; }
+.out { margin: 0; padding: 10px 12px; border-radius: 12px; font-size: 13px; line-height: 1.5; color: #aebfcb; background: rgba(7, 12, 19, 0.62); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1); word-break: break-word; }
+.out strong { color: #ffe7b0; }
+.balance { font-variant-numeric: tabular-nums; font-size: 14px; color: #aebfcb; }
+.balance strong { color: #ffe7b0; font-size: 18px; }
