@@ -18,7 +18,7 @@ idl-build = ["anchor-lang/idl-build", "house/idl-build", "incentives/idl-build"]
 
 [dependencies]
 anchor-lang = "=1.2.0"
-ephemeral-vrf-sdk = { version = "=0.4.1", features = ["anchor-modern"] }
+ephemeral-vrf-sdk = { version = "=0.17.3", features = ["anchor-modern"] }
 house = { path = "../house", features = ["cpi"] }
 game-math = { path = "../../crates/game-math" }
 

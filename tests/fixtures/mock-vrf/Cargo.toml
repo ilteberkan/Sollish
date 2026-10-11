@@ -16,7 +16,7 @@ custom-panic = []
 
 [dependencies]
 anchor-lang = "=1.2.0"
-ephemeral-vrf-sdk = { version = "=0.4.1", features = ["anchor-modern"] }
+ephemeral-vrf-sdk = { version = "=0.17.3", features = ["anchor-modern"] }
 
 [lints.rust]
 unexpected_cfgs = { level = "warn", check-cfg = ['cfg(target_os, values("solana"))'] }
