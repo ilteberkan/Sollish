@@ -1,0 +1,2340 @@
+{
+ "schema": "sollish-audio-evidence-1",
+ "game": "Candy Cascade",
+ "scope": "presentation-only audio (cannot read or change a result, payout or timing)",
+ "generatedAt": "2026-10-11T20:52:22.534Z",
+ "originality": "All music and effects are original, composed as note data and synthesised in code (no samples, no downloaded assets, no third-party melodies or motifs). Outbound asset sites were blocked; no licences were bought.",
+ "method": {
+  "harness": "Headless Chromium renders every asset with the production code path (Web Worker synthesis + OfflineAudioContext reverb + JS mastering), then measures the float output in the page and exports 16-bit WAVs (TPDF dither).",
+  "loudness": "ITU-R BS.1770 K-weighting, 400 ms blocks / 75 % overlap, absolute (−70 LUFS) and relative (−10 LU) gates; momentary = max 400 ms block; short-term = max 3 s window.",
+  "truePeak": "4× oversampled windowed-sinc interpolation (12 zero crossings).",
+  "spectrum": "4096-point Hann FFT averaged over ≤160 frames of the mid signal; centroid of the power spectrum; band energy relative to total.",
+  "seam": "step from the last to the first sample vs. every sample-to-sample step of the loop (median, 99.9th percentile, max, percentile rank); RMS of 50 ms each side.",
+  "runtimeChain": "base theme through the real bus graph (trim → glue compressor → limiter) in an OfflineAudioContext, alone and under a worst-case stack of 40 effects plus a big-win stinger with a −14 dB duck."
+ },
+ "environment": {
+  "browser": "chromium 141.0.7390.37 headless",
+  "sampleRate": 44100,
+  "machine": "cloud container, 4 vCPU Intel Xeon 2.8 GHz (2 physical cores with HT behaviour); another agent ran Chromium tests and a next dev server concurrently (load average ≈ 6), so timings are pessimistic and noisy"
+ },
+ "targets": {
+  "musicIntegratedLufs": "−16 … −14",
+  "truePeak": "< −1 dBTP after the limiter",
+  "sfxOverMusic": "≈ +3 dB",
+  "harshness": "little energy above 8 kHz, bells capped at 9 kHz partials",
+  "loopSeam": "seam step must be an ordinary step of the music",
+  "loadTime": "core (base theme + base-game effects) ≲ 3 s on a desktop; the rest lazily"
+ },
+ "renderTiming": {
+  "runs": [
+   {
+    "workers": 3,
+    "coreMs": 3585,
+    "allMs": 14920,
+    "maxMainThreadGapMsDuringCore": 62,
+    "maxMainThreadGapMsOverall": 75,
+    "perStepMs": {
+     "sfx-core": 3235,
+     "base": 3574,
+     "core": 3584,
+     "ambience": 2413,
+     "sfx-extended": 3121,
+     "fsIntro": 806,
+     "idle": 3369,
+     "bigWin1": 1077,
+     "bed1": 861,
+     "feature": 4301,
+     "bigWin2": 1115,
+     "bed2": 1396,
+     "bigWin3": 1340,
+     "fsOutro": 431,
+     "bed3": 1493,
+     "maxWin": 728,
+     "all": 14920
+    }
+   },
+   {
+    "workers": 3,
+    "coreMs": 5270,
+    "allMs": 17017,
+    "maxMainThreadGapMsDuringCore": 101,
+    "maxMainThreadGapMsOverall": 102,
+    "perStepMs": {
+     "sfx-core": 4527,
+     "base": 5259,
+     "core": 5270,
+     "ambience": 2107,
+     "sfx-extended": 3752,
+     "idle": 2253,
+     "fsIntro": 2359,
+     "bigWin1": 820,
+     "bed1": 1083,
+     "feature": 3828,
+     "bigWin2": 1101,
+     "bed2": 1496,
+     "bigWin3": 1347,
+     "bed3": 1347,
+     "fsOutro": 901,
+     "maxWin": 716,
+     "all": 17017
+    }
+   }
+  ],
+  "note": "core = base theme + base-game effects (what play needs); the feature theme, idle, ambience, stingers, beds and feature effects render afterwards in the background. Before core is ready a live-synth fallback answers every call.",
+  "workerPathVerified": "next dev (Turbopack) /lab/audio: 3 module workers, 64 jobs, no inline fallback"
+ },
+ "music": [
+  {
+   "id": "cascade-base",
+   "about": "F major, 104 BPM light swing, 20-bar loop (A hook+answer / B bridge with the minor iv / C breakdown). Celesta lead, music-box counter and bridge, glockenspiel breakdown, kalimba-like plucked arpeggios, warm pad, round bass, brushes, shaker, wood block.",
+   "bpm": 104,
+   "bars": 20,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "seconds": 46.154,
+   "samples": 2035385,
+   "integratedLufs": -15.09,
+   "momentaryMaxLufs": -11.67,
+   "shortTermMaxLufs": -13.4,
+   "truePeakDbtp": -1.19,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.854,
+   "dcOffsetDb": -88.4,
+   "centroidHz": 615,
+   "energyAbove8kPct": 0.14,
+   "energyAbove12kPct": 0.017,
+   "bandsDbRelTotal": {
+    "0-125": -3.21,
+    "125-500": -9.18,
+    "500-2000": -4.36,
+    "2000-5000": -15.38,
+    "5000-8000": -22.67,
+    "8000-12000": -29.13,
+    "12000-top": -37.79
+   },
+   "seam": {
+    "delta": 0.01293,
+    "medianDelta": 0.00811,
+    "p999Delta": 0.21111,
+    "maxDelta": 0.58404,
+    "percentile": 67.21,
+    "ratio": 1.59,
+    "rmsEndDb": -19.85,
+    "rmsStartDb": -13.33,
+    "rmsJumpDb": 6.52
+   },
+   "mastering": {
+    "normaliseGainDb": 0.83,
+    "peakLimitingDb": -3.5
+   },
+   "renderMsIsolated": 3455,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-base.wav"
+  },
+  {
+   "id": "cascade-idle",
+   "about": "F major, 104 BPM, 8-bar loop: the base hook and answer on a soft music box over warm pad and pedal bass; no drums.",
+   "bpm": 104,
+   "bars": 8,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "seconds": 18.462,
+   "samples": 814154,
+   "integratedLufs": -17.05,
+   "momentaryMaxLufs": -14.22,
+   "shortTermMaxLufs": -16.21,
+   "truePeakDbtp": -6.07,
+   "samplePeakDbfs": -6.08,
+   "stereoCorrelation": 0.775,
+   "dcOffsetDb": -209.1,
+   "centroidHz": 662,
+   "energyAbove8kPct": 0,
+   "energyAbove12kPct": 0,
+   "bandsDbRelTotal": {
+    "0-125": -3.85,
+    "125-500": -7.89,
+    "500-2000": -3.81,
+    "2000-5000": -19.96,
+    "5000-8000": -50.32,
+    "8000-12000": -53.56,
+    "12000-top": -53.9
+   },
+   "seam": {
+    "delta": 0.00359,
+    "medianDelta": 0.0082,
+    "p999Delta": 0.0548,
+    "maxDelta": 0.10587,
+    "percentile": 24.56,
+    "ratio": 0.44,
+    "rmsEndDb": -22.93,
+    "rmsStartDb": -16.91,
+    "rmsJumpDb": 6.02
+   },
+   "mastering": {
+    "normaliseGainDb": 1.34,
+    "peakLimitingDb": 0
+   },
+   "renderMsIsolated": 1042,
+   "checks": {
+    "loudnessInMusicTarget": "n/a (attract/idle variant mastered quieter on purpose (−17 LUFS))",
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-idle.wav"
+  },
+  {
+   "id": "cascade-feature",
+   "about": "D minor (relative of the base key), 118 BPM straight, 16-bar loop (A riff / B climbing answer). Bright synth-pluck lead doubled by celesta, glockenspiel in B, pumping supersaw pad, 16th plucks, driving octave bass, four-on-the-floor kit with claps, open hats and fills.",
+   "bpm": 118,
+   "bars": 16,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "seconds": 32.542,
+   "samples": 1435119,
+   "integratedLufs": -14.58,
+   "momentaryMaxLufs": -11.92,
+   "shortTermMaxLufs": -13.77,
+   "truePeakDbtp": -1.29,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.924,
+   "dcOffsetDb": -99.1,
+   "centroidHz": 701,
+   "energyAbove8kPct": 0.46,
+   "energyAbove12kPct": 0.062,
+   "bandsDbRelTotal": {
+    "0-125": -3.61,
+    "125-500": -6.92,
+    "500-2000": -5.73,
+    "2000-5000": -11.12,
+    "5000-8000": -19.33,
+    "8000-12000": -24.01,
+    "12000-top": -32.05
+   },
+   "seam": {
+    "delta": 0.03806,
+    "medianDelta": 0.01294,
+    "p999Delta": 0.16621,
+    "maxDelta": 0.36613,
+    "percentile": 88.09,
+    "ratio": 2.94,
+    "rmsEndDb": -19.1,
+    "rmsStartDb": -11.88,
+    "rmsJumpDb": 7.22
+   },
+   "mastering": {
+    "normaliseGainDb": -0.12,
+    "peakLimitingDb": -2.05
+   },
+   "renderMsIsolated": 2733,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-feature.wav"
+  },
+  {
+   "id": "cascade-ambience",
+   "about": "Ambience, 16 s loop: soft dark room tone with slow breathing and five sparse sugar-sparkle flurries; no tempo-bound material.",
+   "bpm": 60,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "seconds": 16,
+   "samples": 705600,
+   "integratedLufs": -30.06,
+   "momentaryMaxLufs": -24.89,
+   "shortTermMaxLufs": -28.2,
+   "truePeakDbtp": -13.14,
+   "samplePeakDbfs": -13.18,
+   "stereoCorrelation": 0.07,
+   "dcOffsetDb": -257.4,
+   "centroidHz": 761,
+   "energyAbove8kPct": 0.01,
+   "energyAbove12kPct": 0.002,
+   "bandsDbRelTotal": {
+    "0-125": -8.15,
+    "125-500": -3.77,
+    "500-2000": -5.32,
+    "2000-5000": -8.8,
+    "5000-8000": -29.34,
+    "8000-12000": -42.11,
+    "12000-top": -47.42
+   },
+   "seam": {
+    "delta": 0.00107,
+    "medianDelta": 0.00174,
+    "p999Delta": 0.02991,
+    "maxDelta": 0.0677,
+    "percentile": 32.56,
+    "ratio": 0.62,
+    "rmsEndDb": -33.09,
+    "rmsStartDb": -32.46,
+    "rmsJumpDb": 0.63
+   },
+   "mastering": {
+    "normaliseGainDb": 2.06,
+    "peakLimitingDb": 0
+   },
+   "renderMsIsolated": 636,
+   "checks": {
+    "loudnessInMusicTarget": "n/a (ambience bed on its own bus, −30 LUFS on purpose)",
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-ambience.wav"
+  },
+  {
+   "id": "cascade-fs-intro",
+   "about": "Free-spins fanfare, D minor, 118 BPM: rising 16th run, Bb and C stabs, the \"sugar step\" D–E–F landing on Dm(add9) with impact and cymbal; feature theme enters at beat 6 (3.05 s).",
+   "bpm": 118,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 3.051,
+   "seconds": 4.52,
+   "samples": 199311,
+   "integratedLufs": -14.61,
+   "momentaryMaxLufs": -12.35,
+   "shortTermMaxLufs": -14.25,
+   "truePeakDbtp": -1.54,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.943,
+   "dcOffsetDb": -107.7,
+   "centroidHz": 862,
+   "energyAbove8kPct": 0.12,
+   "energyAbove12kPct": 0.021,
+   "bandsDbRelTotal": {
+    "0-125": -4.19,
+    "125-500": -7.87,
+    "500-2000": -5.07,
+    "2000-5000": -8.63,
+    "5000-8000": -21.96,
+    "8000-12000": -30.14,
+    "12000-top": -36.8
+   },
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.16,
+    "peakLimitingDb": -0.67
+   },
+   "renderMsIsolated": 655,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-fs-intro.wav"
+  },
+  {
+   "id": "cascade-fs-outro",
+   "about": "Total-win outro, F major, 104 BPM: Bbmaj7 – C7sus4 – Fmaj9 with a falling-then-rising celesta line, music-box arpeggio and sugar sparkles; base theme may return at beat 8 (4.6 s).",
+   "bpm": 104,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 4.615,
+   "seconds": 6.035,
+   "samples": 266157,
+   "integratedLufs": -14.96,
+   "momentaryMaxLufs": -12.28,
+   "shortTermMaxLufs": -13.66,
+   "truePeakDbtp": -1.67,
+   "samplePeakDbfs": -1.68,
+   "stereoCorrelation": 0.906,
+   "dcOffsetDb": -195.2,
+   "centroidHz": 537,
+   "energyAbove8kPct": 0.07,
+   "energyAbove12kPct": 0.005,
+   "bandsDbRelTotal": {
+    "0-125": -2.56,
+    "125-500": -8.87,
+    "500-2000": -6.04,
+    "2000-5000": -12.03,
+    "5000-8000": -25.47,
+    "8000-12000": -31.72,
+    "12000-top": -43.12
+   },
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": 1.67,
+    "peakLimitingDb": 0
+   },
+   "renderMsIsolated": 595,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-fs-outro.wav"
+  },
+  {
+   "id": "cascade-bigwin-1",
+   "about": "Big win tier 1, F major, 120 BPM, 2 bars (4 s): impact, rising arpeggio and the \"sugar step\" climb, resolving on a held tonic; a lighter count-up bed can follow on the next bar line.",
+   "bpm": 120,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 4,
+   "seconds": 5.16,
+   "samples": 227543,
+   "integratedLufs": -15.1,
+   "momentaryMaxLufs": -11.95,
+   "shortTermMaxLufs": -13.87,
+   "truePeakDbtp": -1.57,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.903,
+   "dcOffsetDb": -98.6,
+   "centroidHz": 668,
+   "energyAbove8kPct": 0.19,
+   "energyAbove12kPct": 0.022,
+   "bandsDbRelTotal": {
+    "0-125": -3.04,
+    "125-500": -7.77,
+    "500-2000": -6.16,
+    "2000-5000": -10.73,
+    "5000-8000": -21.23,
+    "8000-12000": -27.81,
+    "12000-top": -36.59
+   },
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": 0.03,
+    "peakLimitingDb": -0.52
+   },
+   "renderMsIsolated": 695,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-bigwin-1.wav"
+  },
+  {
+   "id": "cascade-bigwin-2",
+   "about": "Big win tier 2, F major, 120 BPM, 2 bars (4 s): impact, rising arpeggio and the \"sugar step\" climb, resolving on a held tonic; a lighter count-up bed can follow on the next bar line.",
+   "bpm": 120,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 4,
+   "seconds": 5.402,
+   "samples": 238233,
+   "integratedLufs": -14.59,
+   "momentaryMaxLufs": -12,
+   "shortTermMaxLufs": -13.62,
+   "truePeakDbtp": -1.52,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.88,
+   "dcOffsetDb": -114.5,
+   "centroidHz": 787,
+   "energyAbove8kPct": 0.16,
+   "energyAbove12kPct": 0.018,
+   "bandsDbRelTotal": {
+    "0-125": -3.97,
+    "125-500": -8.31,
+    "500-2000": -4.82,
+    "2000-5000": -9.48,
+    "5000-8000": -21.11,
+    "8000-12000": -28.37,
+    "12000-top": -37.43
+   },
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.5,
+    "peakLimitingDb": -0.65
+   },
+   "renderMsIsolated": 614,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-bigwin-2.wav"
+  },
+  {
+   "id": "cascade-bigwin-3",
+   "about": "Big win tier 3, F major, 120 BPM, 3 bars (6 s): impact, rising arpeggio and the \"sugar step\" climb, resolving on a held tonic; a fuller count-up bed can follow on the next bar line.",
+   "bpm": 120,
+   "bars": 3,
+   "loop": false,
+   "musicalEndSeconds": 6,
+   "seconds": 7.39,
+   "samples": 325897,
+   "integratedLufs": -14.11,
+   "momentaryMaxLufs": -11.99,
+   "shortTermMaxLufs": -12.93,
+   "truePeakDbtp": -1.44,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.885,
+   "dcOffsetDb": -112.3,
+   "centroidHz": 739,
+   "energyAbove8kPct": 0.09,
+   "energyAbove12kPct": 0.017,
+   "bandsDbRelTotal": {
+    "0-125": -3.94,
+    "125-500": -7.71,
+    "500-2000": -4.86,
+    "2000-5000": -10.27,
+    "5000-8000": -22.89,
+    "8000-12000": -31.36,
+    "12000-top": -37.74
+   },
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.57,
+    "peakLimitingDb": -1.16
+   },
+   "renderMsIsolated": 739,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-bigwin-3.wav"
+  },
+  {
+   "id": "cascade-bed-1",
+   "about": "Count-up bed tier 1: F – Dm – Bb – C at 120 BPM, 4-bar seamless loop (8 s), plucks, pad, bass, shaker.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "seconds": 8,
+   "samples": 352800,
+   "integratedLufs": -15.07,
+   "momentaryMaxLufs": -13.4,
+   "shortTermMaxLufs": -14.84,
+   "truePeakDbtp": -1.26,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.882,
+   "dcOffsetDb": -103.3,
+   "centroidHz": 625,
+   "energyAbove8kPct": 0.57,
+   "energyAbove12kPct": 0.1,
+   "bandsDbRelTotal": {
+    "0-125": -2.51,
+    "125-500": -7.51,
+    "500-2000": -7.45,
+    "2000-5000": -12.63,
+    "5000-8000": -16.65,
+    "8000-12000": -23.23,
+    "12000-top": -30.01
+   },
+   "seam": {
+    "delta": 0.07118,
+    "medianDelta": 0.0072,
+    "p999Delta": 0.24631,
+    "maxDelta": 0.56869,
+    "percentile": 96.63,
+    "ratio": 9.89,
+    "rmsEndDb": -21.77,
+    "rmsStartDb": -13.39,
+    "rmsJumpDb": 8.38
+   },
+   "mastering": {
+    "normaliseGainDb": 2.95,
+    "peakLimitingDb": -1.05
+   },
+   "renderMsIsolated": 759,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-bed-1.wav"
+  },
+  {
+   "id": "cascade-bed-2",
+   "about": "Count-up bed tier 2: F – Dm – Bb – C at 120 BPM, 4-bar seamless loop (8 s), + kick, claps, pumping supersaw, celesta ostinato.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "seconds": 8,
+   "samples": 352800,
+   "integratedLufs": -15.08,
+   "momentaryMaxLufs": -13.48,
+   "shortTermMaxLufs": -14.75,
+   "truePeakDbtp": -1.28,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.924,
+   "dcOffsetDb": -91,
+   "centroidHz": 612,
+   "energyAbove8kPct": 0.45,
+   "energyAbove12kPct": 0.081,
+   "bandsDbRelTotal": {
+    "0-125": -3.2,
+    "125-500": -6.27,
+    "500-2000": -6.87,
+    "2000-5000": -12.08,
+    "5000-8000": -18.5,
+    "8000-12000": -24.37,
+    "12000-top": -30.91
+   },
+   "seam": {
+    "delta": 0.08552,
+    "medianDelta": 0.00904,
+    "p999Delta": 0.20372,
+    "maxDelta": 0.44831,
+    "percentile": 98.13,
+    "ratio": 9.46,
+    "rmsEndDb": -22.09,
+    "rmsStartDb": -11.46,
+    "rmsJumpDb": 10.63
+   },
+   "mastering": {
+    "normaliseGainDb": 1.08,
+    "peakLimitingDb": -2.08
+   },
+   "renderMsIsolated": 668,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-bed-2.wav"
+  },
+  {
+   "id": "cascade-bed-3",
+   "about": "Count-up bed tier 3: F – Dm – Bb – C at 120 BPM, 4-bar seamless loop (8 s), + celesta/glock lead melody and open hats.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "seconds": 8,
+   "samples": 352800,
+   "integratedLufs": -15.08,
+   "momentaryMaxLufs": -13.55,
+   "shortTermMaxLufs": -14.73,
+   "truePeakDbtp": -1.56,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.937,
+   "dcOffsetDb": -125.7,
+   "centroidHz": 949,
+   "energyAbove8kPct": 0.85,
+   "energyAbove12kPct": 0.104,
+   "bandsDbRelTotal": {
+    "0-125": -4.41,
+    "125-500": -7.29,
+    "500-2000": -5.05,
+    "2000-5000": -9.52,
+    "5000-8000": -17.39,
+    "8000-12000": -21.27,
+    "12000-top": -29.82
+   },
+   "seam": {
+    "delta": 0.01032,
+    "medianDelta": 0.01237,
+    "p999Delta": 0.20049,
+    "maxDelta": 0.34772,
+    "percentile": 43.32,
+    "ratio": 0.83,
+    "rmsEndDb": -25.28,
+    "rmsStartDb": -12.52,
+    "rmsJumpDb": 12.75
+   },
+   "mastering": {
+    "normaliseGainDb": -1.18,
+    "peakLimitingDb": -0.85
+   },
+   "renderMsIsolated": 699,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-bed-3.wav"
+  },
+  {
+   "id": "cascade-max-win",
+   "about": "Max win, 120 BPM, 3 bars (6 s): Db – Eb – F (bVI–bVII–I) with octave celesta/synth lead, strings and supersaw, snare roll, timpani and a long sparkle shower on the final F.",
+   "bpm": 120,
+   "bars": 3,
+   "loop": false,
+   "musicalEndSeconds": 6,
+   "seconds": 7.366,
+   "samples": 324856,
+   "integratedLufs": -14.15,
+   "momentaryMaxLufs": -11.39,
+   "shortTermMaxLufs": -12.99,
+   "truePeakDbtp": -1.59,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.923,
+   "dcOffsetDb": -89,
+   "centroidHz": 746,
+   "energyAbove8kPct": 0.11,
+   "energyAbove12kPct": 0.016,
+   "bandsDbRelTotal": {
+    "0-125": -3.45,
+    "125-500": -9.42,
+    "500-2000": -4.65,
+    "2000-5000": -10.77,
+    "5000-8000": -22.27,
+    "8000-12000": -30.3,
+    "12000-top": -38.02
+   },
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -1.11,
+    "peakLimitingDb": -1.31
+   },
+   "renderMsIsolated": 646,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-max-win.wav"
+  }
+ ],
+ "sfx": {
+  "renderMsAllEffectsIsolated": 3065,
+  "classes": {
+   "major": -11,
+   "medium": -12.5,
+   "light": -16,
+   "ui": -19.5
+  },
+  "perId": [
+   {
+    "id": "spin",
+    "variations": 4,
+    "class": "light",
+    "momentaryLufsRange": [
+     -16,
+     -16
+    ],
+    "worstTruePeakDbtp": -4.12,
+    "maxEnergyAbove8kPct": 2.66,
+    "seconds": [
+     0.601,
+     0.668
+    ]
+   },
+   {
+    "id": "pop-m",
+    "variations": 3,
+    "class": "medium",
+    "momentaryLufsRange": [
+     -13.39,
+     -12.59
+    ],
+    "worstTruePeakDbtp": -1.38,
+    "maxEnergyAbove8kPct": 0.09,
+    "seconds": [
+     0.615,
+     0.651
+    ]
+   },
+   {
+    "id": "coin",
+    "variations": 4,
+    "class": "ui",
+    "momentaryLufsRange": [
+     -20.25,
+     -19.6
+    ],
+    "worstTruePeakDbtp": -1.51,
+    "maxEnergyAbove8kPct": 0,
+    "seconds": [
+     0.311,
+     0.358
+    ]
+   },
+   {
+    "id": "crystal",
+    "variations": 3,
+    "class": "medium",
+    "momentaryLufsRange": [
+     -12.5,
+     -12.5
+    ],
+    "worstTruePeakDbtp": -3.68,
+    "maxEnergyAbove8kPct": 0.03,
+    "seconds": [
+     0.834,
+     0.879
+    ]
+   },
+   {
+    "id": "multiplier",
+    "variations": 3,
+    "class": "major",
+    "momentaryLufsRange": [
+     -11.21,
+     -11.16
+    ],
+    "worstTruePeakDbtp": -1.55,
+    "maxEnergyAbove8kPct": 0.01,
+    "seconds": [
+     1.392,
+     1.413
+    ]
+   },
+   {
+    "id": "scatter3",
+    "variations": 3,
+    "class": "medium",
+    "momentaryLufsRange": [
+     -12.5,
+     -12.5
+    ],
+    "worstTruePeakDbtp": -3.27,
+    "maxEnergyAbove8kPct": 0,
+    "seconds": [
+     1.11,
+     1.138
+    ]
+   },
+   {
+    "id": "scatter6",
+    "variations": 3,
+    "class": "major",
+    "momentaryLufsRange": [
+     -11,
+     -11
+    ],
+    "worstTruePeakDbtp": -1.71,
+    "maxEnergyAbove8kPct": 0.02,
+    "seconds": [
+     0.943,
+     0.996
+    ]
+   },
+   {
+    "id": "bet-up",
+    "variations": 3,
+    "class": "ui",
+    "momentaryLufsRange": [
+     -19.5,
+     -19.5
+    ],
+    "worstTruePeakDbtp": -11.93,
+    "maxEnergyAbove8kPct": 0.1,
+    "seconds": [
+     0.483,
+     0.53
+    ]
+   },
+   {
+    "id": "auto-on",
+    "variations": 3,
+    "class": "light",
+    "momentaryLufsRange": [
+     -16.05,
+     -16
+    ],
+    "worstTruePeakDbtp": -1.28,
+    "maxEnergyAbove8kPct": 2.44,
+    "seconds": [
+     0.504,
+     0.529
+    ]
+   },
+   {
+    "id": "land",
+    "variations": 4,
+    "class": "light",
+    "momentaryLufsRange": [
+     -16.78,
+     -16
+    ],
+    "worstTruePeakDbtp": -1.59,
+    "maxEnergyAbove8kPct": 0,
+    "seconds": [
+     0.283,
+     0.319
+    ]
+   },
+   {
+    "id": "pop-l",
+    "variations": 3,
+    "class": "major",
+    "momentaryLufsRange": [
+     -11.89,
+     -11.6
+    ],
+    "worstTruePeakDbtp": -1.55,
+    "maxEnergyAbove8kPct": 0.09,
+    "seconds": [
+     0.743,
+     0.777
+    ]
+   },
+   {
+    "id": "crystal-fly",
+    "variations": 3,
+    "class": "light",
+    "momentaryLufsRange": [
+     -16,
+     -16
+    ],
+    "worstTruePeakDbtp": -7.11,
+    "maxEnergyAbove8kPct": 1.03,
+    "seconds": [
+     0.751,
+     0.763
+    ]
+   },
+   {
+    "id": "scatter1",
+    "variations": 3,
+    "class": "medium",
+    "momentaryLufsRange": [
+     -12.5,
+     -12.5
+    ],
+    "worstTruePeakDbtp": -3.74,
+    "maxEnergyAbove8kPct": 0,
+    "seconds": [
+     1.155,
+     1.194
+    ]
+   },
+   {
+    "id": "scatter4",
+    "variations": 3,
+    "class": "major",
+    "momentaryLufsRange": [
+     -11.19,
+     -11
+    ],
+    "worstTruePeakDbtp": -1.46,
+    "maxEnergyAbove8kPct": 0.01,
+    "seconds": [
+     0.987,
+     1.055
+    ]
+   },
+   {
+    "id": "tease",
+    "variations": 3,
+    "class": "medium",
+    "momentaryLufsRange": [
+     -12.5,
+     -12.5
+    ],
+    "worstTruePeakDbtp": -5.69,
+    "maxEnergyAbove8kPct": 1.65,
+    "seconds": [
+     3.541,
+     3.557
+    ]
+   },
+   {
+    "id": "click",
+    "variations": 4,
+    "class": "ui",
+    "momentaryLufsRange": [
+     -22.85,
+     -22.74
+    ],
+    "worstTruePeakDbtp": -1.53,
+    "maxEnergyAbove8kPct": 0,
+    "seconds": [
+     0.25,
+     0.276
+    ]
+   },
+   {
+    "id": "bet-down",
+    "variations": 3,
+    "class": "ui",
+    "momentaryLufsRange": [
+     -19.5,
+     -19.5
+    ],
+    "worstTruePeakDbtp": -12.11,
+    "maxEnergyAbove8kPct": 0.01,
+    "seconds": [
+     0.476,
+     0.495
+    ]
+   },
+   {
+    "id": "auto-off",
+    "variations": 3,
+    "class": "light",
+    "momentaryLufsRange": [
+     -16,
+     -16
+    ],
+    "worstTruePeakDbtp": -2.26,
+    "maxEnergyAbove8kPct": 3.04,
+    "seconds": [
+     0.519,
+     0.556
+    ]
+   },
+   {
+    "id": "tick",
+    "variations": 4,
+    "class": "ui",
+    "momentaryLufsRange": [
+     -21.74,
+     -20.81
+    ],
+    "worstTruePeakDbtp": -1.54,
+    "maxEnergyAbove8kPct": 0,
+    "seconds": [
+     0.245,
+     0.31
+    ]
+   },
+   {
+    "id": "shimmer",
+    "variations": 3,
+    "class": "medium",
+    "momentaryLufsRange": [
+     -12.5,
+     -12.5
+    ],
+    "worstTruePeakDbtp": -3.31,
+    "maxEnergyAbove8kPct": 0,
+    "seconds": [
+     0.817,
+     0.869
+    ]
+   },
+   {
+    "id": "pop-s",
+    "variations": 3,
+    "class": "light",
+    "momentaryLufsRange": [
+     -16.34,
+     -16
+    ],
+    "worstTruePeakDbtp": -1.53,
+    "maxEnergyAbove8kPct": 0.1,
+    "seconds": [
+     0.471,
+     0.483
+    ]
+   },
+   {
+    "id": "tumble",
+    "variations": 3,
+    "class": "light",
+    "momentaryLufsRange": [
+     -16,
+     -16
+    ],
+    "worstTruePeakDbtp": -2.41,
+    "maxEnergyAbove8kPct": 2.58,
+    "seconds": [
+     0.492,
+     0.494
+    ]
+   },
+   {
+    "id": "crystal-arrive",
+    "variations": 3,
+    "class": "medium",
+    "momentaryLufsRange": [
+     -12.5,
+     -12.5
+    ],
+    "worstTruePeakDbtp": -1.84,
+    "maxEnergyAbove8kPct": 0,
+    "seconds": [
+     0.64,
+     0.659
+    ]
+   },
+   {
+    "id": "scatter2",
+    "variations": 3,
+    "class": "medium",
+    "momentaryLufsRange": [
+     -12.5,
+     -12.5
+    ],
+    "worstTruePeakDbtp": -2.1,
+    "maxEnergyAbove8kPct": 0,
+    "seconds": [
+     1.129,
+     1.216
+    ]
+   },
+   {
+    "id": "scatter5",
+    "variations": 3,
+    "class": "major",
+    "momentaryLufsRange": [
+     -11.13,
+     -11.08
+    ],
+    "worstTruePeakDbtp": -1.5,
+    "maxEnergyAbove8kPct": 0.1,
+    "seconds": [
+     1.052,
+     1.118
+    ]
+   },
+   {
+    "id": "trigger",
+    "variations": 3,
+    "class": "major",
+    "momentaryLufsRange": [
+     -11.22,
+     -11.06
+    ],
+    "worstTruePeakDbtp": -1.53,
+    "maxEnergyAbove8kPct": 0.19,
+    "seconds": [
+     1.602,
+     1.645
+    ]
+   },
+   {
+    "id": "denied",
+    "variations": 3,
+    "class": "light",
+    "momentaryLufsRange": [
+     -16,
+     -16
+    ],
+    "worstTruePeakDbtp": -6.44,
+    "maxEnergyAbove8kPct": 0,
+    "seconds": [
+     0.4,
+     0.449
+    ]
+   },
+   {
+    "id": "ding",
+    "variations": 3,
+    "class": "medium",
+    "momentaryLufsRange": [
+     -12.5,
+     -12.5
+    ],
+    "worstTruePeakDbtp": -3.5,
+    "maxEnergyAbove8kPct": 0.01,
+    "seconds": [
+     1.363,
+     1.426
+    ]
+   }
+  ],
+  "clips": [
+   {
+    "id": "spin",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.12,
+    "seconds": 0.601,
+    "centroidHz": 1855,
+    "energyAbove8kPct": 1.88,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/spin-1.wav"
+   },
+   {
+    "id": "spin",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.72,
+    "seconds": 0.63,
+    "centroidHz": 2126,
+    "energyAbove8kPct": 2.66,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/spin-2.wav"
+   },
+   {
+    "id": "spin",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.92,
+    "seconds": 0.645,
+    "centroidHz": 2244,
+    "energyAbove8kPct": 2.64,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/spin-3.wav"
+   },
+   {
+    "id": "spin",
+    "variation": 4,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.43,
+    "seconds": 0.668,
+    "centroidHz": 2069,
+    "energyAbove8kPct": 2.19,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/spin-4.wav"
+   },
+   {
+    "id": "pop-m",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.59,
+    "deltaFromTargetDb": -0.09,
+    "truePeakDbtp": -1.58,
+    "seconds": 0.615,
+    "centroidHz": 580,
+    "energyAbove8kPct": 0.03,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/pop-m-1.wav"
+   },
+   {
+    "id": "pop-m",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.92,
+    "deltaFromTargetDb": -0.42,
+    "truePeakDbtp": -1.58,
+    "seconds": 0.643,
+    "centroidHz": 630,
+    "energyAbove8kPct": 0.04,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/pop-m-2.wav"
+   },
+   {
+    "id": "pop-m",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -13.39,
+    "deltaFromTargetDb": -0.89,
+    "truePeakDbtp": -1.38,
+    "seconds": 0.651,
+    "centroidHz": 953,
+    "energyAbove8kPct": 0.09,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/pop-m-3.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -20.25,
+    "deltaFromTargetDb": -0.75,
+    "truePeakDbtp": -1.52,
+    "seconds": 0.315,
+    "centroidHz": 1405,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/coin-1.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.72,
+    "deltaFromTargetDb": -0.22,
+    "truePeakDbtp": -1.51,
+    "seconds": 0.312,
+    "centroidHz": 1411,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/coin-2.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.6,
+    "deltaFromTargetDb": -0.1,
+    "truePeakDbtp": -1.55,
+    "seconds": 0.311,
+    "centroidHz": 1416,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/coin-3.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 4,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -20.22,
+    "deltaFromTargetDb": -0.72,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.358,
+    "centroidHz": 1421,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/coin-4.wav"
+   },
+   {
+    "id": "crystal",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.67,
+    "seconds": 0.834,
+    "centroidHz": 1815,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/crystal-1.wav"
+   },
+   {
+    "id": "crystal",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.55,
+    "seconds": 0.845,
+    "centroidHz": 2150,
+    "energyAbove8kPct": 0.03,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/crystal-2.wav"
+   },
+   {
+    "id": "crystal",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.68,
+    "seconds": 0.879,
+    "centroidHz": 1429,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/crystal-3.wav"
+   },
+   {
+    "id": "multiplier",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.16,
+    "deltaFromTargetDb": -0.16,
+    "truePeakDbtp": -1.56,
+    "seconds": 1.392,
+    "centroidHz": 792,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/multiplier-1.wav"
+   },
+   {
+    "id": "multiplier",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.2,
+    "deltaFromTargetDb": -0.2,
+    "truePeakDbtp": -1.57,
+    "seconds": 1.405,
+    "centroidHz": 852,
+    "energyAbove8kPct": 0.01,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/multiplier-2.wav"
+   },
+   {
+    "id": "multiplier",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.21,
+    "deltaFromTargetDb": -0.21,
+    "truePeakDbtp": -1.55,
+    "seconds": 1.413,
+    "centroidHz": 757,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/multiplier-3.wav"
+   },
+   {
+    "id": "scatter3",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.36,
+    "seconds": 1.138,
+    "centroidHz": 1542,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter3-1.wav"
+   },
+   {
+    "id": "scatter3",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.05,
+    "seconds": 1.11,
+    "centroidHz": 1557,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter3-2.wav"
+   },
+   {
+    "id": "scatter3",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.27,
+    "seconds": 1.138,
+    "centroidHz": 1542,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter3-3.wav"
+   },
+   {
+    "id": "scatter6",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.71,
+    "seconds": 0.996,
+    "centroidHz": 2167,
+    "energyAbove8kPct": 0.02,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter6-1.wav"
+   },
+   {
+    "id": "scatter6",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.19,
+    "seconds": 0.975,
+    "centroidHz": 2214,
+    "energyAbove8kPct": 0.02,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter6-2.wav"
+   },
+   {
+    "id": "scatter6",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.72,
+    "seconds": 0.943,
+    "centroidHz": 2204,
+    "energyAbove8kPct": 0.01,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter6-3.wav"
+   },
+   {
+    "id": "bet-up",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -11.93,
+    "seconds": 0.483,
+    "centroidHz": 1216,
+    "energyAbove8kPct": 0.1,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/bet-up-1.wav"
+   },
+   {
+    "id": "bet-up",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -12.33,
+    "seconds": 0.485,
+    "centroidHz": 1212,
+    "energyAbove8kPct": 0.09,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/bet-up-2.wav"
+   },
+   {
+    "id": "bet-up",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -13.15,
+    "seconds": 0.53,
+    "centroidHz": 1350,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/bet-up-3.wav"
+   },
+   {
+    "id": "auto-on",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16.05,
+    "deltaFromTargetDb": -0.05,
+    "truePeakDbtp": -1.28,
+    "seconds": 0.504,
+    "centroidHz": 1994,
+    "energyAbove8kPct": 2.37,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/auto-on-1.wav"
+   },
+   {
+    "id": "auto-on",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.89,
+    "seconds": 0.508,
+    "centroidHz": 1917,
+    "energyAbove8kPct": 2.44,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/auto-on-2.wav"
+   },
+   {
+    "id": "auto-on",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.47,
+    "seconds": 0.529,
+    "centroidHz": 1652,
+    "energyAbove8kPct": 2.01,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/auto-on-3.wav"
+   },
+   {
+    "id": "land",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16.78,
+    "deltaFromTargetDb": -0.78,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.319,
+    "centroidHz": 243,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/land-1.wav"
+   },
+   {
+    "id": "land",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16.52,
+    "deltaFromTargetDb": -0.52,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.31,
+    "centroidHz": 244,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/land-2.wav"
+   },
+   {
+    "id": "land",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16.37,
+    "deltaFromTargetDb": -0.37,
+    "truePeakDbtp": -1.59,
+    "seconds": 0.305,
+    "centroidHz": 244,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/land-3.wav"
+   },
+   {
+    "id": "land",
+    "variation": 4,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.59,
+    "seconds": 0.283,
+    "centroidHz": 242,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/land-4.wav"
+   },
+   {
+    "id": "pop-l",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.6,
+    "deltaFromTargetDb": -0.6,
+    "truePeakDbtp": -1.59,
+    "seconds": 0.743,
+    "centroidHz": 1024,
+    "energyAbove8kPct": 0.06,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/pop-l-1.wav"
+   },
+   {
+    "id": "pop-l",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.89,
+    "deltaFromTargetDb": -0.89,
+    "truePeakDbtp": -1.57,
+    "seconds": 0.777,
+    "centroidHz": 973,
+    "energyAbove8kPct": 0.03,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/pop-l-2.wav"
+   },
+   {
+    "id": "pop-l",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.84,
+    "deltaFromTargetDb": -0.84,
+    "truePeakDbtp": -1.55,
+    "seconds": 0.766,
+    "centroidHz": 1031,
+    "energyAbove8kPct": 0.09,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/pop-l-3.wav"
+   },
+   {
+    "id": "crystal-fly",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.11,
+    "seconds": 0.763,
+    "centroidHz": 1959,
+    "energyAbove8kPct": 0.93,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/crystal-fly-1.wav"
+   },
+   {
+    "id": "crystal-fly",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -8.03,
+    "seconds": 0.751,
+    "centroidHz": 2023,
+    "energyAbove8kPct": 0.91,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/crystal-fly-2.wav"
+   },
+   {
+    "id": "crystal-fly",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.26,
+    "seconds": 0.752,
+    "centroidHz": 2088,
+    "energyAbove8kPct": 1.03,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/crystal-fly-3.wav"
+   },
+   {
+    "id": "scatter1",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.9,
+    "seconds": 1.165,
+    "centroidHz": 1376,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter1-1.wav"
+   },
+   {
+    "id": "scatter1",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.43,
+    "seconds": 1.155,
+    "centroidHz": 1383,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter1-2.wav"
+   },
+   {
+    "id": "scatter1",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.74,
+    "seconds": 1.194,
+    "centroidHz": 1390,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter1-3.wav"
+   },
+   {
+    "id": "scatter4",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.19,
+    "deltaFromTargetDb": -0.19,
+    "truePeakDbtp": -1.46,
+    "seconds": 1.055,
+    "centroidHz": 1770,
+    "energyAbove8kPct": 0.01,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter4-1.wav"
+   },
+   {
+    "id": "scatter4",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.92,
+    "seconds": 1.015,
+    "centroidHz": 1777,
+    "energyAbove8kPct": 0.01,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter4-2.wav"
+   },
+   {
+    "id": "scatter4",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.06,
+    "deltaFromTargetDb": -0.06,
+    "truePeakDbtp": -1.46,
+    "seconds": 0.987,
+    "centroidHz": 1789,
+    "energyAbove8kPct": 0.01,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter4-3.wav"
+   },
+   {
+    "id": "tease",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.22,
+    "seconds": 3.557,
+    "centroidHz": 1672,
+    "energyAbove8kPct": 1.59,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/tease-1.wav"
+   },
+   {
+    "id": "tease",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.69,
+    "seconds": 3.549,
+    "centroidHz": 1685,
+    "energyAbove8kPct": 1.59,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/tease-2.wav"
+   },
+   {
+    "id": "tease",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.81,
+    "seconds": 3.541,
+    "centroidHz": 1770,
+    "energyAbove8kPct": 1.65,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/tease-3.wav"
+   },
+   {
+    "id": "click",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -22.8,
+    "deltaFromTargetDb": -3.3,
+    "truePeakDbtp": -1.53,
+    "seconds": 0.276,
+    "centroidHz": 991,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/click-1.wav"
+   },
+   {
+    "id": "click",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -22.85,
+    "deltaFromTargetDb": -3.35,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.276,
+    "centroidHz": 1006,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/click-2.wav"
+   },
+   {
+    "id": "click",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -22.82,
+    "deltaFromTargetDb": -3.32,
+    "truePeakDbtp": -1.59,
+    "seconds": 0.27,
+    "centroidHz": 1042,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/click-3.wav"
+   },
+   {
+    "id": "click",
+    "variation": 4,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -22.74,
+    "deltaFromTargetDb": -3.24,
+    "truePeakDbtp": -1.53,
+    "seconds": 0.25,
+    "centroidHz": 1065,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/click-4.wav"
+   },
+   {
+    "id": "bet-down",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -12.35,
+    "seconds": 0.476,
+    "centroidHz": 1221,
+    "energyAbove8kPct": 0.01,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/bet-down-1.wav"
+   },
+   {
+    "id": "bet-down",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -12.64,
+    "seconds": 0.482,
+    "centroidHz": 1227,
+    "energyAbove8kPct": 0.01,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/bet-down-2.wav"
+   },
+   {
+    "id": "bet-down",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -12.11,
+    "seconds": 0.495,
+    "centroidHz": 1384,
+    "energyAbove8kPct": 0.01,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/bet-down-3.wav"
+   },
+   {
+    "id": "auto-off",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.93,
+    "seconds": 0.524,
+    "centroidHz": 1686,
+    "energyAbove8kPct": 1.51,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/auto-off-1.wav"
+   },
+   {
+    "id": "auto-off",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.29,
+    "seconds": 0.519,
+    "centroidHz": 1591,
+    "energyAbove8kPct": 1.56,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/auto-off-2.wav"
+   },
+   {
+    "id": "auto-off",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.26,
+    "seconds": 0.556,
+    "centroidHz": 2114,
+    "energyAbove8kPct": 3.04,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/auto-off-3.wav"
+   },
+   {
+    "id": "tick",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -21.74,
+    "deltaFromTargetDb": -2.24,
+    "truePeakDbtp": -1.56,
+    "seconds": 0.31,
+    "centroidHz": 1529,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/tick-1.wav"
+   },
+   {
+    "id": "tick",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -20.93,
+    "deltaFromTargetDb": -1.43,
+    "truePeakDbtp": -1.54,
+    "seconds": 0.258,
+    "centroidHz": 1602,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/tick-2.wav"
+   },
+   {
+    "id": "tick",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -20.81,
+    "deltaFromTargetDb": -1.31,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.245,
+    "centroidHz": 1677,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/tick-3.wav"
+   },
+   {
+    "id": "tick",
+    "variation": 4,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -21.23,
+    "deltaFromTargetDb": -1.73,
+    "truePeakDbtp": -1.54,
+    "seconds": 0.271,
+    "centroidHz": 1750,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/tick-4.wav"
+   },
+   {
+    "id": "shimmer",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.31,
+    "seconds": 0.859,
+    "centroidHz": 1241,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/shimmer-1.wav"
+   },
+   {
+    "id": "shimmer",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.77,
+    "seconds": 0.869,
+    "centroidHz": 1153,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/shimmer-2.wav"
+   },
+   {
+    "id": "shimmer",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.17,
+    "seconds": 0.817,
+    "centroidHz": 1528,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/shimmer-3.wav"
+   },
+   {
+    "id": "pop-s",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.65,
+    "seconds": 0.471,
+    "centroidHz": 631,
+    "energyAbove8kPct": 0.05,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/pop-s-1.wav"
+   },
+   {
+    "id": "pop-s",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16.08,
+    "deltaFromTargetDb": -0.08,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.472,
+    "centroidHz": 662,
+    "energyAbove8kPct": 0.04,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/pop-s-2.wav"
+   },
+   {
+    "id": "pop-s",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16.34,
+    "deltaFromTargetDb": -0.34,
+    "truePeakDbtp": -1.53,
+    "seconds": 0.483,
+    "centroidHz": 675,
+    "energyAbove8kPct": 0.1,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/pop-s-3.wav"
+   },
+   {
+    "id": "tumble",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.41,
+    "seconds": 0.494,
+    "centroidHz": 2302,
+    "energyAbove8kPct": 2.19,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/tumble-1.wav"
+   },
+   {
+    "id": "tumble",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.87,
+    "seconds": 0.492,
+    "centroidHz": 2264,
+    "energyAbove8kPct": 2.04,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/tumble-2.wav"
+   },
+   {
+    "id": "tumble",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.41,
+    "seconds": 0.493,
+    "centroidHz": 2478,
+    "energyAbove8kPct": 2.58,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/tumble-3.wav"
+   },
+   {
+    "id": "crystal-arrive",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.23,
+    "seconds": 0.659,
+    "centroidHz": 2114,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/crystal-arrive-1.wav"
+   },
+   {
+    "id": "crystal-arrive",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.84,
+    "seconds": 0.64,
+    "centroidHz": 1785,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/crystal-arrive-2.wav"
+   },
+   {
+    "id": "crystal-arrive",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.09,
+    "seconds": 0.64,
+    "centroidHz": 2377,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/crystal-arrive-3.wav"
+   },
+   {
+    "id": "scatter2",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.31,
+    "seconds": 1.129,
+    "centroidHz": 1395,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter2-1.wav"
+   },
+   {
+    "id": "scatter2",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.89,
+    "seconds": 1.178,
+    "centroidHz": 1385,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter2-2.wav"
+   },
+   {
+    "id": "scatter2",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.1,
+    "seconds": 1.216,
+    "centroidHz": 1360,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter2-3.wav"
+   },
+   {
+    "id": "scatter5",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.12,
+    "deltaFromTargetDb": -0.12,
+    "truePeakDbtp": -1.5,
+    "seconds": 1.118,
+    "centroidHz": 1586,
+    "energyAbove8kPct": 0.09,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter5-1.wav"
+   },
+   {
+    "id": "scatter5",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.08,
+    "deltaFromTargetDb": -0.08,
+    "truePeakDbtp": -1.51,
+    "seconds": 1.083,
+    "centroidHz": 1600,
+    "energyAbove8kPct": 0.1,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter5-2.wav"
+   },
+   {
+    "id": "scatter5",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.13,
+    "deltaFromTargetDb": -0.13,
+    "truePeakDbtp": -1.5,
+    "seconds": 1.052,
+    "centroidHz": 1594,
+    "energyAbove8kPct": 0.1,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/scatter5-3.wav"
+   },
+   {
+    "id": "trigger",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.22,
+    "deltaFromTargetDb": -0.22,
+    "truePeakDbtp": -1.6,
+    "seconds": 1.645,
+    "centroidHz": 731,
+    "energyAbove8kPct": 0.19,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/trigger-1.wav"
+   },
+   {
+    "id": "trigger",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.06,
+    "deltaFromTargetDb": -0.06,
+    "truePeakDbtp": -1.53,
+    "seconds": 1.617,
+    "centroidHz": 723,
+    "energyAbove8kPct": 0.19,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/trigger-2.wav"
+   },
+   {
+    "id": "trigger",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.07,
+    "deltaFromTargetDb": -0.07,
+    "truePeakDbtp": -1.55,
+    "seconds": 1.602,
+    "centroidHz": 713,
+    "energyAbove8kPct": 0.18,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/trigger-3.wav"
+   },
+   {
+    "id": "denied",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.6,
+    "seconds": 0.449,
+    "centroidHz": 282,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/denied-1.wav"
+   },
+   {
+    "id": "denied",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.74,
+    "seconds": 0.407,
+    "centroidHz": 261,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/denied-2.wav"
+   },
+   {
+    "id": "denied",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.44,
+    "seconds": 0.4,
+    "centroidHz": 247,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/denied-3.wav"
+   },
+   {
+    "id": "ding",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.58,
+    "seconds": 1.424,
+    "centroidHz": 1824,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/ding-1.wav"
+   },
+   {
+    "id": "ding",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.54,
+    "seconds": 1.426,
+    "centroidHz": 1824,
+    "energyAbove8kPct": 0,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/ding-2.wav"
+   },
+   {
+    "id": "ding",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.5,
+    "seconds": 1.363,
+    "centroidHz": 1890,
+    "energyAbove8kPct": 0.01,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/ding-3.wav"
+   }
+  ]
+ },
+ "sfxOverMusicDb": {
+  "major": 4.1,
+  "medium": 2.6,
+  "light": -0.9,
+  "ui": -4.4
+ },
+ "runtimeChain": {
+  "musicOnlyUnitySliders": {
+   "integratedLufs": -14.87,
+   "momentaryMaxLufs": -12.25,
+   "truePeakDbtp": -1.78,
+   "samplePeakDbfs": -2.18
+  },
+  "musicOnlyDefaultMix": {
+   "integratedLufs": -17.63,
+   "momentaryMaxLufs": -14.99,
+   "truePeakDbtp": -4.48,
+   "samplePeakDbfs": -4.88
+  },
+  "musicPlusSfxStressUnity": {
+   "integratedLufs": -10.18,
+   "momentaryMaxLufs": -8.4,
+   "truePeakDbtp": -1.24,
+   "samplePeakDbfs": -1.33
+  },
+  "musicPlusSfxStressDefault": {
+   "integratedLufs": -11.11,
+   "momentaryMaxLufs": -9.17,
+   "truePeakDbtp": -1.5,
+   "samplePeakDbfs": -1.5
+  }
+ },
+ "summary": {
+  "musicAssetsInLoudnessTarget": [
+   "cascade-base",
+   "cascade-feature",
+   "cascade-fs-intro",
+   "cascade-fs-outro",
+   "cascade-bigwin-1",
+   "cascade-bigwin-2",
+   "cascade-bigwin-3",
+   "cascade-bed-1",
+   "cascade-bed-2",
+   "cascade-bed-3",
+   "cascade-max-win"
+  ],
+  "allAssetsTruePeakBelowMinus1": true,
+  "runtimeStressTruePeakDbtp": -1.24,
+  "loopsSeamless": true,
+  "maxEnergyAbove8kPctMusic": 0.85,
+  "bestCoreLoadMs": 3585
+ },
+ "limitations": [
+  "Nobody has listened to this audio: the author cannot hear. Musical quality, mix balance and \"commercial-slot\" feel need the owner's listening acceptance (WAVs below).",
+  "Loudness, peaks, spectra and seams are measured; taste is not. Stem balance is set by per-stem loudness targets, not by ear.",
+  "Load times were measured in a loaded 4-vCPU cloud container, not on a desktop or a phone; no mobile CPU or memory measurement (decoded buffers ≈ 87 MB at 44.1 kHz stereo float: 173 s of music + 74.5 s of effects (89 clips); createCascadeSound({ sampleRate: 32000 }) would cut this to ≈ 63 MB).",
+  "The bus limiter is the browser DynamicsCompressor (6 ms look-ahead, not a true brickwall); the stress test stays below −1 dBTP but other browsers may differ (Safari/Firefox compressors were not measured).",
+  "Reverb runs at half rate (22.05 kHz) for speed; its tail is band-limited by design."
+ ]
+}
