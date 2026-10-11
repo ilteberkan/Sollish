@@ -1,0 +1,228 @@
+/* Candy Cascade art: night patisserie backdrop + brass-and-glass vitrine frame. */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background: #0b1020;
+  contain: strict;
+}
+.scene {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.glowPulse {
+  animation: windowGlow 7s ease-in-out infinite alternate;
+  transform-origin: 50% 50%;
+}
+.dustLayer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.dust {
+  position: absolute;
+  left: var(--x);
+  bottom: -4%;
+  width: var(--s);
+  height: var(--s);
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, var(--c) 45%, transparent 72%);
+  opacity: 0;
+  animation: dustRise var(--d) linear var(--delay) infinite;
+  will-change: transform, opacity;
+}
+.vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 75% 70% at 50% 46%, transparent 40%, rgba(6, 8, 20, 0.62) 100%),
+    linear-gradient(to bottom, rgba(6, 8, 20, 0.35), transparent 22%, transparent 70%, rgba(6, 8, 20, 0.5));
+}
+
+@keyframes dustRise {
+  0% { transform: translate3d(0, 0, 0) scale(0.7); opacity: 0; }
+  12% { opacity: var(--o); }
+  50% { transform: translate3d(var(--sway), -55vh, 0) scale(1); }
+  88% { opacity: var(--o); }
+  100% { transform: translate3d(calc(var(--sway) * -0.6), -112vh, 0) scale(0.8); opacity: 0; }
+}
+@keyframes windowGlow {
+  from { opacity: 0.82; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dust {
+    animation: none;
+    opacity: calc(var(--o) * 0.6);
+    bottom: auto;
+    top: var(--y);
+  }
+  .glowPulse { animation: none; }
+}
+
+/* ---------------- board frame ---------------- */
+.frame {
+  --pad: clamp(11px, 2.4vw, 24px);
+  --brass-hi: #fff0bd;
+  --brass: #e9b35d;
+  --brass-mid: #b9782a;
+  --brass-lo: #6f3f10;
+  position: relative;
+  width: 100%;
+  padding: var(--pad);
+  border-radius: clamp(18px, 3vw, 32px);
+  background:
+    linear-gradient(135deg, var(--brass-hi) 0%, var(--brass) 12%, var(--brass-mid) 30%, #f8dc98 46%, var(--brass-mid) 62%, var(--brass-lo) 82%, var(--brass) 100%);
+  box-shadow:
+    0 32px 64px -18px rgba(0, 0, 0, 0.8),
+    0 0 0 1px #3b2206,
+    0 0 60px -4px rgba(233, 179, 93, 0.34),
+    inset 0 2px 0 rgba(255, 255, 255, 0.75),
+    inset 0 0 0 2px rgba(120, 70, 14, 0.55),
+    inset 0 -3px 4px rgba(60, 30, 0, 0.7);
+  isolation: isolate;
+}
+.frame::before {
+  /* stud line + engraved groove around the glass */
+  content: '';
+  position: absolute;
+  inset: calc(var(--pad) * 0.34);
+  border-radius: clamp(14px, 2.4vw, 26px);
+  border: 2px dotted rgba(255, 244, 200, 0.7);
+  filter: drop-shadow(0 1px 0 rgba(70, 38, 6, 0.8));
+  pointer-events: none;
+  z-index: 3;
+}
+.frame::after {
+  content: '';
+  position: absolute;
+  inset: calc(var(--pad) - 4px);
+  border-radius: clamp(10px, 1.8vw, 18px);
+  box-shadow:
+    0 0 0 2px #5a3208,
+    0 0 0 4px #f6d58d,
+    0 0 0 5px rgba(70, 38, 6, 0.8);
+  pointer-events: none;
+  z-index: 2;
+}
+.glass {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 6 / 5;
+  border-radius: clamp(8px, 1.4vw, 14px);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 60% at 50% 0%, rgba(170, 150, 255, 0.3), transparent 70%),
+    radial-gradient(ellipse 80% 55% at 50% 115%, rgba(255, 170, 110, 0.26), transparent 70%),
+    linear-gradient(180deg, rgba(36, 34, 104, 0.82), rgba(16, 18, 62, 0.92));
+  -webkit-backdrop-filter: blur(5px) saturate(1.4);
+  backdrop-filter: blur(5px) saturate(1.4);
+  box-shadow:
+    inset 0 0 0 2px rgba(30, 16, 2, 0.85),
+    inset 0 0 52px rgba(130, 120, 255, 0.22),
+    inset 0 3px 0 rgba(255, 255, 255, 0.2),
+    inset 0 -22px 34px -12px rgba(255, 176, 100, 0.28);
+}
+.content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, transparent 16%, rgba(255, 255, 255, 0.11) 24%, rgba(255, 255, 255, 0.025) 33%, transparent 35%, transparent 48%, rgba(255, 255, 255, 0.07) 52%, transparent 58%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.14), transparent 12%);
+}
+.sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 120% 100% at 50% 50%, transparent 64%, rgba(6, 8, 30, 0.42) 100%);
+}
+.corner {
+  position: absolute;
+  width: clamp(34px, 7vw, 66px);
+  height: clamp(34px, 7vw, 66px);
+  z-index: 4;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 2px rgba(30, 14, 0, 0.6));
+}
+.cTL { top: calc(var(--pad) * -0.3); left: calc(var(--pad) * -0.3); }
+.cTR { top: calc(var(--pad) * -0.3); right: calc(var(--pad) * -0.3); transform: scaleX(-1); }
+.cBL { bottom: calc(var(--pad) * -0.3); left: calc(var(--pad) * -0.3); transform: scaleY(-1); }
+.cBR { bottom: calc(var(--pad) * -0.3); right: calc(var(--pad) * -0.3); transform: scale(-1, -1); }
+.crest {
+  position: absolute;
+  top: calc(var(--pad) * -0.9);
+  left: 50%;
+  width: clamp(60px, 12vw, 120px);
+  height: auto;
+  transform: translateX(-50%);
+  z-index: 4;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 2px rgba(30, 14, 0, 0.6));
+}
+
+/* ---------------- dev gallery ---------------- */
+.labPage {
+  min-height: 100vh;
+  padding: 24px 16px 64px;
+  background: #10171f;
+  color: #f1f5f8;
+}
+.labInner { max-width: 1200px; margin: 0 auto; display: grid; gap: 28px; }
+.labH { margin: 0; font-size: 20px; letter-spacing: -0.3px; color: #e9b35d; }
+.labRow { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; }
+.labCard {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  padding: 12px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #26325a, #151c3b);
+  border: 1px solid #3d5265;
+  font-size: 12px;
+  color: #aebfcb;
+}
+.labSmallRow { display: flex; gap: 6px; align-items: center; }
+.labStage {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 560px;
+  display: grid;
+  place-items: center;
+  padding: 36px 16px;
+}
+.labBoardWrap { position: relative; z-index: 1; width: min(100%, 760px); }
+.labGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  width: 100%;
+  height: 100%;
+  padding: 1.6%;
+  gap: 1%;
+}
+.labCell {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  border-radius: 12%;
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015) 70%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+.labCell > svg { width: 94%; height: 94%; }
+.labBackdropOnly { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 16 / 9; }
