@@ -1,0 +1,255 @@
+{
+  "kind": "candy-cascade-rtp-simulation",
+  "scope": "DEMO credits only; Monte Carlo estimate, not a certified or guaranteed RTP",
+  "engine": "candy-cascade-1",
+  "engineSourceSha256": "64d166c4ea81e0895f386e3fccb573fc61e021d74b90bc25ebb00dc865121e12",
+  "rounds": 20000000,
+  "seed": "candy-cascade-20261011-evidence",
+  "workers": 4,
+  "stakeCents": 100,
+  "rtp": {
+    "pointEstimatePct": 95.824,
+    "ci95Pct": [
+      95.2091,
+      96.4388
+    ],
+    "ci95HalfWidthPct": 0.6148,
+    "method": "normal approximation on the per-round return (total/stake); heavy tail makes the interval optimistic",
+    "integerPayoutCheckPct": 95.824,
+    "perRoundStdDevStakes": 14.0289
+  },
+  "contributionPct": {
+    "baseGame": 57.6594,
+    "freeSpins": 38.1646,
+    "scatterPayInBase": 0.8235
+  },
+  "baseHitFrequency": 0.26522,
+  "freeSpinTrigger": {
+    "frequency": 0.00208,
+    "oneIn": 480.8,
+    "count": 41600
+  },
+  "freeSpins": {
+    "played": 478175,
+    "avgPlayedPerTrigger": 11.495,
+    "retriggers": 12437,
+    "maxInOneRound": 45,
+    "avgWinPerTriggerStakes": 183.48
+  },
+  "maxObservedMultiplierSum": 169,
+  "maxObservedRoundWinStakes": 5000,
+  "maxTumblesInOneSpin": 15,
+  "capHits": 1,
+  "capStakes": 5000,
+  "roundsWithWinAtLeast": {
+    "1x": 3608650,
+    "10x": 114391,
+    "50x": 28334,
+    "100x": 22097,
+    "500x": 3669,
+    "1000x": 586,
+    "2000x": 41,
+    "5000x": 1
+  },
+  "tables": {
+    "paytableHundredths": {
+      "crown": [
+        2023,
+        5058,
+        10115
+      ],
+      "cupcake": [
+        1012,
+        3034,
+        6069
+      ],
+      "donut": [
+        607,
+        2023,
+        4046
+      ],
+      "gumdrop": [
+        405,
+        1214,
+        3034
+      ],
+      "strawberry": [
+        202,
+        607,
+        1618
+      ],
+      "blueberry": [
+        152,
+        405,
+        1214
+      ],
+      "kiwi": [
+        101,
+        303,
+        1012
+      ],
+      "lemon": [
+        81,
+        243,
+        809
+      ],
+      "cherry": [
+        51,
+        202,
+        607
+      ]
+    },
+    "scatterPayHundredths": {
+      "4": 300,
+      "5": 500,
+      "6": 10000
+    },
+    "baseWeights": [
+      [
+        "crown",
+        60
+      ],
+      [
+        "cupcake",
+        80
+      ],
+      [
+        "donut",
+        100
+      ],
+      [
+        "gumdrop",
+        120
+      ],
+      [
+        "strawberry",
+        160
+      ],
+      [
+        "blueberry",
+        170
+      ],
+      [
+        "kiwi",
+        180
+      ],
+      [
+        "lemon",
+        190
+      ],
+      [
+        "cherry",
+        200
+      ],
+      [
+        "star",
+        21
+      ]
+    ],
+    "freeWeights": [
+      [
+        "crown",
+        93
+      ],
+      [
+        "cupcake",
+        114
+      ],
+      [
+        "donut",
+        133
+      ],
+      [
+        "gumdrop",
+        142
+      ],
+      [
+        "strawberry",
+        138
+      ],
+      [
+        "blueberry",
+        107
+      ],
+      [
+        "kiwi",
+        86
+      ],
+      [
+        "lemon",
+        57
+      ],
+      [
+        "cherry",
+        38
+      ],
+      [
+        "star",
+        21
+      ],
+      [
+        "crystal",
+        100
+      ]
+    ],
+    "crystalWeights": [
+      [
+        2,
+        600
+      ],
+      [
+        3,
+        440
+      ],
+      [
+        4,
+        320
+      ],
+      [
+        5,
+        220
+      ],
+      [
+        6,
+        160
+      ],
+      [
+        8,
+        100
+      ],
+      [
+        10,
+        70
+      ],
+      [
+        12,
+        40
+      ],
+      [
+        15,
+        24
+      ],
+      [
+        20,
+        14
+      ],
+      [
+        25,
+        8
+      ],
+      [
+        50,
+        3
+      ],
+      [
+        100,
+        1
+      ]
+    ],
+    "maxFreeSpins": 200,
+    "maxTumbles": 100
+  },
+  "runtimeSeconds": 84.3,
+  "node": "v24.21.0",
+  "generatedAt": "2026-10-11T18:29:14.021Z"
+}

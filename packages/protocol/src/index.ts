@@ -16,6 +16,7 @@ export * from "./neuro-boxer";
 export * from "./neuro-boxer-2";
 export * from "./ringside";
 export * from "./pari-mutuel";
+export * from "./cascade";
 export const PROTOCOL_VERSION = 1 as const;
 export const CHAT_STREAM = "lobby" as const;
 export const MAX_FRAME_BYTES = 10_240;
