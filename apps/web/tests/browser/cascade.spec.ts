@@ -357,7 +357,9 @@ test('DEMO refill resets the balance and logs a history line', async ({ page }) 
 
 test('reality check pauses autoplay; Çık stops it and leaves for /games', async ({ page }) => {
   test.setTimeout(90_000);
-  await page.addInitScript(() => { (window as unknown as { __cascadeRealityMs: number }).__cascadeRealityMs = 6000; });
+  // Real 30-minute interval with a faked clock, so this also runs against the production build
+  // (the shorter dev-only interval hook does not exist there).
+  await page.clock.install();
   await stub(page, LOSS);
   await openCascade(page);
   await setTurbo(page);
@@ -366,6 +368,7 @@ test('reality check pauses autoplay; Çık stops it and leaves for /games', asyn
   await panel.getByRole('textbox', { name: /Kayıp limiti/ }).fill('900');
   await panel.getByRole('button', { name: /Başlat · 10 tur/ }).click();
   const reminder = page.getByRole('alertdialog', { name: 'Oturum hatırlatması' });
+  await page.clock.fastForward('31:00');
   await expect(reminder).toBeVisible({ timeout: 15_000 });
   await page.waitForTimeout(2500); // an in-flight round may finish; no new one starts
   const settled = await rows(page).count();

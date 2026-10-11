@@ -3,7 +3,7 @@
  * Receives plain score data or an effects catalog name; returns Float32Array buffers by transfer.
  */
 import { createRenderEnv, finishScore, finishSfx, scoreImpulse, synthSfx, synthTracks, type RenderEnv, type RenderedAsset, type SfxClip } from './render';
-import { SFX_CATALOGS, type WorkerRequest, type WorkerResponse } from './render-service';
+import { SFX_CATALOGS, type WorkerRequest, type WorkerResponse } from './render-protocol';
 import type { Stereo } from './synth/dsp';
 
 type WorkerScope = { onmessage: ((e: MessageEvent<WorkerRequest>) => void) | null; postMessage: (message: WorkerResponse, transfer: Transferable[]) => void };

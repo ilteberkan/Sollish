@@ -3,18 +3,71 @@
   "engine": "candy-cascade-2 (game screen switched from candy-cascade-1; v1 kept for tests)",
   "scope": "local only; next dev (Turbopack) in a Linux cloud container; not deployed; no build:cloudflare preview run, no hosted, real-phone, or user visual/audio acceptance evidence",
   "unit": {
-    "web": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test", "tests": 186, "pass": 186, "new": ["tests/cascade-controls.test.ts (11)", "tests/demo-ledger.test.ts (+2: stake ceiling, reset)"] },
+    "web": {
+      "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test",
+      "tests": 186,
+      "pass": 186,
+      "new": [
+        "tests/cascade-controls.test.ts (11)",
+        "tests/demo-ledger.test.ts (+2: stake ceiling, reset)"
+      ]
+    },
     "typecheck": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck clean"
   },
   "browserAgainstNextDev": {
     "baseUrl": "http://127.0.0.1:3000 (next dev)",
     "chromium": "/opt/pw-browsers/chromium-1194 via PW_CHROMIUM_PATH / executablePath override (Playwright 1.63 expects build 1243, not installed here)",
-    "cascade.spec.ts": { "tests": 16, "pass": 16, "covers": ["board + deck + 7 info pages axe-clean (wcag2a/aa, 21aa, 22aa)", "Space spin settles once with v2 engine payout", "Atla", "navigation mid-round settles full payout", "free spins intro/outro/big win (turbo)", "reduced motion", "entropy failure", "ante cost bet x 1,25 and buy blocked", "buy dialog -> cost bet x 100 -> intro -> outro -> balance = start - cost + engine payout", "autoplay loss limit stops before exceeding", "autoplay stop on hidden tab", "settings persist across reload + sound toggle/slider smoke without page errors", "history replay leaves balance unchanged and shows the engine's final grid", "DEMO refill line", "reality check pauses autoplay, Cik -> /games", "phone 390x844 no overflow, >=44px deck targets"] },
-    "regression": { "specs": ["product.spec.ts", "solo-lifecycle.spec.ts", "demo-entropy.spec.ts"], "tests": 23, "pass": 23 }
+    "cascade.spec.ts": {
+      "tests": 16,
+      "pass": 16,
+      "covers": [
+        "board + deck + 7 info pages axe-clean (wcag2a/aa, 21aa, 22aa)",
+        "Space spin settles once with v2 engine payout",
+        "Atla",
+        "navigation mid-round settles full payout",
+        "free spins intro/outro/big win (turbo)",
+        "reduced motion",
+        "entropy failure",
+        "ante cost bet x 1,25 and buy blocked",
+        "buy dialog -> cost bet x 100 -> intro -> outro -> balance = start - cost + engine payout",
+        "autoplay loss limit stops before exceeding",
+        "autoplay stop on hidden tab",
+        "settings persist across reload + sound toggle/slider smoke without page errors",
+        "history replay leaves balance unchanged and shows the engine's final grid",
+        "DEMO refill line",
+        "reality check pauses autoplay, Cik -> /games",
+        "phone 390x844 no overflow, >=44px deck targets"
+      ]
+    },
+    "regression": {
+      "specs": [
+        "product.spec.ts",
+        "solo-lifecycle.spec.ts",
+        "demo-entropy.spec.ts"
+      ],
+      "tests": 23,
+      "pass": 23
+    }
   },
   "visualQa": "desktop 1440x900 and phone 390x844 screenshots of splash, idle, deck, autoplay modal, running autoplay, settings, info pages, buy dialog, free-spin intro/outro, replay, history and reality check, reviewed over 5 iterations (agent review only, not user acceptance)",
   "knownNotes": [
     "next dev reports a pre-existing hydration warning on the shell chat textarea (caret-color), not from the game",
     "edits to imported modules under next dev Fast Refresh remount the game; the unmount path settles the round once (expected)"
-  ]
+  ],
+  "productionPreview": {
+    "date": "2026-10-11",
+    "command": "bash scripts/use-node.sh pnpm --filter @sollish/web build:cloudflare && preview:cloudflare (:3001)",
+    "nextBuildId": "tynZUa-EiaTSyEzhSQFJ5",
+    "fix": "render.worker.ts imported render-service.ts, which spawns it; the cycle hung Turbopack's production build. Shared messages moved to render-protocol.ts. Turbopack also shipped the worker as raw .ts, so the worker is now prebuilt by scripts/build-audio-worker.mjs (esbuild 0.25.4) into public/workers/slot-audio-render.js with a content-hash query.",
+    "browser": {
+      "cascade.spec.ts": "16/16",
+      "product+solo-lifecycle+demo-entropy": "23/23",
+      "chromium": "/opt/pw-browsers/chromium-1194 (executablePath override)"
+    },
+    "realityCheckTest": "now uses page.clock.fastForward('31:00') instead of a dev-only interval hook, so it runs against production",
+    "audioWorker": "3 workers spawned from /workers/slot-audio-render.js?v=e26e9c003f62; core sound bank ready 4.6 s after enabling sound (desktop headless, shared container)",
+    "devOnlyRoutes": "/lab/audio, /lab/slot-kit, /lab/cascade-art return 404 in production",
+    "openIssue": "one 404 console error seen once after enabling sound; not reproduced in two follow-up runs with response logging",
+    "notVerified": "real phone, hosted deploy, user visual/aural acceptance"
+  }
 }

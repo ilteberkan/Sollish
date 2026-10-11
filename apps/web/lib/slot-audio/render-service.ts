@@ -10,25 +10,17 @@ import {
 } from './render';
 import type { Stereo } from './synth/dsp';
 import type { Score } from './scores/types';
-import { CASCADE_SFX, type SfxDef } from './sfx/cascade';
+import { SLOT_AUDIO_WORKER_VERSION } from './worker-version.generated';
+import { SFX_CATALOGS, type WithoutId, type WorkerRequest, type WorkerResponse } from './render-protocol';
 
-export const SFX_CATALOGS: Record<string, SfxDef[]> = { cascade: CASCADE_SFX };
-
-export type WorkerRequest =
-  | { id: number; type: 'tracks'; score: Score; trackIds: string[]; sampleRate: number }
-  | { id: number; type: 'finish'; score: Score; dry: Stereo[]; wet: Stereo | null; sampleRate: number; renderMs: number }
-  | { id: number; type: 'impulse'; name: 'hall' | 'room'; sampleRate: number }
-  | { id: number; type: 'sfx'; catalog: string; ids: string[]; sampleRate: number; tail: number }
-  | { id: number; type: 'sfx-finish'; parts: SfxPart[]; dry: Stereo; wet: Stereo | null; sampleRate: number; tail: number };
-type WithoutId<T> = T extends unknown ? Omit<T, 'id'> : never;
-export type WorkerResponse = { id: number; ok: true; result: unknown } | { id: number; ok: false; error: string };
+export { SFX_CATALOGS, type WorkerRequest, type WorkerResponse } from './render-protocol';
 
 export type WorkerFactory = () => Worker | null;
 
-/** Bundler-visible worker entry (Turbopack/webpack turn this into a separate chunk). */
+/** Worker script prebuilt by scripts/build-audio-worker.mjs into public/workers/. */
 export const defaultWorkerFactory: WorkerFactory = () => {
   if (typeof Worker === 'undefined') return null;
-  return new Worker(new URL('./render.worker.ts', import.meta.url), { type: 'module', name: 'slot-audio-render' });
+  return new Worker(`/workers/slot-audio-render.js?v=${SLOT_AUDIO_WORKER_VERSION}`, { name: 'slot-audio-render' });
 };
 
 const stereoBuffers = (...list: Stereo[]) => list.flatMap(s => [s.l.buffer, s.r.buffer]) as ArrayBuffer[];
