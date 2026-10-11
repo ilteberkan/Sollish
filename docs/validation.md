@@ -1,5 +1,7 @@
 # Doğrulama ve açık kabul koşulları
 
+**Candy Cascade v2 ekranı (11 Ekim, yayımlanmadı):** web birim 186/186, typecheck temiz, tarayıcı (next dev) `cascade.spec.ts` 16/16 ve regresyon 23/23 (product, solo-lifecycle, demo-entropy). [Kanıt](../ops/evidence/candy-cascade-2-20261011/web.json). Cloudflare önizlemesinde, telefonda ve barındırılan ortamda koşmadı; kullanıcı görsel/işitsel kabulü yok.
+
 **Ringside maç defteri (9 Ekim gece, yayımlanmadı):** protocol 128/128, workerd v5 14/14 (+ v3/v4 16, v2 12), realtime 11/11, web 38/38, tarayıcı (next dev) ringside 7/7 ve ürün 14/14 (WCAG dahil), readiness exit 2. [Kanıt](../ops/evidence/ringside-match-20261009.json). Cloudflare derlemesinde ve barındırılan ortamda koşmadı.
 
 **Güncel Ringside Lab v2 (2 Ekim):** [v2 raporu](releases/ringside-neuroarena-demo-2026-10-02.md), 50 tarayıcı testi ve ayrı gerçek SQLite/havuz testleri. Connectome veri incelemesi öğrenilmiş beyin doğrulaması değildir.

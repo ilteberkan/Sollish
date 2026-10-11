@@ -113,3 +113,19 @@ export function playCascade2Round(seedHex: string, betCents: number, mode: Casca
 export const CASCADE2_RTP: Record<CascadeMode, { rtp: number; ciLow: number; ciHigh: number; rounds: number; hitRate: number; featureRate: number; stdDev: number }>; // kanıttan kopyalanır
 ```
 `stakeCents` alanı geriye uyumluluk için `betCents`'e eşittir. Adım/spin/hücre yapıları v1 ile aynıdır, yani v1 zaman çizelgesi aynı veriyle çalışır.
+
+### Oyun ekranı (v2 arayüzü, 11 Ekim 2026)
+Oyun artık yalnız `candy-cascade-2` ile oynanır; v1 motoru testler için durur. Bütün çizim, düzen ve animasyon özgündür (gece şekerhanesi + koyu Sollish çerçevesi, karamel-altın vurgu).
+- **Kontrol paneli** (`components/cascade/cascade-game.tsx`, tek DOM, CSS grid alanları): masaüstünde ızgara solda, panel sağda (bakiye + "Bakiyeyi yenile", son kazanç, −/bahis menüsü/+, azami bahis, Şans ×2, Bonus satın al, otomatik/ÇEVİR/hız, bilgi/ayarlar/ses). Telefonda (≤1050 px) ızgara tam genişlik, altında 3 satır: bakiye·bahis·kazanç / [bilgi][−][ÇEVİR][+][otomatik] / [Şans ×2][satın al][ayarlar][hız][ses]; hedefler ≥44 px, yatay kaydırma yok.
+- **Bahis:** slot kit `BetSelector` (yeni `render` düzeni) `CASCADE2_BET_LEVELS_CENTS` üstünde; bakiyenin yetmediği basamak seçilemez; seçili modun maliyeti hep görünür. Bahis tarayıcıda hatırlanır.
+- **Şans ×2:** maliyet ×1,25, "Bedava dönüş şansı ≈2 kat"; açıkken satın alma kapalı.
+- **Bonus satın al:** `BuyFeatureDialog`, fiyat 100×bahis, RTP `CASCADE2_RTP.buy`. Otomatik oyunda, tur sürerken, Şans ×2 açıkken veya bakiye yetmezken nedeniyle kapalı.
+- **Ledger:** `DemoLedger.reserve(stake, nonce, { maxMultiplier, maxStakeCents })`; Cascade `maxMultiplier = ceil(5000 × bahis / maliyet)` (5000 / 4000 / 50) ve en çok 50.000 DEMO tek rezervasyon ister; diğer oyunların varsayılanları değişmedi. `reset()` + sağlayıcıda `resetDemoBalance()` ("Bakiye yenilendi" geçmiş satırı), tur rezerve iken reddedilir.
+- **Hız:** Normal / Hızlı (×0,6) / Turbo (×0,35, beklemeler en az 1,5 sn); "Giriş ekranlarını atla" giriş/çıkış/azami kazanç kartlarını ≤0,9 sn, büyük kazanç sayacını ≤1 sn gösterir; kartlar ve sayaç dokunarak geçilir; Boşluk ayarla açılıp kapanır.
+- **Bedava dönüş çıkış kartı:** son bedava dönüşten sonra "Bedava dönüş bitti — Toplam kazanç X DEMO, N dönüş" (`free-outro` zaman çizelgesi olayı).
+- **Otomatik oyun:** kit `AutoplayPanel` (kayıp limiti zorunlu) + saf adaptör `lib/cascade-controls.ts` (`autoplayBeforeSpin` / `autoplayAfterRound`); bonus satın almaz; sekme gizlenince, 30 dk hatırlatmasında ve pencere açıkken bekler/durur; duruş nedeni bildirimle gösterilir; ÇEVİR yerine kalan sayılı DURDUR düğmesi.
+- **Bilgi:** 7 sayfa (nasıl oynanır, bahse göre DEMO ödeme tablosu, özellikler, mod başına RTP ve %95 GA, bahis ve kazanç sınırları, tuşlar, arıza hükmü).
+- **Oturum:** `SessionBar` (saat, süre, net) masanın altında; 30 dakikada bir `RealityCheckDialog` (Devam / Çık → `/games`). Geliştirmede `window.__cascadeRealityMs` aralığı kısaltır (üretimde yok).
+- **Geçmiş ve tekrar:** zaman, mod, bahis, maliyet, kazanç, sonuç, kısa tur kimliği; "Tekrar oynat" kayıtlı seed + bahis + mod ile turu motordan yeniden çözer, ödemeyi kayıtla karşılaştırır ve ledger'a dokunmadan oynatır ("Tekrar — bakiye değişmez").
+- **Yükleme ekranı:** sayfa başına bir kez kısa marka ekranı + "Oyna" (ayarla kapatılabilir). Ses ilk dokunuşta `resume()` + `load()`; "Ses yükleniyor %N" göstergesi.
+- **Ses:** bütün çağrılar `components/cascade/use-cascade-sound.ts` içinde; yeni API yöntemleri varsa çağrılır (setMix ayarlardan, setScene base/feature, freeSpinsIntro→feature, featureOutro→base, bigWin+countUp, maxWin, tumble, scatterTease, crystalArrive, multiplierApply, click, betChange, denied, autoplay; kapanışta setScene('none')).

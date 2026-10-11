@@ -8,14 +8,33 @@
  */
 import { CASCADE_COLS, CASCADE_MAX_WIN_MULTIPLIER, CASCADE_ROWS, type CascadeCell, type CascadeGrid, type CascadePaySymbol, type CascadeRound, type CascadeSymbol } from '@sollish/protocol';
 
+/** A resolved round of any Candy Cascade engine (v1 or v2: same spins, steps and cells). `stakeCents` is the
+ * base bet that wins are measured against (v2: equal to `betCents`, not the mode cost). */
+export type CascadeRoundLike = Omit<CascadeRound, 'engine'> & { engine: string };
+
 export const CASCADE_TURBO_FACTOR = 0.35;
 /** Holds (intro card, big-win, max-win) never shrink below this in turbo so the text stays readable. */
 export const CASCADE_TURBO_MIN_HOLD = 1500;
+/** Presentation speeds: every non-hold duration is scaled; only turbo also shortens the holds. */
+export type CascadeSpeed = 'normal' | 'quick' | 'turbo';
+export const CASCADE_SPEED_FACTOR: Readonly<Record<CascadeSpeed, number>> = Object.freeze({ normal: 1, quick: 0.6, turbo: CASCADE_TURBO_FACTOR });
+/** "Giriş ekranlarını atla": feature intro/outro and max-win cards still show, this long at most. */
+export const CASCADE_SKIP_SCREEN_HOLD = 900;
+/** With skipped screens the big-win count-up and the hold after it are capped to these. */
+export const CASCADE_SKIP_COUNT_UP = 1000;
+export const CASCADE_SKIP_BIG_HOLD = 600;
 /** Round-total thresholds in hundredths of the stake: 20x, 50x, 100x. */
 export const CASCADE_BIG_WIN_THRESHOLDS = [2000, 5000, 10_000] as const;
 export type BigWinTier = 0 | 1 | 2 | 3;
 
-export type TimelineOptions = { turbo?: boolean; reducedMotion?: boolean };
+export type TimelineOptions = {
+  /** Legacy switch: same as `speed: 'turbo'`. */
+  turbo?: boolean;
+  speed?: CascadeSpeed;
+  reducedMotion?: boolean;
+  /** Shorten feature intro/outro, max-win and big-win holds (they still show briefly). */
+  skipScreens?: boolean;
+};
 
 /** A cell's place after an event; `fromRow` is where it starts visually (negative = above the board). */
 export interface PlacedCell {
@@ -50,12 +69,13 @@ export type TimelineEvent =
   | At & { type: 'free-intro'; spin: number; awarded: number; hold: true }
   | At & { type: 'free-mode'; on: boolean }
   | At & { type: 'spin-end'; spin: number; kind: 'base' | 'free'; winHundredths: number; meter: Meter }
+  | At & { type: 'free-outro'; spins: number; totalHundredths: number; hold: true }
   | At & { type: 'max-win'; hold: true }
   | At & { type: 'big-win'; tier: 1 | 2 | 3; totalHundredths: number; countUp: number; hold: true }
   | At & { type: 'end'; totalHundredths: number; payoutCents: number; capped: boolean };
 export type TimelineEventType = TimelineEvent['type'];
 
-export interface CascadeTimeline { events: TimelineEvent[]; duration: number; turbo: boolean; reducedMotion: boolean }
+export interface CascadeTimeline { events: TimelineEvent[]; duration: number; turbo: boolean; speed: CascadeSpeed; skipScreens: boolean; reducedMotion: boolean }
 
 /** Base timings (ms). Reduced motion keeps every step but uses short fades/slides. */
 const NORMAL = {
@@ -64,7 +84,7 @@ const NORMAL = {
   tumbleColStagger: 34, tumbleFreshDelay: 60, tumbleFallBase: 250, tumbleFallK: 85,
   settle: 150, highlight: 450, pop: 360, popGap: 40,
   collectStagger: 240, collectFly: 560, collectSum: 300, multiply: 780, scatterPay: 760,
-  scatterTrigger: 1500, retrigger: 1500, freeIntro: 2400,
+  scatterTrigger: 1500, retrigger: 1500, freeIntro: 2400, freeOutro: 2600,
   spinEndWin: 560, spinEndNone: 260, freeSpinEndWin: 480, freeSpinEndNone: 220,
   maxWin: 2600, bigWinCountUp: [2800, 3800, 4800] as readonly number[], bigWinHold: 1700,
 };
@@ -110,12 +130,15 @@ function starIds(grid: CascadeGrid): number[] {
   return cellsOf(grid).filter(({ cell }) => cell.symbol === 'star').map(({ cell }) => cell.id);
 }
 
-export function buildCascadeTimeline(round: CascadeRound, options: TimelineOptions = {}): CascadeTimeline {
-  const turbo = !!options.turbo, reducedMotion = !!options.reducedMotion;
+export function buildCascadeTimeline(round: CascadeRoundLike, options: TimelineOptions = {}): CascadeTimeline {
+  const speed: CascadeSpeed = options.speed ?? (options.turbo ? 'turbo' : 'normal');
+  const turbo = speed === 'turbo', reducedMotion = !!options.reducedMotion, skipScreens = !!options.skipScreens;
   const T = reducedMotion ? REDUCED : NORMAL;
-  const k = turbo ? CASCADE_TURBO_FACTOR : 1;
+  const k = CASCADE_SPEED_FACTOR[speed];
   const d = (ms: number) => Math.round(ms * k);
   const hold = (ms: number) => (turbo ? Math.max(CASCADE_TURBO_MIN_HOLD, d(ms)) : ms);
+  /** Feature screens (intro, outro, max win): skipped screens keep a short glimpse. */
+  const screen = (ms: number) => (skipScreens ? Math.min(CASCADE_SKIP_SCREEN_HOLD, hold(ms)) : hold(ms));
   const fall = (base: number, perRow: number, rows: number) => (rows <= 0 ? 0 : d(base + perRow * Math.sqrt(rows)));
   const cap = CASCADE_MAX_WIN_MULTIPLIER * 100;
   const events: TimelineEvent[] = [];
@@ -241,7 +264,7 @@ export function buildCascadeTimeline(round: CascadeRound, options: TimelineOptio
       push({ type: 'scatter-trigger', at: t, dur: triggerDur, spin: s, ids: starIds(finalGrid), count: spin.scatterCount, awarded: spin.freeSpinsAwarded, retrigger, freeSpinsLeft: spin.freeSpinsLeft });
       t += triggerDur;
       if (!retrigger) {
-        const introDur = hold(T.freeIntro);
+        const introDur = screen(T.freeIntro);
         push({ type: 'free-intro', at: t, dur: introDur, spin: s, awarded: spin.freeSpinsAwarded, hold: true });
         t += introDur;
         push({ type: 'free-mode', at: t, dur: 0, on: true });
@@ -257,24 +280,30 @@ export function buildCascadeTimeline(round: CascadeRound, options: TimelineOptio
   }
 
   if (round.capped) {
-    const capDur = hold(T.maxWin);
+    const capDur = screen(T.maxWin);
     push({ type: 'max-win', at: t, dur: capDur, hold: true });
     t += capDur;
   }
+  if (round.freeSpinsTriggered) {
+    const outroDur = screen(T.freeOutro);
+    push({ type: 'free-outro', at: t, dur: outroDur, spins: round.spins.length - 1, totalHundredths: round.totalHundredths, hold: true });
+    t += outroDur;
+  }
   const tier = bigWinTier(round.totalHundredths);
   if (tier !== 0) {
-    const countUp = turbo ? Math.max(CASCADE_TURBO_MIN_HOLD, d(T.bigWinCountUp[tier - 1]!)) : T.bigWinCountUp[tier - 1]!;
-    const total = countUp + hold(T.bigWinHold);
+    const fullCountUp = turbo ? Math.max(CASCADE_TURBO_MIN_HOLD, d(T.bigWinCountUp[tier - 1]!)) : T.bigWinCountUp[tier - 1]!;
+    const countUp = skipScreens ? Math.min(CASCADE_SKIP_COUNT_UP, fullCountUp) : fullCountUp;
+    const total = countUp + (skipScreens ? Math.min(CASCADE_SKIP_BIG_HOLD, hold(T.bigWinHold)) : hold(T.bigWinHold));
     push({ type: 'big-win', at: t, dur: total, tier, totalHundredths: round.totalHundredths, countUp, hold: true });
     t += total;
   }
   push({ type: 'end', at: t, dur: 0, totalHundredths: round.totalHundredths, payoutCents: round.payoutCents, capped: round.capped });
   events.sort((a, b) => a.at - b.at); // stable: equal times keep insertion order
-  return { events, duration: t, turbo, reducedMotion };
+  return { events, duration: t, turbo, speed, skipScreens, reducedMotion };
 }
 
 /** The board, meters and mode at the very end of the round, for "Atla" and for unmount. */
-export function finalState(round: CascadeRound): { cells: PlacedCell[]; meter: Meter; free: boolean; freeSpinsPlayed: number } {
+export function finalState(round: CascadeRoundLike): { cells: PlacedCell[]; meter: Meter; free: boolean; freeSpinsPlayed: number } {
   const spin = round.spins[round.spins.length - 1]!;
   const grid = spin.steps[spin.steps.length - 1]!.grid;
   const prev = round.spins.length > 1 ? round.spins[round.spins.length - 2]!.totalHundredthsAfter : 0;
@@ -286,7 +315,7 @@ export function finalState(round: CascadeRound): { cells: PlacedCell[]; meter: M
 }
 
 /** History row text: "3 düşme · 12,40×", "Bedava dönüş ×12 · 183,50×", "Kazanç yok". */
-export function cascadeHistoryDetail(round: CascadeRound): string {
+export function cascadeHistoryDetail(round: CascadeRoundLike): string {
   const total = `${multiplierText(round.totalHundredths)}×`;
   if (round.capped) return `Azami kazanç · ${total}`;
   if (round.freeSpinsTriggered) return `Bedava dönüş ×${round.spins.length - 1} · ${total}`;

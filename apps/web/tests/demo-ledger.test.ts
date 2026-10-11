@@ -39,3 +39,30 @@ test('per-reservation multiplier cap: default 50, up to 5000 when reserved, inva
   for (const cap of [0, -1, 0.5, 5001, NaN, Infinity, Number.MAX_SAFE_INTEGER]) assert.equal(ledger.reserve(1000, () => 'x', cap), null, String(cap));
   assert.equal(ledger.balance, 100_000); assert.equal(ledger.reserve(1000, () => 'x', 5000), 'x');
 });
+test('per-reservation stake ceiling: default 500 DEMO, a game may opt into more up to the balance', () => {
+  let ledger = new DemoLedger();
+  assert.equal(ledger.reserve(50_001, () => 'a'), null, 'default ceiling unchanged');
+  assert.equal(ledger.reserve(50_001, () => 'a', { maxMultiplier: 50 }), null, 'options without a stake ceiling keep the default');
+  assert.equal(ledger.reserve(100_000, () => 'buy', { maxMultiplier: 50, maxStakeCents: 5_000_000 }), 'buy');
+  assert.equal(ledger.balance, 0);
+  assert.throws(() => ledger.settle({ id: 'buy', stake: 100_000, payout: 5_000_001 }), RangeError, '50x of the cost is the cap');
+  assert.equal(ledger.settle({ id: 'buy', stake: 100_000, payout: 5_000_000 }), true);
+  ledger = new DemoLedger();
+  assert.equal(ledger.reserve(100_001, () => 'x', { maxStakeCents: 5_000_000 }), null, 'never above the balance');
+  for (const maxStakeCents of [0, 99, 100.5, 5_000_001, NaN, Infinity]) assert.equal(ledger.reserve(1000, () => 'x', { maxStakeCents }), null, String(maxStakeCents));
+  for (const maxMultiplier of [0, 5001, 0.5]) assert.equal(ledger.reserve(1000, () => 'x', { maxMultiplier, maxStakeCents: 5_000_000 }), null, String(maxMultiplier));
+  assert.equal(ledger.balance, 100_000);
+  assert.equal(ledger.reserve(1250, () => 'ante', { maxMultiplier: 4000, maxStakeCents: 5_000_000 }), 'ante');
+  assert.equal(ledger.settle({ id: 'ante', stake: 1250, payout: 5_000_000 }), true, 'ante: 4000 x cost = 5000 x bet');
+});
+test('reset restores the starting credit only when no round is reserved', () => {
+  const ledger = new DemoLedger();
+  ledger.reserve(10_000, () => 'one');
+  assert.equal(ledger.busy, true);
+  assert.equal(ledger.reset(), false); assert.equal(ledger.balance, 90_000);
+  ledger.settle({ id: 'one', stake: 10_000, payout: 0 });
+  assert.equal(ledger.busy, false);
+  assert.equal(ledger.reset(), true); assert.equal(ledger.balance, 100_000);
+  assert.throws(() => ledger.reserve(1000, () => 'one'), 'used ids stay used after a reset');
+  assert.equal(ledger.reserve(1000, () => 'two'), 'two');
+});
