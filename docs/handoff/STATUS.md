@@ -1,6 +1,6 @@
 # Sollish durum
 
-Son güncelleme: 10 Ekim 2026. Bu dosyayı yalnız güncel durumla tut. Oturum bitmeden veya context dolmadan güncelle; eskiyen kaydı [history.md](history.md)'nin başına taşı.
+Son güncelleme: 11 Ekim 2026. Bu dosyayı yalnız güncel durumla tut. Oturum bitmeden veya context dolmadan güncelle; eskiyen kaydı [history.md](history.md)'nin başına taşı.
 
 ## Yayında olan (Cloudflare devnet)
 - Web: `sollish-web-devnet`, version `93645ad3-1955-4f7d-b947-c495d6b604f6`, build `yTTEY4MG5gmewPMEL9MsM` (Combat Club `sparring-1`). Kök: https://sollish-web-devnet.sollish-web.workers.dev
@@ -8,6 +8,7 @@ Son güncelleme: 10 Ekim 2026. Bu dosyayı yalnız güncel durumla tut. Oturum b
 - Bu kimlikler 4 Ekim'de Cloudflare MCP ile doğrulandı. Deploy öncesi yeniden doğrula.
 
 ## Yerelde hazır, yayımlanmamış
+- **Candy Cascade (11 Ekim, yeni solo DEMO oyunu):** `/game/cascade`, motor `candy-cascade-1` (`packages/protocol/src/cascade.ts`). 6×5 her yerde öde, tumble, 4+ yıldız 10 bedava dönüş, kristal çarpanlar, azami 5.000×. Kullanıcı Sweet Bonanza'nın birebir kopyasını istedi; telif/marka nedeniyle bütün sanat, ad, paytable, ses ve animasyon özgün yapıldı (gerekçe `docs/product/candy-cascade-spec.md`). Simülasyonla RTP %95,82 (20 M tur, GA 95,2–96,4; sertifikasız). Ledger'a oyun başına ödeme tavanı eklendi (Cascade 5000×, diğerleri 50×). Testler: protocol 165, web 110, `cascade.spec.ts` 8/8 ve regresyon 23/23 yerel workerd preview'da (build `BKqxCrH1oqmvvcRxcBFjl`). Kanıt `ops/evidence/candy-cascade-20261011/`. Kullanıcı görsel kabulü, gerçek telefon ölçümü ve deploy yok.
 - **Tekmeler, raunttan raunda öğrenme, yeni çizim (10 Ekim):** motor `ringside-contact-5-5d6b12d5` (kural v5m): tekme/diz; öğrenen durum (ağırlıklar, rakip modeli, dersler) maç boyunca raunttan raunda taşınır, iki beyin bağımsız. Önceden kayıtlı test: öğrenen rakiplere +38 (−2…+74), sabit tarzlara +20 (−5…+45) — ikisi de sıfırı içerdiği için GEÇMEDİ; eğitim etkisi +284. Denge: KOR %51, yere düşme %19, 42 vuruş, tekme %37 (tasarım bandı %35'i aştı, test tavanı %40'a çıkarıldı). Yayın klasik 2D dövüş oyunu: sabit yan kamera, Higgsfield kare kare sprite sayfaları (KOR, AYAZ 16+16 kare, hakem 12; `apps/web/scripts/ringside-frames.mjs`, `lib/ringside-2d/`); döndürmeli kamera kaldırıldı, Taktik görünümü duruyor; sonuç kartı kenarda ve kapatılabilir. Kanıt `ops/evidence/ringside-contact5-20261010/summary.json`.
 - **Orkestra düzeni:** `~/.claude/CLAUDE.md` ve `~/.claude/agents/` (Opus yönetir, Sonnet kodlar, Haiku küçük iş).
 - **Maç başına tek bilet (yeni, gece):** defter `ringside-match-1`. Bahis yalnız R1'den önce 30 sn; raunt aralarında kapalı; pazarlar kazanan, tam sonuç, yere düşme sayısı; havuzlar maç bitince bir kez sonuçlanır. Üç seed hash'i önceden yayımlanır, tarayıcı bütün maçı yeniden oynatır. Kanıt `ops/evidence/ringside-match-20261009.json`.
@@ -47,7 +48,7 @@ Son güncelleme: 10 Ekim 2026. Bu dosyayı yalnız güncel durumla tut. Oturum b
 3. Belgeler: eski Combat Club/3D sayfalarına giden doküman bağlantılarını temizlemek.
 
 ## Ortam notları
-- Git: commit yok, bütün ağaç untracked. İlk commit'ten önce secret tarayıcısını çalıştır.
+- Git: repo commit'li (`main` + `claude/gifted-gauss-25dzjq`). Bulut oturumunda `scripts/use-node.sh` artık x64 Linux Node'u da indiriyor. Burada Playwright 1.63'ün beklediği Chromium 1243 yok; `/opt/pw-browsers/chromium-1194` `executablePath` ile kullanıldı.
 - **Jev anahtarı:** yalnız `.tooling/secrets/typesafe.env`. Bugün 32 gerçek çağrı yapıldı, hepsi OK. Barındırılan ortamda tanımlı değil.
 - Yerel canlı deneme şöyle yapılır:
   1. `apps/realtime` içinde `wrangler dev --port 8787 --env-file ../../.tooling/secrets/typesafe.env --var DECISION_AGENT_ENABLED:true --var JEV_CALL_BUDGET:N --var LIVE_ARENA_ENABLED:true --var ALLOWED_ORIGINS:http://localhost:3000`.

@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-11",
+  "engine": "candy-cascade-1",
+  "scope": "local only; not deployed; no hosted, real-phone or user visual acceptance evidence",
+  "unit": {
+    "protocol": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/protocol test", "tests": 165, "pass": 165 },
+    "web": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test", "tests": 110, "pass": 110 },
+    "typecheck": "pnpm --filter @sollish/web typecheck clean; pnpm --filter @sollish/protocol typecheck clean"
+  },
+  "productionBuild": {
+    "command": "bash scripts/use-node.sh pnpm --filter @sollish/web build:cloudflare",
+    "nextBuildId": "BKqxCrH1oqmvvcRxcBFjl",
+    "routes": ["/game/cascade static 200", "/lab/cascade-art 404 in production (dev-only gallery)"]
+  },
+  "browserAgainstLocalWorkerdPreview": {
+    "baseUrl": "http://localhost:3001 (preview:cloudflare)",
+    "chromium": "/opt/pw-browsers/chromium-1194 via executablePath override; Playwright 1.63 expects build 1243, which is not installed in this cloud container",
+    "cascade.spec.ts": { "tests": 8, "pass": 8 },
+    "regression": { "specs": ["product.spec.ts", "solo-lifecycle.spec.ts", "demo-entropy.spec.ts"], "tests": 23, "pass": 23 }
+  },
+  "frameTiming": "next dev, headless desktop Chromium, software raster: median 16.7 ms, p95 50 ms during tumbles. Not a phone or production measurement.",
+  "rtp": "see rtp.json (simulated 95.824%, 95% CI 95.209-96.439, 20M rounds; heavy tail; not certified)",
+  "originality": "Symbols, backdrop, frame, UI, animations and sounds are original code-authored assets (inline SVG, canvas particles, Web Audio synthesis). No third-party game art, name or layout."
+}
