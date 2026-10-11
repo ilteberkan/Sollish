@@ -6,6 +6,7 @@ Non-custodial Solana game platform (Coinflip, Crash, Ringside live 2.5D boxing) 
 - Starting a session: `docs/handoff/STATUS.md` holds what is deployed, what failed and which decisions wait on the user. Update it before you stop or when context runs low.
 - Ringside simulation, AI, economy or LIVE protocol: `docs/product/ringside-neuroarena-spec.md`, then only the section of `docs/product/ringside-version-log.md` for the version you touch.
 - Token, airdrop, chat, infrastructure or UI direction: `docs/product/platform-decisions.md`.
+- Any new or changed game: `docs/product/game-standards.md` (owner decision, 11 Oct 2026). Games match top commercial studios in features and polish, with fully original art, sound, names and paytables; never a copy of another game.
 - Next.js code: `apps/web/AGENTS.md`.
 - Contracts or devnet deploy: `docs/devnet-deployment.md`. Never run a blind `anchor deploy`.
 - Test scope and real-asset gates: `docs/validation.md`.

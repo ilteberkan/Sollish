@@ -87,3 +87,29 @@ Animasyonlar (hepsi kodla yazılmış, prosedürel; hazır klip yok):
 - Büyük kazanç kademeleri (≥20×, ≥50×, ≥100×) için sayaç tırmanışı ve kutlama.
 - `prefers-reduced-motion`: parçacık ve sarsıntı yok, kısa geçişler.
 - Ses: Web Audio ile sentezlenmiş özgün efektler (düşme, patlama, kazanç, kristal, tetikleme); varsayılan kapalı, kullanıcı açar.
+
+## Sürüm 2 (`candy-cascade-2`, 11 Ekim 2026)
+`docs/product/game-standards.md` eşitliği için. v1 (`candy-cascade-1`) donar; çıktısı değişmez.
+
+### Modlar ve maliyet (taban bahis `bet`, kuruş)
+| Mod | Ödenen | Fark |
+|---|---|---|
+| `standard` | `bet` | v1 kuralları |
+| `ante` ("Şans ×2") | `bet × 5/4` | taban oyunda yıldız olasılığı yaklaşık iki katı; satın alma kapalı |
+| `buy` ("Bonus satın al") | `bet × 100` | taban dönüş en az 4 yıldızla başlar, bedava dönüş garantili |
+Kazançlar taban bahse göre hesaplanır; azami kazanç `5000 × bet`. Her modun RTP'si ayrı ayarlanır ve ayrı kanıtlanır (hedef ≈ %96, her biri 95–97).
+
+### Bahis basamakları (DEMO)
+1, 2, 3, 4, 5, 8, 10, 15, 20, 25, 40, 50, 75, 100, 150, 200, 250, 400, 500. Ödenen tutar ledger'ın tur başına sınırını aşamaz; aşan seçenek devre dışı görünür.
+
+### Motor API ekleri (`packages/protocol/src/cascade-2.ts`)
+```ts
+export const CASCADE2_ENGINE_ID = 'candy-cascade-2';
+export type CascadeMode = 'standard' | 'ante' | 'buy';
+export const CASCADE2_BET_LEVELS_CENTS: readonly number[];
+export function cascadeCostCents(betCents: number, mode: CascadeMode): number;
+export interface Cascade2Round extends Omit<CascadeRound, 'engine'> { engine: typeof CASCADE2_ENGINE_ID; mode: CascadeMode; betCents: number; costCents: number }
+export function playCascade2Round(seedHex: string, betCents: number, mode: CascadeMode): Cascade2Round;
+export const CASCADE2_RTP: Record<CascadeMode, { rtp: number; ciLow: number; ciHigh: number; rounds: number; hitRate: number; featureRate: number; stdDev: number }>; // kanıttan kopyalanır
+```
+`stakeCents` alanı geriye uyumluluk için `betCents`'e eşittir. Adım/spin/hücre yapıları v1 ile aynıdır, yani v1 zaman çizelgesi aynı veriyle çalışır.
