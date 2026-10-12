@@ -39,7 +39,10 @@
     "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test",
     "tests": 234,
     "pass": 234,
-    "new": ["tests/storm-timeline.test.ts (10)", "tests/storm-controls.test.ts (6)"],
+    "new": [
+      "tests/storm-timeline.test.ts (10)",
+      "tests/storm-controls.test.ts (6)"
+    ],
     "covers": [
       "cumulative meter monotonic and ending on the engine total over 3000 seeds (standard/ante/buy) plus fixed seeds at every speed, reduced motion and skipped screens",
       "multiply events = engine appliedMultiplier per spin; orb strike order = final-grid orbs; running multiplier ends on orbSum (base) / totalMultiplierAfter (free)",
@@ -53,10 +56,20 @@
   "browserAgainstNextDev": {
     "baseUrl": "http://127.0.0.1:3000 (next dev)",
     "chromium": "/opt/pw-browsers/chromium-1194 via PW_CHROMIUM_PATH (Playwright 1.63 expects 1243, not installed here)",
-    "tarhun.spec.ts": { "tests": 17, "pass": 17, "duration": "6.9m" },
+    "tarhun.spec.ts": {
+      "tests": 17,
+      "pass": 17,
+      "duration": "6.9m"
+    },
     "regression": {
-      "cascade.spec.ts": { "tests": 23, "pass": 23 },
-      "product.spec.ts + solo-lifecycle.spec.ts + demo-entropy.spec.ts (temporary config with executablePath, deleted)": { "tests": 23, "pass": 23 }
+      "cascade.spec.ts": {
+        "tests": 23,
+        "pass": 23
+      },
+      "product.spec.ts + solo-lifecycle.spec.ts + demo-entropy.spec.ts (temporary config with executablePath, deleted)": {
+        "tests": 23,
+        "pass": 23
+      }
     },
     "covers": [
       "labelled 6x5 grid (30 <use> cells) + 7 info pages (bet-scaled paytable, RTP per mode, limits, fault rule) axe-clean wcag2a/aa/21aa/22aa",
@@ -70,10 +83,21 @@
   },
   "seeds": {
     "note": "crypto.getRandomValues stub fills all four words with the value; seedHex = word ×4",
-    "LOSS": 0, "TUMBLES": 2951033815, "ORB25": 61151303, "ORB100": 3892496642, "FIZZLE": 1381971571,
-    "TIER_BUYUK": 2426448758, "TIER_MEGA": 3916550943, "TIER_SUPER": 1863343164, "TIER_EFSANE": 3847534678,
-    "FREE": 3001001962, "FREE_RETRIGGER": 3733550018, "FREE_LOW": 1618517822,
-    "BUY_EFSANE (10 DEMO)": 85964127, "BUY_RETRIGGER_MEGA (10 DEMO)": 2911921316, "BUY_CAP (1 DEMO)": 1918632665
+    "LOSS": 0,
+    "TUMBLES": 2951033815,
+    "ORB25": 61151303,
+    "ORB100": 3892496642,
+    "FIZZLE": 1381971571,
+    "TIER_BUYUK": 2426448758,
+    "TIER_MEGA": 3916550943,
+    "TIER_SUPER": 1863343164,
+    "TIER_EFSANE": 3847534678,
+    "FREE": 3001001962,
+    "FREE_RETRIGGER": 3733550018,
+    "FREE_LOW": 1618517822,
+    "BUY_EFSANE (10 DEMO)": 85964127,
+    "BUY_RETRIGGER_MEGA (10 DEMO)": 2911921316,
+    "BUY_CAP (1 DEMO)": 1918632665
   },
   "performance": {
     "method": "rAF frame count + CDP tracing in headless Chromium 1194, software compositing, container CPU shared with next dev; numbers are relative, not a phone measurement",
@@ -97,5 +121,14 @@
     "Ayarlar → 'Efektleri azalt' reduces canvas particles (≈35%) and skips sparks; the scene weather (rain/sky flicker) has no density API and is unchanged",
     "Recorded voice files are not in public/audio/voice/storm yet; the engine falls back to its placeholders",
     "User visual and audio acceptance pending"
-  ]
+  ],
+  "productionPreview": {
+    "date": "2026-10-12",
+    "nextBuildId": "KIu2imxr7lBfpp7HlcA8E",
+    "command": "build:cloudflare + preview:cloudflare (:3001), Playwright via /opt/pw-browsers/chromium-1194 executablePath",
+    "result": "63/63 passed in one run (tarhun 17, cascade 23, product+solo-lifecycle+demo-entropy 23)",
+    "spec": "tarhun.spec.ts 17/17",
+    "unit": "web 234/234, protocol 206/206, typecheck clean",
+    "notVerified": "real phone fps, hosted deploy, owner visual/aural acceptance, recorded voice lines"
+  }
 }
