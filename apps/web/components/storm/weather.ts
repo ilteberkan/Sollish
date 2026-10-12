@@ -20,6 +20,9 @@ export interface StormWeatherOptions {
   reducedMotion?: boolean;
   /** Called with 0..1 whenever lightning lights the scene (sky flicker or strike). */
   onFlash?: (intensity: number) => void;
+  /** If given, full-screen white flashes are delegated to it (e.g. a compositor-only overlay
+      div) instead of being filled into the front canvas every frame. */
+  onScreenFlash?: (intensity: number, color: string) => void;
 }
 
 interface MoodCfg { rain: number; wind: number; speed: number; skyEvery: [number, number]; embers: number; gold: number; rainAlpha: number }
@@ -100,6 +103,7 @@ export class StormWeather {
   private readonly skyCtx: CanvasRenderingContext2D | null;
   private readonly frontCtx: CanvasRenderingContext2D | null;
   private readonly onFlash?: (intensity: number) => void;
+  private readonly onScreenFlash?: (intensity: number, color: string) => void;
   private mood: StormMood;
   private cfg: MoodCfg;
   private reduced: boolean;
@@ -133,6 +137,7 @@ export class StormWeather {
   private mq: MediaQueryList | null = null;
   private frames: number[] = [];
   private staticTimer = 0;
+  private frontShown = true;
 
   constructor(opts: StormWeatherOptions) {
     this.host = opts.host;
@@ -143,6 +148,7 @@ export class StormWeather {
     this.skyCtx = this.skyCanvas?.getContext('2d') ?? null;
     this.frontCtx = this.frontCanvas?.getContext('2d') ?? null;
     this.onFlash = opts.onFlash;
+    this.onScreenFlash = opts.onScreenFlash;
     this.mood = opts.mood ?? 'base';
     this.cfg = MOODS[this.mood];
     this.mq = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
@@ -155,6 +161,7 @@ export class StormWeather {
       this.observer.observe(this.host);
     }
     this.nextSky = rand(1, 3);
+    this.setFrontVisible(false);
     this.start();
   }
 
@@ -188,9 +195,10 @@ export class StormWeather {
   /** Brief full-screen flash (ignored under reduced motion). */
   flash(intensity = 0.5, color = '200,236,255') {
     if (this.reduced) return;
+    this.onFlash?.(Math.min(1, intensity * 1.6));
+    if (this.onScreenFlash) { this.onScreenFlash(Math.min(0.85, intensity), color); return; }
     this.flashA = Math.max(this.flashA, Math.min(0.85, intensity));
     this.flashColor = color;
-    this.onFlash?.(Math.min(1, intensity * 1.6));
     this.frontDirty = true;
   }
   /** Sheet lightning + optional distant bolt in the sky band. */
@@ -424,28 +432,56 @@ export class StormWeather {
     this.skyDirty = false;
     if (clear) ctx.clearRect(0, 0, this.w, this.h);
     ctx.globalCompositeOperation = 'lighter';
+    const sprite = this.glowSprite();
     for (const g of this.glows) {
       const age = this.time - g.born;
       let a = 0;
       for (const p of g.pulses) { const t = age - p; if (t >= 0) a = Math.max(a, Math.exp(-t * 14) * (t < 0.03 ? t / 0.03 : 1)); }
       a *= g.intensity;
-      if (a < 0.01) continue;
-      const grd = ctx.createRadialGradient(g.x, g.y, 0, g.x, g.y, g.r);
-      grd.addColorStop(0, `rgba(210,240,255,${(0.55 * a).toFixed(3)})`);
-      grd.addColorStop(0.35, `rgba(120,190,255,${(0.22 * a).toFixed(3)})`);
-      grd.addColorStop(1, 'rgba(60,120,220,0)');
-      ctx.fillStyle = grd;
-      ctx.fillRect(g.x - g.r, g.y - g.r, g.r * 2, g.r * 2);
+      if (a < 0.01 || !sprite) continue;
+      ctx.globalAlpha = Math.min(1, a);
+      ctx.drawImage(sprite, g.x - g.r, g.y - g.r * 0.7, g.r * 2, g.r * 1.4);
+      ctx.globalAlpha = 1;
     }
     for (const b of this.bolts) if (!b.front) this.renderBolt(ctx, b);
     ctx.globalCompositeOperation = 'source-over';
   }
 
+  /* the front canvas is hidden while idle: a transparent full-screen canvas still costs a full
+     blend per frame under software compositing */
+  private setFrontVisible(on: boolean) {
+    if (!this.frontCanvas || this.frontShown === on) return;
+    this.frontShown = on;
+    this.frontCanvas.style.visibility = on ? 'visible' : 'hidden';
+  }
+  /* sheet-lightning glow: one small pre-rendered radial sprite, scaled up (much cheaper than a
+     full-size gradient fill in software raster) */
+  private glow: HTMLCanvasElement | null = null;
+  private glowSprite() {
+    if (this.glow) return this.glow;
+    const c = document.createElement('canvas');
+    c.width = c.height = 128;
+    const g = c.getContext('2d');
+    if (!g) return null;
+    const grd = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    grd.addColorStop(0, 'rgba(210,240,255,0.55)');
+    grd.addColorStop(0.35, 'rgba(120,190,255,0.22)');
+    grd.addColorStop(1, 'rgba(60,120,220,0)');
+    g.fillStyle = grd;
+    g.fillRect(0, 0, 128, 128);
+    this.glow = c;
+    return c;
+  }
   private drawFront() {
     const ctx = this.frontCtx ?? this.rainCtx;
     if (!ctx) return;
     this.frontDirty = false;
-    if (ctx !== this.rainCtx) ctx.clearRect(0, 0, this.w, this.h);
+    const active = this.flashA > 0.005 || this.sparks.length > 0 || this.bolts.some((b) => b.front);
+    if (ctx !== this.rainCtx) {
+      ctx.clearRect(0, 0, this.w, this.h);
+      this.setFrontVisible(active);
+      if (!active) return;
+    }
     if (this.flashA > 0.005) {
       ctx.fillStyle = `rgba(${this.flashColor},${(this.flashA * 0.55).toFixed(3)})`;
       ctx.fillRect(0, 0, this.w, this.h);
@@ -480,9 +516,8 @@ export class StormWeather {
       strokePoly(ctx, b.main);
       if (branches) { ctx.lineWidth = lw * w * 0.55; for (const br of b.branches) strokePoly(ctx, br); }
     };
-    pass(26, '60,150,255', 0.08, false);
-    pass(12, '90,200,255', 0.22, true);
-    pass(5, '170,235,255', 0.6, true);
+    pass(13, '70,170,255', 0.2, false);
+    pass(5.5, '150,225,255', 0.55, true);
     pass(2, '255,255,255', 1, true);
     if (b.front) {
       const r = 70 * w * (0.6 + k);
@@ -536,11 +571,14 @@ export class StormWeather {
     if (!ctx) return;
     const b = makeBolt(from, to, k, 0, true);
     b.born = this.time; b.life = 1;
-    if (ctx !== this.rainCtx) ctx.clearRect(0, 0, this.w, this.h);
+    if (ctx !== this.rainCtx) { ctx.clearRect(0, 0, this.w, this.h); this.setFrontVisible(true); }
     ctx.globalCompositeOperation = 'lighter';
     this.renderBolt(ctx, b);
     ctx.globalCompositeOperation = 'source-over';
     window.clearTimeout(this.staticTimer);
-    this.staticTimer = window.setTimeout(() => (ctx === this.rainCtx ? this.drawStatic() : ctx.clearRect(0, 0, this.w, this.h)), 320);
+    this.staticTimer = window.setTimeout(() => {
+      if (ctx === this.rainCtx) this.drawStatic();
+      else { ctx.clearRect(0, 0, this.w, this.h); this.setFrontVisible(false); }
+    }, 320);
   }
 }

@@ -6,7 +6,7 @@ import styles from './scene.module.css';
 import { StormWeather, type FxPoint, type StormMood } from './weather';
 
 /* "Fırtına Tahtı" backdrop: a Hattuşa-inspired citadel at stormy dusk. Layers (back → front):
-   sky gradient · far clouds · mid clouds · mountains · citadel + sacred bulls · low scud ·
+   sky gradient · far clouds · mid clouds · mountains · citadel + sacred bulls ·
    Lion Gate (cyclopean masonry, parabolic arch, two carved lion protomes, braziers, wet paving) ·
    lightning light overlay · mood overlays · vignette · weather canvas (rain, embers, sheet
    lightning) · children · front-FX canvas (hurled bolts, sparks, flash). Only two canvases: in
@@ -69,7 +69,6 @@ function cloudPuffs(seed: number, banks: Array<{ y: number; n: number; r: [numbe
 const CLOUDS = {
   far: cloudPuffs(7, [{ y: 70, n: 9, r: [110, 170], spread: 50 }, { y: 190, n: 11, r: [70, 120], spread: 50 }]),
   mid: cloudPuffs(19, [{ y: 170, n: 8, r: [80, 140], spread: 70 }, { y: 270, n: 10, r: [50, 90], spread: 40 }]),
-  low: cloudPuffs(41, [{ y: 290, n: 7, r: [40, 80], spread: 50 }]),
 };
 
 /* ridge lines */
@@ -215,11 +214,10 @@ function Stones({ list }: { list: Stone[] }) {
 /* Cloud strips are baked ONCE into bitmaps (SVG string → canvas → PNG blob) and drift as a
    repeating background. Drawing the filtered SVG directly made every newly exposed tile of the
    moving layer re-run feTurbulence/feDisplacementMap (~50 ms per tile in software raster). */
-type CloudTone = 'far' | 'mid' | 'low';
+type CloudTone = 'far' | 'mid';
 const CLOUD_PAL: Record<CloudTone, { top: string; mid: string; bot: string; hi: string; hiA: number; under: string; underA: number }> = {
   far: { top: '#557d94', mid: '#2a4458', bot: '#16263a', hi: '#a6d4e6', hiA: 0.3, under: '#d89a5c', underA: 0.22 },
   mid: { top: '#40637a', mid: '#1e344a', bot: '#0e1a2a', hi: '#8cc2d8', hiA: 0.34, under: '#e0a060', underA: 0.3 },
-  low: { top: '#2a4558', mid: '#142536', bot: '#08111c', hi: '#6fa6bc', hiA: 0.34, under: '#e8a864', underA: 0.34 },
 };
 function cloudSvg(tone: CloudTone, w: number, h: number) {
   const P = CLOUD_PAL[tone];
@@ -236,7 +234,7 @@ function cloudSvg(tone: CloudTone, w: number, h: number) {
     + `<radialGradient id="u" cx="0.5" cy="0.2" r="0.6">${st(0, P.under, P.underA)}${st(1, P.under, 0)}</radialGradient>`
     + `<radialGradient id="v" cx="0.42" cy="0.3" r="0.7">${st(0, P.hi, P.hiA * 1.6)}${st(0.45, P.hi, P.hiA * 0.5)}${st(1, P.hi, 0)}</radialGradient>`
     + `<filter id="f" x="-5%" y="-20%" width="110%" height="140%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.011 0.026" numOctaves="3" seed="${seed}" stitchTiles="stitch" result="n"/>`
-    + `<feDisplacementMap in="SourceGraphic" in2="n" scale="${tone === 'low' ? 26 : 30}" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="${tone === 'far' ? 4 : 2.6}"/></filter>`
+    + `<feDisplacementMap in="SourceGraphic" in2="n" scale="30" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="${tone === 'far' ? 4 : 2.6}"/></filter>`
     + `</defs><g filter="url(#f)">${body}</g></svg>`;
 }
 async function bakeCloud(tone: CloudTone, cssH: number): Promise<string | null> {
@@ -348,8 +346,9 @@ export function StormScene({ mood = 'base', children, className, style, parallax
   const rainRef = useRef<HTMLCanvasElement>(null);
   const frontRef = useRef<HTMLCanvasElement>(null);
   const litRef = useRef<HTMLDivElement>(null);
+  const flashRef = useRef<HTMLDivElement>(null);
   const flameRefs = useRef<Array<HTMLDivElement | null>>([]);
-  const trackRefs = useRef<Record<CloudTone, HTMLDivElement | null>>({ far: null, mid: null, low: null });
+  const trackRefs = useRef<Record<CloudTone, HTMLDivElement | null>>({ far: null, mid: null });
   const weatherRef = useRef<StormWeather | null>(null);
   const moodRef = useRef(mood);
 
@@ -360,6 +359,12 @@ export function StormScene({ mood = 'base', children, className, style, parallax
     const w = new StormWeather({
       host, rain, front: frontRef.current, mood: moodRef.current,
       onFlash: (i) => { lit?.animate([{ opacity: Math.min(1, i) }, { opacity: 0 }], { duration: 520 + i * 300, easing: 'cubic-bezier(.2,.7,.3,1)' }); },
+      onScreenFlash: (i, color) => {
+        const el = flashRef.current;
+        if (!el) return;
+        el.style.background = `rgb(${color})`;
+        el.animate([{ opacity: i * 0.5 }, { opacity: 0 }], { duration: 300, easing: 'ease-out' });
+      },
     });
     weatherRef.current = w;
     const place = () => {
@@ -441,6 +446,7 @@ export function StormScene({ mood = 'base', children, className, style, parallax
         <div className={`${styles.band} ${styles.bandFar}`}><div ref={(el) => { trackRefs.current.far = el; }} className={styles.track} /></div>
         <div className={`${styles.band} ${styles.bandMid}`}><div ref={(el) => { trackRefs.current.mid = el; }} className={styles.track} /></div>
 
+        <div className={styles.moodDark} />
         {/* mountains */}
         <div className={`${styles.layer} ${styles.pMount}`}>
           <svg className={styles.full} viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" focusable="false">
@@ -507,7 +513,6 @@ export function StormScene({ mood = 'base', children, className, style, parallax
             </g>
           </svg>
         </div>
-        <div className={`${styles.band} ${styles.bandLow}`}><div ref={(el) => { trackRefs.current.low = el; }} className={styles.track} /></div>
 
         {/* Lion Gate */}
         <div className={`${styles.gateWrap} ${styles.pGate}`}>
@@ -524,6 +529,7 @@ export function StormScene({ mood = 'base', children, className, style, parallax
                 <linearGradient id={k('stoneDk')} x1="0" y1="0" x2="1" y2="1">{stops([[0, '#6a5e50'], [1, '#2e2722']])}</linearGradient>
                 <linearGradient id={k('bronzeS')} x1="0" y1="0" x2="1" y2="0">{stops([[0, '#3a1d06'], [0.35, '#b97a34'], [0.5, '#ffe0a0'], [0.65, '#c4863c'], [1, '#3a1d06']])}</linearGradient>
                 <radialGradient id={k('faceVol')} cx="0.32" cy="0.28" r="0.85">{stops([[0, '#fff2d8', 0.28], [0.45, '#fff2d8', 0], [0.75, '#000', 0.12], [1, '#000', 0.38]])}</radialGradient>
+                <radialGradient id={k('vig')} cx="800" cy="420" r="980" gradientUnits="userSpaceOnUse" gradientTransform="translate(800 420) scale(1 0.72) translate(-800 -420)">{stops([[0.5, '#02050a', 0], [0.8, '#02050a', 0.4], [1, '#02050a', 0.72]])}</radialGradient>
                 <radialGradient id={k('warm')}>{stops([[0, '#ff8a3a', 0.42], [0.5, '#ff8a3a', 0.12], [1, '#ff8a3a', 0]])}</radialGradient>
                 <radialGradient id={k('eyeHalo')}>{stops([[0, '#bff6ff', 0.9], [1, '#2fb6ff', 0]])}</radialGradient>
                 <radialGradient id={k('fireGlow')}>{stops([[0, '#ffb35a', 0.6], [0.4, '#ff7a2a', 0.2], [1, '#ff7a2a', 0]])}</radialGradient>
@@ -583,6 +589,9 @@ export function StormScene({ mood = 'base', children, className, style, parallax
               <rect x="210" y="800" width="230" height="60" fill="#5b5046" opacity=".12" />
               <rect x="1160" y="800" width="230" height="60" fill="#5b5046" opacity=".12" />
               {BRAZIERS.map(([x, y], i) => <Brazier key={i} x={x} y={y} k={k} />)}
+              {/* vignette baked into this static layer (a separate full-screen overlay costs a
+                  whole extra blend per frame under software compositing) */}
+              <rect x="-200" y="-200" width="2000" height="1300" fill={url('vig')} />
             </svg>
             {BRAZIERS.map(([x, y], i) => (
               <div key={i} ref={(el) => { flameRefs.current[i] = el; }} className={styles.flame} style={{ left: `${(x / 1600) * 100}%`, top: `${(y / 900) * 100}%` }}>
@@ -597,13 +606,12 @@ export function StormScene({ mood = 'base', children, className, style, parallax
         </div>
 
         <div ref={litRef} className={styles.lit} />
-        <div className={styles.moodDark} />
         <div className={styles.rays}><div className={styles.raysInner} /></div>
-        <div className={styles.vignette} />
         <canvas ref={rainRef} className={styles.canvas} />
       </div>
       <div className={styles.content}>{children}</div>
       <canvas ref={frontRef} className={`${styles.canvas} ${styles.front}`} aria-hidden="true" />
+      <div ref={flashRef} className={styles.flash} aria-hidden="true" />
     </div>
   );
 }

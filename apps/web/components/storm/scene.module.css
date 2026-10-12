@@ -40,6 +40,14 @@
   display: block;
 }
 .front { z-index: 3; }
+.flash {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+}
 .content {
   position: relative;
   z-index: 2;
@@ -62,7 +70,6 @@
 }
 .bandFar { top: -2%; height: 44%; opacity: 0.95; translate: calc(var(--px) * -3px) 0; }
 .bandMid { top: 6%; height: 40%; opacity: 0.92; translate: calc(var(--px) * -8px) 0; }
-.bandLow { top: 28%; height: 30%; opacity: 0.55; translate: calc(var(--px) * -16px) 0; }
 .track {
   height: 100%;
   aspect-ratio: 12 / 1;
@@ -76,7 +83,6 @@
 .track[data-ready] { opacity: 1; }
 .bandFar .track { --dur: 240s; }
 .bandMid .track { --dur: 150s; }
-.bandLow .track { --dur: 80s; }
 @keyframes drift { to { transform: translate3d(-33.3333%, 0, 0); } }
 
 /* ---------- gate ---------- */
@@ -175,8 +181,8 @@
   opacity: 0;
   transition: opacity 1.2s ease;
   background:
-    linear-gradient(rgba(2, 8, 18, 0.62), rgba(4, 14, 24, 0.2) 55%, rgba(30, 16, 6, 0.1)),
-    radial-gradient(ellipse 70% 40% at 50% 100%, rgba(255, 150, 70, 0.22), transparent 70%);
+    linear-gradient(rgba(2, 8, 18, 0.66), rgba(4, 14, 24, 0.35) 45%, rgba(30, 16, 6, 0.1)),
+    radial-gradient(ellipse 70% 30% at 50% 62%, rgba(255, 150, 70, 0.24), transparent 70%);
 }
 .root[data-mood='feature'] .moodDark { opacity: 1; }
 .rays {
@@ -188,19 +194,18 @@
   background: radial-gradient(ellipse 60% 50% at 50% 12%, rgba(255, 196, 110, 0.4), transparent 70%);
 }
 .raysInner {
+  /* static rays that breathe in opacity: a rotating, masked full-screen layer is very expensive
+     under software compositing */
   position: absolute;
-  left: 50%;
-  top: 12%;
-  width: 260vmax;
-  height: 260vmax;
-  margin: -130vmax 0 0 -130vmax;
-  background: repeating-conic-gradient(from 0deg, rgba(255, 200, 120, 0.16) 0deg 5deg, transparent 5deg 18deg);
-  -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 46%);
-  mask-image: radial-gradient(circle, #000 0%, transparent 46%);
-  animation: spin 60s linear infinite;
+  inset: 0;
+  background: repeating-conic-gradient(from -4deg at 50% 12%, rgba(255, 200, 120, 0.16) 0deg 5deg, transparent 5deg 18deg);
+  -webkit-mask-image: radial-gradient(ellipse 75% 85% at 50% 12%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 75% 85% at 50% 12%, #000 0%, transparent 75%);
+  will-change: opacity;
+  animation: raysPulse 2.6s ease-in-out infinite alternate;
 }
+@keyframes raysPulse { from { opacity: 0.45; } to { opacity: 1; } }
 .root[data-mood='bigwin'] .rays { opacity: 1; }
-@keyframes spin { to { transform: rotate(360deg); } }
 .vignette {
   position: absolute;
   inset: 0;
@@ -220,14 +225,14 @@
     animation: none;
   }
   .ripple { display: none; }
-  .pMount, .pCit, .pGate, .bandFar, .bandMid, .bandLow { translate: none; }
+  .pMount, .pCit, .pGate, .bandFar, .bandMid { translate: none; }
 }
 
 /* ---------- dev gallery layout (lab only) ---------- */
 .labStage {
   position: absolute;
   inset: 0;
-  --bw: min(54vw, calc((100vh - 170px) * 1.2));
+  --bw: min(54vw, calc((100vh - 130px) / 0.87));
 }
 .labHero {
   position: absolute;
@@ -242,28 +247,28 @@
   left: var(--gate-x);
   top: 54%;
   width: var(--bw);
-  aspect-ratio: 6 / 5;
   transform: translate(-50%, -50%);
+  z-index: 2;
+}
+.labGrid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: repeat(5, 1fr);
-  gap: 1%;
-  padding: 1.6%;
-  border-radius: 18px;
-  background: linear-gradient(180deg, rgba(10, 24, 36, 0.86), rgba(6, 14, 22, 0.92));
-  box-shadow: 0 0 0 3px #6b4517, 0 0 0 6px #d9a456, 0 0 0 8px #3a2208, 0 30px 60px -10px rgba(0, 0, 0, 0.8), 0 0 70px rgba(127, 232, 255, 0.12);
-  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: 1.2%;
+  gap: 0.8%;
 }
 .labCell {
   display: grid;
   place-items: center;
+  min-width: 0;
+  min-height: 0;
   border-radius: 12%;
-  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015) 70%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
   transition: background 0.2s ease;
   cursor: pointer;
 }
-.labCell span { width: 46%; aspect-ratio: 1; border-radius: 30%; opacity: 0.75; box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.4), inset 0 3px 4px rgba(255, 255, 255, 0.35); }
+.labCell > svg { width: 88%; height: 88%; }
 .labCell[data-hit] { background: radial-gradient(circle, rgba(200, 245, 255, 0.85), rgba(80, 180, 255, 0.2) 70%); }
 @media (max-aspect-ratio: 4 / 5) {
   .labStage { --bw: calc(100vw - 20px); }
@@ -275,5 +280,5 @@
     aspect-ratio: 340 / 410;
     transform: translateX(-50%);
   }
-  .labBoard { top: calc(46px + 27vh + var(--bw) * 5 / 12 + 6px); }
+  .labBoard { top: calc(46px + 27vh + var(--bw) * 0.435 + 4px); }
 }

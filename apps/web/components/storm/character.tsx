@@ -20,8 +20,9 @@ export interface StormCharacterHandle {
   getBoltPoint(): StormPoint | null;
   /** Switch pose imperatively (the `pose` prop wins again when it changes). */
   setPose(pose: StormPose): void;
-  /** Wind up and hurl toward `target` (client px). Resolves at the release frame with the bolt-tip
-      position, so the caller can draw the canvas bolt from there to a board cell. */
+  /** Wind up and hurl toward `target` (client px). Resolves at the release frame with the release
+      point (on the held bolt, ~16% from grip to tip — always inside the visible crop), so the caller
+      can draw the canvas bolt from there to a board cell. */
   strike(target: StormPoint): Promise<StormPoint | null>;
 }
 
@@ -52,7 +53,7 @@ const PIV = {
 } as const;
 const origin = (p: readonly [number, number]): CSSProperties => ({ transformOrigin: `${p[0]}px ${p[1]}px` });
 
-const VIEW = { full: '-60 -74 540 834', bust: '52 -44 316 380' } as const;
+const VIEW = { full: '-60 -74 540 834', bust: '40 -96 340 450' } as const;
 
 type Stop = readonly [number, string, number?];
 const stops = (s: readonly Stop[]) => s.map(([o, c, a], i) => <stop key={i} offset={o} stopColor={c} stopOpacity={a ?? 1} />);
@@ -173,6 +174,7 @@ export function StormCharacter({ pose = 'idle', target, framing = 'full', classN
   const [aim, setAim] = useState(-100);
   const [auto, setAuto] = useState<'full' | 'bust'>('full');
   const tipRef = useRef<SVGCircleElement>(null);
+  const releaseRef = useRef<SVGCircleElement>(null);
   const shoulderRef = useRef<SVGCircleElement>(null);
   const timers = useRef<number[]>([]);
   const poseRef = useRef(pose);
@@ -214,7 +216,7 @@ export function StormCharacter({ pose = 'idle', target, framing = 'full', classN
       const release = () => {
         setCurrent('strike');
         timers.current.push(window.setTimeout(() => {
-          resolve(center(tipRef.current));
+          resolve(center(releaseRef.current));
           if (strikeHoldMs > 0) timers.current.push(window.setTimeout(() => setCurrent(poseRef.current), strikeHoldMs));
         }, reduce ? 0 : 150));
       };
@@ -611,6 +613,7 @@ export function StormCharacter({ pose = 'idle', target, framing = 'full', classN
                         </g>
                       </g>
                       <circle ref={tipRef} cx={BOLT_TIP[0]} cy={r1(412 - (412 - BOLT_TIP[1]) * 1.28)} r="1" fill="none" />
+                      <circle ref={releaseRef} cx={BOLT_TIP[0]} cy={r1(412 - (412 - BOLT_TIP[1]) * 1.28 * 0.16)} r="1" fill="none" />
                       <rect x="282" y="404" width="18" height="44" rx="6" fill={url('bronzeH')} stroke={INK} strokeWidth="2.2" />
                       <path d="M283 414H299M283 426H299M283 438H299" stroke="#4a2709" strokeWidth="1.4" />
                     </g>

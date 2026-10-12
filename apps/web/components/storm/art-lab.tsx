@@ -3,6 +3,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { StormCharacter, type StormCharacterHandle, type StormPose } from './character';
 import { StormScene, type StormMood, type StormSceneHandle } from './scene';
+import { StormFrame } from './frame';
+import { StormSymbolSprites, StormSymbolUse, type StormSymbol } from './symbols';
 import styles from './scene.module.css';
 
 /* Dev-only gallery for the Fırtına Tahtı art (rendered by app/lab/storm-art, notFound in prod). */
@@ -10,7 +12,13 @@ import styles from './scene.module.css';
 const POSES: StormPose[] = ['idle', 'charge', 'strike', 'laugh', 'triumph', 'calm'];
 const POSE_TR: Record<StormPose, string> = { idle: 'Bekleme', charge: 'Yükleme', strike: 'Vuruş', laugh: 'Kahkaha', triumph: 'Zafer', calm: 'Sakin' };
 const MOODS: Array<[StormMood, string]> = [['base', 'Temel'], ['feature', 'Özellik'], ['bigwin', 'Büyük kazanç']];
-const GLYPHS = ['#e9b35d', '#4fb7c9', '#c0563a', '#8fa86a', '#b48ad8', '#e2d6b8'];
+const BOARD: Array<[StormSymbol, number?]> = [
+  ['h1'], ['l3'], ['l1'], ['h3'], ['l5'], ['l2'],
+  ['l4'], ['h2'], ['orb', 25], ['l1'], ['scatter'], ['h4'],
+  ['l2'], ['l5'], ['h1'], ['l3'], ['l4'], ['orb', 5],
+  ['h3'], ['scatter'], ['l1'], ['h2'], ['l2'], ['l5'],
+  ['orb', 100], ['l4'], ['h4'], ['l3'], ['h1'], ['l1'],
+];
 
 const bar: React.CSSProperties = { position: 'absolute', zIndex: 5, left: 8, right: 8, top: 8, display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center', font: '600 12px/1 var(--font-barlow), system-ui, sans-serif', color: '#e8eef2', pointerEvents: 'auto' };
 const btn = (on: boolean): React.CSSProperties => ({ padding: '7px 10px', borderRadius: 8, border: `1px solid ${on ? '#e9b35d' : '#3a5163'}`, background: on ? 'rgba(233,179,93,.22)' : 'rgba(10,20,30,.72)', color: '#eef3f6', cursor: 'pointer', font: 'inherit' });
@@ -86,6 +94,7 @@ export function StormArtLab() {
 
   return (
     <main style={{ position: 'fixed', inset: 0, zIndex: 60 }}>
+      <StormSymbolSprites />
       <StormScene ref={scene} mood={mood}>
         <div style={bar}>
           <button type="button" style={btn(false)} onClick={() => setTab('poses')} data-testid="tab-poses">Pozlar</button>
@@ -101,11 +110,15 @@ export function StormArtLab() {
             <StormCharacter ref={hero} pose={pose} framing="auto" />
           </div>
           <div className={styles.labBoard} data-testid="board">
-            {Array.from({ length: 30 }, (_, i) => (
-              <div key={i} ref={(el) => { cells.current[i] = el; }} className={styles.labCell} data-hit={hit === i || undefined} onClick={() => void strike(i)}>
-                <span style={{ background: GLYPHS[(i * 7 + (i >> 2)) % GLYPHS.length] }} />
+            <StormFrame mood={mood === 'base' ? 'base' : 'feature'}>
+              <div className={styles.labGrid}>
+                {BOARD.map(([sym, m], i) => (
+                  <div key={i} ref={(el) => { cells.current[i] = el; }} className={styles.labCell} data-hit={hit === i || undefined} onClick={() => void strike(i)}>
+                    <StormSymbolUse symbol={sym} multiplier={m} />
+                  </div>
+                ))}
               </div>
-            ))}
+            </StormFrame>
           </div>
         </div>
       </StormScene>

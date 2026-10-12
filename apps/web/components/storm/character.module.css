@@ -126,7 +126,7 @@
 .root[data-pose='charge'] .bolt { transform: rotate(175deg); }
 .root[data-pose='charge'] .torso { transform: rotate(-3deg); }
 .root[data-pose='charge'] .head { transform: rotate(3deg); }
-.root[data-pose='charge'] .eyeGlow { opacity: 1; animation: eyeFlare 0.5s ease-in-out infinite alternate; }
+.root[data-pose='charge'] .eyeGlow { opacity: 1; animation: eyeFlare 0.5s steps(3) infinite alternate; }
 .root[data-pose='charge'] .boltHalo { opacity: 1; transform: scale(1.35); animation: haloFlick 0.24s steps(2, jump-none) infinite; }
 .root[data-pose='charge'] .sparks,
 .root[data-pose='charge'] .eyeFlare { opacity: 1; }
@@ -146,6 +146,12 @@
 .root[data-pose='strike'] .eyeFlare { opacity: 1; }
 .root[data-pose='strike'] .heldBolt { animation: hurl 0.7s ease-out both; }
 
+/* phone bust: the arm would leave the crop, so the bolt is hurled from overhead */
+.root[data-framing='bust'][data-pose='strike'] .armB { transform: rotate(-150deg); }
+.root[data-framing='bust'][data-pose='strike'] .foreB { transform: rotate(-22deg); }
+.root[data-framing='bust'][data-pose='strike'] .bolt { transform: rotate(172deg); }
+.root[data-framing='bust'][data-pose='strike'] .torso { transform: rotate(3deg); }
+
 /* ---------- laugh: hand on belt, head back, shoulders bounce ---------- */
 .root[data-pose='laugh'] .armA { transform: rotate(10deg); }
 .root[data-pose='laugh'] .foreA { transform: rotate(-30deg); }
@@ -154,9 +160,9 @@
 .root[data-pose='laugh'] .foreB { transform: rotate(58deg); }
 .root[data-pose='laugh'] .bolt { transform: rotate(140deg); }
 .root[data-pose='laugh'] .head { transform: rotate(-7deg); }
-.root[data-pose='laugh'] .bounce { animation: laughBounce 0.24s ease-in-out infinite alternate; }
-.root[data-pose='laugh'] .headAnim { animation: laughHead 0.24s ease-in-out infinite alternate; }
-.root[data-pose='laugh'] .beard { animation: laughBeard 0.24s ease-in-out infinite alternate; }
+.root[data-pose='laugh'] .bounce { animation: laughBounce 0.24s steps(4) infinite alternate; }
+.root[data-pose='laugh'] .headAnim { animation: laughHead 0.24s steps(4) infinite alternate; }
+.root[data-pose='laugh'] .beard { animation: laughBeard 0.24s steps(4) infinite alternate; }
 .root[data-pose='laugh'] .svg { animation: none; }
 .root[data-pose='laugh'] .eyeGlow { opacity: 0.2; animation: none; }
 .root[data-pose='laugh'] .mouthOpen,
@@ -172,8 +178,8 @@
 .root[data-pose='triumph'] .foreB { transform: rotate(14deg); }
 .root[data-pose='triumph'] .bolt { transform: rotate(154deg); }
 .root[data-pose='triumph'] .head { transform: rotate(-2deg); }
-.root[data-pose='triumph'] .bounce { animation: triumphPump 0.9s ease-in-out infinite alternate; }
-.root[data-pose='triumph'] .eyeGlow { opacity: 0.9; animation: eyeFlare 0.8s ease-in-out infinite alternate; }
+.root[data-pose='triumph'] .bounce { animation: triumphPump 0.9s steps(9) infinite alternate; }
+.root[data-pose='triumph'] .eyeGlow { opacity: 0.9; animation: eyeFlare 0.8s steps(3) infinite alternate; }
 .root[data-pose='triumph'] .boltHalo { opacity: 1; transform: scale(1.2); animation: haloFlick 0.3s steps(2, jump-none) infinite; }
 .root[data-pose='triumph'] .sparks,
 .root[data-pose='triumph'] .eyeFlare { opacity: 1; }
