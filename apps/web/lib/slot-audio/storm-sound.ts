@@ -175,7 +175,7 @@ export function createStormSound(options: { sampleRate?: number; workerFactory?:
   let bed: VoiceHandle | null = null, bedPlaying: StormScoreId | null = null;
   const voiceLines = new Map<StormVoiceLine, AudioBuffer | null>();
   let voiceDecoder: BaseAudioContext | null = null;
-  let speaking: { line: StormVoiceLine; until: number } | null = null, speakingHandle: VoiceHandle | null = null;
+  let speaking: { line: StormVoiceLine; from: number; until: number } | null = null, speakingHandle: VoiceHandle | null = null;
   let lastNiceAt = -Infinity, lastFeatureEndAt = -Infinity, lastTriggerAt = -Infinity;
   let counting = false, countTimer: ReturnType<typeof setInterval> | null = null, countNext = 0, countStart = 0;
   const progressListeners = new Set<(p: LoadProgress) => void>();
@@ -257,7 +257,7 @@ export function createStormSound(options: { sampleRate?: number; workerFactory?:
     if (buffer) {
       speakingHandle = engine.playBuffer('sfx', buffer, { when: at });
       engine.duckMusicBus(VOICE_DUCK_DB, buffer.duration, at - 0.04);
-      speaking = { line, until: at + buffer.duration };
+      speaking = { line, from: at, until: at + buffer.duration };
       return 'line';
     }
     last.delete(placeholder!);
@@ -265,7 +265,7 @@ export function createStormSound(options: { sampleRate?: number; workerFactory?:
     if (!s || s === 'silent') return null;
     speakingHandle = s.handle;
     engine.duckMusicBus(4, s.duration * 0.8, at - 0.03);
-    speaking = { line, until: at + s.duration };
+    speaking = { line, from: at, until: at + s.duration };
     return 'placeholder';
   };
 
@@ -443,7 +443,7 @@ export function createStormSound(options: { sampleRate?: number; workerFactory?:
     status: () => ({
       core: coreReady, extended: extendedReady, rendered: [...music.keys(), ...sfx.keys()], renderMs: { ...renderMs }, workers: service?.parallelism ?? 0, workerJobs: service?.workerJobs ?? 0, workerFailure: service?.failure ?? null,
       celebration: { tier, max: maxWinActive, counting, bed: bedPlaying },
-      voice: { speaking: speaking && speaking.until > ctxNow() ? speaking.line : null, loaded: [...voiceLines.values()].filter(Boolean).length },
+      voice: { speaking: speaking && speaking.from <= ctxNow() && speaking.until > ctxNow() ? speaking.line : null, loaded: [...voiceLines.values()].filter(Boolean).length },
     }),
 
     resume: async () => {
