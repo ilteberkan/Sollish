@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useId, useImperativeHandle, useRef } from 'react';
+import { useEffect, useId, useImperativeHandle, useMemo, useRef } from 'react';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 import styles from './scene.module.css';
 import { StormWeather, type FxPoint, type StormMood } from './weather';
@@ -429,186 +429,193 @@ export function StormScene({ mood = 'base', children, className, style, parallax
     get weather() { return weatherRef.current; },
   }), []);
 
-  return (
-    <div ref={rootRef} className={`${styles.root} ${className ?? ''}`} data-mood={mood} style={style}>
-      <div className={styles.back} aria-hidden="true">
-        {/* sky */}
-        <svg className={styles.full} viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" focusable="false">
-          <defs>
-            <linearGradient id={k('sky')} x1="0" y1="0" x2="0" y2="900" gradientUnits="userSpaceOnUse">{stops([[0, '#081428'], [0.18, '#10263e'], [0.34, '#1a4660'], [0.45, '#2f6676'], [0.505, '#748270'], [0.55, '#dc9554'], [0.6, '#8c5634'], [1, '#26180f']])}</linearGradient>
-            <radialGradient id={k('sun')} cx="1060" cy="500" r="560" gradientUnits="userSpaceOnUse">{stops([[0, '#ffb466', 0.62], [0.3, '#d97a3c', 0.24], [1, '#d97a3c', 0]])}</radialGradient>
-            <radialGradient id={k('storm')} cx="360" cy="140" r="620" gradientUnits="userSpaceOnUse">{stops([[0, '#2f8fb0', 0.22], [1, '#2f8fb0', 0]])}</radialGradient>
-          </defs>
-          <rect width="1600" height="900" fill={url('sky')} />
-          <rect width="1600" height="900" fill={url('sun')} />
-          <rect width="1600" height="900" fill={url('storm')} />
-        </svg>
-        <div className={`${styles.band} ${styles.bandFar}`}><div ref={(el) => { trackRefs.current.far = el; }} className={styles.track} /></div>
-        <div className={`${styles.band} ${styles.bandMid}`}><div ref={(el) => { trackRefs.current.mid = el; }} className={styles.track} /></div>
-
-        <div className={styles.moodDark} />
-        {/* mountains */}
-        <div className={`${styles.layer} ${styles.pMount}`}>
+  /* The static backdrop never depends on props (mood lives on the root attribute), so it is built once:
+     a parent that re-renders the scene with new children (a game screen) does not re-reconcile ~400 SVG nodes. */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const back = useMemo(() => (
+        <div className={styles.back} aria-hidden="true">
+          {/* sky */}
           <svg className={styles.full} viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" focusable="false">
             <defs>
-              <linearGradient id={k('far')} x1="0" y1="360" x2="0" y2="620" gradientUnits="userSpaceOnUse">{stops([[0, '#2c5164'], [1, '#162a38']])}</linearGradient>
-              <linearGradient id={k('haze')} x1="0" y1="420" x2="0" y2="700" gradientUnits="userSpaceOnUse">{stops([[0, '#c88650', 0], [0.55, '#c88650', 0.16], [1, '#3a3a40', 0.3]])}</linearGradient>
-              <linearGradient id={k('mid')} x1="0" y1="420" x2="0" y2="800" gradientUnits="userSpaceOnUse">{stops([[0, '#1a3448'], [1, '#0a141e']])}</linearGradient>
+              <linearGradient id={k('sky')} x1="0" y1="0" x2="0" y2="900" gradientUnits="userSpaceOnUse">{stops([[0, '#081428'], [0.18, '#10263e'], [0.34, '#1a4660'], [0.45, '#2f6676'], [0.505, '#748270'], [0.55, '#dc9554'], [0.6, '#8c5634'], [1, '#26180f']])}</linearGradient>
+              <radialGradient id={k('sun')} cx="1060" cy="500" r="560" gradientUnits="userSpaceOnUse">{stops([[0, '#ffb466', 0.62], [0.3, '#d97a3c', 0.24], [1, '#d97a3c', 0]])}</radialGradient>
+              <radialGradient id={k('storm')} cx="360" cy="140" r="620" gradientUnits="userSpaceOnUse">{stops([[0, '#2f8fb0', 0.22], [1, '#2f8fb0', 0]])}</radialGradient>
             </defs>
-            <path d={ridgeFill(FAR_RIDGE)} fill={url('far')} />
-            <path d={ridgeLine(FAR_RIDGE)} fill="none" stroke="#e7a464" strokeWidth="2" opacity=".42" />
-            <rect y="400" width="1600" height="500" fill={url('haze')} />
-            <path d={ridgeFill(MID_RIDGE)} fill={url('mid')} />
-            <path d={ridgeLine(MID_RIDGE)} fill="none" stroke="#7fc4d8" strokeWidth="1.6" opacity=".22" />
+            <rect width="1600" height="900" fill={url('sky')} />
+            <rect width="1600" height="900" fill={url('sun')} />
+            <rect width="1600" height="900" fill={url('storm')} />
           </svg>
-        </div>
-
-        {/* citadel + sacred bulls */}
-        <div className={`${styles.layer} ${styles.pCit}`}>
-          <svg className={styles.full} viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" focusable="false">
-            <defs>
-              <radialGradient id={k('torch')}>{stops([[0, '#ffd08a', 0.9], [0.3, '#ff9a3c', 0.4], [1, '#ff9a3c', 0]])}</radialGradient>
-            </defs>
-            {[CIT_L, CIT_R].map((c, ci) => (
-              <g key={ci}>
-                {c.wall.map((d, i) => <path key={i} d={d} fill="#0c1923" />)}
-                {c.towers.map((t, i) => (
-                  <g key={i}>
-                    <rect x={f1(t.x)} y={f1(t.y - t.h)} width={f1(t.w)} height={f1(t.h + 30)} fill="#0e1d28" />
-                    <path d={merlons(f1(t.x - 2), f1(t.x + t.w + 2), f1(t.y - t.h), 7, 3.4, 8)} fill="#0e1d28" />
-                    <path d={`M${f1(t.x)} ${f1(t.y - t.h)}H${f1(t.x + t.w)}`} stroke="#c88a52" strokeWidth="1.4" opacity=".5" />
-                    <path d={`M${f1(t.x + t.w)} ${f1(t.y - t.h)}V${f1(t.y)}`} stroke="#6fb6cc" strokeWidth="1.2" opacity=".25" />
-                  </g>
-                ))}
-                {c.lights.map(([x, y], i) => (
-                  <g key={`l${i}`}>
-                    <circle cx={f1(x)} cy={f1(y)} r="14" fill={url('torch')} />
-                    <rect x={f1(x - 2)} y={f1(y - 3)} width="4" height="6" fill="#ffd08a" />
-                  </g>
-                ))}
-              </g>
-            ))}
-            {/* palace blocks on the upper citadel */}
-            <g fill="#0f1f2a">
-              <path d="M1180 450V392H1270V370H1350V450Z" />
-              <path d="M1120 460V418H1190V460Z" />
-            </g>
-            <path d="M1180 392H1270M1270 370H1350" stroke="#c88a52" strokeWidth="1.6" opacity=".55" />
-            {[[1200, 412], [1226, 412], [1290, 392], [1316, 392], [1140, 434]].map(([x, y], i) => <rect key={i} x={x} y={y} width="7" height="11" fill={i % 2 ? '#ffb15a' : '#1c2c38'} opacity={i % 2 ? 0.85 : 1} />)}
-            {/* bulls Şeri & Hurri on the crags */}
-            <path d="M40 420C64 370 120 356 168 370C198 382 214 414 220 460H40Z" fill="#0c1923" />
-            <path d="M1384 404C1408 358 1466 346 1512 360C1542 374 1556 404 1562 448H1384Z" fill="#0c1923" />
-            <path d="M64 386C90 366 130 362 160 372M1410 372C1440 352 1480 350 1508 360" fill="none" stroke="#c88a52" strokeWidth="1.6" opacity=".5" />
-            <g transform="translate(56 292) scale(0.9)">
-              <path d={BULL} fill="#08121a" />
-              <path d={BULL_HORNS} fill="#08121a" />
-              <path d="M18 32C40 26 70 28 96 26C112 22 124 16 136 20C144 22 150 26 154 30C160 36 166 44 168 52" fill="none" stroke="#e7a464" strokeWidth="2.2" opacity=".7" />
-              <path d="M146 26C136 12 144 0 160 0M154 28C160 10 174 6 184 10" fill="none" stroke="#e7a464" strokeWidth="1.6" opacity=".7" />
-            </g>
-            <g transform="translate(1554 276) scale(-0.9 0.9)">
-              <path d={BULL} fill="#08121a" />
-              <path d={BULL_HORNS} fill="#08121a" />
-              <path d="M18 32C40 26 70 28 96 26C112 22 124 16 136 20C144 22 150 26 154 30C160 36 166 44 168 52" fill="none" stroke="#8fd8ee" strokeWidth="2.2" opacity=".6" />
-              <path d="M146 26C136 12 144 0 160 0M154 28C160 10 174 6 184 10" fill="none" stroke="#8fd8ee" strokeWidth="1.6" opacity=".6" />
-            </g>
-          </svg>
-        </div>
-
-        {/* Lion Gate */}
-        <div className={`${styles.gateWrap} ${styles.pGate}`}>
-          <div className={styles.gate}>
-            <svg className={styles.full} viewBox="0 0 1600 900" focusable="false">
+          <div className={`${styles.band} ${styles.bandFar}`}><div ref={(el) => { trackRefs.current.far = el; }} className={styles.track} /></div>
+          <div className={`${styles.band} ${styles.bandMid}`}><div ref={(el) => { trackRefs.current.mid = el; }} className={styles.track} /></div>
+  
+          <div className={styles.moodDark} />
+          {/* mountains */}
+          <div className={`${styles.layer} ${styles.pMount}`}>
+            <svg className={styles.full} viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" focusable="false">
               <defs>
-                <linearGradient id={k('ground')} x1="0" y1="790" x2="0" y2="900" gradientUnits="userSpaceOnUse">{stops([[0, '#1a2026'], [0.3, '#10161b'], [1, '#06080a']])}</linearGradient>
-                <linearGradient id={k('sheen')} x1="0" y1="790" x2="0" y2="900" gradientUnits="userSpaceOnUse">{stops([[0, '#5aa6c4', 0.28], [0.4, '#5aa6c4', 0.06], [1, '#5aa6c4', 0]])}</linearGradient>
-                <linearGradient id={k('reflW')} x1="0" y1="0" x2="0" y2="1">{stops([[0, '#ff9a3c', 0.55], [1, '#ff9a3c', 0]])}</linearGradient>
-                <linearGradient id={k('shadeTop')} x1="0" y1="250" x2="0" y2="800" gradientUnits="userSpaceOnUse">{stops([[0, '#0b1824', 0.35], [0.6, '#0b1824', 0.12], [1, '#2a1406', 0.25]])}</linearGradient>
-                <linearGradient id={k('void')} x1="0" y1="340" x2="0" y2="800" gradientUnits="userSpaceOnUse">{stops([[0, '#0a1622'], [0.5, '#1c2630'], [0.82, '#5a3a22'], [1, '#c07a3a']])}</linearGradient>
-                <linearGradient id={k('lionStone')} x1="0" y1="0" x2="1" y2="1">{stops([[0, '#b09e86'], [0.4, '#7d6f5f'], [1, '#433a32']])}</linearGradient>
-                <linearGradient id={k('slab')} x1="0" y1="0" x2="1" y2="1">{stops([[0, '#6c6155'], [0.5, '#51473e'], [1, '#2e2722']])}</linearGradient>
-                <linearGradient id={k('stoneDk')} x1="0" y1="0" x2="1" y2="1">{stops([[0, '#6a5e50'], [1, '#2e2722']])}</linearGradient>
-                <linearGradient id={k('bronzeS')} x1="0" y1="0" x2="1" y2="0">{stops([[0, '#3a1d06'], [0.35, '#b97a34'], [0.5, '#ffe0a0'], [0.65, '#c4863c'], [1, '#3a1d06']])}</linearGradient>
-                <radialGradient id={k('faceVol')} cx="0.32" cy="0.28" r="0.85">{stops([[0, '#fff2d8', 0.28], [0.45, '#fff2d8', 0], [0.75, '#000', 0.12], [1, '#000', 0.38]])}</radialGradient>
-                <radialGradient id={k('vig')} cx="800" cy="420" r="980" gradientUnits="userSpaceOnUse" gradientTransform="translate(800 420) scale(1 0.72) translate(-800 -420)">{stops([[0.5, '#02050a', 0], [0.8, '#02050a', 0.4], [1, '#02050a', 0.72]])}</radialGradient>
-                <radialGradient id={k('warm')}>{stops([[0, '#ff8a3a', 0.42], [0.5, '#ff8a3a', 0.12], [1, '#ff8a3a', 0]])}</radialGradient>
-                <radialGradient id={k('eyeHalo')}>{stops([[0, '#bff6ff', 0.9], [1, '#2fb6ff', 0]])}</radialGradient>
-                <radialGradient id={k('fireGlow')}>{stops([[0, '#ffb35a', 0.6], [0.4, '#ff7a2a', 0.2], [1, '#ff7a2a', 0]])}</radialGradient>
-                <clipPath id={k('gateClip')}><path d={`M200 800V256H446V286H1154V256H1400V800Z${ARCH_D}`} clipRule="evenodd" /></clipPath>
-                <pattern id={k('grain')} width="9" height="9" patternUnits="userSpaceOnUse">
-                  <circle cx="2" cy="3" r=".9" fill="#000" opacity=".22" />
-                  <circle cx="6.5" cy="7" r=".7" fill="#fff" opacity=".07" />
-                  <circle cx="7" cy="1.5" r=".6" fill="#000" opacity=".16" />
-                </pattern>
+                <linearGradient id={k('far')} x1="0" y1="360" x2="0" y2="620" gradientUnits="userSpaceOnUse">{stops([[0, '#2c5164'], [1, '#162a38']])}</linearGradient>
+                <linearGradient id={k('haze')} x1="0" y1="420" x2="0" y2="700" gradientUnits="userSpaceOnUse">{stops([[0, '#c88650', 0], [0.55, '#c88650', 0.16], [1, '#3a3a40', 0.3]])}</linearGradient>
+                <linearGradient id={k('mid')} x1="0" y1="420" x2="0" y2="800" gradientUnits="userSpaceOnUse">{stops([[0, '#1a3448'], [1, '#0a141e']])}</linearGradient>
               </defs>
-              <g>
-              {/* side walls */}
-              {[WALL_L, WALL_R].map((ws, wi) => (
-                <g key={wi}>
-                  <rect x={wi ? 1370 : -10} y="520" width="240" height="280" fill="#16120f" />
-                  <Stones list={ws} />
-                  <path d={merlons(wi ? 1374 : -6, wi ? 1610 : 226, 522, 26, 14, 24)} fill="#4a423b" />
-                  <path d={wi ? 'M1370 522H1610' : 'M-10 522H230'} stroke="#a8c4cc" strokeWidth="2" opacity=".28" />
+              <path d={ridgeFill(FAR_RIDGE)} fill={url('far')} />
+              <path d={ridgeLine(FAR_RIDGE)} fill="none" stroke="#e7a464" strokeWidth="2" opacity=".42" />
+              <rect y="400" width="1600" height="500" fill={url('haze')} />
+              <path d={ridgeFill(MID_RIDGE)} fill={url('mid')} />
+              <path d={ridgeLine(MID_RIDGE)} fill="none" stroke="#7fc4d8" strokeWidth="1.6" opacity=".22" />
+            </svg>
+          </div>
+  
+          {/* citadel + sacred bulls */}
+          <div className={`${styles.layer} ${styles.pCit}`}>
+            <svg className={styles.full} viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" focusable="false">
+              <defs>
+                <radialGradient id={k('torch')}>{stops([[0, '#ffd08a', 0.9], [0.3, '#ff9a3c', 0.4], [1, '#ff9a3c', 0]])}</radialGradient>
+              </defs>
+              {[CIT_L, CIT_R].map((c, ci) => (
+                <g key={ci}>
+                  {c.wall.map((d, i) => <path key={i} d={d} fill="#0c1923" />)}
+                  {c.towers.map((t, i) => (
+                    <g key={i}>
+                      <rect x={f1(t.x)} y={f1(t.y - t.h)} width={f1(t.w)} height={f1(t.h + 30)} fill="#0e1d28" />
+                      <path d={merlons(f1(t.x - 2), f1(t.x + t.w + 2), f1(t.y - t.h), 7, 3.4, 8)} fill="#0e1d28" />
+                      <path d={`M${f1(t.x)} ${f1(t.y - t.h)}H${f1(t.x + t.w)}`} stroke="#c88a52" strokeWidth="1.4" opacity=".5" />
+                      <path d={`M${f1(t.x + t.w)} ${f1(t.y - t.h)}V${f1(t.y)}`} stroke="#6fb6cc" strokeWidth="1.2" opacity=".25" />
+                    </g>
+                  ))}
+                  {c.lights.map(([x, y], i) => (
+                    <g key={`l${i}`}>
+                      <circle cx={f1(x)} cy={f1(y)} r="14" fill={url('torch')} />
+                      <rect x={f1(x - 2)} y={f1(y - 3)} width="4" height="6" fill="#ffd08a" />
+                    </g>
+                  ))}
                 </g>
               ))}
-              {/* tower + arch block */}
-              <g clipPath={url('gateClip')}>
-                <rect x="200" y="250" width="1200" height="550" fill="#15110e" />
-                <Stones list={GATE_STONES} />
-                <rect x="446" y="250" width="708" height="550" fill="#0b0f14" opacity=".42" />
-                <rect x="200" y="250" width="1200" height="550" fill={url('shadeTop')} />
-                <path d="M446 256V800M1154 256V800" stroke="#0c0a08" strokeWidth="8" opacity=".6" />
-                <path d="M440 256V800" stroke="#a6c8d2" strokeWidth="2" opacity=".18" />
-                <path d="M210 300C214 420 208 560 214 700M1390 320C1386 460 1392 600 1386 760M300 280C306 360 302 440 306 500M1300 270C1296 350 1300 420 1296 480" stroke="#9cc8d4" strokeWidth="3" opacity=".08" strokeLinecap="round" />
+              {/* palace blocks on the upper citadel */}
+              <g fill="#0f1f2a">
+                <path d="M1180 450V392H1270V370H1350V450Z" />
+                <path d="M1120 460V418H1190V460Z" />
               </g>
-              <path d={merlons(198, 448, 256, 28, 16, 26)} fill="#5a5047" />
-              <path d={merlons(1152, 1402, 256, 28, 16, 26)} fill="#5a5047" />
-              <path d={merlons(452, 1150, 286, 24, 16, 22)} fill="#463e37" />
-              <path d="M198 256H448M1152 256H1402" stroke="#a8c4cc" strokeWidth="2" opacity=".3" />
-              {/* arch reveal + void */}
-              <path d={ARCH_D} fill="#1c1814" />
-              <path d={ARCH_IN_D} fill={url('void')} />
-              <path d="M560 800V620H640V590H720V640H800V570H880V630H960V600H1040V800Z" fill="#141c24" opacity=".85" />
-              {[[600, 660], [690, 620], [770, 680], [850, 600], [930, 650], [1000, 630]].map(([x, y], i) => <rect key={i} x={x} y={y} width="9" height="14" fill="#ffb15a" opacity=".75" />)}
-              <path d={ARCH_D} fill="none" stroke="#0c0a08" strokeWidth="5" />
-              <path d={poly(ARCH.slice(29))} fill="none" stroke="#9cc2cc" strokeWidth="2" opacity=".25" />
-              {/* lion protomes */}
-              <Lion k={k} side="l" />
-              <Lion k={k} side="r" />
-              <rect x="-10" y="250" width="1620" height="550" fill={url('grain')} />
+              <path d="M1180 392H1270M1270 370H1350" stroke="#c88a52" strokeWidth="1.6" opacity=".55" />
+              {[[1200, 412], [1226, 412], [1290, 392], [1316, 392], [1140, 434]].map(([x, y], i) => <rect key={i} x={x} y={y} width="7" height="11" fill={i % 2 ? '#ffb15a' : '#1c2c38'} opacity={i % 2 ? 0.85 : 1} />)}
+              {/* bulls Şeri & Hurri on the crags */}
+              <path d="M40 420C64 370 120 356 168 370C198 382 214 414 220 460H40Z" fill="#0c1923" />
+              <path d="M1384 404C1408 358 1466 346 1512 360C1542 374 1556 404 1562 448H1384Z" fill="#0c1923" />
+              <path d="M64 386C90 366 130 362 160 372M1410 372C1440 352 1480 350 1508 360" fill="none" stroke="#c88a52" strokeWidth="1.6" opacity=".5" />
+              <g transform="translate(56 292) scale(0.9)">
+                <path d={BULL} fill="#08121a" />
+                <path d={BULL_HORNS} fill="#08121a" />
+                <path d="M18 32C40 26 70 28 96 26C112 22 124 16 136 20C144 22 150 26 154 30C160 36 166 44 168 52" fill="none" stroke="#e7a464" strokeWidth="2.2" opacity=".7" />
+                <path d="M146 26C136 12 144 0 160 0M154 28C160 10 174 6 184 10" fill="none" stroke="#e7a464" strokeWidth="1.6" opacity=".7" />
               </g>
-              {/* ground */}
-              <rect y="790" width="1600" height="110" fill={url('ground')} />
-              <rect y="790" width="1600" height="110" fill={url('sheen')} />
-              <path d="M0 812H1600M0 842H1600M0 880H1600" stroke="#030405" strokeWidth="2" opacity=".7" />
-              {[-700, -460, -240, -80, 80, 240, 460, 700, 980, -980].map((dx) => <path key={dx} d={`M${800 + dx * 0.55} 790L${800 + dx * 1.35} 900`} stroke="#030405" strokeWidth="2" opacity=".55" />)}
-              {/* reflections */}
-              <ellipse cx="800" cy="830" rx="380" ry="26" fill="#1f3442" opacity=".35" />
-              {BRAZIERS.map(([x], i) => <rect key={i} x={x - 34} y="796" width="68" height="104" fill={url('reflW')} />)}
-              {BRAZIERS.map(([x], i) => <ellipse key={`e${i}`} cx={x} cy="804" rx="120" ry="12" fill="#ff9a3c" opacity=".22" />)}
-              <path d="M300 860C420 850 560 852 700 858M900 866C1040 856 1180 856 1320 864M180 828C260 822 340 822 420 826M1200 826C1290 820 1370 820 1440 826" stroke="#8fd0e6" strokeWidth="2" opacity=".22" strokeLinecap="round" />
-              <rect x="210" y="800" width="230" height="60" fill="#5b5046" opacity=".12" />
-              <rect x="1160" y="800" width="230" height="60" fill="#5b5046" opacity=".12" />
-              {BRAZIERS.map(([x, y], i) => <Brazier key={i} x={x} y={y} k={k} />)}
-              {/* vignette baked into this static layer (a separate full-screen overlay costs a
-                  whole extra blend per frame under software compositing) */}
-              <rect x="-200" y="-200" width="2000" height="1300" fill={url('vig')} />
+              <g transform="translate(1554 276) scale(-0.9 0.9)">
+                <path d={BULL} fill="#08121a" />
+                <path d={BULL_HORNS} fill="#08121a" />
+                <path d="M18 32C40 26 70 28 96 26C112 22 124 16 136 20C144 22 150 26 154 30C160 36 166 44 168 52" fill="none" stroke="#8fd8ee" strokeWidth="2.2" opacity=".6" />
+                <path d="M146 26C136 12 144 0 160 0M154 28C160 10 174 6 184 10" fill="none" stroke="#8fd8ee" strokeWidth="1.6" opacity=".6" />
+              </g>
             </svg>
-            {BRAZIERS.map(([x, y], i) => (
-              <div key={i} ref={(el) => { flameRefs.current[i] = el; }} className={styles.flame} style={{ left: `${(x / 1600) * 100}%`, top: `${(y / 900) * 100}%` }}>
-                <svg className={styles.fl1} viewBox="0 0 60 100" focusable="false"><path d="M30 100C8 100 2 82 8 64C12 52 18 46 16 30C26 38 28 48 28 54C32 40 38 24 34 2C48 16 56 36 54 58C58 52 60 46 58 38C66 56 64 100 30 100Z" /></svg>
-                <svg className={styles.fl2} viewBox="0 0 60 100" focusable="false"><path d="M30 100C14 100 10 86 14 74C18 64 24 58 24 46C30 54 32 62 32 68C36 58 40 48 38 32C48 46 52 62 48 76C52 72 54 68 54 62C58 78 52 100 30 100Z" /></svg>
-                <svg className={styles.fl3} viewBox="0 0 60 100" focusable="false"><path d="M30 100C20 100 18 92 20 84C22 78 26 74 27 66C31 72 33 78 33 82C36 76 38 70 37 62C44 72 46 84 42 92C40 98 36 100 30 100Z" /></svg>
-              </div>
-            ))}
-            {BRAZIERS.map(([x, y], i) => <span key={`g${i}`} className={styles.fireGlow} style={{ left: `${(x / 1600) * 100}%`, top: `${((y - 30) / 900) * 100}%` }} />)}
-            {RIPPLES.map(([x, y, d], i) => <span key={i} className={styles.ripple} style={{ left: `${x}%`, top: `${y}%`, animationDelay: `${d}s` }} />)}
           </div>
+  
+          {/* Lion Gate */}
+          <div className={`${styles.gateWrap} ${styles.pGate}`}>
+            <div className={styles.gate}>
+              <svg className={styles.full} viewBox="0 0 1600 900" focusable="false">
+                <defs>
+                  <linearGradient id={k('ground')} x1="0" y1="790" x2="0" y2="900" gradientUnits="userSpaceOnUse">{stops([[0, '#1a2026'], [0.3, '#10161b'], [1, '#06080a']])}</linearGradient>
+                  <linearGradient id={k('sheen')} x1="0" y1="790" x2="0" y2="900" gradientUnits="userSpaceOnUse">{stops([[0, '#5aa6c4', 0.28], [0.4, '#5aa6c4', 0.06], [1, '#5aa6c4', 0]])}</linearGradient>
+                  <linearGradient id={k('reflW')} x1="0" y1="0" x2="0" y2="1">{stops([[0, '#ff9a3c', 0.55], [1, '#ff9a3c', 0]])}</linearGradient>
+                  <linearGradient id={k('shadeTop')} x1="0" y1="250" x2="0" y2="800" gradientUnits="userSpaceOnUse">{stops([[0, '#0b1824', 0.35], [0.6, '#0b1824', 0.12], [1, '#2a1406', 0.25]])}</linearGradient>
+                  <linearGradient id={k('void')} x1="0" y1="340" x2="0" y2="800" gradientUnits="userSpaceOnUse">{stops([[0, '#0a1622'], [0.5, '#1c2630'], [0.82, '#5a3a22'], [1, '#c07a3a']])}</linearGradient>
+                  <linearGradient id={k('lionStone')} x1="0" y1="0" x2="1" y2="1">{stops([[0, '#b09e86'], [0.4, '#7d6f5f'], [1, '#433a32']])}</linearGradient>
+                  <linearGradient id={k('slab')} x1="0" y1="0" x2="1" y2="1">{stops([[0, '#6c6155'], [0.5, '#51473e'], [1, '#2e2722']])}</linearGradient>
+                  <linearGradient id={k('stoneDk')} x1="0" y1="0" x2="1" y2="1">{stops([[0, '#6a5e50'], [1, '#2e2722']])}</linearGradient>
+                  <linearGradient id={k('bronzeS')} x1="0" y1="0" x2="1" y2="0">{stops([[0, '#3a1d06'], [0.35, '#b97a34'], [0.5, '#ffe0a0'], [0.65, '#c4863c'], [1, '#3a1d06']])}</linearGradient>
+                  <radialGradient id={k('faceVol')} cx="0.32" cy="0.28" r="0.85">{stops([[0, '#fff2d8', 0.28], [0.45, '#fff2d8', 0], [0.75, '#000', 0.12], [1, '#000', 0.38]])}</radialGradient>
+                  <radialGradient id={k('vig')} cx="800" cy="420" r="980" gradientUnits="userSpaceOnUse" gradientTransform="translate(800 420) scale(1 0.72) translate(-800 -420)">{stops([[0.5, '#02050a', 0], [0.8, '#02050a', 0.4], [1, '#02050a', 0.72]])}</radialGradient>
+                  <radialGradient id={k('warm')}>{stops([[0, '#ff8a3a', 0.42], [0.5, '#ff8a3a', 0.12], [1, '#ff8a3a', 0]])}</radialGradient>
+                  <radialGradient id={k('eyeHalo')}>{stops([[0, '#bff6ff', 0.9], [1, '#2fb6ff', 0]])}</radialGradient>
+                  <radialGradient id={k('fireGlow')}>{stops([[0, '#ffb35a', 0.6], [0.4, '#ff7a2a', 0.2], [1, '#ff7a2a', 0]])}</radialGradient>
+                  <clipPath id={k('gateClip')}><path d={`M200 800V256H446V286H1154V256H1400V800Z${ARCH_D}`} clipRule="evenodd" /></clipPath>
+                  <pattern id={k('grain')} width="9" height="9" patternUnits="userSpaceOnUse">
+                    <circle cx="2" cy="3" r=".9" fill="#000" opacity=".22" />
+                    <circle cx="6.5" cy="7" r=".7" fill="#fff" opacity=".07" />
+                    <circle cx="7" cy="1.5" r=".6" fill="#000" opacity=".16" />
+                  </pattern>
+                </defs>
+                <g>
+                {/* side walls */}
+                {[WALL_L, WALL_R].map((ws, wi) => (
+                  <g key={wi}>
+                    <rect x={wi ? 1370 : -10} y="520" width="240" height="280" fill="#16120f" />
+                    <Stones list={ws} />
+                    <path d={merlons(wi ? 1374 : -6, wi ? 1610 : 226, 522, 26, 14, 24)} fill="#4a423b" />
+                    <path d={wi ? 'M1370 522H1610' : 'M-10 522H230'} stroke="#a8c4cc" strokeWidth="2" opacity=".28" />
+                  </g>
+                ))}
+                {/* tower + arch block */}
+                <g clipPath={url('gateClip')}>
+                  <rect x="200" y="250" width="1200" height="550" fill="#15110e" />
+                  <Stones list={GATE_STONES} />
+                  <rect x="446" y="250" width="708" height="550" fill="#0b0f14" opacity=".42" />
+                  <rect x="200" y="250" width="1200" height="550" fill={url('shadeTop')} />
+                  <path d="M446 256V800M1154 256V800" stroke="#0c0a08" strokeWidth="8" opacity=".6" />
+                  <path d="M440 256V800" stroke="#a6c8d2" strokeWidth="2" opacity=".18" />
+                  <path d="M210 300C214 420 208 560 214 700M1390 320C1386 460 1392 600 1386 760M300 280C306 360 302 440 306 500M1300 270C1296 350 1300 420 1296 480" stroke="#9cc8d4" strokeWidth="3" opacity=".08" strokeLinecap="round" />
+                </g>
+                <path d={merlons(198, 448, 256, 28, 16, 26)} fill="#5a5047" />
+                <path d={merlons(1152, 1402, 256, 28, 16, 26)} fill="#5a5047" />
+                <path d={merlons(452, 1150, 286, 24, 16, 22)} fill="#463e37" />
+                <path d="M198 256H448M1152 256H1402" stroke="#a8c4cc" strokeWidth="2" opacity=".3" />
+                {/* arch reveal + void */}
+                <path d={ARCH_D} fill="#1c1814" />
+                <path d={ARCH_IN_D} fill={url('void')} />
+                <path d="M560 800V620H640V590H720V640H800V570H880V630H960V600H1040V800Z" fill="#141c24" opacity=".85" />
+                {[[600, 660], [690, 620], [770, 680], [850, 600], [930, 650], [1000, 630]].map(([x, y], i) => <rect key={i} x={x} y={y} width="9" height="14" fill="#ffb15a" opacity=".75" />)}
+                <path d={ARCH_D} fill="none" stroke="#0c0a08" strokeWidth="5" />
+                <path d={poly(ARCH.slice(29))} fill="none" stroke="#9cc2cc" strokeWidth="2" opacity=".25" />
+                {/* lion protomes */}
+                <Lion k={k} side="l" />
+                <Lion k={k} side="r" />
+                <rect x="-10" y="250" width="1620" height="550" fill={url('grain')} />
+                </g>
+                {/* ground */}
+                <rect y="790" width="1600" height="110" fill={url('ground')} />
+                <rect y="790" width="1600" height="110" fill={url('sheen')} />
+                <path d="M0 812H1600M0 842H1600M0 880H1600" stroke="#030405" strokeWidth="2" opacity=".7" />
+                {[-700, -460, -240, -80, 80, 240, 460, 700, 980, -980].map((dx) => <path key={dx} d={`M${800 + dx * 0.55} 790L${800 + dx * 1.35} 900`} stroke="#030405" strokeWidth="2" opacity=".55" />)}
+                {/* reflections */}
+                <ellipse cx="800" cy="830" rx="380" ry="26" fill="#1f3442" opacity=".35" />
+                {BRAZIERS.map(([x], i) => <rect key={i} x={x - 34} y="796" width="68" height="104" fill={url('reflW')} />)}
+                {BRAZIERS.map(([x], i) => <ellipse key={`e${i}`} cx={x} cy="804" rx="120" ry="12" fill="#ff9a3c" opacity=".22" />)}
+                <path d="M300 860C420 850 560 852 700 858M900 866C1040 856 1180 856 1320 864M180 828C260 822 340 822 420 826M1200 826C1290 820 1370 820 1440 826" stroke="#8fd0e6" strokeWidth="2" opacity=".22" strokeLinecap="round" />
+                <rect x="210" y="800" width="230" height="60" fill="#5b5046" opacity=".12" />
+                <rect x="1160" y="800" width="230" height="60" fill="#5b5046" opacity=".12" />
+                {BRAZIERS.map(([x, y], i) => <Brazier key={i} x={x} y={y} k={k} />)}
+                {/* vignette baked into this static layer (a separate full-screen overlay costs a
+                    whole extra blend per frame under software compositing) */}
+                <rect x="-200" y="-200" width="2000" height="1300" fill={url('vig')} />
+              </svg>
+              {BRAZIERS.map(([x, y], i) => (
+                <div key={i} ref={(el) => { flameRefs.current[i] = el; }} className={styles.flame} style={{ left: `${(x / 1600) * 100}%`, top: `${(y / 900) * 100}%` }}>
+                  <svg className={styles.fl1} viewBox="0 0 60 100" focusable="false"><path d="M30 100C8 100 2 82 8 64C12 52 18 46 16 30C26 38 28 48 28 54C32 40 38 24 34 2C48 16 56 36 54 58C58 52 60 46 58 38C66 56 64 100 30 100Z" /></svg>
+                  <svg className={styles.fl2} viewBox="0 0 60 100" focusable="false"><path d="M30 100C14 100 10 86 14 74C18 64 24 58 24 46C30 54 32 62 32 68C36 58 40 48 38 32C48 46 52 62 48 76C52 72 54 68 54 62C58 78 52 100 30 100Z" /></svg>
+                  <svg className={styles.fl3} viewBox="0 0 60 100" focusable="false"><path d="M30 100C20 100 18 92 20 84C22 78 26 74 27 66C31 72 33 78 33 82C36 76 38 70 37 62C44 72 46 84 42 92C40 98 36 100 30 100Z" /></svg>
+                </div>
+              ))}
+              {BRAZIERS.map(([x, y], i) => <span key={`g${i}`} className={styles.fireGlow} style={{ left: `${(x / 1600) * 100}%`, top: `${((y - 30) / 900) * 100}%` }} />)}
+              {RIPPLES.map(([x, y, d], i) => <span key={i} className={styles.ripple} style={{ left: `${x}%`, top: `${y}%`, animationDelay: `${d}s` }} />)}
+            </div>
+          </div>
+  
+          <div ref={litRef} className={styles.lit} />
+          <div className={styles.rays}><div className={styles.raysInner} /></div>
+          <canvas ref={rainRef} className={styles.canvas} />
         </div>
+  ), []);
 
-        <div ref={litRef} className={styles.lit} />
-        <div className={styles.rays}><div className={styles.raysInner} /></div>
-        <canvas ref={rainRef} className={styles.canvas} />
-      </div>
+  return (
+    <div ref={rootRef} className={`${styles.root} ${className ?? ''}`} data-mood={mood} style={style}>
+      {back}
       <div className={styles.content}>{children}</div>
       <canvas ref={frontRef} className={`${styles.canvas} ${styles.front}`} aria-hidden="true" />
       <div ref={flashRef} className={styles.flash} aria-hidden="true" />

@@ -1,0 +1,71 @@
+/* Tarhun game-information pages (inside the slot kit's GameInfo panel). */
+.page { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.page h3,
+.pageTitle { margin: 0 0 2px; font-size: 18px; color: #ffe7b0; }
+.page h4 { margin: 0 0 4px; font-size: 15px; color: #ffe7b0; }
+.page p { margin: 0; }
+.lead { font-size: 14px; color: #dbe6ee; }
+.note { font-size: 13px; color: #b9c6d2; }
+.steps { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
+.steps li::marker { color: #e9b35d; font-weight: 600; }
+
+/* paytable */
+.payGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(188px, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; }
+.payCard {
+  display: flex; align-items: center; gap: 10px; padding: 10px 12px 10px 8px; border-radius: 16px;
+  background: linear-gradient(160deg, rgba(34, 58, 96, 0.6), rgba(10, 16, 30, 0.75));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+.payHigh { box-shadow: inset 0 0 0 1px rgba(233, 179, 93, 0.45), 0 6px 18px -10px rgba(233, 179, 93, 0.5); }
+.payArt { flex: none; width: 60px; height: 60px; display: grid; place-items: center; }
+.payBody { min-width: 0; flex: 1; }
+.payName { margin: 0 0 4px !important; font-size: 14px !important; color: #fff !important; }
+.payRows { display: grid; gap: 1px; margin: 0; }
+.payRows > div { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; font-variant-numeric: tabular-nums; }
+.payRows dt { font-size: 12px; color: #9fc0d8; min-width: 40px; }
+.payRows dd { margin: 0; display: flex; align-items: baseline; gap: 6px; }
+.payRows strong { font-size: 15px; color: #ffe7b0; }
+.payRows small { font-size: 11px; color: #a9b6c4; }
+.specials { display: grid; gap: 10px; }
+.special { display: flex; gap: 12px; align-items: flex-start; padding: 12px; border-radius: 16px; background: rgba(255, 255, 255, 0.04); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07); }
+.special p { font-size: 14px; color: #d6e2ea; }
+.specialArt { flex: none; width: 56px; height: 56px; display: grid; place-items: center; }
+.specialMax { box-shadow: inset 0 0 0 1px rgba(233, 179, 93, 0.45); background: radial-gradient(120% 140% at 0% 0%, rgba(233, 179, 93, 0.16), transparent 60%); }
+.scatterRows { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 4px 0 6px; font-variant-numeric: tabular-nums; }
+.scatterRows > div { display: flex; align-items: baseline; gap: 6px; }
+.scatterRows dt { font-size: 12px; color: #9fc0d8; }
+.scatterRows dd { margin: 0; }
+.scatterRows strong { color: #ffe7b0; }
+.scatterRows small { font-size: 11px; color: #a9b6c4; }
+
+/* features */
+.feature { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+.feature:last-child { border-bottom: 0; }
+.feature p { font-size: 14px; color: #d6e2ea; }
+.featureArt { flex: none; width: 48px; height: 48px; display: grid; place-items: center; }
+
+/* rtp / limits / keys */
+.tableWrap { overflow-x: auto; }
+.tableWrap table { min-width: 420px; }
+.page tbody th { font-size: 14px; font-weight: 500; letter-spacing: 0; text-transform: none; color: #f1f5f8; }
+.facts, .keys { display: grid; gap: 8px; margin: 0; }
+.facts > div, .keys > div { display: grid; grid-template-columns: minmax(110px, 30%) 1fr; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.07); }
+.facts dt, .keys dt { font-size: 13px; color: #9fc0d8; }
+.facts dd, .keys dd { margin: 0; font-size: 14px; font-variant-numeric: tabular-nums; }
+.page code { font-size: 13px; padding: 0 4px; border-radius: 4px; background: rgba(255, 255, 255, 0.08); }
+
+@media (max-width: 480px) {
+  .payGrid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .payCard { flex-direction: column; align-items: stretch; padding: 8px; gap: 4px; }
+  .payArt { width: 44px; height: 44px; align-self: center; }
+  .payName { text-align: center; font-size: 13px !important; }
+  .payRows strong { font-size: 13px; }
+  .facts > div, .keys > div { grid-template-columns: 1fr; gap: 2px; }
+}
+
+/* orb value strip */
+.orbRow { display: grid; grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; }
+.orbRow li { display: flex; flex-direction: column; align-items: center; gap: 1px; padding: 6px 2px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); font-variant-numeric: tabular-nums; }
+.orbRow li > span { width: 38px; height: 38px; }
+.orbRow strong { font-size: 13px; color: #ffe7b0; }
+.orbRow small { font-size: 11px; color: #a9b6c4; }

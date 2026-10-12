@@ -1,0 +1,101 @@
+{
+  "date": "2026-10-12",
+  "game": "Tarhun: Fırtına Tahtı (route /game/tarhun), engine storm-throne-1, DEMO only",
+  "scope": "local only; next dev (Turbopack) in a Linux cloud container with software rasterisation; not deployed; no build:cloudflare preview run, no hosted, real-phone, or user visual/audio acceptance evidence",
+  "files": {
+    "new": [
+      "apps/web/app/game/tarhun/page.tsx",
+      "apps/web/components/storm/tarhun-game.tsx",
+      "apps/web/components/storm/tarhun-game.module.css",
+      "apps/web/components/storm/storm-board.tsx",
+      "apps/web/components/storm/storm-board.module.css",
+      "apps/web/components/storm/storm-fx.ts",
+      "apps/web/components/storm/storm-celebration.tsx",
+      "apps/web/components/storm/storm-celebration.module.css",
+      "apps/web/components/storm/storm-info-pages.tsx",
+      "apps/web/components/storm/storm-info.module.css",
+      "apps/web/components/storm/storm-history.tsx",
+      "apps/web/components/storm/use-storm-sound.ts",
+      "apps/web/lib/storm-timeline.ts",
+      "apps/web/lib/storm-controls.ts",
+      "apps/web/lib/slot-kit/timeline-player.ts",
+      "apps/web/tests/storm-timeline.test.ts",
+      "apps/web/tests/storm-controls.test.ts",
+      "apps/web/tests/browser/tarhun.spec.ts"
+    ],
+    "changed": [
+      "apps/web/lib/cascade-player.ts (now a typed subclass of the shared slot-kit TimelinePlayer; behaviour unchanged)",
+      "apps/web/components/providers.tsx (DemoGame 'Tarhun', DemoRecord.storm replay meta)",
+      "apps/web/components/game-common.tsx (GameHistory/Rules accept 'Tarhun')",
+      "apps/web/components/shell.tsx (nav link 'Tarhun' after Candy Cascade)",
+      "apps/web/components/icons.tsx (original 'storm' icon)",
+      "apps/web/app/games/page.tsx + page.module.css (lobby card, art style 'storm')",
+      "apps/web/components/storm/scene.tsx (static backdrop memoised: re-rendering the scene with new children no longer re-reconciles the SVG; no visual change)",
+      "apps/web/components/storm/frame.tsx + symbols.module.css (glowing runes moved into three overlay SVG layers that animate opacity as whole elements with will-change; same positions, phases and colours)"
+    ],
+    "untouched": "lib/slot-audio/** (sound engine by another agent; used through components/storm/use-storm-sound.ts with feature detection and setVoiceBank('/audio/voice/storm')); rtp.json, audio.json"
+  },
+  "unit": {
+    "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test",
+    "tests": 234,
+    "pass": 234,
+    "new": ["tests/storm-timeline.test.ts (10)", "tests/storm-controls.test.ts (6)"],
+    "covers": [
+      "cumulative meter monotonic and ending on the engine total over 3000 seeds (standard/ante/buy) plus fixed seeds at every speed, reduced motion and skipped screens",
+      "multiply events = engine appliedMultiplier per spin; orb strike order = final-grid orbs; running multiplier ends on orbSum (base) / totalMultiplierAfter (free)",
+      "free-spin total multiplier at every spin start/end = engine before/after; total screen totalMultiplier = last spin",
+      "tier schedules Büyük / Büyük→Mega / →Süper / →Efsane / Azami (capped) with the count-up ending on the engine total",
+      "retrigger +5 events, orb landings once per orb, cells keep ids and only fall, orbs/scatters never explode",
+      "player fires every event once in order; ledger limits ceil(5000×bet/cost) = 5000/4000/50; buy block reasons; autoplay loss limit, ante cost, tab hidden, stop on feature"
+    ],
+    "typecheck": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck: clean"
+  },
+  "browserAgainstNextDev": {
+    "baseUrl": "http://127.0.0.1:3000 (next dev)",
+    "chromium": "/opt/pw-browsers/chromium-1194 via PW_CHROMIUM_PATH (Playwright 1.63 expects 1243, not installed here)",
+    "tarhun.spec.ts": { "tests": 17, "pass": 17, "duration": "6.9m" },
+    "regression": {
+      "cascade.spec.ts": { "tests": 23, "pass": 23 },
+      "product.spec.ts + solo-lifecycle.spec.ts + demo-entropy.spec.ts (temporary config with executablePath, deleted)": { "tests": 23, "pass": 23 }
+    },
+    "covers": [
+      "labelled 6x5 grid (30 <use> cells) + 7 info pages (bet-scaled paytable, RTP per mode, limits, fault rule) axe-clean wcag2a/aa/21aa/22aa",
+      "spin lock: one debit, disabled button, Space/Enter/forced clicks ignored mid-round, no skip button; payout and final grid = engine",
+      "orb strike + ×25 callout (Gürleyen çarpan) and ×100 callout (Efsane çarpan)",
+      "celebrations Büyük (Space tap-to-finish), Büyük→Mega, →Süper, →Efsane, capped buy at 1 DEMO → Azami; final amount = engine payout",
+      "bonus buy 100× with dialog RTP, intro 'Fırtına Başlıyor', total multiplier never decreases and ends on engine total, +5 retrigger banner, 'Fırtına Dindi — Toplam' = engine payout, Mega, balance = start − cost + payout",
+      "free-spin round < 10× ends on the total screen with no celebration",
+      "Şans ×2 cost 12,50 and buy blocked; autoplay simple panel (Gelişmiş closed) + loss-limit stop; navigation mid-round settles once with full payout; reduced motion; replay without ledger change; entropy failure; refill line; settings persistence; phone 390×844 no overflow + 44 px targets + axe"
+    ]
+  },
+  "seeds": {
+    "note": "crypto.getRandomValues stub fills all four words with the value; seedHex = word ×4",
+    "LOSS": 0, "TUMBLES": 2951033815, "ORB25": 61151303, "ORB100": 3892496642, "FIZZLE": 1381971571,
+    "TIER_BUYUK": 2426448758, "TIER_MEGA": 3916550943, "TIER_SUPER": 1863343164, "TIER_EFSANE": 3847534678,
+    "FREE": 3001001962, "FREE_RETRIGGER": 3733550018, "FREE_LOW": 1618517822,
+    "BUY_EFSANE (10 DEMO)": 85964127, "BUY_RETRIGGER_MEGA (10 DEMO)": 2911921316, "BUY_CAP (1 DEMO)": 1918632665
+  },
+  "performance": {
+    "method": "rAF frame count + CDP tracing in headless Chromium 1194, software compositing, container CPU shared with next dev; numbers are relative, not a phone measurement",
+    "game 1440x900 idle": "≈30–38 fps (lab /lab/storm-art in the same run ≈30 fps); scene backdrop is the largest cost (hiding it → ≈50 fps)",
+    "game 390x844 idle": "≈54 fps; orb round ≈32 fps",
+    "fixes": [
+      "removed CSS drop-shadow filters on the animated hero, the logo (its glow animates) and the spin face: idle 22.8 → ≈30–38 fps at 1440",
+      "spin ring rotates only while the round is locked",
+      "scene static SVG memoised; runes on own compositor layers; board cells are 2-node <use>; FX canvas runs only while particles live; weather loop stops while the tab is hidden"
+    ],
+    "presentation clock": "the timeline player clamps each frame to 64 ms, so at ~20–30 fps a 56 s quick buy round plays in ≈63–68 s; results and payouts are unaffected"
+  },
+  "visualQa": {
+    "rounds": 6,
+    "screenshots": "scratchpad tarhun-*.png (40 files: idle/splash 1440+390, mid-tumble, god strike, callouts ×12/×25/×100/×500, free intro, free spins with total multiplier, retrigger, total screen, Büyük/Mega/Süper/Efsane/Azami, buy dialog, info pages, autoplay, settings, frame rune comparison)",
+    "userAcceptance": "none yet"
+  },
+  "gaps": [
+    "No build:cloudflare / workerd preview run; next dev only",
+    "No real mid-range phone 60 fps measurement; container numbers are software-raster",
+    "Ayarlar → 'Efektleri azalt' reduces canvas particles (≈35%) and skips sparks; the scene weather (rain/sky flicker) has no density API and is unchanged",
+    "Recorded voice files are not in public/audio/voice/storm yet; the engine falls back to its placeholders",
+    "User visual and audio acceptance pending"
+  ]
+}

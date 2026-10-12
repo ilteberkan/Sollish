@@ -86,11 +86,12 @@
   pointer-events: none;
   z-index: 3;
 }
-.runes .rune {
+.runeLayer {
   animation: runePulse var(--rune-speed) ease-in-out infinite alternate;
+  will-change: opacity;
 }
-.runes .rune:nth-child(3n + 1) { animation-delay: -1.2s; }
-.runes .rune:nth-child(3n + 2) { animation-delay: -2.3s; }
+.runeLayer[data-phase='0'] { animation-delay: -1.2s; }
+.runeLayer[data-phase='1'] { animation-delay: -2.3s; }
 .runeHalo {
   fill: none;
   stroke: var(--rune-halo);
@@ -147,7 +148,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .runes .rune,
+  .runeLayer,
   .logoGlow { animation: none; }
 }
 

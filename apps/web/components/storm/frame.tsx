@@ -88,6 +88,24 @@ export function StormFrame({ children, mood = 'base', className }: { children?: 
   const sideRunes = [256, 435, 614];
   const bottomRunes = [-2, -1, 0, 1, 2];
 
+  // Runes: every glowing rune is drawn into one of three small overlay SVGs (one per pulse phase) that animate
+  // opacity as whole elements on their own compositor layers. Animating <g> opacity inside the big frame SVG made
+  // the browser repaint the entire frame art every frame; the look (positions, phases, colours) is unchanged.
+  const runeItems = [
+    ...sideRunes.flatMap((y, j) => [[28, y, j], [W - 28, y, j + 3]]).map(([x, y, r], i) => (
+      <g key={`s${i}`} transform={`translate(${x - 10.4} ${y - 10.4}) scale(1.3)`}>
+        <use href={`#${k(`r${r % RUNES.length}`)}`} className={styles.runeHalo} />
+        <use href={`#${k(`r${r % RUNES.length}`)}`} className={styles.runeCore} />
+      </g>
+    )),
+    ...bottomRunes.map((o, i) => (
+      <g key={`b${o}`} transform={`translate(${W / 2 + o * 34 - 9.6} ${H - 39.6}) scale(1.2)`}>
+        <use href={`#${k(`r${(i + 2) % RUNES.length}`)}`} className={styles.runeHalo} />
+        <use href={`#${k(`r${(i + 2) % RUNES.length}`)}`} className={styles.runeCore} />
+      </g>
+    )),
+  ];
+
   return (
     <div className={`${styles.frame} ${className ?? ''}`} data-mood={mood}>
       <div className={styles.glass}>
@@ -243,21 +261,6 @@ export function StormFrame({ children, mood = 'base', className }: { children?: 
           ))}
           <path d={`M${W / 2 - 92} ${H - 50}H${W / 2 + 92}L${W / 2 + 108} ${H - 30}L${W / 2 + 92} ${H - 10}H${W / 2 - 92}L${W / 2 - 108} ${H - 30}Z`} fill="#13110f" stroke={u('bronze')} strokeWidth="3.4" strokeLinejoin="round" />
         </g>
-        <g className={styles.runes}>
-          {sideRunes.flatMap((y, j) => [[28, y, j], [W - 28, y, j + 3]]).map(([x, y, r], i) => (
-            <g key={i} transform={`translate(${x - 10.4} ${y - 10.4}) scale(1.3)`} className={styles.rune}>
-              <use href={`#${k(`r${r % RUNES.length}`)}`} className={styles.runeHalo} />
-              <use href={`#${k(`r${r % RUNES.length}`)}`} className={styles.runeCore} />
-            </g>
-          ))}
-          {bottomRunes.map((o, i) => (
-            <g key={o} transform={`translate(${W / 2 + o * 34 - 9.6} ${H - 39.6}) scale(1.2)`} className={styles.rune}>
-              <use href={`#${k(`r${(i + 2) % RUNES.length}`)}`} className={styles.runeHalo} />
-              <use href={`#${k(`r${(i + 2) % RUNES.length}`)}`} className={styles.runeCore} />
-            </g>
-          ))}
-        </g>
-
         {/* keystone with the storm sigil */}
         <g>
           <circle cx={W / 2} cy="20" r="80" fill={u('keyGlow')} className={styles.keyGlow} />
@@ -279,6 +282,11 @@ export function StormFrame({ children, mood = 'base', className }: { children?: 
         <CornerLion x={26} y={H - 30} s={0.96} k={k} />
         <CornerLion x={W - 26} y={H - 30} s={0.96} k={k} mirror />
       </svg>
+      {[0, 1, 2].map(phase => (
+        <svg key={phase} className={`${styles.frameArt} ${styles.runeLayer}`} data-phase={phase} viewBox={`0 0 ${W} ${H}`} aria-hidden="true" focusable="false">
+          {runeItems.filter((_, i) => i % 3 === phase)}
+        </svg>
+      ))}
     </div>
   );
 }
