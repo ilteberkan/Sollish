@@ -1,0 +1,654 @@
+{
+  "kind": "storm-throne-rtp-simulation",
+  "scope": "DEMO credits only; Monte Carlo estimate, not a certified or guaranteed RTP; RTP is return / cost",
+  "engine": "storm-throne-1",
+  "engineSourceSha256": "ce628cfee7dc9e83edc649140052c005335069c3303c750c7777d6ffb1e22f4d",
+  "engineSourceNote": "sha256 of packages/protocol/src/storm-throne.ts with the STORM_RTP evidence block (between the @evidence-block markers) removed. The constants were filled after the run; no engine code, tables or RNG changed afterwards.",
+  "seed": "storm-throne-20261012-evidence",
+  "workers": 4,
+  "betCentsSimulated": 100,
+  "betLevelsCents": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    800,
+    1000,
+    1500,
+    2000,
+    2500,
+    4000,
+    5000,
+    7500,
+    10000,
+    15000,
+    20000,
+    25000,
+    40000,
+    50000
+  ],
+  "winTierMeasure": "round total / bet",
+  "tuningOverride": null,
+  "modes": {
+    "standard": {
+      "rounds": 20000000,
+      "costBets": 1,
+      "rtpVsCost": {
+        "pointEstimate": 0.96469,
+        "pointEstimatePct": 96.4694,
+        "ci95": [
+          0.95912,
+          0.97026
+        ],
+        "ci95Pct": [
+          95.9124,
+          97.0264
+        ],
+        "ci95HalfWidthPct": 0.557
+      },
+      "integerPayoutCheckRtp": 0.96469,
+      "hitRate": 0.26772,
+      "featureRate": 0.002426,
+      "featureOneIn": 412.3,
+      "featureCount": 48510,
+      "avgFreeSpinsPerRound": 0.03787,
+      "avgFreeSpinsPerTrigger": 15.615,
+      "freeSpinsPlayed": 757477,
+      "retriggers": 5969,
+      "maxFreeSpinsInOneRound": 40,
+      "freeSpinHitRate": 0.34764,
+      "freeSpinsWithOrbsShare": 0.65103,
+      "avgFinalTotalMultiplierInFeatures": 33.46,
+      "maxFinalTotalMultiplier": 566,
+      "baseSpinsWithOrbsShare": 0.12162,
+      "baseSpinsWithOrbsAndTumbleWinShare": 0.0366,
+      "stdDevPerRoundCostUnits": 12.7094,
+      "stdDevPerRoundBetUnits": 12.7094,
+      "contributionPctOfCost": {
+        "baseGame": 59.2085,
+        "freeSpins": 37.2608,
+        "scatterPayInBase": 0.9582
+      },
+      "avgFreeWinPerTriggerBets": 153.62,
+      "winTiersShareOfRounds": {
+        "atLeast10xBet": 0.01,
+        "atLeast25xBet": 0.0039579,
+        "atLeast50xBet": 0.0022963,
+        "atLeast100xBet": 0.0013747,
+        "atLeast500xBet": 0.00010715,
+        "atLeast1000xBet": 0.0000152,
+        "atLeast2000xBet": 0.0000024,
+        "atLeast5000xBet": 2.5e-7
+      },
+      "winTiersRounds": {
+        "atLeast10xBet": 200007,
+        "atLeast25xBet": 79158,
+        "atLeast50xBet": 45925,
+        "atLeast100xBet": 27494,
+        "atLeast500xBet": 2143,
+        "atLeast1000xBet": 304,
+        "atLeast2000xBet": 48,
+        "atLeast5000xBet": 5
+      },
+      "maxObservedOrbSum": 527,
+      "maxObservedXBet": 5000,
+      "maxObservedXCost": 5000,
+      "maxTumblesInOneSpin": 15,
+      "capHits": 5,
+      "capHitShareOfRounds": 2.5e-7,
+      "capXBet": 5000,
+      "minScattersInInitialBaseGrid": 0,
+      "costMismatches": 0,
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 162.7
+    },
+    "ante": {
+      "rounds": 20000000,
+      "costBets": 1.25,
+      "rtpVsCost": {
+        "pointEstimate": 0.96646,
+        "pointEstimatePct": 96.6464,
+        "ci95": [
+          0.96117,
+          0.97176
+        ],
+        "ci95Pct": [
+          96.1171,
+          97.1756
+        ],
+        "ci95HalfWidthPct": 0.5293
+      },
+      "integerPayoutCheckRtp": 0.96646,
+      "hitRate": 0.26442,
+      "featureRate": 0.004903,
+      "featureOneIn": 204,
+      "featureCount": 98052,
+      "avgFreeSpinsPerRound": 0.07677,
+      "avgFreeSpinsPerTrigger": 15.66,
+      "freeSpinsPlayed": 1535472,
+      "retriggers": 12944,
+      "maxFreeSpinsInOneRound": 40,
+      "freeSpinHitRate": 0.35833,
+      "freeSpinsWithOrbsShare": 0.55042,
+      "avgFinalTotalMultiplierInFeatures": 26.21,
+      "maxFinalTotalMultiplier": 574,
+      "baseSpinsWithOrbsShare": 0.12086,
+      "baseSpinsWithOrbsAndTumbleWinShare": 0.03573,
+      "stdDevPerRoundCostUnits": 12.0768,
+      "stdDevPerRoundBetUnits": 15.096,
+      "contributionPctOfCost": {
+        "baseGame": 46.5338,
+        "freeSpins": 50.1126,
+        "scatterPayInBase": 1.6751
+      },
+      "avgFreeWinPerTriggerBets": 127.77,
+      "winTiersShareOfRounds": {
+        "atLeast10xBet": 0.011986,
+        "atLeast25xBet": 0.0058744,
+        "atLeast50xBet": 0.0038175,
+        "atLeast100xBet": 0.00231,
+        "atLeast500xBet": 0.00014135,
+        "atLeast1000xBet": 0.0000176,
+        "atLeast2000xBet": 0.0000027,
+        "atLeast5000xBet": 3e-7
+      },
+      "winTiersRounds": {
+        "atLeast10xBet": 239725,
+        "atLeast25xBet": 117487,
+        "atLeast50xBet": 76350,
+        "atLeast100xBet": 46200,
+        "atLeast500xBet": 2827,
+        "atLeast1000xBet": 352,
+        "atLeast2000xBet": 54,
+        "atLeast5000xBet": 6
+      },
+      "maxObservedOrbSum": 524,
+      "maxObservedXBet": 5000,
+      "maxObservedXCost": 4000,
+      "maxTumblesInOneSpin": 13,
+      "capHits": 6,
+      "capHitShareOfRounds": 3e-7,
+      "capXBet": 5000,
+      "minScattersInInitialBaseGrid": 0,
+      "costMismatches": 0,
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 231.1
+    },
+    "buy": {
+      "rounds": 20000000,
+      "costBets": 100,
+      "rtpVsCost": {
+        "pointEstimate": 0.96227,
+        "pointEstimatePct": 96.2274,
+        "ci95": [
+          0.96168,
+          0.96287
+        ],
+        "ci95Pct": [
+          96.168,
+          96.2867
+        ],
+        "ci95HalfWidthPct": 0.0593
+      },
+      "integerPayoutCheckRtp": 0.96227,
+      "hitRate": 1,
+      "featureRate": 1,
+      "featureOneIn": 1,
+      "featureCount": 20000000,
+      "avgFreeSpinsPerRound": 15.68249,
+      "avgFreeSpinsPerTrigger": 15.682,
+      "freeSpinsPlayed": 313649801,
+      "retriggers": 2730659,
+      "maxFreeSpinsInOneRound": 50,
+      "freeSpinHitRate": 0.37093,
+      "freeSpinsWithOrbsShare": 0.40401,
+      "avgFinalTotalMultiplierInFeatures": 17.78,
+      "maxFinalTotalMultiplier": 1066,
+      "baseSpinsWithOrbsShare": 0.10249,
+      "baseSpinsWithOrbsAndTumbleWinShare": 0.01539,
+      "stdDevPerRoundCostUnits": 1.3532,
+      "stdDevPerRoundBetUnits": 135.3247,
+      "contributionPctOfCost": {
+        "baseGame": 3.4104,
+        "freeSpins": 92.817,
+        "scatterPayInBase": 3.2162
+      },
+      "avgFreeWinPerTriggerBets": 92.82,
+      "winTiersShareOfRounds": {
+        "atLeast10xBet": 0.91946,
+        "atLeast25xBet": 0.74963,
+        "atLeast50xBet": 0.55237,
+        "atLeast100xBet": 0.31429,
+        "atLeast500xBet": 0.013243,
+        "atLeast1000xBet": 0.0019989,
+        "atLeast2000xBet": 0.0004744,
+        "atLeast5000xBet": 0.000054
+      },
+      "winTiersRounds": {
+        "atLeast10xBet": 18389225,
+        "atLeast25xBet": 14992598,
+        "atLeast50xBet": 11047379,
+        "atLeast100xBet": 6285835,
+        "atLeast500xBet": 264861,
+        "atLeast1000xBet": 39978,
+        "atLeast2000xBet": 9488,
+        "atLeast5000xBet": 1080
+      },
+      "maxObservedOrbSum": 750,
+      "maxObservedXBet": 5000,
+      "maxObservedXCost": 50,
+      "maxTumblesInOneSpin": 18,
+      "capHits": 1080,
+      "capHitShareOfRounds": 0.000054,
+      "capXBet": 5000,
+      "minScattersInInitialBaseGrid": 4,
+      "costMismatches": 0,
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 1902.9
+    }
+  },
+  "tables": {
+    "paytableHundredths": {
+      "h1": [
+        960,
+        2400,
+        5760
+      ],
+      "h2": [
+        480,
+        1440,
+        3360
+      ],
+      "h3": [
+        320,
+        960,
+        2400
+      ],
+      "h4": [
+        200,
+        600,
+        1600
+      ],
+      "l1": [
+        128,
+        400,
+        1120
+      ],
+      "l2": [
+        96,
+        280,
+        800
+      ],
+      "l3": [
+        72,
+        200,
+        600
+      ],
+      "l4": [
+        48,
+        144,
+        440
+      ],
+      "l5": [
+        32,
+        104,
+        320
+      ]
+    },
+    "scatterPayHundredths": {
+      "4": 300,
+      "5": 500,
+      "6": 10000
+    },
+    "orbWeights": [
+      [
+        2,
+        5600
+      ],
+      [
+        3,
+        4000
+      ],
+      [
+        4,
+        3000
+      ],
+      [
+        5,
+        2200
+      ],
+      [
+        6,
+        1700
+      ],
+      [
+        8,
+        1200
+      ],
+      [
+        10,
+        900
+      ],
+      [
+        12,
+        600
+      ],
+      [
+        15,
+        400
+      ],
+      [
+        20,
+        250
+      ],
+      [
+        25,
+        150
+      ],
+      [
+        50,
+        60
+      ],
+      [
+        100,
+        20
+      ],
+      [
+        250,
+        6
+      ],
+      [
+        500,
+        2
+      ]
+    ],
+    "modeTables": {
+      "standard": {
+        "base": [
+          [
+            "h1",
+            56
+          ],
+          [
+            "h2",
+            76
+          ],
+          [
+            "h3",
+            100
+          ],
+          [
+            "h4",
+            126
+          ],
+          [
+            "l1",
+            156
+          ],
+          [
+            "l2",
+            172
+          ],
+          [
+            "l3",
+            184
+          ],
+          [
+            "l4",
+            194
+          ],
+          [
+            "l5",
+            200
+          ],
+          [
+            "scatter",
+            22
+          ],
+          [
+            "orb",
+            5
+          ]
+        ],
+        "free": [
+          [
+            "h1",
+            500
+          ],
+          [
+            "h2",
+            660
+          ],
+          [
+            "h3",
+            880
+          ],
+          [
+            "h4",
+            1100
+          ],
+          [
+            "l1",
+            1500
+          ],
+          [
+            "l2",
+            1760
+          ],
+          [
+            "l3",
+            2000
+          ],
+          [
+            "l4",
+            2240
+          ],
+          [
+            "l5",
+            2400
+          ],
+          [
+            "scatter",
+            160
+          ],
+          [
+            "orb",
+            405
+          ]
+        ]
+      },
+      "ante": {
+        "base": [
+          [
+            "h1",
+            56
+          ],
+          [
+            "h2",
+            76
+          ],
+          [
+            "h3",
+            100
+          ],
+          [
+            "h4",
+            126
+          ],
+          [
+            "l1",
+            156
+          ],
+          [
+            "l2",
+            172
+          ],
+          [
+            "l3",
+            184
+          ],
+          [
+            "l4",
+            194
+          ],
+          [
+            "l5",
+            200
+          ],
+          [
+            "scatter",
+            27
+          ],
+          [
+            "orb",
+            5
+          ]
+        ],
+        "free": [
+          [
+            "h1",
+            500
+          ],
+          [
+            "h2",
+            660
+          ],
+          [
+            "h3",
+            880
+          ],
+          [
+            "h4",
+            1100
+          ],
+          [
+            "l1",
+            1500
+          ],
+          [
+            "l2",
+            1760
+          ],
+          [
+            "l3",
+            2000
+          ],
+          [
+            "l4",
+            2240
+          ],
+          [
+            "l5",
+            2400
+          ],
+          [
+            "scatter",
+            160
+          ],
+          [
+            "orb",
+            303
+          ]
+        ]
+      },
+      "buy": {
+        "base": [
+          [
+            "h1",
+            56
+          ],
+          [
+            "h2",
+            76
+          ],
+          [
+            "h3",
+            100
+          ],
+          [
+            "h4",
+            126
+          ],
+          [
+            "l1",
+            156
+          ],
+          [
+            "l2",
+            172
+          ],
+          [
+            "l3",
+            184
+          ],
+          [
+            "l4",
+            194
+          ],
+          [
+            "l5",
+            200
+          ],
+          [
+            "scatter",
+            22
+          ],
+          [
+            "orb",
+            5
+          ]
+        ],
+        "free": [
+          [
+            "h1",
+            500
+          ],
+          [
+            "h2",
+            660
+          ],
+          [
+            "h3",
+            880
+          ],
+          [
+            "h4",
+            1100
+          ],
+          [
+            "l1",
+            1500
+          ],
+          [
+            "l2",
+            1760
+          ],
+          [
+            "l3",
+            2000
+          ],
+          [
+            "l4",
+            2240
+          ],
+          [
+            "l5",
+            2400
+          ],
+          [
+            "scatter",
+            160
+          ],
+          [
+            "orb",
+            194
+          ]
+        ]
+      }
+    }
+  },
+  "runtimeSeconds": 2296.8,
+  "node": "v24.21.0",
+  "generatedAt": "2026-10-12T01:25:21.301Z"
+}
