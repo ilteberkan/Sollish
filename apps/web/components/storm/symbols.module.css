@@ -1,0 +1,196 @@
+/* Tarhun: Fırtına Tahtı — board frame, logo and dev gallery styles. Only opacity/transform animate. */
+
+/* ---------------- board frame ---------------- */
+.frame {
+  --rune: #6fdcff;
+  --rune-halo: #2a9dff;
+  --rune-lo: 0.55;
+  --rune-hi: 1;
+  --rune-speed: 3.6s;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1000 / 870;
+  border-radius: 1.6% / 1.85%;
+  box-shadow:
+    0 34px 70px -24px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(0, 0, 0, 0.6),
+    0 0 70px -10px rgba(64, 170, 255, 0.28);
+  isolation: isolate;
+}
+.frame[data-mood='feature'] {
+  --rune: #fff1b0;
+  --rune-halo: #ffb43a;
+  --rune-lo: 0.75;
+  --rune-hi: 1;
+  --rune-speed: 1.1s;
+  box-shadow:
+    0 34px 70px -24px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(0, 0, 0, 0.6),
+    0 0 90px -6px rgba(255, 190, 80, 0.4),
+    0 0 40px -10px rgba(120, 230, 255, 0.5);
+}
+.glass {
+  position: absolute;
+  left: 5%;
+  top: 7.356%;
+  width: 90%;
+  height: 86.207%;
+  border-radius: 1.1% / 1.3%;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 0%, rgba(70, 150, 220, 0.26), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 50% 110%, rgba(30, 160, 150, 0.2), transparent 70%),
+    linear-gradient(180deg, #16224a 0%, #0d1631 55%, #08101f 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.7),
+    inset 0 0 60px rgba(70, 160, 255, 0.2),
+    inset 0 10px 24px -8px rgba(0, 0, 0, 0.75);
+}
+.frame[data-mood='feature'] .glass {
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 0%, rgba(120, 220, 255, 0.32), transparent 70%),
+    radial-gradient(ellipse 70% 50% at 50% 110%, rgba(255, 180, 70, 0.22), transparent 70%),
+    linear-gradient(180deg, #1a2a5a 0%, #10193a 55%, #0a1224 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.7),
+    inset 0 0 70px rgba(120, 220, 255, 0.32),
+    inset 0 10px 24px -8px rgba(0, 0, 0, 0.75);
+}
+.clouds {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.glassSheen {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(118deg, transparent 18%, rgba(190, 230, 255, 0.07) 26%, transparent 34%, transparent 62%, rgba(190, 230, 255, 0.04) 68%, transparent 72%),
+    radial-gradient(ellipse 120% 100% at 50% 50%, transparent 66%, rgba(2, 6, 18, 0.5) 100%);
+}
+.frameArt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 3;
+}
+.runes .rune {
+  animation: runePulse var(--rune-speed) ease-in-out infinite alternate;
+}
+.runes .rune:nth-child(3n + 1) { animation-delay: -1.2s; }
+.runes .rune:nth-child(3n + 2) { animation-delay: -2.3s; }
+.runeHalo {
+  fill: none;
+  stroke: var(--rune-halo);
+  stroke-width: 5.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.4;
+}
+.runeCore {
+  fill: none;
+  stroke: var(--rune);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.innerArc {
+  stroke: var(--rune);
+  stroke-width: 1.4;
+  opacity: 0.28;
+}
+.frame[data-mood='feature'] .innerArc {
+  stroke-width: 2.6;
+  opacity: 0.9;
+}
+.lionEye {
+  fill: var(--rune);
+  stroke: #1a1714;
+  stroke-width: 1;
+}
+.keyBolt {
+  fill: var(--rune);
+}
+.keyGlow {
+  opacity: 0.7;
+  transition: opacity 0.4s ease;
+}
+.frame[data-mood='feature'] .keyGlow { opacity: 1; }
+@keyframes runePulse {
+  from { opacity: var(--rune-lo); }
+  to { opacity: var(--rune-hi); }
+}
+
+/* ---------------- logo ---------------- */
+.logo {
+  display: block;
+  max-width: 100%;
+}
+.logoGlow {
+  animation: logoGlow 4.2s ease-in-out infinite alternate;
+}
+@keyframes logoGlow {
+  from { opacity: 0.65; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .runes .rune,
+  .logoGlow { animation: none; }
+}
+
+/* ---------------- dev gallery ---------------- */
+.labPage {
+  min-height: 100vh;
+  padding: 24px 16px 64px;
+  background: radial-gradient(ellipse 80% 50% at 50% 0%, #1b2a55, #0a0f1f 70%);
+  color: #eef3fb;
+}
+.labInner { max-width: 1240px; margin: 0 auto; display: grid; gap: 28px; }
+.labH { margin: 0 0 10px; font-size: 20px; letter-spacing: -0.3px; color: #f0c26a; }
+.labRow { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; }
+.labCard {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  padding: 12px;
+  border-radius: 14px;
+  background: linear-gradient(160deg, #1c2a52, #0e1530);
+  border: 1px solid #2c3e6a;
+  font-size: 12px;
+  color: #b8c6dc;
+  text-align: center;
+}
+.labSmallRow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.labGray { filter: grayscale(1); }
+.labBoards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr)); gap: 40px 28px; }
+.labBoardWrap { padding: 4% 3%; }
+.labGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  width: 100%;
+  height: 100%;
+  padding: 1.8%;
+  gap: 0.8%;
+}
+.labCell {
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+}
+.labCell > svg { width: 92%; height: 92%; }
+.labLogos { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; }
