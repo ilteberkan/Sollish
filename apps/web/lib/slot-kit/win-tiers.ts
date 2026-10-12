@@ -8,6 +8,8 @@
  * counter climbs THROUGH the tiers: it opens as Büyük and upgrades as it passes each threshold.
  */
 
+import { MULTIPLIER_CLASS_MIN, WIN_TIER_THRESHOLDS as TIER_MULTIPLES } from '../slot-audio/win-tiers';
+
 /** 0 = no celebration; 1..4 = Büyük, Mega, Süper, Efsane. */
 export type WinTier = 0 | 1 | 2 | 3 | 4;
 /** What a celebration screen shows: a tier, or 5 = Azami (capped round). */
@@ -25,14 +27,16 @@ export interface WinTierInfo {
   minHundredths: number;
 }
 export const WIN_TIER_INFO: Readonly<Record<CelebrationLevel, WinTierInfo>> = Object.freeze({
-  1: Object.freeze({ level: 1, id: 'big', title: 'Büyük Kazanç', word: 'BÜYÜK', minHundredths: 1000 }),
-  2: Object.freeze({ level: 2, id: 'mega', title: 'Mega Kazanç', word: 'MEGA', minHundredths: 2500 }),
-  3: Object.freeze({ level: 3, id: 'super', title: 'Süper Kazanç', word: 'SÜPER', minHundredths: 5000 }),
-  4: Object.freeze({ level: 4, id: 'epic', title: 'Efsane Kazanç', word: 'EFSANE', minHundredths: 10_000 }),
+  1: Object.freeze({ level: 1, id: 'big', title: 'Büyük Kazanç', word: 'BÜYÜK', minHundredths: TIER_MULTIPLES[1] * 100 }),
+  2: Object.freeze({ level: 2, id: 'mega', title: 'Mega Kazanç', word: 'MEGA', minHundredths: TIER_MULTIPLES[2] * 100 }),
+  3: Object.freeze({ level: 3, id: 'super', title: 'Süper Kazanç', word: 'SÜPER', minHundredths: TIER_MULTIPLES[3] * 100 }),
+  4: Object.freeze({ level: 4, id: 'epic', title: 'Efsane Kazanç', word: 'EFSANE', minHundredths: TIER_MULTIPLES[4] * 100 }),
   5: Object.freeze({ level: 5, id: 'max', title: 'Azami Kazanç', word: 'AZAMİ', minHundredths: 0 }),
 } as const);
-/** Tier thresholds in hundredths of the base bet: 10×, 25×, 50×, 100×. */
-export const WIN_TIER_THRESHOLDS = Object.freeze([1000, 2500, 5000, 10_000] as const);
+/** Tier thresholds in hundredths of the base bet: 10×, 25×, 50×, 100× (single source: the sound engine's tier table). */
+export const WIN_TIER_THRESHOLDS: readonly [number, number, number, number] = Object.freeze([
+  TIER_MULTIPLES[1] * 100, TIER_MULTIPLES[2] * 100, TIER_MULTIPLES[3] * 100, TIER_MULTIPLES[4] * 100,
+]) as readonly [number, number, number, number];
 
 /** Tier of a round total (hundredths of the base bet). */
 export function winTierOf(totalHundredths: number): WinTier {
@@ -56,7 +60,9 @@ export function roundCelebration(totalHundredths: number, capped: boolean): Roun
 
 /* ------------------------------------------------------------------ multiplier callouts */
 /** Multiplier callout treatment: 0 = plain (<10×), 1..4 = ≥10×, ≥25×, ≥50×, ≥100×. */
-export const MULTIPLIER_CALLOUT_THRESHOLDS = Object.freeze([10, 25, 50, 100] as const);
+export const MULTIPLIER_CALLOUT_THRESHOLDS: readonly [number, number, number, number] = Object.freeze([
+  MULTIPLIER_CLASS_MIN.x10, MULTIPLIER_CLASS_MIN.x25, MULTIPLIER_CLASS_MIN.x50, MULTIPLIER_CLASS_MIN.x100,
+]) as readonly [number, number, number, number];
 export function multiplierCalloutTier(multiplier: number): WinTier {
   const [a, b, c, d] = MULTIPLIER_CALLOUT_THRESHOLDS;
   if (!Number.isFinite(multiplier)) return 0;

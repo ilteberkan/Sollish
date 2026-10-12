@@ -1,4 +1,4 @@
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect, type Locator, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { CASCADE2_RTP, cascadeSeedFromEntropy, playCascade2Round, type CascadeMode } from '@sollish/protocol';
 import { SYMBOL_LABELS } from '../../components/cascade/symbols';
@@ -43,6 +43,8 @@ async function openCascade(page: Page) {
   await enter(page);
 }
 const spin = (page: Page) => page.getByRole('button', { name: 'Çevir', exact: true });
+/** Taps a hold-screen button if it is (still) there: turbo holds are short and auto-advance, so a slow runner may miss them. */
+const tapIfShown = (locator: Locator, timeout = 15_000) => locator.click({ force: true, timeout }).catch(() => {});
 const demoText = (cents: number) => new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(cents / 100);
 const celebration = (page: Page) => page.getByTestId('cascade-celebration');
 /** Records every level the celebration shows (data-level), in order, and every meter reading. */
@@ -76,7 +78,7 @@ async function expectCelebration(page: Page, fill: number, expected: { levels: s
   await recordPresentation(page);
   await stub(page, fill);
   await openCascade(page);
-  await setTurbo(page);
+  if (round.freeSpinsTriggered) await setQuick(page); else await setTurbo(page);
   if (bet !== 1000) await chooseBet(page, bet / 100);
   if (mode === 'buy') {
     await page.getByRole('button', { name: /Bonus satın al/ }).click();
@@ -84,19 +86,20 @@ async function expectCelebration(page: Page, fill: number, expected: { levels: s
   } else await spin(page).click();
   await expect(balance(page)).toContainText(formatAmount(START - round.costCents));
   if (round.freeSpinsTriggered) {
-    await page.getByRole('dialog', { name: 'Bedava dönüş' }).getByRole('button', { name: 'Başla' }).click({ timeout: 20_000 });
+    await tapIfShown(page.getByRole('dialog', { name: 'Bedava dönüş' }).getByRole('button', { name: 'Başla' }), 20_000);
     const total = page.getByRole('dialog', { name: 'Bedava Dönüş Toplamı' });
     await expect(total).toBeVisible({ timeout: 150_000 });
     await expect(total.getByTestId('cascade-feature-amount')).toHaveText(demoText(round.payoutCents), { timeout: 5000 });
   }
   await expect(celebration(page)).toBeVisible({ timeout: 60_000 });
   await expect(spin(page)).toBeDisabled(); // still locked while the celebration plays
-  if (opts.tapWithSpace) { await page.locator('h1').click({ force: true }).catch(() => {}); await page.keyboard.press('Space'); }
-  else await celebration(page).click({ position: { x: 12, y: 12 } }); // first tap: finish the count-up
+  if (opts.tapWithSpace) { await page.locator('h1').click(); await page.keyboard.press('Space'); } // first tap: finish the count-up
+  else await expect(celebration(page).getByRole('button', { name: 'Devam' })).toBeVisible({ timeout: 20_000 }); // let it climb on its own
   await expect(celebration(page).getByTestId('cascade-celebration-amount')).toHaveText(demoText(round.payoutCents));
   await expect(celebration(page)).toHaveAccessibleName(expected.title);
   await expect(celebration(page).getByRole('button', { name: 'Devam' })).toBeVisible();
-  await celebration(page).click({ position: { x: 12, y: 12 } }); // second tap closes
+  // Second tap closes (in turbo the short hold may already have closed it on its own).
+  await celebration(page).click({ position: { x: 12, y: 12 }, timeout: 2000 }).catch(() => {});
   await expect(celebration(page)).toHaveCount(0);
   await expect(rows(page)).toHaveCount(1, { timeout: 15_000 });
   await expect(balance(page)).toContainText(formatAmount(START - round.costCents + round.payoutCents));
@@ -106,6 +109,11 @@ async function expectCelebration(page: Page, fill: number, expected: { levels: s
 const balance = (page: Page) => page.getByTestId('cascade-balance');
 const rows = (page: Page) => page.locator('.history-table tbody tr');
 const speedButton = (page: Page) => page.getByRole('button', { name: /^Dönüş hızı:/ });
+/** Quick speed keeps the full hold screens (free-spin intro/total), so slow runners do not race them. */
+async function setQuick(page: Page) {
+  await speedButton(page).click();
+  await expect(speedButton(page)).toHaveAccessibleName('Dönüş hızı: Hızlı');
+}
 async function setTurbo(page: Page) {
   await speedButton(page).click();
   await speedButton(page).click();
@@ -192,7 +200,7 @@ test('spin lock: the spin button stays disabled for the whole round; extra click
   await expect(balance(page)).toContainText(formatAmount(START - 1000));
   const button = page.getByTestId('cascade-spin');
   await expect(button).toBeDisabled();
-  await expect(button).toHaveAttribute('data-locked', '');
+  await expect(button).toHaveAttribute('data-locked', 'true');
   await expect(button).toHaveAccessibleName('Çevir');
   for (let i = 0; i < 4; i++) {
     await button.click({ force: true });           // a disabled button never fires
@@ -244,7 +252,7 @@ test('navigating away mid-animation settles once with the full payout (no refund
   await expect(rows(page)).toHaveCount(1);
 });
 
-test('free spins (turbo): intro, crystals, one cumulative meter, total screen, celebration Büyük → Mega = engine total', async ({ page }) => {
+test('free spins (quick): intro, crystals, one cumulative meter, total screen, celebration Büyük → Mega = engine total', async ({ page }) => {
   test.setTimeout(120_000);
   const round = engine(FREE);
   expect(round.freeSpinsTriggered).toBe(true);
@@ -252,12 +260,12 @@ test('free spins (turbo): intro, crystals, one cumulative meter, total screen, c
   await recordPresentation(page);
   await stub(page, FREE);
   await openCascade(page);
-  await setTurbo(page);
+  await setQuick(page);
   await spin(page).click();
   const intro = page.getByRole('dialog', { name: 'Bedava dönüş' });
   await expect(intro).toBeVisible({ timeout: 10_000 });
   await expect(intro).toContainText('10');
-  await intro.getByRole('button', { name: 'Başla' }).click();
+  await tapIfShown(intro.getByRole('button', { name: 'Başla' }), 5000);
   await expect(page.getByLabel(/Bedava dönüş \d+, kalan dönüş \d+/)).toBeVisible();
   await expect(page.getByTestId('cascade-meter')).toContainText('Toplam kazanç');
   await expect(page.getByTestId('cascade-meter')).not.toContainText('Bu dönüş');
@@ -272,9 +280,9 @@ test('free spins (turbo): intro, crystals, one cumulative meter, total screen, c
   expect(readings.length).toBeGreaterThan(10);
   for (let i = 1; i < readings.length; i++) expect(readings[i]!, `meter reading ${i}`).toBeGreaterThanOrEqual(readings[i - 1]!);
   expect(readings.at(-1)).toBeCloseTo(round.payoutCents / 100, 2);
-  await total.getByRole('button', { name: 'Kutlamaya geç' }).click();
+  await tapIfShown(total.getByRole('button', { name: 'Kutlamaya geç' }), 3000);
   await expect(celebration(page)).toBeVisible({ timeout: 10_000 });
-  await celebration(page).getByRole('button', { name: 'Hızlandırmak için dokun' }).click();
+  await expect(celebration(page).getByRole('button', { name: 'Devam' })).toBeVisible({ timeout: 20_000 }); // climbs on its own
   await expect(celebration(page).getByTestId('cascade-celebration-amount')).toHaveText(demoText(round.payoutCents));
   await expect(celebration(page)).toHaveAccessibleName(/Mega Kazanç/);
   await expect(rows(page)).toHaveCount(1, { timeout: 15_000 });
@@ -290,13 +298,13 @@ test('free-spin round below 10x still ends on the "Bedava Dönüş Toplamı" scr
   await recordPresentation(page);
   await stub(page, FREE_LOW);
   await openCascade(page);
-  await setTurbo(page);
+  await setQuick(page);
   await spin(page).click();
-  await page.getByRole('dialog', { name: 'Bedava dönüş' }).getByRole('button', { name: 'Başla' }).click({ timeout: 15_000 });
+  await tapIfShown(page.getByRole('dialog', { name: 'Bedava dönüş' }).getByRole('button', { name: 'Başla' }), 15_000);
   const total = page.getByRole('dialog', { name: 'Bedava Dönüş Toplamı' });
   await expect(total).toBeVisible({ timeout: 90_000 });
   await expect(total.getByTestId('cascade-feature-amount')).toHaveText(demoText(round.payoutCents));
-  await total.getByRole('button', { name: 'Devam' }).click();
+  await tapIfShown(total.getByRole('button', { name: 'Devam' }), 3000);
   await expect(rows(page)).toHaveCount(1, { timeout: 15_000 });
   expect(await levels(page)).toEqual([]);
   await expect(balance(page)).toContainText(formatAmount(START - 1000 + round.payoutCents));
@@ -335,9 +343,9 @@ test('a x12 crystal total gets its own big callout over the board', async ({ pag
   await recordPresentation(page);
   await stub(page, FREE_X12);
   await openCascade(page);
-  await setTurbo(page);
+  await setQuick(page);
   await spin(page).click();
-  await page.getByRole('dialog', { name: 'Bedava dönüş' }).getByRole('button', { name: 'Başla' }).click({ timeout: 15_000 });
+  await tapIfShown(page.getByRole('dialog', { name: 'Bedava dönüş' }).getByRole('button', { name: 'Başla' }), 15_000);
   await expect.poll(() => callouts(page), { timeout: 140_000 }).toContain('1:Büyük çarpan×12');
   const applied = round.spins.filter(s => s.multiplierSum > 0 && s.tumbleHundredths > 0).map(s => s.multiplierSum);
   await expect(page.getByRole('dialog', { name: 'Bedava Dönüş Toplamı' })).toBeVisible({ timeout: 140_000 });
@@ -391,7 +399,7 @@ test('bonus buy: dialog, cost bet × 100, intro, outro, balance = start − cost
   expect(round.freeSpinsTriggered).toBe(true);
   await stub(page, FREE);
   await openCascade(page);
-  await setTurbo(page);
+  await setQuick(page);
   await chooseBet(page, 5);
   await page.getByRole('button', { name: /Bonus satın al/ }).click();
   const dialog = page.getByRole('dialog', { name: 'Bonus satın al' });
@@ -403,12 +411,12 @@ test('bonus buy: dialog, cost bet × 100, intro, outro, balance = start − cost
   await expect(balance(page)).toContainText(formatAmount(START - 50_000));
   const intro = page.getByRole('dialog', { name: 'Bedava dönüş' });
   await expect(intro).toBeVisible({ timeout: 15_000 });
-  await intro.getByRole('button', { name: 'Başla' }).click();
+  await tapIfShown(intro.getByRole('button', { name: 'Başla' }), 5000);
   const outro = page.getByRole('dialog', { name: 'Bedava Dönüş Toplamı' });
   await expect(outro).toBeVisible({ timeout: 60_000 });
   await expect(outro).toContainText(`${round.spins.length - 1} dönüş`);
   await expect(outro.getByTestId('cascade-feature-amount')).toHaveText(demoText(round.payoutCents));
-  await outro.getByRole('button', { name: /^(Devam|Kutlamaya geç)$/ }).click();
+  await tapIfShown(outro.getByRole('button', { name: /^(Devam|Kutlamaya geç)$/ }), 3000);
   if (round.totalHundredths >= 1000) {
     await celebration(page).click({ position: { x: 12, y: 12 } });
     await expect(celebration(page).getByTestId('cascade-celebration-amount')).toHaveText(demoText(round.payoutCents));

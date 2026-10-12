@@ -133,7 +133,7 @@ export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, 
       <section className={styles.group}>
         <AmountField label="Kayıp limiti" required hint={lossHint} value={lossText} onChange={setLossText} error={parsed.lossError} disabled={disabled} />
         {spinCostCents !== undefined && (
-          <div className={styles.shortcuts} role="group" aria-label="Kayıp limiti kısayolları">
+          <div className={cx(styles.shortcuts, styles.shortcutsRow)} role="group" aria-label="Kayıp limiti kısayolları">
             {SHORTCUTS.map(n => (
               <button key={n} type="button" className={styles.chip} disabled={disabled} onClick={() => setLossText(centsText(spinCostCents * n))}>{n}× bahis</button>
             ))}
@@ -147,7 +147,7 @@ export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, 
       >
         <summary className={styles.advancedSummary}>
           <span className={styles.advancedTitle}>Gelişmiş</span>
-          <span className={styles.advancedState}>{summary.length ? summary.join(' · ') : 'Ek durma koşulu yok'}</span>
+          <span className={styles.advancedState}>{summary.length ? `Durur: ${summary.join(' · ')}` : 'Ek durma koşulu yok'}</span>
         </summary>
         <div className={styles.advancedBody} role="group" aria-label="Ek durma koşulları">
           <Toggle label="Her kazançta dur" checked={stopOnAnyWin} onChange={setStopOnAnyWin} disabled={disabled} />

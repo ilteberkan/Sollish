@@ -38,7 +38,7 @@ export function cascadeInfoPages(betCents: number): GameInfoPage[] {
             <li><strong>Çevir.</strong> Büyük düğmeye bas veya Boşluk tuşunu kullan. Bahis tutarı (Şans ×2 açıksa 1,25 katı) bakiyeden bir kez düşer.</li>
             <li><strong>Eşleştir.</strong> 6 sütun × 5 satırlık ızgarada aynı şekerden <strong>her yerde 8 veya daha fazla</strong> varsa kazanırsın; sayı arttıkça ödeme kademesi yükselir.</li>
             <li><strong>Zincir.</strong> Kazanan şekerler patlar, üsttekiler düşer, boşluklar yeni şekerle dolar. Yeni kazanç kalmayana kadar sürer.</li>
-            <li><strong>Sonuç.</strong> Turun tamamı dönüş başlamadan önce motorla belirlenir; animasyon yalnızca bu sonucu oynatır. "Atla", hız ayarı, gizli sekme veya sayfadan ayrılma ödemeyi değiştirmez; tur her durumda bir kez, motorun ödemesiyle kapanır.</li>
+            <li><strong>Sonuç.</strong> Turun tamamı dönüş başlamadan önce motorla belirlenir; animasyon yalnızca bu sonucu oynatır. Çevir düğmesi tur (bütün düşmeler ve bedava dönüşler) bitene kadar kilitlidir; hızlandırmak için Hızlı/Turbo ayarını kullan. Hız ayarı, kutlama sayacına dokunmak, gizli sekme veya sayfadan ayrılma ödemeyi değiştirmez; tur her durumda bir kez, motorun ödemesiyle kapanır.</li>
           </ol>
           <p className={styles.note}>DEMO kredisi değersizdir; SOL, token veya ödül kazandırmaz. Oyun tarayıcıda yerel rastgelelikle çalışır, VRF kanıtı yoktur.</p>
         </div>
@@ -51,7 +51,7 @@ export function cascadeInfoPages(betCents: number): GameInfoPage[] {
         <div className={styles.page}>
           <h3>Özellikler</h3>
           <Feature title="Düşen şekerler (tumble)" art={<SymbolArt symbol="strawberry" size="100%" />}>
-            <p>Her kazançtan sonra kazanan şekerler patlar, kalanlar aşağı kayar ve boşluklar üstten dolar. Bir dönüşteki bütün düşmeler tek dönüş kazancında toplanır.</p>
+            <p>Her kazançtan sonra kazanan şekerler patlar, kalanlar aşağı kayar ve boşluklar üstten dolar. Kazanç göstergesi tur boyunca sıfırlanmaz: düşmeler, çarpanlar ve bütün bedava dönüşler aynı toplamda birikir.</p>
           </Feature>
           <Feature title="Yıldız kurabiye (scatter)" art={<SymbolArt symbol="star" size="100%" />}>
             <p>Temel dönüş bitince ızgarada 4 veya daha fazla yıldız varsa ödeme yapar ve {CASCADE_FREE_SPINS_TRIGGER} bedava dönüş açar. Bedava dönüşte 3 veya daha fazla yıldız {CASCADE_FREE_SPINS_RETRIGGER} dönüş daha ekler (ödemesiz). Bir turda en çok {CASCADE_MAX_FREE_SPINS} bedava dönüş oynanır.</p>
@@ -60,7 +60,10 @@ export function cascadeInfoPages(betCents: number): GameInfoPage[] {
             <p>Yalnız bedava dönüşte düşer ve 2× ile 100× arası değer taşır. Dönüş bitince ızgaradaki kristallerin değerleri toplanır; o dönüşün kazancı sıfırdan büyükse bu toplamla çarpılır. Kazanç yoksa kristal etkisizdir.</p>
           </Feature>
           <Feature title="Bedava dönüş">
-            <p>Bedava dönüşler aynı bahisle, aynı tur içinde oynanır; ek ücret alınmaz. Bitince özet kartı toplam kazancı ve oynanan dönüş sayısını gösterir.</p>
+            <p>Bedava dönüşler aynı bahisle, aynı tur içinde oynanır; ek ücret alınmaz. Her zaman "Bedava Dönüş Toplamı" ekranıyla biter: oynanan dönüş, uygulanan kristal çarpanları ve toplam kazanç.</p>
+          </Feature>
+          <Feature title="Kazanç kademeleri">
+            <p>Tur toplamı taban bahsin <strong>10 katı</strong> veya üstüyse kutlama ekranı açılır ve sayaç kademeler arasında tırmanır: Büyük Kazanç ≥10×, Mega Kazanç ≥25×, Süper Kazanç ≥50×, Efsane Kazanç ≥100×; tavana ulaşan tur Azami Kazanç ile biter. 10× altındaki kazanç göstergede kısa bir vurguyla gösterilir. 10× ve üstü çarpan toplamları ızgaranın üstünde büyük yazıyla duyurulur. Ekrana dokunmak sayacı hemen sonuca getirir; ödemeyi değiştirmez.</p>
           </Feature>
           <Feature title={`Şans ×2 · maliyet ${formatDemo(cascadeCost(betCents, 'ante'))}`}>
             <p>Açıkken her dönüş bahsin <strong>1,25 katına</strong> mal olur ve temel oyunda yıldız çıkma olasılığı artar: bedava dönüş şansı yaklaşık 2 katıdır ({pct(CASCADE2_RTP.ante.featureRate, 2)} / {pct(CASCADE2_RTP.standard.featureRate, 2)}). Kazançlar yine taban bahse göre ödenir. Açıkken bonus satın alınamaz.</p>
@@ -123,7 +126,7 @@ export function cascadeInfoPages(betCents: number): GameInfoPage[] {
         <div className={styles.page}>
           <h3>Klavye</h3>
           <dl className={styles.keys}>
-            <div><dt><kbd>Boşluk</kbd></dt><dd>Dönüşü başlatır; dönüş sırasında kartı ve kazanç sayacını geçer (Ayarlar → "Boşluk tuşuyla döndür").</dd></div>
+            <div><dt><kbd>Boşluk</kbd></dt><dd>Dönüşü başlatır (Ayarlar → "Boşluk tuşuyla döndür"). Tur sürerken dönüşü atlamaz; yalnız bedava dönüş kartlarını ve kutlama sayacını hızlandırır.</dd></div>
             <div><dt><kbd>Enter</kbd></dt><dd>Odaktaki düğmeye basar.</dd></div>
             <div><dt><kbd>Esc</kbd></dt><dd>Açık pencereyi kapatır (oturum hatırlatması hariç).</dd></div>
             <div><dt><kbd>Tab</kbd></dt><dd>Kontroller arasında gezinir; odak her zaman görünür.</dd></div>

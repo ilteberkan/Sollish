@@ -92,7 +92,8 @@ function CountUp({ cents, duration, instant, className, from }: { cents: number;
     if (instant || duration <= 0 || from === to || typeof requestAnimationFrame === 'undefined') { shown.current = to; el.textContent = moneyText(to); return; }
     const start = performance.now(); let frame = 0;
     const step = (now: number) => {
-      const p = Math.min(1, (now - start) / duration);
+      // rAF timestamps can precede `start` (frame start vs. effect time): clamp so the meter never dips below `from`.
+      const p = Math.min(1, Math.max(0, (now - start) / duration));
       const eased = 1 - (1 - p) ** 3;
       shown.current = Math.round(from + (to - from) * eased);
       el.textContent = moneyText(shown.current);
@@ -927,7 +928,7 @@ export function CascadeGame() {
       <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title="Candy Cascade · Oyun bilgisi" initialPageId={infoPage} />
       <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title="Otomatik oyun" size="md">
         <AutoplayPanel onStart={startAutoplay} spinCostCents={spinCost} balanceCents={demoBalance} disabled={busy || gated} />
-        <p className={styles.modalNote}>Her tur {formatDemo(spinCost)} ({ante ? 'Şans ×2 açık' : 'standart'}). Otomatik oyun bonus satın almaz; sekme gizlenince veya 30 dakikalık hatırlatmada durur.</p>
+        <p className={styles.modalNote}>Tur başı {formatDemo(spinCost)}{ante ? ' (Şans ×2)' : ''} · bonus satın almaz · sekme gizlenince durur.</p>
       </Modal>
       <BuyFeatureDialog
         open={modal === 'buy'}

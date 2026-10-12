@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-12",
+  "scope": "Candy Cascade presentation v3 (game-standards §6): spin lock, cumulative meter, escalating win tiers, free-spin total screen, multiplier callouts, simple autoplay. Engine candy-cascade-2 unchanged.",
+  "environment": "local next dev (Turbopack) on 127.0.0.1:3000, headless Chromium 141 (swiftshader). Not build:cloudflare preview, not hosted, no GitHub CI.",
+  "unit": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test", "result": "204/204 pass" },
+  "typecheck": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck", "result": "clean" },
+  "browser": [
+    { "command": "PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://127.0.0.1:3000 bash scripts/use-node.sh pnpm --filter @sollish/web test:browser cascade.spec.ts --workers=1", "result": "23/23 pass (6.4 min)" },
+    { "command": "playwright test -c pw-local.tmp.config.ts product.spec.ts solo-lifecycle.spec.ts demo-entropy.spec.ts --workers=1 (temporary config, deleted)", "result": "23/23 pass" }
+  ],
+  "stub_seeds_bet_10_demo": {
+    "buyuk_base_10.62x": 2710938426, "mega_base_30.66x": 613793899, "super_base_50.08x": 2084571699,
+    "efsane_free_440.36x_crystal_x104": 3078212295, "azami_buy_bet_1_demo_capped_5000x": 3213976678,
+    "free_low_4.52x": 2001552816, "free_x12_135.55x": 2808649529, "free_mega_39.96x": 1621328416
+  },
+  "found_and_fixed": "CountUp meter dipped below its start value for one frame on every new target (rAF timestamp earlier than performance.now() at effect start -> negative progress). Reproduced by the new monotonic-meter browser assertion (34,40 -> 34,20); fixed by clamping progress to [0,1]; 0 drops after the fix.",
+  "limits": [
+    "Frame rate measured only under software rendering (swiftshader): celebration frames ~80 ms there; 60 fps on a mid-range phone is not verified.",
+    "Screenshots are not the owner's visual or audio acceptance."
+  ]
+}
