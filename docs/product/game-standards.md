@@ -38,3 +38,10 @@ Durum: 11 Ekim 2026, sahip kararı. Bundan sonraki bütün Sollish oyunları (sl
 - Otomatik oyun durma koşullarının ve kayıp limitinin testleri.
 - Kanıt: komut, sonuç, build kimliği. Kullanıcının görsel ve işitsel kabulü ayrı kaydedilir.
 - DEMO dışı (gerçek varlık) kapılar bu standarttan bağımsız olarak kapalı kalır.
+
+## 6. Oyun akışı kuralları (sahip kararı, 12 Ekim 2026)
+- **Dönüş kilidi:** Dönüş düğmesine bir kez basılınca tur (bütün düşmeler ve bedava dönüşler dahil) bitene kadar düğme ve Boşluk tuşu devre dışıdır. Aynı düğme "atla/durdur" olmaz; oyunu hızlandırmak için hızlı/turbo ayarı kullanılır. Kazanç sayacını kutlama ekranına dokunarak hızlandırmak serbesttir; sonucu ve ödemeyi değiştirmez.
+- **Birikimli kazanç:** Kazanç göstergesi tur boyunca sıfırlanmaz; düşmeler ve bedava dönüşler boyunca toplanır. Tur sonunda toplam kazanç ekranı gösterilir.
+- **Kazanç kademeleri** (tur toplamı / taban bahis): Büyük ≥10×, Mega ≥25×, Süper ≥50×, Efsane ≥100×, ayrıca tavana ulaşan tur için Azami Kazanç. Sayaç kademeler arasında tırmanır; her kademenin kendi ekranı, rengi, parçacık efekti ve müziği vardır. Bedava dönüş turu her zaman "toplam kazanç" ekranıyla biter.
+- **Çarpan anonsu:** Büyük çarpanlar (≥10×) ekranda kendi büyük yazısı ve kendine özgü sesiyle duyurulur; oyunun karakteri varsa kendi seslendirmesiyle.
+- **Otomatik oyun ekranı sade olur:** ana görünümde yalnız tur sayısı, kayıp limiti (zorunlu) ve Başlat. Diğer durma koşulları ("her kazançta", "bedava dönüşte", "tek kazanç şu tutarı aşarsa", "bakiye şu kadar artarsa") kapalı bir "Gelişmiş" bölümündedir.
