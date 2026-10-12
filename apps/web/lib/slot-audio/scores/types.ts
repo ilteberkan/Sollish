@@ -1,9 +1,12 @@
 import type { HitEvent, NoteEvent } from './notation';
 
-export type PitchedVoice = 'celesta' | 'musicBox' | 'glock' | 'marimba' | 'pluck' | 'synthLead' | 'bass' | 'bassDrive' | 'bell' | 'timpani' | 'brass';
-export type PadVoice = 'padWarm' | 'padSaw' | 'padString' | 'padChoir';
-export type KitHit = 'kick' | 'kickSoft' | 'kickPunch' | 'brush' | 'snare' | 'clap' | 'hat' | 'hatOpen' | 'shaker' | 'snap' | 'wood' | 'woodHi' | 'tomHi' | 'tomMid' | 'tomLo' | 'timp' | 'timpLo' | 'crash';
-export type FxKind = 'riser' | 'sparkle' | 'crash' | 'impact' | 'whoosh' | 'swell' | 'room';
+export type PitchedVoice = 'celesta' | 'musicBox' | 'glock' | 'marimba' | 'pluck' | 'synthLead' | 'bass' | 'bassDrive' | 'bell' | 'timpani' | 'brass'
+  // Tarhun (storm-throne) voices, synth/anatolian.ts
+  | 'zurna' | 'zurnaSoft' | 'ney' | 'baglama' | 'horn' | 'hornSwell' | 'bronze' | 'taikoPitched';
+export type PadVoice = 'padWarm' | 'padSaw' | 'padString' | 'padChoir' | 'padChoirMale' | 'padHorn';
+export type KitHit = 'kick' | 'kickSoft' | 'kickPunch' | 'brush' | 'snare' | 'clap' | 'hat' | 'hatOpen' | 'shaker' | 'snap' | 'wood' | 'woodHi' | 'tomHi' | 'tomMid' | 'tomLo' | 'timp' | 'timpLo' | 'crash'
+  | 'davul' | 'davulLo' | 'davulRim' | 'dum' | 'tek' | 'ka' | 'frame' | 'taiko' | 'taikoLo';
+export type FxKind = 'riser' | 'sparkle' | 'crash' | 'impact' | 'whoosh' | 'swell' | 'room' | 'thunder' | 'rumble' | 'rain' | 'wind';
 
 export interface PadEvent { t: number; d: number; ns: number[]; v: number }
 export interface FxEvent { t: number; d: number; k: FxKind; v: number; notes?: number[]; density?: number; shape?: 'swell' | 'decay' | 'flat' }
@@ -23,6 +26,11 @@ interface TrackBase {
   humanize?: number;
   /** Swing applies to this track (default true). */
   swing?: boolean;
+  /**
+   * Optional soft peak control of the stem before balancing: peaks are softly saturated toward this many
+   * dB above the stem's gated RMS (crest-factor ceiling, e.g. 12 for punchy drums). Unset = untouched.
+   */
+  tame?: number;
 }
 export interface PitchedTrack extends TrackBase { kind: 'pitched'; voice: PitchedVoice; notes: NoteEvent[]; transpose?: number; bright?: number }
 export interface PadTrack extends TrackBase { kind: 'pad'; voice: PadVoice; chords: PadEvent[]; cutoff?: number }

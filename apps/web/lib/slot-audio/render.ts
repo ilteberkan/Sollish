@@ -3,11 +3,12 @@
  * generated convolution reverb on a send (OfflineAudioContext when available) → loop folding → master
  * EQ, loudness normalisation and look-ahead limiting. Runtime playback is then plain buffer playback.
  */
-import { Biquad, addMono, addStereo, addStereoUpsampled, createYielder, fadeEdges, stereo, upsample, type Stereo } from './synth/dsp';
+import { Biquad, addMono, addStereo, addStereoUpsampled, createYielder, fadeEdges, softClip, stereo, upsample, type Stereo } from './synth/dsp';
 import {
   bass, bell, brush, celesta, choirChord, roomTone, clap, crash, glock, hat, impact, kick, marimba, musicBox, padChord, pluck, riser, shaker, snap, snare,
   sparkles, synthLead, timpani, tom, whoosh, wood, type PadKind, type VoiceCtx,
 } from './synth/instruments';
+import { baglama, bronze, darbuka, davul, davulRim, frameDrum, horn, hornChord, ney, rain, taiko, thunderCrack, thunderRumble, wind, zurna } from './synth/anatolian';
 import { foldLoop, loudness, master } from './synth/master';
 import { HALL, ROOM, makeImpulse, type ImpulseSpec } from './synth/reverb';
 import type { Score, KitHit, PitchedVoice, Track } from './scores/types';
@@ -77,10 +78,19 @@ function pitched(ctx: VoiceCtx, voice: PitchedVoice, freq: number, vel: number, 
     case 'timpani': return timpani(ctx, vel, freq);
     // brass-like stab: the synth lead with a darker, slower-opening filter and a longer body
     case 'brass': return synthLead(ctx, freq, vel, held, 700 + 500 * bright, 1900 * bright, 0.32);
+    // Tarhun voices (synth/anatolian.ts)
+    case 'zurna': return zurna(ctx, freq, vel, held, bright);
+    case 'zurnaSoft': return zurna(ctx, freq, vel, held, bright, { mellow: true, scoop: 0.02, vibrato: 0.7 });
+    case 'ney': return ney(ctx, freq, vel, held);
+    case 'baglama': return baglama(ctx, freq, vel, held, 0.55 + 0.3 * bright);
+    case 'horn': return horn(ctx, freq, vel, held, { attack: 0.04, bright });
+    case 'hornSwell': return horn(ctx, freq, vel, held, { attack: Math.min(0.9, Math.max(0.12, held * 0.55)), bright });
+    case 'bronze': return bronze(ctx, freq, vel, bright);
+    case 'taikoPitched': return taiko(ctx, vel, freq);
   }
 }
 
-const KIT_PAN: Partial<Record<KitHit, number>> = { hat: -0.25, hatOpen: -0.3, shaker: 0.3, wood: 0.35, woodHi: -0.35, snap: 0.15, tomHi: 0.3, tomLo: -0.3, brush: 0.05 };
+const KIT_PAN: Partial<Record<KitHit, number>> = { hat: -0.25, hatOpen: -0.3, shaker: 0.3, wood: 0.35, woodHi: -0.35, snap: 0.15, tomHi: 0.3, tomLo: -0.3, brush: 0.05, davulRim: 0.25, tek: -0.3, ka: -0.38, dum: -0.2, frame: 0.3 };
 
 function kit(ctx: VoiceCtx, k: KitHit, v: number): Float32Array | Stereo {
   switch (k) {
@@ -102,6 +112,15 @@ function kit(ctx: VoiceCtx, k: KitHit, v: number): Float32Array | Stereo {
     case 'timp': return timpani(ctx, v, 87.31);
     case 'timpLo': return timpani(ctx, v, 65.41);
     case 'crash': return crash(ctx, v);
+    case 'davul': return davul(ctx, v, 58);
+    case 'davulLo': return davul(ctx, v, 49, 1.1);
+    case 'davulRim': return davulRim(ctx, v);
+    case 'dum': return darbuka(ctx, v, 'dum');
+    case 'tek': return darbuka(ctx, v, 'tek');
+    case 'ka': return darbuka(ctx, v, 'ka');
+    case 'frame': return frameDrum(ctx, v);
+    case 'taiko': return taiko(ctx, v, 50);
+    case 'taikoLo': return taiko(ctx, v, 41);
   }
 }
 
@@ -158,14 +177,17 @@ async function renderTrack(score: Score, track: Track, st: Stereo, env: RenderEn
       await check();
     }
   } else if (track.kind === 'pad') {
+    const male = track.voice === 'padChoirMale', hornPad = track.voice === 'padHorn';
     const choir = track.voice === 'padChoir';
     const kind: PadKind = track.voice === 'padSaw' ? 'saw' : track.voice === 'padString' ? 'string' : 'warm';
     for (const c of track.chords) {
       const start = at(c.t), held = Math.max(0.05, at(c.t + c.d) - start);
       // pads are low-passed (warm < 2 kHz, saw/string/choir < 5 kHz): synthesised at a quarter/half rate and interpolated up
-      const factor = kind === 'warm' && !choir ? 4 : 2;
+      const factor = kind === 'warm' && !choir && !male && !hornPad ? 4 : 2;
       const lowCtx = { sr: sr / factor, rng: ctx.rng };
-      const low = choir ? choirChord(lowCtx, c.ns.map(midiToHz), c.v, held) : padChord(lowCtx, c.ns.map(midiToHz), c.v, held, kind, track.cutoff ? { cutoff: track.cutoff } : {});
+      const low = male ? choirChord(lowCtx, c.ns.map(midiToHz), c.v, held, { vowel: 'oh', voices: 3, attack: Math.min(0.6, held * 0.3) })
+        : hornPad ? hornChord(lowCtx, c.ns.map(midiToHz), c.v, held, { bright: 0.75 })
+        : choir ? choirChord(lowCtx, c.ns.map(midiToHz), c.v, held) : padChord(lowCtx, c.ns.map(midiToHz), c.v, held, kind, track.cutoff ? { cutoff: track.cutoff } : {});
       const s0 = place(Math.round(start * sr));
       mark(s0, addStereoUpsampled(st, low, factor, s0, 1, pan, track.width ?? 1));
       await check();
@@ -188,6 +210,10 @@ async function renderTrack(score: Score, track: Track, st: Stereo, env: RenderEn
         case 'impact': putMono(impact(ctx, f.v, 0.5), s, 1, pan); break;
         case 'whoosh': putStereo(whoosh(ctx, dur, 400, 3000, f.v), s, 1, pan); break;
         case 'room': putStereo(roomTone(ctx, dur, f.v), s, 1, pan, track.width ?? 1); break;
+        case 'thunder': putStereo(thunderCrack(ctx, f.v, 1, Math.max(1.2, dur)), s, 1, pan, track.width ?? 1); break;
+        case 'rumble': putStereo(thunderRumble(ctx, dur, f.v, f.density ?? 0.5), s, 1, pan, track.width ?? 1); break;
+        case 'rain': putStereo(rain(ctx, dur, f.v, f.density ?? 1), s, 1, pan, track.width ?? 1); break;
+        case 'wind': putStereo(wind(ctx, dur, f.v), s, 1, pan, track.width ?? 1); break;
         case 'swell': {
           // reversed cymbal that lands exactly on t + d
           const c = crash(ctx, f.v, dur * 1.1), n = Math.min(c.l.length, Math.round(dur * sr));
@@ -238,6 +264,7 @@ export async function synthTracks(score: Score, trackIds: string[] | null, env: 
     const { lo, hi } = await renderTrack(score, track, scratch, env);
     if (hi <= lo) continue;
     const { l, r } = scratch;
+    if (track.tame) tameStem(scratch, lo, hi, track.tame);
     // balance each stem to its loudness target (a decimated estimate is plenty for balancing)
     const m = loudness([l.subarray(lo, hi), r.subarray(lo, hi)], sr, 4).integrated;
     const gain = Number.isFinite(m) ? dbToGain(track.level - m) : 0, sg = gain * track.send;
@@ -254,13 +281,37 @@ export async function synthTracks(score: Score, trackIds: string[] | null, env: 
   return { dry, send: { l: decimate2(send.l, sr), r: decimate2(send.r, sr) } };
 }
 
+/**
+ * Soft crest-factor control for a stem (only for tracks that ask for it with `tame`): the reference is the
+ * gated mean power of 2048-sample blocks (blocks within 40 dB of the loudest), and every sample passes a
+ * soft knee: linear up to half the ceiling, saturating at a ceiling `crestDb` above that RMS.
+ */
+export function tameStem(st: Stereo, lo: number, hi: number, crestDb: number): void {
+  const B = 2048, powers: number[] = [];
+  for (let a = lo; a < hi; a += B) {
+    let s = 0; const b = Math.min(hi, a + B);
+    for (let i = a; i < b; i++) s += st.l[i]! * st.l[i]! + st.r[i]! * st.r[i]!;
+    powers.push(s / (2 * (b - a)));
+  }
+  const top = Math.max(...powers);
+  if (!(top > 0)) return;
+  const gated = powers.filter(p => p > top * 1e-4);
+  const ref = Math.sqrt(gated.reduce((s, p) => s + p, 0) / gated.length), ceiling = ref * 10 ** (crestDb / 20);
+  // linear up to half the ceiling, then a smooth (C1) knee that saturates at the ceiling
+  const k = 0.5 * ceiling, span = ceiling - k;
+  for (const ch of [st.l, st.r]) for (let i = lo; i < hi; i++) {
+    const x = ch[i]!, a = x < 0 ? -x : x;
+    if (a > k) ch[i] = (x < 0 ? -1 : 1) * (k + span * softClip((a - k) / span));
+  }
+}
+
 /** Rough synthesis cost of a track, for spreading tracks over workers. */
 export function trackCost(track: Track): number {
   switch (track.kind) {
     case 'pitched': return track.notes.length * (track.voice === 'pluck' ? 0.6 : 1);
-    case 'pad': return track.chords.reduce((s, c) => s + c.ns.length * (c.d + 2), 0) * (track.voice === 'padSaw' ? 1.2 : track.voice === 'padChoir' ? 1.6 : 0.6);
+    case 'pad': return track.chords.reduce((s, c) => s + c.ns.length * (c.d + 2), 0) * (track.voice === 'padSaw' ? 1.2 : track.voice === 'padChoir' || track.voice === 'padChoirMale' ? 1.6 : track.voice === 'padHorn' ? 1.3 : 0.6);
     case 'kit': return 4 + track.hits.length * 0.15;
-    case 'fx': return track.fx.reduce((s, f) => s + (f.k === 'room' ? 40 : f.k === 'riser' ? 8 : 3) + f.d, 0);
+    case 'fx': return track.fx.reduce((s, f) => s + (f.k === 'room' ? 40 : f.k === 'rain' ? 60 : f.k === 'wind' ? 30 : f.k === 'riser' || f.k === 'rumble' ? 8 : 3) + f.d, 0);
   }
 }
 

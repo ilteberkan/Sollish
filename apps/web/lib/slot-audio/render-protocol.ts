@@ -6,8 +6,9 @@ import type { SfxPart } from './render';
 import type { Stereo } from './synth/dsp';
 import type { Score } from './scores/types';
 import { CASCADE_SFX, type SfxDef } from './sfx/cascade';
+import { STORM_SFX } from './sfx/storm';
 
-export const SFX_CATALOGS: Record<string, SfxDef[]> = { cascade: CASCADE_SFX };
+export const SFX_CATALOGS: Record<string, SfxDef[]> = { cascade: CASCADE_SFX, storm: STORM_SFX };
 
 export type WorkerRequest =
   | { id: number; type: 'tracks'; score: Score; trackIds: string[]; sampleRate: number }
