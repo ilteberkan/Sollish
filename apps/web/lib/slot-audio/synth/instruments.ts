@@ -460,3 +460,110 @@ export function roomTone(ctx: VoiceCtx, dur: number, level = 1, loopable = true)
   }
   return res;
 }
+
+/* ---------------- choir, bells, vox (win tiers and callouts) ---------------- */
+
+/** Vowel formants (Hz) and relative gains for the synthetic choir and vox: an original source-filter design. */
+export const VOWELS = {
+  ah: { f: [780, 1180, 2650], g: [1, 0.55, 0.22] },
+  oh: { f: [470, 820, 2600], g: [1, 0.45, 0.14] },
+  oo: { f: [340, 720, 2450], g: [1, 0.3, 0.1] },
+  eh: { f: [560, 1750, 2600], g: [1, 0.45, 0.2] },
+} as const;
+export type Vowel = keyof typeof VOWELS;
+
+/**
+ * Wordless choir pad: an ensemble of slightly detuned, gently vibrating band-limited saws per note, shaped
+ * by a parallel formant filter bank (vowel "ah" blended toward "oh") with a slow swell. Stereo by voice spread.
+ */
+export function choirChord(ctx: VoiceCtx, freqs: number[], vel: number, held: number, opts: { attack?: number; release?: number; vowel?: Vowel; voices?: number; breath?: number } = {}): Stereo {
+  const { sr, rng } = ctx;
+  const attack = opts.attack ?? 0.32, release = opts.release ?? 0.7, voices = opts.voices ?? 3;
+  const len = Math.ceil((held + release * 2.2) * sr);
+  const L = new Float32Array(len), R = new Float32Array(len);
+  for (const freq of freqs) {
+    for (let v = 0; v < voices; v++) {
+      const cents = voices === 1 ? 0 : (v / (voices - 1) * 2 - 1) * 11 + (rng() - 0.5) * 4;
+      const f = freq * 2 ** (cents / 1200), dt = f / sr;
+      const side = voices === 1 ? 0 : (v / (voices - 1)) * 2 - 1;
+      const gl = Math.sqrt(0.5 * (1 - side * 0.7)), gr = Math.sqrt(0.5 * (1 + side * 0.7));
+      let p = rng(), vp = rng(), dp = rng();
+      const vibRate = (4.6 + rng() * 1.1) / sr, driftRate = (0.21 + rng() * 0.2) / sr, onset = 0.25 + rng() * 0.2;
+      for (let i = 0; i < len; i++) {
+        const s = 2 * p - 1 - polyBlep(p, dt);
+        L[i]! += s * gl; R[i]! += s * gr;
+        // vibrato fades in after the onset, like singers settling on a note; a slow drift adds ensemble life
+        const vib = 0.0042 * Math.min(1, Math.max(0, i / sr - onset) / 0.5) * sinCycles(vp) + 0.0011 * sinCycles(dp);
+        p += dt * (1 + vib); if (p >= 1) p -= 1;
+        vp += vibRate; dp += driftRate;
+      }
+    }
+  }
+  const a = VOWELS[opts.vowel ?? 'ah'], o = VOWELS.oh;
+  const norm = 0.9 / Math.sqrt(Math.max(1, freqs.length * voices));
+  const heldN = Math.floor(held * sr), relD = t60Factor(release * 2.2, sr), attN = Math.max(1, Math.round(attack * sr));
+  const breath = opts.breath ?? 0.05;
+  for (const ch of [L, R]) {
+    const bank = a.f.map((f, k) => ({ bp: new Biquad(sr).bandpass(0.72 * f + 0.28 * o.f[k]!, (0.72 * f + 0.28 * o.f[k]!) / (70 + 30 * k)), g: 0.72 * a.g[k]! + 0.28 * o.g[k]! }));
+    const air = new Biquad(sr).bandpass(a.f[1]!, 1.2);
+    const tilt = new Biquad(sr).lowpass(3400, 0.6);
+    let relG = 1;
+    for (let i = 0; i < len; i++) {
+      const x = ch[i]! * norm;
+      let y = 0;
+      for (const b of bank) y += b.bp.tick(x) * b.g;
+      y = tilt.tick(y * 3.2) + air.tick((rng() * 2 - 1) * breath);
+      const att = i < attN ? Math.sin((i / attN) * Math.PI * 0.5) ** 2 : 1;
+      if (i >= heldN) relG *= relD;
+      ch[i] = y * att * relG * vel;
+    }
+  }
+  return { l: L, r: R };
+}
+
+/**
+ * Bright tower-style bell: strike tone `freq` with a hum an octave below, a soft major "tierce", quint and an
+ * upper octave, each an exponentially decaying partial (exact modal synthesis); long, shimmering decay.
+ */
+export function bell(ctx: VoiceCtx, freq: number, vel: number): Float32Array {
+  const s = clampNum((523 / freq) ** 0.35, 0.6, 1.6);
+  return modal(ctx, freq, [0.5, 1, 1.26, 1.5, 2, 2.52, 3.01], [0.32, 1, 0.2, 0.16, 0.38, 0.12, 0.08], [4.2 * s, 3.4 * s, 2.2 * s, 1.8 * s, 1.5 * s, 0.7 * s, 0.4 * s], vel, 10, { attack: 0.0007, maxLen: 4.5 });
+}
+
+/**
+ * Wordless "announcer" vox: one formant-filtered voice gliding from `f0` to `f1` while the vowel morphs
+ * (e.g. "oh" → "ah"), with a short rising scoop at the onset and a little vibrato on the held part.
+ * Non-verbal by design: a placeholder character until a recorded voice line exists.
+ */
+export function vox(ctx: VoiceCtx, f0: number, f1: number, dur: number, vel: number, from: Vowel = 'oh', to: Vowel = 'ah'): Float32Array {
+  const { sr, rng } = ctx;
+  const len = Math.ceil((dur + 0.25) * sr), src = new Float32Array(len);
+  let p = rng(), q = rng(), vp = 0;
+  const bodyN = Math.floor(dur * sr);
+  for (let i = 0; i < len; i++) {
+    const x = Math.min(1, i / bodyN);
+    const glide = x < 0.35 ? 0 : (x - 0.35) / 0.65;
+    const scoop = 1 - 0.06 * Math.exp(-i / (0.035 * sr));
+    const vib = 1 + 0.006 * Math.min(1, Math.max(0, x - 0.4) / 0.3) * sinCycles(vp);
+    const f = f0 * (f1 / f0) ** (glide * glide * (3 - 2 * glide)) * scoop * vib;
+    const dt = f / sr, dt2 = (f * 1.004) / sr;
+    src[i] = 2 * p - 1 - polyBlep(p, dt) + 0.6 * (2 * q - 1 - polyBlep(q, dt2));
+    p += dt; if (p >= 1) p -= 1; q += dt2; if (q >= 1) q -= 1; vp += 5.4 / sr;
+  }
+  const out = new Float32Array(len);
+  const A = VOWELS[from], B = VOWELS[to];
+  const filters = [new Svf(sr), new Svf(sr), new Svf(sr)];
+  const aN = Math.round(0.02 * sr), relStart = bodyN, relD = t60Factor(0.2, sr);
+  let relG = 1;
+  for (let i = 0; i < len; i++) {
+    const m = Math.min(1, i / (0.45 * bodyN));
+    if ((i & 15) === 0) for (let k = 0; k < 3; k++) { const f = A.f[k]! + (B.f[k]! - A.f[k]!) * m; filters[k]!.set(f, f / (75 + 35 * k)); }
+    let y = 0;
+    for (let k = 0; k < 3; k++) y += filters[k]!.tick(src[i]! * 0.3, 1) * (A.g[k]! + (B.g[k]! - A.g[k]!) * m);
+    if (i >= relStart) relG *= relD;
+    out[i] = y * (i < aN ? i / aN : 1) * relG * vel;
+  }
+  const lp = new Biquad(sr).lowpass(4200, 0.6);
+  lp.process(out);
+  return trimTail(out);
+}

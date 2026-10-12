@@ -45,7 +45,8 @@ test('every Candy Cascade score fits its form: whole bars, events inside, loops 
   const end = (k: keyof typeof CASCADE_SCORES) => ((CASCADE_SCORES[k].musicalEnd ?? 0) * 60) / CASCADE_SCORES[k].bpm;
   assert.ok(Math.abs(end('fsIntro') - 3) < 0.2);
   assert.ok(end('fsOutro') >= 4 && end('fsOutro') <= 5);
-  for (const k of ['bigWin1', 'bigWin2', 'bigWin3', 'maxWin'] as const) assert.ok(end(k) >= 3 && end(k) <= 6, k);
+  for (const k of ['bigWin1', 'bigWin2', 'bigWin3', 'bigWin4', 'maxWin'] as const) assert.ok(end(k) >= 3 && end(k) <= 6, k);
+  assert.ok(Math.abs(end('totalWin') - 3) < 0.05, 'total-win fanfare ≈ 3 s');
 });
 
 test('tracks split over workers cover every track exactly once', () => {

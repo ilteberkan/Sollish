@@ -5,7 +5,7 @@
  */
 import { Biquad, addMono, addStereo, addStereoUpsampled, createYielder, fadeEdges, stereo, upsample, type Stereo } from './synth/dsp';
 import {
-  bass, brush, celesta, roomTone, clap, crash, glock, hat, impact, kick, marimba, musicBox, padChord, pluck, riser, shaker, snap, snare,
+  bass, bell, brush, celesta, choirChord, roomTone, clap, crash, glock, hat, impact, kick, marimba, musicBox, padChord, pluck, riser, shaker, snap, snare,
   sparkles, synthLead, timpani, tom, whoosh, wood, type PadKind, type VoiceCtx,
 } from './synth/instruments';
 import { foldLoop, loudness, master } from './synth/master';
@@ -73,6 +73,10 @@ function pitched(ctx: VoiceCtx, voice: PitchedVoice, freq: number, vel: number, 
     // bass is band-limited (< 2 kHz), so it is synthesised at a quarter rate and interpolated up
     case 'bass': return upsample(bass({ sr: ctx.sr / 4, rng: ctx.rng }, freq, vel, held, 1.6, 850), 4);
     case 'bassDrive': return upsample(bass({ sr: ctx.sr / 4, rng: ctx.rng }, freq, vel, held, 2.6, 1100, 0.22), 4);
+    case 'bell': return bell(ctx, freq, vel);
+    case 'timpani': return timpani(ctx, vel, freq);
+    // brass-like stab: the synth lead with a darker, slower-opening filter and a longer body
+    case 'brass': return synthLead(ctx, freq, vel, held, 700 + 500 * bright, 1900 * bright, 0.32);
   }
 }
 
@@ -154,12 +158,14 @@ async function renderTrack(score: Score, track: Track, st: Stereo, env: RenderEn
       await check();
     }
   } else if (track.kind === 'pad') {
+    const choir = track.voice === 'padChoir';
     const kind: PadKind = track.voice === 'padSaw' ? 'saw' : track.voice === 'padString' ? 'string' : 'warm';
     for (const c of track.chords) {
       const start = at(c.t), held = Math.max(0.05, at(c.t + c.d) - start);
-      // pads are low-passed (warm < 2 kHz, saw/string < 5 kHz): synthesised at a quarter/half rate and interpolated up
-      const factor = kind === 'warm' ? 4 : 2;
-      const low = padChord({ sr: sr / factor, rng: ctx.rng }, c.ns.map(midiToHz), c.v, held, kind, track.cutoff ? { cutoff: track.cutoff } : {});
+      // pads are low-passed (warm < 2 kHz, saw/string/choir < 5 kHz): synthesised at a quarter/half rate and interpolated up
+      const factor = kind === 'warm' && !choir ? 4 : 2;
+      const lowCtx = { sr: sr / factor, rng: ctx.rng };
+      const low = choir ? choirChord(lowCtx, c.ns.map(midiToHz), c.v, held) : padChord(lowCtx, c.ns.map(midiToHz), c.v, held, kind, track.cutoff ? { cutoff: track.cutoff } : {});
       const s0 = place(Math.round(start * sr));
       mark(s0, addStereoUpsampled(st, low, factor, s0, 1, pan, track.width ?? 1));
       await check();
@@ -252,7 +258,7 @@ export async function synthTracks(score: Score, trackIds: string[] | null, env: 
 export function trackCost(track: Track): number {
   switch (track.kind) {
     case 'pitched': return track.notes.length * (track.voice === 'pluck' ? 0.6 : 1);
-    case 'pad': return track.chords.reduce((s, c) => s + c.ns.length * (c.d + 2), 0) * (track.voice === 'padSaw' ? 1.2 : 0.6);
+    case 'pad': return track.chords.reduce((s, c) => s + c.ns.length * (c.d + 2), 0) * (track.voice === 'padSaw' ? 1.2 : track.voice === 'padChoir' ? 1.6 : 0.6);
     case 'kit': return 4 + track.hits.length * 0.15;
     case 'fx': return track.fx.reduce((s, f) => s + (f.k === 'room' ? 40 : f.k === 'riser' ? 8 : 3) + f.d, 0);
   }

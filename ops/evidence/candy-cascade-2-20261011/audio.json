@@ -2336,5 +2336,1122 @@
   "Load times were measured in a loaded 4-vCPU cloud container, not on a desktop or a phone; no mobile CPU or memory measurement (decoded buffers ≈ 87 MB at 44.1 kHz stereo float: 173 s of music + 74.5 s of effects (89 clips); createCascadeSound({ sampleRate: 32000 }) would cut this to ≈ 63 MB).",
   "The bus limiter is the browser DynamicsCompressor (6 ms look-ahead, not a true brickwall); the stress test stays below −1 dBTP but other browsers may differ (Safari/Firefox compressors were not measured).",
   "Reverb runs at half rate (22.05 kHz) for speed; its tail is band-limited by design."
- ]
+ ],
+ "v3": {
+  "generatedAt": "2026-10-12T01:01:39.274Z",
+  "scope": "Candy Cascade sound set v3: win-tier escalation (Büyük/Mega/Süper/Efsane + max win), tier-up transitions, per-tier count-up beds and landings, multiplier callouts (6 classes, voice-line slot), total-win fanfare. Presentation only.",
+  "originality": "All new music and effects are original note data and code synthesis (wordless formant choir, modal tower bells, formant \"vox\" and brass-like stabs are new instruments written for this set). No samples, no voice recordings, no third-party melodies or motifs; the vox is non-verbal by design.",
+  "environment": {
+   "browser": "chromium 141.0.7390.37 headless",
+   "sampleRate": 44100,
+   "machine": "cloud container, 4 vCPU; other agents ran a next dev server and Chromium concurrently (load average 8–14 during these runs), so timings are pessimistic and noisy"
+  },
+  "method": "Same harness as the top-level measurements: headless Chromium, production code path (Web Worker synthesis via the prebuilt worker bundle + OfflineAudioContext reverb + JS mastering), BS.1770 loudness, 4× true peak, seam statistic; 16-bit TPDF WAV export. The escalation runs replay the runtime schedule (planTierUp) through the real bus graph (buildBusGraph) at the default mix with the base scene under a −20 dB duck.",
+  "keyLadder": {
+   "Büyük (≥10×)": "F major",
+   "Mega (≥25×)": "G major",
+   "Süper (≥50×)": "A major",
+   "Efsane (≥100×)": "C major",
+   "Azami kazanç": "D major"
+  },
+  "music": [
+   {
+    "key": "bigWin1",
+    "id": "cascade-bigwin-1",
+    "about": "Big win tier 1 (Büyük), F major, 120 BPM, 2 bars (4 s): impact, rising arpeggio and the \"sugar step\" climb, resolving on a held tonic.",
+    "bpm": 120,
+    "bars": 2,
+    "loop": false,
+    "musicalEndSeconds": 4,
+    "targetLufs": -15,
+    "seconds": 5.16,
+    "integratedLufs": -15.1,
+    "momentaryMaxLufs": -11.95,
+    "shortTermMaxLufs": -13.87,
+    "truePeakDbtp": -1.57,
+    "samplePeakDbfs": -1.6,
+    "stereoCorrelation": 0.903,
+    "centroidHz": 668,
+    "energyAbove8kPct": 0.19,
+    "seam": null,
+    "mastering": {
+     "normaliseGainDb": 0.03,
+     "peakLimitingDb": -0.52
+    },
+    "renderMsWorkers": 2063,
+    "checks": {
+     "loudnessInMusicTarget": true,
+     "truePeakBelowMinus1": true,
+     "seamIsOrdinaryStep": "n/a (one-shot)"
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-bigwin-1.wav"
+   },
+   {
+    "key": "bigWin2",
+    "id": "cascade-bigwin-2",
+    "about": "Big win tier 2 (Mega), G major, 120 BPM, 2 bars (4 s): impact, rising arpeggio and the \"sugar step\" climb, resolving on a held tonic; strings added.",
+    "bpm": 120,
+    "bars": 2,
+    "loop": false,
+    "musicalEndSeconds": 4,
+    "targetLufs": -14.5,
+    "seconds": 5.271,
+    "integratedLufs": -14.57,
+    "momentaryMaxLufs": -12.42,
+    "shortTermMaxLufs": -13.72,
+    "truePeakDbtp": -1.67,
+    "samplePeakDbfs": -1.71,
+    "stereoCorrelation": 0.869,
+    "centroidHz": 885,
+    "energyAbove8kPct": 0.17,
+    "seam": null,
+    "mastering": {
+     "normaliseGainDb": -0.76,
+     "peakLimitingDb": 0
+    },
+    "renderMsWorkers": 1893,
+    "checks": {
+     "loudnessInMusicTarget": true,
+     "truePeakBelowMinus1": true,
+     "seamIsOrdinaryStep": "n/a (one-shot)"
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-bigwin-2.wav"
+   },
+   {
+    "key": "bigWin3",
+    "id": "cascade-bigwin-3",
+    "about": "Big win tier 3 (Süper), A major, 120 BPM, 3 bars (6 s): impact, rising arpeggio and the \"sugar step\" climb, resolving on a held tonic; strings added; snare/tom fill and timpani.",
+    "bpm": 120,
+    "bars": 3,
+    "loop": false,
+    "musicalEndSeconds": 6,
+    "targetLufs": -14,
+    "seconds": 7.344,
+    "integratedLufs": -14.08,
+    "momentaryMaxLufs": -12.17,
+    "shortTermMaxLufs": -12.97,
+    "truePeakDbtp": -1.54,
+    "samplePeakDbfs": -1.6,
+    "stereoCorrelation": 0.873,
+    "centroidHz": 841,
+    "energyAbove8kPct": 0.11,
+    "seam": null,
+    "mastering": {
+     "normaliseGainDb": -0.64,
+     "peakLimitingDb": -0.39
+    },
+    "renderMsWorkers": 2117,
+    "checks": {
+     "loudnessInMusicTarget": true,
+     "truePeakBelowMinus1": true,
+     "seamIsOrdinaryStep": "n/a (one-shot)"
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-bigwin-3.wav"
+   },
+   {
+    "key": "bigWin4",
+    "id": "cascade-bigwin-4",
+    "about": "Big win tier 4 (Efsane), C major, 120 BPM, 3 bars (6 s): C – Am | F – G7sus4 – G7 | Cadd9. Celesta + brass-like lead, wordless \"ah\" choir pad, strings, tower bells on each downbeat, timpani roll into the last bar, impact, crash and the densest sparkle shower.",
+    "bpm": 120,
+    "bars": 3,
+    "loop": false,
+    "musicalEndSeconds": 6,
+    "targetLufs": -14,
+    "seconds": 7.472,
+    "integratedLufs": -14.1,
+    "momentaryMaxLufs": -11.21,
+    "shortTermMaxLufs": -13.03,
+    "truePeakDbtp": -1.49,
+    "samplePeakDbfs": -1.6,
+    "stereoCorrelation": 0.893,
+    "centroidHz": 605,
+    "energyAbove8kPct": 0.09,
+    "seam": null,
+    "mastering": {
+     "normaliseGainDb": -1.23,
+     "peakLimitingDb": -0.56
+    },
+    "renderMsWorkers": 3177,
+    "checks": {
+     "loudnessInMusicTarget": true,
+     "truePeakBelowMinus1": true,
+     "seamIsOrdinaryStep": "n/a (one-shot)"
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-bigwin-4.wav"
+   },
+   {
+    "key": "maxWin",
+    "id": "cascade-max-win",
+    "about": "Max win, D major (top of the key ladder), 120 BPM, 3 bars (6 s): Bb – C – D (bVI–bVII–I) with octave celesta/brass lead, wordless choir, strings and supersaw, tower bells, driving octave bass, snare roll, timpani roll into the last bar, two impacts and the longest sparkle shower.",
+    "bpm": 120,
+    "bars": 3,
+    "loop": false,
+    "musicalEndSeconds": 6,
+    "targetLufs": -14,
+    "seconds": 7.707,
+    "integratedLufs": -14.11,
+    "momentaryMaxLufs": -11.62,
+    "shortTermMaxLufs": -13.16,
+    "truePeakDbtp": -1.47,
+    "samplePeakDbfs": -1.6,
+    "stereoCorrelation": 0.872,
+    "centroidHz": 652,
+    "energyAbove8kPct": 0.1,
+    "seam": null,
+    "mastering": {
+     "normaliseGainDb": -2.12,
+     "peakLimitingDb": -1.5
+    },
+    "renderMsWorkers": 2793,
+    "checks": {
+     "loudnessInMusicTarget": true,
+     "truePeakBelowMinus1": true,
+     "seamIsOrdinaryStep": "n/a (one-shot)"
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-max-win.wav"
+   },
+   {
+    "key": "totalWin",
+    "id": "cascade-total-win",
+    "about": "Total-win fanfare, F major, 120 BPM, 3 s to its musical end: Bb – Gm – C – C7 – F; brass-like lead with dotted parade rhythm, marimba pickup run, celesta doubling, march snare roll into a crash, bells and an applause-like sparkle shower on the final F.",
+    "bpm": 120,
+    "bars": 2,
+    "loop": false,
+    "musicalEndSeconds": 3,
+    "targetLufs": -14.5,
+    "seconds": 5.559,
+    "integratedLufs": -14.57,
+    "momentaryMaxLufs": -12.1,
+    "shortTermMaxLufs": -13.41,
+    "truePeakDbtp": -1.54,
+    "samplePeakDbfs": -1.6,
+    "stereoCorrelation": 0.932,
+    "centroidHz": 561,
+    "energyAbove8kPct": 0.1,
+    "seam": null,
+    "mastering": {
+     "normaliseGainDb": 0.32,
+     "peakLimitingDb": -2.27
+    },
+    "renderMsWorkers": 1470,
+    "checks": {
+     "loudnessInMusicTarget": true,
+     "truePeakBelowMinus1": true,
+     "seamIsOrdinaryStep": "n/a (one-shot)"
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-total-win.wav"
+   },
+   {
+    "key": "bed1",
+    "id": "cascade-bed-1",
+    "about": "Count-up bed tier 1: I – vi – IV – V in F major at 120 BPM, 4-bar seamless loop (8 s); plucks, pad, bass, shaker.",
+    "bpm": 120,
+    "bars": 4,
+    "loop": true,
+    "musicalEndSeconds": null,
+    "targetLufs": -15,
+    "seconds": 8,
+    "integratedLufs": -15.07,
+    "momentaryMaxLufs": -13.4,
+    "shortTermMaxLufs": -14.84,
+    "truePeakDbtp": -1.26,
+    "samplePeakDbfs": -1.6,
+    "stereoCorrelation": 0.882,
+    "centroidHz": 625,
+    "energyAbove8kPct": 0.57,
+    "seam": {
+     "delta": 0.07118,
+     "medianDelta": 0.0072,
+     "p999Delta": 0.24631,
+     "maxDelta": 0.56869,
+     "percentile": 96.63,
+     "ratio": 9.89,
+     "rmsJumpDb": 8.38
+    },
+    "mastering": {
+     "normaliseGainDb": 2.95,
+     "peakLimitingDb": -1.05
+    },
+    "renderMsWorkers": 1069,
+    "checks": {
+     "loudnessInMusicTarget": true,
+     "truePeakBelowMinus1": true,
+     "seamIsOrdinaryStep": true
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-bed-1.wav"
+   },
+   {
+    "key": "bed2",
+    "id": "cascade-bed-2",
+    "about": "Count-up bed tier 2: I – vi – IV – V in G major at 120 BPM, 4-bar seamless loop (8 s); plucks, pad, bass, shaker + kick, claps, pumping supersaw, celesta ostinato.",
+    "bpm": 120,
+    "bars": 4,
+    "loop": true,
+    "musicalEndSeconds": null,
+    "targetLufs": -14.75,
+    "seconds": 8,
+    "integratedLufs": -14.83,
+    "momentaryMaxLufs": -13.09,
+    "shortTermMaxLufs": -14.63,
+    "truePeakDbtp": -1.32,
+    "samplePeakDbfs": -1.6,
+    "stereoCorrelation": 0.92,
+    "centroidHz": 693,
+    "energyAbove8kPct": 0.47,
+    "seam": {
+     "delta": 0.07974,
+     "medianDelta": 0.00981,
+     "p999Delta": 0.21565,
+     "maxDelta": 0.4304,
+     "percentile": 97.54,
+     "ratio": 8.13,
+     "rmsJumpDb": 8.32
+    },
+    "mastering": {
+     "normaliseGainDb": 1.44,
+     "peakLimitingDb": -1.45
+    },
+    "renderMsWorkers": 1080,
+    "checks": {
+     "loudnessInMusicTarget": true,
+     "truePeakBelowMinus1": true,
+     "seamIsOrdinaryStep": true
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-bed-2.wav"
+   },
+   {
+    "key": "bed3",
+    "id": "cascade-bed-3",
+    "about": "Count-up bed tier 3: I – vi – IV – V in A major at 120 BPM, 4-bar seamless loop (8 s); plucks, pad, bass, shaker + kick, claps, pumping supersaw, celesta ostinato + celesta/glock lead melody and open hats.",
+    "bpm": 120,
+    "bars": 4,
+    "loop": true,
+    "musicalEndSeconds": null,
+    "targetLufs": -14.5,
+    "seconds": 8,
+    "integratedLufs": -14.58,
+    "momentaryMaxLufs": -12.06,
+    "shortTermMaxLufs": -14.13,
+    "truePeakDbtp": -1.29,
+    "samplePeakDbfs": -1.6,
+    "stereoCorrelation": 0.923,
+    "centroidHz": 1071,
+    "energyAbove8kPct": 0.95,
+    "seam": {
+     "delta": 0.03012,
+     "medianDelta": 0.01388,
+     "p999Delta": 0.22341,
+     "maxDelta": 0.39837,
+     "percentile": 77.79,
+     "ratio": 2.17,
+     "rmsJumpDb": 11.61
+    },
+    "mastering": {
+     "normaliseGainDb": -0.4,
+     "peakLimitingDb": -0.4
+    },
+    "renderMsWorkers": 1209,
+    "checks": {
+     "loudnessInMusicTarget": true,
+     "truePeakBelowMinus1": true,
+     "seamIsOrdinaryStep": true
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-bed-3.wav"
+   },
+   {
+    "key": "bed4",
+    "id": "cascade-bed-4",
+    "about": "Count-up bed tier 4: I – vi – IV – V in C major at 120 BPM, 4-bar seamless loop (8 s); plucks, pad, bass, shaker + kick, claps, pumping supersaw, celesta ostinato + celesta/glock lead melody and open hats + wordless choir, tower bells on every chord, timpani.",
+    "bpm": 120,
+    "bars": 4,
+    "loop": true,
+    "musicalEndSeconds": null,
+    "targetLufs": -14.25,
+    "seconds": 8,
+    "integratedLufs": -14.41,
+    "momentaryMaxLufs": -12.42,
+    "shortTermMaxLufs": -13.98,
+    "truePeakDbtp": -1.56,
+    "samplePeakDbfs": -1.6,
+    "stereoCorrelation": 0.89,
+    "centroidHz": 825,
+    "energyAbove8kPct": 0.85,
+    "seam": {
+     "delta": 0.01712,
+     "medianDelta": 0.01202,
+     "p999Delta": 0.20622,
+     "maxDelta": 0.43131,
+     "percentile": 63.8,
+     "ratio": 1.42,
+     "rmsJumpDb": 11.22
+    },
+    "mastering": {
+     "normaliseGainDb": -0.78,
+     "peakLimitingDb": -1.98
+    },
+    "renderMsWorkers": 1879,
+    "checks": {
+     "loudnessInMusicTarget": true,
+     "truePeakBelowMinus1": true,
+     "seamIsOrdinaryStep": true
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-bed-4.wav"
+   },
+   {
+    "key": "bedMax",
+    "id": "cascade-bed-max",
+    "about": "Count-up bed max win: I – vi – IV – V in D major at 120 BPM, 4-bar seamless loop (8 s); plucks, pad, bass, shaker + kick, claps, pumping supersaw, celesta ostinato + celesta/glock lead melody and open hats + wordless choir, tower bells on every chord, timpani + strings, brass-like stabs and 16th hats.",
+    "bpm": 120,
+    "bars": 4,
+    "loop": true,
+    "musicalEndSeconds": null,
+    "targetLufs": -14,
+    "seconds": 8,
+    "integratedLufs": -14.13,
+    "momentaryMaxLufs": -11.79,
+    "shortTermMaxLufs": -13.8,
+    "truePeakDbtp": -1.4,
+    "samplePeakDbfs": -1.6,
+    "stereoCorrelation": 0.881,
+    "centroidHz": 894,
+    "energyAbove8kPct": 1.07,
+    "seam": {
+     "delta": 0.07597,
+     "medianDelta": 0.01318,
+     "p999Delta": 0.25398,
+     "maxDelta": 0.53575,
+     "percentile": 96.23,
+     "ratio": 5.77,
+     "rmsJumpDb": 10.62
+    },
+    "mastering": {
+     "normaliseGainDb": -1.33,
+     "peakLimitingDb": -1.96
+    },
+    "renderMsWorkers": 1594,
+    "checks": {
+     "loudnessInMusicTarget": true,
+     "truePeakBelowMinus1": true,
+     "seamIsOrdinaryStep": true
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-bed-max.wav"
+   }
+  ],
+  "sfx": {
+   "renderMsWorkers": 5913,
+   "classes": {
+    "hero": -10,
+    "major": -11,
+    "medium": -12.5
+   },
+   "clips": [
+    {
+     "id": "callout-x2",
+     "variation": 1,
+     "class": "medium",
+     "targetMomentaryLufs": -12.5,
+     "momentaryMaxLufs": -12.5,
+     "deltaFromTargetDb": 0,
+     "truePeakDbtp": -2.41,
+     "seconds": 1.087,
+     "centroidHz": 1536,
+     "energyAbove8kPct": 0,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-callout-x2-1.wav"
+    },
+    {
+     "id": "callout-x2",
+     "variation": 2,
+     "class": "medium",
+     "targetMomentaryLufs": -12.5,
+     "momentaryMaxLufs": -12.5,
+     "deltaFromTargetDb": 0,
+     "truePeakDbtp": -2.87,
+     "seconds": 1.087,
+     "centroidHz": 1586,
+     "energyAbove8kPct": 0,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-callout-x2-2.wav"
+    },
+    {
+     "id": "callout-x10",
+     "variation": 1,
+     "class": "major",
+     "targetMomentaryLufs": -11,
+     "momentaryMaxLufs": -11,
+     "deltaFromTargetDb": 0,
+     "truePeakDbtp": -2.81,
+     "seconds": 1.493,
+     "centroidHz": 1035,
+     "energyAbove8kPct": 0,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-callout-x10-1.wav"
+    },
+    {
+     "id": "callout-x10",
+     "variation": 2,
+     "class": "major",
+     "targetMomentaryLufs": -11,
+     "momentaryMaxLufs": -11,
+     "deltaFromTargetDb": 0,
+     "truePeakDbtp": -2.53,
+     "seconds": 1.493,
+     "centroidHz": 1020,
+     "energyAbove8kPct": 0,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-callout-x10-2.wav"
+    },
+    {
+     "id": "callout-x25",
+     "variation": 1,
+     "class": "major",
+     "targetMomentaryLufs": -11,
+     "momentaryMaxLufs": -11,
+     "deltaFromTargetDb": 0,
+     "truePeakDbtp": -2.95,
+     "seconds": 1.649,
+     "centroidHz": 1094,
+     "energyAbove8kPct": 0.06,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-callout-x25-1.wav"
+    },
+    {
+     "id": "callout-x25",
+     "variation": 2,
+     "class": "major",
+     "targetMomentaryLufs": -11,
+     "momentaryMaxLufs": -11,
+     "deltaFromTargetDb": 0,
+     "truePeakDbtp": -1.81,
+     "seconds": 1.654,
+     "centroidHz": 1095,
+     "energyAbove8kPct": 0.07,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-callout-x25-2.wav"
+    },
+    {
+     "id": "callout-x50",
+     "variation": 1,
+     "class": "hero",
+     "targetMomentaryLufs": -10,
+     "momentaryMaxLufs": -10.1,
+     "deltaFromTargetDb": -0.1,
+     "truePeakDbtp": -1.57,
+     "seconds": 2.054,
+     "centroidHz": 939,
+     "energyAbove8kPct": 0.06,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-callout-x50-1.wav"
+    },
+    {
+     "id": "callout-x100",
+     "variation": 1,
+     "class": "hero",
+     "targetMomentaryLufs": -10,
+     "momentaryMaxLufs": -10,
+     "deltaFromTargetDb": 0,
+     "truePeakDbtp": -1.62,
+     "seconds": 3.089,
+     "centroidHz": 743,
+     "energyAbove8kPct": 0.05,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-callout-x100-1.wav"
+    },
+    {
+     "id": "callout-x250",
+     "variation": 1,
+     "class": "hero",
+     "targetMomentaryLufs": -10,
+     "momentaryMaxLufs": -10.12,
+     "deltaFromTargetDb": -0.12,
+     "truePeakDbtp": -1.59,
+     "seconds": 3.351,
+     "centroidHz": 849,
+     "energyAbove8kPct": 0.11,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-callout-x250-1.wav"
+    },
+    {
+     "id": "count-land-1",
+     "variation": 1,
+     "class": "major",
+     "targetMomentaryLufs": -11,
+     "momentaryMaxLufs": -11.04,
+     "deltaFromTargetDb": -0.04,
+     "truePeakDbtp": -1.59,
+     "seconds": 1.372,
+     "centroidHz": 744,
+     "energyAbove8kPct": 0,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-count-land-1-1.wav"
+    },
+    {
+     "id": "count-land-2",
+     "variation": 1,
+     "class": "major",
+     "targetMomentaryLufs": -11,
+     "momentaryMaxLufs": -11.12,
+     "deltaFromTargetDb": -0.12,
+     "truePeakDbtp": -1.54,
+     "seconds": 1.435,
+     "centroidHz": 745,
+     "energyAbove8kPct": 0.12,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-count-land-2-1.wav"
+    },
+    {
+     "id": "count-land-3",
+     "variation": 1,
+     "class": "hero",
+     "targetMomentaryLufs": -10,
+     "momentaryMaxLufs": -10.24,
+     "deltaFromTargetDb": -0.24,
+     "truePeakDbtp": -1.49,
+     "seconds": 1.588,
+     "centroidHz": 990,
+     "energyAbove8kPct": 0.16,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-count-land-3-1.wav"
+    },
+    {
+     "id": "count-land-4",
+     "variation": 1,
+     "class": "hero",
+     "targetMomentaryLufs": -10,
+     "momentaryMaxLufs": -10.22,
+     "deltaFromTargetDb": -0.22,
+     "truePeakDbtp": -1.55,
+     "seconds": 2.848,
+     "centroidHz": 666,
+     "energyAbove8kPct": 0.13,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-count-land-4-1.wav"
+    },
+    {
+     "id": "count-land-max",
+     "variation": 1,
+     "class": "hero",
+     "targetMomentaryLufs": -10,
+     "momentaryMaxLufs": -10.27,
+     "deltaFromTargetDb": -0.27,
+     "truePeakDbtp": -1.55,
+     "seconds": 2.82,
+     "centroidHz": 695,
+     "energyAbove8kPct": 0.13,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-count-land-max-1.wav"
+    },
+    {
+     "id": "tier-up-2",
+     "variation": 1,
+     "class": "major",
+     "targetMomentaryLufs": -11,
+     "momentaryMaxLufs": -11.12,
+     "deltaFromTargetDb": -0.12,
+     "truePeakDbtp": -1.56,
+     "seconds": 1.589,
+     "centroidHz": 1036,
+     "energyAbove8kPct": 0.47,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-tier-up-2-1.wav"
+    },
+    {
+     "id": "tier-up-3",
+     "variation": 1,
+     "class": "major",
+     "targetMomentaryLufs": -11,
+     "momentaryMaxLufs": -11.11,
+     "deltaFromTargetDb": -0.11,
+     "truePeakDbtp": -1.49,
+     "seconds": 1.59,
+     "centroidHz": 1103,
+     "energyAbove8kPct": 0.52,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-tier-up-3-1.wav"
+    },
+    {
+     "id": "tier-up-4",
+     "variation": 1,
+     "class": "major",
+     "targetMomentaryLufs": -11,
+     "momentaryMaxLufs": -11.15,
+     "deltaFromTargetDb": -0.15,
+     "truePeakDbtp": -1.53,
+     "seconds": 2.595,
+     "centroidHz": 816,
+     "energyAbove8kPct": 0.3,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-tier-up-4-1.wav"
+    },
+    {
+     "id": "tier-up-max",
+     "variation": 1,
+     "class": "major",
+     "targetMomentaryLufs": -11,
+     "momentaryMaxLufs": -11.23,
+     "deltaFromTargetDb": -0.23,
+     "truePeakDbtp": -1.52,
+     "seconds": 2.597,
+     "centroidHz": 672,
+     "energyAbove8kPct": 0.25,
+     "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cascade-v3-tier-up-max-1.wav"
+    }
+   ]
+  },
+  "escalation": {
+   "note": "Count-up from Büyük to Efsane (and on to max win): head 1, bed 1 on its musical end, tier-up calls at 5.3 / 8.15 / 10.7 (/ 13.25) s, landing when the count stops. hits: every hit lands on the 120 BPM grid; callToHitMs is the delay from the bigWin() call. The largest sample steps right before a hit come from the coin ticks and the rising whoosh (content): with both removed (cutIsolation) the 80–100 ms cut fades rank at the 78–94th percentile of all steps, i.e. no click.",
+   "toEfsane": {
+    "seconds": 19,
+    "marks": [
+     {
+      "at": 0.5,
+      "what": "head 1 (F)"
+     },
+     {
+      "at": 4.5,
+      "what": "bed 1 (F)"
+     },
+     {
+      "at": 5.5,
+      "what": "tier-up hit → bed 2",
+      "call": 5.3
+     },
+     {
+      "at": 8.5,
+      "what": "tier-up hit → bed 3",
+      "call": 8.15
+     },
+     {
+      "at": 11,
+      "what": "tier-up hit → bed 4",
+      "call": 10.7
+     },
+     {
+      "at": 15.2,
+      "what": "count stops: landing hit"
+     }
+    ],
+    "segments": [
+     {
+      "what": "head 1 (F)",
+      "from": 0.5,
+      "to": 4.5,
+      "integratedLufs": -13.46,
+      "momentaryMaxLufs": -12.26,
+      "truePeakDbtp": -1.42
+     },
+     {
+      "what": "bed 1 (F)",
+      "from": 4.5,
+      "to": 5.5,
+      "integratedLufs": -13.47,
+      "momentaryMaxLufs": -12.73,
+      "truePeakDbtp": -1.69
+     },
+     {
+      "what": "tier-up hit → bed 2",
+      "from": 5.5,
+      "to": 8.5,
+      "integratedLufs": -13.22,
+      "momentaryMaxLufs": -10.39,
+      "truePeakDbtp": -1.48
+     },
+     {
+      "what": "tier-up hit → bed 3",
+      "from": 8.5,
+      "to": 11,
+      "integratedLufs": -13.24,
+      "momentaryMaxLufs": -10,
+      "truePeakDbtp": -1.43
+     },
+     {
+      "what": "tier-up hit → bed 4",
+      "from": 11,
+      "to": 15.2,
+      "integratedLufs": -13.33,
+      "momentaryMaxLufs": -10.7,
+      "truePeakDbtp": -1.44
+     },
+     {
+      "what": "count stops: landing hit",
+      "from": 15.2,
+      "to": 19,
+      "integratedLufs": -15.73,
+      "momentaryMaxLufs": -10.41,
+      "truePeakDbtp": -1.55
+     }
+    ],
+    "whole": {
+     "integratedLufs": -13.51,
+     "momentaryMaxLufs": -9.99,
+     "truePeakDbtp": -1.42,
+     "samplePeakDbfs": -1.44
+    },
+    "p999Step": 0.2241,
+    "maxStep": 0.3785,
+    "controlWindowMaxStep": {
+     "median": 0.2526,
+     "p90": 0.3177,
+     "max": 0.3785
+    },
+    "hits": [
+     {
+      "at": 5.5,
+      "maxStepAroundHit": 0.3273,
+      "maxStepInCutFadeBeforeHit": 0.3273,
+      "cutWindowPercentileRank": 99.999,
+      "maxStepAtMsBeforeHit": 5,
+      "onBeat": true,
+      "callToHitMs": 200
+     },
+     {
+      "at": 8.5,
+      "maxStepAroundHit": 0.2878,
+      "maxStepInCutFadeBeforeHit": 0.2725,
+      "cutWindowPercentileRank": 99.991,
+      "maxStepAtMsBeforeHit": 37,
+      "onBeat": true,
+      "callToHitMs": 350
+     },
+     {
+      "at": 11,
+      "maxStepAroundHit": 0.3019,
+      "maxStepInCutFadeBeforeHit": 0.2785,
+      "cutWindowPercentileRank": 99.994,
+      "maxStepAtMsBeforeHit": 17,
+      "onBeat": true,
+      "callToHitMs": 300
+     }
+    ],
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-escalation.wav"
+   },
+   "toMax": {
+    "seconds": 26,
+    "marks": [
+     {
+      "at": 0.5,
+      "what": "head 1 (F)"
+     },
+     {
+      "at": 4.5,
+      "what": "bed 1 (F)"
+     },
+     {
+      "at": 5.5,
+      "what": "tier-up hit → bed 2",
+      "call": 5.3
+     },
+     {
+      "at": 8.5,
+      "what": "tier-up hit → bed 3",
+      "call": 8.15
+     },
+     {
+      "at": 11,
+      "what": "tier-up hit → bed 4",
+      "call": 10.7
+     },
+     {
+      "at": 13.5,
+      "what": "tier-up hit → max head (D)",
+      "call": 13.25
+     },
+     {
+      "at": 19.5,
+      "what": "max bed (D)"
+     },
+     {
+      "at": 22.3,
+      "what": "count stops: landing hit"
+     }
+    ],
+    "segments": [
+     {
+      "what": "head 1 (F)",
+      "from": 0.5,
+      "to": 4.5,
+      "integratedLufs": -13.46,
+      "momentaryMaxLufs": -12.26,
+      "truePeakDbtp": -1.42
+     },
+     {
+      "what": "bed 1 (F)",
+      "from": 4.5,
+      "to": 5.5,
+      "integratedLufs": -13.47,
+      "momentaryMaxLufs": -12.73,
+      "truePeakDbtp": -1.69
+     },
+     {
+      "what": "tier-up hit → bed 2",
+      "from": 5.5,
+      "to": 8.5,
+      "integratedLufs": -13.22,
+      "momentaryMaxLufs": -10.39,
+      "truePeakDbtp": -1.48
+     },
+     {
+      "what": "tier-up hit → bed 3",
+      "from": 8.5,
+      "to": 11,
+      "integratedLufs": -13.24,
+      "momentaryMaxLufs": -10,
+      "truePeakDbtp": -1.43
+     },
+     {
+      "what": "tier-up hit → bed 4",
+      "from": 11,
+      "to": 13.5,
+      "integratedLufs": -13.13,
+      "momentaryMaxLufs": -10.7,
+      "truePeakDbtp": -1.44
+     },
+     {
+      "what": "tier-up hit → max head (D)",
+      "from": 13.5,
+      "to": 19.5,
+      "integratedLufs": -13.1,
+      "momentaryMaxLufs": -10.05,
+      "truePeakDbtp": -1.57
+     },
+     {
+      "what": "max bed (D)",
+      "from": 19.5,
+      "to": 22.3,
+      "integratedLufs": -13.43,
+      "momentaryMaxLufs": -12.19,
+      "truePeakDbtp": -1.36
+     },
+     {
+      "what": "count stops: landing hit",
+      "from": 22.3,
+      "to": 26,
+      "integratedLufs": -16.9,
+      "momentaryMaxLufs": -11.8,
+      "truePeakDbtp": -1.84
+     }
+    ],
+    "whole": {
+     "integratedLufs": -13.45,
+     "momentaryMaxLufs": -9.99,
+     "truePeakDbtp": -1.36,
+     "samplePeakDbfs": -1.44
+    },
+    "p999Step": 0.2269,
+    "maxStep": 0.3785,
+    "controlWindowMaxStep": {
+     "median": 0.2526,
+     "p90": 0.3177,
+     "max": 0.3785
+    },
+    "hits": [
+     {
+      "at": 5.5,
+      "maxStepAroundHit": 0.3273,
+      "maxStepInCutFadeBeforeHit": 0.3273,
+      "cutWindowPercentileRank": 99.999,
+      "maxStepAtMsBeforeHit": 5,
+      "onBeat": true,
+      "callToHitMs": 200
+     },
+     {
+      "at": 8.5,
+      "maxStepAroundHit": 0.2878,
+      "maxStepInCutFadeBeforeHit": 0.2725,
+      "cutWindowPercentileRank": 99.992,
+      "maxStepAtMsBeforeHit": 37,
+      "onBeat": true,
+      "callToHitMs": 350
+     },
+     {
+      "at": 11,
+      "maxStepAroundHit": 0.3019,
+      "maxStepInCutFadeBeforeHit": 0.2785,
+      "cutWindowPercentileRank": 99.994,
+      "maxStepAtMsBeforeHit": 17,
+      "onBeat": true,
+      "callToHitMs": 300
+     },
+     {
+      "at": 13.5,
+      "maxStepAroundHit": 0.3384,
+      "maxStepInCutFadeBeforeHit": 0.1715,
+      "cutWindowPercentileRank": 99.444,
+      "maxStepAtMsBeforeHit": 7,
+      "onBeat": true,
+      "callToHitMs": 250
+     }
+    ],
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cascade-v3-escalation-max.wav"
+   },
+   "cutIsolation": {
+    "p999Step": 0.1599,
+    "maxStep": 0.3332,
+    "controlWindowMaxStep": {
+     "median": 0.2063,
+     "p90": 0.267,
+     "max": 0.3034
+    },
+    "hits": [
+     {
+      "at": 5.5,
+      "maxStepAroundHit": 0.2496,
+      "maxStepInCutFadeBeforeHit": 0.0208,
+      "cutWindowPercentileRank": 78.435,
+      "maxStepAtMsBeforeHit": 67,
+      "onBeat": true,
+      "callToHitMs": 200
+     },
+     {
+      "at": 8.5,
+      "maxStepAroundHit": 0.2009,
+      "maxStepInCutFadeBeforeHit": 0.0275,
+      "cutWindowPercentileRank": 85.818,
+      "maxStepAtMsBeforeHit": 69,
+      "onBeat": true,
+      "callToHitMs": 350
+     },
+     {
+      "at": 11,
+      "maxStepAroundHit": 0.1778,
+      "maxStepInCutFadeBeforeHit": 0.0427,
+      "cutWindowPercentileRank": 93.524,
+      "maxStepAtMsBeforeHit": 69,
+      "onBeat": true,
+      "callToHitMs": 300
+     }
+    ]
+   }
+  },
+  "renderTiming": {
+   "runs": [
+    {
+     "coreMs": 7675,
+     "allMs": 31363,
+     "maxMainThreadGapMsDuringCore": 550,
+     "maxMainThreadGapMsOverall": 550,
+     "perStepMs": {
+      "sfx-core": 5657,
+      "base": 7662,
+      "core": 7672,
+      "ambience": 1860,
+      "sfx-extended": 4341,
+      "fsIntro": 549,
+      "idle": 3329,
+      "feature": 5005,
+      "sfx-celebration": 5598,
+      "bigWin1": 1544,
+      "bed1": 1086,
+      "bigWin2": 648,
+      "bed2": 1224,
+      "bigWin3": 1588,
+      "bed3": 2044,
+      "bigWin4": 4114,
+      "bed4": 3325,
+      "fsOutro": 1735,
+      "totalWin": 1924,
+      "maxWin": 2517,
+      "bedMax": 3299,
+      "all": 31362
+     }
+    },
+    {
+     "coreMs": 6913,
+     "allMs": 26241,
+     "maxMainThreadGapMsDuringCore": 112,
+     "maxMainThreadGapMsOverall": 144,
+     "perStepMs": {
+      "base": 6668,
+      "sfx-core": 6903,
+      "core": 6912,
+      "ambience": 2181,
+      "idle": 1980,
+      "sfx-extended": 4598,
+      "fsIntro": 1473,
+      "feature": 5691,
+      "sfx-celebration": 5181,
+      "bigWin1": 856,
+      "bed1": 1088,
+      "bigWin2": 1177,
+      "bed2": 1286,
+      "bigWin3": 1541,
+      "bed3": 1601,
+      "bigWin4": 1890,
+      "fsOutro": 691,
+      "bed4": 2009,
+      "totalWin": 841,
+      "maxWin": 2364,
+      "bedMax": 2044,
+      "all": 26241
+     }
+    }
+   ],
+   "note": "Core is unchanged by v3 (core slower than the v2 runs because the machine load average was 11–14). The new assets add 4 scores and a separate late \"sfx-celebration\" batch after the feature theme; until it lands, callouts fall back to the older multiplier effect and landings to the ding."
+  },
+  "labPage": {
+   "url": "next dev (another agent, port 3300) /lab/audio",
+   "loadMs": 31325,
+   "workers": [
+    "http://127.0.0.1:3300/workers/slot-audio-render.js?v=c6ba7d0a3fcc"
+   ],
+   "pageErrors": [],
+   "voiceBank": "yüklü: yok · eksik (sessizce atlandı): x2, x10, x25, x50, x100, x250",
+   "voiceBankConsole": "the six missing voice files appear as browser 404 network messages only; no script error or warning",
+   "escalationStateSamples": [
+    {
+     "ms": 1500,
+     "celebration": "kutlama: kademe 1 · sayıyor · bed1"
+    },
+    {
+     "ms": 4200,
+     "celebration": "kutlama: kademe 2 · sayıyor · bed2"
+    },
+    {
+     "ms": 6800,
+     "celebration": "kutlama: kademe 3 · sayıyor · bed3"
+    },
+    {
+     "ms": 9300,
+     "celebration": "kutlama: kademe 4 · sayıyor · bed4"
+    },
+    {
+     "ms": 12500,
+     "celebration": "kutlama: kademe 4 + azami · sayıyor · bedMax"
+    },
+    {
+     "ms": 17000,
+     "celebration": "kutlama: kademe 4 + azami · sayıyor · bedMax"
+    },
+    {
+     "ms": 19200,
+     "celebration": "kutlama: kademe 0 · sfx-core 6036 ms · base 6235 ms"
+    },
+    {
+     "ms": 21000,
+     "celebration": "kutlama: kademe 0 · sfx-core 6036 ms · base 6235 ms"
+    }
+   ],
+   "screenshot": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/lab-audio-v3.png"
+  },
+  "summary": {
+   "musicInLoudnessTarget": [
+    "cascade-bigwin-1",
+    "cascade-bigwin-2",
+    "cascade-bigwin-3",
+    "cascade-bigwin-4",
+    "cascade-max-win",
+    "cascade-total-win",
+    "cascade-bed-1",
+    "cascade-bed-2",
+    "cascade-bed-3",
+    "cascade-bed-4",
+    "cascade-bed-max"
+   ],
+   "musicOutOfTarget": [],
+   "allTruePeakBelowMinus1": true,
+   "loopsSeamless": true,
+   "sfxMaxDeltaFromClassDb": 0.27,
+   "calloutSecondsByClass": {
+    "x2": 1.087,
+    "x10": 1.493,
+    "x25": 1.649,
+    "x50": 2.054,
+    "x100": 3.089,
+    "x250": 3.351
+   },
+   "tierUpHitsOnBeat": true,
+   "escalationTruePeakDbtp": -1.36
+  },
+  "limitations": [
+   "Nobody has listened to v3: the author cannot hear. The choir, bells, vox and the tier ladder need the owner's listening acceptance (WAVs listed per asset; cascade-v3-escalation*.wav are the full climbs).",
+   "The vox is a synthetic, wordless placeholder; real voice lines plug into setVoiceBank() and were only tested with fakes (no audio files exist yet).",
+   "Loudness rises only slightly per tier by design (all music stays in −16…−14 LUFS); tier identity comes from the key change and added layers, not from level.",
+   "Rare celebration effects render 1–2 variations (frequent effects keep 3–4); per-play pitch/gain micro-variation still applies.",
+   "Load timings were taken on a heavily shared container (load average 8–14), not on a desktop or phone.",
+   "Not verified here: GitHub CI, a production (next build / Cloudflare) runtime, Safari/Firefox, and the game components wiring (components/** belongs to another agent)."
+  ]
+ }
 }

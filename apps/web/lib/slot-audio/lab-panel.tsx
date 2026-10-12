@@ -8,6 +8,7 @@ import { createCascadeSound, type CascadeSound, type LoadProgress } from './casc
 import { CASCADE_SCORES, type CascadeScoreId } from './scores/cascade';
 import { CASCADE_SFX } from './sfx/cascade';
 import { DEFAULT_MIX, type MixSettings, type SceneId } from './timing';
+import { MULTIPLIER_CLASSES, MULTIPLIER_CLASS_MIN, WIN_TIERS, WIN_TIER_NAMES, WIN_TIER_THRESHOLDS, type MultiplierClass, type WinTier } from './win-tiers';
 
 const card: CSSProperties = { border: '1px solid var(--line)', borderRadius: 12, padding: 16, background: 'var(--surface)', display: 'grid', gap: 10 };
 const row: CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' };
@@ -16,7 +17,10 @@ const on: CSSProperties = { ...btn, border: '1px solid var(--accent)', color: 'v
 const small: CSSProperties = { color: 'var(--muted)', fontSize: 13, margin: 0 };
 
 const SCENES: SceneId[] = ['idle', 'base', 'feature', 'bigwin', 'none'];
-const STINGERS: CascadeScoreId[] = ['fsIntro', 'fsOutro', 'bigWin1', 'bigWin2', 'bigWin3', 'maxWin', 'bed1', 'bed2', 'bed3'];
+const STINGERS: CascadeScoreId[] = ['fsIntro', 'fsOutro', 'totalWin', 'bigWin1', 'bigWin2', 'bigWin3', 'bigWin4', 'maxWin', 'bed1', 'bed2', 'bed3', 'bed4', 'bedMax'];
+/** A representative applied multiplier per callout class. */
+const CALLOUT_VALUES: Record<MultiplierClass, number> = { x2: 5, x10: 12, x25: 30, x50: 60, x100: 150, x250: 300 };
+const VOICE_FOLDER = '/audio/voice/cascade';
 
 export function AudioLab() {
   const sound = useRef<CascadeSound | null>(null);
@@ -28,6 +32,9 @@ export function AudioLab() {
   const [counting, setCounting] = useState(false);
   const [tease, setTease] = useState(false);
   const [status, setStatus] = useState('');
+  const [ladder, setLadder] = useState<string | null>(null);
+  const [voiceBank, setVoiceBank] = useState('');
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
     const s = createCascadeSound();
@@ -35,8 +42,8 @@ export function AudioLab() {
     return () => { s.dispose(); sound.current = null; };
   }, []);
   useEffect(() => {
-    const id = setInterval(() => { const s = sound.current?.status(); if (s) setStatus(`core ${s.core ? 'ready' : '…'} · all ${s.extended ? 'ready' : '…'} · workers ${s.workers} (${s.workerJobs} jobs${s.workerFailure ? `, fell back: ${s.workerFailure}` : ''}) · ${Object.entries(s.renderMs).map(([k, v]) => `${k} ${v} ms`).join(' · ')}`); }, 500);
-    return () => clearInterval(id);
+    const id = setInterval(() => { const s = sound.current?.status(); if (s) setStatus(`core ${s.core ? 'ready' : '…'} · all ${s.extended ? 'ready' : '…'} · workers ${s.workers} (${s.workerJobs} jobs${s.workerFailure ? `, fell back: ${s.workerFailure}` : ''}) · kutlama: kademe ${s.celebration.tier}${s.celebration.max ? ' + azami' : ''}${s.celebration.counting ? ' · sayıyor' : ''}${s.celebration.bed ? ` · ${s.celebration.bed}` : ''} · ${Object.entries(s.renderMs).map(([k, v]) => `${k} ${v} ms`).join(' · ')}`); }, 500);
+    return () => { clearInterval(id); for (const t of timers.current) clearTimeout(t); };
   }, []);
 
   const s = () => sound.current;
@@ -60,6 +67,29 @@ export function AudioLab() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [demo]);
 
+  /** Tier-escalation demo: a count-up that climbs Büyük → Mega → Süper → Efsane (→ max), then lands. */
+  const runLadder = (withMax: boolean) => {
+    for (const t of timers.current) clearTimeout(t);
+    timers.current = [];
+    const x = s(); if (!x) return;
+    x.countUp(false);
+    const steps: [number, string, () => void][] = [
+      [0, 'Büyük', () => { x.bigWin(1); x.countUp(true); setCounting(true); }],
+      [3000, 'Mega', () => x.bigWin(2)],
+      [5500, 'Süper', () => x.bigWin(3)],
+      [8000, 'Efsane', () => x.bigWin(4)],
+      ...(withMax ? [[11000, 'Azami kazanç', () => x.maxWin()] as [number, string, () => void]] : []),
+      [withMax ? 18000 : 12500, 'iniş', () => { x.countUp(false); setCounting(false); }],
+      [withMax ? 20000 : 14500, '', () => {}],
+    ];
+    for (const [ms, label, fn] of steps) timers.current.push(setTimeout(() => { fn(); setLadder(label || null); }, ms));
+  };
+  const loadVoices = async () => {
+    const x = s(); if (!x) return;
+    setVoiceBank('yükleniyor…');
+    const r = await x.setVoiceBank(VOICE_FOLDER);
+    setVoiceBank(`yüklü: ${r.loaded.join(', ') || 'yok'} · eksik (sessizce atlandı): ${r.missing.join(', ') || 'yok'}`);
+  };
   const landSweep = () => { for (let c = 0; c < 6; c++) setTimeout(() => s()?.land(c), c * 70); };
   const slider = (key: keyof Omit<MixSettings, 'muted'>, label: string) => (
     <label style={{ display: 'grid', gap: 4, minWidth: 150, flex: '1 1 150px' }}>
@@ -127,9 +157,7 @@ export function AudioLab() {
           <button type="button" style={btn} onClick={() => s()?.freeSpinsIntro()}>freeSpinsIntro</button>
           <button type="button" style={btn} onClick={() => { s()?.freeSpinsIntro(); s()?.setScene('feature'); setSceneState('feature'); }}>intro → feature</button>
           <button type="button" style={btn} onClick={() => { s()?.featureOutro(); s()?.setScene('base'); setSceneState('base'); }}>outro → base</button>
-          {[1, 2, 3].map(t => <button key={t} type="button" style={btn} onClick={() => s()?.bigWin(t as 1 | 2 | 3)}>bigWin {t}</button>)}
-          <button type="button" style={btn} onClick={() => s()?.maxWin()}>maxWin</button>
-          <button type="button" style={counting ? on : btn} onClick={() => { s()?.countUp(!counting); setCounting(c => !c); }}>{counting ? 'countUp: durdur' : 'countUp: başlat'}</button>
+          <button type="button" style={btn} onClick={() => s()?.totalWinFanfare()}>totalWinFanfare</button>
         </div>
         <div style={row}>
           <button type="button" style={btn} onClick={() => s()?.click()}>click</button>
@@ -138,6 +166,33 @@ export function AudioLab() {
           <button type="button" style={btn} onClick={() => s()?.denied()}>denied</button>
           <button type="button" style={btn} onClick={() => s()?.autoplay(true)}>autoplay on</button>
           <button type="button" style={btn} onClick={() => s()?.autoplay(false)}>autoplay off</button>
+        </div>
+      </section>
+
+      <section style={card} aria-labelledby="a-tiers">
+        <h2 id="a-tiers" style={{ margin: 0, fontSize: 18 }}>Kazanç kademeleri</h2>
+        <p style={small}>Kademeler yukarı doğru ton değiştirir (F → G → A → C, azami D). Sayaç çalışırken daha yüksek bir kademe gelirse “whoosh + vuruş” vuruşa hizalanır ve yeni kademenin döngüsü girer; sayaç durunca kademeye özgü iniş vuruşu çalar.</p>
+        <div style={row}>
+          {WIN_TIERS.map((t: WinTier) => <button key={t} type="button" style={btn} onClick={() => s()?.bigWin(t)}>bigWin {t} · {WIN_TIER_NAMES[t]} ≥{WIN_TIER_THRESHOLDS[t]}×</button>)}
+          <button type="button" style={btn} onClick={() => s()?.maxWin()}>maxWin · Azami</button>
+          <button type="button" style={counting ? on : btn} onClick={() => { s()?.countUp(!counting); setCounting(c => !c); }}>{counting ? 'countUp: durdur (iniş)' : 'countUp: başlat'}</button>
+        </div>
+        <div style={row}>
+          <button type="button" style={btn} onClick={() => runLadder(false)}>Tırmanış demosu 1→2→3→4 + countUp</button>
+          <button type="button" style={btn} onClick={() => runLadder(true)}>Tırmanış demosu 1→2→3→4→azami</button>
+          <span style={small} aria-live="polite">{ladder ? `şimdi: ${ladder}` : ''}</span>
+        </div>
+      </section>
+
+      <section style={card} aria-labelledby="a-callout">
+        <h2 id="a-callout" style={{ margin: 0, fontSize: 18 }}>Çarpan anonsu</h2>
+        <p style={small}>Sözsüz “sunucu” sesi: sınıf büyüdükçe motif uzar ve katman eklenir. Ses kaydı gelince her sınıf için {VOICE_FOLDER}/&lt;sınıf&gt;.mp3 üstüne bindirilir (müzik kısılır); eksik dosya sessizce atlanır.</p>
+        <div style={row}>
+          {MULTIPLIER_CLASSES.map(c => <button key={c} type="button" style={btn} onClick={() => s()?.multiplierCallout(CALLOUT_VALUES[c])}>{c === 'x2' ? '<10×' : `≥${MULTIPLIER_CLASS_MIN[c]}×`} ({CALLOUT_VALUES[c]}×){c === 'x250' ? ' · sonraki oyun' : ''}</button>)}
+        </div>
+        <div style={row}>
+          <button type="button" style={btn} onClick={() => void loadVoices()}>Ses bankasını yükle ({VOICE_FOLDER})</button>
+          <span style={small} aria-live="polite">{voiceBank}</span>
         </div>
       </section>
 

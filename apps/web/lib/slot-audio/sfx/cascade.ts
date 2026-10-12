@@ -4,15 +4,17 @@
  * Pitched material sits in F major pentatonic (F G A C D) so overlapping effects stay consonant
  * with the base theme (F major) and the feature theme (D minor).
  */
-import { addMono, addStereo, sinCycles, stereo, type Stereo } from '../synth/dsp';
+import { addMono, addStereo, addStereoUpsampled, sinCycles, stereo, type Stereo } from '../synth/dsp';
 import {
-  celesta, glock, impact, kick, marimba, modal, musicBox, noiseHit, padChord, pluck, riser, sparkles, whoosh, wood, crash,
+  bell, celesta, choirChord, glock, impact, kick, marimba, modal, musicBox, noiseHit, padChord, pluck, riser, sparkles, synthLead, timpani, vox, whoosh, wood, crash,
   type VoiceCtx,
 } from '../synth/instruments';
 import { midiToHz } from '../timing';
+import { MULTIPLIER_CLASSES, TIER_KEY, TIER_UP_PRE, type MultiplierClass, type WinTier } from '../win-tiers';
 
-/** Loudness classes (max momentary LUFS of the rendered effect). Music is mastered to −15 LUFS integrated. */
-export const SFX_LEVELS = { major: -11, medium: -12.5, light: -16, ui: -19.5 } as const;
+/** Loudness classes (max momentary LUFS of the rendered effect). Music is mastered to −15 LUFS integrated.
+ *  'hero' is reserved for the top celebration moments (≥50× callouts, tier-4/max landings). */
+export const SFX_LEVELS = { hero: -10, major: -11, medium: -12.5, light: -16, ui: -19.5 } as const;
 export type SfxLevel = keyof typeof SFX_LEVELS;
 
 export interface SfxDef {
@@ -25,6 +27,8 @@ export interface SfxDef {
   jitter: [number, number];
   /** Rendered in the first (core) batch. */
   core: boolean;
+  /** Rendered in its own later batch (rare celebration moments), after the feature theme. */
+  late?: boolean;
   build: (ctx: VoiceCtx, variation: number) => Stereo;
 }
 
@@ -259,5 +263,147 @@ export const CASCADE_SFX: SfxDef[] = [
     },
   },
 ];
+
+/* ---------------- win tiers and multiplier callouts ---------------- */
+
+type TierOrMax = WinTier | 'max';
+/** Tonic (MIDI) of a tier's key around F5; keys above A are voiced an octave lower so the register stays sweet. */
+const tierTonic = (t: TierOrMax) => { const k = TIER_KEY[t]; return 77 + (k > 4 ? k - 12 : k); };
+const triad = (root: number) => [root, root + 4, root + 7];
+const tierRank = (t: TierOrMax) => (t === 'max' ? 5 : t);
+
+/** Choir chord synthesised at half rate (its formants sit below 3.5 kHz) and interpolated up into `out`. */
+function choirInto(ctx: VoiceCtx, out: Stereo, notes: number[], at: number, vel: number, held: number, gain: number, attack: number, release = 0.6) {
+  const low = choirChord({ sr: ctx.sr / 2, rng: ctx.rng }, notes.map(hz), vel, held, { attack, release });
+  addStereoUpsampled(out, low, 2, Math.round(at), gain);
+}
+
+/** Brass-like stab chord (the synth lead with a slower, darker filter). */
+function brassStab(ctx: VoiceCtx, out: Stereo, notes: number[], at: number, vel: number, held: number, gain = 0.5) {
+  notes.forEach((n, i) => mono(out, synthLead(ctx, hz(n), vel, held, 900, 2200, 0.3), at, gain, (i / Math.max(1, notes.length - 1)) * 0.6 - 0.3));
+}
+
+/** Pitched "power" impact: a sub sweep that lands on the tonic F, a body thump and an optional crack. */
+function powerImpact(ctx: VoiceCtx, out: Stereo, at: number, vel: number, landHz = 43.65, crack = 0.4) {
+  mono(out, kick(ctx, vel, landHz * 4.2, landHz, 0.07, 1.1, 0.3, 1.7), at, 1);
+  mono(out, noiseHit(ctx, vel * 0.5, 240, 0.6, 0.001, 0.16), at, 0.9);
+  if (crack > 0) mono(out, noiseHit(ctx, vel * crack, 2500, 0.8, 0.0005, 0.05, 900, 8000), at, 1);
+}
+
+/**
+ * Tier-up transition into tier `t`: a rising whoosh for TIER_UP_PRE seconds, then the hit — power impact,
+ * cymbal, brass and bell stab on the new key's tonic triad, sparkle burst; tier 4 and max add a tower bell
+ * and a short choir "ah"; max adds timpani. The runtime aligns the hit to the beat.
+ */
+const tierUp = (t: Exclude<TierOrMax, 1>): SfxDef => ({
+  id: `tier-up-${t}`, variations: 1, level: 'major', send: 0.32, jitter: [6, 0.5], core: false, late: true,
+  build: (ctx, v) => {
+    const out = sized(2.6 * ctx.sr), hit = TIER_UP_PRE * ctx.sr, root = tierTonic(t), rank = tierRank(t);
+    addStereo(out, whoosh(ctx, TIER_UP_PRE + 0.06, 300, 4200, 0.9, v ? 0.5 : -0.5, v ? -0.3 : 0.3, 0.88), 0, 1);
+    addStereo(out, riser(ctx, TIER_UP_PRE, 500, 3800, 0.5, 0.35), 0, 0.6);
+    powerImpact(ctx, out, hit, 1, hz(root - 36));
+    addStereo(out, crash(ctx, 0.45 + rank * 0.05, 1.6), Math.round(hit), 0.55);
+    brassStab(ctx, out, triad(root - 12), hit, 0.85, 0.32, 0.45);
+    bellChord(ctx, out, [...triad(root), root + 12], hit + 0.002 * ctx.sr, 0.8, 0.008);
+    if (rank >= 4) {
+      mono(out, bell(ctx, hz(root), 0.8), hit, 0.45, -0.25);
+      choirInto(ctx, out, triad(root - 12), hit, 0.9, 0.55, 0.7, 0.04, 0.5);
+    }
+    if (t === 'max') mono(out, timpani(ctx, 1, hz(root - 36)), hit, 0.8);
+    addStereo(out, sparkles(ctx, 0.9, 50 + rank * 15, [root + 12, root + 16, root + 19, root + 24].filter(n => n <= 100), 0.8, 'decay'), Math.round(hit + 0.01 * ctx.sr), 0.8);
+    return out;
+  },
+});
+
+/**
+ * Count-up landing ("the count stops here"): a tonic chord hit in the tier's key, sized by tier — 1 kick,
+ * celesta/glock strum; 2 + cymbal; 3 + brass stab; 4 + tower bell and a choir swell; max + timpani and a
+ * second bell an octave up.
+ */
+const countLand = (t: TierOrMax): SfxDef => ({
+  id: `count-land-${t}`, variations: 1, level: tierRank(t) >= 3 ? 'hero' : 'major', send: 0.32, jitter: [5, 0.5], core: false, late: true,
+  build: (ctx, v) => {
+    const rank = tierRank(t), root = tierTonic(t), sr = ctx.sr;
+    const out = sized((1.8 + rank * 0.35) * sr);
+    mono(out, kick(ctx, 0.9, 170, 46, 0.045, 0.6, 0.6, 1.6), 0, 1);
+    if (rank >= 2) { powerImpact(ctx, out, 0, 0.7 + rank * 0.06, hz(root - 36), 0.3); addStereo(out, crash(ctx, 0.4 + rank * 0.06, 1.4 + rank * 0.2), 0, 0.55); }
+    const notes = [root - 12, root - 5, root, root + 4, root + 7, root + 12].slice(0, 3 + Math.min(3, rank));
+    bellChord(ctx, out, notes, 0.002 * sr, 0.85, 0.012 + v * 0.004);
+    mono(out, glock(ctx, hz(root + 12), 0.6), 0.004 * sr, 0.35);
+    if (rank >= 3) brassStab(ctx, out, triad(root - 12), 0, 0.9, 0.45, 0.45);
+    if (rank >= 4) {
+      mono(out, bell(ctx, hz(root), 0.9), 0, 0.5, -0.2);
+      choirInto(ctx, out, [root - 12, root - 8, root - 5, root], 0, 0.95, 0.5 + (rank - 4) * 0.4, 0.75, 0.06);
+    }
+    if (rank >= 5) { mono(out, timpani(ctx, 1, hz(root - 36)), 0, 0.85); mono(out, bell(ctx, hz(root + 12), 0.6), 0.25 * sr, 0.35, 0.3); }
+    addStereo(out, sparkles(ctx, 0.8 + rank * 0.25, 40 + rank * 18, [root + 12, root + 14, root + 16, root + 19, root + 24].filter(n => n <= 100), 0.85, 'decay'), Math.round(0.01 * sr), 0.8);
+    return out;
+  },
+});
+
+/** Callout recipe per multiplier class: motif (F major pentatonic, consonant with base and feature themes), spacing and layers. */
+const CALLOUT: Record<MultiplierClass, { motif: number[]; step: number; seconds: number; level: SfxLevel }> = {
+  x2: { motif: [81, 84], step: 0.07, seconds: 1.0, level: 'medium' },
+  x10: { motif: [77, 79, 84], step: 0.09, seconds: 1.5, level: 'major' },
+  x25: { motif: [74, 77, 79, 81, 86], step: 0.085, seconds: 2.0, level: 'major' },
+  x50: { motif: [72, 74, 77, 79, 81, 84, 89], step: 0.075, seconds: 2.5, level: 'hero' },
+  x100: { motif: [65, 72, 74, 77, 79, 81], step: 0.12, seconds: 3.1, level: 'hero' },
+  x250: { motif: [65, 72, 74, 77, 79, 81, 84, 86, 89], step: 0.11, seconds: 3.7, level: 'hero' },
+};
+
+/**
+ * Applied-multiplier "announcer" callouts. Non-verbal: a pitched power impact, a sparkle swell and a short
+ * motif that grows with the class. x2 a glassy two-note "ting-ting"; x10 a zip-up and a three-note rise;
+ * x25 adds a cymbal, a brass stab and a wordless "oh-AH" vox; x50 a choir stab and timpani with a two-octave
+ * climb; x100 a brass fanfare with bells, choir swell and a long vox glide; x250 (reserved) a two-phrase
+ * fanfare with a second impact. A recorded voice line per class can be layered on top at runtime.
+ */
+const callout = (c: MultiplierClass): SfxDef => ({
+  // frequent classes get two variations; the rare big ones one (per-play micro-variation still applies)
+  id: `callout-${c}`, variations: MULTIPLIER_CLASSES.indexOf(c) <= 2 ? 2 : 1, level: CALLOUT[c].level, send: 0.3, jitter: [5, 0.4], core: false, late: true,
+  build: (ctx, v) => {
+    const spec = CALLOUT[c], rank = MULTIPLIER_CLASSES.indexOf(c), sr = ctx.sr;
+    const out = sized(spec.seconds * sr);
+    const start = rank >= 4 ? 0.1 : 0.05;
+    const last = start + (spec.motif.length - 1) * spec.step;
+    // impact first: the callout answers the moment the multiplier hits
+    if (rank === 0) mono(out, kick(ctx, 0.55, 320, 110, 0.03, 0.18, 0.3, 1.2), 0, 0.8);
+    else powerImpact(ctx, out, 0, 0.75 + rank * 0.05, 43.65, 0.3 + rank * 0.05);
+    if (rank >= 1) mono(out, glide(ctx, hz(53 + rank * 2), hz(77 + rank * 2), 0.16 + rank * 0.02, 0.3), 0.01 * sr, 0.8);
+    if (rank >= 2) addStereo(out, crash(ctx, 0.35 + rank * 0.06, 1.2 + rank * 0.2), 0, 0.5);
+    if (rank >= 3) mono(out, timpani(ctx, 1, hz(41)), 0, 0.8);
+    if (rank >= 4) mono(out, timpani(ctx, 0.85, hz(48)), Math.round(0.24 * sr), 0.7);
+    // motif: celesta lead doubled by glock; from x100 up a brass line carries it an octave lower
+    spec.motif.forEach((n, i) => {
+      const at = (start + i * spec.step) * sr, final = i === spec.motif.length - 1;
+      const vel = 0.65 + 0.35 * (i / Math.max(1, spec.motif.length - 1));
+      mono(out, celesta(ctx, hz(n), vel, final ? 0.6 : spec.step, 1.2), at, 0.6, (v ? -1 : 1) * (i / spec.motif.length - 0.5) * 0.5);
+      if (final || rank <= 1) mono(out, glock(ctx, hz(n + (n < 84 ? 12 : 0)), 0.5 * vel), at, 0.3);
+      if (rank >= 4) mono(out, synthLead(ctx, hz(n - 12), vel, final ? 0.7 : spec.step * 0.9, 900, 2000, 0.3), at, 0.4);
+    });
+    const finalAt = last * sr;
+    // chord on the final note: bells for small classes, brass / choir / tower bells as the class grows
+    if (rank >= 1) bellChord(ctx, out, [77, 81, 84, 89].slice(0, 2 + Math.min(2, rank)), finalAt, 0.7, 0.01);
+    if (rank >= 2) brassStab(ctx, out, rank >= 4 ? [65, 69, 72, 77] : [62, 65, 69, 72], finalAt, 0.85, 0.3 + rank * 0.08, 0.4);
+    if (rank >= 3) choirInto(ctx, out, [53, 60, 65, 69, 72].slice(rank >= 4 ? 0 : 1), rank >= 4 ? 0 : finalAt, 0.9, rank >= 4 ? 1.1 : 0.45, 0.7, rank >= 4 ? 0.25 : 0.03);
+    if (rank >= 4) { mono(out, bell(ctx, hz(77), 0.85), finalAt, 0.45, -0.25); mono(out, bell(ctx, hz(84), 0.7), finalAt + 0.12 * sr, 0.35, 0.25); }
+    // wordless "oh → AH" vox: the placeholder announcer character
+    if (rank >= 2) {
+      const [f0, f1, dur] = rank === 2 ? [69, 74, 0.5] : rank === 3 ? [72, 77, 0.6] : rank === 4 ? [65, 72, 0.9] : [65, 77, 1.2];
+      mono(out, vox(ctx, hz(f0), hz(f1), dur, 0.8), 0.06 * sr, 0.55, 0);
+    }
+    if (rank >= 5) { powerImpact(ctx, out, finalAt + 0.08 * sr, 0.9, 43.65, 0.4); addStereo(out, crash(ctx, 0.7, 2), Math.round(finalAt + 0.08 * sr), 0.5); }
+    // sparkle swell into the final note, then a burst
+    addStereo(out, sparkles(ctx, Math.max(0.15, last), 20 + rank * 12, [84, 86, 89, 91, 93], 0.6, 'swell'), 0, 0.6);
+    addStereo(out, sparkles(ctx, 0.5 + rank * 0.18, 40 + rank * 18, [86, 89, 91, 93, 96, 98], 0.8, 'decay'), Math.round(finalAt), 0.8);
+    return out;
+  },
+});
+
+CASCADE_SFX.push(
+  ...([2, 3, 4, 'max'] as const).map(tierUp),
+  ...([1, 2, 3, 4, 'max'] as const).map(countLand),
+  ...MULTIPLIER_CLASSES.map(callout),
+);
 
 export const SFX_IDS = CASCADE_SFX.map(s => s.id);

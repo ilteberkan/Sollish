@@ -6,6 +6,7 @@
  */
 import { melody, nearest, progression, steps, voice, type ChordEvent, type HitEvent, type NoteEvent } from './notation';
 import type { FxEvent, PadEvent, Score } from './types';
+import { CELEBRATION_BPM, TIER_KEY, type WinTier } from '../win-tiers';
 
 /* ---------------- arranging helpers ---------------- */
 
@@ -254,87 +255,183 @@ export const FS_OUTRO: Score = {
   ],
 };
 
-/** Big-win heads, 120 BPM F major. Each ends on a held tonic so it resolves even without a count-up bed. */
-const BW_BPM = 120;
+/* =====================================================================================
+ * WIN CELEBRATIONS — a key ladder (win-tiers.ts): Büyük F major → Mega G → Süper A → Efsane C → Max win D.
+ * Every tier climbs to a higher tonic and adds layers, so a count-up that crosses tiers keeps lifting.
+ * All at 120 BPM so tier-up transitions land on the same pulse.
+ * ===================================================================================== */
+
+const BW_BPM = CELEBRATION_BPM;
+const shiftChords = (chords: ChordEvent[], k: number): ChordEvent[] => chords.map(c => ({ ...c, root: (c.root + k + 12) % 12, tones: c.tones.map(t => (t + k + 12) % 12), bass: (c.bass + k + 12) % 12 }));
+const shiftNotes = (notes: NoteEvent[], k: number): NoteEvent[] => notes.map(n => ({ ...n, n: n.n + k }));
+/** Melodies above A major are written an octave lower (the tonic still rises; the register stays sweet). */
+const leadShift = (key: number) => (key > 4 ? key - 12 : key);
+
+/** Big-win heads 1–3: the original F-major heads, each now in its own tier key (1 F, 2 G, 3 A). Each ends on a held tonic. */
 function bigWinHead(tier: 1 | 2 | 3): Score {
   const spec = {
     1: { bars: 2, chords: 'F:2 Bb:1 C:1 | F', lead: 'F5:.25 A5:.25 C6:.25 F6:.25 A5:.25 C6:.25 F6:.25 A6:.25 F6:1 G6:1 | A6:3 r:1', bass: 'F2:2 Bb1:1 C2:1 | F1:3 r:1', lufs: -15 },
     2: { bars: 2, chords: 'F:1 Dm:1 Bb:1 C:1 | F', lead: 'F5:.25 G5:.25 A5:.25 C6:.25 D6:.25 F6:.25 A6:.5 F6:.5 D6:.5 G6:1 | A6:1 G6:.5 A6:.5 C7:2', bass: 'F2:1 D2:1 Bb1:1 C2:1 | F1:3 r:1', lufs: -14.5 },
     3: { bars: 3, chords: 'Dm:2 Bb:2 | Gm:2 C7:2 | F', lead: 'A5:.25 D6:.25 F6:.25 A6:.25 F6:.5 D6:.5 Bb5:.25 D6:.25 F6:.25 Bb6:.25 F6:1 | Bb5:.25 D6:.25 G6:.25 Bb6:.25 G6:.5 D6:.5 C6:.25 E6:.25 G6:.25 C7:.25 Bb6:1 | A6:3 r:1', bass: 'D2:2 Bb1:2 | G1:2 C2:2 | F1:3 r:1', lufs: -14 },
   }[tier];
-  const chords = progression(spec.chords);
+  const key = TIER_KEY[tier];
+  const chords = shiftChords(progression(spec.chords), key);
+  const lead = melody(spec.lead, 0, 4, key), bassNotes = melody(spec.bass, 0, 4, key);
   const lastBar = spec.bars - 1;
   const kit = tier === 1
     ? hits(steps('kickPunch', 'x...x...x...x...', 0, 1), steps('snare', '............oxxX', 0, 1), steps('kickPunch', 'X...............', 1, 1))
     : tier === 2
       ? hits(steps('kickPunch', 'x...x...x...x...', 0, 1), steps('snare', '........ooxxxxXX', 0, 1), steps('clap', '....x.......x...', 0, 1), steps('kickPunch', 'X...............', 1, 1))
-      : hits(steps('kickPunch', 'x.x.x.x.x.x.x.x.', 0, 2), steps('snare', 'o.o.o.o.x.x.xxXX', 1, 1), steps('tomHi', '............x...', 1, 1), steps('tomMid', '.............x..', 1, 1), steps('tomLo', '..............x.', 1, 1), steps('kickPunch', 'X...............', 2, 1), steps('timp', 'X...............', 2, 1));
+      : hits(steps('kickPunch', 'x.x.x.x.x.x.x.x.', 0, 2), steps('snare', 'o.o.o.o.x.x.xxXX', 1, 1), steps('tomHi', '............x...', 1, 1), steps('tomMid', '.............x..', 1, 1), steps('tomLo', '..............x.', 1, 1), steps('kickPunch', 'X...............', 2, 1));
   const fx: FxEvent[] = [
     { t: 0, d: 0.5, k: 'impact', v: 0.9 }, { t: 0, d: 3, k: 'crash', v: 0.55 },
-    { t: lastBar * 4, d: 4, k: 'crash', v: 0.7 }, { t: lastBar * 4, d: 4, k: 'sparkle', v: 0.8, shape: 'decay', density: 40 + tier * 15 },
+    { t: lastBar * 4, d: 4, k: 'crash', v: 0.7 }, { t: lastBar * 4, d: 4, k: 'sparkle', v: 0.8, shape: 'decay', density: 40 + tier * 15, notes: [84, 86, 89, 91, 93, 96].map(n => n + leadShift(key)) },
     ...(tier === 3 ? [{ t: 4, d: 4, k: 'riser' as const, v: 0.7 }, { t: 6, d: 2, k: 'swell' as const, v: 0.45 }] : []),
   ];
+  const tonic = 41 + key; // F2 + key: the timpani tonic of the tier
   return {
     id: `cascade-bigwin-${tier}`, bpm: BW_BPM, beatsPerBar: 4, bars: spec.bars, swing: 0.5, loop: false, tail: 2, reverb: 'hall', reverbDb: -5,
     target: { lufs: spec.lufs, measure: 'integrated' }, musicalEnd: spec.bars * 4,
-    about: `Big win tier ${tier}, F major, 120 BPM, ${spec.bars} bars (${spec.bars * 2} s): impact, rising arpeggio and the "sugar step" climb, resolving on a held tonic; a ${tier === 3 ? 'fuller' : 'lighter'} count-up bed can follow on the next bar line.`,
+    about: `Big win tier ${tier} (${['', 'Büyük', 'Mega', 'Süper'][tier]}), ${['', 'F', 'G', 'A'][tier]} major, 120 BPM, ${spec.bars} bars (${spec.bars * 2} s): impact, rising arpeggio and the "sugar step" climb, resolving on a held tonic${tier >= 2 ? '; strings added' : ''}${tier === 3 ? '; snare/tom fill and timpani' : ''}.`,
     tracks: [
-      { id: 'lead', kind: 'pitched', voice: 'celesta', level: -19, send: 0.35, notes: melody(spec.lead), bright: 1.2 },
-      { id: 'synth', kind: 'pitched', voice: 'synthLead', level: -22 + tier, send: 0.25, pan: 0.25, notes: melody(spec.lead, 0, 4, -12), bright: 0.8 },
-      { id: 'glock', kind: 'pitched', voice: 'glock', level: -25, send: 0.4, pan: -0.35, notes: melody(spec.lead).filter(n => n.d >= 0.5) },
+      { id: 'lead', kind: 'pitched', voice: 'celesta', level: -19, send: 0.35, notes: lead, bright: 1.2 },
+      { id: 'synth', kind: 'pitched', voice: 'synthLead', level: -22 + tier, send: 0.25, pan: 0.25, notes: shiftNotes(lead, -12), bright: 0.8 },
+      { id: 'glock', kind: 'pitched', voice: 'glock', level: -25, send: 0.4, pan: -0.35, notes: lead.filter(n => n.d >= 0.5) },
       { id: 'pad', kind: 'pad', voice: 'padSaw', level: -23, send: 0.3, width: 1.6, chords: pads(chords, 4, 55, 76, 0.85) },
       ...(tier >= 2 ? [{ id: 'strings', kind: 'pad' as const, voice: 'padString' as const, level: -25, send: 0.4, chords: pads(chords, 3, 65, 84, 0.7) }] : []),
-      { id: 'bass', kind: 'pitched', voice: 'bassDrive', level: -21, send: 0, notes: melody(spec.bass) },
+      { id: 'bass', kind: 'pitched', voice: 'bassDrive', level: -21, send: 0, notes: bassNotes.map(n => ({ ...n, n: n.n > 47 ? n.n - 12 : n.n })) },
       { id: 'kit', kind: 'kit', level: -21, send: 0.12, hits: kit },
+      ...(tier === 3 ? [{ id: 'timp', kind: 'pitched' as const, voice: 'timpani' as const, level: -23, send: 0.25, notes: [{ t: 8, d: 2, n: tonic, v: 1 }] }] : []),
       { id: 'fx', kind: 'fx', level: -25, send: 0.35, fx },
     ],
   };
 }
-export const BIG_WIN_HEADS = [bigWinHead(1), bigWinHead(2), bigWinHead(3)] as const;
 
-/** Count-up beds: a 4-bar F–Dm–Bb–C celebration loop at 120 BPM, layered more fully per tier. */
+/**
+ * Big win tier 4 — "Efsane" (legendary), C major, 120 BPM, 3 bars (6 s). The most triumphant head: a wordless
+ * choir pad, brass-like stabs, tower bells on the downbeats, a timpani roll into the final bar and the densest
+ * sparkle shower. Melody: an arpeggio launch into a held fifth, then a step-wise climb to the high tonic.
+ */
+const EFSANE_LEAD = 'E5:.25 G5:.25 C6:.25 E6:.25 G6:1 E6:.5 G6:.5 A6:1 | A6:.5 G6:.25 F6:.25 A6:1 B6:.5 C7:.5 D7:1 | C7:3 r:1';
+const EFSANE_CHORDS = 'C:2 Am:2 | F:2 G7sus4:1 G7:1 | Cadd9';
+export const BIG_WIN_LEGEND: Score = {
+  id: 'cascade-bigwin-4', bpm: BW_BPM, beatsPerBar: 4, bars: 3, swing: 0.5, loop: false, tail: 2.6, reverb: 'hall', reverbDb: -4.5,
+  target: { lufs: -14, measure: 'integrated' }, musicalEnd: 12,
+  about: 'Big win tier 4 (Efsane), C major, 120 BPM, 3 bars (6 s): C – Am | F – G7sus4 – G7 | Cadd9. Celesta + brass-like lead, wordless "ah" choir pad, strings, tower bells on each downbeat, timpani roll into the last bar, impact, crash and the densest sparkle shower.',
+  tracks: [
+    { id: 'lead', kind: 'pitched', voice: 'celesta', level: -19, send: 0.35, notes: melody(EFSANE_LEAD), bright: 1.2 },
+    { id: 'brass', kind: 'pitched', voice: 'brass', level: -21, send: 0.28, pan: 0.2, notes: melody(EFSANE_LEAD, 0, 4, -12), bright: 1 },
+    { id: 'stabs', kind: 'pitched', voice: 'brass', level: -24, send: 0.3, pan: -0.2, notes: [0, 1.5, 2, 4, 5.5, 6, 7].flatMap(t => { const tones = t < 4 ? (t < 2 ? [60, 64, 67] : [57, 60, 64]) : t < 6 ? [57, 60, 65] : [59, 62, 67]; return tones.map(n => ({ t, d: 0.35, n, v: 0.8 })); }) },
+    { id: 'choir', kind: 'pad', voice: 'padChoir', level: -22, send: 0.45, width: 1.7, chords: pads(progression(EFSANE_CHORDS), 4, 55, 76, 0.9) },
+    { id: 'strings', kind: 'pad', voice: 'padString', level: -25, send: 0.4, chords: pads(progression(EFSANE_CHORDS), 3, 67, 86, 0.75) },
+    { id: 'bells', kind: 'pitched', voice: 'bell', level: -22, send: 0.5, pan: -0.3, notes: melody('C6:4 | A5:2 G5:2 | C6:4') },
+    { id: 'bass', kind: 'pitched', voice: 'bassDrive', level: -20, send: 0, notes: melody('C2:2 A1:2 | F1:2 G1:2 | C2:3 r:1') },
+    { id: 'timp', kind: 'pitched', voice: 'timpani', level: -21, send: 0.25, notes: [{ t: 0, d: 1, n: 36, v: 1 }, ...Array.from({ length: 16 }, (_, i) => ({ t: 6 + i * 0.125, d: 0.125, n: 43, v: 0.35 + (0.6 * i) / 15 })), { t: 8, d: 2, n: 36, v: 1 }] },
+    { id: 'kit', kind: 'kit', level: -21, send: 0.12, hits: hits(steps('kickPunch', 'x...x...x...x...', 0, 2), steps('snare', '....o.......o...', 0, 1), steps('snare', 'o.o.o.o.oooooxxX', 1, 1), steps('kickPunch', 'X...............', 2, 1)) },
+    { id: 'fx', kind: 'fx', level: -24, send: 0.35, fx: [
+      { t: 0, d: 0.5, k: 'impact', v: 1 }, { t: 0, d: 4, k: 'crash', v: 0.6 }, { t: 4, d: 4, k: 'riser', v: 0.7 }, { t: 6, d: 2, k: 'swell', v: 0.5 },
+      { t: 8, d: 0.5, k: 'impact', v: 1 }, { t: 8, d: 4, k: 'crash', v: 0.8 }, { t: 8, d: 4, k: 'sparkle', v: 0.9, shape: 'decay', density: 110, notes: [84, 88, 91, 93, 96, 100] },
+    ] },
+  ],
+};
+export const BIG_WIN_HEADS = [bigWinHead(1), bigWinHead(2), bigWinHead(3), BIG_WIN_LEGEND] as const;
+
+/**
+ * Count-up beds: the 4-bar I–vi–IV–V celebration loop at 120 BPM, one per tier in the tier's key, layered
+ * more fully per tier: 1 plucks/pad/bass/shaker · 2 + kick, claps, pumping supersaw, celesta ostinato ·
+ * 3 + celesta/glock lead and open hats · 4 + wordless choir, tower bells and timpani · max + strings,
+ * brass stabs and 16th hats.
+ */
 const BED_CHORDS = progression('F | Dm | Bb | C');
 const BED_LEAD = `C6:.75 A5:.25 C6:.5 F6:1.5 E6:.5 D6:.5 | D6:.75 A5:.25 D6:.5 F6:1.5 E6:.5 D6:.5 | D6:.75 Bb5:.25 D6:.5 F6:1 G6:.5 F6:.5 D6:.5 | E6:1 G6:1 C6:.5 D6:.5 E6:1`;
-function bed(tier: 1 | 2 | 3): Score {
+type BedLevel = 1 | 2 | 3 | 4 | 5;
+function bed(level: BedLevel): Score {
+  const key = level === 5 ? TIER_KEY.max : TIER_KEY[level as WinTier];
+  const chords = shiftChords(BED_CHORDS, key), lk = leadShift(key);
+  const name = level === 5 ? 'max' : String(level);
   const tracks: Score['tracks'] = [
-    { id: 'arp', kind: 'pitched', voice: 'pluck', level: -23, send: 0.2, pan: 0.4, bright: 0.6, notes: arp(BED_CHORDS, [0, 1, 2, 3, 2, 1, 2, 3], 0.25, 65, 84, 0.7) },
-    { id: 'pad', kind: 'pad', voice: tier === 1 ? 'padWarm' : 'padSaw', level: -25, send: 0.3, pump: tier >= 2 ? 0.45 : 0, chords: pads(BED_CHORDS, 4, 55, 74, 0.7) },
-    { id: 'bass', kind: 'pitched', voice: tier === 1 ? 'bass' : 'bassDrive', level: -22, send: 0, notes: bassLine(BED_CHORDS, tier === 1 ? 'half' : 'drive', 0.85, true, 38) },
+    { id: 'arp', kind: 'pitched', voice: 'pluck', level: -23, send: 0.2, pan: 0.4, bright: 0.6, notes: arp(chords, [0, 1, 2, 3, 2, 1, 2, 3], 0.25, 65, 84, 0.7) },
+    { id: 'pad', kind: 'pad', voice: level === 1 ? 'padWarm' : 'padSaw', level: -25, send: 0.3, pump: level >= 2 ? 0.45 : 0, chords: pads(chords, 4, 55, 74, 0.7) },
+    { id: 'bass', kind: 'pitched', voice: level === 1 ? 'bass' : 'bassDrive', level: -22, send: 0, notes: bassLine(chords, level === 1 ? 'half' : 'drive', 0.85, true, 38) },
     { id: 'perc', kind: 'kit', level: -28, send: 0.12, hits: hits(steps('shaker', 'x.o.x.o.x.o.x.o.', 0, 4)) },
-    { id: 'fx', kind: 'fx', level: -30, send: 0.4, fx: [0, 1, 2, 3].map(b => ({ t: b * 4, d: 2, k: 'sparkle' as const, v: 0.5 + tier * 0.1, shape: 'decay' as const, density: 15 + tier * 10 })) },
+    { id: 'fx', kind: 'fx', level: -30, send: 0.4, fx: [0, 1, 2, 3].map(b => ({ t: b * 4, d: 2, k: 'sparkle' as const, v: Math.min(0.95, 0.5 + level * 0.1), shape: 'decay' as const, density: 15 + level * 10, notes: [84, 86, 89, 91, 93, 96].map(n => n + lk) })) },
   ];
-  if (tier >= 2) {
+  if (level >= 2) {
     tracks.push({ id: 'kit', kind: 'kit', level: -22, send: 0.08, hits: hits(steps('kickPunch', 'x...x...x...x...', 0, 4), steps('clap', '....x.......x...', 0, 4)) });
-    tracks.push({ id: 'counter', kind: 'pitched', voice: 'celesta', level: -24, send: 0.3, pan: -0.38, notes: arp(BED_CHORDS, [3, 2, 1, 2], 1, 72, 91, 0.6, 3), bright: 1 });
+    tracks.push({ id: 'counter', kind: 'pitched', voice: 'celesta', level: -24, send: 0.3, pan: -0.38, notes: arp(chords, [3, 2, 1, 2], 1, 72, 91, 0.6, 3), bright: 1 });
   }
-  if (tier >= 3) {
-    tracks.push({ id: 'lead', kind: 'pitched', voice: 'celesta', level: -20, send: 0.35, notes: melody(BED_LEAD), bright: 1.2 });
-    tracks.push({ id: 'glock', kind: 'pitched', voice: 'glock', level: -26, send: 0.4, notes: melody(BED_LEAD).filter(n => n.d >= 0.5) });
+  if (level >= 3) {
+    const lead = melody(BED_LEAD, 0, 4, lk);
+    tracks.push({ id: 'lead', kind: 'pitched', voice: 'celesta', level: -20, send: 0.35, notes: lead, bright: 1.2 });
+    tracks.push({ id: 'glock', kind: 'pitched', voice: 'glock', level: -26, send: 0.4, notes: lead.filter(n => n.d >= 0.5) });
     tracks.push({ id: 'hats', kind: 'kit', level: -28, send: 0.1, hits: steps('hatOpen', '..o...o...o...o.', 0, 4) });
   }
+  if (level >= 4) {
+    tracks.push({ id: 'choir', kind: 'pad', voice: 'padChoir', level: -24, send: 0.45, width: 1.7, chords: pads(chords, 4, 55, 74, 0.8) });
+    tracks.push({ id: 'bells', kind: 'pitched', voice: 'bell', level: -25, send: 0.5, pan: -0.3, notes: chords.map(c => ({ t: c.t, d: 2, n: nearest(c.root, 79), v: 0.75 })) });
+    tracks.push({ id: 'timp', kind: 'pitched', voice: 'timpani', level: -25, send: 0.25, notes: chords.flatMap(c => [{ t: c.t, d: 1, n: nearest(c.root, 40), v: 0.9 }, { t: c.t + 3.5, d: 0.5, n: nearest(c.root, 40), v: 0.45 }]) });
+  }
+  if (level >= 5) {
+    tracks.push({ id: 'strings', kind: 'pad', voice: 'padString', level: -26, send: 0.4, chords: pads(chords, 3, 67, 86, 0.7) });
+    tracks.push({ id: 'stabs', kind: 'pitched', voice: 'brass', level: -25, send: 0.25, pan: 0.2, notes: chords.flatMap(c => voice(c.tones, 3, 57, 72, null).flatMap(n => [0, 1.5, 2.5].map(t => ({ t: c.t + t, d: 0.3, n, v: 0.75 })))) });
+    tracks.push({ id: 'hats16', kind: 'kit', level: -30, send: 0.08, hits: steps('hat', 'g.o.g.o.g.o.g.o.', 0, 4) });
+  }
+  const keyName = ['F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B', 'C', 'Db', 'D'][key];
   return {
-    id: `cascade-bed-${tier}`, bpm: BW_BPM, beatsPerBar: 4, bars: 4, swing: 0.5, loop: true, tail: 2.5, reverb: 'hall', reverbDb: -6,
-    target: { lufs: -15, measure: 'integrated' },
-    about: `Count-up bed tier ${tier}: F – Dm – Bb – C at 120 BPM, 4-bar seamless loop (8 s), ${tier === 1 ? 'plucks, pad, bass, shaker' : tier === 2 ? '+ kick, claps, pumping supersaw, celesta ostinato' : '+ celesta/glock lead melody and open hats'}.`,
+    id: `cascade-bed-${name}`, bpm: BW_BPM, beatsPerBar: 4, bars: 4, swing: 0.5, loop: true, tail: 2.5, reverb: 'hall', reverbDb: -6,
+    target: { lufs: -15 + Math.min(1, (level - 1) * 0.25), measure: 'integrated' },
+    about: `Count-up bed ${level === 5 ? 'max win' : `tier ${level}`}: I – vi – IV – V in ${keyName} major at 120 BPM, 4-bar seamless loop (8 s); ${['plucks, pad, bass, shaker', '+ kick, claps, pumping supersaw, celesta ostinato', '+ celesta/glock lead melody and open hats', '+ wordless choir, tower bells on every chord, timpani', '+ strings, brass-like stabs and 16th hats'].slice(0, level).join(' ')}.`,
     tracks,
   };
 }
-export const BIG_WIN_BEDS = [bed(1), bed(2), bed(3)] as const;
+export const BIG_WIN_BEDS = [bed(1), bed(2), bed(3), bed(4)] as const;
+export const MAX_WIN_BED = bed(5);
 
-/** Max win: the epic bVI – bVII – I cadence (Db – Eb – F), timpani, rolls and the brightest shower. */
+/**
+ * Max win — the ultimate: D major (the top of the key ladder), 120 BPM, 3 bars (6 s). The epic bVI – bVII – I
+ * cadence (Bb – C – D) with octave celesta/brass lead, choir, strings, supersaw, tower bells, a snare roll,
+ * a timpani roll into the last bar and the longest, brightest shower.
+ */
+const MAX_LEAD = 'F5:.5 A5:.5 Bb5:.5 D6:.5 F6:2 | G5:.5 C6:.5 E6:.5 G6:.5 E6:1 C6:.5 E6:.5 | A5:.25 D6:.25 F#6:.25 A6:.25 F#6:3';
+const MAX_CHORDS = 'Bbadd9 | Cadd9 | Dadd9';
 export const MAX_WIN: Score = {
-  id: 'cascade-max-win', bpm: BW_BPM, beatsPerBar: 4, bars: 3, swing: 0.5, loop: false, tail: 2.4, reverb: 'hall', reverbDb: -5,
+  id: 'cascade-max-win', bpm: BW_BPM, beatsPerBar: 4, bars: 3, swing: 0.5, loop: false, tail: 2.8, reverb: 'hall', reverbDb: -4.5,
   target: { lufs: -14, measure: 'integrated' }, musicalEnd: 12,
-  about: 'Max win, 120 BPM, 3 bars (6 s): Db – Eb – F (bVI–bVII–I) with octave celesta/synth lead, strings and supersaw, snare roll, timpani and a long sparkle shower on the final F.',
+  about: 'Max win, D major (top of the key ladder), 120 BPM, 3 bars (6 s): Bb – C – D (bVI–bVII–I) with octave celesta/brass lead, wordless choir, strings and supersaw, tower bells, driving octave bass, snare roll, timpani roll into the last bar, two impacts and the longest sparkle shower.',
   tracks: [
-    { id: 'lead', kind: 'pitched', voice: 'celesta', level: -19, send: 0.35, notes: melody('Ab5:.5 C6:.5 Db6:.5 F6:.5 Ab6:2 | Bb5:.5 Eb6:.5 G6:.5 Bb6:.5 G6:1 Eb6:.5 G6:.5 | C6:.25 F6:.25 A6:.25 C7:.25 A6:3'), bright: 1.2 },
-    { id: 'synth', kind: 'pitched', voice: 'synthLead', level: -20, send: 0.25, notes: melody('Ab5:.5 C6:.5 Db6:.5 F6:.5 Ab6:2 | Bb5:.5 Eb6:.5 G6:.5 Bb6:.5 G6:1 Eb6:.5 G6:.5 | C6:.25 F6:.25 A6:.25 C7:.25 A6:3', 0, 4, -12), bright: 0.9 },
-    { id: 'glock', kind: 'pitched', voice: 'glock', level: -24, send: 0.4, notes: melody('Ab6:2 F6:2 | Bb6:2 G6:2 | A6:4') },
-    { id: 'pad', kind: 'pad', voice: 'padSaw', level: -22, send: 0.3, chords: pads(progression('Db | Eb | Fadd9'), 5, 55, 79, 0.9) },
-    { id: 'strings', kind: 'pad', voice: 'padString', level: -24, send: 0.45, chords: pads(progression('Db | Eb | Fadd9'), 3, 65, 86, 0.8) },
-    { id: 'bass', kind: 'pitched', voice: 'bassDrive', level: -20, send: 0, notes: melody('Db2:.5 Db2:.5 Db2:.5 Db2:.5 Db2:.5 Db2:.5 Db2:.5 Db2:.5 | Eb2:.5 Eb2:.5 Eb2:.5 Eb2:.5 Eb2:.5 Eb2:.5 Eb2:.5 Eb2:.5 | F1:3 r:1') },
-    { id: 'kit', kind: 'kit', level: -20, send: 0.12, hits: hits(steps('kickPunch', 'x...x...x...x...', 0, 2), steps('snare', 'g.g.o.o.o.o.x.x.', 0, 1), steps('snare', 'oooooxxxxxxxXXXX', 1, 1), steps('timp', 'X...........x.x.', 1, 1), steps('kickPunch', 'X...............', 2, 1), steps('timp', 'X...............', 2, 1)) },
-    { id: 'fx', kind: 'fx', level: -24, send: 0.35, fx: [{ t: 0, d: 0.5, k: 'impact', v: 1 }, { t: 0, d: 4, k: 'crash', v: 0.6 }, { t: 0, d: 8, k: 'riser', v: 0.6 }, { t: 6, d: 2, k: 'swell', v: 0.5 }, { t: 8, d: 0.5, k: 'impact', v: 1 }, { t: 8, d: 4, k: 'crash', v: 0.8 }, { t: 8, d: 4, k: 'sparkle', v: 0.9, shape: 'decay', density: 90 }] },
+    { id: 'lead', kind: 'pitched', voice: 'celesta', level: -19, send: 0.35, notes: melody(MAX_LEAD), bright: 1.2 },
+    { id: 'brass', kind: 'pitched', voice: 'brass', level: -20, send: 0.25, notes: melody(MAX_LEAD, 0, 4, -12), bright: 1 },
+    { id: 'glock', kind: 'pitched', voice: 'glock', level: -24, send: 0.4, notes: melody('F6:2 D6:2 | G6:2 E6:2 | F#6:4') },
+    { id: 'pad', kind: 'pad', voice: 'padSaw', level: -23, send: 0.3, chords: pads(progression(MAX_CHORDS), 5, 55, 79, 0.9) },
+    { id: 'choir', kind: 'pad', voice: 'padChoir', level: -21, send: 0.45, width: 1.7, chords: pads(progression(MAX_CHORDS), 4, 57, 76, 0.95) },
+    { id: 'strings', kind: 'pad', voice: 'padString', level: -24, send: 0.45, chords: pads(progression(MAX_CHORDS), 3, 65, 86, 0.8) },
+    { id: 'bells', kind: 'pitched', voice: 'bell', level: -22, send: 0.5, pan: 0.3, notes: melody('Bb5:4 | C6:4 | D6:2 A5:2') },
+    { id: 'bass', kind: 'pitched', voice: 'bassDrive', level: -20, send: 0, notes: melody('Bb1:.5 Bb1:.5 Bb1:.5 Bb1:.5 Bb1:.5 Bb1:.5 Bb1:.5 Bb1:.5 | C2:.5 C2:.5 C2:.5 C2:.5 C2:.5 C2:.5 C2:.5 C2:.5 | D2:3 r:1') },
+    { id: 'timp', kind: 'pitched', voice: 'timpani', level: -21, send: 0.25, notes: [{ t: 0, d: 1, n: 34, v: 1 }, { t: 4, d: 1, n: 36, v: 1 }, ...Array.from({ length: 16 }, (_, i) => ({ t: 6 + i * 0.125, d: 0.125, n: 45, v: 0.35 + (0.6 * i) / 15 })), { t: 8, d: 2, n: 38, v: 1 }] },
+    { id: 'kit', kind: 'kit', level: -20, send: 0.12, hits: hits(steps('kickPunch', 'x...x...x...x...', 0, 2), steps('snare', 'g.g.o.o.o.o.x.x.', 0, 1), steps('snare', 'oooooxxxxxxxXXXX', 1, 1), steps('kickPunch', 'X...............', 2, 1)) },
+    { id: 'fx', kind: 'fx', level: -24, send: 0.35, fx: [{ t: 0, d: 0.5, k: 'impact', v: 1 }, { t: 0, d: 4, k: 'crash', v: 0.6 }, { t: 0, d: 8, k: 'riser', v: 0.6 }, { t: 6, d: 2, k: 'swell', v: 0.5 }, { t: 8, d: 0.5, k: 'impact', v: 1 }, { t: 8, d: 4, k: 'crash', v: 0.8 }, { t: 8, d: 4, k: 'sparkle', v: 0.95, shape: 'decay', density: 130, notes: [86, 90, 93, 95, 98, 102] }] },
+  ],
+};
+
+/**
+ * Total-win fanfare (end of the free-spins feature): F major, 120 BPM, a parade-style flourish distinct from
+ * the tier stingers — brass-like dotted stabs, a marimba pickup run, march snare roll and an "applause" of
+ * sparkles; the tonic lands at beat 4 and rings to the musical end at beat 6 (3 s).
+ */
+export const TOTAL_WIN: Score = {
+  id: 'cascade-total-win', bpm: BW_BPM, beatsPerBar: 4, bars: 2, swing: 0.5, loop: false, tail: 1.8, reverb: 'hall', reverbDb: -5,
+  target: { lufs: -14.5, measure: 'integrated' }, musicalEnd: 6,
+  about: 'Total-win fanfare, F major, 120 BPM, 3 s to its musical end: Bb – Gm – C – C7 – F; brass-like lead with dotted parade rhythm, marimba pickup run, celesta doubling, march snare roll into a crash, bells and an applause-like sparkle shower on the final F.',
+  tracks: [
+    { id: 'brass', kind: 'pitched', voice: 'brass', level: -19, send: 0.25, notes: melody('C5:.25 D5:.25 F5:.5 r:.25 F5:.25 A5:.5 G5:.25 A5:.25 C6:.5 D6:.75 C6:.25 | F6:2 r:2', 0, 4, -12), bright: 1.1 },
+    { id: 'cel', kind: 'pitched', voice: 'celesta', level: -21, send: 0.35, notes: melody('C5:.25 D5:.25 F5:.5 r:.25 F5:.25 A5:.5 G5:.25 A5:.25 C6:.5 D6:.75 C6:.25 | F6:2 r:2'), bright: 1.2 },
+    { id: 'marimba', kind: 'pitched', voice: 'marimba', level: -25, send: 0.2, pan: -0.35, notes: melody('F4:.125 G4:.125 A4:.125 C5:.125 D5:.125 F5:.125 G5:.125 A5:.125 r:3') },
+    { id: 'stabs', kind: 'pitched', voice: 'brass', level: -23, send: 0.25, pan: 0.25, notes: ([[0, [58, 62, 65]], [1, [58, 62, 67]], [1.75, [58, 62, 67]], [2, [60, 64, 67]], [3, [58, 64, 67]], [4, [57, 60, 65]]] as const).flatMap(([t, ns]) => ns.map(n => ({ t, d: t === 4 ? 2 : 0.3, n, v: 0.85 }))) },
+    { id: 'pad', kind: 'pad', voice: 'padString', level: -25, send: 0.4, chords: pads(progression('Bb:1 Gm:1 C:1 C7:1 | Fadd9:2 F:2'), 4, 57, 79, 0.75) },
+    { id: 'bells', kind: 'pitched', voice: 'bell', level: -24, send: 0.5, notes: melody('r:4 | F5:2 C6:2') },
+    { id: 'bass', kind: 'pitched', voice: 'bassDrive', level: -21, send: 0, notes: melody('Bb1:1 G1:1 C2:2 | F1:2 r:2') },
+    { id: 'kit', kind: 'kit', level: -21, send: 0.12, hits: hits(steps('kickPunch', 'x.......x.......', 0, 1), steps('snare', '..x.x...ooooxxXX', 0, 1), steps('kickPunch', 'X...............', 1, 1), steps('clap', 'X...............', 1, 1)) },
+    { id: 'fx', kind: 'fx', level: -25, send: 0.35, fx: [{ t: 2, d: 2, k: 'swell', v: 0.45 }, { t: 4, d: 0.5, k: 'impact', v: 0.8 }, { t: 4, d: 3, k: 'crash', v: 0.7 }, { t: 4, d: 3, k: 'sparkle', v: 0.85, shape: 'decay', density: 80, notes: [84, 86, 89, 91, 93, 96] }] },
   ],
 };
 
@@ -349,5 +446,10 @@ export const AMBIENCE: Score = {
   ],
 };
 
-export const CASCADE_SCORES = { base: BASE_THEME, idle: IDLE_THEME, feature: FEATURE_THEME, fsIntro: FS_INTRO, fsOutro: FS_OUTRO, bigWin1: BIG_WIN_HEADS[0], bigWin2: BIG_WIN_HEADS[1], bigWin3: BIG_WIN_HEADS[2], bed1: BIG_WIN_BEDS[0], bed2: BIG_WIN_BEDS[1], bed3: BIG_WIN_BEDS[2], maxWin: MAX_WIN, ambience: AMBIENCE } as const;
+export const CASCADE_SCORES = {
+  base: BASE_THEME, idle: IDLE_THEME, feature: FEATURE_THEME, fsIntro: FS_INTRO, fsOutro: FS_OUTRO,
+  bigWin1: BIG_WIN_HEADS[0], bigWin2: BIG_WIN_HEADS[1], bigWin3: BIG_WIN_HEADS[2], bigWin4: BIG_WIN_HEADS[3],
+  bed1: BIG_WIN_BEDS[0], bed2: BIG_WIN_BEDS[1], bed3: BIG_WIN_BEDS[2], bed4: BIG_WIN_BEDS[3], bedMax: MAX_WIN_BED,
+  maxWin: MAX_WIN, totalWin: TOTAL_WIN, ambience: AMBIENCE,
+} as const;
 export type CascadeScoreId = keyof typeof CASCADE_SCORES;

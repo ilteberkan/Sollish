@@ -1,7 +1,7 @@
 import type { HitEvent, NoteEvent } from './notation';
 
-export type PitchedVoice = 'celesta' | 'musicBox' | 'glock' | 'marimba' | 'pluck' | 'synthLead' | 'bass' | 'bassDrive';
-export type PadVoice = 'padWarm' | 'padSaw' | 'padString';
+export type PitchedVoice = 'celesta' | 'musicBox' | 'glock' | 'marimba' | 'pluck' | 'synthLead' | 'bass' | 'bassDrive' | 'bell' | 'timpani' | 'brass';
+export type PadVoice = 'padWarm' | 'padSaw' | 'padString' | 'padChoir';
 export type KitHit = 'kick' | 'kickSoft' | 'kickPunch' | 'brush' | 'snare' | 'clap' | 'hat' | 'hatOpen' | 'shaker' | 'snap' | 'wood' | 'woodHi' | 'tomHi' | 'tomMid' | 'tomLo' | 'timp' | 'timpLo' | 'crash';
 export type FxKind = 'riser' | 'sparkle' | 'crash' | 'impact' | 'whoosh' | 'swell' | 'room';
 

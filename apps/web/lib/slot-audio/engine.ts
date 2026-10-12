@@ -2,9 +2,9 @@
  * Slot audio runtime engine. One lazily created AudioContext (only from a user gesture), a bus graph
  *
  *   scene loops ─► duck ─┐
- *   stingers ────────────┴► music ─┐
- *   one-shots ─────────────► sfx ──┼► master (mix × mute) ─► trim ─► glue comp ─► limiter ─► out
- *   beds ──────────────────► ambience ┘
+ *   stingers, beds ──────┴► music ─► voice duck ─┐
+ *   one-shots, voice lines ─────────► sfx ──────────┼► master (mix × mute) ─► trim ─► glue comp ─► limiter ─► out
+ *   ambience beds ──────────────────► ambience ─────┘
  *
  * smooth mix ramps, ducking, equal-power scene cross-fades with sample-accurate loops, beat/bar
  * quantised stingers, pause on hidden tabs and complete no-op safety without Web Audio (SSR, tests).
@@ -54,6 +54,8 @@ export const MASTER_CHAIN = {
 export interface BusGraph {
   master: GainNode; trim: GainNode; glue: DynamicsCompressorNode; limiter: DynamicsCompressorNode;
   music: GainNode; duck: GainNode; sfx: GainNode; ambience: GainNode;
+  /** Whole music bus (scenes, stingers, beds) lowered while a voice line plays. */
+  voiceDuck: GainNode;
 }
 
 const setValue = (param: AudioParam | undefined, value: number) => { if (param) try { param.value = value; } catch { /* fake or locked param */ } };
@@ -67,11 +69,11 @@ export function buildBusGraph(ctx: BaseAudioContext, destination: AudioNode = ct
     setValue(node.threshold, spec.threshold); setValue(node.knee, spec.knee); setValue(node.ratio, spec.ratio);
     setValue(node.attack, spec.attack); setValue(node.release, spec.release);
   }
-  const music = gain(1), duck = gain(1), sfx = gain(1), ambience = gain(1);
+  const music = gain(1), duck = gain(1), sfx = gain(1), ambience = gain(1), voiceDuck = gain(1);
   duck.connect(music);
-  music.connect(master); sfx.connect(master); ambience.connect(master);
+  music.connect(voiceDuck); voiceDuck.connect(master); sfx.connect(master); ambience.connect(master);
   master.connect(trim); trim.connect(glue); glue.connect(limiter); limiter.connect(destination);
-  return { master, trim, glue, limiter, music, duck, sfx, ambience };
+  return { master, trim, glue, limiter, music, duck, sfx, ambience, voiceDuck };
 }
 
 /** Linear ramp from the current value, tolerant of partial AudioParam implementations. */
@@ -206,6 +208,24 @@ export class SlotAudioEngine {
     if (!this.duckHeld) {
       try { p.setValueAtTime(floor, holdUntil); p.linearRampToValueAtTime(1, holdUntil + (plan.releaseEnd - plan.holdUntil)); } catch { /* partial param */ }
     }
+  }
+
+  /**
+   * Lower the whole music bus (scene, stingers and count-up beds) by `amountDb` from `at` for `seconds`,
+   * e.g. under a voice line. Independent of the scene duck, so the two never fight over one parameter.
+   */
+  duckMusicBus(amountDb: number, seconds: number, at?: number, attack = 0.04, release = 0.35): void {
+    const ctx = this.ctx, g = this.graph;
+    if (!ctx || !g) return;
+    const start = Math.max(ctx.currentTime, at ?? ctx.currentTime), floor = 10 ** (-Math.abs(amountDb) / 20);
+    const p = g.voiceDuck.gain, end = start + attack + Math.max(0, seconds);
+    try {
+      p.cancelScheduledValues?.(start);
+      p.setValueAtTime(p.value, start);
+      p.linearRampToValueAtTime(floor, start + attack);
+      p.setValueAtTime(floor, end);
+      p.linearRampToValueAtTime(1, end + release);
+    } catch { /* partial param */ }
   }
 
   /** Hold a duck until `duckRelease` (e.g. while a count-up bed plays over the scene). */

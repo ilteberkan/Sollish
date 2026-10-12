@@ -92,8 +92,12 @@ test('effects render with their variations and stay under the ceiling', async ()
     assert.equal(list.length, d.variations);
     for (const c of list) { assert.ok(c.l.length > 100); assert.ok(samplePeakDb([c.l, c.r]) <= -1.6 + 1e-3); }
   }
-  // every effect id is unique and has 3–4 variations
+  // every effect id is unique; frequent effects have 3–4 variations, the rare celebration moments (tier-ups,
+  // landings, callouts: `late`) 1–2 plus per-play pitch/gain micro-variation
   const ids = CASCADE_SFX.map(d => d.id);
   assert.equal(new Set(ids).size, ids.length);
-  for (const d of CASCADE_SFX) assert.ok(d.variations >= 3 && d.variations <= 4, d.id);
+  for (const d of CASCADE_SFX) {
+    if (d.late) assert.ok(d.variations >= 1 && d.variations <= 2 && d.jitter[0] > 0 && d.jitter[1] > 0, d.id);
+    else assert.ok(d.variations >= 3 && d.variations <= 4, d.id);
+  }
 });
