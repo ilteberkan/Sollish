@@ -6,6 +6,8 @@
  * net loss over it. All amounts are integer cents; every function returns new frozen state.
  */
 
+import { formatDemo } from './bet';
+
 export const AUTOPLAY_SPIN_OPTIONS = [10, 25, 50, 100, 250, 500, 1000] as const;
 export type AutoplaySpins = (typeof AUTOPLAY_SPIN_OPTIONS)[number];
 
@@ -19,6 +21,22 @@ export interface AutoplayConfig {
   balanceIncreaseCents?: number;
   stopOnAnyWin: boolean;
   stopOnFeature: boolean;
+}
+
+/**
+ * Optional stop conditions live in a collapsed "Gelişmiş" section (game-standards §6: the main view shows only
+ * the spin count, the required loss limit and Start). These are their defaults: stop on free spins is ON.
+ */
+export const AUTOPLAY_ADVANCED_DEFAULTS: Readonly<Pick<AutoplayConfig, 'stopOnAnyWin' | 'stopOnFeature'>> = Object.freeze({ stopOnAnyWin: false, stopOnFeature: true });
+
+/** Short labels of the active optional stop conditions, for the collapsed "Gelişmiş" summary line. */
+export function autoplayAdvancedSummary(config: Pick<AutoplayConfig, 'stopOnAnyWin' | 'stopOnFeature' | 'singleWinLimitCents' | 'balanceIncreaseCents'>): string[] {
+  const out: string[] = [];
+  if (config.stopOnAnyWin) out.push('Her kazançta');
+  if (config.stopOnFeature) out.push('Bedava dönüşte');
+  if (config.singleWinLimitCents !== undefined) out.push(`Tek kazanç ≥ ${formatDemo(config.singleWinLimitCents, { trimZeros: true })}`);
+  if (config.balanceIncreaseCents !== undefined) out.push(`Bakiye +${formatDemo(config.balanceIncreaseCents, { trimZeros: true })}`);
+  return out;
 }
 
 export type AutoplayStopCode =

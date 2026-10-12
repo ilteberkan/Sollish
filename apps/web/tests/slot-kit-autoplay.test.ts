@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  AUTOPLAY_SPIN_OPTIONS, AUTOPLAY_STOP_REASONS, autoplayNetLossCents, cancelAutoplay, createAutoplay, nextDecision, recordRound, validateAutoplayConfig,
+  AUTOPLAY_ADVANCED_DEFAULTS, autoplayAdvancedSummary, AUTOPLAY_SPIN_OPTIONS, AUTOPLAY_STOP_REASONS, autoplayNetLossCents, cancelAutoplay, createAutoplay, nextDecision, recordRound, validateAutoplayConfig,
   type AutoplayConfig, type AutoplayState,
 } from '../lib/slot-kit/autoplay';
 
@@ -210,4 +210,15 @@ test('a full loss-limited run stops at the right spin count', () => {
   }
   assert.equal(spins, 4);
   assert.equal(autoplayNetLossCents(s), 1000);
+});
+
+test('advanced stop conditions: defaults (bedava dönüşte ON) and the collapsed summary line', () => {
+  assert.deepEqual({ ...AUTOPLAY_ADVANCED_DEFAULTS }, { stopOnAnyWin: false, stopOnFeature: true });
+  assert.ok(Object.isFrozen(AUTOPLAY_ADVANCED_DEFAULTS));
+  assert.deepEqual(autoplayAdvancedSummary({ ...AUTOPLAY_ADVANCED_DEFAULTS }), ['Bedava dönüşte']);
+  assert.deepEqual(autoplayAdvancedSummary({ stopOnAnyWin: false, stopOnFeature: false }), []);
+  assert.deepEqual(
+    autoplayAdvancedSummary({ stopOnAnyWin: true, stopOnFeature: true, singleWinLimitCents: 25_000, balanceIncreaseCents: 1250 }),
+    ['Her kazançta', 'Bedava dönüşte', 'Tek kazanç ≥ 250 DEMO', 'Bakiye +12,50 DEMO'],
+  );
 });

@@ -1,0 +1,279 @@
+/* Fırtına Tahtı scene. Only transform / opacity animate. The scene fills its parent. */
+
+.root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background: #070d16;
+  --px: 0;
+  --py: 0;
+  --gate-x: 50%;
+}
+.back {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  contain: strict;
+}
+.full {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.layer {
+  position: absolute;
+  inset: -3% -3% 0;
+}
+.canvas {
+  position: absolute;
+  /* own compositor layer: without it an unaccelerated (software) 2D canvas invalidates the
+     layer it sits in and every rain frame re-rasters all the static SVG art underneath */
+  will-change: transform;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: block;
+}
+.front { z-index: 3; }
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+
+/* parallax depth (pointer, desktop only — vars stay 0 elsewhere) */
+.pMount { translate: calc(var(--px) * -6px) calc(var(--py) * -3px); }
+.pCit { translate: calc(var(--px) * -12px) calc(var(--py) * -5px); }
+.pGate { translate: calc(var(--px) * -20px) calc(var(--py) * -6px); }
+.pMount, .pCit, .pGate { transition: translate 0.6s cubic-bezier(0.2, 0.7, 0.3, 1); }
+
+/* ---------- clouds ---------- */
+.band {
+  position: absolute;
+  left: 0;
+  right: 0;
+  overflow: visible;
+}
+.bandFar { top: -2%; height: 44%; opacity: 0.95; translate: calc(var(--px) * -3px) 0; }
+.bandMid { top: 6%; height: 40%; opacity: 0.92; translate: calc(var(--px) * -8px) 0; }
+.bandLow { top: 28%; height: 30%; opacity: 0.55; translate: calc(var(--px) * -16px) 0; }
+.track {
+  height: 100%;
+  aspect-ratio: 12 / 1;
+  background-repeat: repeat-x;
+  background-size: 33.3333% 100%;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  will-change: transform;
+  animation: drift var(--dur, 160s) linear infinite;
+}
+.track[data-ready] { opacity: 1; }
+.bandFar .track { --dur: 240s; }
+.bandMid .track { --dur: 150s; }
+.bandLow .track { --dur: 80s; }
+@keyframes drift { to { transform: translate3d(-33.3333%, 0, 0); } }
+
+/* ---------- gate ---------- */
+.gateWrap {
+  position: absolute;
+  inset: 0;
+}
+.gate {
+  position: absolute;
+  bottom: 0;
+  left: var(--gate-x);
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  transform: translateX(-50%);
+}
+@media (max-aspect-ratio: 4 / 5) {
+  .gate {
+    height: auto;
+    width: 125%;
+  }
+}
+.torch { animation: torch 2.6s ease-in-out infinite alternate; }
+@keyframes torch { from { opacity: 0.55; } to { opacity: 1; } }
+.fireGlow {
+  position: absolute;
+  will-change: opacity;
+  width: 26%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 179, 90, 0.5), rgba(255, 122, 42, 0.16) 40%, rgba(255, 122, 42, 0) 70%);
+  animation: torch 0.9s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+.root[data-mood='feature'] .fireGlow { background: radial-gradient(circle, rgba(255, 190, 100, 0.66), rgba(255, 130, 50, 0.22) 40%, rgba(255, 122, 42, 0) 70%); }
+.lionEye { opacity: 0.12; transition: opacity 0.8s ease; }
+.root[data-mood='feature'] .lionEye { opacity: 1; }
+.root[data-mood='bigwin'] .lionEye { opacity: 0.7; }
+
+.flame {
+  position: absolute;
+  width: 5.6%;
+  aspect-ratio: 3 / 5;
+  transform: translate(-50%, -96%);
+}
+.flame svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: 50% 100%;
+  will-change: transform;
+}
+/* each flame tongue is its own <svg> box, so the flicker is a compositor transform (no raster) */
+.fl1 { fill: #ff6a1a; animation: flameA 0.62s ease-in-out infinite alternate; opacity: 0.92; }
+.fl2 { fill: #ffb03c; animation: flameB 0.47s ease-in-out infinite alternate; }
+.fl3 { fill: #fff1c0; animation: flameC 0.33s ease-in-out infinite alternate; }
+@keyframes flameA { from { transform: scale(1, 0.94) skewX(-3deg); } to { transform: scale(0.96, 1.1) skewX(4deg); } }
+@keyframes flameB { from { transform: scale(1.04, 1.06) skewX(3deg); } to { transform: scale(0.94, 0.92) skewX(-4deg); } }
+@keyframes flameC { from { transform: scale(0.9, 0.9); } to { transform: scale(1.08, 1.12) skewX(2deg); } }
+.root[data-mood='feature'] .fl1 { fill: #ff8a2a; }
+.root[data-mood='feature'] .flame { width: 6.6%; }
+
+.ripple {
+  position: absolute;
+  will-change: transform, opacity;
+  width: 4%;
+  aspect-ratio: 5 / 1;
+  border-radius: 50%;
+  border: 1px solid rgba(170, 220, 240, 0.4);
+  transform: translate(-50%, -50%) scale(0.1);
+  opacity: 0;
+  animation: ripple 3.4s ease-out infinite;
+}
+@keyframes ripple {
+  0% { transform: translate(-50%, -50%) scale(0.1); opacity: 0; }
+  10% { opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+/* ---------- lighting + mood overlays ---------- */
+.lit {
+  position: absolute;
+  inset: 0;
+  will-change: opacity;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(190, 236, 255, 0.55), transparent 70%),
+    linear-gradient(rgba(150, 210, 255, 0.2), rgba(150, 210, 255, 0.04));
+}
+.moodDark {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  background:
+    linear-gradient(rgba(2, 8, 18, 0.62), rgba(4, 14, 24, 0.2) 55%, rgba(30, 16, 6, 0.1)),
+    radial-gradient(ellipse 70% 40% at 50% 100%, rgba(255, 150, 70, 0.22), transparent 70%);
+}
+.root[data-mood='feature'] .moodDark { opacity: 1; }
+.rays {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 1s ease;
+  background: radial-gradient(ellipse 60% 50% at 50% 12%, rgba(255, 196, 110, 0.4), transparent 70%);
+}
+.raysInner {
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  width: 260vmax;
+  height: 260vmax;
+  margin: -130vmax 0 0 -130vmax;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 200, 120, 0.16) 0deg 5deg, transparent 5deg 18deg);
+  -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 46%);
+  mask-image: radial-gradient(circle, #000 0%, transparent 46%);
+  animation: spin 60s linear infinite;
+}
+.root[data-mood='bigwin'] .rays { opacity: 1; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 85% 80% at 50% 45%, transparent 55%, rgba(2, 5, 10, 0.55) 100%),
+    linear-gradient(to bottom, rgba(2, 5, 10, 0.25), transparent 16%, transparent 82%, rgba(2, 5, 10, 0.45));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track,
+  .torch,
+  .fireGlow,
+  .fl1,
+  .fl2,
+  .fl3,
+  .raysInner {
+    animation: none;
+  }
+  .ripple { display: none; }
+  .pMount, .pCit, .pGate, .bandFar, .bandMid, .bandLow { translate: none; }
+}
+
+/* ---------- dev gallery layout (lab only) ---------- */
+.labStage {
+  position: absolute;
+  inset: 0;
+  --bw: min(54vw, calc((100vh - 170px) * 1.2));
+}
+.labHero {
+  position: absolute;
+  bottom: 0;
+  height: 93%;
+  aspect-ratio: 540 / 834;
+  left: calc((var(--gate-x) - var(--bw) / 2) / 2 - 93vh * 0.33);
+  z-index: 3;
+}
+.labBoard {
+  position: absolute;
+  left: var(--gate-x);
+  top: 54%;
+  width: var(--bw);
+  aspect-ratio: 6 / 5;
+  transform: translate(-50%, -50%);
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 1%;
+  padding: 1.6%;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(10, 24, 36, 0.86), rgba(6, 14, 22, 0.92));
+  box-shadow: 0 0 0 3px #6b4517, 0 0 0 6px #d9a456, 0 0 0 8px #3a2208, 0 30px 60px -10px rgba(0, 0, 0, 0.8), 0 0 70px rgba(127, 232, 255, 0.12);
+  z-index: 2;
+}
+.labCell {
+  display: grid;
+  place-items: center;
+  border-radius: 12%;
+  background: radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.015) 70%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+.labCell span { width: 46%; aspect-ratio: 1; border-radius: 30%; opacity: 0.75; box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.4), inset 0 3px 4px rgba(255, 255, 255, 0.35); }
+.labCell[data-hit] { background: radial-gradient(circle, rgba(200, 245, 255, 0.85), rgba(80, 180, 255, 0.2) 70%); }
+@media (max-aspect-ratio: 4 / 5) {
+  .labStage { --bw: calc(100vw - 20px); }
+  .labHero {
+    left: 50%;
+    top: 46px;
+    bottom: auto;
+    height: 27vh;
+    aspect-ratio: 340 / 410;
+    transform: translateX(-50%);
+  }
+  .labBoard { top: calc(46px + 27vh + var(--bw) * 5 / 12 + 6px); }
+}

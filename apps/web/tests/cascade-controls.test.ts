@@ -5,7 +5,8 @@ import {
   CASCADE_BET_LADDER, CASCADE_COST_MODES, autoplayAfterRound, autoplayBeforeSpin, buyBlockReason, cascadeCost, cascadeLedgerLimits,
   cascadeRtpText, cascadeTimelineOptions, formatRtp, formatRtpRange, shortRoundId,
 } from '../lib/cascade-controls';
-import { buildCascadeTimeline, CASCADE_SKIP_BIG_HOLD, CASCADE_SKIP_COUNT_UP, CASCADE_SKIP_SCREEN_HOLD, CASCADE_SPEED_FACTOR, type TimelineEvent } from '../lib/cascade-timeline';
+import { buildCascadeTimeline, CASCADE_SKIP_SCREEN_HOLD, CASCADE_SPEED_FACTOR, type TimelineEvent } from '../lib/cascade-timeline';
+import { SKIP_COUNT_UP_MS, SKIP_HOLD_MS, countUpSchedule } from '../lib/slot-kit/win-tiers';
 import { createAutoplay, type AutoplayConfig } from '../lib/slot-kit/autoplay';
 import { betLevels, modeCostCents } from '../lib/slot-kit/bet';
 import { DemoLedger } from '../lib/demo';
@@ -82,11 +83,16 @@ test('speed and skip-screens map to the timeline; holds stay visible but shorter
   for (let i = 0; i < normal.events.length; i++) {
     const n = normal.events[i]!, q = quick.events[i]!, s = skip.events[i]!;
     if ('hold' in n) {
-      assert.equal(q.dur, n.dur, `${n.type} quick keeps holds`);
-      if (n.type === 'big-win' && s.type === 'big-win') {
-        assert.equal(s.countUp, Math.min(CASCADE_SKIP_COUNT_UP, n.countUp));
-        assert.equal(s.dur, s.countUp + Math.min(CASCADE_SKIP_BIG_HOLD, n.dur - n.countUp));
-      } else assert.equal(s.dur, Math.min(CASCADE_SKIP_SCREEN_HOLD, n.dur), `${n.type} skip`);
+      if (n.type === 'big-win' && s.type === 'big-win' && q.type === 'big-win') {
+        // The celebration follows the shared count-up schedule: quick is shorter, skipped screens are capped.
+        assert.deepEqual(q.schedule, countUpSchedule(round.totalHundredths, round.capped, { speed: 'quick' }));
+        assert.ok(q.countUp < n.countUp);
+        assert.ok(s.countUp <= SKIP_COUNT_UP_MS && s.dur - s.countUp <= SKIP_HOLD_MS);
+        assert.equal(s.dur, s.countUp + s.schedule.hold);
+      } else {
+        assert.equal(q.dur, n.dur, `${n.type} quick keeps holds`);
+        assert.equal(s.dur, Math.min(CASCADE_SKIP_SCREEN_HOLD, n.dur), `${n.type} skip`);
+      }
       assert.ok(s.dur > 0, 'still shown');
     } else assert.ok(Math.abs(q.dur - n.dur * CASCADE_SPEED_FACTOR.quick) <= 2.5, `${n.type} scaled`);
   }

@@ -1,6 +1,6 @@
 'use client';
 import { useId, useMemo, useState } from 'react';
-import { AUTOPLAY_SPIN_OPTIONS, validateAutoplayConfig, type AutoplayConfig, type AutoplaySpins } from '@/lib/slot-kit/autoplay';
+import { AUTOPLAY_ADVANCED_DEFAULTS, AUTOPLAY_SPIN_OPTIONS, autoplayAdvancedSummary, validateAutoplayConfig, type AutoplayConfig, type AutoplaySpins } from '@/lib/slot-kit/autoplay';
 import { formatDemo, parseDemoAmountCents } from '@/lib/slot-kit/bet';
 import { Segmented, Toggle } from './controls';
 import { cx } from './cx';
@@ -16,6 +16,8 @@ export interface AutoplayPanelProps {
   initialSpins?: AutoplaySpins;
   startLabel?: string;
   className?: string;
+  /** Open the "Gelişmiş" (optional stop conditions) section initially. Default: closed. */
+  defaultAdvancedOpen?: boolean;
 }
 
 const SHORTCUTS = [10, 25, 50, 100] as const;
@@ -73,14 +75,19 @@ const optionalCents = (text: string): { cents: number | undefined; error: string
   return cents === null ? { cents: undefined, error: 'Geçerli bir tutar girin (örn. 25 veya 12,50)' } : { cents, error: null };
 };
 
-/** Autoplay setup. The Start button stays disabled until the config passes `validateAutoplayConfig`. */
-export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, initialSpins = 10, startLabel = 'Başlat', className }: AutoplayPanelProps) {
+/**
+ * Autoplay setup (game-standards §6): the main view is only the spin count, the required loss limit and Start.
+ * The optional stop conditions sit in a closed "Gelişmiş" section ("bedava dönüşte dur" on by default). The Start
+ * button stays disabled until the config passes `validateAutoplayConfig`.
+ */
+export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, initialSpins = 10, startLabel = 'Başlat', className, defaultAdvancedOpen = false }: AutoplayPanelProps) {
   const [spins, setSpins] = useState<AutoplaySpins>(initialSpins);
   const [lossText, setLossText] = useState('');
   const [singleText, setSingleText] = useState('');
   const [increaseText, setIncreaseText] = useState('');
-  const [stopOnAnyWin, setStopOnAnyWin] = useState(false);
-  const [stopOnFeature, setStopOnFeature] = useState(true);
+  const [stopOnAnyWin, setStopOnAnyWin] = useState(AUTOPLAY_ADVANCED_DEFAULTS.stopOnAnyWin);
+  const [stopOnFeature, setStopOnFeature] = useState(AUTOPLAY_ADVANCED_DEFAULTS.stopOnFeature);
+  const [advancedOpen, setAdvancedOpen] = useState(defaultAdvancedOpen);
 
   const parsed = useMemo(() => {
     const loss = lossText.trim() === '' ? null : parseDemoAmountCents(lossText);
@@ -101,8 +108,13 @@ export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, 
   }, [lossText, singleText, increaseText, spins, stopOnAnyWin, stopOnFeature, spinCostCents]);
 
   const lossHint = parsed.loss !== null && balanceCents !== undefined && parsed.loss > balanceCents
-    ? 'Bu limit bakiyenizden büyük; bakiye bitince oyun yine durur.'
-    : 'Net kayıp bu tutara ulaşacaksa sonraki dönüşten önce durur.';
+    ? 'Bakiyeden büyük; bakiye bitince yine durur.'
+    : 'Net kayıp bu tutarı aşacaksa durur.';
+  const summary = autoplayAdvancedSummary({
+    stopOnAnyWin, stopOnFeature,
+    ...(parsed.single.cents !== undefined ? { singleWinLimitCents: parsed.single.cents } : {}),
+    ...(parsed.increase.cents !== undefined ? { balanceIncreaseCents: parsed.increase.cents } : {}),
+  });
 
   return (
     <form
@@ -128,14 +140,22 @@ export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, 
           </div>
         )}
       </section>
-      <section className={styles.group} aria-label="İsteğe bağlı durma koşulları">
-        <h3 className={styles.groupTitle}>Durma koşulları</h3>
-        <Toggle label="Her kazançta dur" checked={stopOnAnyWin} onChange={setStopOnAnyWin} disabled={disabled} />
-        <Toggle label="Bedava dönüş gelince dur" description="Özellik tetiklenen turdan sonra durur." checked={stopOnFeature} onChange={setStopOnFeature} disabled={disabled} />
-        <AmountField label="Tek kazanç şu tutara ulaşırsa dur" hint="Boş bırakırsanız kapalı." value={singleText} onChange={setSingleText} error={parsed.single.error} disabled={disabled} />
-        <AmountField label="Bakiye şu kadar artarsa dur" hint="Başlangıç bakiyesine göre. Boş bırakırsanız kapalı." value={increaseText} onChange={setIncreaseText} error={parsed.increase.error} disabled={disabled} />
-      </section>
-      <p className={styles.note}>Sekme gizlenirse otomatik oyun durur. DEMO tutarları gerçek para değildir.</p>
+      <details
+        className={styles.advanced}
+        open={advancedOpen}
+        onToggle={event => setAdvancedOpen((event.currentTarget as HTMLDetailsElement).open)}
+      >
+        <summary className={styles.advancedSummary}>
+          <span className={styles.advancedTitle}>Gelişmiş</span>
+          <span className={styles.advancedState}>{summary.length ? summary.join(' · ') : 'Ek durma koşulu yok'}</span>
+        </summary>
+        <div className={styles.advancedBody} role="group" aria-label="Ek durma koşulları">
+          <Toggle label="Her kazançta dur" checked={stopOnAnyWin} onChange={setStopOnAnyWin} disabled={disabled} />
+          <Toggle label="Bedava dönüşte dur" checked={stopOnFeature} onChange={setStopOnFeature} disabled={disabled} />
+          <AmountField label="Tek kazanç şu tutarı aşarsa dur" hint="Boş = kapalı." value={singleText} onChange={setSingleText} error={parsed.single.error} disabled={disabled} />
+          <AmountField label="Bakiye şu kadar artarsa dur" hint="Başlangıca göre. Boş = kapalı." value={increaseText} onChange={setIncreaseText} error={parsed.increase.error} disabled={disabled} />
+        </div>
+      </details>
       <button type="submit" className={cx(styles.btn, styles.btnPrimary)} disabled={disabled || parsed.config === null}>
         {startLabel} · {spins} tur
       </button>

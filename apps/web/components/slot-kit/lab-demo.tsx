@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { createAutoplay, cancelAutoplay, nextDecision, recordRound, type AutoplayConfig, type AutoplayState } from '@/lib/slot-kit/autoplay';
+import { autoplayAdvancedSummary, createAutoplay, cancelAutoplay, nextDecision, recordRound, type AutoplayConfig, type AutoplayState } from '@/lib/slot-kit/autoplay';
 import { clampBetToLimits, createBetLadder, formatDemo, type CostMode } from '@/lib/slot-kit/bet';
 import {
   AutoplayPanel, AutoplayStopButton, BetSelector, BuyFeatureDialog, GameInfo, Modal, RealityCheckDialog, SessionBar, SettingsPanel, Toggle, useSession, useSlotSettings,
@@ -19,7 +19,7 @@ const PAGES: GameInfoPage[] = [
   { id: 'pay', title: 'Ödeme tablosu', content: (<><h3>Ödeme tablosu</h3><table><thead><tr><th>Sembol</th><th>8–9</th><th>10–11</th><th>12+</th></tr></thead><tbody><tr><td>Taç</td><td>10,00</td><td>25,00</td><td>50,00</td></tr><tr><td>Kek</td><td>2,50</td><td>10,00</td><td>25,00</td></tr><tr><td>Kiraz</td><td>0,40</td><td>0,90</td><td>4,00</td></tr></tbody></table><p>Tutarlar DEMO ve bahse göre hesaplanır.</p></>) },
   { id: 'features', title: 'Özellikler', content: (<><h3>Bedava dönüş</h3><p>4 yıldız 10 bedava dönüş açar. Bedava dönüşte çarpan kristalleri düşer.</p><h3>Şans ×2</h3><p>Bahsin 1,25 katına mal olur; bedava dönüş şansı artar.</p></>) },
   { id: 'rtp', title: 'RTP', content: (<><h3>Teorik dönüş</h3><table><thead><tr><th>Mod</th><th>RTP</th></tr></thead><tbody><tr><td>Standart</td><td>%95,80</td></tr><tr><td>Şans ×2</td><td>%95,80</td></tr><tr><td>Bonus satın alma</td><td>%96,10</td></tr></tbody></table><p>Azami kazanç bahsin 5.000 katıdır.</p></>) },
-  { id: 'keys', title: 'Tuşlar', content: (<><h3>Klavye</h3><p><kbd>Boşluk</kbd> dönüş başlatır ve kazanç sayacını atlar.</p><p><kbd>←</kbd> <kbd>→</kbd> bilgi sayfalarında gezinir, <kbd>Esc</kbd> pencereyi kapatır.</p></>) },
+  { id: 'keys', title: 'Tuşlar', content: (<><h3>Klavye</h3><p><kbd>Boşluk</kbd> dönüş başlatır; tur sürerken yalnız kutlama sayacını hızlandırır.</p><p><kbd>←</kbd> <kbd>→</kbd> bilgi sayfalarında gezinir, <kbd>Esc</kbd> pencereyi kapatır.</p></>) },
   { id: 'rules', title: 'Arıza hükmü', content: (<><h3>Arıza hükmü</h3><p>Arıza tüm ödemeleri ve turları geçersiz kılar.</p></>) },
 ];
 
@@ -73,7 +73,8 @@ export function SlotKitLab() {
 
   const start = (config: AutoplayConfig) => {
     setStartedWith(config);
-    setAutoplayLog('Çalışıyor…');
+    const extra = autoplayAdvancedSummary(config);
+    setAutoplayLog(`Çalışıyor… ${config.spins} tur · kayıp limiti ${formatDemo(config.lossLimitCents)}${extra.length ? ` · durur: ${extra.join(', ')}` : ''}`);
     setAuto(createAutoplay(config, balance));
   };
 
@@ -90,6 +91,7 @@ export function SlotKitLab() {
 
         <section className={styles.card} aria-label="Otomatik oyun">
           <h2>AutoplayPanel · AutoplayStopButton</h2>
+          <p className={styles.out}>Ana görünüm: tur sayısı, zorunlu kayıp limiti, Başlat. Diğer durma koşulları kapalı &quot;Gelişmiş&quot; bölümünde.</p>
           {auto ? (
             <div className={styles.stage}>
               <AutoplayStopButton remaining={auto.spinsRemaining} onStop={() => setAuto(cancelAutoplay(auto))} />

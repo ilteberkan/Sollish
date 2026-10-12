@@ -3,7 +3,8 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState, type CSSProper
 import { useRouter } from 'next/navigation';
 import { CASCADE2_RTP, cascadeSeedFromEntropy, playCascade2Round, type Cascade2Round, type CascadeMode } from '@sollish/protocol';
 import { demoNumber } from '@/lib/demo';
-import { buildCascadeTimeline, cascadeHistoryDetail, centsFor, finalState, moneyText, multiplierText, winAnnouncement, type CascadeTimeline, type Meter, type TimelineEvent } from '@/lib/cascade-timeline';
+import { buildCascadeTimeline, cascadeHistoryDetail, centsFor, moneyText, multiplierText, winAnnouncement, type CascadeTimeline, type Meter, type TimelineEvent } from '@/lib/cascade-timeline';
+import { WIN_TIER_INFO, countUpSchedule, multiplierCalloutTier, type CelebrationLevel, type CountUpSchedule, type WinTier } from '@/lib/slot-kit/win-tiers';
 import { TimelinePlayer, type EventInfo } from '@/lib/cascade-player';
 import { AUTOPLAY_STOP_REASONS, autoplayNetLossCents, cancelAutoplay, createAutoplay, type AutoplayConfig, type AutoplayState } from '@/lib/slot-kit/autoplay';
 import { formatAmount, formatDemo, formatSignedDemo } from '@/lib/slot-kit/bet';
@@ -26,11 +27,15 @@ import { CascadeFx, SYMBOL_COLORS } from './fx';
 import { cascadeInfoPages } from './info-pages';
 import { SYMBOL_LABELS, SymbolArt } from './symbols';
 import { useCascadeSound } from './use-cascade-sound';
+import { FeatureTotal, WinCelebration } from './win-celebration';
 import styles from './cascade-game.module.css';
 
 /* Lifecycle: entropy -> engine v2 resolves the whole round (bet + mode) -> one reservation of the mode cost ->
-   the timeline replays it -> exactly one settlement with the engine payout (at the end, on "Atla", or on
-   unmount). A replay from the history uses the same engine call and never touches the ledger. */
+   the timeline replays it -> exactly one settlement with the engine payout (at the end, or on unmount).
+   Spin lock (game-standards §6): once a round starts the spin button and Space stay locked until the whole
+   round, every tumble and free spin included, has played; there is no skip. Speed comes from the quick/turbo
+   setting; only the celebration overlays may be tapped (that moves the presentation clock, never a result).
+   A replay from the history uses the same engine call and never touches the ledger. */
 
 type LiveRound = {
   /** Ledger reservation id; null for a history replay. */
@@ -41,9 +46,9 @@ type LiveRound = {
 type Phase = 'idle' | 'playing' | 'done';
 type Card =
   | { kind: 'intro'; awarded: number; at: number; dur: number }
-  | { kind: 'outro'; spins: number; total: number; at: number; dur: number }
-  | { kind: 'max'; at: number; dur: number }
-  | { kind: 'big'; tier: 1 | 2 | 3; total: number; countUp: number; at: number; dur: number; instant: boolean };
+  | { kind: 'outro'; spins: number; total: number; multipliers: number[]; celebration: boolean; capped: boolean; bet: number; at: number; dur: number }
+  | { kind: 'big'; schedule: CountUpSchedule; bet: number; at: number; dur: number };
+type Callout = { key: number; sum: number; tier: WinTier; x: number; y: number };
 type Banner = { key: number; text: string; tone: 'gold' | 'pink' };
 type Badge = { parts: number[]; sum: number | null };
 type Toast = { key: number; text: string; tone: 'info' | 'warn' };
@@ -51,7 +56,7 @@ type ModalId = 'settings' | 'info' | 'autoplay' | 'buy' | null;
 type Boot = { phase: 'loading' | 'ready' | 'done'; progress: number };
 
 const ENTROPY_ERROR = 'Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.';
-const BIG_TITLES = { 1: 'Büyük kazanç', 2: 'Süper kazanç', 3: 'Efsane kazanç' } as const;
+const CALLOUT_TAGS: Record<WinTier, string> = { 0: 'Çarpan', 1: 'Büyük çarpan', 2: 'Mega çarpan', 3: 'Süper çarpan', 4: 'Efsane çarpan' };
 const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hızlı', turbo: 'Turbo' };
 const ZERO: Meter = { spin: 0, total: 0 };
 const BET_KEY = 'sollish:cascade:bet';
@@ -125,7 +130,7 @@ function BoltIcons({ count }: { count: number }) {
 function SoundIcon({ on }: { on: boolean }) {
   return <svg {...svg}><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor" />{on ? <path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" /> : <path d="m15.5 9.5 5 5m0-5-5 5" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" />}</svg>;
 }
-function SkipIcon() { return <svg {...svg} width={34} height={34}><path d="M4.5 6l7 6-7 6zM11.5 6l7 6-7 6z" fill="currentColor" /><path d="M20 6v12" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>; }
+function LockIcon() { return <svg {...svg} width={14} height={14}><rect x="5" y="10.5" width="14" height="10" rx="2.6" fill="currentColor" /><path d="M8.2 10.5V8a3.8 3.8 0 0 1 7.6 0v2.5" fill="none" stroke="currentColor" strokeWidth="2.4" /></svg>; }
 function GearIcon() { return <svg {...svg}><path d="M12 8.6a3.4 3.4 0 1 0 0 6.8 3.4 3.4 0 0 0 0-6.8Z" fill="none" stroke="currentColor" strokeWidth="1.9" /><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l2-1.6-2-3.4-2.4 1a7.4 7.4 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A7.4 7.4 0 0 0 7 6.5l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 3l-2 1.6 2 3.4 2.4-1a7.4 7.4 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.4 7.4 0 0 0 2.6-1.5l2.4 1 2-3.4z" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round" /></svg>; }
 function InfoIcon() { return <svg {...svg}><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="1.9" /><path d="M12 11v6M12 7.4h.01" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>; }
 function LoopIcon() { return <svg {...svg}><path d="M17 3.5 20 6.5l-3 3" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" /><path d="M4 11.5v-1a4 4 0 0 1 4-4h12M7 20.5 4 17.5l3-3" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" /><path d="M20 12.5v1a4 4 0 0 1-4 4H4" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" /></svg>; }
@@ -155,6 +160,8 @@ export function CascadeGame() {
   const [roundBet, setRoundBet] = useState<number | null>(null);
   const [badge, setBadge] = useState<Badge | null>(null);
   const [card, setCard] = useState<Card | null>(null);
+  const [callout, setCallout] = useState<Callout | null>(null);
+  const [flourish, setFlourish] = useState(0);
   const [banner, setBanner] = useState<Banner | null>(null);
   const [announce, setAnnounce] = useState('');
   const [lastWin, setLastWin] = useState<{ payout: number; total: number; replay: boolean } | null>(null);
@@ -180,6 +187,9 @@ export function CascadeGame() {
   const sequence = useRef(0);
   const bannerKey = useRef(0);
   const toastKey = useRef(0);
+  const calloutKey = useRef(0);
+  /** Effect mode of the celebration on screen (its round's reduced/lite flags). */
+  const celebrateFx = useRef({ reduced: false, lite: false });
   const autoRef = useRef<AutoplayState | null>(null);
   autoRef.current = auto;
   const balanceRef = useRef(demoBalance);
@@ -272,7 +282,7 @@ export function CascadeGame() {
     setAnnounce(`Otomatik oyun durdu: ${reason}.`);
   }, [showToast, sound]);
 
-  const finishRound = useCallback((current: LiveRound, skipped: boolean) => {
+  const finishRound = useCallback((current: LiveRound) => {
     settle(current);
     setPhase('done');
     sound.countUp(false);
@@ -292,7 +302,7 @@ export function CascadeGame() {
     }
     sound.scene('base');
     const total = demoNumber(round.payoutCents);
-    setAnnounce(round.payoutCents > 0 ? `Tur bitti${skipped ? ' (atlandı)' : ''}. Toplam kazanç ${total} DEMO, ${multiplierText(round.totalHundredths)}×.` : 'Tur bitti. Kazanç yok.');
+    setAnnounce(round.payoutCents > 0 ? `Tur bitti. Toplam kazanç ${total} DEMO, ${multiplierText(round.totalHundredths)}×.` : 'Tur bitti. Kazanç yok.');
   }, [settle, sound]);
 
   /* ---------------------------------------------------------------- presentation events */
@@ -303,12 +313,51 @@ export function CascadeGame() {
     return { x: a.left - b.left + (x / 6) * a.width, y: a.top - b.top + (y / 5) * a.height, cell: a.width / 6 };
   }, []);
 
-  const shake = useCallback((strength: number) => {
-    shakeRef.current?.animate([
+  /** Shakes the board and anything else marked `data-shake` (the celebration lockup). */
+  const shake = useCallback((strength: number, duration = 360) => {
+    const frames: Keyframe[] = [
       { transform: 'translate3d(0,0,0)' }, { transform: `translate3d(${-strength}px, ${strength * 0.6}px, 0)` }, { transform: `translate3d(${strength}px, ${-strength * 0.4}px, 0)` },
-      { transform: `translate3d(${-strength * 0.6}px, ${strength * 0.3}px, 0)` }, { transform: 'translate3d(0,0,0)' },
-    ], { duration: 360, easing: 'ease-out' });
+      { transform: `translate3d(${-strength * 0.7}px, ${-strength * 0.5}px, 0)` }, { transform: `translate3d(${strength * 0.5}px, ${strength * 0.3}px, 0)` },
+      { transform: `translate3d(${-strength * 0.3}px, ${strength * 0.15}px, 0)` }, { transform: 'translate3d(0,0,0)' },
+    ];
+    shakeRef.current?.animate(frames, { duration, easing: 'ease-out' });
+    stageRef.current?.querySelectorAll('[data-shake]').forEach(el => el.animate(frames, { duration, easing: 'ease-out' }));
   }, []);
+
+  /** Big multiplier announcement over the board (game-standards §6); the meter and badge still update. */
+  const showCallout = useCallback((sum: number, reduced: boolean, lite: boolean) => {
+    const tier = multiplierCalloutTier(sum);
+    const c = centre(3, 2.5);
+    setCallout({ key: ++calloutKey.current, sum, tier, x: c.x, y: c.y });
+    sound.multiplierCallout(sum);
+    const f = fx.current;
+    if (lite || !f) return;
+    f.burst(c.x, c.y, SYMBOL_COLORS.crystal!, c.cell * (1 + tier * 0.45), 16 + tier * 14);
+    f.sparkle(c.x, c.y, c.cell * (1.2 + tier * 0.5), 10 + tier * 8, tier >= 3 ? '#e6f4ff' : '#fff4c8');
+    if (tier >= 1) f.ring(c.x, c.y, c.cell * (1.4 + tier * 0.3), '#ffe09a', 0.6);
+    if (tier >= 2) f.ring(c.x, c.y, c.cell * 2.4, tier >= 4 ? '#c9a8ff' : '#ff9ccc', 0.85);
+    if (tier >= 3) f.fountain(tier);
+    if (!reduced) shake(tier === 0 ? 5 : 6 + tier * 3, 360 + tier * 70);
+  }, [centre, shake, sound]);
+
+  /** Opens the escalating celebration for a schedule (from the timeline, or the dev preview). */
+  const openCelebration = useCallback((schedule: CountUpSchedule, bet: number, at: number, dur: number, reduced: boolean, lite: boolean) => {
+    celebrateFx.current = { reduced, lite };
+    setCard({ kind: 'big', schedule, bet, at, dur });
+    setAnnounce(`${WIN_TIER_INFO[schedule.finalLevel].title}: ${demoNumber(centsFor(bet, schedule.totalHundredths))} DEMO, ${multiplierText(schedule.totalHundredths)}×.`);
+  }, []);
+  const onCelebrationLevel = useCallback((level: CelebrationLevel, first: boolean, remainingMs: number) => {
+    const { reduced, lite } = celebrateFx.current, f = fx.current;
+    if (level === 5) sound.maxWin(); else sound.bigWin(level);
+    if (first) sound.countUp(true);
+    if (f && !lite) {
+      f.rain(level, remainingMs / 1000);
+      f.fountain(level);
+      if (!first) f.confetti(Math.min(3, level));
+    }
+    if (!lite && !reduced) shake(first ? 5 : 6 + level * 2.5, first ? 380 : 560);
+  }, [shake, sound]);
+  const onCelebrationCounted = useCallback(() => { sound.countUp(false); }, [sound]);
 
   const handle = useCallback((event: TimelineEvent, _info: EventInfo) => {
     const current = live.current; if (!current) return;
@@ -373,16 +422,13 @@ export function CascadeGame() {
       }
       case 'multiply': {
         setBadge(prev => ({ parts: prev?.parts ?? [], sum: event.sum }));
-        setMeterDur(Math.min(700, event.dur)); setMeter(event.meter);
+        setMeterDur(Math.min(900, event.dur)); setMeter(event.meter);
         const m = meterRef.current;
         if (!reduced) m?.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.16)', offset: 0.25 }, { transform: 'scale(.97)', offset: 0.6 }, { transform: 'scale(1)' }], { duration: 560, easing: 'ease-out' });
-        if (!lite) {
-          shake(7);
-          if (f && m) { const p = f.point(m); f.sparkle(p.x, p.y, p.w * 0.35, 14); f.burst(p.x, p.y - p.h * 0.2, SYMBOL_COLORS.crystal!, p.h, 18); }
-        }
-        if (f && m) { const p = f.point(m); f.label(p.x, p.y - p.h * 1.15, `×${event.sum}`, styles.floatBig, reduced ? 800 : 1300); }
+        if (f && m && !lite) { const p = f.point(m); f.sparkle(p.x, p.y, p.w * 0.35, 14); }
         sound.multiplierApply(event.sum, event.meter.spin / 100);
-        setAnnounce(`${multiplierText(event.baseHundredths)}× kazanç ${event.sum} ile çarpıldı.`);
+        showCallout(event.sum, reduced, lite);
+        setAnnounce(`Çarpan ×${event.sum}: ${multiplierText(event.baseHundredths)}× kazanç ${event.sum} ile çarpıldı.`);
         break;
       }
       case 'scatter-pay': {
@@ -414,41 +460,47 @@ export function CascadeGame() {
         b?.dim(false);
         sound.scatterTease(false);
         setMeterDur(300); setMeter(event.meter);
-        if (event.kind === 'free') setAnnounce(event.winHundredths > 0 ? `Bedava dönüş ${multiplierText(event.winHundredths)}× kazandırdı.` : 'Bedava dönüşte kazanç yok.');
-        else if (event.winHundredths === 0) setAnnounce('Kazanç yok.');
+        if (event.kind === 'free') {
+          // Transient "+X" for this spin; the main meter keeps the cumulative total.
+          const m = meterRef.current;
+          if (f && m && event.winHundredths > 0) { const p = f.point(m); f.label(p.x, p.y - p.h * 1.05, `+${moneyText(centsFor(betCents, event.winHundredths))}`, styles.floatSpin, reduced ? 900 : 1400); }
+          setAnnounce(event.winHundredths > 0 ? `Bedava dönüş ${multiplierText(event.winHundredths)}× kazandırdı. Toplam ${multiplierText(event.meter.total)}×.` : 'Bedava dönüşte kazanç yok.');
+        } else if (event.winHundredths === 0) setAnnounce('Kazanç yok.');
         break;
       }
-      case 'max-win':
-        setCard({ kind: 'max', at: event.at, dur: event.dur });
-        sound.maxWin();
-        if (f && !lite) f.confetti(3);
-        setAnnounce('Azami kazanca ulaşıldı: bahsin 5.000 katı.');
+      case 'total-win': {
+        // Below 10x: a short flourish on the meter, no full-screen takeover.
+        setFlourish(k => k + 1);
+        sound.totalWinFanfare();
+        const m = meterRef.current;
+        if (!reduced) m?.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.1)', offset: 0.3 }, { transform: 'scale(.98)', offset: 0.65 }, { transform: 'scale(1)' }], { duration: 620, easing: 'ease-out' });
+        if (f && m && !lite) { const p = f.point(m); f.sparkle(p.x, p.y, p.w * 0.5, 14); f.ring(p.x, p.y, p.h * 1.3, '#ffe09a', 0.55); }
+        setAnnounce(`Toplam kazanç ${demoNumber(centsFor(betCents, event.totalHundredths))} DEMO, ${multiplierText(event.totalHundredths)}×.`);
         break;
+      }
       case 'free-outro':
-        setCard({ kind: 'outro', spins: event.spins, total: event.totalHundredths, at: event.at, dur: event.dur });
+        setCard({ kind: 'outro', spins: event.spins, total: event.totalHundredths, multipliers: event.multipliers, celebration: event.celebration, capped: event.capped, bet: betCents, at: event.at, dur: event.dur });
         sound.featureOutro(); sound.scene('base');
-        setAnnounce(`Bedava dönüş bitti. Toplam kazanç ${demoNumber(centsFor(betCents, event.totalHundredths))} DEMO, ${event.spins} dönüş.`);
+        if (f && !lite) f.confetti(1);
+        setAnnounce(`Bedava dönüş toplamı: ${demoNumber(centsFor(betCents, event.totalHundredths))} DEMO, ${event.spins} dönüş.`);
         break;
       case 'big-win':
-        setCard({ kind: 'big', tier: event.tier, total: event.totalHundredths, countUp: event.countUp, at: event.at, dur: event.dur, instant: false });
-        sound.bigWin(event.tier); sound.countUp(true);
-        if (f && !lite) f.confetti(event.tier);
-        if (!lite) shake(5 + event.tier * 2);
-        setAnnounce(`${BIG_TITLES[event.tier]}: ${demoNumber(centsFor(betCents, event.totalHundredths))} DEMO.`);
+        openCelebration(event.schedule, betCents, event.at, event.dur, reduced, lite);
         break;
       case 'end':
         setCard(null); setBanner(null); setBadge(null);
+        fx.current?.stopRain();
         player.current = null;
-        finishRound(current, false);
+        finishRound(current);
         break;
     }
-  }, [centre, finishRound, shake, sound]);
+  }, [centre, finishRound, openCelebration, showCallout, sound]);
 
   /* ---------------------------------------------------------------- starting rounds */
   const begin = useCallback((current: LiveRound, text: string) => {
     live.current = current;
     setError(''); setPhase('playing'); setRoundBet(current.bet);
-    setFree(false); setFreeInfo(null); setMeterDur(0); setMeter(ZERO); setBadge(null); setCard(null); setBanner(null);
+    setFree(false); setFreeInfo(null); setMeterDur(0); setMeter(ZERO); setBadge(null); setCard(null); setBanner(null); setCallout(null); setFlourish(0);
     setAnnounce(text);
     fx.current?.clear();
     sound.unlock();
@@ -509,31 +561,60 @@ export function CascadeGame() {
     begin(current, `Tekrar oynatılıyor: tur ${shortRoundId(meta.seedHex)}. Bakiye değişmez.`);
   }, [begin, booting, reducedMotion, showToast]);
 
-  function skip() {
-    const current = live.current;
-    if (!current || current.settled) return;
-    if (performance.now() - current.startedAt < 350) return; // a double tap on the spin button is not a skip
-    player.current?.stop(); player.current = null;
-    fx.current?.clear();
-    const fin = finalState(current.round);
-    board.current?.showFinal(current.prefix, fin.cells);
-    setMeterDur(0); setMeter(fin.meter); setFree(fin.free); setFreeInfo(fin.free ? { number: fin.freeSpinsPlayed, left: 0 } : null);
-    setBadge(null); setCard(null); setBanner(null);
-    finishRound(current, true);
-  }
-
-  /** Tap on a hold card: finish the count-up first, then continue. */
+  /**
+   * Tap on a hold screen (free-spin intro/total, celebration): the first tap on a celebration finishes the
+   * count-up (the counter reads the player clock), the next one closes it. Never touches a result.
+   */
   const advanceHold = useCallback(() => {
     const p = player.current; if (!p) return;
     const hold = p.currentHold(); if (!hold) return;
-    if (hold.type === 'big-win' && p.time < hold.at + hold.countUp - 1) {
-      p.jumpTo(hold.at + hold.countUp);
-      sound.countUp(false);
-      setCard(c => (c && c.kind === 'big' ? { ...c, instant: true } : c));
-      return;
-    }
+    if (hold.type === 'big-win' && p.time < hold.at + hold.countUp - 1) { p.jumpTo(hold.at + hold.countUp); return; }
     p.jumpTo(hold.at + hold.dur);
-  }, [sound]);
+  }, []);
+  /** Clock of the screen on display, in ms since it opened (the counters read it every frame). */
+  const cardAt = card?.at ?? null;
+  const cardElapsed = useCallback(() => {
+    const p = player.current;
+    return p && cardAt !== null ? p.time - cardAt : Number.POSITIVE_INFINITY;
+  }, [cardAt]);
+
+  // Multiplier callouts clear themselves after their animation.
+  useEffect(() => {
+    if (!callout) return;
+    const timer = window.setTimeout(() => setCallout(c => (c?.key === callout.key ? null : c)), 1900 + callout.tier * 150);
+    return () => window.clearTimeout(timer);
+  }, [callout]);
+
+  /* Development-only preview of the celebration screens and multiplier callouts (visual QA). It never builds a
+     round, reserves or settles anything; production builds drop it (NODE_ENV is inlined). */
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'production') return;
+    const w = window as unknown as { __cascadePreview?: unknown };
+    w.__cascadePreview = {
+      celebrate: (totalHundredths: number, capped = false, betCents = 1000) => {
+        if ((live.current && !live.current.settled) || player.current) return false;
+        const s = settingsRef.current, opts = cascadeTimelineOptions(s, reducedMotion);
+        const schedule = countUpSchedule(totalHundredths, capped, opts);
+        const dur = schedule.countUp + schedule.hold;
+        const timeline: CascadeTimeline = {
+          events: [
+            { type: 'big-win', at: 0, dur, tier: schedule.finalLevel, totalHundredths, capped, countUp: schedule.countUp, schedule, hold: true },
+            { type: 'end', at: dur, dur: 0, totalHundredths, payoutCents: centsFor(betCents, totalHundredths), capped },
+          ],
+          duration: dur, turbo: opts.speed === 'turbo', speed: opts.speed, skipScreens: !!opts.skipScreens, reducedMotion,
+        };
+        const preview = new TimelinePlayer(timeline, event => {
+          if (event.type === 'big-win') openCelebration(event.schedule, betCents, event.at, event.dur, reducedMotion, reducedMotion || s.reducedEffects);
+          else if (event.type === 'end') { setCard(null); fx.current?.stopRain(); sound.countUp(false); player.current = null; }
+        });
+        player.current = preview;
+        preview.start();
+        return true;
+      },
+      callout: (sum: number) => { showCallout(sum, reducedMotion, reducedMotion || settingsRef.current.reducedEffects); return true; },
+    };
+    return () => { delete w.__cascadePreview; };
+  }, [openCelebration, reducedMotion, showCallout, sound]);
 
   /* ---------------------------------------------------------------- autoplay */
   const startAutoplay = useCallback((config: AutoplayConfig) => {
@@ -576,8 +657,9 @@ export function CascadeGame() {
       if (document.querySelector('dialog[open]')) return;
       if (event.key === ' ' && !settingsRef.current.spaceToSpin) return;
       event.preventDefault();
-      if (player.current?.active) advanceHold();
-      else if (!autoRef.current) startRef.current('spin');
+      // Spin lock: during a round Space/Enter only act on a hold screen (tap-to-continue); they never skip play.
+      if (player.current?.active) { if (player.current.currentHold()) advanceHold(); return; }
+      if (!autoRef.current) startRef.current('spin');
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -593,7 +675,7 @@ export function CascadeGame() {
   const boardLabel = free ? 'Candy Cascade bedava dönüş ızgarası, 6 sütun, 5 satır' : 'Candy Cascade ızgarası, 6 sütun, 5 satır';
   const boardElement = useMemo(() => <BoardFrame><CascadeBoard ref={board} label={boardLabel} free={free} /></BoardFrame>, [boardLabel, free]);
   const stageClass = [styles.stage, free ? styles.stageFree : '', card ? styles.stageCard : ''].join(' ');
-  const cardTier = card?.kind === 'big' ? card.tier : 3;
+  const celebrating = card?.kind === 'big' || card?.kind === 'outro';
   const infoPages = useMemo(() => cascadeInfoPages(bet), [bet]);
   const outOfCredit = !busy && demoBalance < CASCADE_MIN_BET_CENTS;
   const deckWin = busy ? amountCents(meter.total) : (lastWin?.payout ?? 0);
@@ -625,7 +707,7 @@ export function CascadeGame() {
     setAnnounce(text);
   };
   const onSpinClick = () => {
-    if (busy) { skip(); return; }
+    if (busy) return; // locked until the whole round has played
     startRound('spin');
   };
   const confirmBuy = () => {
@@ -668,12 +750,13 @@ export function CascadeGame() {
             {auto ? (
               <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay(AUTOPLAY_STOP_REASONS.cancelled, 'info')} />
             ) : (
-              <button type="button" className={`${styles.spin} ${busy ? styles.spinning : ''}`} onClick={onSpinClick} disabled={gated || booting}
-                aria-label={busy ? 'Atla' : 'Çevir'} aria-describedby="cc-spin-cost">
-                <span className={styles.spinFace}>{busy ? <SkipIcon /> : <SwirlIcon />}</span>
+              <button type="button" className={`${styles.spin} ${busy ? styles.spinning : ''}`} onClick={onSpinClick} disabled={busy || gated || booting}
+                aria-label="Çevir" aria-describedby="cc-spin-cost" data-locked={busy || undefined} data-testid="cascade-spin">
+                <span className={styles.spinFace}><SwirlIcon /></span>
+                {busy && <span className={styles.spinLock} aria-hidden="true"><LockIcon /></span>}
               </button>
             )}
-            <span id="cc-spin-cost" className="sr-only">{busy ? 'Animasyonu atlar; sonuç değişmez.' : `Maliyet ${formatDemo(spinCost)}`}</span>
+            <span id="cc-spin-cost" className="sr-only">{busy ? 'Tur sürüyor; bütün düşmeler ve bedava dönüşler bitene kadar kilitli.' : `Maliyet ${formatDemo(spinCost)}`}</span>
           </div>
           <button type="button" className={`${styles.tool} ${styles.areaAuto}`} onClick={() => { sound.click(); setModal('autoplay'); }} disabled={locked} aria-haspopup="dialog">
             <LoopIcon /><span>Otomatik</span>
@@ -718,7 +801,7 @@ export function CascadeGame() {
     <div className={`game-page ${styles.page}`}>
       <GameHeading title="Candy Cascade" subtitle="Sekiz eşleşmede patlat, düşen şekerlerle zincir kur." mode={mode} setMode={setMode} active={busy || auto !== null} />
       <section className={`game-table ${styles.table}`} aria-label="Candy Cascade oyun masası">
-        <div ref={stageRef} className={stageClass} data-phase={phase}>
+        <div ref={stageRef} className={stageClass} data-phase={phase} data-celebrate={celebrating || undefined}>
           <StaticBackdrop />
           <div className={styles.freeTint} aria-hidden="true" />
           <div ref={shakeRef} className={styles.shake}>
@@ -737,17 +820,18 @@ export function CascadeGame() {
               </div>
             </div>
             <div className={styles.boardWrap}>{boardElement}</div>
-            <div ref={meterRef} className={`${styles.meter} ${free ? styles.meterFree : ''}`}>
-              {free ? (
-                <>
-                  <div className={styles.meterPart}><small>Bu dönüş</small><strong><CountUp cents={amountCents(meter.spin)} duration={meterDur} /><em> DEMO</em></strong></div>
-                  <div className={`${styles.meterPart} ${styles.meterTotal}`}><small>Toplam kazanç</small><strong><CountUp cents={amountCents(meter.total)} duration={meterDur} /><em> DEMO</em></strong></div>
-                </>
-              ) : phase === 'idle' ? (
+            {/* One cumulative meter: it never resets inside a round (tumbles, multipliers, every free spin add up)
+                and keeps the last round's total until the next spin starts. */}
+            <div ref={meterRef} className={`${styles.meter} ${free ? styles.meterFree : ''}`} data-testid="cascade-meter">
+              {phase === 'idle' ? (
                 <div className={styles.meterIdle}><span>Her yerde <strong>8+</strong> aynı şeker öder</span><span aria-hidden="true">·</span><span><strong>4</strong> yıldız = <strong>10</strong> bedava dönüş</span></div>
               ) : (
-                <div className={styles.meterPart}><small>Kazanç</small><strong><CountUp cents={amountCents(meter.total)} duration={meterDur} /><em> DEMO</em></strong></div>
+                <div className={`${styles.meterPart} ${free ? styles.meterTotal : ''}`}>
+                  <small>{free || phase === 'done' ? 'Toplam kazanç' : 'Kazanç'}</small>
+                  <strong data-testid="cascade-meter-total"><CountUp cents={amountCents(meter.total)} duration={meterDur} /><em> DEMO</em></strong>
+                </div>
               )}
+              {flourish > 0 && phase !== 'idle' && <span key={flourish} className={styles.meterShine} aria-hidden="true" />}
             </div>
           </div>
           <canvas ref={canvasRef} className={styles.fxCanvas} aria-hidden="true" />
@@ -755,12 +839,12 @@ export function CascadeGame() {
           {replayInfo && <div className={styles.replayRibbon} data-testid="cascade-replay"><Icon name="history" size={15} /><span>{replayInfo}</span></div>}
           {auto && !replayInfo && <div className={styles.autoRibbon} aria-hidden="true"><LoopIcon /><span>Otomatik · {auto.spinsRemaining} tur kaldı</span></div>}
           {toast && (
-            <div key={toast.key} className={`${styles.toast} ${toast.tone === 'warn' ? styles.toastWarn : ''}`} data-testid="cascade-toast">
+            <div key={`toast-${toast.key}`} className={`${styles.toast} ${toast.tone === 'warn' ? styles.toastWarn : ''}`} data-testid="cascade-toast">
               <span>{toast.text}</span>
               <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label="Bildirimi kapat"><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
             </div>
           )}
-          {banner && <div key={banner.key} className={`${styles.banner} ${banner.tone === 'pink' ? styles.bannerPink : ''}`} aria-hidden="true">{banner.text}</div>}
+          {banner && <div key={`banner-${banner.key}`} className={`${styles.banner} ${banner.tone === 'pink' ? styles.bannerPink : ''}`} aria-hidden="true">{banner.text}</div>}
           {card?.kind === 'intro' && (
             <div className={styles.overlay} onClick={advanceHold}>
               <div className={styles.introCard} role="dialog" aria-modal="false" aria-labelledby="cc-intro-title">
@@ -775,41 +859,20 @@ export function CascadeGame() {
               </div>
             </div>
           )}
-          {card?.kind === 'outro' && (
-            <div className={styles.overlay} onClick={advanceHold}>
-              <div className={`${styles.introCard} ${styles.outroCard}`} role="dialog" aria-modal="false" aria-labelledby="cc-outro-title" data-testid="cascade-outro">
-                <div className={styles.outroCrystals} aria-hidden="true">
-                  <SymbolArt symbol="crystal" multiplier={5} size="100%" /><SymbolArt symbol="star" size="100%" /><SymbolArt symbol="crystal" multiplier={25} size="100%" />
-                </div>
-                <h2 id="cc-outro-title" className={styles.introTitle}>Bedava dönüş bitti</h2>
-                <p className={styles.outroLabel}>Toplam kazanç</p>
-                <p className={styles.outroAmount}><CountUp key={card.at} from={0} cents={amountCents(card.total)} duration={Math.min(1400, Math.round(card.dur * 0.55))} instant={reducedMotion} /><small> DEMO</small></p>
-                <p className={styles.outroMeta}><span>{card.spins} dönüş</span><span aria-hidden="true">·</span><span>{multiplierText(card.total)}×</span></p>
-                <button type="button" className={styles.introButton} onClick={event => { event.stopPropagation(); advanceHold(); }}>Devam</button>
-                <span className={styles.introTimer} style={{ '--hold': `${card.dur}ms` } as CSSProperties} aria-hidden="true" />
-              </div>
+          {callout && (
+            <div key={`callout-${callout.key}`} className={styles.callout} data-tier={callout.tier} style={{ left: `${callout.x}px`, top: `${callout.y}px` }} aria-hidden="true" data-testid="cascade-callout" data-key={callout.key}>
+              <span className={styles.calloutGlow} />
+              {callout.tier >= 1 && <span className={styles.calloutTag}>{CALLOUT_TAGS[callout.tier]}</span>}
+              <span className={styles.calloutText} data-text={`×${callout.sum}`}><span className={styles.calloutFill}>×{callout.sum}</span></span>
             </div>
           )}
-          {card?.kind === 'max' && (
-            <div className={`${styles.overlay} ${styles.overlayBig} ${styles.tier3}`} onClick={advanceHold}>
-              {!reducedMotion && <div className={styles.rays} aria-hidden="true" />}
-              <div className={styles.bigCard}>
-                <p className={styles.bigTitle}>Azami kazanç</p>
-                <p className={styles.bigAmount}>5.000×</p>
-                <p className={styles.bigHint}>Tur tavana ulaştı; kalan dönüşler oynanmaz.</p>
-              </div>
-            </div>
+          {card?.kind === 'outro' && (
+            <FeatureTotal key={`outro-${card.at}`} spins={card.spins} totalHundredths={card.total} multipliers={card.multipliers} betCents={card.bet} celebration={card.celebration}
+              capped={card.capped} dur={card.dur} elapsed={cardElapsed} reducedMotion={reducedMotion} onTap={advanceHold} />
           )}
           {card?.kind === 'big' && (
-            <div className={`${styles.overlay} ${styles.overlayBig} ${styles[`tier${cardTier}`]}`} onClick={advanceHold}>
-              {!reducedMotion && <div className={styles.rays} aria-hidden="true" />}
-              <div className={styles.bigCard}>
-                <p className={styles.bigTitle}>{BIG_TITLES[card.tier]}</p>
-                <p className={styles.bigAmount}><CountUp key={card.at} from={0} cents={amountCents(card.total)} duration={card.countUp} instant={card.instant} /><small> DEMO</small></p>
-                <p className={styles.bigMult}>{multiplierText(card.total)}×</p>
-                <button type="button" className={styles.bigHint} onClick={event => { event.stopPropagation(); advanceHold(); }}>Geçmek için dokun</button>
-              </div>
-            </div>
+            <WinCelebration key={`big-${card.at}`} schedule={card.schedule} betCents={card.bet} elapsed={cardElapsed} reducedMotion={reducedMotion}
+              onLevel={onCelebrationLevel} onCountDone={onCelebrationCounted} onTap={advanceHold} />
           )}
           {gated && (
             <div className={`${styles.overlay} ${styles.gated}`}>

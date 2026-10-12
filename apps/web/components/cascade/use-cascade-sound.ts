@@ -3,8 +3,8 @@
  * The only place Candy Cascade talks to its sound engine. Presentation only: nothing here can read or change
  * a result. The core methods (resume, setEnabled, spinStart, land, pop, win, crystal, collect, scatter,
  * freeSpinsIntro, bigWin, dispose) exist on every engine version; the richer API (load, setMix, setScene,
- * duck, countUp, click, betChange, denied, tumble, multiplierApply, scatterTease, featureOutro, maxWin,
- * autoplay …) is feature-detected and called only when the object provides it, so the game works with the
+ * duck, countUp, click, betChange, denied, tumble, multiplierApply, multiplierCallout, scatterTease, featureOutro,
+ * maxWin, totalWinFanfare, autoplay …) is feature-detected and called only when the object provides it, so the game works with the
  * old synthesizer and picks the new engine up without changes here.
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -26,7 +26,8 @@ interface CoreSound {
   collect: () => void;
   scatter: (n: number) => void;
   freeSpinsIntro: () => void;
-  bigWin: (tier: 1 | 2 | 3) => void;
+  /** Older engines know tiers 1..3 and clamp; newer ones take 1..4 (Büyük, Mega, Süper, Efsane). */
+  bigWin: (tier: 1 | 2 | 3 | 4) => void;
   dispose: () => void;
 }
 /** Optional methods of the newer engine; each is called only if present. */
@@ -43,6 +44,8 @@ interface RichSound {
   symbolLand: () => void;
   crystalArrive: (value: number) => void;
   multiplierApply: (total: number) => void;
+  multiplierCallout: (value: number) => void;
+  totalWinFanfare: () => void;
   scatterTease: (on: boolean) => void;
   featureOutro: () => void;
   maxWin: () => void;
@@ -74,10 +77,15 @@ export interface CascadeSoundControls {
   collect: () => void;
   crystalArrive: (value: number) => void;
   multiplierApply: (total: number, multiplier: number) => void;
+  /** Big multiplier announcement (the board callout); silent on engines without it. */
+  multiplierCallout: (value: number) => void;
   freeSpinsIntro: () => void;
   featureOutro: () => void;
-  bigWin: (tier: 1 | 2 | 3) => void;
+  /** Celebration tier (or tier-up): 1 Büyük, 2 Mega, 3 Süper, 4 Efsane. */
+  bigWin: (tier: 1 | 2 | 3 | 4) => void;
   maxWin: () => void;
+  /** Short total-win flourish for a winning round below the celebration tiers. */
+  totalWinFanfare: () => void;
   countUp: (start: boolean) => void;
   click: () => void;
   betChange: (direction: 1 | -1) => void;
@@ -153,10 +161,12 @@ export function useCascadeSound(settings: SlotSettings): { sound: CascadeSoundCo
       collect: () => { call(e(), 'collect'); },
       crystalArrive: value => { if (has('crystalArrive')) call(e(), 'crystalArrive', value); else call(e(), 'crystal', value); },
       multiplierApply: (total, multiplier) => { if (has('multiplierApply')) call(e(), 'multiplierApply', total); else call(e(), 'win', multiplier); },
+      multiplierCallout: value => { call(e(), 'multiplierCallout', value); },
       freeSpinsIntro: () => { call(e(), 'scatterTease', false); call(e(), 'freeSpinsIntro'); },
       featureOutro: () => { call(e(), 'featureOutro'); },
       bigWin: tier => { call(e(), 'bigWin', tier); },
       maxWin: () => { if (has('maxWin')) call(e(), 'maxWin'); else call(e(), 'bigWin', 3); },
+      totalWinFanfare: () => { call(e(), 'totalWinFanfare'); },
       countUp: start => { call(e(), 'countUp', start); },
       click: () => { call(e(), 'click'); },
       betChange: direction => { call(e(), 'betChange', direction); },

@@ -7,32 +7,33 @@
  * Time unit: milliseconds from the round start. Grid coordinates: col 0..5, row 0..4 (row 0 top).
  */
 import { CASCADE_COLS, CASCADE_MAX_WIN_MULTIPLIER, CASCADE_ROWS, type CascadeCell, type CascadeGrid, type CascadePaySymbol, type CascadeRound, type CascadeSymbol } from '@sollish/protocol';
+import {
+  WIN_TIER_THRESHOLDS, countUpSchedule, multiplierCalloutTier, roundCelebration, winTierOf,
+  type CelebrationLevel, type CountUpSchedule, type WinTier,
+} from './slot-kit/win-tiers';
 
 /** A resolved round of any Candy Cascade engine (v1 or v2: same spins, steps and cells). `stakeCents` is the
  * base bet that wins are measured against (v2: equal to `betCents`, not the mode cost). */
 export type CascadeRoundLike = Omit<CascadeRound, 'engine'> & { engine: string };
 
 export const CASCADE_TURBO_FACTOR = 0.35;
-/** Holds (intro card, big-win, max-win) never shrink below this in turbo so the text stays readable. */
+/** Holds (free-spin intro and total cards) never shrink below this in turbo so the text stays readable. */
 export const CASCADE_TURBO_MIN_HOLD = 1500;
 /** Presentation speeds: every non-hold duration is scaled; only turbo also shortens the holds. */
 export type CascadeSpeed = 'normal' | 'quick' | 'turbo';
 export const CASCADE_SPEED_FACTOR: Readonly<Record<CascadeSpeed, number>> = Object.freeze({ normal: 1, quick: 0.6, turbo: CASCADE_TURBO_FACTOR });
-/** "Giriş ekranlarını atla": feature intro/outro and max-win cards still show, this long at most. */
+/** "Giriş ekranlarını atla": the free-spin intro and total cards still show, this long at most. */
 export const CASCADE_SKIP_SCREEN_HOLD = 900;
-/** With skipped screens the big-win count-up and the hold after it are capped to these. */
-export const CASCADE_SKIP_COUNT_UP = 1000;
-export const CASCADE_SKIP_BIG_HOLD = 600;
-/** Round-total thresholds in hundredths of the stake: 20x, 50x, 100x. */
-export const CASCADE_BIG_WIN_THRESHOLDS = [2000, 5000, 10_000] as const;
-export type BigWinTier = 0 | 1 | 2 | 3;
+/** Round-total thresholds in hundredths of the stake (owner rule, game-standards §6): 10x, 25x, 50x, 100x. */
+export const CASCADE_BIG_WIN_THRESHOLDS = WIN_TIER_THRESHOLDS;
+export type BigWinTier = WinTier;
 
 export type TimelineOptions = {
   /** Legacy switch: same as `speed: 'turbo'`. */
   turbo?: boolean;
   speed?: CascadeSpeed;
   reducedMotion?: boolean;
-  /** Shorten feature intro/outro, max-win and big-win holds (they still show briefly). */
+  /** Shorten the free-spin intro/total cards and the celebration (they still show briefly). */
   skipScreens?: boolean;
 };
 
@@ -48,7 +49,11 @@ export interface TimelineWin {
   /** Mean cell position of the cluster, in cell units (col + 0.5, row + 0.5 = cell centre). */
   centroid: { x: number; y: number };
 }
-/** Hundredths of the stake: this spin's running win and the capped round total. */
+/**
+ * Hundredths of the stake: this spin's running win and the capped round total. `total` is the cumulative
+ * round win the main meter shows: it never decreases inside a round (tumbles, multipliers and every free
+ * spin add to it) and ends exactly on the engine total.
+ */
 export interface Meter { spin: number; total: number }
 
 type At = { at: number; dur: number };
@@ -63,15 +68,18 @@ export type TimelineEvent =
   | At & { type: 'tumble'; spin: number; step: number; cells: PlacedCell[]; removed: number[] }
   | At & { type: 'crystal-collect'; spin: number; crystals: Array<{ id: number; value: number; delay: number; fly: number }>; sum: number }
   | At & { type: 'crystal-arrive'; spin: number; id: number; value: number; parts: number[] }
-  | At & { type: 'multiply'; spin: number; sum: number; baseHundredths: number; meter: Meter }
+  | At & { type: 'multiply'; spin: number; sum: number; baseHundredths: number; calloutTier: WinTier; meter: Meter }
   | At & { type: 'scatter-pay'; spin: number; count: number; hundredths: number; meter: Meter }
   | At & { type: 'scatter-trigger'; spin: number; ids: number[]; count: number; awarded: number; retrigger: boolean; freeSpinsLeft: number }
   | At & { type: 'free-intro'; spin: number; awarded: number; hold: true }
   | At & { type: 'free-mode'; on: boolean }
   | At & { type: 'spin-end'; spin: number; kind: 'base' | 'free'; winHundredths: number; meter: Meter }
-  | At & { type: 'free-outro'; spins: number; totalHundredths: number; hold: true }
-  | At & { type: 'max-win'; hold: true }
-  | At & { type: 'big-win'; tier: 1 | 2 | 3; totalHundredths: number; countUp: number; hold: true }
+  /** Free-spin total screen; always ends a free-spin round. `multipliers` = crystal totals applied, in order. */
+  | At & { type: 'free-outro'; spins: number; totalHundredths: number; multipliers: number[]; celebration: boolean; capped: boolean; hold: true }
+  /** Short total-win flourish on the meter for a winning round below 10x without free spins (no takeover). */
+  | At & { type: 'total-win'; totalHundredths: number }
+  /** Escalating celebration: `tier` is the level it ends on (5 = Azami, capped round). */
+  | At & { type: 'big-win'; tier: CelebrationLevel; totalHundredths: number; capped: boolean; countUp: number; schedule: CountUpSchedule; hold: true }
   | At & { type: 'end'; totalHundredths: number; payoutCents: number; capped: boolean };
 export type TimelineEventType = TimelineEvent['type'];
 
@@ -83,27 +91,27 @@ const NORMAL = {
   dropColStagger: 62, dropRowStagger: 24, dropFallBase: 300, dropFallK: 72,
   tumbleColStagger: 34, tumbleFreshDelay: 60, tumbleFallBase: 250, tumbleFallK: 85,
   settle: 150, highlight: 450, pop: 360, popGap: 40,
-  collectStagger: 240, collectFly: 560, collectSum: 300, multiply: 780, scatterPay: 760,
-  scatterTrigger: 1500, retrigger: 1500, freeIntro: 2400, freeOutro: 2600,
-  spinEndWin: 560, spinEndNone: 260, freeSpinEndWin: 480, freeSpinEndNone: 220,
-  maxWin: 2600, bigWinCountUp: [2800, 3800, 4800] as readonly number[], bigWinHold: 1700,
+  collectStagger: 240, collectFly: 560, collectSum: 300, scatterPay: 760,
+  /** Multiplier callout time by callout tier (<10x, >=10x, >=25x, >=50x, >=100x). */
+  multiply: [780, 1100, 1300, 1500, 1700] as readonly number[],
+  scatterTrigger: 1500, retrigger: 1500, freeIntro: 2400, freeOutro: 2600, totalWin: 900,
+  spinEndWin: 560, spinEndNone: 260, freeSpinEndWin: 640, freeSpinEndNone: 220,
 };
 const REDUCED: typeof NORMAL = {
   ...NORMAL,
   clear: 200, clearColStagger: 0, dropAfterClear: 160,
   dropColStagger: 0, dropRowStagger: 0, dropFallBase: 240, dropFallK: 0,
   tumbleColStagger: 0, tumbleFreshDelay: 0, tumbleFallBase: 240, tumbleFallK: 0,
-  pop: 240, collectStagger: 120, collectFly: 320, multiply: 520, scatterTrigger: 900, retrigger: 1100,
-  bigWinCountUp: [1200, 1400, 1600],
+  pop: 240, collectStagger: 120, collectFly: 320, multiply: [520, 700, 800, 900, 1000], scatterTrigger: 900, retrigger: 1100,
 };
 
 /** floor(stake x hundredths / 100): the engine's own payout rule, also used for every displayed amount. */
 export function centsFor(stakeCents: number, hundredths: number): number {
   return Math.floor((stakeCents * hundredths) / 100);
 }
+/** Celebration tier of a round total: 1 Büyük >=10x, 2 Mega >=25x, 3 Süper >=50x, 4 Efsane >=100x. */
 export function bigWinTier(totalHundredths: number): BigWinTier {
-  const [t1, t2, t3] = CASCADE_BIG_WIN_THRESHOLDS;
-  return totalHundredths >= t3 ? 3 : totalHundredths >= t2 ? 2 : totalHundredths >= t1 ? 1 : 0;
+  return winTierOf(totalHundredths);
 }
 /** Fixed two-decimal DEMO amount for meters and labels: 3510 -> "35,10". */
 let twoDecimals: Intl.NumberFormat | null = null;
@@ -137,12 +145,13 @@ export function buildCascadeTimeline(round: CascadeRoundLike, options: TimelineO
   const k = CASCADE_SPEED_FACTOR[speed];
   const d = (ms: number) => Math.round(ms * k);
   const hold = (ms: number) => (turbo ? Math.max(CASCADE_TURBO_MIN_HOLD, d(ms)) : ms);
-  /** Feature screens (intro, outro, max win): skipped screens keep a short glimpse. */
+  /** Feature screens (intro, free-spin total): skipped screens keep a short glimpse. */
   const screen = (ms: number) => (skipScreens ? Math.min(CASCADE_SKIP_SCREEN_HOLD, hold(ms)) : hold(ms));
   const fall = (base: number, perRow: number, rows: number) => (rows <= 0 ? 0 : d(base + perRow * Math.sqrt(rows)));
   const cap = CASCADE_MAX_WIN_MULTIPLIER * 100;
   const events: TimelineEvent[] = [];
   let t = 0, prevTotal = 0, freeNumber = 0, freeSpinsLeft = 0;
+  const appliedMultipliers: number[] = [];
   let previousGridIds: number[] | null = null;
   const push = (event: TimelineEvent) => { events.push(event); };
 
@@ -247,8 +256,10 @@ export function buildCascadeTimeline(round: CascadeRoundLike, options: TimelineO
       }
       t += collectDur;
       running = spin.tumbleHundredths * spin.multiplierSum;
-      const multiplyDur = d(T.multiply);
-      push({ type: 'multiply', at: t, dur: multiplyDur, spin: s, sum: spin.multiplierSum, baseHundredths: spin.tumbleHundredths, meter: meter() });
+      const calloutTier = multiplierCalloutTier(spin.multiplierSum);
+      const multiplyDur = d(T.multiply[calloutTier]!);
+      appliedMultipliers.push(spin.multiplierSum);
+      push({ type: 'multiply', at: t, dur: multiplyDur, spin: s, sum: spin.multiplierSum, baseHundredths: spin.tumbleHundredths, calloutTier, meter: meter() });
       t += multiplyDur;
     }
     if (spin.scatterHundredths > 0) {
@@ -279,22 +290,20 @@ export function buildCascadeTimeline(round: CascadeRoundLike, options: TimelineO
     previousGridIds = cellsOf(finalGrid).map(({ cell }) => cell.id);
   }
 
-  if (round.capped) {
-    const capDur = screen(T.maxWin);
-    push({ type: 'max-win', at: t, dur: capDur, hold: true });
-    t += capDur;
-  }
+  const celebration = roundCelebration(round.totalHundredths, round.capped);
   if (round.freeSpinsTriggered) {
     const outroDur = screen(T.freeOutro);
-    push({ type: 'free-outro', at: t, dur: outroDur, spins: round.spins.length - 1, totalHundredths: round.totalHundredths, hold: true });
+    push({ type: 'free-outro', at: t, dur: outroDur, spins: round.spins.length - 1, totalHundredths: round.totalHundredths, multipliers: [...appliedMultipliers], celebration: celebration === 'celebration', capped: round.capped, hold: true });
     t += outroDur;
+  } else if (celebration === 'flourish') {
+    const flourishDur = d(T.totalWin);
+    push({ type: 'total-win', at: t, dur: flourishDur, totalHundredths: round.totalHundredths });
+    t += flourishDur;
   }
-  const tier = bigWinTier(round.totalHundredths);
-  if (tier !== 0) {
-    const fullCountUp = turbo ? Math.max(CASCADE_TURBO_MIN_HOLD, d(T.bigWinCountUp[tier - 1]!)) : T.bigWinCountUp[tier - 1]!;
-    const countUp = skipScreens ? Math.min(CASCADE_SKIP_COUNT_UP, fullCountUp) : fullCountUp;
-    const total = countUp + (skipScreens ? Math.min(CASCADE_SKIP_BIG_HOLD, hold(T.bigWinHold)) : hold(T.bigWinHold));
-    push({ type: 'big-win', at: t, dur: total, tier, totalHundredths: round.totalHundredths, countUp, hold: true });
+  if (celebration === 'celebration') {
+    const schedule = countUpSchedule(round.totalHundredths, round.capped, { speed, skipScreens, reducedMotion });
+    const total = schedule.countUp + schedule.hold;
+    push({ type: 'big-win', at: t, dur: total, tier: schedule.finalLevel, totalHundredths: round.totalHundredths, capped: round.capped, countUp: schedule.countUp, schedule, hold: true });
     t += total;
   }
   push({ type: 'end', at: t, dur: 0, totalHundredths: round.totalHundredths, payoutCents: round.payoutCents, capped: round.capped });
@@ -302,7 +311,7 @@ export function buildCascadeTimeline(round: CascadeRoundLike, options: TimelineO
   return { events, duration: t, turbo, speed, skipScreens, reducedMotion };
 }
 
-/** The board, meters and mode at the very end of the round, for "Atla" and for unmount. */
+/** The board, meters and mode at the very end of the round (what a finished round leaves on screen). */
 export function finalState(round: CascadeRoundLike): { cells: PlacedCell[]; meter: Meter; free: boolean; freeSpinsPlayed: number } {
   const spin = round.spins[round.spins.length - 1]!;
   const grid = spin.steps[spin.steps.length - 1]!.grid;

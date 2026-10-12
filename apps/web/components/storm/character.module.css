@@ -1,0 +1,224 @@
+/* Tarhun rig. Pose = CSS transforms on <g> groups rotating around fixed view-box pivots (set
+   inline as transform-origin). Pose groups transition; nested "*Anim" groups carry the looping
+   idle motion so the two transforms never fight. Only transform/opacity are animated. */
+
+.root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  will-change: transform;
+  --ease: cubic-bezier(0.34, 1.32, 0.5, 1);
+  --t: 0.52s;
+}
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.aura {
+  position: absolute;
+  inset: 4% 0 10%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse 50% 46% at 52% 34%, rgba(110, 210, 255, 0.2), rgba(110, 210, 255, 0.06) 55%, transparent 72%);
+  opacity: 0.8;
+  transition: opacity 0.4s ease, transform 0.5s var(--ease);
+  will-change: opacity, transform;
+}
+.root[data-framing='bust'] .aura { inset: 0; }
+.root[data-pose='charge'] .aura,
+.root[data-pose='strike'] .aura { opacity: 1; transform: scale(1.12); background: radial-gradient(ellipse 50% 46% at 56% 26%, rgba(150, 230, 255, 0.36), rgba(90, 190, 255, 0.1) 55%, transparent 72%); }
+.root[data-pose='triumph'] .aura { opacity: 1; transform: scale(1.15); background: radial-gradient(ellipse 52% 48% at 50% 30%, rgba(255, 200, 120, 0.34), rgba(255, 170, 90, 0.1) 55%, transparent 72%); }
+.root[data-pose='calm'] .aura { opacity: 0.35; }
+/* phone bust: crop at the belt with a soft fade so the board can sit right under it */
+.root[data-framing='bust'] .svg {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(#000 78%, transparent 99%);
+  mask-image: linear-gradient(#000 78%, transparent 99%);
+}
+
+.body,
+.cloak,
+.torso,
+.breath,
+.bounce,
+.head,
+.headAnim,
+.beard,
+.armA,
+.foreA,
+.axe,
+.armB,
+.foreB,
+.bolt,
+.boltHalo {
+  transform-box: view-box;
+}
+.torso,
+.head,
+.armA,
+.foreA,
+.axe,
+.armB,
+.foreB,
+.bolt {
+  transition: transform var(--t) var(--ease);
+}
+.eyeGlow,
+.eyeFlare,
+.sparks,
+.mouthShut,
+.mouthOpen,
+.heldBolt {
+  transition: opacity 0.3s ease;
+}
+.boltHalo {
+  transition: transform 0.4s var(--ease), opacity 0.3s ease;
+}
+
+/* ---------- idle loops (all poses unless overridden) ----------
+   Breathing/bob runs on the <svg> box itself (compositor-only, 60 fps, zero raster). The tiny
+   internal sways share one duration and are stepped (30 steps / 4.8 s ≈ 6 repaints per second):
+   at 1-2° amplitude the steps are invisible, and the vector figure is not re-rastered per frame. */
+.svg { animation: svgBreath 4.8s ease-in-out infinite alternate; transform-origin: 50% 100%; will-change: transform; }
+.root[data-framing='bust'] .svg { transform-origin: 50% 0%; }
+.beard { animation: beardSway 4.8s steps(30) infinite alternate; }
+.cloak { animation: cloakSway 4.8s steps(30) infinite alternate; }
+.headAnim { animation: headIdle 4.8s steps(30) infinite alternate; }
+.eyeGlow { opacity: 0.55; animation: eyePulse 4.8s steps(30) infinite alternate; }
+.boltHalo { opacity: 0.6; transform: scale(0.82); }
+.sparks { opacity: 0; }
+.eyeFlare { opacity: 0; }
+.sparks path { animation: sparkFlick 0.42s steps(2, jump-none) infinite paused; }
+.root[data-pose='charge'] .sparks path,
+.root[data-pose='strike'] .sparks path,
+.root[data-pose='triumph'] .sparks path { animation-play-state: running; }
+.mouthOpen { opacity: 0; }
+
+/* ---------- idle: axe upright at the side, bolt held like a sceptre ---------- */
+.root[data-pose='idle'] .armA { transform: rotate(14deg); }
+.root[data-pose='idle'] .foreA { transform: rotate(-24deg); }
+.root[data-pose='idle'] .axe { transform: rotate(2deg); }
+.root[data-pose='idle'] .armB { transform: rotate(-6deg); }
+.root[data-pose='idle'] .foreB { transform: rotate(-128deg); }
+.root[data-pose='idle'] .bolt { transform: rotate(122deg); }
+
+/* ---------- calm: lowered arms, no glow, slow breath ---------- */
+.root[data-pose='calm'] .armA { transform: rotate(8deg); }
+.root[data-pose='calm'] .foreA { transform: rotate(-14deg); }
+.root[data-pose='calm'] .axe { transform: rotate(2deg); }
+.root[data-pose='calm'] .armB { transform: rotate(-10deg); }
+.root[data-pose='calm'] .foreB { transform: rotate(-30deg); }
+.root[data-pose='calm'] .bolt { transform: rotate(32deg); }
+.root[data-pose='calm'] .head { transform: rotate(2deg); }
+.root[data-pose='calm'] .eyeGlow { opacity: 0; animation: none; }
+.root[data-pose='calm'] .boltHalo { opacity: 0.35; transform: scale(0.7); }
+.root[data-pose='calm'] .svg { animation-duration: 6.4s; }
+
+/* ---------- charge: bolt raised overhead, eyes flare, sparks ---------- */
+.root[data-pose='charge'] { --t: 0.36s; }
+.root[data-pose='charge'] .armA { transform: rotate(24deg); }
+.root[data-pose='charge'] .foreA { transform: rotate(-40deg); }
+.root[data-pose='charge'] .axe { transform: rotate(-4deg); }
+.root[data-pose='charge'] .armB { transform: rotate(-160deg); }
+.root[data-pose='charge'] .foreB { transform: rotate(-15deg); }
+.root[data-pose='charge'] .bolt { transform: rotate(175deg); }
+.root[data-pose='charge'] .torso { transform: rotate(-3deg); }
+.root[data-pose='charge'] .head { transform: rotate(3deg); }
+.root[data-pose='charge'] .eyeGlow { opacity: 1; animation: eyeFlare 0.5s ease-in-out infinite alternate; }
+.root[data-pose='charge'] .boltHalo { opacity: 1; transform: scale(1.35); animation: haloFlick 0.24s steps(2, jump-none) infinite; }
+.root[data-pose='charge'] .sparks,
+.root[data-pose='charge'] .eyeFlare { opacity: 1; }
+
+/* ---------- strike: thrust toward --aim, the held bolt is hurled and re-forms ---------- */
+.root[data-pose='strike'] { --t: 0.16s; --ease: cubic-bezier(0.2, 0.9, 0.3, 1.2); }
+.root[data-pose='strike'] .armA { transform: rotate(30deg); }
+.root[data-pose='strike'] .foreA { transform: rotate(-50deg); }
+.root[data-pose='strike'] .axe { transform: rotate(10deg); }
+.root[data-pose='strike'] .armB { transform: rotate(var(--aim, -100deg)); }
+.root[data-pose='strike'] .foreB { transform: rotate(0deg); }
+.root[data-pose='strike'] .bolt { transform: rotate(180deg); }
+.root[data-pose='strike'] .torso { transform: rotate(6deg); }
+.root[data-pose='strike'] .head { transform: rotate(4deg); }
+.root[data-pose='strike'] .eyeGlow { opacity: 1; animation: none; }
+.root[data-pose='strike'] .sparks,
+.root[data-pose='strike'] .eyeFlare { opacity: 1; }
+.root[data-pose='strike'] .heldBolt { animation: hurl 0.7s ease-out both; }
+
+/* ---------- laugh: hand on belt, head back, shoulders bounce ---------- */
+.root[data-pose='laugh'] .armA { transform: rotate(10deg); }
+.root[data-pose='laugh'] .foreA { transform: rotate(-30deg); }
+.root[data-pose='laugh'] .axe { transform: rotate(14deg); }
+.root[data-pose='laugh'] .armB { transform: rotate(-26deg); }
+.root[data-pose='laugh'] .foreB { transform: rotate(58deg); }
+.root[data-pose='laugh'] .bolt { transform: rotate(140deg); }
+.root[data-pose='laugh'] .head { transform: rotate(-7deg); }
+.root[data-pose='laugh'] .bounce { animation: laughBounce 0.24s ease-in-out infinite alternate; }
+.root[data-pose='laugh'] .headAnim { animation: laughHead 0.24s ease-in-out infinite alternate; }
+.root[data-pose='laugh'] .beard { animation: laughBeard 0.24s ease-in-out infinite alternate; }
+.root[data-pose='laugh'] .svg { animation: none; }
+.root[data-pose='laugh'] .eyeGlow { opacity: 0.2; animation: none; }
+.root[data-pose='laugh'] .mouthOpen,
+.root[data-pose='triumph'] .mouthOpen { opacity: 1; }
+.root[data-pose='laugh'] .mouthShut,
+.root[data-pose='triumph'] .mouthShut { opacity: 0; }
+
+/* ---------- triumph: both arms raised ---------- */
+.root[data-pose='triumph'] .armA { transform: rotate(150deg); }
+.root[data-pose='triumph'] .foreA { transform: rotate(-14deg); }
+.root[data-pose='triumph'] .axe { transform: rotate(-160deg); }
+.root[data-pose='triumph'] .armB { transform: rotate(-150deg); }
+.root[data-pose='triumph'] .foreB { transform: rotate(14deg); }
+.root[data-pose='triumph'] .bolt { transform: rotate(154deg); }
+.root[data-pose='triumph'] .head { transform: rotate(-2deg); }
+.root[data-pose='triumph'] .bounce { animation: triumphPump 0.9s ease-in-out infinite alternate; }
+.root[data-pose='triumph'] .eyeGlow { opacity: 0.9; animation: eyeFlare 0.8s ease-in-out infinite alternate; }
+.root[data-pose='triumph'] .boltHalo { opacity: 1; transform: scale(1.2); animation: haloFlick 0.3s steps(2, jump-none) infinite; }
+.root[data-pose='triumph'] .sparks,
+.root[data-pose='triumph'] .eyeFlare { opacity: 1; }
+
+@keyframes svgBreath { from { transform: translateY(0) scale(1, 1); } to { transform: translateY(-0.35%) scale(1.006, 1.012); } }
+@keyframes beardSway { from { transform: rotate(-1.4deg); } to { transform: rotate(1.4deg); } }
+@keyframes cloakSway { from { transform: skewX(-1.2deg); } to { transform: skewX(1.8deg) scaleX(1.01); } }
+@keyframes headIdle { from { transform: rotate(-0.8deg); } to { transform: rotate(0.9deg); } }
+@keyframes eyePulse { from { opacity: 0.25; } to { opacity: 0.6; } }
+@keyframes eyeFlare { from { opacity: 0.8; } to { opacity: 1; } }
+@keyframes haloFlick { from { opacity: 0.75; } to { opacity: 1; } }
+@keyframes sparkFlick { from { opacity: 0.15; } to { opacity: 1; } }
+@keyframes hurl {
+  0% { opacity: 1; }
+  12% { opacity: 0; }
+  70% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes laughBounce { from { transform: translateY(0); } to { transform: translateY(5px); } }
+@keyframes laughHead { from { transform: rotate(-2deg); } to { transform: rotate(1.5deg) translateY(-2px); } }
+@keyframes laughBeard { from { transform: rotate(-2deg); } to { transform: rotate(2.5deg); } }
+@keyframes triumphPump { from { transform: translateY(0); } to { transform: translateY(-6px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .root { --t: 0s; }
+  .svg,
+  .body,
+  .breath,
+  .bounce,
+  .beard,
+  .cloak,
+  .headAnim,
+  .eyeGlow,
+  .boltHalo,
+  .sparks path,
+  .heldBolt {
+    animation: none !important;
+  }
+  .eyeGlow,
+  .eyeFlare,
+  .sparks,
+  .mouthShut,
+  .mouthOpen,
+  .heldBolt,
+  .boltHalo {
+    transition: none;
+  }
+}

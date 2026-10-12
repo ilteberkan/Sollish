@@ -6,6 +6,7 @@ import {
   CASCADE_TURBO_FACTOR, CASCADE_TURBO_MIN_HOLD, type CascadeTimeline, type TimelineEvent,
 } from '../lib/cascade-timeline';
 import { TimelinePlayer, type FrameScheduler } from '../lib/cascade-player';
+import { countUpSchedule, countUpValueAt, multiplierCalloutTier, roundCelebration, winTierOf } from '../lib/slot-kit/win-tiers';
 
 const seedOf = (value: number) => cascadeSeedFromEntropy(new Uint32Array([value, value, value, value]));
 /** Fill values the browser spec also uses (crypto.getRandomValues stub fills all four words). */
@@ -84,8 +85,10 @@ test('turbo keeps the order and scales durations by 0.35 (holds keep a readable 
     for (let i = 0; i < a.length; i++) {
       const n = a[i]!, f = b[i]!;
       if ('hold' in n) {
-        if (n.type === 'big-win' && f.type === 'big-win') assert.equal(f.countUp, Math.max(CASCADE_TURBO_MIN_HOLD, Math.round(n.countUp * CASCADE_TURBO_FACTOR)));
-        else assert.equal(f.dur, Math.max(CASCADE_TURBO_MIN_HOLD, Math.round(n.dur * CASCADE_TURBO_FACTOR)));
+        if (n.type === 'big-win' && f.type === 'big-win') {
+          assert.deepEqual(f.schedule, countUpSchedule(round.totalHundredths, round.capped, { speed: 'turbo' }));
+          assert.ok(f.countUp < n.countUp && f.countUp >= CASCADE_TURBO_MIN_HOLD);
+        } else assert.equal(f.dur, Math.max(CASCADE_TURBO_MIN_HOLD, Math.round(n.dur * CASCADE_TURBO_FACTOR)));
       } else assert.ok(Math.abs(f.dur - n.dur * CASCADE_TURBO_FACTOR) <= 2.5, `${n.type} ${n.dur} -> ${f.dur}`);
     }
     const holdsNormal = normal.events.filter(e => 'hold' in e).reduce((s, e) => s + e.dur, 0);
@@ -122,8 +125,12 @@ test('free-spin round: trigger, intro hold, mode switch, counters and crystal co
   assert.deepEqual(starts.map(s => s.freeSpinNumber), round.spins.map(s => s.index));
   assert.deepEqual(starts.slice(1).map(s => s.freeSpinsLeft), round.spins.slice(1).map(s => s.freeSpinsLeft));
   assert.ok(of(timeline, 'crystal-collect').length >= 1);
-  assert.equal(bigWinTier(round.totalHundredths), 1);
-  assert.equal(of(timeline, 'big-win')[0]!.tier, 1);
+  const tier = bigWinTier(round.totalHundredths);
+  assert.ok(tier >= 1);
+  assert.equal(of(timeline, 'big-win')[0]!.tier, tier);
+  // The free-spin total screen comes first, then the celebration.
+  assert.ok(of(timeline, 'free-outro')[0]!.at < of(timeline, 'big-win')[0]!.at);
+  assert.equal(of(timeline, 'free-outro')[0]!.celebration, true);
   // Every spin after the first clears the previous spin's final grid.
   const clears = of(timeline, 'clear');
   assert.equal(clears[0]!.ids, null);
@@ -142,7 +149,7 @@ test('retrigger adds five spins and the counter follows the engine', () => {
   assert.equal(of(timeline, 'free-intro').length, 1);
 });
 
-test('capped round shows the max-win banner and never displays more than 5000x', () => {
+test('capped round ends on the Azami celebration and never displays more than 5000x', () => {
   let capped: CascadeRound | null = null;
   for (let i = 0; i < 4000 && !capped; i++) {
     const round = __cascadeTest.play(seedOf((i * 2_246_822_519) >>> 0), 1000, { capHundredths: 1500 });
@@ -151,14 +158,18 @@ test('capped round shows the max-win banner and never displays more than 5000x',
   assert.ok(capped, 'found a capped round with a low test cap');
   const timeline = buildCascadeTimeline(capped);
   const end = timeline.events[timeline.events.length - 1]!;
-  assert.equal(of(timeline, 'max-win').length, 1);
+  const big = of(timeline, 'big-win');
+  assert.equal(big.length, 1);
+  assert.equal(big[0]!.tier, 5); assert.equal(big[0]!.capped, true);
+  assert.equal(big[0]!.schedule.stages.at(-1)!.level, 5);
+  assert.equal(of(timeline, 'free-outro')[0]!.capped, true);
   assert.ok(end.type === 'end' && end.capped && end.totalHundredths === 1500);
   // The real engine cap is 5000x; real rounds can never show above it.
   for (const event of buildCascadeTimeline(playCascadeRound(seedOf(SEEDS.legend), 1000)).events) if ('meter' in event) assert.ok(event.meter.total <= 500_000);
 });
 
 test('big-win tiers, final state, history detail and announcements', () => {
-  assert.deepEqual([0, 1999, 2000, 4999, 5000, 9999, 10_000].map(bigWinTier), [0, 0, 1, 1, 2, 2, 3]);
+  assert.deepEqual([0, 999, 1000, 2499, 2500, 4999, 5000, 9999, 10_000, 500_000].map(bigWinTier), [0, 0, 1, 1, 2, 2, 3, 3, 4, 4]);
   assert.equal(multiplierText(1240), '12,40'); assert.equal(multiplierText(500_000), '5.000,00');
   assert.equal(centsFor(123, 51), 62);
   const none = playCascadeRound(seedOf(SEEDS.none), 1000);
@@ -168,7 +179,8 @@ test('big-win tiers, final state, history detail and announcements', () => {
   assert.equal(cascadeHistoryDetail(tumbles), `4 düşme · ${multiplierText(tumbles.totalHundredths)}×`);
   const free = playCascadeRound(seedOf(SEEDS.legend), 1000);
   assert.equal(cascadeHistoryDetail(free), `Bedava dönüş ×${free.spins.length - 1} · ${multiplierText(free.totalHundredths)}×`);
-  assert.equal(of(buildCascadeTimeline(free), 'big-win')[0]!.tier, 3);
+  assert.equal(of(buildCascadeTimeline(free), 'big-win')[0]!.tier, bigWinTier(free.totalHundredths));
+  assert.ok(free.totalHundredths >= 10_000 && bigWinTier(free.totalHundredths) === 4);
   const fin = finalState(free);
   assert.equal(fin.meter.total, free.totalHundredths); assert.equal(fin.cells.length, 30); assert.ok(fin.free);
   assert.equal(winAnnouncement({ symbol: 'strawberry', count: 8, payHundredths: 202 }, { strawberry: 'Çilek' }), '8 çilek, 2,02× kazanç');
@@ -211,4 +223,70 @@ test('player stop() fires nothing further', () => {
   for (let i = 0; i < 500; i++) frames.frame(16);
   assert.equal(seen.length, count); assert.ok(!seen.includes('end'));
   player.jumpTo(1e9); assert.equal(seen.length, count);
+});
+
+test('cumulative meter: never decreases inside a round and ends exactly on the engine payout', () => {
+  const values = [...Object.values(SEEDS), ...Array.from({ length: 220 }, (_, i) => (i * 2_246_822_519 + 99) >>> 0)];
+  let freeRounds = 0;
+  for (const value of values) for (const stake of [100, 1000, 12_345]) {
+    const round = playCascadeRound(seedOf(value), stake);
+    if (round.freeSpinsTriggered) freeRounds++;
+    for (const speed of ['normal', 'turbo'] as const) {
+      const timeline = buildCascadeTimeline(round, { speed });
+      // What the single main meter shows after each event (free spins included: no per-spin reset).
+      let shown = 0;
+      for (const event of timeline.events) {
+        if (!('meter' in event)) continue;
+        assert.ok(event.meter.total >= shown, `meter dropped at ${event.type} (${shown} -> ${event.meter.total})`);
+        shown = event.meter.total;
+      }
+      assert.equal(shown, round.totalHundredths, 'last meter value is the round total');
+      assert.equal(centsFor(stake, shown), round.payoutCents, 'and its DEMO amount is the payout');
+      const spinStarts = of(timeline, 'spin-start');
+      for (let i = 1; i < spinStarts.length; i++) assert.equal(spinStarts[i]!.meter.total, round.spins[i - 1]!.totalHundredthsAfter, 'a free spin starts from the running total');
+      for (const event of timeline.events) {
+        if (event.type === 'free-outro' || event.type === 'total-win' || event.type === 'big-win') assert.equal(event.totalHundredths, round.totalHundredths);
+      }
+    }
+  }
+  assert.ok(freeRounds > 5, 'sample includes free-spin rounds');
+});
+
+test('round end: free spins always show their total screen; <10x flourish, >=10x or capped celebrate', () => {
+  const values = [...Object.values(SEEDS), ...Array.from({ length: 400 }, (_, i) => (i * 2_654_435_761 + 4242) >>> 0)];
+  const seen = { flourish: 0, celebration: 0, freeLow: 0 };
+  for (const value of values) {
+    const round = playCascadeRound(seedOf(value), 1000);
+    const timeline = buildCascadeTimeline(round);
+    const outro = of(timeline, 'free-outro'), flourish = of(timeline, 'total-win'), big = of(timeline, 'big-win');
+    const kind = roundCelebration(round.totalHundredths, round.capped);
+    assert.equal(outro.length, round.freeSpinsTriggered ? 1 : 0);
+    assert.equal(big.length, kind === 'celebration' ? 1 : 0);
+    assert.equal(flourish.length, kind === 'flourish' && !round.freeSpinsTriggered ? 1 : 0);
+    if (outro[0]) {
+      assert.equal(outro[0].celebration, kind === 'celebration');
+      const applied = round.spins.filter(s => s.multiplierSum > 0 && s.tumbleHundredths > 0).map(s => s.multiplierSum);
+      assert.deepEqual(outro[0].multipliers, applied);
+      if (kind !== 'celebration') seen.freeLow++;
+    }
+    if (big[0]) {
+      seen.celebration++;
+      assert.equal(big[0].tier, round.capped ? 5 : winTierOf(round.totalHundredths));
+      assert.equal(big[0].dur, big[0].countUp + big[0].schedule.hold);
+      assert.equal(countUpValueAt(big[0].schedule, big[0].countUp), round.totalHundredths);
+    }
+    if (flourish[0]) seen.flourish++;
+    const last = timeline.events.filter(e => e.type !== 'end' && e.type !== 'land').at(-1)!;
+    if (round.freeSpinsTriggered && kind !== 'celebration') assert.equal(last.type, 'free-outro');
+  }
+  assert.ok(seen.flourish > 10 && seen.celebration > 0 && seen.freeLow > 0, JSON.stringify(seen));
+});
+
+test('multiplier callouts escalate with the crystal total and get longer on screen', () => {
+  for (const value of [SEEDS.freeBig, SEEDS.legend, SEEDS.retrigger, SEEDS.freeSmall]) {
+    const round = playCascadeRound(seedOf(value), 1000);
+    const timeline = buildCascadeTimeline(round);
+    for (const event of of(timeline, 'multiply')) assert.equal(event.calloutTier, multiplierCalloutTier(event.sum));
+  }
+  assert.deepEqual([2, 9, 10, 24, 25, 49, 50, 99, 100, 156].map(multiplierCalloutTier), [0, 0, 1, 1, 2, 2, 3, 3, 4, 4]);
 });

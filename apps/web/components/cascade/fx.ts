@@ -17,12 +17,24 @@ export const SYMBOL_COLORS: Record<string, readonly string[]> = {
 };
 const CONFETTI = ['#ff5d8f', '#31cdb2', '#a47dff', '#ff9a3c', '#ffd84a', '#8fd14f', '#5b7dff', '#fff4c8'];
 
-type Shape = 0 | 1 | 2 | 3 | 4; // circle, rounded crumb, triangle shard, sparkle, ring
+type Shape = 0 | 1 | 2 | 3 | 4 | 5 | 6; // circle, rounded crumb, triangle shard, sparkle, ring, gold coin, wrapped candy
 interface Particle {
   x: number; y: number; vx: number; vy: number; g: number; drag: number;
   rot: number; vr: number; size: number; color: string; shape: Shape;
   life: number; max: number; grow: number; fade: boolean;
+  /** Second colour (coin rim, candy stripe). */
+  alt?: string;
 }
+/** Continuous particle source (celebration rain). */
+interface Emitter { rate: number; carry: number; until: number; spawn: () => void }
+/** Celebration palettes per level (1 Büyük … 4 Efsane, 5 Azami): candy colours that rain with the gold coins. */
+export const CELEBRATION_COLORS: Record<number, readonly string[]> = {
+  1: ['#ffb347', '#ffd36b', '#ff8a3c', '#fff1c4'],
+  2: ['#ff5d8f', '#ff9ccc', '#ffd0e6', '#c33aa0'],
+  3: ['#31e0c2', '#9bf5da', '#5bd0ff', '#e8fff8'],
+  4: ['#a47dff', '#d9c2ff', '#ff7ad9', '#7b5cff'],
+  5: ['#ffffff', '#ffe7a6', '#ff5d8f', '#5bd0ff', '#a47dff', '#8dffcf'],
+};
 const MAX_PARTICLES = 900;
 const rand = (a: number, b: number) => a + Math.random() * (b - a);
 const pickOf = <T,>(items: readonly T[]) => items[Math.floor(Math.random() * items.length)]!;
@@ -30,6 +42,7 @@ const pickOf = <T,>(items: readonly T[]) => items[Math.floor(Math.random() * ite
 export class CascadeFx {
   private ctx: CanvasRenderingContext2D | null;
   private particles: Particle[] = [];
+  private emitters: Emitter[] = [];
   private frame = 0;
   private last = 0;
   private width = 0;
@@ -58,7 +71,42 @@ export class CascadeFx {
   private add(p: Particle) {
     if (this.particles.length >= MAX_PARTICLES) this.particles.shift();
     this.particles.push(p);
+    this.wake();
+  }
+  private wake() {
     if (!this.frame && !this.disposed) { this.last = performance.now(); this.frame = requestAnimationFrame(this.tick); }
+  }
+  /** One falling gold coin or wrapped candy from above the stage (celebration rain). */
+  private dropPiece(colors: readonly string[], speed: number) {
+    const coin = Math.random() < 0.45;
+    const size = coin ? rand(9, 15) : rand(10, 17);
+    this.add({ x: rand(-10, this.width + 10), y: rand(-60, -14), vx: rand(-40, 40), vy: rand(120, 260) * speed, g: 520 * speed, drag: 0.35,
+      rot: rand(0, 6.28), vr: rand(-7, 7), size, color: coin ? '#ffcf4a' : pickOf(colors), alt: coin ? '#b8741f' : '#ffffff', shape: coin ? 5 : 6,
+      life: 0, max: rand(2.2, 3.4), grow: 0, fade: true });
+  }
+  /**
+   * Celebration rain on the single canvas: candy and gold coins fall from the top for `seconds`. `level` 1..5 sets
+   * the density and the palette; calling again replaces the previous rain (tier-up intensifies it).
+   */
+  rain(level: number, seconds: number) {
+    const colors = CELEBRATION_COLORS[level] ?? CELEBRATION_COLORS[1]!;
+    // Density per level, scaled down on narrow stages (phones) so the screen stays readable.
+    const rate = [0, 22, 38, 58, 84, 110][Math.max(1, Math.min(5, level))]! * Math.min(1, Math.max(0.45, this.width / 760));
+    const speed = 1 + level * 0.08;
+    this.emitters = [{ rate, carry: 0, until: performance.now() + seconds * 1000, spawn: () => this.dropPiece(colors, speed) }];
+    this.wake();
+  }
+  stopRain() { this.emitters = []; }
+  /** Tier-up fountain: coins and candy shoot up from the bottom edge and fall back (count grows with level). */
+  fountain(level: number) {
+    const colors = CELEBRATION_COLORS[level] ?? CELEBRATION_COLORS[1]!;
+    const n = Math.round((26 + level * 22) * Math.min(1, Math.max(0.5, this.width / 760)));
+    for (let i = 0; i < n; i++) {
+      const coin = i % 2 === 0;
+      this.add({ x: this.width * rand(0.15, 0.85), y: this.height + 10, vx: rand(-260, 260), vy: -rand(620, 1080) * Math.min(1.25, this.height / 640 + 0.35),
+        g: 1150, drag: 0.5, rot: rand(0, 6.28), vr: rand(-10, 10), size: coin ? rand(10, 16) : rand(11, 18), color: coin ? '#ffcf4a' : pickOf(colors),
+        alt: coin ? '#b8741f' : '#ffffff', shape: coin ? 5 : 6, life: -rand(0, 0.25), max: rand(1.7, 2.5), grow: 0, fade: true });
+    }
   }
   /** Candy-crumb burst for a popped cell. `scale` is the cell size in px. */
   burst(x: number, y: number, colors: readonly string[], scale: number, count = 14) {
@@ -131,6 +179,7 @@ export class CascadeFx {
   }
   clear() {
     this.particles = [];
+    this.emitters = [];
     for (const child of Array.from(this.layer.children)) { for (const anim of child.getAnimations()) anim.cancel(); child.remove(); }
     this.ctx?.clearRect(0, 0, this.width, this.height);
   }
@@ -143,6 +192,13 @@ export class CascadeFx {
     this.last = now;
     if (!ctx) { this.particles = []; this.frame = 0; return; }
     ctx.clearRect(0, 0, this.width, this.height);
+    if (this.emitters.length) {
+      this.emitters = this.emitters.filter(e => now < e.until);
+      for (const e of this.emitters) {
+        e.carry += e.rate * dt;
+        while (e.carry >= 1) { e.carry -= 1; e.spawn(); }
+      }
+    }
     const alive: Particle[] = [];
     for (const p of this.particles) {
       p.life += dt;
@@ -166,6 +222,28 @@ export class CascadeFx {
         ctx.moveTo(0, -r); ctx.quadraticCurveTo(r * 0.14, -r * 0.14, r, 0); ctx.quadraticCurveTo(r * 0.14, r * 0.14, 0, r);
         ctx.quadraticCurveTo(-r * 0.14, r * 0.14, -r, 0); ctx.quadraticCurveTo(-r * 0.14, -r * 0.14, 0, -r);
         ctx.fill(); ctx.restore();
+      } else if (p.shape === 5) {
+        // Gold coin flipping about its vertical axis: width follows cos(rot), rim + face + glint.
+        const flip = Math.cos(p.rot * 1.3), w = Math.max(0.12, Math.abs(flip)) * p.size, h = p.size;
+        ctx.save(); ctx.translate(p.x, p.y);
+        ctx.fillStyle = p.alt ?? '#b8741f';
+        ctx.beginPath(); ctx.ellipse(0, 0, w, h, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = flip > 0 ? p.color : '#f2b33a';
+        ctx.beginPath(); ctx.ellipse(0, 0, w * 0.8, h * 0.8, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = 'rgba(255,255,255,.75)';
+        ctx.beginPath(); ctx.ellipse(-w * 0.25, -h * 0.3, w * 0.22, h * 0.18, -0.5, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      } else if (p.shape === 6) {
+        // Wrapped candy: round body, two twisted wrapper ends, a white stripe.
+        const s = p.size * 0.55;
+        ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.beginPath(); ctx.moveTo(-s, 0); ctx.lineTo(-s * 1.9, -s * 0.7); ctx.lineTo(-s * 1.9, s * 0.7); ctx.closePath(); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(s, 0); ctx.lineTo(s * 1.9, -s * 0.7); ctx.lineTo(s * 1.9, s * 0.7); ctx.closePath(); ctx.fill();
+        ctx.beginPath(); ctx.arc(0, 0, s, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = p.alt ?? '#fff'; ctx.lineWidth = Math.max(1, s * 0.32); ctx.globalAlpha *= 0.85;
+        ctx.beginPath(); ctx.arc(0, 0, s * 0.55, -2.2, 0.4); ctx.stroke();
+        ctx.restore();
       } else {
         ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.color;
         const s = p.size;
@@ -178,7 +256,7 @@ export class CascadeFx {
     }
     ctx.globalAlpha = 1;
     this.particles = alive;
-    this.frame = alive.length && !this.disposed ? requestAnimationFrame(this.tick) : 0;
+    this.frame = (alive.length || this.emitters.length) && !this.disposed ? requestAnimationFrame(this.tick) : 0;
     if (!this.frame) ctx.clearRect(0, 0, this.width, this.height);
   };
 }
