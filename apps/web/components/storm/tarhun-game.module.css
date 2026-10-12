@@ -837,3 +837,9 @@
   .banner { animation: none; }
   .callout { animation: none; opacity: 1; }
 }
+
+/* Phone deck: keep the full balance ("1.000,00 DEMO") readable instead of ellipsizing it. */
+@media (max-width: 420px) {
+  .cellValue { font-size: 17px; }
+  .cellValue small { font-size: 9.5px; letter-spacing: 0.4px; }
+}
