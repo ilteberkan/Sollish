@@ -11,12 +11,14 @@ export interface StormHistoryProps {
   /** True while a round, autoplay or replay is running (replays never overlap a real round). */
   replayDisabled: boolean;
   replayingId: string | null;
+  /** Remote (server-verified) mode only: publish a signed replay of a server round and share its link. */
+  onShare?: (record: DemoRecord) => void;
 }
 
 const time = (at: number) => new Date(at).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
 
 /** Tarhun session round list (time, mode, bet, cost, win, round id) with an exact, ledger-free replay. */
-export const StormHistory = memo(function StormHistory({ onReplay, replayDisabled, replayingId }: StormHistoryProps) {
+export const StormHistory = memo(function StormHistory({ onReplay, replayDisabled, replayingId, onShare }: StormHistoryProps) {
   const { records } = useProduct();
   const relevant = records.filter(record => record.game === 'Tarhun');
   return (
@@ -54,6 +56,12 @@ export const StormHistory = memo(function StormHistory({ onReplay, replayDisable
                       <button type="button" className={styles.replayButton} disabled={replayDisabled} onClick={() => onReplay(record)}
                         aria-label={`Tekrar oynat: tur ${stormRoundId(record.storm.seedHex)}, bakiye değişmez`}>
                         <Icon name="history" size={15} /><span>Tekrar oynat</span>
+                      </button>
+                    )}
+                    {onShare && record.remote && (
+                      <button type="button" className={styles.replayButton} onClick={() => onShare(record)} data-testid="share-round"
+                        aria-label={`Kazancını paylaş: tur ${stormRoundId(record.remote.roundId)}`}>
+                        <Icon name="arrow" size={15} /><span>Kazancını paylaş</span>
                       </button>
                     )}
                   </td>

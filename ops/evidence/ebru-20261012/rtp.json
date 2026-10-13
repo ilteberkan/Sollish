@@ -1,0 +1,822 @@
+{
+  "kind": "ebru-rtp-simulation",
+  "scope": "DEMO credits only; Monte Carlo estimate, not a certified or guaranteed RTP; RTP is return / cost",
+  "engine": "ebru-ink-1",
+  "engineSourceSha256": "9f6c1507328726ce450781087ed83c9132a41a597983ddef6b0481d5b5542c46",
+  "engineSourceNote": "sha256 of packages/protocol/src/ebru.ts with the EBRU_RTP evidence block (between the @evidence-block markers) removed. The constants were filled after the run; no engine code, tables or RNG changed afterwards.",
+  "seed": "ebru-20261012-evidence",
+  "workers": 4,
+  "betCentsSimulated": 100,
+  "betLevelsCents": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    800,
+    1000,
+    1500,
+    2000,
+    2500,
+    4000,
+    5000,
+    7500,
+    10000,
+    15000,
+    20000,
+    25000,
+    40000,
+    50000
+  ],
+  "winTierMeasure": "round total / bet",
+  "tuningOverride": null,
+  "modes": {
+    "standard": {
+      "rounds": 20000000,
+      "costBets": 1,
+      "rtpVsCost": {
+        "pointEstimate": 0.95695,
+        "pointEstimatePct": 95.695,
+        "ci95": [
+          0.94726,
+          0.96664
+        ],
+        "ci95Pct": [
+          94.7258,
+          96.6642
+        ],
+        "ci95HalfWidthPct": 0.9692
+      },
+      "integerPayoutCheckRtp": 0.95695,
+      "hitRate": 0.27824,
+      "baseClusterHitRate": 0.2761,
+      "featureRate": 0.003054,
+      "featureOneIn": 327.4,
+      "featureCount": 61079,
+      "avgFreeSpinsPerRound": 0.02636,
+      "avgFreeSpinsPerTrigger": 8.633,
+      "freeSpinsPlayed": 527280,
+      "retriggers": 9668,
+      "maxFreeSpinsInOneRound": 32,
+      "freeSpinHitRate": 0.5194,
+      "stdDevPerRoundCostUnits": 22.1144,
+      "stdDevPerRoundBetUnits": 22.1144,
+      "contributionPctOfCost": {
+        "baseGame": 48.7173,
+        "freeSpins": 46.9778,
+        "scatterPayInBase": 1.1506
+      },
+      "avgFreeWinPerTriggerBets": 153.83,
+      "winTiersShareOfRounds": {
+        "atLeast10xBet": 0.0066464,
+        "atLeast25xBet": 0.0029149,
+        "atLeast50xBet": 0.0018776,
+        "atLeast100xBet": 0.0011447,
+        "atLeast500xBet": 0.0001805,
+        "atLeast1000xBet": 0.00006095,
+        "atLeast2000xBet": 0.00001705,
+        "atLeast5000xBet": 0.00000255,
+        "atLeast10000xBet": 7e-7
+      },
+      "winTiersRounds": {
+        "atLeast10xBet": 132929,
+        "atLeast25xBet": 58298,
+        "atLeast50xBet": 37552,
+        "atLeast100xBet": 22894,
+        "atLeast500xBet": 3610,
+        "atLeast1000xBet": 1219,
+        "atLeast2000xBet": 341,
+        "atLeast5000xBet": 51,
+        "atLeast10000xBet": 14
+      },
+      "maxObservedXBet": 10000,
+      "maxObservedXCost": 10000,
+      "maxStepsPerSpinTumblesPlusOne": 12,
+      "capHits": 14,
+      "capHitShareOfRounds": 7e-7,
+      "capXBet": 10000,
+      "comb": {
+        "avgCombCreatedWinsPerSpin": 0.10051,
+        "avgCombCreatedWinsPerBaseSpin": 0.09711,
+        "avgCombCreatedWinsPerFreeSpin": 0.22921,
+        "avgCombPassesPerSpin": 1.0998,
+        "baseSpinsWithCombCreatedWinShare": 0.08938,
+        "baseHitsThatNeededTheCombShare": 0.22979,
+        "freeSpinsWithCombCreatedWinShare": 0.19078
+      },
+      "tumbles": {
+        "avgPerBaseSpin": 0.33343,
+        "avgPerFreeSpin": 0.8095,
+        "avgClustersPerBaseSpin": 0.35384,
+        "avgClustersPerFreeSpin": 0.91674
+      },
+      "stains": {
+        "shareOfFreeSpinClustersCrossingAStain": 0.71369,
+        "avgStainedCellsAtFeatureEnd": 27.55,
+        "maxStainedCellsAtFeatureEnd": 49,
+        "featureEndMaxStainShare": {
+          "max0": 0.002505,
+          "max2": 0.04087,
+          "max4": 0.2107,
+          "max8": 0.3308,
+          "max16": 0.2399,
+          "max32": 0.1146,
+          "max64": 0.04129,
+          "max128": 0.01383,
+          "max256": 0.00537
+        },
+        "featureEndMaxStainCount": {
+          "max0": 153,
+          "max2": 2496,
+          "max4": 12871,
+          "max8": 20207,
+          "max16": 14655,
+          "max32": 7002,
+          "max64": 2522,
+          "max128": 845,
+          "max256": 328
+        }
+      },
+      "minCombsInInitialBaseGrid": 49,
+      "costMismatches": 0,
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 408.6
+    },
+    "ante": {
+      "rounds": 20000000,
+      "costBets": 1.25,
+      "rtpVsCost": {
+        "pointEstimate": 0.9503,
+        "pointEstimatePct": 95.0304,
+        "ci95": [
+          0.94203,
+          0.95858
+        ],
+        "ci95Pct": [
+          94.2028,
+          95.8579
+        ],
+        "ci95HalfWidthPct": 0.8275
+      },
+      "integerPayoutCheckRtp": 0.9503,
+      "hitRate": 0.2786,
+      "baseClusterHitRate": 0.27451,
+      "featureRate": 0.005826,
+      "featureOneIn": 171.6,
+      "featureCount": 116526,
+      "avgFreeSpinsPerRound": 0.05007,
+      "avgFreeSpinsPerTrigger": 8.593,
+      "freeSpinsPlayed": 1001317,
+      "retriggers": 17279,
+      "maxFreeSpinsInOneRound": 28,
+      "freeSpinHitRate": 0.49563,
+      "stdDevPerRoundCostUnits": 18.8816,
+      "stdDevPerRoundBetUnits": 23.6021,
+      "contributionPctOfCost": {
+        "baseGame": 39.5575,
+        "freeSpins": 55.4729,
+        "scatterPayInBase": 1.9031
+      },
+      "avgFreeWinPerTriggerBets": 119.01,
+      "winTiersShareOfRounds": {
+        "atLeast10xBet": 0.0090178,
+        "atLeast25xBet": 0.0047165,
+        "atLeast50xBet": 0.0030852,
+        "atLeast100xBet": 0.0017972,
+        "atLeast500xBet": 0.0002397,
+        "atLeast1000xBet": 0.0000754,
+        "atLeast2000xBet": 0.0000189,
+        "atLeast5000xBet": 0.00000255,
+        "atLeast10000xBet": 5e-7
+      },
+      "winTiersRounds": {
+        "atLeast10xBet": 180356,
+        "atLeast25xBet": 94330,
+        "atLeast50xBet": 61703,
+        "atLeast100xBet": 35944,
+        "atLeast500xBet": 4794,
+        "atLeast1000xBet": 1508,
+        "atLeast2000xBet": 378,
+        "atLeast5000xBet": 51,
+        "atLeast10000xBet": 10
+      },
+      "maxObservedXBet": 10000,
+      "maxObservedXCost": 8000,
+      "maxStepsPerSpinTumblesPlusOne": 12,
+      "capHits": 10,
+      "capHitShareOfRounds": 5e-7,
+      "capXBet": 10000,
+      "comb": {
+        "avgCombCreatedWinsPerSpin": 0.10194,
+        "avgCombCreatedWinsPerBaseSpin": 0.09649,
+        "avgCombCreatedWinsPerFreeSpin": 0.21061,
+        "avgCombPassesPerSpin": 1.10119,
+        "baseSpinsWithCombCreatedWinShare": 0.08885,
+        "baseHitsThatNeededTheCombShare": 0.22775,
+        "freeSpinsWithCombCreatedWinShare": 0.17734
+      },
+      "tumbles": {
+        "avgPerBaseSpin": 0.33118,
+        "avgPerFreeSpin": 0.74566,
+        "avgClustersPerBaseSpin": 0.35134,
+        "avgClustersPerFreeSpin": 0.83853
+      },
+      "stains": {
+        "shareOfFreeSpinClustersCrossingAStain": 0.68975,
+        "avgStainedCellsAtFeatureEnd": 26.02,
+        "maxStainedCellsAtFeatureEnd": 49,
+        "featureEndMaxStainShare": {
+          "max0": 0.003587,
+          "max2": 0.05694,
+          "max4": 0.2492,
+          "max8": 0.34,
+          "max16": 0.2177,
+          "max32": 0.0916,
+          "max64": 0.02968,
+          "max128": 0.008505,
+          "max256": 0.002823
+        },
+        "featureEndMaxStainCount": {
+          "max0": 418,
+          "max2": 6635,
+          "max4": 29036,
+          "max8": 39614,
+          "max16": 25371,
+          "max32": 10674,
+          "max64": 3458,
+          "max128": 991,
+          "max256": 329
+        }
+      },
+      "minCombsInInitialBaseGrid": 49,
+      "costMismatches": 0,
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 402.8
+    },
+    "buy": {
+      "rounds": 20000000,
+      "costBets": 100,
+      "rtpVsCost": {
+        "pointEstimate": 0.95377,
+        "pointEstimatePct": 95.3769,
+        "ci95": [
+          0.95277,
+          0.95477
+        ],
+        "ci95Pct": [
+          95.277,
+          95.4769
+        ],
+        "ci95HalfWidthPct": 0.0999
+      },
+      "integerPayoutCheckRtp": 0.95377,
+      "hitRate": 1,
+      "baseClusterHitRate": 0.22341,
+      "featureRate": 1,
+      "featureOneIn": 1,
+      "featureCount": 20000000,
+      "avgFreeSpinsPerRound": 8.54197,
+      "avgFreeSpinsPerTrigger": 8.542,
+      "freeSpinsPlayed": 170839389,
+      "retriggers": 2710221,
+      "maxFreeSpinsInOneRound": 36,
+      "freeSpinHitRate": 0.46772,
+      "stdDevPerRoundCostUnits": 2.2803,
+      "stdDevPerRoundBetUnits": 228.032,
+      "contributionPctOfCost": {
+        "baseGame": 3.4212,
+        "freeSpins": 91.9557,
+        "scatterPayInBase": 3.073
+      },
+      "avgFreeWinPerTriggerBets": 91.96,
+      "winTiersShareOfRounds": {
+        "atLeast10xBet": 0.86593,
+        "atLeast25xBet": 0.6443,
+        "atLeast50xBet": 0.43024,
+        "atLeast100xBet": 0.23555,
+        "atLeast500xBet": 0.026656,
+        "atLeast1000xBet": 0.0077368,
+        "atLeast2000xBet": 0.0019867,
+        "atLeast5000xBet": 0.0002716,
+        "atLeast10000xBet": 0.00004755
+      },
+      "winTiersRounds": {
+        "atLeast10xBet": 17318657,
+        "atLeast25xBet": 12885975,
+        "atLeast50xBet": 8604715,
+        "atLeast100xBet": 4711030,
+        "atLeast500xBet": 533113,
+        "atLeast1000xBet": 154736,
+        "atLeast2000xBet": 39734,
+        "atLeast5000xBet": 5432,
+        "atLeast10000xBet": 951
+      },
+      "maxObservedXBet": 10000,
+      "maxObservedXCost": 100,
+      "maxStepsPerSpinTumblesPlusOne": 15,
+      "capHits": 951,
+      "capHitShareOfRounds": 0.00004755,
+      "capXBet": 10000,
+      "comb": {
+        "avgCombCreatedWinsPerSpin": 0.18015,
+        "avgCombCreatedWinsPerBaseSpin": 0.07535,
+        "avgCombCreatedWinsPerFreeSpin": 0.19242,
+        "avgCombPassesPerSpin": 1.17699,
+        "baseSpinsWithCombCreatedWinShare": 0.07064,
+        "baseHitsThatNeededTheCombShare": 0,
+        "freeSpinsWithCombCreatedWinShare": 0.16463
+      },
+      "tumbles": {
+        "avgPerBaseSpin": 0.25906,
+        "avgPerFreeSpin": 0.67924,
+        "avgClustersPerBaseSpin": 0.27116,
+        "avgClustersPerFreeSpin": 0.75756
+      },
+      "stains": {
+        "shareOfFreeSpinClustersCrossingAStain": 0.66147,
+        "avgStainedCellsAtFeatureEnd": 24.31,
+        "maxStainedCellsAtFeatureEnd": 49,
+        "featureEndMaxStainShare": {
+          "max0": 0.005775,
+          "max2": 0.07568,
+          "max4": 0.2949,
+          "max8": 0.3412,
+          "max16": 0.1879,
+          "max32": 0.06838,
+          "max64": 0.01971,
+          "max128": 0.005006,
+          "max256": 0.001483
+        },
+        "featureEndMaxStainCount": {
+          "max0": 115502,
+          "max2": 1513633,
+          "max4": 5897065,
+          "max8": 6823454,
+          "max16": 3758905,
+          "max32": 1367550,
+          "max64": 394110,
+          "max128": 100122,
+          "max256": 29659
+        }
+      },
+      "minCombsInInitialBaseGrid": 49,
+      "costMismatches": 0,
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 1266.5
+    }
+  },
+  "tables": {
+    "clusterTierStarts": [
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      12,
+      14,
+      17,
+      21,
+      26,
+      33
+    ],
+    "paytableHundredths": {
+      "c1": [
+        160,
+        288,
+        560,
+        1120,
+        2080,
+        3840,
+        8800,
+        19200,
+        41600,
+        88000,
+        192000,
+        416000
+      ],
+      "c2": [
+        122,
+        220,
+        427,
+        854,
+        1586,
+        2928,
+        6710,
+        14640,
+        31720,
+        67100,
+        146400,
+        317200
+      ],
+      "c3": [
+        95,
+        171,
+        333,
+        665,
+        1235,
+        2280,
+        5225,
+        11400,
+        24700,
+        52250,
+        114000,
+        247000
+      ],
+      "c4": [
+        74,
+        133,
+        259,
+        518,
+        962,
+        1776,
+        4070,
+        8880,
+        19240,
+        40700,
+        88800,
+        192400
+      ],
+      "c5": [
+        58,
+        104,
+        203,
+        406,
+        754,
+        1392,
+        3190,
+        6960,
+        15080,
+        31900,
+        69600,
+        150800
+      ],
+      "c6": [
+        48,
+        86,
+        168,
+        336,
+        624,
+        1152,
+        2640,
+        5760,
+        12480,
+        26400,
+        57600,
+        124800
+      ],
+      "c7": [
+        40,
+        72,
+        140,
+        280,
+        520,
+        960,
+        2200,
+        4800,
+        10400,
+        22000,
+        48000,
+        104000
+      ],
+      "c8": [
+        32,
+        58,
+        112,
+        224,
+        416,
+        768,
+        1760,
+        3840,
+        8320,
+        17600,
+        38400,
+        83200
+      ]
+    },
+    "scatterPayHundredths": {
+      "3": 300,
+      "4": 1000,
+      "5": 10000
+    },
+    "combAmplitudeWeights": [
+      [
+        1,
+        30
+      ],
+      [
+        2,
+        40
+      ],
+      [
+        3,
+        30
+      ]
+    ],
+    "combRowStepWeights": [
+      [
+        1,
+        10
+      ],
+      [
+        2,
+        12
+      ],
+      [
+        3,
+        12
+      ],
+      [
+        4,
+        12
+      ],
+      [
+        5,
+        10
+      ],
+      [
+        6,
+        10
+      ],
+      [
+        8,
+        10
+      ],
+      [
+        10,
+        8
+      ],
+      [
+        12,
+        8
+      ],
+      [
+        16,
+        8
+      ]
+    ],
+    "modeTables": {
+      "standard": {
+        "base": [
+          [
+            "c1",
+            1250
+          ],
+          [
+            "c2",
+            1250
+          ],
+          [
+            "c3",
+            1250
+          ],
+          [
+            "c4",
+            1250
+          ],
+          [
+            "c5",
+            1250
+          ],
+          [
+            "c6",
+            1250
+          ],
+          [
+            "c7",
+            1250
+          ],
+          [
+            "c8",
+            1250
+          ],
+          [
+            "drop",
+            12
+          ],
+          [
+            "comb",
+            57
+          ]
+        ],
+        "free": [
+          [
+            "c1",
+            1580
+          ],
+          [
+            "c2",
+            1580
+          ],
+          [
+            "c3",
+            1580
+          ],
+          [
+            "c4",
+            1580
+          ],
+          [
+            "c5",
+            1580
+          ],
+          [
+            "c6",
+            1580
+          ],
+          [
+            "c7",
+            108
+          ],
+          [
+            "c8",
+            0
+          ],
+          [
+            "drop",
+            20
+          ],
+          [
+            "comb",
+            100
+          ]
+        ]
+      },
+      "ante": {
+        "base": [
+          [
+            "c1",
+            1250
+          ],
+          [
+            "c2",
+            1250
+          ],
+          [
+            "c3",
+            1250
+          ],
+          [
+            "c4",
+            1250
+          ],
+          [
+            "c5",
+            1250
+          ],
+          [
+            "c6",
+            1250
+          ],
+          [
+            "c7",
+            1250
+          ],
+          [
+            "c8",
+            1250
+          ],
+          [
+            "drop",
+            12
+          ],
+          [
+            "comb",
+            72
+          ]
+        ],
+        "free": [
+          [
+            "c1",
+            1580
+          ],
+          [
+            "c2",
+            1580
+          ],
+          [
+            "c3",
+            1580
+          ],
+          [
+            "c4",
+            1580
+          ],
+          [
+            "c5",
+            1580
+          ],
+          [
+            "c6",
+            1580
+          ],
+          [
+            "c7",
+            285
+          ],
+          [
+            "c8",
+            0
+          ],
+          [
+            "drop",
+            20
+          ],
+          [
+            "comb",
+            100
+          ]
+        ]
+      },
+      "buy": {
+        "base": [
+          [
+            "c1",
+            1250
+          ],
+          [
+            "c2",
+            1250
+          ],
+          [
+            "c3",
+            1250
+          ],
+          [
+            "c4",
+            1250
+          ],
+          [
+            "c5",
+            1250
+          ],
+          [
+            "c6",
+            1250
+          ],
+          [
+            "c7",
+            1250
+          ],
+          [
+            "c8",
+            1250
+          ],
+          [
+            "drop",
+            12
+          ],
+          [
+            "comb",
+            57
+          ]
+        ],
+        "free": [
+          [
+            "c1",
+            1580
+          ],
+          [
+            "c2",
+            1580
+          ],
+          [
+            "c3",
+            1580
+          ],
+          [
+            "c4",
+            1580
+          ],
+          [
+            "c5",
+            1580
+          ],
+          [
+            "c6",
+            1580
+          ],
+          [
+            "c7",
+            495
+          ],
+          [
+            "c8",
+            0
+          ],
+          [
+            "drop",
+            20
+          ],
+          [
+            "comb",
+            100
+          ]
+        ]
+      }
+    }
+  },
+  "runtimeSeconds": 2077.8,
+  "node": "v24.21.0",
+  "generatedAt": "2026-10-13T01:14:31.245Z"
+}

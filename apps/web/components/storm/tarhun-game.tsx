@@ -1,7 +1,7 @@
 'use client';
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { useRouter } from 'next/navigation';
-import { STORM_RTP, playStormRound, stormSeedFromEntropy, type StormMode, type StormRound } from '@sollish/protocol';
+import { STORM_RTP, playStormRound, type StormMode, type StormRound } from '@sollish/protocol';
 import { demoNumber } from '@/lib/demo';
 import {
   STORM_FULL_WINDUP_MS, buildStormTimeline, stormCalloutTier, stormCents, stormHistoryDetail, stormMoney, stormTimes, stormWinAnnouncement,
@@ -16,6 +16,8 @@ import {
   STORM_AUTOPLAY_GAP, STORM_BET_LADDER, STORM_COST_MODES, STORM_DEFAULT_BET_CENTS, STORM_MAX_BET_CENTS, STORM_MIN_BET_CENTS,
   stormAutoplayAfterRound, stormAutoplayBeforeSpin, stormBuyBlockReason, stormCost, stormLedgerLimits, stormRoundId, stormRtp, stormTimelineOptions,
 } from '@/lib/storm-controls';
+import { localRoundSource, markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
+import { useRoundSource } from '@/lib/use-round-source';
 import { useProduct, type DemoRecord } from '../providers';
 import { DemoNotice, GameHeading, Rules, type Mode } from '../game-common';
 import { Icon } from '../icons';
@@ -41,12 +43,17 @@ import styles from './tarhun-game.module.css';
    Spin lock (game-standards §6): once a round starts the spin button and Space stay locked until the whole round,
    every tumble, orb strike and free spin included, has played; there is no skip. Speed comes from the quick/turbo
    setting; only the hold screens may be tapped (that moves the presentation clock, never a result). A replay from
-   the history uses the same engine call and never touches the ledger. */
+   the history uses the same engine call and never touches the ledger.
+   Remote (RGS) mode, lib/rgs-client.ts: the server resolves AND settles the round before the browser sees it; the game
+   presents the returned round, records it in the history and shows the server balance. It never reserves or settles
+   locally, so leaving mid-round needs nothing; a reload re-presents the last unseen server round. */
 
 type LiveRound = {
   id: string | null; replayOf: string | null;
   bet: number; cost: number; mode: StormMode; balanceBefore: number;
   round: StormRound; timeline: StormTimeline; prefix: string; reduced: boolean; lite: boolean; settled: boolean;
+  /** Server round (already settled there): its receipt and the balance to show when the presentation ends. */
+  remote: { receipt: RemoteReceipt; balanceAfter: number } | null;
 };
 type Phase = 'idle' | 'playing' | 'done';
 type Card =
@@ -140,12 +147,12 @@ function InfoIcon() { return <svg {...svg}><circle cx="12" cy="12" r="9" fill="n
 function LoopIcon() { return <svg {...svg}><path d="M17 3.5 20 6.5l-3 3" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" /><path d="M4 11.5v-1a4 4 0 0 1 4-4h12M7 20.5 4 17.5l3-3" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" /><path d="M20 12.5v1a4 4 0 0 1-4 4H4" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" /></svg>; }
 function RefillIcon() { return <svg {...svg} width={16} height={16}><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4.5h-4.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>; }
 
-const StaticFooter = memo(function StaticFooter() { return <><DemoNotice /><Rules game="Tarhun" /></>; });
+const StaticFooter = memo(function StaticFooter({ remote }: { remote: boolean }) { return <><DemoNotice remote={remote} /><Rules game="Tarhun" /></>; });
 const HeroFigure = memo(StormCharacter);
 const MemoFrame = memo(StormFrame);
 
 export function TarhunGame() {
-  const { reserveDemo, settleDemo, setActiveDemo, demoBalance, resetDemoBalance } = useProduct();
+  const { reserveDemo, settleDemo, recordRemote, setActiveDemo, demoBalance, resetDemoBalance } = useProduct();
   const router = useRouter();
   const { settings, update: updateSettings, reset: resetSettings } = useSlotSettings('tarhun');
   const [realityMs] = useState(realityIntervalOverride);
@@ -179,6 +186,16 @@ export function TarhunGame() {
   const [heroPose, setHeroPose] = useState<StormPose>('idle');
   const [mood, setMood] = useState<StormMood>('base');
   const reducedMotion = usePrefersReducedMotion();
+  const sourceView = useRoundSource('tarhun');
+  const remote: RemoteRoundSource | null = sourceView.status === 'remote' ? sourceView.source : null;
+  const sourcePending = sourceView.status === 'pending';
+  /** Server balance in remote mode (display only; the server's response is the truth). */
+  const [remoteBalance, setRemoteBalance] = useState<number | null>(null);
+  useEffect(() => { if (sourceView.status === 'remote') setRemoteBalance(sourceView.balanceCents); }, [sourceView]);
+  const balance = remote ? (remoteBalance ?? 0) : demoBalance;
+  const pendingRemote = useRef(false);
+  const mounted = useRef(true);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
 
   const scene = useRef<StormSceneHandle>(null);
   const hero = useRef<StormCharacterHandle>(null);
@@ -203,8 +220,8 @@ export function TarhunGame() {
   const celebrateFx = useRef({ reduced: false, lite: false });
   const autoRef = useRef<AutoplayState | null>(null);
   autoRef.current = auto;
-  const balanceRef = useRef(demoBalance);
-  balanceRef.current = demoBalance;
+  const balanceRef = useRef(balance);
+  balanceRef.current = balance;
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
 
@@ -264,13 +281,19 @@ export function TarhunGame() {
     if (current.settled || settledIds.current.has(current.id)) return;
     current.settled = true; settledIds.current.add(current.id);
     const { round } = current;
-    settleDemo({
+    const record: DemoRecord = {
       id: current.id, game: 'Tarhun', stake: current.cost, payout: round.payoutCents, detail: stormHistoryDetail(round), at: Date.now(), kind: 'round',
       storm: { engine: round.engine, seedHex: round.seedHex, betCents: current.bet, mode: current.mode, costCents: current.cost },
-    });
+    };
+    if (current.remote) {
+      // Already settled on the server: only the history line and the server balance.
+      const { receipt } = current.remote;
+      recordRemote({ ...record, at: receipt.at, remote: { roundId: receipt.roundId, nonce: receipt.fair.nonce, serverSeedHash: receipt.fair.serverSeedHash, clientSeed: receipt.fair.clientSeed } });
+      setRemoteBalance(current.remote.balanceAfter);
+    } else settleDemo(record);
     recordSession({ costCents: current.cost, payoutCents: round.payoutCents });
     setActiveDemo(false);
-  }, [settleDemo, setActiveDemo, recordSession]);
+  }, [settleDemo, recordRemote, setActiveDemo, recordSession]);
 
   // Leaving the page mid-show still closes the round once, with the full engine payout.
   const settleRef = useRef(settle); settleRef.current = settle;
@@ -293,6 +316,7 @@ export function TarhunGame() {
 
   const finishRound = useCallback((current: LiveRound) => {
     settle(current);
+    if (current.remote) markRoundShown('tarhun', current.remote.receipt.roundId);
     setPhase('done');
     sound.countUp(false);
     setMood('base');
@@ -563,8 +587,35 @@ export function TarhunGame() {
   const busy = phase === 'playing';
   const booting = boot.phase !== 'done';
 
+  /** Remote round: the server resolves and settles it; the spin stays locked until its round has been presented. */
+  const startRemote = useCallback((source: RemoteRoundSource, roundMode: StormMode, cost: number, balanceBefore: number) => {
+    const betCents = bet;
+    pendingRemote.current = true;
+    setError(''); setPhase('playing'); setActiveDemo(true); setReplaying(null);
+    setRemoteBalance(balanceBefore - cost);
+    setAnnounce(`Dönüş sunucuya gönderildi, ${demoNumber(cost)} DEMO.`);
+    source.client.play('tarhun', betCents, roundMode).then(play => {
+      pendingRemote.current = false;
+      const s = settingsRef.current;
+      const current: LiveRound = {
+        id: `remote:${play.receipt.roundId}`, replayOf: null, bet: betCents, cost: play.receipt.costCents, mode: roundMode, balanceBefore, round: play.round,
+        timeline: buildStormTimeline(play.round, stormTimelineOptions(s, reducedMotion)), prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects,
+        settled: false, remote: { receipt: play.receipt, balanceAfter: play.receipt.balanceCents },
+      };
+      if (!mounted.current) { settleRef.current(current); return; }
+      begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Bedava dönüşler başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+    }, (failure: unknown) => {
+      pendingRemote.current = false;
+      setActiveDemo(false);
+      if (!mounted.current) return;
+      setPhase('idle'); setError(rgsErrorMessage(failure)); sound.denied();
+      if (autoRef.current) stopAutoplay('Sunucu turu başlatılamadı');
+      source.client.state().then(state => { if (mounted.current) setRemoteBalance(state.balanceCents); }, () => undefined);
+    });
+  }, [bet, begin, reducedMotion, setActiveDemo, sound, stopAutoplay]);
+
   const startRound = useCallback((kind: 'spin' | 'buy'): boolean => {
-    if ((live.current && !live.current.settled) || gated || booting) return false;
+    if ((live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
     const roundMode: StormMode = kind === 'buy' ? 'buy' : ante ? 'ante' : 'standard';
     if (kind === 'buy' && ante) return false;
     const cost = stormCost(bet, roundMode);
@@ -574,11 +625,10 @@ export function TarhunGame() {
       sound.denied();
       return false;
     }
+    if (remote) { startRemote(remote, roundMode, cost, balanceBefore); return true; }
     let round: StormRound;
     try {
-      const words = new Uint32Array(4);
-      crypto.getRandomValues(words);
-      round = playStormRound(stormSeedFromEntropy(words), bet, roundMode);
+      round = localRoundSource.resolve('tarhun', bet, roundMode);
     } catch { setError(ENTROPY_ERROR); return false; }
     let id: string | null;
     try { id = reserveDemo(cost, stormLedgerLimits(bet, roundMode)); } catch { setError(ENTROPY_ERROR); return false; }
@@ -586,11 +636,41 @@ export function TarhunGame() {
     setActiveDemo(true);
     const s = settingsRef.current;
     const timeline = buildStormTimeline(round, stormTimelineOptions(s, reducedMotion));
-    const current: LiveRound = { id, replayOf: null, bet, cost, mode: roundMode, balanceBefore, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects, settled: false };
+    const current: LiveRound = { id, replayOf: null, bet, cost, mode: roundMode, balanceBefore, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects, settled: false, remote: null };
     setReplaying(null);
     begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Bedava dönüşler başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
     return true;
-  }, [ante, bet, begin, booting, gated, reducedMotion, reserveDemo, setActiveDemo, sound]);
+  }, [ante, bet, begin, booting, gated, reducedMotion, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote]);
+
+  // Reload recovery (remote): the last server round of this game that this tab did not finish showing is shown again,
+  // exactly as resolved. Nothing is debited or credited here; the server settled it when it was accepted.
+  const recoveredOnce = useRef(false);
+  useEffect(() => {
+    if (sourceView.status !== 'remote' || !sourceView.recovered || recoveredOnce.current || booting || live.current || pendingRemote.current) return;
+    recoveredOnce.current = true;
+    const { receipt, round } = sourceView.recovered;
+    const after = sourceView.recoveredBalanceCents ?? receipt.balanceCents, s = settingsRef.current;
+    const current: LiveRound = {
+      id: `remote:${receipt.roundId}`, replayOf: null, bet: receipt.betCents, cost: receipt.costCents, mode: receipt.mode, balanceBefore: after + receipt.costCents - receipt.payoutCents, round,
+      timeline: buildStormTimeline(round, stormTimelineOptions(s, reducedMotion)), prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects,
+      settled: false, remote: { receipt, balanceAfter: after },
+    };
+    setActiveDemo(true);
+    setRemoteBalance(current.balanceBefore - current.cost);
+    begin(current, `Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı (${demoNumber(receipt.payoutCents)} DEMO).`);
+  }, [sourceView, booting, begin, reducedMotion, setActiveDemo]);
+
+  /** Remote only: publish the signed replay of a server round and hand out its link. */
+  const shareRound = useCallback((record: DemoRecord) => {
+    const id = record.remote?.roundId;
+    if (!remote || !id) return;
+    remote.client.share(id).then(async ({ path }) => {
+      const url = `${window.location.origin}${path}`;
+      let copied = false;
+      try { await navigator.clipboard.writeText(url); copied = true; } catch { /* clipboard blocked: show the link */ }
+      showToast(copied ? `Paylaşım bağlantısı kopyalandı: ${url}` : `Paylaşım bağlantısı: ${url}`);
+    }, (failure: unknown) => showToast(`Paylaşılamadı: ${rgsErrorMessage(failure)}`, 'warn'));
+  }, [remote, showToast]);
   const startRef = useRef(startRound); startRef.current = startRound;
 
   const replay = useCallback((record: DemoRecord) => {
@@ -601,7 +681,7 @@ export function TarhunGame() {
     if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast('Tekrar doğrulanamadı: kayıt motorla uyuşmuyor.', 'warn'); return; }
     const s = settingsRef.current;
     const timeline = buildStormTimeline(round, stormTimelineOptions(s, reducedMotion));
-    const current: LiveRound = { id: null, replayOf: record.id, bet: meta.betCents, cost: meta.costCents, mode: meta.mode, balanceBefore: balanceRef.current, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects, settled: false };
+    const current: LiveRound = { id: null, replayOf: record.id, bet: meta.betCents, cost: meta.costCents, mode: meta.mode, balanceBefore: balanceRef.current, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects, settled: false, remote: null };
     setReplaying({ recordId: record.id, seed: meta.seedHex });
     stageRef.current?.scrollIntoView({ block: 'start' });
     begin(current, `Tekrar oynatılıyor: tur ${stormRoundId(meta.seedHex)}. Bakiye değişmez.`);
@@ -713,14 +793,14 @@ export function TarhunGame() {
   const roundMode: StormMode = ante ? 'ante' : 'standard';
   const spinCost = stormCost(bet, roundMode);
   const buyPrice = stormCost(bet, 'buy');
-  const buyReason = stormBuyBlockReason({ betCents: bet, balanceCents: demoBalance, ante, autoplay: auto !== null, busy, gated });
-  const locked = busy || auto !== null || gated || booting;
+  const buyReason = stormBuyBlockReason({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const locked = busy || auto !== null || gated || booting || sourcePending;
   const amountCents = (h: number) => (roundBet === null ? 0 : stormCents(roundBet, h));
   const boardLabel = free ? 'Tarhun bedava dönüş ızgarası, 6 sütun, 5 satır' : 'Tarhun ızgarası, 6 sütun, 5 satır';
   const boardElement = useMemo(() => <MemoFrame mood={free ? 'feature' : 'base'}><StormBoard ref={board} label={boardLabel} /></MemoFrame>, [boardLabel, free]);
   const celebrating = card?.kind === 'big' || card?.kind === 'outro' || card?.kind === 'intro';
   const infoPages = useMemo(() => stormInfoPages(bet), [bet]);
-  const outOfCredit = !busy && demoBalance < STORM_MIN_BET_CENTS;
+  const outOfCredit = !busy && balance < STORM_MIN_BET_CENTS;
   const deckWin = busy ? amountCents(meter.total) : (lastWin?.payout ?? 0);
   const speedIndex = SPIN_SPEEDS.indexOf(settings.spinSpeed);
   const replayInfo = replaying ? `Tekrar — bakiye değişmez · tur ${stormRoundId(replaying.seed)}` : null;
@@ -729,6 +809,16 @@ export function TarhunGame() {
   const openInfo = (page = 'how') => { setInfoPage(page); setModal('info'); sound.click(); };
   const refill = () => {
     if (busy || auto) return;
+    if (remote) {
+      if (pendingRemote.current) return;
+      remote.client.resetBalance().then(cents => {
+        setRemoteBalance(cents);
+        const at = Date.now();
+        recordRemote({ id: `remote-reset:${at}`, game: 'Tarhun', stake: 0, payout: 0, detail: 'Bakiye yenilendi (sunucu)', at, kind: 'reset' });
+        showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('Sunucu DEMO bakiyesi 1.000 DEMO olarak yenilendi.');
+      }, (failure: unknown) => showToast(rgsErrorMessage(failure), 'warn'));
+      return;
+    }
     if (resetDemoBalance('Tarhun')) { showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('DEMO bakiyesi 1.000 DEMO olarak yenilendi.'); }
   };
   const toggleSound = () => { const muted = !settings.muted; updateSettings({ muted }); if (!muted) sound.unlock(); };
@@ -753,7 +843,7 @@ export function TarhunGame() {
       ladder={STORM_BET_LADDER}
       valueCents={bet}
       onChange={chooseBet}
-      balanceCents={demoBalance}
+      balanceCents={balance}
       maxBetCents={STORM_MAX_BET_CENTS}
       costMode={STORM_COST_MODES[roundMode]}
       modeLabel={ante ? 'Şans ×2' : undefined}
@@ -763,7 +853,7 @@ export function TarhunGame() {
         <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label="Oyun kontrolleri">
           <div className={styles.cellBalance}>
             <span className={styles.cellLabel}>Bakiye</span>
-            <strong className={styles.cellValue} data-testid="tarhun-balance">{formatAmount(demoBalance)}<small> DEMO</small></strong>
+            <strong className={styles.cellValue} data-testid="tarhun-balance">{formatAmount(balance)}<small> DEMO</small></strong>
             <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated} aria-label="Bakiyeyi yenile"><RefillIcon /><span aria-hidden="true">Bakiyeyi yenile</span></button>
           </div>
           <div className={styles.cellWin}>
@@ -782,7 +872,7 @@ export function TarhunGame() {
             {auto ? (
               <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay(AUTOPLAY_STOP_REASONS.cancelled, 'info')} />
             ) : (
-              <button type="button" className={`${styles.spin} ${busy ? styles.spinning : ''}`} onClick={onSpinClick} disabled={busy || gated || booting}
+              <button type="button" className={`${styles.spin} ${busy ? styles.spinning : ''}`} onClick={onSpinClick} disabled={busy || gated || booting || sourcePending}
                 aria-label="Çevir" aria-describedby="tz-spin-cost" data-locked={busy || undefined} data-testid="tarhun-spin">
                 <span className={styles.spinFace}><SpinSigil /></span>
                 {busy && <span className={styles.spinLock} aria-hidden="true"><LockIcon /></span>}
@@ -834,7 +924,8 @@ export function TarhunGame() {
   return (
     <div className={`game-page ${styles.page}`}>
       <StormSymbolSprites />
-      <GameHeading title="Tarhun: Fırtına Tahtı" subtitle="Fırtına tanrısı taşlara yıldırım atar; çarpanlar bedava dönüşte birikir." mode={mode} setMode={setMode} active={busy || auto !== null} />
+      <GameHeading title="Tarhun: Fırtına Tahtı" subtitle="Fırtına tanrısı taşlara yıldırım atar; çarpanlar bedava dönüşte birikir." mode={mode} setMode={setMode} active={busy || auto !== null}
+        badge={remote ? remote.label : sourcePending ? 'Sunucu kontrol ediliyor' : localRoundSource.label} />
       <section className={`game-table ${styles.table}`} aria-label="Tarhun oyun masası" data-free={free || undefined}>
         <StormScene ref={scene} mood={sceneMood} className={styles.scene}>
           <div className={styles.layout}>
@@ -940,21 +1031,21 @@ export function TarhunGame() {
         <div className="sr-only" role="status" aria-live="polite">{announce}</div>
       </section>
       <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} />
-      <StormHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} />
-      <StaticFooter />
+      <StormHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
+      <StaticFooter remote={remote !== null} />
 
       <Modal open={modal === 'settings'} onClose={() => setModal(null)} title="Ayarlar" size="md">
         <SettingsPanel settings={settings} onChange={updateSettings} onReset={resetSettings} />
         <p className={styles.modalNote} role="status">{soundLoad.ready ? 'Ses hazır: müzik, efektler ve seslendirme bu cihazda hazırlandı.' : soundLoad.started ? `Ses yükleniyor %${soundLoad.percent} (bu sırada oyun sessiz veya basit efektlerle sürer).` : 'Ses ilk dokunuşta yüklenir.'}</p>
         <section className={styles.demoBox} aria-labelledby="tz-demo-title">
           <h3 id="tz-demo-title">DEMO bakiyesi</h3>
-          <p>Bakiye {formatDemo(demoBalance)}. Yenilemek bakiyeyi 1.000 DEMO yapar ve geçmişe "Bakiye yenilendi" satırı ekler; tur veya otomatik oyun sürerken yapılamaz.</p>
+          <p>Bakiye {formatDemo(balance)}{remote ? ' (sunucu)' : ''}. Yenilemek bakiyeyi 1.000 DEMO yapar ve geçmişe "Bakiye yenilendi" satırı ekler; tur veya otomatik oyun sürerken yapılamaz.</p>
           <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>Bakiyeyi yenile</button>
         </section>
       </Modal>
       <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title="Tarhun · Oyun bilgisi" initialPageId={infoPage} />
       <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title="Otomatik oyun" size="md">
-        <AutoplayPanel onStart={startAutoplay} spinCostCents={spinCost} balanceCents={demoBalance} disabled={busy || gated} />
+        <AutoplayPanel onStart={startAutoplay} spinCostCents={spinCost} balanceCents={balance} disabled={busy || gated} />
         <p className={styles.modalNote}>Tur başı {formatDemo(spinCost)}{ante ? ' (Şans ×2)' : ''} · bonus satın almaz · sekme gizlenince durur.</p>
       </Modal>
       <BuyFeatureDialog
@@ -963,7 +1054,7 @@ export function TarhunGame() {
         onConfirm={confirmBuy}
         featureName={`15 bedava dönüş · bahis ${formatDemo(bet)}`}
         priceCents={buyPrice}
-        balanceCents={demoBalance}
+        balanceCents={balance}
         rtpText={`Satın alma RTP ${stormRtp(STORM_RTP.buy.rtp)} · standart ${stormRtp(STORM_RTP.standard.rtp)} (simülasyon, sertifikasız)`}
         description={<>Bahsin <strong>100 katı</strong>. Tur en az 4 Şimşek Mührüyle başlar ve 15 bedava dönüş garantilidir; toplam çarpan ×0’dan başlayıp kazanan her dönüşte büyür. Kazançlar {formatDemo(bet)} bahse göre ödenir, azami {formatDemo(bet * 5000)}.</>}
         disabledReason={buyReason ?? undefined}

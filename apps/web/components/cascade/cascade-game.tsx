@@ -1,7 +1,7 @@
 'use client';
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { useRouter } from 'next/navigation';
-import { CASCADE2_RTP, cascadeSeedFromEntropy, playCascade2Round, type Cascade2Round, type CascadeMode } from '@sollish/protocol';
+import { CASCADE2_RTP, playCascade2Round, type Cascade2Round, type CascadeMode } from '@sollish/protocol';
 import { demoNumber } from '@/lib/demo';
 import { buildCascadeTimeline, cascadeHistoryDetail, centsFor, moneyText, multiplierText, winAnnouncement, type CascadeTimeline, type Meter, type TimelineEvent } from '@/lib/cascade-timeline';
 import { WIN_TIER_INFO, countUpSchedule, multiplierCalloutTier, type CelebrationLevel, type CountUpSchedule, type WinTier } from '@/lib/slot-kit/win-tiers';
@@ -13,6 +13,8 @@ import {
   CASCADE_AUTOPLAY_GAP, CASCADE_BET_LADDER, CASCADE_COST_MODES, CASCADE_DEFAULT_BET_CENTS, CASCADE_MAX_BET_CENTS, CASCADE_MIN_BET_CENTS,
   autoplayAfterRound, autoplayBeforeSpin, buyBlockReason, cascadeCost, cascadeLedgerLimits, cascadeTimelineOptions, formatRtp, shortRoundId,
 } from '@/lib/cascade-controls';
+import { localRoundSource, markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
+import { useRoundSource } from '@/lib/use-round-source';
 import { useProduct, type DemoRecord } from '../providers';
 import { DemoNotice, GameHeading, Rules, type Mode } from '../game-common';
 import { Icon } from '../icons';
@@ -35,13 +37,18 @@ import styles from './cascade-game.module.css';
    Spin lock (game-standards §6): once a round starts the spin button and Space stay locked until the whole
    round, every tumble and free spin included, has played; there is no skip. Speed comes from the quick/turbo
    setting; only the celebration overlays may be tapped (that moves the presentation clock, never a result).
-   A replay from the history uses the same engine call and never touches the ledger. */
+   A replay from the history uses the same engine call and never touches the ledger.
+   Remote (RGS) mode, lib/rgs-client.ts: the server resolves AND settles the round before the browser sees it; the game
+   presents the returned round, records it in the history and shows the server balance. It never reserves or settles
+   locally, so leaving mid-round needs nothing; a reload re-presents the last unseen server round. */
 
 type LiveRound = {
   /** Ledger reservation id; null for a history replay. */
   id: string | null; replayOf: string | null;
   bet: number; cost: number; mode: CascadeMode; balanceBefore: number;
   round: Cascade2Round; timeline: CascadeTimeline; prefix: string; reduced: boolean; lite: boolean; settled: boolean; startedAt: number;
+  /** Server round (already settled there): its receipt and the balance to show when the presentation ends. */
+  remote: { receipt: RemoteReceipt; balanceAfter: number } | null;
 };
 type Phase = 'idle' | 'playing' | 'done';
 type Card =
@@ -139,10 +146,10 @@ function RefillIcon() { return <svg {...svg} width={16} height={16}><path d="M20
 
 /* Heavy static subtrees are memoised so meter/announcement updates never re-render them. */
 const StaticBackdrop = memo(CascadeBackdrop);
-const StaticFooter = memo(function StaticFooter() { return <><DemoNotice /><Rules game="Cascade" /></>; });
+const StaticFooter = memo(function StaticFooter({ remote }: { remote: boolean }) { return <><DemoNotice remote={remote} /><Rules game="Cascade" /></>; });
 
 export function CascadeGame() {
-  const { reserveDemo, settleDemo, setActiveDemo, demoBalance, resetDemoBalance } = useProduct();
+  const { reserveDemo, settleDemo, recordRemote, setActiveDemo, demoBalance, resetDemoBalance } = useProduct();
   const router = useRouter();
   const { settings, update: updateSettings, reset: resetSettings } = useSlotSettings('cascade');
   const [realityMs] = useState(realityIntervalOverride);
@@ -173,6 +180,16 @@ export function CascadeGame() {
   const [replaying, setReplaying] = useState<{ recordId: string; seed: string } | null>(null);
   const [boot, setBoot] = useState<Boot>(() => ({ phase: bootedOnce ? 'done' : 'loading', progress: 0 }));
   const reducedMotion = usePrefersReducedMotion();
+  const sourceView = useRoundSource('cascade');
+  const remote: RemoteRoundSource | null = sourceView.status === 'remote' ? sourceView.source : null;
+  const sourcePending = sourceView.status === 'pending';
+  /** Server balance in remote mode (display only; the server's response is the truth). */
+  const [remoteBalance, setRemoteBalance] = useState<number | null>(null);
+  useEffect(() => { if (sourceView.status === 'remote') setRemoteBalance(sourceView.balanceCents); }, [sourceView]);
+  const balance = remote ? (remoteBalance ?? 0) : demoBalance;
+  const pendingRemote = useRef(false);
+  const mounted = useRef(true);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
 
   const board = useRef<BoardHandle>(null);
   const stageRef = useRef<HTMLDivElement>(null);
@@ -193,8 +210,8 @@ export function CascadeGame() {
   const celebrateFx = useRef({ reduced: false, lite: false });
   const autoRef = useRef<AutoplayState | null>(null);
   autoRef.current = auto;
-  const balanceRef = useRef(demoBalance);
-  balanceRef.current = demoBalance;
+  const balanceRef = useRef(balance);
+  balanceRef.current = balance;
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
 
@@ -256,13 +273,19 @@ export function CascadeGame() {
     if (current.settled || settledIds.current.has(current.id)) return;
     current.settled = true; settledIds.current.add(current.id);
     const { round } = current;
-    settleDemo({
+    const record: DemoRecord = {
       id: current.id, game: 'Cascade', stake: current.cost, payout: round.payoutCents, detail: cascadeHistoryDetail(round), at: Date.now(), kind: 'round',
       cascade: { engine: round.engine, seedHex: round.seedHex, betCents: current.bet, mode: current.mode, costCents: current.cost },
-    });
+    };
+    if (current.remote) {
+      // Already settled on the server: only the history line and the server balance.
+      const { receipt } = current.remote;
+      recordRemote({ ...record, at: receipt.at, remote: { roundId: receipt.roundId, nonce: receipt.fair.nonce, serverSeedHash: receipt.fair.serverSeedHash, clientSeed: receipt.fair.clientSeed } });
+      setRemoteBalance(current.remote.balanceAfter);
+    } else settleDemo(record);
     recordSession({ costCents: current.cost, payoutCents: round.payoutCents });
     setActiveDemo(false);
-  }, [settleDemo, setActiveDemo, recordSession]);
+  }, [settleDemo, recordRemote, setActiveDemo, recordSession]);
 
   // Leaving the page mid-show still closes the round once, with the full engine payout.
   const settleRef = useRef(settle); settleRef.current = settle;
@@ -285,6 +308,7 @@ export function CascadeGame() {
 
   const finishRound = useCallback((current: LiveRound) => {
     settle(current);
+    if (current.remote) markRoundShown('cascade', current.remote.receipt.roundId);
     setPhase('done');
     sound.countUp(false);
     const { round } = current;
@@ -516,9 +540,36 @@ export function CascadeGame() {
   const busy = phase === 'playing';
   const booting = boot.phase !== 'done';
 
+  /** Remote round: the server resolves and settles it; the spin stays locked until its round has been presented. */
+  const startRemote = useCallback((source: RemoteRoundSource, roundMode: CascadeMode, cost: number, balanceBefore: number) => {
+    const betCents = bet;
+    pendingRemote.current = true;
+    setError(''); setPhase('playing'); setActiveDemo(true); setReplaying(null);
+    setRemoteBalance(balanceBefore - cost);
+    setAnnounce(`Dönüş sunucuya gönderildi, ${demoNumber(cost)} DEMO.`);
+    source.client.play('cascade', betCents, roundMode).then(play => {
+      pendingRemote.current = false;
+      const s = settingsRef.current;
+      const current: LiveRound = {
+        id: `remote:${play.receipt.roundId}`, replayOf: null, bet: betCents, cost: play.receipt.costCents, mode: roundMode, balanceBefore, round: play.round,
+        timeline: buildCascadeTimeline(play.round, cascadeTimelineOptions(s, reducedMotion)), prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects,
+        settled: false, startedAt: performance.now(), remote: { receipt: play.receipt, balanceAfter: play.receipt.balanceCents },
+      };
+      if (!mounted.current) { settleRef.current(current); return; }
+      begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Bedava dönüşler başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+    }, (failure: unknown) => {
+      pendingRemote.current = false;
+      setActiveDemo(false);
+      if (!mounted.current) return;
+      setPhase('idle'); setError(rgsErrorMessage(failure)); sound.denied();
+      if (autoRef.current) stopAutoplay('Sunucu turu başlatılamadı');
+      source.client.state().then(state => { if (mounted.current) setRemoteBalance(state.balanceCents); }, () => undefined);
+    });
+  }, [bet, begin, reducedMotion, setActiveDemo, sound, stopAutoplay]);
+
   /** Real round (standard/ante spin or a confirmed buy). Returns false when nothing started. */
   const startRound = useCallback((kind: 'spin' | 'buy'): boolean => {
-    if ((live.current && !live.current.settled) || gated || booting) return false;
+    if ((live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
     const roundMode: CascadeMode = kind === 'buy' ? 'buy' : ante ? 'ante' : 'standard';
     if (kind === 'buy' && ante) return false;
     const cost = cascadeCost(bet, roundMode);
@@ -528,11 +579,10 @@ export function CascadeGame() {
       sound.denied();
       return false;
     }
+    if (remote) { startRemote(remote, roundMode, cost, balanceBefore); return true; }
     let round: Cascade2Round;
     try {
-      const words = new Uint32Array(4);
-      crypto.getRandomValues(words);
-      round = playCascade2Round(cascadeSeedFromEntropy(words), bet, roundMode);
+      round = localRoundSource.resolve('cascade', bet, roundMode);
     } catch { setError(ENTROPY_ERROR); return false; }
     let id: string | null;
     try { id = reserveDemo(cost, cascadeLedgerLimits(bet, roundMode)); } catch { setError(ENTROPY_ERROR); return false; }
@@ -541,11 +591,41 @@ export function CascadeGame() {
     const s = settingsRef.current;
     const lite = reducedMotion || s.reducedEffects;
     const timeline = buildCascadeTimeline(round, cascadeTimelineOptions(s, reducedMotion));
-    const current: LiveRound = { id, replayOf: null, bet, cost, mode: roundMode, balanceBefore, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite, settled: false, startedAt: performance.now() };
+    const current: LiveRound = { id, replayOf: null, bet, cost, mode: roundMode, balanceBefore, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite, settled: false, startedAt: performance.now(), remote: null };
     setReplaying(null);
     begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Bedava dönüşler başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
     return true;
-  }, [ante, bet, begin, booting, gated, reducedMotion, reserveDemo, setActiveDemo, sound]);
+  }, [ante, bet, begin, booting, gated, reducedMotion, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote]);
+
+  // Reload recovery (remote): the last server round of this game that this tab did not finish showing is shown again,
+  // exactly as resolved. Nothing is debited or credited here; the server settled it when it was accepted.
+  const recoveredOnce = useRef(false);
+  useEffect(() => {
+    if (sourceView.status !== 'remote' || !sourceView.recovered || recoveredOnce.current || booting || live.current || pendingRemote.current) return;
+    recoveredOnce.current = true;
+    const { receipt, round } = sourceView.recovered;
+    const after = sourceView.recoveredBalanceCents ?? receipt.balanceCents, s = settingsRef.current;
+    const current: LiveRound = {
+      id: `remote:${receipt.roundId}`, replayOf: null, bet: receipt.betCents, cost: receipt.costCents, mode: receipt.mode, balanceBefore: after + receipt.costCents - receipt.payoutCents, round,
+      timeline: buildCascadeTimeline(round, cascadeTimelineOptions(s, reducedMotion)), prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects,
+      settled: false, startedAt: performance.now(), remote: { receipt, balanceAfter: after },
+    };
+    setActiveDemo(true);
+    setRemoteBalance(current.balanceBefore - current.cost);
+    begin(current, `Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı (${demoNumber(receipt.payoutCents)} DEMO).`);
+  }, [sourceView, booting, begin, reducedMotion, setActiveDemo]);
+
+  /** Remote only: publish the signed replay of a server round and hand out its link. */
+  const shareRound = useCallback((record: DemoRecord) => {
+    const id = record.remote?.roundId;
+    if (!remote || !id) return;
+    remote.client.share(id).then(async ({ path }) => {
+      const url = `${window.location.origin}${path}`;
+      let copied = false;
+      try { await navigator.clipboard.writeText(url); copied = true; } catch { /* clipboard blocked: show the link */ }
+      showToast(copied ? `Paylaşım bağlantısı kopyalandı: ${url}` : `Paylaşım bağlantısı: ${url}`);
+    }, (failure: unknown) => showToast(`Paylaşılamadı: ${rgsErrorMessage(failure)}`, 'warn'));
+  }, [remote, showToast]);
   const startRef = useRef(startRound); startRef.current = startRound;
 
   const replay = useCallback((record: DemoRecord) => {
@@ -556,7 +636,7 @@ export function CascadeGame() {
     if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast('Tekrar doğrulanamadı: kayıt motorla uyuşmuyor.', 'warn'); return; }
     const s = settingsRef.current;
     const timeline = buildCascadeTimeline(round, cascadeTimelineOptions(s, reducedMotion));
-    const current: LiveRound = { id: null, replayOf: record.id, bet: meta.betCents, cost: meta.costCents, mode: meta.mode, balanceBefore: balanceRef.current, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects, settled: false, startedAt: performance.now() };
+    const current: LiveRound = { id: null, replayOf: record.id, bet: meta.betCents, cost: meta.costCents, mode: meta.mode, balanceBefore: balanceRef.current, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects, settled: false, startedAt: performance.now(), remote: null };
     setReplaying({ recordId: record.id, seed: meta.seedHex });
     stageRef.current?.scrollIntoView({ block: 'start' });
     begin(current, `Tekrar oynatılıyor: tur ${shortRoundId(meta.seedHex)}. Bakiye değişmez.`);
@@ -670,15 +750,15 @@ export function CascadeGame() {
   const roundMode: CascadeMode = ante ? 'ante' : 'standard';
   const spinCost = cascadeCost(bet, roundMode);
   const buyPrice = cascadeCost(bet, 'buy');
-  const buyReason = buyBlockReason({ betCents: bet, balanceCents: demoBalance, ante, autoplay: auto !== null, busy, gated });
-  const locked = busy || auto !== null || gated || booting;
+  const buyReason = buyBlockReason({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const locked = busy || auto !== null || gated || booting || sourcePending;
   const amountCents = (h: number) => (roundBet === null ? 0 : centsFor(roundBet, h));
   const boardLabel = free ? 'Candy Cascade bedava dönüş ızgarası, 6 sütun, 5 satır' : 'Candy Cascade ızgarası, 6 sütun, 5 satır';
   const boardElement = useMemo(() => <BoardFrame><CascadeBoard ref={board} label={boardLabel} free={free} /></BoardFrame>, [boardLabel, free]);
   const stageClass = [styles.stage, free ? styles.stageFree : '', card ? styles.stageCard : ''].join(' ');
   const celebrating = card?.kind === 'big' || card?.kind === 'outro';
   const infoPages = useMemo(() => cascadeInfoPages(bet), [bet]);
-  const outOfCredit = !busy && demoBalance < CASCADE_MIN_BET_CENTS;
+  const outOfCredit = !busy && balance < CASCADE_MIN_BET_CENTS;
   const deckWin = busy ? amountCents(meter.total) : (lastWin?.payout ?? 0);
   const speedIndex = SPIN_SPEEDS.indexOf(settings.spinSpeed);
   const replayInfo = replaying ? `Tekrar — bakiye değişmez · tur ${shortRoundId(replaying.seed)}` : null;
@@ -686,6 +766,16 @@ export function CascadeGame() {
   const openInfo = (page = 'how') => { setInfoPage(page); setModal('info'); sound.click(); };
   const refill = () => {
     if (busy || auto) return;
+    if (remote) {
+      if (pendingRemote.current) return;
+      remote.client.resetBalance().then(cents => {
+        setRemoteBalance(cents);
+        const at = Date.now();
+        recordRemote({ id: `remote-reset:${at}`, game: 'Cascade', stake: 0, payout: 0, detail: 'Bakiye yenilendi (sunucu)', at, kind: 'reset' });
+        showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('Sunucu DEMO bakiyesi 1.000 DEMO olarak yenilendi.');
+      }, (failure: unknown) => showToast(rgsErrorMessage(failure), 'warn'));
+      return;
+    }
     if (resetDemoBalance('Cascade')) { showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('DEMO bakiyesi 1.000 DEMO olarak yenilendi.'); }
   };
   const toggleSound = () => {
@@ -722,7 +812,7 @@ export function CascadeGame() {
       ladder={CASCADE_BET_LADDER}
       valueCents={bet}
       onChange={chooseBet}
-      balanceCents={demoBalance}
+      balanceCents={balance}
       maxBetCents={CASCADE_MAX_BET_CENTS}
       costMode={CASCADE_COST_MODES[roundMode]}
       modeLabel={ante ? 'Şans ×2' : undefined}
@@ -732,7 +822,7 @@ export function CascadeGame() {
         <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label="Oyun kontrolleri">
           <div className={styles.cellBalance}>
             <span className={styles.cellLabel}>Bakiye</span>
-            <strong className={styles.cellValue} data-testid="cascade-balance">{formatAmount(demoBalance)}<small> DEMO</small></strong>
+            <strong className={styles.cellValue} data-testid="cascade-balance">{formatAmount(balance)}<small> DEMO</small></strong>
             <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated}><RefillIcon /><span>Bakiyeyi yenile</span></button>
           </div>
           <div className={styles.cellBet}>
@@ -751,7 +841,7 @@ export function CascadeGame() {
             {auto ? (
               <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay(AUTOPLAY_STOP_REASONS.cancelled, 'info')} />
             ) : (
-              <button type="button" className={`${styles.spin} ${busy ? styles.spinning : ''}`} onClick={onSpinClick} disabled={busy || gated || booting}
+              <button type="button" className={`${styles.spin} ${busy ? styles.spinning : ''}`} onClick={onSpinClick} disabled={busy || gated || booting || sourcePending}
                 aria-label="Çevir" aria-describedby="cc-spin-cost" data-locked={busy || undefined} data-testid="cascade-spin">
                 <span className={styles.spinFace}><SwirlIcon /></span>
                 {busy && <span className={styles.spinLock} aria-hidden="true"><LockIcon /></span>}
@@ -800,7 +890,8 @@ export function CascadeGame() {
 
   return (
     <div className={`game-page ${styles.page}`}>
-      <GameHeading title="Candy Cascade" subtitle="Sekiz eşleşmede patlat, düşen şekerlerle zincir kur." mode={mode} setMode={setMode} active={busy || auto !== null} />
+      <GameHeading title="Candy Cascade" subtitle="Sekiz eşleşmede patlat, düşen şekerlerle zincir kur." mode={mode} setMode={setMode} active={busy || auto !== null}
+        badge={remote ? remote.label : sourcePending ? 'Sunucu kontrol ediliyor' : localRoundSource.label} />
       <section className={`game-table ${styles.table}`} aria-label="Candy Cascade oyun masası">
         <div ref={stageRef} className={stageClass} data-phase={phase} data-celebrate={celebrating || undefined}>
           <StaticBackdrop />
@@ -913,21 +1004,21 @@ export function CascadeGame() {
         <div className="sr-only" role="status" aria-live="polite">{announce}</div>
       </section>
       <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} />
-      <CascadeHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} />
-      <StaticFooter />
+      <CascadeHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
+      <StaticFooter remote={remote !== null} />
 
       <Modal open={modal === 'settings'} onClose={() => setModal(null)} title="Ayarlar" size="md">
         <SettingsPanel settings={settings} onChange={updateSettings} onReset={resetSettings} />
         <p className={styles.modalNote} role="status">{soundLoad.ready ? 'Ses hazır: müzik ve efektler bu cihazda oluşturuldu.' : soundLoad.started ? `Ses yükleniyor %${soundLoad.percent} (bu sırada basit efektler çalar).` : 'Ses ilk dokunuşta yüklenir.'}</p>
         <section className={styles.demoBox} aria-labelledby="cc-demo-title">
           <h3 id="cc-demo-title">DEMO bakiyesi</h3>
-          <p>Bakiye {formatDemo(demoBalance)}. Yenilemek bakiyeyi 1.000 DEMO yapar ve geçmişe "Bakiye yenilendi" satırı ekler; tur veya otomatik oyun sürerken yapılamaz.</p>
+          <p>Bakiye {formatDemo(balance)}{remote ? ' (sunucu)' : ''}. Yenilemek bakiyeyi 1.000 DEMO yapar ve geçmişe "Bakiye yenilendi" satırı ekler; tur veya otomatik oyun sürerken yapılamaz.</p>
           <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>Bakiyeyi yenile</button>
         </section>
       </Modal>
       <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title="Candy Cascade · Oyun bilgisi" initialPageId={infoPage} />
       <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title="Otomatik oyun" size="md">
-        <AutoplayPanel onStart={startAutoplay} spinCostCents={spinCost} balanceCents={demoBalance} disabled={busy || gated} />
+        <AutoplayPanel onStart={startAutoplay} spinCostCents={spinCost} balanceCents={balance} disabled={busy || gated} />
         <p className={styles.modalNote}>Tur başı {formatDemo(spinCost)}{ante ? ' (Şans ×2)' : ''} · bonus satın almaz · sekme gizlenince durur.</p>
       </Modal>
       <BuyFeatureDialog
@@ -936,7 +1027,7 @@ export function CascadeGame() {
         onConfirm={confirmBuy}
         featureName={`10 bedava dönüş · bahis ${formatDemo(bet)}`}
         priceCents={buyPrice}
-        balanceCents={demoBalance}
+        balanceCents={balance}
         rtpText={`Satın alma RTP ${formatRtp(CASCADE2_RTP.buy.rtp)} · standart ${formatRtp(CASCADE2_RTP.standard.rtp)} (simülasyon, sertifikasız)`}
         description={<>Bahsin <strong>100 katı</strong>. Tur en az 4 yıldızla başlar ve 10 bedava dönüş garantilidir; kazançlar {formatDemo(bet)} bahse göre ödenir, azami {formatDemo(bet * 5000)}.</>}
         disabledReason={buyReason ?? undefined}

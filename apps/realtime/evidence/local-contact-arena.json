@@ -3,11 +3,11 @@
     "apps/realtime/src/ringside-arena.ts": "19b5b8e34a6b2a78b8fe6fde81e64e9888e346fd0fff9db8ae4f58e8a45af589",
     "packages/protocol/src/combat-v3.ts": "0813ec0765c66ca7344a69bb7e971a089ca7486fee51bd523851695c1c41c3c8",
     "packages/protocol/src/combat-v4.ts": "e968f235ebee073c8f30807dda43b83fa15ea31655507a40327551806d62ab85",
-    "packages/protocol/src/ringside.ts": "829a4f3d623cd72f55062f19515abc1b79e3e46c77dd859b3d0a110c1ab84585",
+    "packages/protocol/src/ringside.ts": "dfe3adee3d1da4d1e5240bac7d4e9be5ca1100852cde623b6998e30e3e6a7f72",
     "packages/protocol/src/connectome-policy.ts": "37590c7fb528b14baa232e980fcbf8c9d16daa14aff48d5c59b2034e549e15aa",
     "apps/realtime/test/contact-arena.workerd.mjs": "14174982cc83c13288bad8bc7dac6139b2272c0c4089b3f50d2f056e0ea20cb6"
   },
-  "at": "2026-10-09T17:18:04.608Z",
+  "at": "2026-10-13T00:38:53.874Z",
   "runtime": "local-workerd-sqlite",
   "checks": 16,
   "passed": [

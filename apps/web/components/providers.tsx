@@ -8,14 +8,18 @@ export type DemoGame = 'Crash' | 'Coinflip' | 'Ringside' | 'Cascade' | 'Tarhun';
 export type CascadeRoundMeta = { engine: string; seedHex: string; betCents: number; mode: 'standard' | 'ante' | 'buy'; costCents: number };
 /** Replay data of a Tarhun: Fırtına Tahtı round (engine storm-throne-1); same shape as the Candy Cascade meta. */
 export type StormRoundMeta = { engine: string; seedHex: string; betCents: number; mode: 'standard' | 'ante' | 'buy'; costCents: number };
+/** A round the RGS server resolved and settled (lib/rgs-client.ts). The browser only recorded it; it never settled it. */
+export type RemoteRoundMeta = { roundId: string; nonce: number; serverSeedHash: string; clientSeed: string };
 /** `stake` is what the round cost; `kind: 'reset'` marks a DEMO balance refill line (stake and payout 0). */
-export type DemoRecord = { id: string; game: DemoGame; stake: number; payout: number; detail: string; at: number; kind?: 'round' | 'reset'; cascade?: CascadeRoundMeta; storm?: StormRoundMeta };
+export type DemoRecord = { id: string; game: DemoGame; stake: number; payout: number; detail: string; at: number; kind?: 'round' | 'reset'; cascade?: CascadeRoundMeta; storm?: StormRoundMeta; remote?: RemoteRoundMeta };
 type ProductContext = {
   wallet: ConnectedWallet | null; connectWallet: (wallet: StandardWallet) => Promise<void>; disconnectWallet: () => void;
   walletOpen: boolean; setWalletOpen: (open: boolean) => void;
   demoBalance: number; records: DemoRecord[];
   reserveDemo: (amount: number, limits?: number | DemoReserveLimits) => string | null;
   settleDemo: (record: DemoRecord) => void;
+  /** History line for a server-settled round or a server balance reset. Never touches the local ledger; one line per id. */
+  recordRemote: (record: DemoRecord) => void;
   /** DEMO only: back to the starting credit. False while a round is reserved or a game reports activity. */
   resetDemoBalance: (game: DemoGame) => boolean;
   activeDemo: boolean; setActiveDemo: (active: boolean) => void;
@@ -47,6 +51,9 @@ export function Providers({ children }: { children: ReactNode }) {
     setBalance(ledger.current.balance);
     setRecords(current => [record, ...current].slice(0, 30));
   }, []);
+  const recordRemote = useCallback((record: DemoRecord) => {
+    setRecords(current => (current.some(r => r.id === record.id) ? current : [record, ...current].slice(0, 30)));
+  }, []);
   const activeRef = useRef(false);
   useEffect(() => { activeRef.current = activeDemo; }, [activeDemo]);
   const resetDemoBalance = useCallback((game: DemoGame) => {
@@ -56,7 +63,7 @@ export function Providers({ children }: { children: ReactNode }) {
     setRecords(current => [{ id: `reset:${at}:${current.length}`, game, stake: 0, payout: 0, detail: 'Bakiye yenilendi', at, kind: 'reset' as const }, ...current].slice(0, 30));
     return true;
   }, []);
-  return <Context value={{ wallet, connectWallet, disconnectWallet, walletOpen, setWalletOpen, demoBalance, records, reserveDemo, settleDemo, resetDemoBalance, activeDemo, setActiveDemo }}>{children}</Context>;
+  return <Context value={{ wallet, connectWallet, disconnectWallet, walletOpen, setWalletOpen, demoBalance, records, reserveDemo, settleDemo, recordRemote, resetDemoBalance, activeDemo, setActiveDemo }}>{children}</Context>;
 }
 export function useProduct() {
   const context = useContext(Context);

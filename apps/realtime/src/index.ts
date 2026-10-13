@@ -5,10 +5,15 @@ import { ServiceError, activeSession, allowedOrigin, authenticate, boundedText, 
 import { LiveArena } from "./live-arena";
 import { RingsideArena, ContactArena, ContactArenaV4 } from "./ringside-arena";
 import { ContactArenaV5 } from "./contact-arena-v5";
+import { SLOT_PATH_PREFIX, handleSlots, type SlotEnv } from "./slots";
+import { SlotWallet } from "./slot-wallet";
+import { SlotReplay } from "./slot-replay";
+import { SlotMonitor } from "./slot-monitor";
 export { RingsideArena, ContactArena, ContactArenaV4, ContactArenaV5 };
 export { LiveArena };
+export { SlotWallet, SlotReplay, SlotMonitor };
 
-export interface Env extends AuthEnv { CONTACT_ARENA: DurableObjectNamespace<ContactArena>; CONTACT_ARENA_V4: DurableObjectNamespace<ContactArenaV4>; CONTACT_ARENA_V5: DurableObjectNamespace<ContactArenaV5>; RINGSIDE_ARENA: DurableObjectNamespace<RingsideArena>; LIVE_ARENA: DurableObjectNamespace<LiveArena>; LIVE_ARENA_ENABLED?: string; ROOMS: DurableObjectNamespace<RoomCoordinator>; BUCKETS: DurableObjectNamespace<FanoutBucket>; ADMISSION: DurableObjectNamespace<AdmissionGate>; FANOUT_BUCKETS?: string }
+export interface Env extends AuthEnv, SlotEnv { CONTACT_ARENA: DurableObjectNamespace<ContactArena>; CONTACT_ARENA_V4: DurableObjectNamespace<ContactArenaV4>; CONTACT_ARENA_V5: DurableObjectNamespace<ContactArenaV5>; RINGSIDE_ARENA: DurableObjectNamespace<RingsideArena>; LIVE_ARENA: DurableObjectNamespace<LiveArena>; LIVE_ARENA_ENABLED?: string; ROOMS: DurableObjectNamespace<RoomCoordinator>; BUCKETS: DurableObjectNamespace<FanoutBucket>; ADMISSION: DurableObjectNamespace<AdmissionGate>; FANOUT_BUCKETS?: string }
 const json = (value: unknown, status = 200) => Response.json(value, { status, headers: { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" } });
 const errorCode = (e: unknown): ErrorCode => e instanceof ServiceError ? e.code : "SERVICE_UNAVAILABLE";
 const buckets = (env: Env) => Math.max(1, Math.min(64, Number.parseInt(env.FANOUT_BUCKETS ?? "8", 10) || 8));
@@ -36,6 +41,8 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url), origin = request.headers.get("Origin");
     if (origin && !allowedOrigin(origin, env)) return json({ code: "FORBIDDEN" }, 403);
+    // DEMO slot service (default off: SLOTS_ENABLED). Own CORS, body, auth and rate rules: src/slots.ts.
+    if (url.pathname.startsWith(SLOT_PATH_PREFIX)) return handleSlots(request, env, url);
     const cors = (response: Response) => { if (origin) { response.headers.set("Access-Control-Allow-Origin", origin); response.headers.set("Vary", "Origin"); } return response; };
     if (request.method === "OPTIONS") return cors(new Response(null, { status: 204, headers: { "Access-Control-Allow-Methods": "GET,OPTIONS", "Access-Control-Allow-Headers": "Content-Type" } }));
     try {

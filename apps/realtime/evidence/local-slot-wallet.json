@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-13T00:39:50.773Z",
+  "runtime": "local-workerd-sqlite-production-router",
+  "node": "v24.21.0",
+  "checks": 30,
+  "results": {
+    "concurrency": {
+      "twins": [
+        200,
+        409
+      ],
+      "burst": [
+        200,
+        409,
+        200,
+        409,
+        409,
+        409
+      ]
+    },
+    "responseBytes": {
+      "cascadeStandard": 1897,
+      "tarhunBuy": 28113
+    },
+    "verifiedAfterReveal": 7,
+    "rateLimit": {
+      "roundBurst": [
+        200,
+        200,
+        200,
+        200,
+        429,
+        429,
+        429,
+        429
+      ],
+      "requestBurst": 8,
+      "minuteRetryAfter": 30
+    },
+    "monitor": [
+      {
+        "game": "cascade",
+        "mode": "ante",
+        "rounds": 1
+      },
+      {
+        "game": "cascade",
+        "mode": "standard",
+        "rounds": 10
+      },
+      {
+        "game": "tarhun",
+        "mode": "buy",
+        "rounds": 1
+      }
+    ]
+  },
+  "scope": "Real workerd + SQLite Durable Objects through the production router: default-off flag, dev/worker signature, CORS/origin/query, token mint/forgery/unknown-token (no storage), strict body (unknown/result fields, size, chunked, media type), bet/mode/cost/balance, idempotent same bytes and 409 conflict, one-request-at-a-time with a held round, unheld concurrent duplicates and bursts, injected SQLite failure rollback, rotate + reveal + Node/shared verifier recomputation, signed replay without secrets and republish after reveal, session isolation, ledger conservation, 4/s 12 req/s 600/min limits, per-IP session admission, idle expiry wipe, alarm-fed RTP monitor and 4-sigma log line, restart persistence. Not hosted, not load, not certified RNG, DEMO only."
+}
