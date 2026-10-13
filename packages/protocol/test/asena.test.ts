@@ -99,7 +99,7 @@ test("RNG and rules are frozen: a fingerprint of 200 fixed seeds across all mode
     const seed = createHash("sha256").update(`asena-stars-1-frozen:${i}`).digest("hex").slice(0, 32);
     hash.update(JSON.stringify(playAsenaRound(seed, bets[i % 4]!, MODES[i % 3]!)));
   }
-  assert.equal(hash.digest("hex"), "FINGERPRINT");
+  assert.equal(hash.digest("hex"), "da258a9de34606b19872761495dc3f8e7dcc618c15119e0a7b5c4b749873f97d");
 });
 
 test("input validation throws RangeError for seed, bet level and mode", () => {

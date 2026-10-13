@@ -9,6 +9,7 @@ import {
   sparkles, synthLead, timpani, tom, whoosh, wood, type PadKind, type VoiceCtx,
 } from './synth/instruments';
 import { baglama, bronze, darbuka, davul, davulRim, frameDrum, horn, hornChord, ney, rain, taiko, thunderCrack, thunderRumble, wind, zurna } from './synth/anatolian';
+import { bubbles, glassHarp, kanun, kudum, ud, waterBed, waterGlass, zil } from './synth/ebru';
 import { foldLoop, loudness, master } from './synth/master';
 import { HALL, ROOM, makeImpulse, type ImpulseSpec } from './synth/reverb';
 import type { Score, KitHit, PitchedVoice, Track } from './scores/types';
@@ -87,10 +88,16 @@ function pitched(ctx: VoiceCtx, voice: PitchedVoice, freq: number, vel: number, 
     case 'hornSwell': return horn(ctx, freq, vel, held, { attack: Math.min(0.9, Math.max(0.12, held * 0.55)), bright });
     case 'bronze': return bronze(ctx, freq, vel, bright);
     case 'taikoPitched': return taiko(ctx, vel, freq);
+    // Ebru voices (synth/ebru.ts)
+    case 'kanun': return kanun(ctx, freq, vel, held, bright);
+    case 'kanunSoft': return kanun(ctx, freq, vel * 0.85, held, bright * 0.55, { ring: 0.2 });
+    case 'ud': return ud(ctx, freq, vel, held, 0.5 + 0.3 * bright);
+    case 'glassHarp': return glassHarp(ctx, freq, vel, held);
+    case 'waterGlass': return waterGlass(ctx, freq, vel, 1, bright);
   }
 }
 
-const KIT_PAN: Partial<Record<KitHit, number>> = { hat: -0.25, hatOpen: -0.3, shaker: 0.3, wood: 0.35, woodHi: -0.35, snap: 0.15, tomHi: 0.3, tomLo: -0.3, brush: 0.05, davulRim: 0.25, tek: -0.3, ka: -0.38, dum: -0.2, frame: 0.3 };
+const KIT_PAN: Partial<Record<KitHit, number>> = { hat: -0.25, hatOpen: -0.3, shaker: 0.3, wood: 0.35, woodHi: -0.35, snap: 0.15, tomHi: 0.3, tomLo: -0.3, brush: 0.05, davulRim: 0.25, tek: -0.3, ka: -0.38, dum: -0.2, frame: 0.3, kudumDum: -0.22, kudumTek: 0.22, zil: 0.4, frameLo: 0.15 };
 
 function kit(ctx: VoiceCtx, k: KitHit, v: number): Float32Array | Stereo {
   switch (k) {
@@ -121,6 +128,10 @@ function kit(ctx: VoiceCtx, k: KitHit, v: number): Float32Array | Stereo {
     case 'frame': return frameDrum(ctx, v);
     case 'taiko': return taiko(ctx, v, 50);
     case 'taikoLo': return taiko(ctx, v, 41);
+    case 'kudumDum': return kudum(ctx, v, 'dum');
+    case 'kudumTek': return kudum(ctx, v, 'tek');
+    case 'zil': return zil(ctx, v);
+    case 'frameLo': return frameDrum(ctx, v, 92);
   }
 }
 
@@ -214,6 +225,8 @@ async function renderTrack(score: Score, track: Track, st: Stereo, env: RenderEn
         case 'rumble': putStereo(thunderRumble(ctx, dur, f.v, f.density ?? 0.5), s, 1, pan, track.width ?? 1); break;
         case 'rain': putStereo(rain(ctx, dur, f.v, f.density ?? 1), s, 1, pan, track.width ?? 1); break;
         case 'wind': putStereo(wind(ctx, dur, f.v), s, 1, pan, track.width ?? 1); break;
+        case 'water': putStereo(waterBed(ctx, dur, f.v, f.density ?? 1), s, 1, pan, track.width ?? 1); break;
+        case 'bubbles': putStereo(bubbles(ctx, dur, Math.max(1, Math.round((f.density ?? 20) * dur)), f.v, 380, 1700, f.shape === 'swell' ? 'swell' : f.shape === 'flat' ? 'flat' : 'decay'), s, 1, pan, track.width ?? 1); break;
         case 'swell': {
           // reversed cymbal that lands exactly on t + d
           const c = crash(ctx, f.v, dur * 1.1), n = Math.min(c.l.length, Math.round(dur * sr));
@@ -311,7 +324,7 @@ export function trackCost(track: Track): number {
     case 'pitched': return track.notes.length * (track.voice === 'pluck' ? 0.6 : 1);
     case 'pad': return track.chords.reduce((s, c) => s + c.ns.length * (c.d + 2), 0) * (track.voice === 'padSaw' ? 1.2 : track.voice === 'padChoir' || track.voice === 'padChoirMale' ? 1.6 : track.voice === 'padHorn' ? 1.3 : 0.6);
     case 'kit': return 4 + track.hits.length * 0.15;
-    case 'fx': return track.fx.reduce((s, f) => s + (f.k === 'room' ? 40 : f.k === 'rain' ? 60 : f.k === 'wind' ? 30 : f.k === 'riser' || f.k === 'rumble' ? 8 : 3) + f.d, 0);
+    case 'fx': return track.fx.reduce((s, f) => s + (f.k === 'room' ? 40 : f.k === 'rain' ? 60 : f.k === 'wind' ? 30 : f.k === 'water' ? 45 : f.k === 'riser' || f.k === 'rumble' ? 8 : 3) + f.d, 0);
   }
 }
 

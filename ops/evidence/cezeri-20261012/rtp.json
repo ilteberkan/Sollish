@@ -2,10 +2,10 @@
   "kind": "cezeri-rtp-simulation",
   "scope": "DEMO credits only; Monte Carlo estimate, not a certified or guaranteed RTP; RTP is return / cost",
   "engine": "cezeri-gears-1",
-  "engineSourceSha256": "c6760d472a9c060bdfcecbe818be4926623ca9b5f1253b5ec269b29dfe4ce331",
+  "engineSourceSha256": "b09ece26f4183b7f3a1621654e4a89bca1647de2a784586dfae46a4bdfefe578",
   "engineSourceNote": "sha256 of packages/protocol/src/cezeri.ts with the CEZERI_RTP evidence block (between the @evidence-block markers) removed. The constants were filled after the run; no engine code, tables or RNG changed afterwards.",
   "seed": "cezeri-20261012-evidence",
-  "workers": 4,
+  "workers": 2,
   "betCentsSimulated": 100,
   "betLevelsCents": [
     100,
@@ -35,188 +35,188 @@
       "rounds": 20000000,
       "costBets": 1,
       "rtpVsCost": {
-        "pointEstimate": 0.95017,
-        "pointEstimatePct": 95.0167,
+        "pointEstimate": 0.94864,
+        "pointEstimatePct": 94.8645,
         "ci95": [
-          0.94387,
-          0.95646
+          0.94232,
+          0.95497
         ],
         "ci95Pct": [
-          94.3871,
-          95.6463
+          94.2323,
+          95.4967
         ],
-        "ci95HalfWidthPct": 0.6296
+        "ci95HalfWidthPct": 0.6322
       },
-      "integerPayoutCheckRtp": 0.95017,
-      "hitRate": 0.28745,
-      "baseChainHitRate": 0.28545,
-      "featureRate": 0.002894,
-      "featureOneIn": 345.5,
-      "featureCount": 57882,
-      "avgFreeSpinsPerRound": 0.03887,
-      "avgFreeSpinsPerTrigger": 13.431,
-      "freeSpinsPlayed": 777392,
-      "retriggers": 49643,
-      "maxFreeSpinsInOneRound": 54,
-      "freeSpinHitRate": 0.57154,
+      "integerPayoutCheckRtp": 0.94864,
+      "hitRate": 0.28735,
+      "baseChainHitRate": 0.28535,
+      "featureRate": 0.002878,
+      "featureOneIn": 347.5,
+      "featureCount": 57559,
+      "avgFreeSpinsPerRound": 0.03864,
+      "avgFreeSpinsPerTrigger": 13.425,
+      "freeSpinsPlayed": 772754,
+      "retriggers": 49291,
+      "maxFreeSpinsInOneRound": 50,
+      "freeSpinHitRate": 0.57185,
       "respinChain": {
         "baseRotationsHistogram": {
-          "rotations1": 15246868,
-          "rotations2": 4753132,
+          "rotations1": 15247917,
+          "rotations2": 4752083,
           "rotations3": 0,
           "rotations4": 0
         },
-        "avgRespinsPerBaseSpin": 0.23766,
-        "avgRespinsPerWinningBaseChain": 0.83258,
+        "avgRespinsPerBaseSpin": 0.2376,
+        "avgRespinsPerWinningBaseChain": 0.83266,
         "freeRotationsHistogram": {
-          "rotations1": 476287,
-          "rotations2": 301105,
+          "rotations1": 473498,
+          "rotations2": 299256,
           "rotations3": 0,
           "rotations4": 0
         },
-        "avgRespinsPerFreeSpin": 0.38733,
-        "avgRespinsPerWinningFreeChain": 0.67769,
+        "avgRespinsPerFreeSpin": 0.38726,
+        "avgRespinsPerWinningFreeChain": 0.6772,
         "maxRotationsInOneSpin": 4
       },
-      "avgFinalHubInFeatures": 12.36,
+      "avgFinalHubInFeatures": 12.37,
       "maxFinalHub": 33,
-      "falconVisits": 228570,
+      "falconVisits": 227143,
       "avgFalconWildsAtFeatureEnd": 6.52,
       "baseVesselsHistogram": {
-        "0": 13573601,
-        "1": 5526505,
-        "2": 842012,
-        "3": 56425,
-        "4": 1457,
+        "0": 13571750,
+        "1": 5530860,
+        "2": 839831,
+        "3": 56147,
+        "4": 1412,
         "5plus": 0
       },
-      "stdDevPerRoundCostUnits": 14.3657,
-      "stdDevPerRoundBetUnits": 14.3657,
+      "stdDevPerRoundCostUnits": 14.4244,
+      "stdDevPerRoundBetUnits": 14.4244,
       "contributionPctOfCost": {
-        "baseChain": 52.4161,
-        "scatterPayInBase": 0.6371,
-        "freeSpins": 41.9635
+        "baseChain": 52.3784,
+        "scatterPayInBase": 0.6321,
+        "freeSpins": 41.854
       },
-      "avgFreeWinPerTriggerBets": 145,
+      "avgFreeWinPerTriggerBets": 145.43,
       "winTiersShareOfRounds": {
-        "atLeast10xBet": 0.011045,
-        "atLeast25xBet": 0.0033846,
-        "atLeast50xBet": 0.0020362,
-        "atLeast100xBet": 0.001234,
-        "atLeast500xBet": 0.0001397,
-        "atLeast1000xBet": 0.00003315,
-        "atLeast2000xBet": 0.00000505,
-        "atLeast5000xBet": 1e-7,
+        "atLeast10xBet": 0.011029,
+        "atLeast25xBet": 0.0033702,
+        "atLeast50xBet": 0.0020287,
+        "atLeast100xBet": 0.0012344,
+        "atLeast500xBet": 0.00013655,
+        "atLeast1000xBet": 0.00003375,
+        "atLeast2000xBet": 0.0000052,
+        "atLeast5000xBet": 1.5e-7,
         "atLeast10000xBet": 0
       },
       "winTiersRounds": {
-        "atLeast10xBet": 220890,
-        "atLeast25xBet": 67693,
-        "atLeast50xBet": 40723,
-        "atLeast100xBet": 24681,
-        "atLeast500xBet": 2794,
-        "atLeast1000xBet": 663,
-        "atLeast2000xBet": 101,
-        "atLeast5000xBet": 2,
+        "atLeast10xBet": 220571,
+        "atLeast25xBet": 67403,
+        "atLeast50xBet": 40574,
+        "atLeast100xBet": 24688,
+        "atLeast500xBet": 2731,
+        "atLeast1000xBet": 675,
+        "atLeast2000xBet": 104,
+        "atLeast5000xBet": 3,
         "atLeast10000xBet": 0
       },
-      "maxObservedXBet": 5773.04,
-      "maxObservedXCost": 5773.04,
+      "maxObservedXBet": 6048.76,
+      "maxObservedXCost": 6048.76,
       "capHits": 0,
       "capHitShareOfRounds": 0,
       "capXBet": 10000,
       "minVesselsOnFirstBaseBoard": 0,
       "costMismatches": 0,
       "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
-      "runtimeSeconds": 98.2
+      "runtimeSeconds": 162.9
     },
     "ante": {
       "rounds": 20000000,
       "costBets": 1.25,
       "rtpVsCost": {
-        "pointEstimate": 0.96074,
-        "pointEstimatePct": 96.0743,
+        "pointEstimate": 0.9558,
+        "pointEstimatePct": 95.5796,
         "ci95": [
-          0.9546,
-          0.96689
+          0.94969,
+          0.9619
         ],
         "ci95Pct": [
-          95.4598,
-          96.6888
+          94.9694,
+          96.1898
         ],
-        "ci95HalfWidthPct": 0.6145
+        "ci95HalfWidthPct": 0.6102
       },
-      "integerPayoutCheckRtp": 0.96074,
+      "integerPayoutCheckRtp": 0.9558,
       "hitRate": 0.28965,
       "baseChainHitRate": 0.28605,
-      "featureRate": 0.00518,
-      "featureOneIn": 193.1,
-      "featureCount": 103598,
-      "avgFreeSpinsPerRound": 0.06976,
-      "avgFreeSpinsPerTrigger": 13.468,
-      "freeSpinsPlayed": 1395280,
-      "retriggers": 89825,
+      "featureRate": 0.005174,
+      "featureOneIn": 193.3,
+      "featureCount": 103489,
+      "avgFreeSpinsPerRound": 0.06961,
+      "avgFreeSpinsPerTrigger": 13.453,
+      "freeSpinsPlayed": 1392246,
+      "retriggers": 89339,
       "maxFreeSpinsInOneRound": 54,
-      "freeSpinHitRate": 0.57269,
+      "freeSpinHitRate": 0.57125,
       "respinChain": {
         "baseRotationsHistogram": {
-          "rotations1": 15239208,
-          "rotations2": 4760792,
+          "rotations1": 15239487,
+          "rotations2": 4760513,
           "rotations3": 0,
           "rotations4": 0
         },
-        "avgRespinsPerBaseSpin": 0.23804,
-        "avgRespinsPerWinningBaseChain": 0.83216,
+        "avgRespinsPerBaseSpin": 0.23803,
+        "avgRespinsPerWinningBaseChain": 0.83211,
         "freeRotationsHistogram": {
-          "rotations1": 855472,
-          "rotations2": 539808,
+          "rotations1": 853900,
+          "rotations2": 538346,
           "rotations3": 0,
           "rotations4": 0
         },
-        "avgRespinsPerFreeSpin": 0.38688,
-        "avgRespinsPerWinningFreeChain": 0.67555,
+        "avgRespinsPerFreeSpin": 0.38667,
+        "avgRespinsPerWinningFreeChain": 0.67689,
         "maxRotationsInOneSpin": 4
       },
-      "avgFinalHubInFeatures": 10.97,
-      "maxFinalHub": 35,
-      "falconVisits": 410280,
-      "avgFalconWildsAtFeatureEnd": 6.53,
+      "avgFinalHubInFeatures": 10.95,
+      "maxFinalHub": 31,
+      "falconVisits": 409408,
+      "avgFalconWildsAtFeatureEnd": 6.52,
       "baseVesselsHistogram": {
-        "0": 12385582,
-        "1": 6312292,
-        "2": 1198528,
-        "3": 100459,
-        "4": 3139,
+        "0": 12389148,
+        "1": 6309893,
+        "2": 1197470,
+        "3": 100294,
+        "4": 3195,
         "5plus": 0
       },
-      "stdDevPerRoundCostUnits": 14.0213,
-      "stdDevPerRoundBetUnits": 17.5266,
+      "stdDevPerRoundCostUnits": 13.9231,
+      "stdDevPerRoundBetUnits": 17.4038,
       "contributionPctOfCost": {
-        "baseChain": 41.8325,
-        "scatterPayInBase": 0.9292,
-        "freeSpins": 53.3126
+        "baseChain": 41.8501,
+        "scatterPayInBase": 0.9302,
+        "freeSpins": 52.7993
       },
-      "avgFreeWinPerTriggerBets": 128.65,
+      "avgFreeWinPerTriggerBets": 127.55,
       "winTiersShareOfRounds": {
-        "atLeast10xBet": 0.013116,
-        "atLeast25xBet": 0.0051495,
-        "atLeast50xBet": 0.0032816,
-        "atLeast100xBet": 0.001916,
-        "atLeast500xBet": 0.0002162,
-        "atLeast1000xBet": 0.00004855,
-        "atLeast2000xBet": 0.00000695,
-        "atLeast5000xBet": 2e-7,
+        "atLeast10xBet": 0.013097,
+        "atLeast25xBet": 0.0051507,
+        "atLeast50xBet": 0.0032696,
+        "atLeast100xBet": 0.0019042,
+        "atLeast500xBet": 0.0002073,
+        "atLeast1000xBet": 0.00004685,
+        "atLeast2000xBet": 0.0000067,
+        "atLeast5000xBet": 3e-7,
         "atLeast10000xBet": 0
       },
       "winTiersRounds": {
-        "atLeast10xBet": 262328,
-        "atLeast25xBet": 102990,
-        "atLeast50xBet": 65632,
-        "atLeast100xBet": 38319,
-        "atLeast500xBet": 4324,
-        "atLeast1000xBet": 971,
-        "atLeast2000xBet": 139,
-        "atLeast5000xBet": 4,
+        "atLeast10xBet": 261937,
+        "atLeast25xBet": 103014,
+        "atLeast50xBet": 65392,
+        "atLeast100xBet": 38085,
+        "atLeast500xBet": 4146,
+        "atLeast1000xBet": 937,
+        "atLeast2000xBet": 134,
+        "atLeast5000xBet": 6,
         "atLeast10000xBet": 0
       },
       "maxObservedXBet": 6774.57,
@@ -227,95 +227,95 @@
       "minVesselsOnFirstBaseBoard": 0,
       "costMismatches": 0,
       "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
-      "runtimeSeconds": 58.6
+      "runtimeSeconds": 162.6
     },
     "buy": {
       "rounds": 20000000,
       "costBets": 100,
       "rtpVsCost": {
-        "pointEstimate": 0.93497,
-        "pointEstimatePct": 93.497,
+        "pointEstimate": 0.95471,
+        "pointEstimatePct": 95.4706,
         "ci95": [
-          0.93424,
-          0.9357
+          0.95396,
+          0.95545
         ],
         "ci95Pct": [
-          93.4237,
-          93.5703
+          95.396,
+          95.5451
         ],
-        "ci95HalfWidthPct": 0.0733
+        "ci95HalfWidthPct": 0.0746
       },
-      "integerPayoutCheckRtp": 0.93497,
+      "integerPayoutCheckRtp": 0.95471,
       "hitRate": 1,
-      "baseChainHitRate": 0.28532,
+      "baseChainHitRate": 0.28535,
       "featureRate": 1,
       "featureOneIn": 1,
       "featureCount": 20000000,
-      "avgFreeSpinsPerRound": 13.70775,
+      "avgFreeSpinsPerRound": 13.70833,
       "avgFreeSpinsPerTrigger": 13.708,
-      "freeSpinsPlayed": 274154912,
-      "retriggers": 18538731,
-      "maxFreeSpinsInOneRound": 62,
-      "freeSpinHitRate": 0.52355,
+      "freeSpinsPlayed": 274166585,
+      "retriggers": 18541652,
+      "maxFreeSpinsInOneRound": 66,
+      "freeSpinHitRate": 0.52359,
       "respinChain": {
         "baseRotationsHistogram": {
-          "rotations1": 15248492,
-          "rotations2": 4751508,
+          "rotations1": 15248349,
+          "rotations2": 4751651,
           "rotations3": 0,
           "rotations4": 0
         },
         "avgRespinsPerBaseSpin": 0.23758,
-        "avgRespinsPerWinningBaseChain": 0.83267,
+        "avgRespinsPerWinningBaseChain": 0.8326,
         "freeRotationsHistogram": {
-          "rotations1": 176333353,
-          "rotations2": 97821559,
+          "rotations1": 176324513,
+          "rotations2": 97842072,
           "rotations3": 0,
           "rotations4": 0
         },
-        "avgRespinsPerFreeSpin": 0.35681,
-        "avgRespinsPerWinningFreeChain": 0.68153,
+        "avgRespinsPerFreeSpin": 0.35687,
+        "avgRespinsPerWinningFreeChain": 0.68158,
         "maxRotationsInOneSpin": 4
       },
-      "avgFinalHubInFeatures": 8.65,
-      "maxFinalHub": 38,
-      "falconVisits": 80666780,
+      "avgFinalHubInFeatures": 8.84,
+      "maxFinalHub": 36,
+      "falconVisits": 80670751,
       "avgFalconWildsAtFeatureEnd": 6.65,
       "baseVesselsHistogram": {
         "0": 0,
         "1": 0,
         "2": 0,
-        "3": 19998573,
-        "4": 1427,
+        "3": 19998557,
+        "4": 1443,
         "5plus": 0
       },
-      "stdDevPerRoundCostUnits": 1.6721,
-      "stdDevPerRoundBetUnits": 167.213,
+      "stdDevPerRoundCostUnits": 1.7011,
+      "stdDevPerRoundBetUnits": 170.1116,
       "contributionPctOfCost": {
-        "baseChain": 0.5238,
+        "baseChain": 0.5235,
         "scatterPayInBase": 2.0006,
-        "freeSpins": 90.9727
+        "freeSpins": 92.9465
       },
-      "avgFreeWinPerTriggerBets": 90.97,
+      "avgFreeWinPerTriggerBets": 92.95,
       "winTiersShareOfRounds": {
-        "atLeast10xBet": 0.90956,
-        "atLeast25xBet": 0.69641,
-        "atLeast50xBet": 0.45768,
-        "atLeast100xBet": 0.24452,
-        "atLeast500xBet": 0.024947,
-        "atLeast1000xBet": 0.0056147,
-        "atLeast2000xBet": 0.0008079,
-        "atLeast5000xBet": 0.0000229,
+        "atLeast10xBet": 0.91182,
+        "atLeast25xBet": 0.70263,
+        "atLeast50xBet": 0.4657,
+        "atLeast100xBet": 0.25061,
+        "atLeast500xBet": 0.025907,
+        "atLeast1000xBet": 0.0058367,
+        "atLeast2000xBet": 0.0008449,
+        "atLeast5000xBet": 0.00002455,
         "atLeast10000xBet": 3e-7
       },
       "winTiersRounds": {
-        "atLeast10xBet": 18191299,
-        "atLeast25xBet": 13928213,
-        "atLeast50xBet": 9153535,
-        "atLeast100xBet": 4890313,
-        "atLeast500xBet": 498947,
-        "atLeast1000xBet": 112294,
-        "atLeast2000xBet": 16158,
-        "atLeast5000xBet": 458,
+        "atLeast10xBet": 18236314,
+        "atLeast25xBet": 14052584,
+        "atLeast50xBet": 9313938,
+        "atLeast100xBet": 5012126,
+        "atLeast500xBet": 518137,
+        "atLeast1000xBet": 116734,
+        "atLeast2000xBet": 16898,
+        "atLeast5000xBet": 491,
         "atLeast10000xBet": 6
       },
       "maxObservedXBet": 10000,
@@ -326,7 +326,7 @@
       "minVesselsOnFirstBaseBoard": 0,
       "costMismatches": 0,
       "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
-      "runtimeSeconds": 1082.1
+      "runtimeSeconds": 1254
     }
   },
   "tables": {
@@ -614,11 +614,11 @@
         "hubFree": [
           [
             1,
-            200
+            196
           ],
           [
             2,
-            128
+            126
           ],
           [
             3,
@@ -626,17 +626,17 @@
           ],
           [
             5,
-            21
+            22
           ],
           [
             10,
-            5
+            6
           ]
         ]
       }
     }
   },
-  "runtimeSeconds": 1238.9,
+  "runtimeSeconds": 1579.6,
   "node": "v24.21.0",
-  "generatedAt": "2026-10-13T00:56:04.738Z"
+  "generatedAt": "2026-10-13T05:40:07.345Z"
 }

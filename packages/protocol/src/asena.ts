@@ -313,10 +313,10 @@ const deepFreeze = (tables: Record<AsenaMode, AsenaModeTables>): Record<AsenaMod
 };
 /** Weight tables per mode. Tuned by Monte Carlo; see ops/evidence/asena-20261012. */
 export const ASENA_MODE_TABLES: Record<AsenaMode, AsenaModeTables> = deepFreeze({
-  standard: { base: symbols(BASE_PAY, 700, 640), free: symbols(FREE_PAY, 850, 800) },
+  standard: { base: symbols(BASE_PAY, 700, 640), free: symbols(FREE_PAY, 840, 800) },
   // Ante: moon weight 830 instead of 640 in the base game (about 1.8x the feature rate); a slightly milder free table so that the
   // higher trigger rate returns about 95.5% of the (5/4) cost.
-  ante: { base: symbols(BASE_PAY, 700, 830), free: symbols(FREE_PAY, 830, 800) },
+  ante: { base: symbols(BASE_PAY, 700, 830), free: symbols(FREE_PAY, 820, 800) },
   // Buy: base table as standard (plus the 3-moon guarantee); a milder free table so that the guaranteed feature returns about
   // 95.5% of its 80 x bet cost.
   buy: { base: symbols(BASE_PAY, 700, 640), free: symbols(FREE_PAY_MILD, 860, 800) },

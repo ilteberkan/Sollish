@@ -276,7 +276,7 @@ test("RNG and rules are frozen: a fingerprint of 200 fixed seeds across all mode
     const seed = createHash("sha256").update(`cezeri-gears-1-frozen:${i}`).digest("hex").slice(0, 32);
     hash.update(JSON.stringify(playCezeriRound(seed, bets[i % 4]!, MODES[i % 3]!)));
   }
-  assert.equal(hash.digest("hex"), "c4479116c4000265febe820a5fd141aa5a5b7da1faf103dd08c1604221ecd8f2");
+  assert.equal(hash.digest("hex"), "563533bd34b875ba171b01527e62ec327acf699c73abb8711a81db7378536f62");
 });
 
 test("input validation throws RangeError for seed, bet level and mode", () => {

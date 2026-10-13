@@ -232,7 +232,7 @@ export const CEZERI_MODE_TABLES: Record<CezeriMode, CezeriModeTables> = deepFree
   // Buy: base as standard (plus the 3-vessel guarantee); one gear less per free ring and tamer hub draws so the guaranteed feature returns about 95.5% of its 100 x bet cost.
   buy: { base: rings(BASE_STRIPS, [24, 24, 24, 24]), free: rings(FREE_STRIPS_BUY, [30, 30, 30, 30]),
     hubBase: [[1, 40], [2, 26], [3, 17], [5, 11], [10, 6]],
-    hubFree: [[1, 200], [2, 128], [3, 44], [5, 21], [10, 5]] },
+    hubFree: [[1, 196], [2, 126], [3, 44], [5, 22], [10, 6]] },
 });
 
 export interface CezeriRtp { rtp: number; ciLow: number; ciHigh: number; rounds: number; hitRate: number; featureRate: number; stdDev: number }

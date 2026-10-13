@@ -2,11 +2,16 @@ import type { HitEvent, NoteEvent } from './notation';
 
 export type PitchedVoice = 'celesta' | 'musicBox' | 'glock' | 'marimba' | 'pluck' | 'synthLead' | 'bass' | 'bassDrive' | 'bell' | 'timpani' | 'brass'
   // Tarhun (storm-throne) voices, synth/anatolian.ts
-  | 'zurna' | 'zurnaSoft' | 'ney' | 'baglama' | 'horn' | 'hornSwell' | 'bronze' | 'taikoPitched';
+  | 'zurna' | 'zurnaSoft' | 'ney' | 'baglama' | 'horn' | 'hornSwell' | 'bronze' | 'taikoPitched'
+  // Ebru (ebru-ink) voices, synth/ebru.ts
+  | 'kanun' | 'kanunSoft' | 'ud' | 'glassHarp' | 'waterGlass';
 export type PadVoice = 'padWarm' | 'padSaw' | 'padString' | 'padChoir' | 'padChoirMale' | 'padHorn';
 export type KitHit = 'kick' | 'kickSoft' | 'kickPunch' | 'brush' | 'snare' | 'clap' | 'hat' | 'hatOpen' | 'shaker' | 'snap' | 'wood' | 'woodHi' | 'tomHi' | 'tomMid' | 'tomLo' | 'timp' | 'timpLo' | 'crash'
-  | 'davul' | 'davulLo' | 'davulRim' | 'dum' | 'tek' | 'ka' | 'frame' | 'taiko' | 'taikoLo';
-export type FxKind = 'riser' | 'sparkle' | 'crash' | 'impact' | 'whoosh' | 'swell' | 'room' | 'thunder' | 'rumble' | 'rain' | 'wind';
+  | 'davul' | 'davulLo' | 'davulRim' | 'dum' | 'tek' | 'ka' | 'frame' | 'taiko' | 'taikoLo'
+  | 'kudumDum' | 'kudumTek' | 'zil' | 'frameLo';
+export type FxKind = 'riser' | 'sparkle' | 'crash' | 'impact' | 'whoosh' | 'swell' | 'room' | 'thunder' | 'rumble' | 'rain' | 'wind'
+  // Ebru: still-water bed and bubble bursts
+  | 'water' | 'bubbles';
 
 export interface PadEvent { t: number; d: number; ns: number[]; v: number }
 export interface FxEvent { t: number; d: number; k: FxKind; v: number; notes?: number[]; density?: number; shape?: 'swell' | 'decay' | 'flat' }
