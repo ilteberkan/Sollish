@@ -237,10 +237,14 @@ export const CEZERI_MODE_TABLES: Record<CezeriMode, CezeriModeTables> = deepFree
 
 export interface CezeriRtp { rtp: number; ciLow: number; ciHigh: number; rounds: number; hitRate: number; featureRate: number; stdDev: number }
 // @evidence-block-begin (engineSourceSha256 in the evidence is the sha256 of this file with the lines from here to the end marker removed)
+/** Copied from ops/evidence/cezeri-20261012/rtp.json (a test keeps them equal). rtp, ciLow and ciHigh are return / COST as ratios (0.955 = 95.5%),
+ * rounded to 3 decimals; hitRate = base spins with any win per round (3 decimals); featureRate = rounds that trigger free spins (4 decimals);
+ * stdDev = standard deviation of the per-round return in cost units (3 decimals); rounds = simulated rounds. DEMO estimate, not a certified RTP;
+ * the 95% interval is a normal approximation and optimistic for this heavy tail. */
 export const CEZERI_RTP: Record<CezeriMode, CezeriRtp> = Object.freeze({
-  standard: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
-  ante: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
-  buy: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
+  standard: Object.freeze({ rtp: 0.949, ciLow: 0.942, ciHigh: 0.955, rounds: 20_000_000, hitRate: 0.287, featureRate: 0.0029, stdDev: 14.424 }),
+  ante: Object.freeze({ rtp: 0.956, ciLow: 0.95, ciHigh: 0.962, rounds: 20_000_000, hitRate: 0.29, featureRate: 0.0052, stdDev: 13.923 }),
+  buy: Object.freeze({ rtp: 0.955, ciLow: 0.954, ciHigh: 0.955, rounds: 20_000_000, hitRate: 1, featureRate: 1, stdDev: 1.701 }),
 });
 // @evidence-block-end
 
