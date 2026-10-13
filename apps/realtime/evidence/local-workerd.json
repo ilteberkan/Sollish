@@ -1,23 +1,23 @@
 {
-  "at": "2026-10-13T00:41:10.726Z",
+  "at": "2026-10-13T05:07:30.461Z",
   "runtime": "local-workerd",
   "node": "v24.21.0",
   "auth": "local ES256 JWKS/Auth/DB fixture, no cloud connection",
-  "spectators": 200,
+  "spectators": 1000,
   "fanoutBuckets": 8,
-  "authenticatedSockets": 200,
+  "authenticatedSockets": 1000,
   "checks": 16,
-  "authenticationBatchMs": 22472,
+  "authenticationBatchMs": 149945,
   "eventFanoutMs": {
-    "p50": 63,
-    "p95": 74,
-    "max": 74
+    "p50": 137,
+    "p95": 210,
+    "max": 211
   },
   "authFixtureRequests": {
     "jwks": 1,
-    "user": 203,
-    "session": 231,
-    "snapshot": 203
+    "user": 1003,
+    "session": 1019,
+    "snapshot": 1003
   },
   "scope": "one localhost host; synthetic public chat event; no financial transactions, hosted Supabase, production geography, reconnect storm or sustained load"
 }

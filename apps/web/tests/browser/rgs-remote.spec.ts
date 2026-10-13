@@ -22,7 +22,7 @@ async function server(page: Page, path: string, method: 'GET' | 'POST' = 'GET'):
 async function enter(page: Page, splash: string) {
   await expect(page.getByTestId('round-source')).toHaveText('Sunucu doğrulamalı', { timeout: 20_000 });
   const play = page.getByRole('button', { name: 'Oyna', exact: true });
-  await expect(play.or(page.getByRole('button', { name: 'Çevir', exact: true }))).toBeVisible({ timeout: 20_000 });
+  await expect(play.or(page.getByRole('button', { name: 'Çevir', exact: true })).first()).toBeVisible({ timeout: 20_000 });
   if (await page.getByTestId(splash).count()) { await play.click(); await expect(page.getByTestId(splash)).toHaveCount(0); }
 }
 const cents = (text: string | null) => Math.round(Number((text ?? '').replace(/[^0-9,]/g, '').replace(',', '.')) * 100);

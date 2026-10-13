@@ -8,6 +8,7 @@ Son güncelleme: 12 Ekim 2026. Bu dosyayı yalnız güncel durumla tut. Oturum b
 - Bu kimlikler 4 Ekim'de Cloudflare MCP ile doğrulandı. Deploy öncesi yeniden doğrula.
 
 ## Yerelde hazır, yayımlanmamış
+- **Sunucu doğrulamalı slot servisi (RGS, 12–13 Ekim):** `apps/realtime` `SlotWallet`/`SlotReplay`/`SlotMonitor` (migration `v7`), `/v1/slots/*`, provably fair `sollish-slot-fair-1` (`packages/protocol/src/slot-fair.ts`, kayıt `slot-games.ts`), web `lib/rgs-client.ts` (yerel/sunucu kaynağı, rozet), `/verify`, `/replay/[id]`, geçmişte "Kazancını paylaş". Varsayılan kapalı (`SLOTS_ENABLED=false`); `NEXT_PUBLIC_API_URL` yoksa oyunlar eskisi gibi yerel. Kanıt `ops/evidence/slot-rgs-20261012.json`, ayrıntı `docs/architecture/slot-rgs.md`. Barındırılan ortamda koşmadı.
 - **Oyun standardı (12 Ekim):** `docs/product/game-standards.md` bütün oyunlar için "bitti" tanımı; §6 sahip kuralları: dönüş kilidi (aynı düğme atla değil), birikimli kazanç, kademe kutlamaları Büyük ≥10× / Mega ≥25× / Süper ≥50× / Efsane ≥100× / Azami, çarpan anonsları, sade otomatik oyun ("Gelişmiş" kapalı). Kopya yok, tamamen özgün sanat/ses/ad/paytable.
 - **Candy Cascade v3 (12 Ekim):** §6 kuralları uygulandı; kutlama ekranları `components/cascade/win-celebration.tsx`, saf kademe/sayaç mantığı `lib/slot-kit/win-tiers.ts`. Ses: kademe tırmanışı (F→G→A→C→D), çarpan anonsları, toplam fanfarı, ses bankası yükleyici. Kanıt `ops/evidence/candy-cascade-ui-v3-20261012/web.json`, ses `ops/evidence/candy-cascade-2-20261011/audio.json` "v3".
 - **Tarhun: Fırtına Tahtı (12 Ekim, yeni oyun, `/game/tarhun`):** sahip Gates of Olympus türünde oyun istedi; tema seçimi: Hitit fırtına tanrısından esinli **özgün** karakter ve Aslanlı Kapı sahnesi (Zeus/Olympos öğesi yok). Motor `storm-throne-1` (`packages/protocol/src/storm-throne.ts`): temel oyunda da çarpan taşları, bedava dönüşte biriken toplam çarpan, 15 bedava dönüş, ante, satın alma, azami 5.000×. RTP (20 M tur/mod, sertifikasız): standart %96,47, ante %96,65, satın alma %96,23 (`ops/evidence/storm-throne-20261012/rtp.json`). Sanat kodla çizildi (`components/storm/*`), müzik/efekt özgün sentez (A/D Hicaz; `lib/slot-audio/scores/storm.ts`, ölçüm `audio.json`). Oyun ekranı `components/storm/tarhun-game.tsx`, testler storm-timeline/controls + `tarhun.spec.ts` 17/17 (next dev). Seslendirme metni `docs/product/storm-throne-voice-script.md`; ses dosyaları yok (`public/audio/voice/storm/` boş, oyun sözsüz yer tutucu çalar).
@@ -49,6 +50,7 @@ Son güncelleme: 12 Ekim 2026. Bu dosyayı yalnız güncel durumla tut. Oturum b
 5. Ürün modeli s1 onayı.
 6. Candy Cascade ve Tarhun'un devnet'e yüklenmesi (onay bekler); kullanıcının görsel/işitsel kabulü.
 7. Seslendirme: ElevenLabs anahtarı + ağ izni (yukarı bak) ya da Higgsfield ücretli plan.
+8. Slot RGS yayını: `wrangler secret put SLOT_SIGNING_KEY` (≥ 32 karakter), realtime deploy (migration `v7`), sonra `SLOTS_ENABLED=true` ve web'de `NEXT_PUBLIC_API_URL`. Hepsi onay bekler.
 
 ## Sıradaki iş
 1. Kullanıcının yeni arayüz ve animasyon geri bildirimi; telefon ölçümü; `build:cloudflare` önizlemesinde tarayıcı paketi.

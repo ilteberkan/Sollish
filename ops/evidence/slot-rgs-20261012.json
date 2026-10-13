@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "slot-rgs-20261012",
+  "recordedAt": "2026-10-13T05:30:00Z",
+  "subject": "Server-authoritative DEMO slot service (RGS): SlotWallet/SlotReplay/SlotMonitor Durable Objects, /v1/slots routes, sollish-slot-fair-1 provably fair derivation, web RoundSource (local|remote), /verify and /replay/[id]",
+  "spec": "docs/architecture/slot-rgs.md (section 'Uygulama kararları')",
+  "deployed": false,
+  "realAssets": false,
+  "certifiedRng": false,
+  "defaultFlag": { "SLOTS_ENABLED": "false (apps/realtime/wrangler.jsonc vars)" },
+  "migration": { "tag": "v7", "new_sqlite_classes": ["SlotWallet", "SlotReplay", "SlotMonitor"], "existingMigrationsEdited": false },
+  "pendingOwnerActions": [
+    "wrangler secret put SLOT_SIGNING_KEY (>= 32 characters) before SLOTS_ENABLED=true on any hosted worker; without it signatures/tokens are per-isolate 'dev' and fail closed across isolates",
+    "realtime deploy (migration v7) and web deploy with NEXT_PUBLIC_API_URL; both wait for user approval"
+  ],
+  "environment": { "machine": "cloud container, linux x64, 4 vCPU, shared with three concurrent engine-simulation agents", "node": "v24.21.0 (scripts/use-node.sh)", "wrangler": "4.145.0 local workerd", "next": "16.3.8 next dev", "playwright": "1.63.0 with /opt/pw-browsers/chromium-1194 (PW_CHROMIUM_PATH)" },
+  "sourceSha256": {
+    "packages/protocol/src/slot-fair.ts": "c37fce6bad50eb7e3864b60dc4daa44153d38c08b356688094f9e1bb738376ee",
+    "packages/protocol/src/slot-games.ts": "035c405e909f5c083f728083173614b2a6133821c830496829cbb08695638b0c",
+    "apps/realtime/src/slots.ts": "35d8ef3ac22a425f278680ba1a423b01de6acac69530a17aad032eef7333415b",
+    "apps/realtime/src/slot-wallet.ts": "67647f321058d2da336abcdf35174deeb28e5a870488e2b39864071f042506b9",
+    "apps/realtime/src/slot-replay.ts": "b5edbcb938f62b95568e550fac1416f34001e7732cfa168dc6ac71a04d9068e5",
+    "apps/realtime/src/slot-monitor.ts": "911596fb2b2459e161500d0e00ae8462db832897a0f7a8bf05f5bbd0fcb59faa",
+    "apps/realtime/src/slot-stats.ts": "f7808e3246f906c10f7fa89920fa29b7db2f1284c0fb7b3877ad4ed2419f2cee",
+    "apps/realtime/src/slot-records.ts": "fdbf0d895c82a1851af770a208c33728b695090a7b1639d0ab492e79fd0bfa7b",
+    "apps/web/lib/rgs-client.ts": "7dca24310607c32f53027de8b64e7818b60ee7efc7f2a7ff8bb57ff45fe5665b",
+    "apps/web/lib/use-round-source.ts": "d838a7277e01670e79cd032aefa540d788b11e673c9d090f071142e5c6ff54af",
+    "apps/web/lib/slot-verify.ts": "be6cd9a41d13cb68357a3dfee8832a25f6bde81907a43c4e74428ed6f5f98f00",
+    "apps/realtime/wrangler.jsonc": "85bdc26b4c33dbccd5055c0c0c8b4eefa75ca6843945be20f31933866b1c7505"
+  },
+  "results": {
+    "unit": [
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/protocol exec node --import tsx --test test/slot-fair.test.ts", "result": "6/6 pass", "notes": "3 known-answer vectors computed with Python hmac/hashlib, 64 random cross-checks against node:crypto, input strictness, registry own-property lookup, verifier mismatch flags, canonical signed texts" },
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/protocol test", "result": "298/300 pass", "notes": "the 2 failures are ASENA_RTP and CEZERI_RTP evidence tests of engines another agent is tuning (its 20M-round evidence simulations were running); slot-fair 6/6, cascade-2 17/17, storm-throne 24/24, protocol 3/3" },
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime test", "result": "17/17 pass", "notes": "11 existing + 6 new (test/slots.test.ts: strict bodies, bet admission/exposure, token MAC + forgeries, signatures, 4-sigma arithmetic, replay record shape, router flag/origin/query/preflight)" },
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test", "result": "245/245 pass", "notes": "includes tests/rgs-client.test.ts (7) and tests/slot-verify.test.ts (4) against a mock-fetch RGS with the real engines and derivation" }
+    ],
+    "typecheck": [
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/protocol typecheck", "result": "clean" },
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime typecheck", "result": "clean" },
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck", "result": "clean (next typegen + tsc)" }
+    ],
+    "localWorkerd": [
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime test:slots", "result": "30/30 checks, exit 0 (repeated 3 times, last 2026-10-13T05:19:22Z)", "evidence": "apps/realtime/evidence/local-slot-wallet.json",
+        "covers": ["default-off flag (503)", "no SLOT_SIGNING_KEY -> signature 'dev'", "CORS: foreign/missing Origin 403, preflight", "query string refused (no token in URL)", "token: missing 401 AUTH_REQUIRED, malformed/forged 401 AUTH_INVALID, well-signed unknown token leaves no storage", "raw token not stored (SHA-256 only)", "receipt HMAC recomputed in Node with the fixture key", "duplicate key -> identical bytes + Idempotent-Replayed, no second debit", "same key with different bet/mode/clientSeed/game -> 409", "invalid bet/mode, cost/payout/seed/nonce fields -> 400, unknown game 404, text/plain 415, >2KB and chunked >2KB 413", "insufficient balance 409, nothing consumed", "held in-flight round: concurrent B, retry-of-A and GET -> 409 SESSION_BUSY (Retry-After 1), A commits once", "unheld concurrent duplicates and a 6-request burst: one debit per key, unique nonces, ledger conserved", "injected SQLite failure rolls back debit/round/nonce/ledger; same key then succeeds with the unconsumed nonce", "Tarhun through the same registry", "last-round recovery equals the original receipt", "share before reveal: exact public keys, no token/hash/clientSeed/IP/balance/time, signature verified", "rotate: SHA-256(seed) == commitment, every round's seedHex recomputed with node:crypto and verifySlotRound", "shared record republished with the revealed seed", "new seed starts at nonce 0 and stays secret until the next rotation", "session isolation", "balance reset is a ledger row", "4 rounds/s, 12 requests/s, 600 rounds/min (Retry-After ~30 s)", "30 session creations per IP per minute", "idle expiry wipes the object", "alarm-fed global monitor counters and a 4-sigma JSON log line", "restart on the same SQLite dir: last round, idempotent retry and replay byte-identical, nonce continues", "logs contain no token, token hash or server seed"] },
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime test:integration", "result": "16/16 checks, 1000 authenticated sockets, exit 0 (2026-10-13T05:07:30Z)", "notes": "an earlier run during five concurrent simulations failed at socket 340 (SOCKET_CONNECT_FAILED); 200 sockets then passed 16/16; the full 1000 run passed once the load dropped" },
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime test:arena", "result": "exit 0 (13 + 12 checks)" },
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime test:contact", "result": "exit 0" },
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime test:ringside", "result": "exit 0" },
+      { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime test:arena:stress", "result": "FAIL (STRESS_SOCKET_ERROR, then LOCAL_STRESS_TIMEOUT) under load 6-11 from concurrent simulations", "notes": "this fixture loads only apps/realtime/src/live-arena.ts, which is byte-identical to commit 4e5562d (git diff empty); not a regression of this change, not re-run on an idle machine" }
+    ],
+    "browser": [
+      { "command": "PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://127.0.0.1:3000 bash scripts/use-node.sh pnpm --filter @sollish/web test:browser tests/browser/cascade.spec.ts tests/browser/tarhun.spec.ts --workers=1", "server": "next dev without NEXT_PUBLIC_API_URL (local mode, unchanged behaviour)", "result": "38 passed, 2 failed; the 2 (info-dialog + axe tests) failed again at the default 30 s timeout and passed 2/2 with --timeout=120000 at load 8.5", "notes": "one first-attempt failure was a Chromium 'Failed to find browser context' protocol error" },
+      { "command": "PLAYWRIGHT_RGS_API=http://127.0.0.1:18895 PW_CHROMIUM_PATH=... PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://127.0.0.1:3000 bash scripts/use-node.sh pnpm --filter @sollish/web test:browser tests/browser/rgs-remote.spec.ts --workers=1", "server": "local workerd from apps/realtime/wrangler.jsonc with --var SLOTS_ENABLED:true --var ALLOWED_ORIGINS:http://127.0.0.1:3000 --var SLOT_SIGNING_KEY:<local fixture>, plus next dev with NEXT_PUBLIC_API_URL=http://127.0.0.1:18895 (process env, no .env file written)", "result": "2/2 passed", "covers": ["badge 'Sunucu doğrulamalı'", "displayed balance equals the server balance after a round", "no token in the page URL", "'Kazancını paylaş' -> /replay/<roundId> shows an unrevealed signed round with a board", "/verify: history pending -> 'Tohumu açıkla' -> match, 'Forma aktar' -> Eşleşti", "replay page then 'Tohumla doğrulandı'", "Tarhun reload mid-round re-presents the same server round, one server round, balance consistent, not shown again after it finished"] }
+    ],
+    "readiness": { "command": "bash scripts/use-node.sh pnpm check:readiness", "result": "exit 1", "notes": "records recovery-local and coinflip-provider-local are MISSING_STALE_OR_INCONSISTENT because target/deploy/*.so and .tooling/vrf-provider-build/ do not exist in this cloud checkout; the check reads no file of this change. Expected exit 2 on the development machine with those artifacts." }
+  },
+  "notCovered": [
+    "hosted Cloudflare runtime, deploy, secrets, multiple isolates with a real SLOT_SIGNING_KEY",
+    "load/capacity beyond the local fixture, multi-region latency, bot resistance (no Turnstile/CAPTCHA), Sybil (unlimited DEMO sessions per IP at 30/min)",
+    "build:cloudflare preview of the web app, physical phones, user visual acceptance of the badge, share, /verify and /replay screens",
+    "certified RNG or math (GLI/eCOGRA); RTP figures are the engines' simulation evidence",
+    "global monitor counters are at-least-once (a lost acknowledgement can double-count a batch); the 4-sigma alarm uses a normal approximation that heavy tails can trip",
+    "replays signed before a hosted secret exists cannot be verified by the server later (dev key per isolate)"
+  ]
+}
