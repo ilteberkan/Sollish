@@ -246,9 +246,9 @@ export interface EbruRtp { rtp: number; ciLow: number; ciHigh: number; rounds: n
  * return in cost units (3 decimals); rounds = simulated rounds. DEMO estimate, not a certified RTP; the 95% interval
  * is a normal approximation and optimistic for this heavy tail. */
 export const EBRU_RTP: Record<EbruMode, EbruRtp> = Object.freeze({
-  standard: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
-  ante: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
-  buy: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
+  standard: Object.freeze({ rtp: 0.957, ciLow: 0.947, ciHigh: 0.967, rounds: 20_000_000, hitRate: 0.278, featureRate: 0.0031, stdDev: 22.114 }),
+  ante: Object.freeze({ rtp: 0.95, ciLow: 0.942, ciHigh: 0.959, rounds: 20_000_000, hitRate: 0.279, featureRate: 0.0058, stdDev: 18.882 }),
+  buy: Object.freeze({ rtp: 0.954, ciLow: 0.953, ciHigh: 0.955, rounds: 20_000_000, hitRate: 1, featureRate: 1, stdDev: 2.28 }),
 });
 // @evidence-block-end
 
