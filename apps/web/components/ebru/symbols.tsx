@@ -368,7 +368,7 @@ function MasterDrop({ k }: { k: K }) {
     <>
       <defs>
         <RG id={k('aura')} cx={0.5} cy={0.6} r={0.5} s={[[0.15, '#fff6dc', 0.85], [0.5, '#ffd36a', 0.32], [1, '#ffb43a', 0]]} />
-        <RG id={k('drop')} cx={0.5} cy={0.6} r={0.56} fx={0.36} fy={0.46} s={[[0, '#ffffff'], [0.4, '#dff4ff'], [0.75, '#4a64e0'], [1, '#14093e']]} />
+        <RG id={k('drop')} cx={0.5} cy={0.6} r={0.56} fx={0.36} fy={0.46} s={[[0, '#ffffff'], [0.28, '#e6f4ff'], [0.6, '#4a64e0'], [0.85, '#24158a'], [1, '#0c0530']]} />
         <RG id={k('core')} cx={0.4} cy={0.45} r={0.5} s={[[0, '#ffffff', 0.95], [0.6, '#ffffff', 0.25], [1, '#ffffff', 0]]} />
         <LG id={k('brass')} x1={0} y1={0} x2={1} y2={0} s={[[0, '#5a3204'], [0.35, '#e9b24a'], [0.5, '#fff1b8'], [0.7, '#c98a26'], [1, '#4a2803']]} />
         <LG id={k('wood')} x1={0} y1={0} x2={1} y2={0} s={[[0, '#2a0806'], [0.4, '#9a2a1c'], [0.55, '#d8604a'], [1, '#3a0a08']]} />
@@ -384,7 +384,7 @@ function MasterDrop({ k }: { k: K }) {
       {/* the master drop */}
       <path d={MASTER} fill={u('drop')} stroke="#0e0634" strokeWidth="2.4" strokeLinejoin="round" />
       <g clipPath={u('clip')} fill="none" strokeLinejoin="round">
-        {bands.map((c, i) => <path key={i} d={heart(31 - i * 3.9)} stroke={c} strokeWidth={i % 3 === 1 ? 1.6 : 2.8} opacity=".9" />)}
+        {bands.map((c, i) => <path key={i} d={heart(31 - i * 3.9)} stroke={c} strokeWidth={i % 3 === 1 ? 1.8 : 3.2} opacity="1" />)}
       </g>
       <ellipse cx="46" cy="62" rx="14" ry="13" fill={u('core')} />
       <path d="M31 58C32 49 37 42 43 37" fill="none" stroke={u('sh')} strokeWidth="4" strokeLinecap="round" opacity=".95" />

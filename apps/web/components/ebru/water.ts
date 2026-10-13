@@ -105,7 +105,7 @@ export class MarbleField {
     this.width = opts.width ?? COLS * EBRU_UNITS;
     this.height = opts.height ?? ROWS * EBRU_UNITS;
     this.maxEdge = opts.maxEdge ?? 9;
-    this.maxVerts = opts.maxVerts ?? 14000;
+    this.maxVerts = opts.maxVerts ?? 11000;
     this.periodic = opts.periodic ?? true;
   }
   private dxw(dx: number) {
@@ -334,7 +334,7 @@ interface CombState {
   trails: Trail[]; endedAt: number; lastY: number; lastX: number;
 }
 
-const MAX_POLYS = 120;
+const MAX_POLYS = 96;
 const MAX_RIPPLES = 64;
 const MAX_GLOWS = 64;
 const MAX_GLINTS = 220;
@@ -345,7 +345,7 @@ interface MoodCfg { pigment: number; caustic: number; idleEvery: [number, number
 const IDLE_BASE = ['#8e1a2c', '#c08a2a', '#0f6a72', '#1e3f9a', '#e9dcc0', '#145a3a', '#7a2a5e', '#b05a1a', '#2a2066', '#e9dcc0', '#1e3f9a'];
 const IDLE_FEATURE = ['#d9a23a', '#b4203a', '#1a9a9a', '#b8507e', '#f3e6c8', '#3050c0', '#c86a1a', '#f3e6c8', '#5a2a8a'];
 const MOODS: Record<EbruMood, MoodCfg> = {
-  base: { pigment: 0.6, caustic: 0.11, idleEvery: [2.6, 4.6], palette: IDLE_BASE, tint: '#0b1638' },
+  base: { pigment: 0.54, caustic: 0.11, idleEvery: [2.6, 4.6], palette: IDLE_BASE, tint: '#0b1638' },
   feature: { pigment: 0.68, caustic: 0.15, idleEvery: [1.6, 3], palette: IDLE_FEATURE, tint: '#1a1240' },
   bigwin: { pigment: 0.8, caustic: 0.18, idleEvery: [1.1, 2], palette: IDLE_FEATURE, tint: '#2a1a10' },
 };
@@ -376,6 +376,7 @@ export class EbruWater {
   private pctx: CanvasRenderingContext2D | null = null;
   private pigScale = 0.5;
   private pigDirty = true;
+  private lastPig = 0;
   private caustic: HTMLCanvasElement | null = null;
   private causticPat: CanvasPattern | null = null;
   private glowSprites = new Map<string, HTMLCanvasElement>();
@@ -829,7 +830,7 @@ export class EbruWater {
       this.front.height = Math.max(1, Math.round(this.frontOff.h * this.fdpr));
     }
     // pigment raster: about half resolution, capped
-    const target = Math.min(420, Math.max(160, this.grid.w * 0.62));
+    const target = Math.min(360, Math.max(160, this.grid.w * 0.58));
     this.pigScale = target / 700;
     if (!this.pig) { this.pig = document.createElement('canvas'); this.pctx = this.pig.getContext('2d'); }
     this.pig.width = Math.round(700 * this.pigScale);
@@ -888,7 +889,7 @@ export class EbruWater {
   private draw(now: number) {
     const ctx = this.ctx;
     if (!ctx) return;
-    if (this.pigDirty) this.renderPigment(now);
+    if (this.pigDirty && (this.comb || this.reduced || now - this.lastPig > 0.05)) { this.lastPig = now; this.renderPigment(now); }
     ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
     ctx.clearRect(0, 0, this.w, this.h);
     const g = this.grid;
@@ -1039,8 +1040,8 @@ export class EbruWater {
       const halo = this.sprite(pal.glow);
       for (const cc of xs) {
         const x = g.x + (cc + 0.5) * EBRU_UNITS * s, y = g.y + (r + 0.5) * EBRU_UNITS * s;
-        if (halo) { ctx.globalAlpha = 0.42 * pulse * pop; ctx.drawImage(halo, x - rad * 1.5, y - rad * 1.5, rad * 3, rad * 3); }
-        if (blot) { ctx.globalAlpha = 0.85 * pop; ctx.drawImage(blot, x - rad, y - rad, rad * 2, rad * 2); }
+        if (halo) { ctx.globalAlpha = 0.22 * pulse * pop; ctx.drawImage(halo, x - rad * 1.5, y - rad * 1.5, rad * 3, rad * 3); }
+        if (blot) { ctx.globalAlpha = 0.7 * pop; ctx.drawImage(blot, x - rad, y - rad, rad * 2, rad * 2); }
       }
     }
     ctx.globalAlpha = 1;
