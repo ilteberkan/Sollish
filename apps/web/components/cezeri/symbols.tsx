@@ -101,7 +101,8 @@ function Aura({ k, color, cy = 52, r = 48, o = 0.55 }: { k: K; color: string; cy
 }
 
 /* ---------- h1 · Fil Saati (elephant clock) ---------- */
-const ELEPHANT = 'M15 63C15 53 25 47.5 39 47.5H63C69 43 79 42 85.5 47.5C91 52 92.5 59 91.5 66C90.5 73 88.5 79 88.5 84C88.5 87.5 90.5 88.6 92.6 87.8C94.6 87.2 95.6 89.4 94.4 91.2C92.4 94.2 86.4 94.4 84.2 90.2C82.2 86.2 83.2 80 82.2 74.5C81.4 72.2 79.6 71.4 78 72.4L77.6 92.5H66.8L66 80.5C60 82.4 50 82.4 44.2 80.6L43.4 92.5H32.6L31.2 78.6C25.6 76.6 21.4 72.8 19.6 68.4C18.6 70.6 17.4 73.6 16 75.4C14.6 73.4 14.6 67 15 63Z';
+/** Elephant outline (symbol space 100 × 100, facing right); the scene reuses it for the elephant clock. */
+export const CZ_ELEPHANT_PATH = 'M15 63C15 53 25 47.5 39 47.5H63C69 43 79 42 85.5 47.5C91 52 92.5 59 91.5 66C90.5 73 88.5 79 88.5 84C88.5 87.5 90.5 88.6 92.6 87.8C94.6 87.2 95.6 89.4 94.4 91.2C92.4 94.2 86.4 94.4 84.2 90.2C82.2 86.2 83.2 80 82.2 74.5C81.4 72.2 79.6 71.4 78 72.4L77.6 92.5H66.8L66 80.5C60 82.4 50 82.4 44.2 80.6L43.4 92.5H32.6L31.2 78.6C25.6 76.6 21.4 72.8 19.6 68.4C18.6 70.6 17.4 73.6 16 75.4C14.6 73.4 14.6 67 15 63Z';
 function ElephantClock({ k }: { k: K }) {
   const u = (n: string) => `url(#${k(n)})`;
   return (
@@ -122,7 +123,7 @@ function ElephantClock({ k }: { k: K }) {
       {/* far legs */}
       <path d="M60 78L61 92.5H69L69.4 79ZM25.6 74.6L26.4 92.5H34L33.4 77Z" fill={u('far')} stroke={INK} strokeWidth="1.8" strokeLinejoin="round" />
       {/* body */}
-      <path d={ELEPHANT} fill={u('hide')} stroke={INK} strokeWidth="2.4" strokeLinejoin="round" />
+      <path d={CZ_ELEPHANT_PATH} fill={u('hide')} stroke={INK} strokeWidth="2.4" strokeLinejoin="round" />
       {/* toes */}
       <path d="M68 92.5V90.6M71.6 92.5V90.6M75 92.5V90.6M34.2 92.5V90.6M37.8 92.5V90.6M41.4 92.5V90.6" stroke={INK} strokeWidth="1.1" strokeLinecap="round" />
       {/* trunk wrinkles + ear + eye + tusk */}

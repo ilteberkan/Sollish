@@ -94,6 +94,14 @@ const RingArt = memo(function RingArt({ ring, uid }: { ring: number; uid: string
   const st = (r: number) => r2(r / 500);
   const plates = useMemo(() => Array.from({ length: CZ_SLICES }, (_, s) => slicePath(ring, s, 3.2)).join(''), [ring]);
   const inlays = useMemo(() => Array.from({ length: CZ_SLICES }, (_, s) => slicePath(ring, s, 9)).join(''), [ring]);
+  // outer rings have spare tangential room: a brass rosette and two dots flank each symbol
+  const orn = useMemo(() => {
+    if (ring < 2) return [] as Array<readonly [number, number]>;
+    const off = ring === 2 ? 12.4 : 11.2, rc = (b.inner + b.outer) / 2;
+    const out: Array<readonly [number, number]> = [];
+    for (let s = 0; s < CZ_SLICES; s++) for (const d of [-off, off]) { const p = polar(rc, sliceAngle(s) + d); out.push([r2(p.x), r2(p.y)]); }
+    return out;
+  }, [ring, b.inner, b.outer]);
   const sockets = useMemo(() => Array.from({ length: CZ_SLICES }, (_, s) => { const c = symbolBox(ring, s); return [r2(c.cx), r2(c.cy), r2(c.size * 0.5)] as const; }), [ring]);
   const rivets = useMemo(() => {
     const out: Array<[number, number]> = [];
@@ -138,6 +146,12 @@ const RingArt = memo(function RingArt({ ring, uid }: { ring: number; uid: string
       <path d={plates} fill={`url(#${id('plate')})`} stroke="#000" strokeOpacity=".55" strokeWidth="1.6" />
       {sockets.map(([x, y, r], i) => <circle key={i} cx={x} cy={y} r={r} fill={`url(#${id('socket')})`} />)}
       <path d={inlays} fill="none" stroke={P.brass.light} strokeOpacity=".38" strokeWidth="1.3" />
+      {orn.map(([x, y], i) => (
+        <g key={i} opacity=".7">
+          <path d={`M${x} ${y - 8}Q${x + 1.6} ${y - 1.6} ${x + 8} ${y}Q${x + 1.6} ${y + 1.6} ${x} ${y + 8}Q${x - 1.6} ${y + 1.6} ${x - 8} ${y}Q${x - 1.6} ${y - 1.6} ${x} ${y - 8}Z`} fill={P.brass.light} />
+          <circle cx={x} cy={y} r="2.2" fill={t.rim} />
+        </g>
+      ))}
       <path d={plates} fill="none" stroke={t.rim} strokeOpacity=".3" strokeWidth="1.2" transform="translate(500 500) scale(.994) translate(-500 -500)" />
       {/* brass dividers with rivets */}
       <path d={dividerPath(ring)} stroke="#140a02" strokeWidth="7" strokeLinecap="round" />
@@ -300,14 +314,33 @@ function Plate({ ring, slice, symbol, kind, fresh, uid }: { ring: number; slice:
   // symbol box relative to the plate box
   const sb = { left: czPct(((sym.x - box.x) / box.w) * 100), top: czPct(((sym.y - box.y) / box.h) * 100), width: czPct((sym.size / box.w) * 100), height: czPct((sym.size / box.h) * 100) };
   const d = slicePath(ring, slice, 1.5);
-  const jaw = slicePath(ring, slice, 6);
+  const inner = slicePath(ring, slice, 9);
   const gold = kind === 'pinned';
+  // clamp jaws: short brass bars on both radial sides near the inner and outer corners, plus corner bolts
+  const bnd = ringBand(ring);
+  const c = sliceAngle(slice);
+  const L = bnd.outer - bnd.inner;
+  const jaws: string[] = [];
+  const bolts: Array<readonly [number, number]> = [];
+  for (const side of [-1, 1]) {
+    for (const [f0, f1] of [[0.1, 0.34], [0.66, 0.9]] as const) {
+      const r0 = bnd.inner + L * f0, r1 = bnd.inner + L * f1;
+      const a0 = c + side * (CZ_SLICE_DEG / 2 - 286 / r0), a1 = c + side * (CZ_SLICE_DEG / 2 - 286 / r1);
+      const p0 = polar(r0, a0), p1 = polar(r1, a1);
+      jaws.push(`M${r2(p0.x)} ${r2(p0.y)}L${r2(p1.x)} ${r2(p1.y)}`);
+    }
+    for (const f of [0.06, 0.94]) { const r = bnd.inner + L * f; const p = polar(r, c + side * (CZ_SLICE_DEG / 2 - 560 / r)); bolts.push([r2(p.x), r2(p.y)]); }
+  }
   return (
     <div className={styles.plate} style={style} data-kind={kind} data-fresh={fresh ? '' : undefined} role="gridcell" aria-label={`${CEZERI_SYMBOL_LABELS[symbol]}${gold ? ', kalıcı joker' : ', kilitli'}`}>
       <svg viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`} className={styles.plateSvg} aria-hidden="true" focusable="false">
-        <path d={d} fill={gold ? 'url(#' + uid + 'pinFill)' : 'url(#' + uid + 'heldFill)'} stroke="#140a02" strokeWidth="6" />
-        <path d={d} fill="none" stroke={gold ? P.brass.hi : P.brass.light} strokeWidth="3" />
-        <path d={jaw} fill="none" stroke={gold ? '#fff2b0' : P.turq.light} strokeWidth="1.6" strokeDasharray="7 5" opacity=".8" />
+        <path d={d} fill="none" stroke={gold ? '#ffcf5a' : '#5ff0e0'} strokeWidth="16" opacity=".35" />
+        <path d={d} fill={gold ? 'url(#' + uid + 'pinFill)' : 'url(#' + uid + 'heldFill)'} stroke="#140a02" strokeWidth="8" />
+        <path d={d} fill="none" stroke={`url(#${uid}rimFill)`} strokeWidth="4.6" />
+        <path d={inner} fill="none" stroke={gold ? '#fff2b0' : P.turq.hi} strokeWidth="1.6" strokeDasharray="6 5" opacity=".75" />
+        <path d={jaws.join('')} stroke="#140a02" strokeWidth="10" strokeLinecap="round" />
+        <path d={jaws.join('')} stroke={`url(#${uid}rimFill)`} strokeWidth="5.4" strokeLinecap="round" />
+        {bolts.map(([x, y], i) => <circle key={i} cx={x} cy={y} r="3.6" fill={P.brass.hi} stroke="#140a02" strokeWidth="1.4" />)}
       </svg>
       <div className={styles.plateGlow} />
       <div className={styles.plateSym} style={sb}><CezeriSymbolUse symbol={symbol} /></div>
@@ -450,8 +483,9 @@ export function CezeriBoard({ initial, hubValue = 1, mood = 'base', className, s
       <div className={styles.overlay}>
         <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false">
           <defs>
-            <radialGradient id={`${uid}heldFill`} cx="500" cy="500" r="500" gradientUnits="userSpaceOnUse"><stop offset=".15" stopColor="#1f6a70" /><stop offset=".6" stopColor="#0b3a40" /><stop offset="1" stopColor="#04181c" /></radialGradient>
-            <radialGradient id={`${uid}pinFill`} cx="500" cy="500" r="500" gradientUnits="userSpaceOnUse"><stop offset=".15" stopColor="#7a5210" /><stop offset=".6" stopColor="#4a2e06" /><stop offset="1" stopColor="#241402" /></radialGradient>
+            <radialGradient id={`${uid}heldFill`} cx="500" cy="500" r="500" gradientUnits="userSpaceOnUse"><stop offset=".15" stopColor="#2a9a9a" /><stop offset=".55" stopColor="#127078" /><stop offset="1" stopColor="#063a40" /></radialGradient>
+            <linearGradient id={`${uid}rimFill`} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#fffbe0" /><stop offset=".35" stopColor="#ffe07a" /><stop offset=".7" stopColor="#d9a441" /><stop offset="1" stopColor="#8f5a17" /></linearGradient>
+            <radialGradient id={`${uid}pinFill`} cx="500" cy="500" r="500" gradientUnits="userSpaceOnUse"><stop offset=".15" stopColor="#b8801c" /><stop offset=".55" stopColor="#7a4e0c" /><stop offset="1" stopColor="#3a2204" /></radialGradient>
           </defs>
         </svg>
         {[...lifting].map(([k, sym]) => <Plate key={`l${k}`} ring={Math.floor(k / CZ_SLICES)} slice={k % CZ_SLICES} symbol={sym} kind="lift" uid={uid} />)}
@@ -463,8 +497,8 @@ export function CezeriBoard({ initial, hubValue = 1, mood = 'base', className, s
           return (
             <div key={`w${k}`} className={styles.winGlow} style={st}>
               <svg viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`} aria-hidden="true" focusable="false">
-                <path d={slicePath(ring, s, 1)} fill="rgba(255,214,110,.16)" stroke="#ffe7a0" strokeWidth="5" />
-                <path d={slicePath(ring, s, 1)} fill="none" stroke="#ffb43a" strokeWidth="14" opacity=".35" />
+                <path d={slicePath(ring, s, 1)} fill="none" stroke="#ffb43a" strokeWidth="22" opacity=".45" />
+                <path d={slicePath(ring, s, 1)} fill="rgba(255,214,110,.28)" stroke="#fff2b0" strokeWidth="6" />
               </svg>
             </div>
           );

@@ -46,7 +46,7 @@
 .cell[data-sym='comb'] .glow { background: radial-gradient(circle, rgba(255, 244, 196, 0.98), rgba(242, 191, 60, 0.55) 45%, rgba(242, 191, 60, 0) 72%); }
 .cell[data-sym='drop'] .glow { background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(190, 220, 255, 0.5) 45%, rgba(160, 200, 255, 0) 72%); }
 /* focus: while a win shows, every other drop sinks back into the water */
-.board[data-focus] .cell:not([data-win]) .sym { opacity: 0.34; filter: saturate(0.6); }
+.board[data-focus] .cell:not([data-win]) .sym { opacity: 0.45; }
 .cell[data-win] { z-index: 2; }
 .cell[data-tease] .glow { animation: tease 0.9s ease-in-out infinite alternate; }
 .cell[data-flare] { z-index: 4; }

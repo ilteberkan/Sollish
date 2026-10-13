@@ -1,0 +1,161 @@
+/* Zamanın Çarkları courtyard scene. Only transform / opacity animate. The scene fills its parent. */
+.root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  background: #0d0806;
+  container-type: size;
+  --px: 0;
+  --py: 0;
+}
+.back { position: absolute; inset: 0; pointer-events: none; contain: strict; }
+.stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: max(100cqw, 100cqh * 16 / 9);
+  aspect-ratio: 16 / 9;
+  transform: translate(-50%, -50%);
+}
+.full { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.layer { position: absolute; inset: 0; transition: translate 0.6s cubic-bezier(0.2, 0.7, 0.3, 1); }
+.pWall { translate: calc(var(--px) * -6px) calc(var(--py) * -3px); }
+.pProps { translate: calc(var(--px) * -16px) calc(var(--py) * -6px); }
+.content { position: relative; z-index: 2; width: 100%; height: 100%; }
+
+/* wall gears + lamps */
+.wallGear {
+  position: absolute;
+  width: 7.4%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  animation: turn 26s linear infinite;
+  will-change: transform;
+  opacity: 0.85;
+}
+.wallGear > svg { width: 100%; height: 100%; display: block; }
+@keyframes turn { to { transform: rotate(360deg); } }
+.root[data-mood='feature'] .wallGear, .root[data-awake] .wallGear { animation-duration: 6s; }
+.lampGlow {
+  position: absolute;
+  width: 14%;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 210, 120, 0.55), rgba(255, 150, 60, 0.18) 45%, rgba(255, 120, 40, 0) 100%);
+  animation: flicker 3.1s ease-in-out infinite;
+  will-change: opacity;
+}
+@keyframes flicker { 0%, 100% { opacity: 0.85; } 23% { opacity: 1; } 47% { opacity: 0.72; } 71% { opacity: 0.95; } }
+.lampFlash {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255, 214, 120, 0.55), rgba(255, 170, 60, 0.15) 50%, transparent 80%);
+}
+
+/* water channel (stage y 798..834) */
+.channel { position: absolute; left: 0; right: 0; top: 88.67%; height: 4%; overflow: hidden; }
+.shimmer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 200%;
+  height: 100%;
+  background: repeating-linear-gradient(90deg, rgba(190, 255, 246, 0) 0 46px, rgba(190, 255, 246, 0.5) 52px, rgba(190, 255, 246, 0) 60px, rgba(190, 255, 246, 0) 92px, rgba(255, 220, 150, 0.32) 98px, rgba(190, 255, 246, 0) 108px);
+  animation: flow 7s linear infinite;
+  will-change: transform;
+  opacity: 0.6;
+}
+@keyframes flow { to { transform: translateX(-216px); } }
+.root[data-mood='feature'] .shimmer { opacity: 1; animation-duration: 3.5s; }
+
+/* automata */
+.elephant, .castle { position: absolute; top: 27.78%; height: 62.22%; }
+.elephant { left: 4.38%; width: 20%; transform-origin: 50% 100%; }
+.castle { left: 76.88%; width: 18.75%; transform-origin: 50% 100%; }
+@container (max-aspect-ratio: 4 / 5) {
+  .elephant { translate: 30% 9%; scale: 0.62; }
+  .castle { translate: -38% 9%; scale: 0.62; }
+}
+@container (min-aspect-ratio: 4 / 5) and (max-aspect-ratio: 5 / 4) {
+  .elephant { translate: 16% 4%; scale: 0.8; }
+  .castle { translate: -20% 4%; scale: 0.8; }
+}
+.dial, .zodiac, .falconPerch, .cymbals, .arm, .doorL, .doorR, .jet { position: absolute; will-change: transform; }
+.dial > svg, .zodiac > svg, .falconPerch > svg, .arm > svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.dial { animation: turn 60s linear infinite; }
+.root[data-awake] .dial { animation-duration: 2.4s; }
+.zodiac { animation: turn 90s linear infinite reverse; }
+.root[data-mood='feature'] .zodiac { animation-duration: 12s; }
+.wingL, .wingR { transform-box: fill-box; }
+.wingL { transform-origin: 100% 80%; }
+.wingR { transform-origin: 0% 80%; }
+.root[data-awake] .wingL { animation: flapL 0.32s ease-in-out infinite alternate; }
+.root[data-awake] .wingR { animation: flapR 0.32s ease-in-out infinite alternate; }
+@keyframes flapL { to { transform: rotate(38deg); } }
+@keyframes flapR { to { transform: rotate(-38deg); } }
+.root[data-awake] .falconPerch { animation: perchHop 0.64s ease-in-out infinite; }
+@keyframes perchHop { 50% { transform: translateY(-14%); } }
+.arm { transform-origin: 4% 18%; }
+.root[data-awake] .arm { animation: strike 0.6s cubic-bezier(0.3, 0, 0.3, 1) infinite; }
+@keyframes strike { 0%, 100% { transform: rotate(0deg); } 45% { transform: rotate(-38deg); } 62% { transform: rotate(14deg); } }
+.cymL, .cymR {
+  position: absolute;
+  top: 10%;
+  width: 46%;
+  height: 80%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #fff6d0, #f6d27a 35%, #c98a26 70%, #5a3204);
+  box-shadow: 0 0 0 1px #120804;
+}
+.cymL { left: -12%; }
+.cymR { right: -12%; }
+.root[data-awake] .cymL { animation: cymL 0.5s cubic-bezier(0.5, 0, 0.3, 1) infinite; }
+.root[data-awake] .cymR { animation: cymR 0.5s cubic-bezier(0.5, 0, 0.3, 1) infinite; }
+@keyframes cymL { 0%, 100% { transform: translateX(0) rotate(0deg); } 40% { transform: translateX(44%) rotate(14deg); } }
+@keyframes cymR { 0%, 100% { transform: translateX(0) rotate(0deg); } 40% { transform: translateX(-44%) rotate(-14deg); } }
+.doorL, .doorR {
+  background: linear-gradient(90deg, #4a2a08, #d9a441 40%, #fff4c4 55%, #c98a26 75%, #4a2a08);
+  box-shadow: inset 0 0 0 2px #120804;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.doorL { transform-origin: 0 50%; border-top-left-radius: 100% 26%; }
+.doorR { transform-origin: 100% 50%; border-top-right-radius: 100% 26%; }
+.root[data-mood='feature'] .doorL, .root[data-mood='feature'] .doorR, .root[data-mood='bigwin'] .doorL, .root[data-mood='bigwin'] .doorR { transform: scaleX(0.16); }
+.jet {
+  border-radius: 40% 40% 10% 10%;
+  background: linear-gradient(180deg, rgba(210, 255, 250, 0.95), rgba(60, 210, 220, 0.5) 60%, rgba(60, 210, 220, 0));
+  opacity: 0;
+  transform-origin: 50% 100%;
+  transition: opacity 0.8s ease;
+}
+.root[data-mood='feature'] .jet { opacity: 0.9; animation: jet 0.9s ease-in-out infinite alternate; }
+@keyframes jet { from { transform: scaleY(0.86) scaleX(0.9); } to { transform: scaleY(1.05) scaleX(1.05); } }
+
+/* motes */
+.motes { position: absolute; inset: 0; }
+.motes > span {
+  position: absolute;
+  border-radius: 50%;
+  background: #ffdca0;
+  opacity: 0;
+  animation: mote 14s linear infinite;
+  will-change: transform, opacity;
+}
+@keyframes mote { 0% { transform: translate(0, 0); opacity: 0; } 15% { opacity: 0.7; } 85% { opacity: 0.5; } 100% { transform: translate(40px, -120px); opacity: 0; } }
+
+/* moods */
+.moodFeature, .moodBig { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; pointer-events: none; }
+.moodFeature { background: radial-gradient(ellipse 80% 70% at 50% 45%, rgba(40, 200, 220, 0.1), rgba(20, 60, 160, 0.32) 70%, rgba(4, 12, 40, 0.55) 100%); }
+.moodBig { background: radial-gradient(ellipse 70% 60% at 50% 45%, rgba(255, 210, 110, 0.32), rgba(255, 150, 50, 0.14) 55%, rgba(60, 20, 0, 0.3) 100%); }
+.root[data-mood='feature'] .moodFeature { opacity: 1; }
+.root[data-mood='bigwin'] .moodBig { opacity: 1; }
+.root[data-mood='feature'] .lampGlow { opacity: 0.55; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wallGear, .lampGlow, .shimmer, .dial, .zodiac, .motes > span, .root[data-awake] .wingL, .root[data-awake] .wingR, .root[data-awake] .arm, .root[data-awake] .cymL, .root[data-awake] .cymR, .root[data-awake] .falconPerch, .root[data-mood='feature'] .jet { animation: none; }
+  .doorL, .doorR, .layer { transition: none; }
+}

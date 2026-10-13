@@ -19,7 +19,7 @@ export const CZ_RINGS = 4;
 export const CZ_SLICE_DEG = 360 / CZ_SLICES;
 
 /** Symbol box / inscribed-circle diameter (the art's aura may spill over the plate edge). */
-export const CZ_SYMBOL_FILL = 1.16;
+export const CZ_SYMBOL_FILL = 1.22;
 /** Hub disc radius and the boundaries between hub | ring 0 | ring 1 | ring 2 | ring 3 | rim. */
 export const CZ_HUB_R = 86;
 export const CZ_BOUNDS: readonly number[] = [94, 208, 300, 392, 482];

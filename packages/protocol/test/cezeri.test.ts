@@ -62,7 +62,7 @@ function replaySpin(spin: CezeriSpin, mode: CezeriMode, kind: "base" | "free", c
   const tables = CEZERI_MODE_TABLES[mode];
   const paid = new Array<number>(12).fill(0);
   const held = new Set<string>();
-  let board: CezeriBoard | null = null, hub = 0, round = -1, chain = 0, respinPending = false, rotatedRound = -1, sawEnd = false, lastRespin = true;
+  let board: CezeriBoard | null = null, hub = 0, round = -1, chain = 0, respinPending = false, rotatedRound = -1, sawEnd = false, capEnded = false;
   let newThisRound: string[] = [];
   for (const step of spin.steps) {
     switch (step.type) {
@@ -138,9 +138,9 @@ function replaySpin(spin: CezeriSpin, mode: CezeriMode, kind: "base" | "free", c
         assert.deepEqual(step.newHeld.map(([r, k]) => heldKey(r, k)), newThisRound);
         for (const key of newThisRound) held.add(key);
         assert.deepEqual(step.held.map(([r, k]) => heldKey(r, k)), [...held].sort((a, b) => { const [ar, ak] = a.split(",").map(Number) as [number, number], [br, bk] = b.split(",").map(Number) as [number, number]; return ar - br || ak - bk; }));
-        assert.ok(step.newHeld.length >= 1 || true);
+        assert.ok(step.newHeld.length >= 0);
         assert.equal(step.respin, round < CEZERI_MAX_RESPINS && held.size < 48);
-        respinPending = step.respin; lastRespin = step.respin;
+        respinPending = step.respin; capEnded = !step.respin && round >= CEZERI_MAX_RESPINS;
         break;
       }
       case "end": {
@@ -151,9 +151,9 @@ function replaySpin(spin: CezeriSpin, mode: CezeriMode, kind: "base" | "free", c
         assert.equal(step.hub, hub);
         assert.equal(step.heldSlices, held.size);
         assert.equal(step.chainHundredths, chain);
-        assert.equal(step.chainCapped, held.size > 0 && round >= CEZERI_MAX_RESPINS && !lastRespin && stepsBeforeEndPaid(spin));
+        assert.equal(step.chainCapped, capEnded);
         assert.ok(!respinPending);
-        if (!step.chainCapped && lastRespin) for (let s = 0; s < 12; s++) assert.ok(oraclePay(spokeOf(board!, s)) <= paid[s]!);
+        for (let s = 0; s < 12; s++) assert.ok(oraclePay(spokeOf(board!, s)) <= paid[s]!, "the chain ends only when nothing new pays (or the cap/full board ended it)");
         break;
       }
       default: break;
@@ -164,11 +164,6 @@ function replaySpin(spin: CezeriSpin, mode: CezeriMode, kind: "base" | "free", c
   assert.equal(spin.rotations, round + 1);
   assert.equal(spin.respins, round);
   assert.equal(spin.hubEnd, hub);
-}
-/** True when the last rotation of the spin still had a new win (the lock step sits right before `end`). */
-function stepsBeforeEndPaid(spin: CezeriSpin): boolean {
-  const i = spin.steps.findIndex(s => s.type === "end");
-  return spin.steps[i - 1]?.type === "lock";
 }
 function replayRound(round: CezeriRound): void {
   let carried = 0;
@@ -205,10 +200,10 @@ test("structure: self-contained pure module (no imports, clock, Math.random, net
   for (const forbidden of ["Math.random", "Date.now", "new Date", "performance.now", "fetch(", "process.", "require("]) assert.ok(!source.includes(forbidden), forbidden);
 });
 
-test("strips: lengths 30-48, valid letters, vessels at least 12 slices apart, positive stop weights, free tables richer in wilds", () => {
+test("strips: lengths 30-48, valid letters, vessels at least 12 slices apart, positive stop weights, respin tables richer in wilds", () => {
   for (const mode of MODES) {
     const tables = CEZERI_MODE_TABLES[mode];
-    for (const [kind, list] of [["base", tables.base], ["free", tables.free]] as const) {
+    for (const [kind, list] of [["base", tables.base], ["respin", tables.respin], ["free", tables.free]] as const) {
       assert.equal(list.length, 4);
       list.forEach((table, r) => {
         const s = table.strip;
@@ -226,8 +221,8 @@ test("strips: lengths 30-48, valid letters, vessels at least 12 slices apart, po
       });
     }
     const wilds = (list: readonly CezeriRingTable[]): number => list.reduce((a, t) => a + [...t.strip].filter(c => c === "W").length, 0);
+    assert.ok(wilds(tables.respin) > wilds(tables.base), `${mode}: the respin strips carry more gear wilds than the first rotation`);
     assert.ok(wilds(tables.free) >= wilds(tables.base), `${mode}: free strips carry at least as many gear wilds`);
-    if (mode !== "buy") assert.ok(wilds(tables.free) > wilds(tables.base), `${mode}: free strips carry more gear wilds`);
     assert.ok(tables.hubFree.every(([v, w]) => [1, 2, 3, 5, 10].includes(v) && w > 0) && tables.hubBase.every(([v, w]) => [1, 2, 3, 5, 10].includes(v) && w > 0));
   }
   // modes share the base strips; ante raises the vessel stop weight (feature about 2x as often)
@@ -348,26 +343,33 @@ test("payout is floor(bet * hundredths / 100) in every mode and never exceeds 10
   }
 });
 
-test("spoke evaluation: 3 or 4 from ring 0, gear is wild, a vessel or other symbol ends the run, pure gear runs pay their own table", () => {
+test("spoke evaluation: 3-4 from ring 0 or 3 from ring 1, gear is wild, a vessel or other symbol ends the run, pure gear runs pay their own table", () => {
   const ev = (...cells: CezeriSymbol[]) => __cezeriTest.evalSpoke(cells);
-  assert.deepEqual(ev("h1", "h1", "h1", "h2"), { symbol: "h1", length: 3, pay: CEZERI_PAYTABLE.h1[0] });
-  assert.deepEqual(ev("l4", "l4", "l4", "l4"), { symbol: "l4", length: 4, pay: CEZERI_PAYTABLE.l4[1] });
-  assert.equal(ev("h1", "h1", "h2", "h1"), null, "a run must be consecutive from ring 0");
+  assert.deepEqual(ev("h1", "h1", "h1", "h2"), { symbol: "h1", length: 3, pay: CEZERI_PAYTABLE.h1[0], start: 0 });
+  assert.deepEqual(ev("l4", "l4", "l4", "l4"), { symbol: "l4", length: 4, pay: CEZERI_PAYTABLE.l4[1], start: 0 });
+  assert.equal(ev("h1", "h1", "h2", "h1"), null, "a run must be consecutive");
   assert.equal(ev("h1", "h1", "vessel", "h1"), null);
-  assert.equal(ev("h2", "h1", "h1", "h1"), null, "the run must start at ring 0");
+  assert.deepEqual(ev("h2", "h1", "h1", "h1"), { symbol: "h1", length: 3, pay: CEZERI_PAYTABLE.h1[0], start: 1 }, "a run may start at ring 1 (rings 1-3)");
+  assert.deepEqual(ev("vessel", "l2", "l2", "l2"), { symbol: "l2", length: 3, pay: CEZERI_PAYTABLE.l2[0], start: 1 });
   assert.equal(ev("vessel", "vessel", "vessel", "vessel"), null, "vessels never pay on a spoke");
-  assert.equal(ev("h1", "gear", "h2", "h2"), null);
+  assert.equal(ev("h1", "h2", "h1", "h1"), null, "a run from ring 2 would be only 2 slices");
   // wilds
-  assert.deepEqual(ev("h3", "gear", "h3", "l1"), { symbol: "h3", length: 3, pay: CEZERI_PAYTABLE.h3[0] });
-  assert.deepEqual(ev("gear", "l2", "l2", "l2"), { symbol: "l2", length: 4, pay: CEZERI_PAYTABLE.l2[1] });
-  assert.deepEqual(ev("h4", "h4", "gear", "gear"), { symbol: "h4", length: 4, pay: CEZERI_PAYTABLE.h4[1] });
-  assert.deepEqual(ev("gear", "gear", "l3", "l3"), { symbol: "l3", length: 4, pay: CEZERI_PAYTABLE.l3[1] });
-  assert.deepEqual(ev("gear", "gear", "l1", "vessel"), { symbol: "l1", length: 3, pay: CEZERI_PAYTABLE.l1[0] });
+  assert.deepEqual(ev("h1", "gear", "h2", "h2"), { symbol: "h2", length: 3, pay: CEZERI_PAYTABLE.h2[0], start: 1 }, "gear then h2 h2 from ring 1");
+  assert.deepEqual(ev("h3", "gear", "h3", "l1"), { symbol: "h3", length: 3, pay: CEZERI_PAYTABLE.h3[0], start: 0 });
+  assert.deepEqual(ev("gear", "l2", "l2", "l2"), { symbol: "l2", length: 4, pay: CEZERI_PAYTABLE.l2[1], start: 0 });
+  assert.deepEqual(ev("h4", "h4", "gear", "gear"), { symbol: "h4", length: 4, pay: CEZERI_PAYTABLE.h4[1], start: 0 });
+  assert.deepEqual(ev("gear", "gear", "l3", "l3"), { symbol: "l3", length: 4, pay: CEZERI_PAYTABLE.l3[1], start: 0 });
+  assert.deepEqual(ev("gear", "gear", "l1", "vessel"), { symbol: "l1", length: 3, pay: CEZERI_PAYTABLE.l1[0], start: 0 });
   assert.equal(ev("gear", "gear", "vessel", "h1"), null, "two gears and a vessel is not a run of three");
   assert.equal(ev("gear", "h1", "h2", "h2"), null);
+  // the better of the run from ring 0 and the run from ring 1; a tie goes to ring 0
+  assert.equal(ev("h4", "gear", "gear", "h3")!.pay, Math.max(CEZERI_PAYTABLE.h4[0], CEZERI_PAYTABLE.h3[0]));
+  assert.equal(ev("h1", "h2", "h2", "h2")!.start, 1);
+  assert.equal(ev("h2", "h2", "h2", "h2")!.start, 0);
   // pure gear runs: 3 gears + vessel, 4 gears; the better of the pure-gear and symbol runs pays
-  assert.deepEqual(ev("gear", "gear", "gear", "vessel"), { symbol: "gear", length: 3, pay: CEZERI_GEAR_PAY[0] });
-  assert.deepEqual(ev("gear", "gear", "gear", "gear"), { symbol: "gear", length: 4, pay: CEZERI_GEAR_PAY[1] });
+  assert.deepEqual(ev("gear", "gear", "gear", "vessel"), { symbol: "gear", length: 3, pay: CEZERI_GEAR_PAY[0], start: 0 });
+  assert.deepEqual(ev("vessel", "gear", "gear", "gear"), { symbol: "gear", length: 3, pay: CEZERI_GEAR_PAY[0], start: 1 });
+  assert.deepEqual(ev("gear", "gear", "gear", "gear"), { symbol: "gear", length: 4, pay: CEZERI_GEAR_PAY[1], start: 0 });
   const g3h1 = ev("gear", "gear", "gear", "h1")!;
   assert.equal(g3h1.pay, Math.max(CEZERI_GEAR_PAY[0], CEZERI_PAYTABLE.h1[1]));
   const g3l4 = ev("gear", "gear", "gear", "l4")!;
@@ -387,26 +389,50 @@ test("spoke evaluation: 3 or 4 from ring 0, gear is wild, a vessel or other symb
 });
 
 test("step grammar and chain replay: every step of thousands of rounds obeys the rules", () => {
-  const stats = { wildWins: 0, upgrades: 0, rotations: [0, 0, 0, 0, 0], falcons: 0, scatters: 0, retriggers: 0 };
-  for (const [i, seed] of seeds(1800, "11112222333344445555666677778888").entries()) {
+  const stats = { wildWins: 0, upgrades: 0, startOne: 0, rotations: new Array<number>(12).fill(0), falcons: 0, scatters: 0, heldRotations: 0 };
+  for (const [i, seed] of seeds(2400, "11112222333344445555666677778888").entries()) {
     const mode = MODES[i % 3]!;
     const round = playCezeriRound(seed, 100, mode);
     replayRound(round);
     for (const spin of round.spins) {
       stats.rotations[spin.rotations]!++;
       for (const step of spin.steps) {
-        if (step.type === "win") { if (step.wildRings.length > 0) stats.wildWins++; if (step.paidBefore > 0) stats.upgrades++; }
+        if (step.type === "win") { if (step.wildRings.length > 0) stats.wildWins++; if (step.paidBefore > 0) stats.upgrades++; if (step.startRing === 1) stats.startOne++; }
         if (step.type === "falcon") stats.falcons++;
-        if (step.type === "scatter") { stats.scatters++; if (spin.kind === "free") stats.retriggers++; }
+        if (step.type === "scatter") stats.scatters++;
+        if (step.type === "rotate" && step.rings.some(r => r.held.length > 0)) stats.heldRotations++;
       }
     }
   }
   assert.ok(stats.wildWins > 20, `wild wins ${stats.wildWins}`);
-  assert.ok(stats.rotations[1]! > 0 && stats.rotations[2]! > 0, "chains of 1 and 2 rotations occur");
   assert.equal(stats.rotations[0], 0);
-  assert.equal(stats.rotations[3]! + stats.rotations[4]!, 0, "every run covers rings 0-2, so only ring 3 can respin: at most 2 rotations");
-  assert.ok(stats.upgrades > 20, `3-to-4 upgrades ${stats.upgrades}`);
+  for (const n of [1, 2, 3, 4, 5]) assert.ok(stats.rotations[n]! > 0, `chains of ${n} rotations occur`);
+  assert.ok(stats.heldRotations > 100, "respins with held slices occur");
+  assert.ok(stats.upgrades > 20 && stats.startOne > 20, `upgrades ${stats.upgrades}, runs from ring 1: ${stats.startOne}`);
   assert.ok(stats.falcons > 0 && stats.scatters > 0);
+});
+
+test("chain length: respins per winning base spin average 1.8-2.5 with a visible tail; the cap of 10 respins is never exceeded and is reached sometimes", () => {
+  let winning = 0, respins = 0, tail = 0, capped = 0, rounds = 0;
+  const play = __cezeriTest.player();
+  const rng = __cezeriTest.createRng("c4a1c4a1c4a1c4a1c4a1c4a1c4a1c4a1");
+  while (rounds < 300_000) {
+    rounds++;
+    const round = play(cezeriSeedFromEntropy(new Uint32Array([rng(), rng(), rng(), rng()])), 100, "standard");
+    const spin = round.spins[0]!;
+    assert.ok(spin.respins <= CEZERI_MAX_RESPINS && spin.rotations === spin.respins + 1);
+    if (spin.chainHundredths > 0) { winning++; respins += spin.respins; if (spin.respins >= 5) tail++; }
+    if (spin.respins === CEZERI_MAX_RESPINS) {
+      capped++;
+      replayRound(round);
+      assert.equal((spin.steps.find(s => s.type === "end") as { chainCapped: boolean }).chainCapped, true);
+      assert.equal(spin.hubEnd, spin.hubStart + CEZERI_MAX_RESPINS);
+    }
+  }
+  const avg = respins / winning;
+  assert.ok(avg >= 1.8 && avg <= 2.5, `average respins per winning chain ${avg}`);
+  assert.ok(tail / winning >= 0.01, `chains with 5+ respins: ${tail / winning}`);
+  assert.ok(capped > 0, "the 10-respin cap is reached in 300k spins");
 });
 
 test("board and step data shapes: 4 rings x 12 slices, known symbols, snapshots are independent copies, fields are plain data", () => {
@@ -433,8 +459,8 @@ test("board and step data shapes: 4 rings x 12 slices, known symbols, snapshots 
 const FIRST_SPIN = 12 * CEZERI_PAYTABLE.h1[0] * 3; // forced board [h1,h1,h1,h2] at hub 3
 const NOWIN = [A30, B30, C30, "D".repeat(30)];
 
-test("lock semantics (forced board): winning rings lock, locked rings never move, the hub rises by 1 per respin", () => {
-  // rings 0..2 show only h1, ring 3 only h2: 12 spokes pay h1 x3, rings 0,1,2 lock, ring 3 respins once and finds nothing.
+test("Dişli Kilidi (forced board): winning slices are held, every ring turns underneath, held slices never move, the hub rises by 1 per respin", () => {
+  // rings 0..2 show only h1, ring 3 only h2: 12 spokes pay h1 x3 (rings 0-2 of every spoke are held); all four rings turn again and find nothing new.
   const round = __cezeriTest.play(SEED, 100, "standard", scenario("standard", [A30, A30, A30, B30], [A30, A30, A30, A30]));
   assert.equal(round.spins.length, 1);
   const spin = round.spins[0]!;
@@ -442,67 +468,101 @@ test("lock semantics (forced board): winning rings lock, locked rings never move
   const wins = stepsOf(spin, "win");
   assert.deepEqual(wins.map(w => w.spoke), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
   for (const w of wins) {
-    assert.deepEqual([w.symbol, w.length, w.round, w.hub, w.paidBefore], ["h1", 3, 0, 3, 0]);
+    assert.deepEqual([w.symbol, w.length, w.startRing, w.round, w.hub, w.paidBefore], ["h1", 3, 0, 0, 3, 0]);
     assert.equal(w.payHundredths, CEZERI_PAYTABLE.h1[0]);
     assert.equal(w.winHundredths, CEZERI_PAYTABLE.h1[0] * 3);
     assert.deepEqual(w.wildRings, []);
+    assert.deepEqual(w.cells, [[0, w.spoke], [1, w.spoke], [2, w.spoke]]);
   }
   const [lock] = stepsOf(spin, "lock");
-  assert.deepEqual([lock!.rings, lock!.newRings, lock!.respinRings], [[0, 1, 2], [0, 1, 2], [3]]);
+  assert.equal(lock!.held.length, 36);
+  assert.equal(lock!.newHeld.length, 36);
+  assert.equal(lock!.respin, true);
+  assert.ok(lock!.held.every(([r]) => r <= 2));
   const [hub0, hub1] = stepsOf(spin, "hub");
   assert.deepEqual([hub0!.value, hub0!.reason, hub1!.value, hub1!.previous, hub1!.reason, hub1!.round], [3, "spin", 4, 3, "respin", 1]);
   const [rot0, rot1] = stepsOf(spin, "rotate");
   assert.deepEqual(rot0!.rings.map(r => r.ring), [0, 1, 2, 3]);
-  assert.deepEqual(rot1!.rings.map(r => r.ring), [3], "only the unlocked ring turns");
-  for (const r of [0, 1, 2]) assert.deepEqual(rot1!.board[r], rot0!.board[r]);
+  assert.deepEqual(rot1!.rings.map(r => r.ring), [0, 1, 2, 3], "all four rings turn in a respin");
+  assert.deepEqual(rot1!.rings.map(r => r.held.length), [12, 12, 12, 0]);
+  for (const r of [0, 1, 2]) assert.deepEqual(rot1!.board[r], rot0!.board[r], "held slices never move");
   const [end] = stepsOf(spin, "end");
-  assert.deepEqual([end!.rotations, end!.respins, end!.hub, end!.lockedRings, end!.chainHundredths], [2, 1, 4, [0, 1, 2], 12 * CEZERI_PAYTABLE.h1[0] * 3]);
-  assert.equal(spin.winHundredths, 12 * CEZERI_PAYTABLE.h1[0] * 3);
+  assert.deepEqual([end!.rotations, end!.respins, end!.hub, end!.heldSlices, end!.chainCapped, end!.chainHundredths], [2, 1, 4, 36, false, FIRST_SPIN]);
+  assert.equal(spin.winHundredths, FIRST_SPIN);
   assert.equal(round.totalHundredths, spin.winHundredths);
   assert.equal(round.freeSpinsTriggered, false);
   replayRound(round);
+  // the next spin starts clean: held slices are released at the end of the chain (a free spin of the same scenario holds nothing in its first rotation)
+  const withFree = __cezeriTest.play(SEED, 100, "standard", scenario("standard", [V30, V30, V30, A30], [A30, A30, A30, B30]));
+  for (const spin2 of withFree.spins.slice(1)) assert.ok(stepsOf(spin2, "rotate")[0]!.rings.every(r => r.held.length === 0));
 });
 
-test("lock semantics: a respin that completes a longer run pays only the increment, at the new hub; no second respin once all rings are locked", () => {
-  // ring 3 holds a single h1 slice among h2: only some stops show it. Rings 0..2 are all h1.
+test("Dişli Kilidi: a respin that extends a run or pays a new spoke pays only the increment, at the new hub; the chain goes on while something new pays", () => {
+  // rings 0..2 are all h1, ring 3 holds a single h1 slice among h2: a rotation shows it at one spoke (or not at all).
   const tuning = scenario("standard", [A30, A30, A30, B30.slice(1) + "A"], [A30, A30, A30, A30]);
-  let found = 0;
+  let found = 0, multi = 0;
   for (const seed of seeds(400, "5eed5eed5eed5eed5eed5eed5eed5eed")) {
     const round = __cezeriTest.play(seed, 100, "standard", tuning);
     replayRound(round);
     const spin = round.spins[0]!;
-    const second = stepsOf(spin, "win").filter(w => w.round === 1);
-    if (second.length === 0) { assert.ok(spin.rotations <= 2); continue; }
-    found++;
-    assert.equal(second.length, 1, "one h1 slice on ring 3 completes exactly one spoke");
-    const w = second[0]!;
-    assert.deepEqual([w.symbol, w.length, w.hub, w.paidBefore, w.fullHundredths], ["h1", 4, 4, CEZERI_PAYTABLE.h1[0], CEZERI_PAYTABLE.h1[1]]);
-    assert.equal(w.payHundredths, CEZERI_PAYTABLE.h1[1] - CEZERI_PAYTABLE.h1[0]);
-    assert.equal(w.winHundredths, (CEZERI_PAYTABLE.h1[1] - CEZERI_PAYTABLE.h1[0]) * 4);
-    assert.deepEqual(stepsOf(spin, "lock").at(-1)!.respinRings, [], "every ring is locked now: the chain ends");
-    assert.equal(spin.rotations, 2);
-    assert.equal(spin.chainHundredths, 12 * CEZERI_PAYTABLE.h1[0] * 3 + w.winHundredths);
+    const later = stepsOf(spin, "win").filter(w => w.round >= 1);
+    const first = stepsOf(spin, "win").filter(w => w.round === 0);
+    // round 0 may already show the ring-3 h1 slice (a 4-run); every other spoke pays the 3-run
+    assert.equal(first.length, 12);
+    let expected = first.reduce((a, w) => a + w.winHundredths, 0);
+    const roundsWithPay = new Set(later.map(w => w.round));
+    for (const w of later) {
+      assert.deepEqual([w.symbol, w.length, w.startRing, w.hub, w.paidBefore, w.fullHundredths], ["h1", 4, 0, 3 + w.round, CEZERI_PAYTABLE.h1[0], CEZERI_PAYTABLE.h1[1]]);
+      assert.equal(w.payHundredths, CEZERI_PAYTABLE.h1[1] - CEZERI_PAYTABLE.h1[0]);
+      assert.equal(w.winHundredths, w.payHundredths * w.hub);
+      expected += w.winHundredths;
+    }
+    assert.equal(spin.chainHundredths, expected);
+    // the chain ended on a rotation without a new pay (or when all 48 slices were held)
+    const last = stepsOf(spin, "rotate").at(-1)!;
+    assert.ok(!later.some(w => w.round === last.round) || stepsOf(spin, "lock").at(-1)!.respin === false || last.round === CEZERI_MAX_RESPINS);
+    if (later.length > 0) found++;
+    if (roundsWithPay.size >= 2) multi++;
+    assert.equal(spin.rotations, 1 + (spin.rotations - 1));
   }
-  assert.ok(found > 20, `${found} upgrades found`);
+  assert.ok(found > 20, `${found} chains with an extension`);
+  assert.ok(multi > 3, `${multi} chains with extensions in two or more respins`);
 });
 
-test("lock semantics: spokes already paid are not paid again when other rings respin; chains stop after at most 1 respin", () => {
-  const maxima = [0, 0, 0, 0, 0];
-  for (const seed of seeds(3000, "c0ffee00c0ffee00c0ffee00c0ffee00")) {
+test("respin cap: tuning maxRespins 0 and 1 stop the chain, flag chainCapped, and still pay the last rotation", () => {
+  const tuning = scenario("standard", [A30, A30, A30, B30.slice(1) + "A"], [A30, A30, A30, A30]);
+  let capped1 = 0;
+  for (const seed of seeds(300, "ca9ca9ca9ca9ca9ca9ca9ca9ca9ca9ca")) {
+    const zero = __cezeriTest.play(seed, 100, "standard", { ...tuning, maxRespins: 0 }).spins[0]!;
+    assert.equal(zero.rotations, 1);
+    assert.equal((stepsOf(zero, "end")[0] as { chainCapped: boolean }).chainCapped, true);
+    assert.equal(stepsOf(zero, "lock")[0]!.respin, false);
+    const one = __cezeriTest.play(seed, 100, "standard", { ...tuning, maxRespins: 1 }).spins[0]!;
+    assert.ok(one.rotations <= 2);
+    if (one.rotations === 2 && stepsOf(one, "win").some(w => w.round === 1)) { capped1++; assert.equal(stepsOf(one, "lock").at(-1)!.respin, false); assert.equal((stepsOf(one, "end")[0] as { chainCapped: boolean }).chainCapped, true); }
+  }
+  assert.ok(capped1 > 10);
+  assert.equal(CEZERI_MAX_RESPINS, 10);
+});
+
+test("Dişli Kilidi: spokes already paid are not paid again; increments add up to the final run pay of each spoke", () => {
+  const rotations = new Array<number>(12).fill(0);
+  for (const seed of seeds(4000, "c0ffee00c0ffee00c0ffee00c0ffee00")) {
     const round = playCezeriRound(seed, 100, "standard");
     for (const spin of round.spins) {
-      maxima[spin.rotations]!++;
+      rotations[spin.rotations]!++;
       const perSpoke = new Map<number, number>();
       for (const w of stepsOf(spin, "win")) {
         perSpoke.set(w.spoke, (perSpoke.get(w.spoke) ?? 0) + w.payHundredths);
         assert.ok(w.payHundredths > 0);
       }
-      for (const [spoke, paid] of perSpoke) assert.equal(paid, oraclePay(spokeOf(spin.steps.filter((s): s is CezeriRotateStep => s.type === "rotate").at(-1)!.board, spoke)), "increments add up to the final run pay");
+      const finalBoard = spin.steps.filter((s): s is CezeriRotateStep => s.type === "rotate").at(-1)!.board;
+      for (const [spoke, paid] of perSpoke) assert.equal(paid, oraclePay(spokeOf(finalBoard, spoke)), "increments add up to the final run pay");
     }
   }
-  assert.equal(maxima[0], 0);
-  assert.ok(maxima[1]! > 0 && maxima[2]! > 0);
-  assert.equal(maxima[3]! + maxima[4]!, 0);
+  assert.equal(rotations[0], 0);
+  for (const n of [1, 2, 3, 4]) assert.ok(rotations[n]! > 0, `${n}-rotation chains occur`);
+  assert.ok(rotations.slice(6).some(n => n > 0), "chains of 5+ respins occur");
 });
 
 test("wild gear in a forced board: substitutes in a symbol run and in a pure gear run", () => {
@@ -515,20 +575,26 @@ test("wild gear in a forced board: substitutes in a symbol run and in a pure gea
   const p = stepsOf(pure, "win");
   assert.equal(p.length, 12);
   for (const win of p) assert.deepEqual([win.symbol, win.length, win.fullHundredths, win.wildRings], ["gear", 4, CEZERI_GEAR_PAY[1], [0, 1, 2, 3]]);
-  assert.equal(stepsOf(pure, "lock")[0]!.respinRings.length, 0, "four locked rings: no respin");
+  assert.equal(stepsOf(pure, "lock")[0]!.held.length, 48);
+  assert.equal(stepsOf(pure, "lock")[0]!.respin, false, "all 48 slices held: no respin");
   assert.equal(pure.rotations, 1);
   assert.equal(stepsOf(pure, "hub").length, 1);
   assert.equal(pure.chainHundredths, 12 * CEZERI_GEAR_PAY[1] * 3);
-  // gear completes a run for a symbol that only appears on some rings
+  // gear completes a run for a symbol that only appears on some rings; a gear held in the run stays a gear
   const mixed = __cezeriTest.play(SEED, 100, "standard", scenario("standard", [A30, W30, A30, D(30)], [A30, A30, A30, A30])).spins[0]!;
   for (const win of stepsOf(mixed, "win")) assert.deepEqual([win.symbol, win.wildRings], ["h1", [1]]);
+  assert.equal(stepsOf(mixed, "rotate")[1]!.board[1]!.every(x => x === "gear"), true);
+  // a run that starts at ring 1
+  const late = __cezeriTest.play(SEED, 100, "standard", scenario("standard", [B30, A30, A30, A30], [A30, A30, A30, A30])).spins[0]!;
+  for (const win of stepsOf(late, "win")) assert.deepEqual([win.symbol, win.length, win.startRing, win.cells.length], ["h1", 3, 1, 3]);
+  assert.equal(stepsOf(late, "win").length, 12);
 });
 function D(n: number): string { return "D".repeat(n); }
 
 test("scatter: vessels count on the whole final board; trigger 3+, pay 2x / 10x / 50x of the bet, never multiplied by the hub", () => {
   assert.equal(CEZERI_SCATTER_PAY[3], 200);
   for (const [vessels, pay] of [[3, 200], [4, 1000], [5, 5000], [6, 5000], [9, 5000]] as const) {
-    const round = __cezeriTest.play(SEED, 100, "buy", { tables: { buy: { base: NOWIN.map(s => ring(s)), hubBase: [[10, 1]] } }, buyMinVessels: vessels });
+    const round = __cezeriTest.play(SEED, 100, "buy", { tables: { buy: { base: NOWIN.map(s => ring(s)), respin: NOWIN.map(s => ring(s)), hubBase: [[10, 1]] } }, buyMinVessels: vessels });
     const spin = round.spins[0]!;
     const [scatter] = stepsOf(spin, "scatter");
     assert.equal(scatter!.count, vessels);
@@ -729,7 +795,7 @@ test("buy mode guarantees the feature: >= 3 vessels after the chain, forged on s
   }
   assert.ok(forgedRounds > 2000 && naturalRounds > 0, `${forgedRounds} forged, ${naturalRounds} natural`);
   // forge order: slices outside winning runs first, winning-run slices only when those are used up
-  const dense = __cezeriTest.play(SEED, 100, "buy", { tables: { buy: { base: [A30, A30, A30, B30].map(s => ring(s)), hubBase: [[3, 1]] } }, buyMinVessels: 14 });
+  const dense = __cezeriTest.play(SEED, 100, "buy", { tables: { buy: { base: [A30, A30, A30, B30].map(s => ring(s)), respin: [A30, A30, A30, B30].map(s => ring(s)), hubBase: [[3, 1]] } }, buyMinVessels: 14 });
   const forged = stepsOf(dense.spins[0]!, "scatter")[0]!.forged;
   assert.equal(forged.length, 14);
   assert.ok(forged.slice(0, 12).every(([r]) => r === 3), "the 12 quiet ring-3 slices go first");
@@ -765,7 +831,7 @@ test("structure invariants: totals, free-spin accounting, step grammar for every
     if (round.spins.length > 1) assert.equal(round.freeSpinsTriggered, true);
     for (const s of round.spins) {
       assert.ok(Number.isSafeInteger(s.winHundredths) && s.winHundredths >= 0);
-      assert.ok(s.rotations >= 1 && s.rotations <= 2 && s.respins === s.rotations - 1);
+      assert.ok(s.rotations >= 1 && s.rotations <= CEZERI_MAX_RESPINS + 1 && s.respins === s.rotations - 1);
       assert.ok(s.freeSpinsLeft >= 0);
       assert.ok(s.hubStart >= 1 && s.hubEnd === s.hubStart + s.respins);
     }

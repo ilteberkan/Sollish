@@ -1,5 +1,5 @@
 /** Cezeri engine `cezeri-gears-1` (working name "Cezeri: Zamanın Çarkları"): DEMO-credit concentric-ring slot with
- * 4 rings x 12 slices, 12 spokes, a hub multiplier, a lock-and-respin chain, vessel scatters and the "Fil Saati"
+ * 4 rings x 12 slices, 12 spokes, a hub multiplier, a gear-lock respin chain (Dişli Kilidi), vessel scatters and the "Fil Saati"
  * free spins (persistent hub + falcon wild slices). Three modes (standard, ante, buy).
  * Pure and deterministic: same 32-hex seed, bet level and mode always give the identical round. No clock, no
  * Math.random, no network, no balance or wager input beyond the bet level. The whole round (every rotation, lock,
@@ -21,22 +21,23 @@
  * the scatter. Strip letters: A..H = h1..h4, l1..l4; W = gear; V = vessel.
  *
  * Rules (authoritative text: docs/product/games-wave2.md section 1):
- *   - Spoke win: from ring 0 outwards, 3 or 4 consecutive slices of the same pay symbol (gear counts as that symbol).
- *     The target symbol is the first non-gear slice of the spoke; a vessel or a different symbol ends the run. A spoke
- *     that starts with 3 or 4 gears also has a pure-gear run (gear pay table); the better of the two pays. The 12
- *     spokes pay independently. Pay table is in hundredths of the bet per spoke (before the hub).
+ *   - Spoke win: along a spoke, 3 or 4 consecutive slices of the same pay symbol (gear counts as that symbol) that start at
+ *     ring 0 (rings 0-2 or 0-3) or at ring 1 (rings 1-3, 3 slices). The target symbol is the first non-gear slice of the run's
+ *     start; a vessel or a different symbol ends the run. A start that has 3 or 4 gears also has a pure-gear run (gear pay
+ *     table); the better pays. Per spoke the better of the ring-0 run and the ring-1 run pays (a tie goes to ring 0), so a spoke
+ *     holds at most one paying run. The 12 spokes pay independently. Pay table is in hundredths of the bet per spoke (before the hub).
  *   - Hub: every spin starts with a hub draw (HUB_BASE / HUB_FREE weights over x1,2,3,5,10). It multiplies every spoke
  *     win of the rotation. Base game: hub = draw. Free spin: hub = max(carried hub, draw) (see Fil Saati).
- *   - Lock-and-respin chain (one chain per spin): rotation 0 spins all 4 rings. Every spoke is evaluated. A spoke win
- *     is NEW when its pay is larger than the pay already collected on that spoke in this chain (so a spoke that
- *     already paid length 3 and grows to length 4 pays only the difference; unchanged spokes pay nothing). New wins
- *     pay (increment x hub). If there is at least one new win: every ring that holds a slice of a winning run is
- *     LOCKED for the rest of the chain (ring 0 is part of every run, so it is always locked first), the hub gets +1 and
- *     the unlocked rings respin (one draw each, ascending ring id; locked rings never move and keep their slices). The
- *     chain ends when a rotation has no new win or no ring is left to respin. Every run covers rings 0, 1 and 2 (the
- *     shortest run is 3 slices from ring 0), so after any win only ring 3 can respin: a chain has at most 2 rotations
- *     (1 respin, hub +1), and the only possible new win is a spoke whose run grows from 3 to 4 slices (the increment is
- *     paid). The generic chain loop would handle up to 4 rotations; the 4-ring rule keeps it at 2 (engine id cezeri-gears-1).
+ *   - Dişli Kilidi (gear lock) chain, one per spin: rotation 0 turns all 4 rings. Every spoke is evaluated. A spoke win
+ *     is NEW when its pay is larger than the pay already collected on that spoke in this chain (a run that grows from 3 to 4
+ *     slices pays only the difference; unchanged spokes pay nothing). New wins pay (increment x hub). If there is at least one
+ *     new win, the slices of the paying runs are HELD (pinned: they keep their symbol and do not move), the hub gets +1 and
+ *     ALL four rings turn again underneath (four stop draws, rings 0..3), the held slices overlaying what the strips show. The
+ *     chain goes on as long as a rotation produces a NEW pay (a new spoke, or a held run that is extended). It ends on the first
+ *     rotation without a new pay, when all 48 slices are held, or after CEZERI_MAX_RESPINS (10) respins (the last rotation still
+ *     pays). Held slices are released when the spin ends. Base-game respins turn on the `respin` strips (richer in gear wilds
+ *     than the first rotation, which is what makes chains run on: about 2 respins per winning chain); free spins use the free strips
+ *     for every rotation. Hub after k respins = start + k, so at most start + 10 in the base game.
  *   - Scatter (vessel): counted on the FINAL board of a spin, after the chain. Base spin: 3 / 4 / 5+ vessels pay 2x /
  *     10x / 50x the bet (never multiplied by the hub) and award 10 free spins. Free spin: 2+ vessels award 4 more (no
  *     scatter pay). Total free spins granted in a round <= CEZERI_MAX_FREE_SPINS.
@@ -59,13 +60,13 @@
  * (CEZERI_RTP, ops/evidence/cezeri-20261012).
  *
  * RNG and draw order: SplitMix32 expands the seed into xoshiro128**. One stream continues across the whole round.
- *   spin: 1 hub draw (u32, weighted); rotation 0: rings 0,1,2,3 one stop draw each; respin k: the unlocked rings in
- *   ascending order one stop draw each; buy-mode forge (base spin only, after the chain): see below.
+ *   spin: 1 hub draw (u32, weighted); rotation 0: rings 0,1,2,3 one stop draw each; every respin: rings 0,1,2,3 one stop
+ *   draw each (also for rings whose slices are all held); buy-mode forge (base spin only, after the chain): see below.
  *   After a free spin (when the reservoir reaches 3 and free spins remain): ring draw (u32, uniform over the rings that
  *   still have a non-gear window slice), count draw (weighted 1..3, limited to the free slices of that ring), then one
  *   uniform u32 per placed slice over the remaining free slice ids (ascending, removing each pick).
- * Buy forge (base spin, after the chain, only when vessels < 3): candidates = non-vessel slices that are not part of any
- * winning run of this spin, listed ring 0..3, slice 0..11. For each missing vessel draw one u32, pick index
+ * Buy forge (base spin, after the chain, only when vessels < 3): candidates = non-vessel slices that are not held
+ * (not part of any paying run of this spin), listed ring 0..3, slice 0..11. For each missing vessel draw one u32, pick index
  * floor(u32 * length / 2^32), turn that slice into a vessel (it leaves the list for the next pick). Only if that list is
  * empty before the guarantee is met, the same procedure continues over the remaining non-vessel slices of winning runs
  * (same listing order). Wins were already paid, so the forge can never remove a win.
@@ -130,7 +131,7 @@ export interface CezeriHubStep {
 export interface CezeriRingSpin { ring: number; stop: number; stripLength: number; slices: CezeriSymbol[]; pinned: number[]; held: number[] }
 /** `rings` has all 4 rings in ascending order; `board` is the complete board after the rotation (a copy). */
 export interface CezeriRotateStep { type: "rotate"; round: number; rings: CezeriRingSpin[]; board: CezeriBoard }
-/** One new spoke win. `cells` are the slices of the winning run (ring 0.. length-1, slice = spoke), `wildRings` the rings of
+/** One new spoke win. `cells` are the slices of the winning run (rings startRing..startRing+length-1, slice = spoke), `wildRings` the rings of
  * the run that show a gear. `fullHundredths` is the run's pay, `paidBefore` what the spoke already paid in this chain,
  * `payHundredths` = fullHundredths - paidBefore (> 0), `winHundredths` = payHundredths * hub. */
 export interface CezeriWinStep {
