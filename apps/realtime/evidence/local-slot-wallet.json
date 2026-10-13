@@ -1,8 +1,8 @@
 {
-  "at": "2026-10-13T05:30:29.058Z",
+  "at": "2026-10-13T17:57:05.394Z",
   "runtime": "local-workerd-sqlite-production-router",
   "node": "v24.21.0",
-  "checks": 30,
+  "checks": 31,
   "results": {
     "concurrency": {
       "twins": [
@@ -11,7 +11,7 @@
       ],
       "burst": [
         200,
-        200,
+        409,
         200,
         409,
         409,
@@ -19,8 +19,9 @@
       ]
     },
     "responseBytes": {
-      "cascadeStandard": 1905,
-      "tarhunBuy": 25334
+      "cascadeStandard": 1889,
+      "tarhunBuy": 28230,
+      "ebruStandard": 7317
     },
     "verifiedAfterReveal": 8,
     "rateLimit": {
@@ -46,7 +47,12 @@
       {
         "game": "cascade",
         "mode": "standard",
-        "rounds": 11
+        "rounds": 10
+      },
+      {
+        "game": "ebru",
+        "mode": "standard",
+        "rounds": 1
       },
       {
         "game": "tarhun",

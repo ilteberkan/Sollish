@@ -3,7 +3,8 @@ export const DEMO_START_CENTS = 100_000;
 export const DEMO_MAX_BET_CENTS = 50_000;
 export const CRASH_GROWTH = 0.14;
 export const DEMO_DEFAULT_MAX_MULTIPLIER = 50;
-export const DEMO_CEILING_MULTIPLIER = 5000;
+/** Highest per-reservation payout multiplier a game may opt into (Ebru: 10000 × bet in standard mode). */
+export const DEMO_CEILING_MULTIPLIER = 10_000;
 export type Side = 'heads' | 'tails';
 
 /** Highest per-reservation stake a game may opt into (Candy Cascade bonus buy: 500 DEMO bet x 100). */
@@ -21,7 +22,7 @@ export class DemoLedger {
   get busy(): boolean { return this.pending !== null; }
   /**
    * `limits` may be the legacy multiplier number or `{ maxMultiplier, maxStakeCents }`. The multiplier stays
-   * within 1..5000 and the stake ceiling within 100..DEMO_STAKE_CEILING_CENTS; an invalid limit admits nothing.
+   * within 1..DEMO_CEILING_MULTIPLIER (10000) and the stake ceiling within 100..DEMO_STAKE_CEILING_CENTS; an invalid limit admits nothing.
    */
   reserve(stake: number, nonce: () => string = () => crypto.randomUUID(), limits: number | DemoReserveLimits = {}): string | null {
     const options: DemoReserveLimits = typeof limits === 'number' ? { maxMultiplier: limits } : (limits ?? {});

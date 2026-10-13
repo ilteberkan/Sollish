@@ -14,7 +14,7 @@
  */
 import { addMono, addStereo, addStereoUpsampled, stereo, type Stereo } from '../synth/dsp';
 import { choirChord, noiseHit, riser, sparkles, vox, whoosh, type VoiceCtx } from '../synth/instruments';
-import { frameDrum, ney, softKnee } from '../synth/anatolian';
+import { frameDrum, softKnee } from '../synth/anatolian';
 import { bristles, bubble, bubbles, glassHarp, kanun, kudum, ud, waterBed, waterGlass, zil } from '../synth/ebru';
 import { midiToHz } from '../timing';
 import { MULTIPLIER_CLASSES, TIER_KEY, TIER_UP_PRE, type MultiplierClass, type WinTier } from '../win-tiers';
@@ -192,15 +192,14 @@ export const EBRU_SFX: SfxDef[] = [
   },
   /* ---------------- the comb sweep layers (core: the comb passes on most spins) ---------------- */
   {
-    // the singing glide: a sustained glass-harmonica G5 with an airy halo; the runtime bends its playback rate along the row shifts
+    // the singing glide: a sustained glass-harmonica G5 with its octave and a soft D/G halo; the runtime bends its playback rate along the row shifts
     id: 'comb-glide', variations: 3, level: 'medium', send: 0.4, jitter: [0, 0.5], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 6.6);
       const tone = glassHarp(ctx, hz(79), 0.9, 5.6, { attack: 0.05, release: 0.25, beat: 1.1 + v * 0.35 });
       mono(out, tone, 0, 0.75);
       mono(out, glassHarp(ctx, hz(91), 0.4, 5.6, { attack: 0.08, release: 0.25, beat: 1.7 }), 0, 0.22, 0.2);
-      if (v !== 1) mono(out, ney(ctx, hz(67), 0.4, 5.4), 0, v === 2 ? 0.22 : 0.14, -0.15);
-      else mono(out, glassHarp(ctx, hz(74), 0.5, 5.6, { attack: 0.1, release: 0.25 }), 0, 0.2, -0.2);
+      if (v !== 0) mono(out, glassHarp(ctx, hz(v === 1 ? 74 : 67), 0.5, 5.6, { attack: 0.1, release: 0.25 }), 0, 0.2, -0.2);
       return out;
     },
   },

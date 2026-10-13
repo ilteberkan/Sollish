@@ -28,7 +28,7 @@ test('payout uses exact intermediate integers and rejects overflow; invalid cloc
   assert.equal(grossPayout(Number.MAX_SAFE_INTEGER, 1), Number.MAX_SAFE_INTEGER); assert.equal(grossPayout(101, 1.96), 197); assert.throws(() => grossPayout(Number.MAX_SAFE_INTEGER, 1.01), RangeError);
   for (const [time, point] of [[NaN, 2], [Infinity, 2], [1, NaN], [1, 0.99], [1, 50.01]]) assert.throws(() => crashAt(time!, point!), RangeError);
 });
-test('per-reservation multiplier cap: default 50, up to 5000 when reserved, invalid caps rejected', () => {
+test('per-reservation multiplier cap: default 50, up to 10000 when reserved, invalid caps rejected', () => {
   let ledger = new DemoLedger(); ledger.reserve(1000, () => 'a', 5000);
   assert.throws(() => ledger.settle({ id: 'a', stake: 1000, payout: 5_000_001 }), RangeError);
   assert.equal(ledger.settle({ id: 'a', stake: 1000, payout: 5_000_000 }), true); assert.equal(ledger.balance, 100_000 - 1000 + 5_000_000);
@@ -36,8 +36,11 @@ test('per-reservation multiplier cap: default 50, up to 5000 when reserved, inva
   assert.throws(() => ledger.settle({ id: 'b', stake: 1000, payout: 50_001 }), RangeError); assert.equal(ledger.settle({ id: 'b', stake: 1000, payout: 50_000 }), true);
   ledger = new DemoLedger(); ledger.reserve(1000, () => 'c', 100); assert.throws(() => ledger.settle({ id: 'c', stake: 1000, payout: 100_001 }), RangeError);
   ledger = new DemoLedger();
-  for (const cap of [0, -1, 0.5, 5001, NaN, Infinity, Number.MAX_SAFE_INTEGER]) assert.equal(ledger.reserve(1000, () => 'x', cap), null, String(cap));
+  for (const cap of [0, -1, 0.5, 10_001, NaN, Infinity, Number.MAX_SAFE_INTEGER]) assert.equal(ledger.reserve(1000, () => 'x', cap), null, String(cap));
   assert.equal(ledger.balance, 100_000); assert.equal(ledger.reserve(1000, () => 'x', 5000), 'x');
+  ledger = new DemoLedger(); ledger.reserve(1000, () => 'e', 10_000);
+  assert.throws(() => ledger.settle({ id: 'e', stake: 1000, payout: 10_000_001 }), RangeError);
+  assert.equal(ledger.settle({ id: 'e', stake: 1000, payout: 10_000_000 }), true, 'Ebru: 10000 x bet in standard mode');
 });
 test('per-reservation stake ceiling: default 500 DEMO, a game may opt into more up to the balance', () => {
   let ledger = new DemoLedger();
@@ -50,7 +53,7 @@ test('per-reservation stake ceiling: default 500 DEMO, a game may opt into more 
   ledger = new DemoLedger();
   assert.equal(ledger.reserve(100_001, () => 'x', { maxStakeCents: 5_000_000 }), null, 'never above the balance');
   for (const maxStakeCents of [0, 99, 100.5, 5_000_001, NaN, Infinity]) assert.equal(ledger.reserve(1000, () => 'x', { maxStakeCents }), null, String(maxStakeCents));
-  for (const maxMultiplier of [0, 5001, 0.5]) assert.equal(ledger.reserve(1000, () => 'x', { maxMultiplier, maxStakeCents: 5_000_000 }), null, String(maxMultiplier));
+  for (const maxMultiplier of [0, 10_001, 0.5]) assert.equal(ledger.reserve(1000, () => 'x', { maxMultiplier, maxStakeCents: 5_000_000 }), null, String(maxMultiplier));
   assert.equal(ledger.balance, 100_000);
   assert.equal(ledger.reserve(1250, () => 'ante', { maxMultiplier: 4000, maxStakeCents: 5_000_000 }), 'ante');
   assert.equal(ledger.settle({ id: 'ante', stake: 1250, payout: 5_000_000 }), true, 'ante: 4000 x cost = 5000 x bet');

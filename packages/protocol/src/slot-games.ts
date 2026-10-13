@@ -7,6 +7,7 @@
  */
 import { CASCADE2_BET_LEVELS_CENTS, CASCADE2_ENGINE_ID, CASCADE2_MAX_WIN_MULTIPLIER, CASCADE2_MODES, CASCADE2_RTP, cascadeCostCents, playCascade2Round, type Cascade2Round, type CascadeMode } from "./cascade-2";
 import { STORM_BET_LEVELS_CENTS, STORM_ENGINE_ID, STORM_MAX_WIN_MULTIPLIER, STORM_MODES, STORM_RTP, playStormRound, stormCostCents, type StormMode, type StormRound } from "./storm-throne";
+import { EBRU_BET_LEVELS_CENTS, EBRU_ENGINE_ID, EBRU_MAX_WIN_MULTIPLIER, EBRU_MODES, EBRU_RTP, ebruCostCents, playEbruRound, type EbruMode, type EbruRound } from "./ebru";
 import type { SlotRoundSummary, SlotVerifiableGame } from "./slot-fair";
 
 export interface SlotModeRtp { rtp: number; stdDev: number }
@@ -44,10 +45,18 @@ export const TARHUN_SLOT: SlotGameDefinition<StormRound> = Object.freeze({
   rtp: rtpTable(STORM_RTP),
 });
 
+export const EBRU_SLOT: SlotGameDefinition<EbruRound> = Object.freeze({
+  id: "ebru", engineId: EBRU_ENGINE_ID, modes: EBRU_MODES, betLevels: EBRU_BET_LEVELS_CENTS, maxMultiplier: EBRU_MAX_WIN_MULTIPLIER,
+  play: (seedHex: string, betCents: number, mode: string) => playEbruRound(seedHex, betCents, mode as EbruMode),
+  cost: (betCents: number, mode: string) => ebruCostCents(betCents, mode as EbruMode),
+  rtp: rtpTable(EBRU_RTP),
+});
+
 /** id -> game. Frozen; new games are added here (other engines register when they ship). */
 export const SLOT_GAMES: Readonly<Record<string, SlotGameDefinition>> = Object.freeze({
   [CASCADE_SLOT.id]: CASCADE_SLOT as SlotGameDefinition,
   [TARHUN_SLOT.id]: TARHUN_SLOT as SlotGameDefinition,
+  [EBRU_SLOT.id]: EBRU_SLOT as SlotGameDefinition,
 });
 export const SLOT_GAME_ID_PATTERN = /^[a-z][a-z0-9-]{0,31}$/;
 

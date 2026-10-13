@@ -26,6 +26,7 @@
 .cell { position: relative; display: grid; place-items: center; border-radius: 10px; background: rgba(255, 255, 255, .03); transition: transform .2s ease, box-shadow .2s ease; }
 .cell > * { width: 88%; height: 88%; }
 .win { box-shadow: 0 0 0 2px var(--accent); transform: scale(1.04); }
+.stain { position: absolute; right: 0; bottom: 0; width: 46% !important; height: 46% !important; }
 .mult { position: absolute; bottom: 2px; right: 4px; font-size: 11px; font-weight: 600; color: var(--text); text-shadow: 0 1px 2px #000; }
 .player { display: grid; gap: 14px; justify-items: start; }
 .meta { color: var(--muted); font-size: 14px; }

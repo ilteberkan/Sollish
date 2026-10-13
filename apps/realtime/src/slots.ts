@@ -37,8 +37,8 @@ export const SLOT_LIMITS = Object.freeze({
   maxSharesPerSession: 500,
   sessionIdleMs: 7 * 24 * 60 * 60 * 1000,
   replayTtlMs: 30 * 24 * 60 * 60 * 1000,
-  /** Highest bet x maxMultiplier one round may expose (500 DEMO x 5000). */
-  maxExposureCents: 250_000_000,
+  /** Highest bet x maxMultiplier one round may expose (500 DEMO x 10000, Ebru's cap; DEMO credits only). */
+  maxExposureCents: 500_000_000,
   historyRows: 50,
   revealedSeedsShown: 10,
   monitorFlushMs: 5_000,

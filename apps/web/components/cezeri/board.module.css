@@ -1,0 +1,169 @@
+/* Cezeri board layers. Only transform / opacity animate. */
+.board {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  isolation: isolate;
+  container-type: inline-size;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.layerSvg, .ringSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+.ring {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+  border-radius: 50%;
+}
+.streaks { opacity: 0; transition: opacity 0.18s ease; }
+.ring[data-spin] .streaks { opacity: 1; }
+.cell {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  will-change: transform;
+}
+.cellArt {
+  width: 100%;
+  height: 100%;
+  transition: opacity 0.16s ease;
+}
+.cellArt > svg { width: 100%; height: 100%; }
+.ring[data-spin] .cellArt { opacity: 0.32; }
+.cell[data-under] .cellArt { opacity: 0; transition: none; }
+.cell[data-win] .cellArt { animation: winPop 0.9s cubic-bezier(0.3, 1.6, 0.45, 1) both, winBeat 1.2s 0.9s ease-in-out infinite; }
+@keyframes winPop { 0% { transform: scale(1); } 30% { transform: scale(1.28); } 100% { transform: scale(1.1); } }
+@keyframes winBeat { 0%, 100% { transform: scale(1.1); } 50% { transform: scale(1.02); } }
+.cell[data-vessel] .cellArt { animation: vesselBob 1.4s ease-in-out infinite; }
+@keyframes vesselBob { 0%, 100% { transform: translateY(0) scale(1.12); } 50% { transform: translateY(-5%) scale(1.18); } }
+
+.overlay { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+.plate { position: absolute; }
+.plateSvg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
+.plateSym { position: absolute; display: grid; }
+.plateSym > svg { width: 100%; height: 100%; }
+.plateGlow {
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(110, 255, 236, 0.45), rgba(110, 255, 236, 0) 100%);
+  opacity: 0.7;
+  animation: plateGlow 2.2s ease-in-out infinite;
+}
+.plate[data-kind='pinned'] .plateGlow { background: radial-gradient(closest-side, rgba(255, 214, 110, 0.6), rgba(255, 180, 60, 0) 100%); }
+@keyframes plateGlow { 0%, 100% { opacity: 0.45; } 50% { opacity: 0.9; } }
+.plate[data-fresh] { animation: clampSlam 0.38s cubic-bezier(0.2, 0.9, 0.3, 1.2) both; }
+@keyframes clampSlam { 0% { transform: scale(1.32); opacity: 0; } 55% { transform: scale(0.95); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+.plate[data-kind='pinned'][data-fresh] { animation: pinDrop 0.6s cubic-bezier(0.25, 1.4, 0.4, 1) both; }
+@keyframes pinDrop { 0% { transform: translateY(-40%) scale(1.5); opacity: 0; } 60% { transform: translateY(0) scale(0.94); opacity: 1; } 100% { transform: none; opacity: 1; } }
+.plate[data-kind='lift'] { animation: clampLift 0.42s ease-in both; }
+@keyframes clampLift { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.18); opacity: 0; } }
+
+.winGlow { position: absolute; animation: winGlow 1.2s ease-in-out infinite; }
+.winGlow > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+@keyframes winGlow { 0%, 100% { opacity: 0.65; } 50% { opacity: 1; } }
+
+.lamps { position: absolute; inset: 0; pointer-events: none; z-index: 7; }
+.lamp {
+  position: absolute;
+  width: 3.2%;
+  height: 3.2%;
+  margin: -1.6% 0 0 -1.6%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 34%, #d8fff8 0 12%, #2fd0c4 30%, #0a5a60 70%, #032428 100%);
+}
+.lamp::after {
+  content: '';
+  position: absolute;
+  inset: -110%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 230, 140, 0.95), rgba(255, 170, 60, 0.4) 40%, rgba(255, 140, 40, 0) 100%);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.lamp[data-on] { background: radial-gradient(circle at 38% 34%, #fffef0 0 18%, #ffe07a 40%, #e09a1e 75%, #6a3a04 100%); }
+.lamp[data-on]::after { opacity: 1; }
+
+.hub { position: absolute; z-index: 8; }
+.hubTeeth { position: absolute; inset: 0; will-change: transform; }
+.hubTeeth > svg, .hubFace { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.hubWindow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 32%;
+  translate: -50% -50%;
+  display: flex;
+  align-items: stretch;
+  gap: 1.5%;
+  padding: 0 5%;
+  border-radius: 12px / 10px;
+  background: linear-gradient(180deg, #2a1604, #0c0602 40%, #0c0602 60%, #2a1604);
+  box-shadow: 0 0 0 2px #1a0e03, 0 0 0 4px #f6d27a, 0 0 0 5.5px #4a2a08, inset 0 2px 6px rgba(0, 0, 0, 0.8);
+  font: 600 1em/1 var(--font-barlow), 'Arial Narrow', system-ui, sans-serif;
+  font-size: 4.4cqw;
+  color: #2a1604;
+  will-change: transform;
+}
+.hub[data-digits='2'] .hubWindow { font-size: 3.9cqw; }
+.hub[data-digits='3'] .hubWindow { font-size: 3.2cqw; }
+.hubX {
+  align-self: center;
+  color: #ffe7a0;
+  font-size: 0.72em;
+  margin-right: 1%;
+  text-shadow: 0 0 6px rgba(255, 200, 90, 0.8);
+}
+.drum {
+  position: relative;
+  width: 0.66em;
+  overflow: hidden;
+  margin: 8% 0;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #8a6a3a 0%, #f6ead0 22%, #fffaf0 50%, #f6ead0 78%, #8a6a3a 100%);
+  box-shadow: inset 0 0 0 1px rgba(40, 20, 4, 0.6);
+}
+.drumStrip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 2000%;
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+.drumStrip > span {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+.glass {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9;
+  background:
+    radial-gradient(ellipse 46% 30% at 30% 18%, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0) 70%),
+    radial-gradient(closest-side, rgba(0, 0, 0, 0) 86%, rgba(0, 0, 0, 0.35) 100%);
+}
+.board[data-mood='feature'] .glass {
+  background:
+    radial-gradient(ellipse 46% 30% at 30% 18%, rgba(200, 255, 250, 0.16), rgba(255, 255, 255, 0) 70%),
+    radial-gradient(closest-side, rgba(40, 220, 210, 0) 80%, rgba(40, 220, 210, 0.18) 96%, rgba(0, 0, 0, 0.3) 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cell[data-win] .cellArt, .cell[data-vessel] .cellArt, .plateGlow, .winGlow { animation: none; }
+  .plate[data-fresh], .plate[data-kind='lift'], .plate[data-kind='pinned'][data-fresh] { animation-duration: 0.01s; }
+}

@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHash, createHmac } from "node:crypto";
 import {
-  CASCADE_SLOT, SLOT_GAMES, TARHUN_SLOT, deriveSeedHex, isClientSeed, playCascade2Round, playStormRound, slotBytesToHex, slotGame, slotHexToBytes,
+  CASCADE_SLOT, EBRU_SLOT, SLOT_GAMES, TARHUN_SLOT, deriveSeedHex, playEbruRound, isClientSeed, playCascade2Round, playStormRound, slotBytesToHex, slotGame, slotHexToBytes,
   slotNonceMessage, slotReceiptMessage, slotReplayMessage, slotServerSeedHash, verifySlotRound,
 } from "../src/index";
 
@@ -41,18 +41,20 @@ test("inputs are strict: seed length, client seed alphabet, nonce range, hex cas
 });
 
 test("registry: own ids only, engines and costs are the protocol functions", () => {
-  assert.deepEqual(Object.keys(SLOT_GAMES).sort(), ["cascade", "tarhun"]);
+  assert.deepEqual(Object.keys(SLOT_GAMES).sort(), ["cascade", "ebru", "tarhun"]);
   for (const id of ["__proto__", "constructor", "toString", "Cascade", "", "cascade/x"]) assert.equal(slotGame(id), null);
-  assert.equal(slotGame("cascade"), CASCADE_SLOT); assert.equal(slotGame("tarhun"), TARHUN_SLOT);
+  assert.equal(slotGame("cascade"), CASCADE_SLOT); assert.equal(slotGame("tarhun"), TARHUN_SLOT); assert.equal(slotGame("ebru"), EBRU_SLOT);
   const seed = "0123456789abcdef0123456789abcdef";
   assert.deepEqual(CASCADE_SLOT.play(seed, 1000, "ante"), playCascade2Round(seed, 1000, "ante"));
   assert.deepEqual(TARHUN_SLOT.play(seed, 1000, "buy"), playStormRound(seed, 1000, "buy"));
-  for (const game of [CASCADE_SLOT, TARHUN_SLOT]) {
+  assert.deepEqual(EBRU_SLOT.play(seed, 1000, "buy"), playEbruRound(seed, 1000, "buy"));
+  for (const game of [CASCADE_SLOT, TARHUN_SLOT, EBRU_SLOT]) {
     assert.equal(game.cost(1000, "standard"), 1000); assert.equal(game.cost(1000, "ante"), 1250); assert.equal(game.cost(1000, "buy"), 100_000);
     assert.throws(() => game.cost(1001, "standard"), RangeError); assert.throws(() => game.cost(1000, "turbo"), RangeError);
     for (const mode of game.modes) { assert.ok(game.rtp[mode]!.rtp > 0.9 && game.rtp[mode]!.rtp < 1); assert.ok(game.rtp[mode]!.stdDev > 0); }
-    assert.equal(game.maxMultiplier, 5000);
+    assert.equal(game.maxMultiplier, game === EBRU_SLOT ? 10_000 : 5000);
   }
+  assert.equal(EBRU_SLOT.engineId, "ebru-ink-1");
 });
 
 test("verifySlotRound recomputes hash, seed, engine round, payout, total and cost and flags each mismatch", async () => {

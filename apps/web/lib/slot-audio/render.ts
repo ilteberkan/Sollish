@@ -318,10 +318,13 @@ export function tameStem(st: Stereo, lo: number, hi: number, crestDb: number): v
   }
 }
 
+const EBRU_VOICE_COST = { kanun: 2.6, kanunSoft: 3.2, ud: 2.6, glassHarp: 5, waterGlass: 20 } as const;
+
 /** Rough synthesis cost of a track, for spreading tracks over workers. */
 export function trackCost(track: Track): number {
   switch (track.kind) {
-    case 'pitched': return track.notes.length * (track.voice === 'pluck' ? 0.6 : 1);
+    // Ebru voices are weighted by their measured synthesis cost (three-string Karplus-Strong, long glass tones)
+    case 'pitched': return track.notes.length * (track.voice === 'pluck' ? 0.6 : (EBRU_VOICE_COST as Partial<Record<string, number>>)[track.voice] ?? 1);
     case 'pad': return track.chords.reduce((s, c) => s + c.ns.length * (c.d + 2), 0) * (track.voice === 'padSaw' ? 1.2 : track.voice === 'padChoir' || track.voice === 'padChoirMale' ? 1.6 : track.voice === 'padHorn' ? 1.3 : 0.6);
     case 'kit': return 4 + track.hits.length * 0.15;
     case 'fx': return track.fx.reduce((s, f) => s + (f.k === 'room' ? 40 : f.k === 'rain' ? 60 : f.k === 'wind' ? 30 : f.k === 'water' ? 45 : f.k === 'riser' || f.k === 'rumble' ? 8 : 3) + f.d, 0);
