@@ -491,7 +491,9 @@ export function createEbruSound(options: { sampleRate?: number; workerFactory?: 
   const bloom = (colour: string | undefined, size: number) => {
     const id = `bloom-${bloomSize(size)}`;
     const semis = colourSemitones(colour);
-    if (!play(id, { rate: 2 ** (semis / 12), gain: 0.85 + 0.15 * Math.min(1, size / 20) })) fb()?.pop(size, size >= 12 ? 2 : size >= 8 ? 1 : 0);
+    const opts = { rate: 2 ** (semis / 12), gain: 0.85 + 0.15 * Math.min(1, size / 20) };
+    // the large bloom renders in the first background batch; until then the medium one stands in
+    if (!play(id, opts) && !(id === 'bloom-l' && play('bloom-m', opts))) fb()?.pop(size, size >= 12 ? 2 : size >= 8 ? 1 : 0);
   };
 
   /* ---------------- API ---------------- */
@@ -539,7 +541,7 @@ export function createEbruSound(options: { sampleRate?: number; workerFactory?: 
     symbolLand: () => { play('tick'); },
     bleed: (colour, spread) => {
       const n = clamp(Number(spread ?? 2), 0, 4);
-      if (!play('bleed', { rate: 2 ** (colourSemitones(colour) / 24), gain: 0.8 + 0.05 * n })) fb()?.crystal(4);
+      if (!play('bleed', { rate: 2 ** (colourSemitones(colour) / 24), gain: 0.8 + 0.05 * n }) && !play('bloom-m', { rate: 0.75 })) fb()?.crystal(4);
     },
     clusterDissolve: (colour, size) => bloom(colour, clamp(Number(size), 1, 49)),
     shatter: (count, payTier) => { const lvl = clamp(payTier, 0, 2); bloom(undefined, Math.max(clamp(count, 1, 49), lvl >= 2 ? 12 : lvl >= 1 ? 8 : 5)); },

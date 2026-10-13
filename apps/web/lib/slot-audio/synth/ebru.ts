@@ -7,7 +7,7 @@
  * granular water beds, the wet bristle-on-water texture of the comb). Deterministic given the seeded
  * random source in `ctx`. Approximations of the instruments' colour, not models of any recording.
  */
-import { Biquad, Svf, addMono, dcBlock, onePoleCoef, sinCycles, stereo, trimTail, type Stereo } from './dsp';
+import { Biquad, Svf, addMono, dcBlock, onePoleCoef, sinCycles, stereo, trimTail, upsample, type Stereo } from './dsp';
 import { kick, modal, noiseHit, type VoiceCtx } from './instruments';
 
 const t60Factor = (t60: number, sr: number) => Math.exp(-6.9078 / Math.max(1e-4, t60 * sr));
@@ -63,13 +63,14 @@ function strings(ctx: VoiceCtx, out: Float32Array, freq: number, vel: number, co
  * attack, and a skin-bridge body (a nasal mid resonance over a small box). Notes ring past their written
  * length like an undamped zither; `bright` 0..1.5.
  */
-export function kanun(ctx: VoiceCtx, freq: number, vel: number, held: number, bright = 1, opts: { t60?: number; ring?: number } = {}): Float32Array {
+export interface KanunOptions { t60?: number; ring?: number; courses?: 2 | 3 }
+export function kanun(ctx: VoiceCtx, freq: number, vel: number, held: number, bright = 1, opts: KanunOptions = {}): Float32Array {
   const { sr } = ctx;
   const t60 = opts.t60 ?? clampNum(3.2 * (196 / freq) ** 0.5, 0.9, 4.2);
   const releaseAt = held + (opts.ring ?? 0.32);
   const len = Math.ceil((Math.min(t60, releaseAt + 0.5) + 0.05) * sr) + 64;
   const out = new Float32Array(len);
-  strings(ctx, out, freq, vel, [{ cents: -3.5, gain: 0.42 }, { cents: 0, gain: 0.46 }, { cents: 3.2, gain: 0.4 }], {
+  strings(ctx, out, freq, vel, opts.courses === 2 ? [{ cents: -3, gain: 0.6 }, { cents: 3, gain: 0.58 }] : [{ cents: -3.5, gain: 0.42 }, { cents: 0, gain: 0.46 }, { cents: 3.2, gain: 0.4 }], {
     t60, cutoff: clampNum(2600 + bright * 6200 * (0.5 + 0.5 * vel), 800, 11000), pick: 0.11, tilt: 0.62 + 0.06 * clampNum(bright, 0, 1.5), releaseAt, damp: 0.18,
   });
   // skin bridge: a nasal resonance around 1.1 kHz and the box around 260 Hz
@@ -126,6 +127,21 @@ export function glassHarp(ctx: VoiceCtx, freq: number, vel: number, held: number
     out[i] = y * env * relG * flutter * vel * 0.5;
   }
   return trimTail(out);
+}
+
+/**
+ * The glass harmonica synthesised at half rate and interpolated up (its partials stay below 4 kHz for every note
+ * the scores use, so nothing audible is lost), at half the cost; full rate for very high notes.
+ */
+export function glassHarpFast(ctx: VoiceCtx, freq: number, vel: number, held: number, opts: { attack?: number; release?: number; beat?: number } = {}): Float32Array {
+  if (freq * 3 > ctx.sr * 0.2) return glassHarp(ctx, freq, vel, held, opts);
+  return upsample(glassHarp({ sr: ctx.sr / 2, rng: ctx.rng }, freq, vel, held, opts), 2);
+}
+
+/** The water glass synthesised at half rate and interpolated up when its partials allow it (f below ~1.4 kHz). */
+export function waterGlassFast(ctx: VoiceCtx, freq: number, vel: number, wobble = 1, length = 1): Float32Array {
+  if (freq > 1400) return waterGlass(ctx, freq, vel, wobble, length);
+  return upsample(waterGlass({ sr: ctx.sr / 2, rng: ctx.rng }, freq, vel, wobble, length), 2);
 }
 
 /**
@@ -273,12 +289,18 @@ export function bristles(ctx: VoiceCtx, dur: number, vel: number, brightness = 1
       ch[i] = (top.tick(svf.tick(rng() * 2 - 1, 1)) * 0.5 * grain + wake.tick(brown) * 0.9) * vel * edge;
     }
   }
-  // the tines: tiny resonant ticks (pins breaking the surface)
+  // the tines: tiny resonant ticks (pins breaking the surface), written in place as short decaying sines
   const ticks = Math.round(160 * dur);
   for (let k = 0; k < ticks; k++) {
-    const at = Math.floor(rng() * (len - 0.02 * sr));
-    const tick = modal(ctx, (2100 + rng() * 3200) * brightness, [1, 1.9], [1, 0.3], [0.005 + rng() * 0.008, 0.004], vel * (0.08 + rng() * 0.12), 10, { attack: 0.0003, maxLen: 0.03 });
-    addMono(out, tick, at, 1, rng() * 1.6 - 0.8);
+    const at = Math.floor(rng() * (len - 0.02 * sr)), f = (2100 + rng() * 3200) * brightness, t60 = 0.005 + rng() * 0.008;
+    const amp = vel * (0.08 + rng() * 0.12), pan = rng() * 1.6 - 0.8, gl = Math.cos((pan + 1) * Math.PI * 0.25), gr = Math.sin((pan + 1) * Math.PI * 0.25);
+    const n = Math.min(len - at, Math.ceil(t60 * sr)), d = t60Factor(t60, sr), inc = f / sr, inc2 = (f * 1.9) / sr, aN = Math.max(1, Math.round(0.0003 * sr));
+    let g = amp, ph = rng(), ph2 = rng();
+    for (let i = 0; i < n; i++) {
+      const v = (sinCycles(ph) + 0.3 * sinCycles(ph2)) * g * (i < aN ? i / aN : 1);
+      out.l[at + i]! += v * gl; out.r[at + i]! += v * gr;
+      ph += inc; ph2 += inc2; g *= d;
+    }
   }
   // the gurgle
   const n = Math.round(14 * dur);

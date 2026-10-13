@@ -15,13 +15,15 @@
 import { addMono, addStereo, addStereoUpsampled, stereo, type Stereo } from '../synth/dsp';
 import { choirChord, noiseHit, riser, sparkles, vox, whoosh, type VoiceCtx } from '../synth/instruments';
 import { frameDrum, softKnee } from '../synth/anatolian';
-import { bristles, bubble, bubbles, glassHarp, kanun, kudum, ud, waterBed, waterGlass, zil } from '../synth/ebru';
+import { bristles, bubble, bubbles, glassHarpFast as glassHarp, kanun as kanun3, kudum, ud, waterBed, waterGlassFast as waterGlass, zil, type KanunOptions } from '../synth/ebru';
 import { midiToHz } from '../timing';
 import { MULTIPLIER_CLASSES, TIER_KEY, TIER_UP_PRE, type MultiplierClass, type WinTier } from '../win-tiers';
 import { EBRU_TONIC, type EbruVocal } from '../ebru-tiers';
 import type { SfxDef, SfxLevel } from './cascade';
 
 const hz = midiToHz;
+/** Effects use the two-string kanun course (the triple chorus is a music detail) at two thirds of the cost; comb plucks keep three. */
+const kanun = (ctx: VoiceCtx, freq: number, vel: number, held: number, bright = 1, opts: KanunOptions = {}) => kanun3(ctx, freq, vel, held, bright, { courses: 2, ...opts });
 const sized = (ctx: VoiceCtx, seconds: number) => stereo(Math.ceil(seconds * ctx.sr));
 function mono(dst: Stereo, src: Float32Array, at: number, gain: number, pan = 0) { addMono(dst, src, Math.round(at), gain, pan); }
 function st(dst: Stereo, src: Stereo, at: number, gain: number, pan = 0, width = 1) { addStereo(dst, src, Math.round(at), gain, pan, width); }
@@ -44,12 +46,11 @@ function glassChord(ctx: VoiceCtx, out: Stereo, notes: number[], at: number, hel
 
 export const EBRU_SFX: SfxDef[] = [
   {
-    // spin start: a brush stirs the size water (swirling whoosh + bubbles) and a soft open kanun G–D
+    // spin start: a stick stirs the size water (swirling whoosh + bubbles) and a soft open kanun G–D
     id: 'spin', variations: 4, level: 'light', send: 0.16, jitter: [30, 1], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 0.9);
       st(out, whoosh(ctx, 0.5 + v * 0.03, 200, 1300 + v * 100, 0.8, -0.5, 0.5, 0.5), 0, 0.7);
-      st(out, bristles(ctx, 0.45, 0.5, 0.8), 0.02 * ctx.sr, 0.5);
       st(out, bubbles(ctx, 0.45, 7, 0.5, 450, 1300), 0.08 * ctx.sr, 0.6);
       plucks(ctx, out, [[55 + (v % 2 ? 0 : 7), 0.05, 0.3, 0.55], [62 + (v === 2 ? 5 : 0), 0.08, 0.3, 0.5]], 0.45, 0.7);
       return out;
@@ -69,7 +70,7 @@ export const EBRU_SFX: SfxDef[] = [
   },
   {
     // a single symbol settles: a tiny water tick
-    id: 'tick', variations: 4, level: 'ui', send: 0.08, jitter: [60, 1.5], core: true,
+    id: 'tick', variations: 4, level: 'ui', send: 0, jitter: [60, 1.5], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 0.12);
       mono(out, bubble(ctx, 1700 + v * 180, 0.7, 0.7), 0, 1, (v - 1.5) * 0.15);
@@ -91,7 +92,7 @@ export const EBRU_SFX: SfxDef[] = [
   ...(['bloom-s', 'bloom-m', 'bloom-l'] as const).map((id, size): SfxDef => ({
     // cluster dissolve = pigment bloom: a soft glass swell opening on G, watery shimmer and bubbles; larger blooms
     // add a low ud thump and more water (the runtime pitches it by colour along the ladder)
-    id, variations: 3, level: size === 2 ? 'major' : size === 1 ? 'medium' : 'light', send: 0.3 + size * 0.04, jitter: [25, 1], core: true,
+    id, variations: 3, level: size === 2 ? 'major' : size === 1 ? 'medium' : 'light', send: 0.3 + size * 0.04, jitter: [25, 1], core: size < 2,
     build: (ctx, v) => {
       const out = sized(ctx, 1.3 + size * 0.4);
       glassChord(ctx, out, [[67, 74], [67, 71, 74], [62, 67, 71, 74]][size]!.map(n => n + (v === 1 ? 12 : 0)), 0, 0.15 + size * 0.1, 0.8, 0.75, 0.015);
@@ -105,7 +106,7 @@ export const EBRU_SFX: SfxDef[] = [
   })),
   {
     // drop wild bleed: ink spreading — a deep bubble "bloop", a low ud pluck and a glass-harmonica chord that blooms open
-    id: 'bleed', variations: 3, level: 'medium', send: 0.36, jitter: [15, 0.8], core: true,
+    id: 'bleed', variations: 3, level: 'medium', send: 0.36, jitter: [15, 0.8], core: false,
     build: (ctx, v) => {
       const out = sized(ctx, 2);
       mono(out, bubble(ctx, 260 + v * 30, 1, 0.9), 0, 0.9);
@@ -140,7 +141,7 @@ export const EBRU_SFX: SfxDef[] = [
   },
   {
     // count-up tick: a small glass tick (the runtime raises its pitch as the count climbs)
-    id: 'coin', variations: 4, level: 'ui', send: 0.1, jitter: [15, 1], core: true,
+    id: 'coin', variations: 4, level: 'ui', send: 0, jitter: [15, 1], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 0.3);
       mono(out, waterGlass(ctx, hz(91) * (1 + v * 0.004), 0.7, 0.4, 0.12), 0, 1, (v - 1.5) * 0.12);
@@ -149,7 +150,7 @@ export const EBRU_SFX: SfxDef[] = [
   },
   {
     // button click: a wooden mandal (kanun tuning lever) flick with a tiny glass ring
-    id: 'click', variations: 4, level: 'ui', send: 0.03, jitter: [40, 1], core: true,
+    id: 'click', variations: 4, level: 'ui', send: 0, jitter: [40, 1], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 0.14);
       mono(out, noiseHit(ctx, 0.8, 1900 + v * 120, 2.2, 0.0003, 0.012, 700, 7000), 0, 1);
@@ -159,7 +160,7 @@ export const EBRU_SFX: SfxDef[] = [
     },
   },
   ...(['bet-up', 'bet-down'] as const).map((id, dir): SfxDef => ({
-    id, variations: 3, level: 'ui', send: 0.1, jitter: [20, 1], core: true,
+    id, variations: 3, level: 'ui', send: 0, jitter: [20, 1], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 0.5);
       const pair = dir === 0 ? [79, 86] : [86, 79];
@@ -169,7 +170,7 @@ export const EBRU_SFX: SfxDef[] = [
   })),
   {
     // denied: two muted low ud thumps falling a fourth
-    id: 'denied', variations: 3, level: 'light', send: 0.06, jitter: [15, 1], core: true,
+    id: 'denied', variations: 3, level: 'light', send: 0.06, jitter: [15, 1], core: false,
     build: (ctx, v) => {
       const out = sized(ctx, 0.5);
       [0, 1].forEach(i => mono(out, softKnee(ud(ctx, hz(i ? 38 : 43) * (1 + v * 0.02), 0.9, 0.06, 0.3), 10, ctx.sr, 0.15), i * 0.13 * ctx.sr, 0.9));
@@ -195,11 +196,11 @@ export const EBRU_SFX: SfxDef[] = [
     // the singing glide: a sustained glass-harmonica G5 with its octave and a soft D/G halo; the runtime bends its playback rate along the row shifts
     id: 'comb-glide', variations: 3, level: 'medium', send: 0.4, jitter: [0, 0.5], core: true,
     build: (ctx, v) => {
-      const out = sized(ctx, 6.6);
-      const tone = glassHarp(ctx, hz(79), 0.9, 5.6, { attack: 0.05, release: 0.25, beat: 1.1 + v * 0.35 });
+      const out = sized(ctx, 5.9);
+      const tone = glassHarp(ctx, hz(79), 0.9, 5.2, { attack: 0.05, release: 0.25, beat: 1.1 + v * 0.35 });
       mono(out, tone, 0, 0.75);
-      mono(out, glassHarp(ctx, hz(91), 0.4, 5.6, { attack: 0.08, release: 0.25, beat: 1.7 }), 0, 0.22, 0.2);
-      if (v !== 0) mono(out, glassHarp(ctx, hz(v === 1 ? 74 : 67), 0.5, 5.6, { attack: 0.1, release: 0.25 }), 0, 0.2, -0.2);
+      mono(out, glassHarp(ctx, hz(91), 0.4, 5.2, { attack: 0.08, release: 0.25, beat: 1.7 }), 0, 0.22, 0.2);
+      if (v !== 0) mono(out, glassHarp(ctx, hz(v === 1 ? 74 : 67), 0.5, 5.2, { attack: 0.1, release: 0.25 }), 0, 0.2, -0.2);
       return out;
     },
   },
@@ -208,14 +209,14 @@ export const EBRU_SFX: SfxDef[] = [
     id: 'comb-pluck', variations: 4, level: 'light', send: 0.3, jitter: [4, 1], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 0.9);
-      mono(out, kanun(ctx, hz(79), 0.6 + v * 0.05, 0.12, 1.1, { ring: 0.2 }), 0, 0.8, (v - 1.5) * 0.12);
+      mono(out, kanun(ctx, hz(79), 0.6 + v * 0.05, 0.12, 1.1, { ring: 0.2, courses: 3 }), 0, 0.8, (v - 1.5) * 0.12);
       mono(out, bubble(ctx, 1300 + v * 120, 0.25, 0.8), 0.004 * ctx.sr, 0.35);
       return out;
     },
   },
   {
     // the wet bristle-on-water texture of the comb (flat level: the runtime shapes it along the sweep)
-    id: 'comb-bristle', variations: 3, level: 'light', send: 0.2, jitter: [30, 0.8], core: true,
+    id: 'comb-bristle', variations: 3, level: 'light', send: 0, jitter: [30, 0.8], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 3.4);
       st(out, bristles(ctx, 3.3, 0.9, 0.9 + v * 0.1), 0, 1);

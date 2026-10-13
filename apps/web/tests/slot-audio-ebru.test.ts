@@ -109,7 +109,7 @@ test('effects: every Ebru event exists, unique ids, variation rules, the comb la
     else assert.ok(d.variations >= 3 && d.variations <= 4, `${d.id}: frequent effects have 3–4 variations`);
   }
   const core = EBRU_SFX.filter(d => d.core).map(d => d.id);
-  for (const id of ['spin', 'drop', 'bloom-s', 'bleed', 'stain', 'fall', 'comb-glide', 'comb-pluck', 'comb-bristle', 'comb-win', 'comb-settle', 'click', 'coin']) assert.ok(core.includes(id), id);
+  for (const id of ['spin', 'drop', 'bloom-s', 'bloom-m', 'stain', 'fall', 'comb-glide', 'comb-pluck', 'comb-bristle', 'comb-win', 'comb-settle', 'click', 'coin']) assert.ok(core.includes(id), id);
   assert.ok(!EBRU_SFX.some(d => d.core && d.late));
   assert.equal(SFX_CATALOGS.ebru, EBRU_SFX); assert.equal(SFX_CATALOGS.storm, STORM_SFX); assert.equal(SFX_CATALOGS.cascade, CASCADE_SFX);
   for (const line of EBRU_VOICE_LINES) { const p = EBRU_PLACEHOLDER[line]; if (p) assert.ok(ids.includes(p), p); }
@@ -153,7 +153,7 @@ test('comb plan: the pitch contour follows the row shifts on the G pentatonic, s
   for (const A of [1, 2, 3]) for (const q of [1, 2, 3, 4, 5, 6, 8, 10, 12, 16]) for (const pass of [1, 2, 3]) {
     const p = combPlan(engineShifts(A, 13, q), 3000, pass);
     assert.ok(p.rate.every(v => v >= 0.5 && v <= 2.01));
-    assert.ok(p.rate.reduce((s, v) => s + v, 0) / p.rate.length * p.seconds < 6.2, 'glide clip covers the sweep');
+    assert.ok(p.rate.reduce((s, v) => s + v, 0) / p.rate.length * p.seconds < 5.1, 'glide clip (5.2 s sustained) covers the sweep');
   }
 });
 
@@ -238,5 +238,5 @@ test('comb layers and frequent effects render with their variations under the ce
     assert.notDeepEqual(list[0]!.l.slice(0, 500), list[1]!.l.slice(0, 500), `${d.id}: variations differ`);
   }
   // the glide is long enough for the longest sweep at the highest pitch it is asked for
-  for (const c of clips.get('comb-glide')!) assert.ok(c.l.length / SR > 6, `glide ${c.l.length / SR} s`);
+  for (const c of clips.get('comb-glide')!) assert.ok(c.l.length / SR > 5.3, `glide ${c.l.length / SR} s`);
 });

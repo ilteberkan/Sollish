@@ -53,6 +53,8 @@ export const COMB_MIN_SECONDS = 0.35;
 export const COMB_MAX_SECONDS = 3;
 /** Points of the rate / pan / level automation curves. */
 export const COMB_CURVE_POINTS = 96;
+/** Highest glide pitch (semitones above G5). */
+export const COMB_TOP_SEMITONES = 9;
 
 export interface CombRow { row: number; at: number; shift: number; semitones: number; rate: number; pan: number; level: number }
 export interface CombPlan {
@@ -74,7 +76,7 @@ const cosInterp = (a: number, b: number, x: number) => a + (b - a) * (1 - Math.c
 /**
  * The comb sweep as sound: the comb passes over rows 0..6 (top → bottom) in `ms` milliseconds; each row is a
  * point of the pitch contour — its cyclic shift (−3..3, positive = right) picks a G-pentatonic step around the
- * pass's centre (pass 2 and 3 sit one and two steps higher, so repeated passes climb). Between rows the pitch
+ * pass's centre (pass 2 and 3 sit one and two steps higher, so repeated passes climb, capped at E6). Between rows the pitch
  * glides with a raised-cosine (sine-shaped) curve, so a comb whose shifts come from a sine table sings that sine.
  * Pan follows the shift direction, the level its size. Non-finite or out-of-range shifts are clamped.
  */
@@ -83,7 +85,8 @@ export function combPlan(shifts: readonly number[], ms: number, pass = 1): CombP
   const p = Math.max(1, Math.min(3, Math.round(Number.isFinite(pass) ? pass : 1)));
   const clean = Array.from({ length: COMB_ROWS }, (_, r) => { const v = Number(shifts[r]); return Number.isFinite(v) ? Math.max(-3, Math.min(3, Math.round(v))) : 0; });
   const rows: CombRow[] = clean.map((shift, row) => {
-    const semitones = ladder(shift + (p - 1));
+    // capped at E (+9, rate 1.68): with the longest sweep the glide clip (5.2 s sustained) always covers the pass
+    const semitones = Math.min(COMB_TOP_SEMITONES, ladder(shift + (p - 1)));
     return { row, at: (seconds * (row + 0.5)) / COMB_ROWS, shift, semitones, rate: 2 ** (semitones / 12), pan: Math.max(-0.75, Math.min(0.75, shift * 0.25)), level: 0.55 + 0.15 * Math.abs(shift) };
   });
   const n = COMB_CURVE_POINTS, rate = new Float32Array(n), pan = new Float32Array(n), level = new Float32Array(n);

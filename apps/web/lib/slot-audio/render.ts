@@ -9,7 +9,7 @@ import {
   sparkles, synthLead, timpani, tom, whoosh, wood, type PadKind, type VoiceCtx,
 } from './synth/instruments';
 import { baglama, bronze, darbuka, davul, davulRim, frameDrum, horn, hornChord, ney, rain, taiko, thunderCrack, thunderRumble, wind, zurna } from './synth/anatolian';
-import { bubbles, glassHarp, kanun, kudum, ud, waterBed, waterGlass, zil } from './synth/ebru';
+import { bubbles, glassHarpFast, kanun, kudum, ud, waterBed, waterGlassFast, zil } from './synth/ebru';
 import { foldLoop, loudness, master } from './synth/master';
 import { HALL, ROOM, makeImpulse, type ImpulseSpec } from './synth/reverb';
 import type { Score, KitHit, PitchedVoice, Track } from './scores/types';
@@ -90,10 +90,10 @@ function pitched(ctx: VoiceCtx, voice: PitchedVoice, freq: number, vel: number, 
     case 'taikoPitched': return taiko(ctx, vel, freq);
     // Ebru voices (synth/ebru.ts)
     case 'kanun': return kanun(ctx, freq, vel, held, bright);
-    case 'kanunSoft': return kanun(ctx, freq, vel * 0.85, held, bright * 0.55, { ring: 0.2 });
+    case 'kanunSoft': return kanun(ctx, freq, vel * 0.85, held, bright * 0.55, { ring: 0.2, courses: 2 });
     case 'ud': return ud(ctx, freq, vel, held, 0.5 + 0.3 * bright);
-    case 'glassHarp': return glassHarp(ctx, freq, vel, held);
-    case 'waterGlass': return waterGlass(ctx, freq, vel, 1, bright);
+    case 'glassHarp': return glassHarpFast(ctx, freq, vel, held);
+    case 'waterGlass': return waterGlassFast(ctx, freq, vel, 1, bright);
   }
 }
 
@@ -318,7 +318,7 @@ export function tameStem(st: Stereo, lo: number, hi: number, crestDb: number): v
   }
 }
 
-const EBRU_VOICE_COST = { kanun: 2.6, kanunSoft: 3.2, ud: 2.6, glassHarp: 5, waterGlass: 20 } as const;
+const EBRU_VOICE_COST = { kanun: 2.6, kanunSoft: 2.2, ud: 2.6, glassHarp: 2.6, waterGlass: 10 } as const;
 
 /** Rough synthesis cost of a track, for spreading tracks over workers. */
 export function trackCost(track: Track): number {
