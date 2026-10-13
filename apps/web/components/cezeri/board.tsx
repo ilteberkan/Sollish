@@ -80,10 +80,10 @@ const r2 = (n: number) => Math.round(n * 100) / 100;
 
 /* ------------------------------------------------------------------ static ring art */
 const RING_TONES = [
-  { a: '#0e4a52', b: '#062a30', c: '#021418', rim: P.turq.light },
-  { a: '#1c2a74', b: '#0e1648', c: '#060a26', rim: P.lapis.light },
-  { a: '#0e4a52', b: '#062a30', c: '#021418', rim: P.turq.light },
-  { a: '#1c2a74', b: '#0e1648', c: '#060a26', rim: P.lapis.light },
+  { a: '#13636a', b: '#083a40', c: '#021a1e', rim: P.turq.light, glow: '#5ff0e0' },
+  { a: '#26389a', b: '#121c5c', c: '#060a2a', rim: P.lapis.light, glow: '#8aa4ff' },
+  { a: '#13636a', b: '#083a40', c: '#021a1e', rim: P.turq.light, glow: '#5ff0e0' },
+  { a: '#26389a', b: '#121c5c', c: '#060a2a', rim: P.lapis.light, glow: '#8aa4ff' },
 ] as const;
 
 const RingArt = memo(function RingArt({ ring, uid }: { ring: number; uid: string }) {
@@ -93,6 +93,8 @@ const RingArt = memo(function RingArt({ ring, uid }: { ring: number; uid: string
   const id = (n: string) => `${uid}r${ring}${n}`;
   const st = (r: number) => r2(r / 500);
   const plates = useMemo(() => Array.from({ length: CZ_SLICES }, (_, s) => slicePath(ring, s, 3.2)).join(''), [ring]);
+  const inlays = useMemo(() => Array.from({ length: CZ_SLICES }, (_, s) => slicePath(ring, s, 9)).join(''), [ring]);
+  const sockets = useMemo(() => Array.from({ length: CZ_SLICES }, (_, s) => { const c = symbolBox(ring, s); return [r2(c.cx), r2(c.cy), r2(c.size * 0.5)] as const; }), [ring]);
   const rivets = useMemo(() => {
     const out: Array<[number, number]> = [];
     for (let s = 0; s < CZ_SLICES; s++) {
@@ -119,6 +121,11 @@ const RingArt = memo(function RingArt({ ring, uid }: { ring: number; uid: string
           <stop offset={st(b.mid + 14)} stopColor={t.a} />
           <stop offset={st(b.outer)} stopColor={t.c} />
         </radialGradient>
+        <radialGradient id={id('socket')}>
+          <stop offset="0" stopColor={t.glow} stopOpacity=".42" />
+          <stop offset=".55" stopColor={t.glow} stopOpacity=".12" />
+          <stop offset="1" stopColor={t.glow} stopOpacity="0" />
+        </radialGradient>
         <radialGradient id={id('brass')} cx="500" cy="500" r="500" gradientUnits="userSpaceOnUse">
           <stop offset={st(b.inner - 8)} stopColor={P.brass.deep} />
           <stop offset={st(b.inner + 2)} stopColor={P.brass.light} />
@@ -129,7 +136,9 @@ const RingArt = memo(function RingArt({ ring, uid }: { ring: number; uid: string
       </defs>
       <path d={annulusPath(b.inner - 1, b.outer + 1)} fill={`url(#${id('band')})`} fillRule="evenodd" />
       <path d={plates} fill={`url(#${id('plate')})`} stroke="#000" strokeOpacity=".55" strokeWidth="1.6" />
-      <path d={plates} fill="none" stroke={t.rim} strokeOpacity=".22" strokeWidth="1" transform="translate(500 500) scale(.994) translate(-500 -500)" />
+      {sockets.map(([x, y, r], i) => <circle key={i} cx={x} cy={y} r={r} fill={`url(#${id('socket')})`} />)}
+      <path d={inlays} fill="none" stroke={P.brass.light} strokeOpacity=".38" strokeWidth="1.3" />
+      <path d={plates} fill="none" stroke={t.rim} strokeOpacity=".3" strokeWidth="1.2" transform="translate(500 500) scale(.994) translate(-500 -500)" />
       {/* brass dividers with rivets */}
       <path d={dividerPath(ring)} stroke="#140a02" strokeWidth="7" strokeLinecap="round" />
       <path d={dividerPath(ring)} stroke={`url(#${id('brass')})`} strokeWidth="4" strokeLinecap="round" />

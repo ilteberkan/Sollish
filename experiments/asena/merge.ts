@@ -11,7 +11,7 @@ if (parts.length === 0) { console.error("no parts"); process.exit(2); }
 const files = parts.map(p => JSON.parse(readFileSync(resolve(p), "utf8")) as Record<string, any>);
 const first = files[0]!;
 for (const f of files) {
-  for (const key of ["kind", "engine", "engineSourceSha256", "seed", "workers", "betCentsSimulated", "tuningOverride"]) {
+  for (const key of ["kind", "engine", "engineSourceSha256", "seed", "workers", "chunks", "betCentsSimulated", "tuningOverride"]) {
     if (JSON.stringify(f[key]) !== JSON.stringify(first[key])) throw new Error(`parts disagree on ${key}`);
   }
 }

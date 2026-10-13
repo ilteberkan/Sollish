@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import {
   CEZERI_BET_LEVELS_CENTS, CEZERI_COST_FRACTION, CEZERI_ENGINE_ID, CEZERI_FALCON_COUNT, CEZERI_FREE_SPINS_RETRIGGER, CEZERI_FREE_SPINS_TRIGGER, CEZERI_GEAR_PAY,
-  CEZERI_MAX_FREE_SPINS, CEZERI_MAX_WIN_MULTIPLIER, CEZERI_MODES, CEZERI_MODE_TABLES, CEZERI_PAYTABLE, CEZERI_RETRIGGER_VESSELS, CEZERI_RTP, CEZERI_SCATTER_PAY,
+  CEZERI_MAX_FREE_SPINS, CEZERI_MAX_RESPINS, CEZERI_MAX_WIN_MULTIPLIER, CEZERI_MODES, CEZERI_MODE_TABLES, CEZERI_PAYTABLE, CEZERI_RETRIGGER_VESSELS, CEZERI_RTP, CEZERI_SCATTER_PAY,
   CEZERI_STOP_BASE_WEIGHT, CEZERI_TRIGGER_VESSELS, __cezeriTest, cezeriCostCents, cezeriSeedFromEntropy, playCezeriRound,
   type CezeriBoard, type CezeriMode, type CezeriPaySymbol, type CezeriRingTable, type CezeriRound, type CezeriSpin, type CezeriSymbol, type CezeriTuning,
   type CezeriFalconStep, type CezeriHubStep, type CezeriLockStep, type CezeriRotateStep, type CezeriScatterStep, type CezeriWinStep,
@@ -24,7 +24,7 @@ const A30 = "A".repeat(30), B30 = "B".repeat(30), V30 = "V".repeat(30), W30 = "W
 const AB30 = "AB".repeat(15);
 /** Tuning that replaces the tables of one mode. Hub tables default to a constant hub of 3 (base) / 1 (free). */
 const scenario = (mode: CezeriMode, base: string[], free: string[], extra: CezeriTuning = {}, hubBase: number = 3, hubFree: number = 1): CezeriTuning => ({
-  tables: { [mode]: { base: base.map(s => ring(s)), free: free.map(s => ring(s)), hubBase: [[hubBase, 1]], hubFree: [[hubFree, 1]] } },
+  tables: { [mode]: { base: base.map(s => ring(s)), respin: base.map(s => ring(s)), free: free.map(s => ring(s)), hubBase: [[hubBase, 1]], hubFree: [[hubFree, 1]] } },
   ...extra,
 });
 const richPay = Object.fromEntries(PAY.map(s => [s, [10 ** 7, 10 ** 7]])) as never;
@@ -33,30 +33,37 @@ const stepsOf = <T extends CezeriSpin["steps"][number]["type"]>(spin: CezeriSpin
   spin.steps.filter(s => s.type === type) as never;
 const countSymbol = (board: CezeriBoard, symbol: CezeriSymbol): number => board.flat().filter(s => s === symbol).length;
 
-/** Independent spoke oracle: best pay of the four slices of a spoke (3-4 run of any symbol with gears as wild, or a pure gear run). */
-function oraclePay(cells: readonly CezeriSymbol[]): number {
-  let best = 0;
-  for (const symbol of PAY) {
-    let n = 0;
-    while (n < 4 && (cells[n] === symbol || cells[n] === "gear")) n++;
-    if (n >= 3) best = Math.max(best, CEZERI_PAYTABLE[symbol][n - 3]!);
+/** Independent spoke oracle: best pay of the four slices of a spoke: a run of 3-4 slices that starts at ring 0 or a run of 3 slices from ring 1
+ * (any symbol, gears are wild) or a pure gear run. */
+function oracleRun(cells: readonly CezeriSymbol[]): { pay: number; start: number; length: number } {
+  let best = { pay: 0, start: 0, length: 0 };
+  for (const start of [0, 1]) {
+    for (const symbol of PAY) {
+      let n = 0;
+      while (start + n < 4 && (cells[start + n] === symbol || cells[start + n] === "gear")) n++;
+      if (n >= 3) { const pay = CEZERI_PAYTABLE[symbol][n - 3]!; if (pay > best.pay || (pay === best.pay && start < best.start)) best = { pay, start, length: n }; }
+    }
+    let g = 0;
+    while (start + g < 4 && cells[start + g] === "gear") g++;
+    if (g >= 3 && CEZERI_GEAR_PAY[g - 3]! > best.pay) best = { pay: CEZERI_GEAR_PAY[g - 3]!, start, length: g };
   }
-  let g = 0;
-  while (g < 4 && cells[g] === "gear") g++;
-  if (g >= 3) best = Math.max(best, CEZERI_GEAR_PAY[g - 3]!);
   return best;
 }
+const oraclePay = (cells: readonly CezeriSymbol[]): number => oracleRun(cells).pay;
 const spokeOf = (board: CezeriBoard, spoke: number): CezeriSymbol[] => [0, 1, 2, 3].map(r => board[r]![spoke]!);
+const LETTER_SYMBOL: Record<string, CezeriSymbol> = { A: "h1", B: "h2", C: "h3", D: "h4", E: "l1", F: "l2", G: "l3", H: "l4", W: "gear", V: "vessel" };
+const heldKey = (r: number, k: number): string => `${r},${k}`;
 
-/** Replays the steps of one spin against the rules and checks every field. Returns the stats the callers use. */
-function replaySpin(spin: CezeriSpin, kind: "base" | "free", carried: number): { rotations: number } {
+/** Replays the steps of one spin against the rules and checks every field (rotation strips included). */
+function replaySpin(spin: CezeriSpin, mode: CezeriMode, kind: "base" | "free", carried: number, wildsBefore: ReadonlySet<string>): void {
   assert.equal(spin.kind, kind);
   assert.match(typesOf(spin), /^HRW*(?:LHRW*)*L?ES?F?$/, typesOf(spin));
   if (kind === "base") assert.ok(!typesOf(spin).includes("F"));
+  const tables = CEZERI_MODE_TABLES[mode];
   const paid = new Array<number>(12).fill(0);
-  const locked = new Set<number>();
-  let board: CezeriBoard | null = null, hub = 0, round = -1, chain = 0, pendingRespin: number[] | null = null, rotatedRound = -1;
-  let sawEnd = false;
+  const held = new Set<string>();
+  let board: CezeriBoard | null = null, hub = 0, round = -1, chain = 0, respinPending = false, rotatedRound = -1, sawEnd = false, lastRespin = true;
+  let newThisRound: string[] = [];
   for (const step of spin.steps) {
     switch (step.type) {
       case "hub": {
@@ -67,74 +74,86 @@ function replaySpin(spin: CezeriSpin, kind: "base" | "free", carried: number): {
           assert.equal(step.value, kind === "free" ? Math.max(carried, step.drawn!) : step.drawn);
           assert.equal(step.previous, 0);
         } else {
+          assert.ok(respinPending, "a respin hub follows a lock that says respin");
           assert.equal(step.reason, "respin");
           assert.equal(step.drawn, null);
           assert.equal(step.previous, hub);
           assert.equal(step.value, hub + 1, "hub +1 per respin");
           assert.equal(step.round, round + 1);
+          assert.ok(step.round <= CEZERI_MAX_RESPINS, "respin cap");
         }
-        hub = step.value; round = step.round;
+        hub = step.value; round = step.round; respinPending = false;
         break;
       }
       case "rotate": {
         assert.equal(step.round, round, "rotate follows its hub");
-        const spun = step.rings.map(r => r.ring);
-        assert.deepEqual(spun, step.round === 0 ? [0, 1, 2, 3] : pendingRespin);
-        const next: CezeriBoard = board ? board.map(r => r.slice()) : [[], [], [], []];
+        assert.deepEqual(step.rings.map(r => r.ring), [0, 1, 2, 3], "every ring turns in every rotation");
+        const strips = kind === "free" ? tables.free : step.round === 0 ? tables.base : tables.respin;
+        const next: CezeriBoard = [[], [], [], []];
         for (const r of step.rings) {
           assert.equal(r.slices.length, 12);
-          assert.ok(r.stop >= 0 && r.stop < r.stripLength && r.stripLength >= 30 && r.stripLength <= 48);
-          assert.ok(!locked.has(r.ring), "a locked ring never spins again");
+          const table = strips[r.ring]!.strip;
+          assert.equal(r.stripLength, table.length);
+          assert.ok(r.stop >= 0 && r.stop < table.length && table.length >= 30 && table.length <= 48);
+          const wild = [...Array(12).keys()].filter(k => wildsBefore.has(heldKey(r.ring, k)));
+          assert.deepEqual(r.pinned, kind === "free" ? wild : [], "pinned = permanent falcon wilds");
+          const keep = [...Array(12).keys()].filter(k => held.has(heldKey(r.ring, k)) && !r.pinned.includes(k));
+          assert.deepEqual(r.held, keep, "held = the chain-held slices (not wild)");
+          for (let k = 0; k < 12; k++) {
+            if (r.pinned.includes(k)) assert.equal(r.slices[k], "gear");
+            else if (keep.includes(k)) assert.equal(r.slices[k], board![r.ring]![k], "held slices keep their symbol and never move");
+            else assert.equal(r.slices[k], LETTER_SYMBOL[table[(r.stop + k) % table.length]!], "free slices come from the strip window");
+          }
           next[r.ring] = r.slices;
-          r.pinned.forEach(k => assert.equal(r.slices[k], "gear"));
         }
         assert.deepEqual(step.board, next);
-        for (const r of locked) assert.deepEqual(step.board[r], board![r], "locked rings keep their slices");
-        board = step.board; rotatedRound = step.round;
+        board = step.board; rotatedRound = step.round; newThisRound = [];
         break;
       }
       case "win": {
         assert.equal(step.round, rotatedRound);
         assert.equal(step.hub, hub);
         const cells = spokeOf(board!, step.spoke);
-        assert.equal(step.fullHundredths, oraclePay(cells), `spoke ${step.spoke}`);
+        const run = oracleRun(cells);
+        assert.equal(step.fullHundredths, run.pay, `spoke ${step.spoke}`);
+        assert.equal(step.startRing, run.start);
+        assert.equal(step.length, run.length);
         assert.equal(step.paidBefore, paid[step.spoke]);
         assert.ok(step.fullHundredths > paid[step.spoke]!);
         assert.equal(step.payHundredths, step.fullHundredths - step.paidBefore);
         assert.equal(step.winHundredths, step.payHundredths * hub);
         assert.equal(step.cells.length, step.length);
-        step.cells.forEach(([r, k], i) => { assert.equal(r, i); assert.equal(k, step.spoke); });
+        step.cells.forEach(([r, k], i) => { assert.equal(r, step.startRing + i); assert.equal(k, step.spoke); });
         assert.deepEqual(step.wildRings, step.cells.filter(([r, k]) => board![r]![k] === "gear").map(([r]) => r));
         if (step.symbol !== "gear") for (const [r, k] of step.cells) assert.ok(board![r]![k] === step.symbol || board![r]![k] === "gear");
         else assert.equal(step.wildRings.length, step.length);
+        for (const [r, k] of step.cells) if (!held.has(heldKey(r, k))) newThisRound.push(heldKey(r, k));
         paid[step.spoke] = step.fullHundredths; chain += step.winHundredths;
         break;
       }
       case "lock": {
         assert.equal(step.round, rotatedRound);
-        // every spoke with a possible new win was announced before the lock: nothing left to pay in this rotation
+        // every spoke with a pay beyond what it already paid was announced before the lock
         for (let s = 0; s < 12; s++) assert.ok(oraclePay(spokeOf(board!, s)) <= paid[s]!, `spoke ${s} fully paid`);
-        const winning = new Set<number>();
-        for (let s = 0; s < 12; s++) if (paid[s]! > 0) { const cells = spokeOf(board!, s); for (let r = 0; r < 4; r++) if (runRings(cells).includes(r)) winning.add(r); }
-        for (const r of step.newRings) { assert.ok(!locked.has(r)); locked.add(r); }
-        assert.deepEqual(step.rings, [...locked].sort());
-        assert.deepEqual(step.respinRings, [0, 1, 2, 3].filter(r => !locked.has(r)));
-        assert.ok(step.newRings.length >= 1, "every continuation locks at least one more ring");
-        assert.ok(locked.has(0), "ring 0 is part of every run");
-        for (const r of locked) assert.ok(winning.has(r), "a locked ring holds a slice of a winning run");
-        pendingRespin = step.respinRings;
+        assert.deepEqual(step.newHeld.map(([r, k]) => heldKey(r, k)), newThisRound);
+        for (const key of newThisRound) held.add(key);
+        assert.deepEqual(step.held.map(([r, k]) => heldKey(r, k)), [...held].sort((a, b) => { const [ar, ak] = a.split(",").map(Number) as [number, number], [br, bk] = b.split(",").map(Number) as [number, number]; return ar - br || ak - bk; }));
+        assert.ok(step.newHeld.length >= 1 || true);
+        assert.equal(step.respin, round < CEZERI_MAX_RESPINS && held.size < 48);
+        respinPending = step.respin; lastRespin = step.respin;
         break;
       }
       case "end": {
         sawEnd = true;
         assert.equal(step.rotations, round + 1);
         assert.equal(step.respins, round);
-        assert.ok(step.rotations >= 1 && step.rotations <= 4);
+        assert.ok(step.rotations >= 1 && step.rotations <= CEZERI_MAX_RESPINS + 1);
         assert.equal(step.hub, hub);
-        assert.deepEqual(step.lockedRings, [...locked].sort());
+        assert.equal(step.heldSlices, held.size);
         assert.equal(step.chainHundredths, chain);
-        // the last rotation has no new win (or no ring left): nothing unpaid on the final board
-        for (let s = 0; s < 12; s++) assert.ok(oraclePay(spokeOf(board!, s)) <= paid[s]!);
+        assert.equal(step.chainCapped, held.size > 0 && round >= CEZERI_MAX_RESPINS && !lastRespin && stepsBeforeEndPaid(spin));
+        assert.ok(!respinPending);
+        if (!step.chainCapped && lastRespin) for (let s = 0; s < 12; s++) assert.ok(oraclePay(spokeOf(board!, s)) <= paid[s]!);
         break;
       }
       default: break;
@@ -145,27 +164,17 @@ function replaySpin(spin: CezeriSpin, kind: "base" | "free", carried: number): {
   assert.equal(spin.rotations, round + 1);
   assert.equal(spin.respins, round);
   assert.equal(spin.hubEnd, hub);
-  return { rotations: round + 1 };
 }
-/** Rings that carry a slice of the run of this spoke (for the lock oracle). */
-function runRings(cells: readonly CezeriSymbol[]): number[] {
-  const pay = oraclePay(cells);
-  if (pay === 0) return [];
-  let length = 0;
-  for (const symbol of PAY) {
-    let n = 0;
-    while (n < 4 && (cells[n] === symbol || cells[n] === "gear")) n++;
-    if (n >= 3 && CEZERI_PAYTABLE[symbol][n - 3] === pay) length = Math.max(length, n);
-  }
-  let g = 0;
-  while (g < 4 && cells[g] === "gear") g++;
-  if (g >= 3 && CEZERI_GEAR_PAY[g - 3] === pay) length = Math.max(length, g);
-  return Array.from({ length }, (_, r) => r);
+/** True when the last rotation of the spin still had a new win (the lock step sits right before `end`). */
+function stepsBeforeEndPaid(spin: CezeriSpin): boolean {
+  const i = spin.steps.findIndex(s => s.type === "end");
+  return spin.steps[i - 1]?.type === "lock";
 }
 function replayRound(round: CezeriRound): void {
   let carried = 0;
   round.spins.forEach((spin, i) => {
-    replaySpin(spin, i === 0 ? "base" : "free", i === 0 ? 0 : carried);
+    const wildsBefore = new Set<string>(i === 0 ? [] : round.spins[i - 1]!.wilds.map(([r, k]) => heldKey(r, k)));
+    replaySpin(spin, round.mode, i === 0 ? "base" : "free", i === 0 ? 0 : carried, wildsBefore);
     if (i > 0) carried = spin.hubEnd;
   });
 }

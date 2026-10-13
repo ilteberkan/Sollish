@@ -99,7 +99,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  height: 32%;
+  height: 40%;
   translate: -50% -50%;
   display: flex;
   align-items: stretch;
@@ -109,12 +109,12 @@
   background: linear-gradient(180deg, #2a1604, #0c0602 40%, #0c0602 60%, #2a1604);
   box-shadow: 0 0 0 2px #1a0e03, 0 0 0 4px #f6d27a, 0 0 0 5.5px #4a2a08, inset 0 2px 6px rgba(0, 0, 0, 0.8);
   font: 600 1em/1 var(--font-barlow), 'Arial Narrow', system-ui, sans-serif;
-  font-size: 4.4cqw;
+  font-size: 6.2cqw;
   color: #2a1604;
   will-change: transform;
 }
-.hub[data-digits='2'] .hubWindow { font-size: 3.9cqw; }
-.hub[data-digits='3'] .hubWindow { font-size: 3.2cqw; }
+.hub[data-digits='2'] .hubWindow { font-size: 5.2cqw; }
+.hub[data-digits='3'] .hubWindow { font-size: 4cqw; }
 .hubX {
   align-self: center;
   color: #ffe7a0;

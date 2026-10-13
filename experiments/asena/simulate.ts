@@ -6,7 +6,7 @@
  * (seed, rounds, workers, modes) tuple always reproduces the same numbers. RTP is return / COST.
  * Win tiers are multiples of the BET (round total / bet), the same measure as the in-game tier screens. */
 import { createHash } from "node:crypto";
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isMainThread, parentPort, workerData, Worker } from "node:worker_threads";
@@ -138,12 +138,12 @@ if (!isMainThread) {
   const args = new Map<string, string>();
   for (let i = 2; i < process.argv.length; i += 2) args.set(process.argv[i]!.replace(/^--/, ""), process.argv[i + 1] ?? "");
   const rounds = Number(args.get("rounds") ?? 1_000_000), seed = args.get("seed") ?? "asena-20261012-evidence", out = args.get("out");
-  const workers = Number(args.get("workers") ?? 4);
+  const workers = Number(args.get("workers") ?? 4), chunks = Number(args.get("chunks") ?? 1);
   const modes = (args.get("modes") ?? ASENA_MODES.join(",")).split(",") as AsenaMode[];
   const tuneFile = args.get("tune");
   const tuning: AsenaTuning = tuneFile ? JSON.parse(readFileSync(resolve(tuneFile), "utf8")) : {};
-  if (!Number.isSafeInteger(rounds) || rounds < 2 || !Number.isSafeInteger(workers) || workers < 1 || !out || modes.some(m => !ASENA_MODES.includes(m))) {
-    console.error("usage: simulate.ts --rounds N --seed TEXT --out PATH [--modes standard,ante,buy] [--workers N] [--tune FILE]"); process.exit(2);
+  if (!Number.isSafeInteger(rounds) || rounds < 2 || !Number.isSafeInteger(workers) || workers < 1 || !Number.isSafeInteger(chunks) || chunks < 1 || !out || modes.some(m => !ASENA_MODES.includes(m))) {
+    console.error("usage: simulate.ts --rounds N --seed TEXT --out PATH [--modes standard,ante,buy] [--workers N] [--chunks N] [--tune FILE]"); process.exit(2);
   }
   const started = Date.now();
   const source = stripEvidenceBlock(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "../../packages/protocol/src/asena.ts"), "utf8"));
@@ -152,11 +152,20 @@ if (!isMainThread) {
   const report: Record<string, unknown> = {};
   for (const mode of modes) {
     const t0 = Date.now();
-    const share = Array.from({ length: workers }, (_, w) => Math.floor(rounds / workers) + (w < rounds % workers ? 1 : 0));
-    const parts = await Promise.all(share.map((n, w) => new Promise<Part>((ok, fail) => {
-      const worker = new Worker(fileURLToPath(import.meta.url), { workerData: { seed, mode, worker: w, rounds: n, tuning }, execArgv: process.execArgv });
-      worker.once("message", ok); worker.once("error", fail);
-    })));
+    // --chunks N splits the run into N independent sub-runs (seed "<seed>/c<k>") whose raw counters are checkpointed to <out>.ckpt/ so a killed run resumes.
+    const parts: Part[] = [];
+    for (let k = 0; k < chunks; k++) {
+      const chunkRounds = Math.floor(rounds / chunks) + (k < rounds % chunks ? 1 : 0), chunkSeed = chunks > 1 ? `${seed}/c${k}` : seed;
+      const ckpt = resolve(`${out}.ckpt`, `${mode}-${k}-of-${chunks}-${workers}w-${chunkRounds}.json`);
+      if (chunks > 1 && existsSync(ckpt)) { parts.push(...(JSON.parse(readFileSync(ckpt, "utf8")) as Part[])); console.error(`chunk ${k + 1}/${chunks} of ${mode}: loaded checkpoint`); continue; }
+      const share = Array.from({ length: workers }, (_, w) => Math.floor(chunkRounds / workers) + (w < chunkRounds % workers ? 1 : 0));
+      const done = await Promise.all(share.map((n, w) => new Promise<Part>((ok, fail) => {
+        const worker = new Worker(fileURLToPath(import.meta.url), { workerData: { seed: chunkSeed, mode, worker: w, rounds: n, tuning }, execArgv: process.execArgv });
+        worker.once("message", ok); worker.once("error", fail);
+      })));
+      if (chunks > 1) { mkdirSync(dirname(ckpt), { recursive: true }); writeFileSync(ckpt, JSON.stringify(done)); console.error(`chunk ${k + 1}/${chunks} of ${mode}: done`); }
+      parts.push(...done);
+    }
     const sum = (f: (p: Part) => number): number => parts.reduce((a, p) => a + f(p), 0);
     const max = (f: (p: Part) => number): number => parts.reduce((a, p) => Math.max(a, f(p)), 0);
     const sumArr = (f: (p: Part) => number[], k: number): number => parts.reduce((a, p) => a + f(p)[k]!, 0);
@@ -238,7 +247,7 @@ if (!isMainThread) {
     kind: "asena-rtp-simulation", scope: "DEMO credits only; Monte Carlo estimate, not a certified or guaranteed RTP; RTP is return / cost",
     engine: ASENA_ENGINE_ID, engineSourceSha256: createHash("sha256").update(source).digest("hex"),
     engineSourceNote: "sha256 of packages/protocol/src/asena.ts with the ASENA_RTP evidence block (between the @evidence-block markers) removed. The constants were filled after the run; no engine code, tables or RNG changed afterwards.",
-    seed, workers, betCentsSimulated: BET_CENTS, betLevelsCents: ASENA_BET_LEVELS_CENTS, winTierMeasure: "round total / bet",
+    seed, workers, chunks, betCentsSimulated: BET_CENTS, betLevelsCents: ASENA_BET_LEVELS_CENTS, winTierMeasure: "round total / bet",
     tuningOverride: tuneFile ? tuning : null,
     modes: report,
     tables: {
