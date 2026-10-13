@@ -26,7 +26,7 @@ interface Part {
   baseHitSpins: number; baseChainHitSpins: number; triggers: number; retriggers: number; freeSpinsPlayed: number; freeWinSpins: number;
   rotationsHist: number[]; freeRotationsHist: number[]; freeRespins: number; finalHubSum: number; finalHubMax: number; falconVisits: number; finalWildsSum: number;
   capHits: number; maxRoundHundredths: number; maxFreeSpinsInRound: number; minVesselsInBaseBoard: number; costMismatch: number; roundsAtLeast: number[];
-  freeSpinsByTrigger: number; vesselsHist: number[];
+  freeSpinsByTrigger: number; vesselsHist: number[]; chainCaps: number;
 }
 
 function simulateChunk(seed: string, mode: CezeriMode, worker: number, rounds: number, tuning: CezeriTuning): Part {
@@ -34,7 +34,7 @@ function simulateChunk(seed: string, mode: CezeriMode, worker: number, rounds: n
   const rng = __cezeriTest.createRng(state);
   const p: Part = {
     rounds, sumH: 0, sumSqH: "0", sumPayoutCents: 0, baseH: 0, freeH: 0, scatterH: 0, chainBaseH: 0, baseHitSpins: 0, baseChainHitSpins: 0, triggers: 0,
-    retriggers: 0, freeSpinsPlayed: 0, freeWinSpins: 0, rotationsHist: [0, 0, 0, 0, 0], freeRotationsHist: [0, 0, 0, 0, 0], freeRespins: 0, finalHubSum: 0, finalHubMax: 0,
+    retriggers: 0, freeSpinsPlayed: 0, freeWinSpins: 0, rotationsHist: new Array<number>(12).fill(0), freeRotationsHist: new Array<number>(12).fill(0), chainCaps: 0, freeRespins: 0, finalHubSum: 0, finalHubMax: 0,
     falconVisits: 0, finalWildsSum: 0, capHits: 0, maxRoundHundredths: 0, maxFreeSpinsInRound: 0, minVesselsInBaseBoard: 48, costMismatch: 0,
     roundsAtLeast: TIERS.map(() => 0), freeSpinsByTrigger: 0, vesselsHist: [0, 0, 0, 0, 0, 0],
   };
@@ -63,6 +63,7 @@ function simulateChunk(seed: string, mode: CezeriMode, worker: number, rounds: n
         p.chainBaseH += spin.chainHundredths;
         p.scatterH += spin.scatterHundredths;
         p.rotationsHist[spin.rotations]!++;
+        if (spin.steps.some(st => st.type === "end" && st.chainCapped)) p.chainCaps++;
         p.vesselsHist[Math.min(5, spin.vesselCount)]!++;
         const first = spin.steps.find(s => s.type === "rotate");
         if (first && first.type === "rotate") {
@@ -75,6 +76,7 @@ function simulateChunk(seed: string, mode: CezeriMode, worker: number, rounds: n
         if (spin.freeSpinsAwarded > 0) p.retriggers++;
         if (spin.chainHundredths > 0) p.freeWinSpins++;
         p.freeRotationsHist[spin.rotations]!++;
+        if (spin.steps.some(st => st.type === "end" && st.chainCapped)) p.chainCaps++;
         p.freeRespins += spin.respins;
         if (spin.steps.some(s => s.type === "falcon")) p.falconVisits++;
       }
@@ -147,10 +149,13 @@ if (!isMainThread) {
         baseRotationsHistogram: Object.fromEntries(rot.map((n, k) => [`rotations${k}`, n]).slice(1)),
         avgRespinsPerBaseSpin: ratio(respinsBase / rounds),
         avgRespinsPerWinningBaseChain: winningChains ? ratio(respinsBase / winningChains) : null,
+        baseChainsWithAtLeast5RespinsShare: winningChains ? Number((rot.slice(6).reduce((a, n) => a + n, 0) / winningChains).toPrecision(4)) : null,
+        baseChainsWithAtLeast3RespinsShare: winningChains ? Number((rot.slice(4).reduce((a, n) => a + n, 0) / winningChains).toPrecision(4)) : null,
+        chainsEndedByRespinCap: sum(p => p.chainCaps),
         freeRotationsHistogram: Object.fromEntries(freeRot.map((n, k) => [`rotations${k}`, n]).slice(1)),
         avgRespinsPerFreeSpin: freeSpins ? ratio(sum(p => p.freeRespins) / freeSpins) : null,
         avgRespinsPerWinningFreeChain: freeWin ? ratio(sum(p => p.freeRespins) / freeWin) : null,
-        maxRotationsInOneSpin: 4,
+        maxRotationsInOneSpin: 11,
       },
       avgFinalHubInFeatures: triggers ? Number((sum(p => p.finalHubSum) / triggers).toFixed(2)) : null, maxFinalHub: max(p => p.finalHubMax),
       falconVisits: sum(p => p.falconVisits), avgFalconWildsAtFeatureEnd: triggers ? Number((sum(p => p.finalWildsSum) / triggers).toFixed(2)) : null,

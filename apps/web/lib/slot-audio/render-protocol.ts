@@ -7,8 +7,9 @@ import type { Stereo } from './synth/dsp';
 import type { Score } from './scores/types';
 import { CASCADE_SFX, type SfxDef } from './sfx/cascade';
 import { STORM_SFX } from './sfx/storm';
+import { EBRU_SFX } from './sfx/ebru';
 
-export const SFX_CATALOGS: Record<string, SfxDef[]> = { cascade: CASCADE_SFX, storm: STORM_SFX };
+export const SFX_CATALOGS: Record<string, SfxDef[]> = { cascade: CASCADE_SFX, storm: STORM_SFX, ebru: EBRU_SFX };
 
 export type WorkerRequest =
   | { id: number; type: 'tracks'; score: Score; trackIds: string[]; sampleRate: number }

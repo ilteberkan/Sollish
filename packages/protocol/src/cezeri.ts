@@ -88,6 +88,8 @@ export const CEZERI_MAX_FREE_SPINS = 100;
 /** Free spins between two falcon visits (the reservoir has this many levels). */
 export const CEZERI_RESERVOIR_LEVELS = 3;
 export const CEZERI_STOP_BASE_WEIGHT = 100;
+/** Hard cap on respins in one chain (rotations <= 11). */
+export const CEZERI_MAX_RESPINS = 10;
 
 export type CezeriPaySymbol = "h1" | "h2" | "h3" | "h4" | "l1" | "l2" | "l3" | "l4";
 export type CezeriSymbol = CezeriPaySymbol | "gear" | "vessel";
@@ -112,8 +114,8 @@ export type CezeriPos = readonly [ring: number, slice: number];
 //   hub(round 0) -> rotate(round 0) -> win* -> [ lock -> hub(round k) -> rotate(round k) -> win* ]* -> end
 //   -> [scatter] -> [falcon]
 // `lock` is present only after a rotation that had at least one new win; the `hub`/`rotate` pair that follows exists
-// only when `lock.respinRings` is not empty. The last rotation of a chain has no new win. `falcon` is last and only in
-// free spins.
+// only when `lock.respin` is true. The last rotation of a chain has no new win unless the respin cap ended it.
+// `falcon` is last and only in free spins.
 /** The hub shows its value for the rotation of `round`. round 0: draw (base) or max(carried, draw) (free). round k > 0:
  * previous + 1 (`reason: "respin"`, drawn null). */
 export interface CezeriHubStep {
@@ -121,24 +123,26 @@ export interface CezeriHubStep {
   /** Hub carried in from the previous free spin (0 in the base spin and in the first free spin). */
   carried: number;
 }
-/** One ring turning to its stop. `slices` is what the ring shows afterwards (pinned falcon wilds already applied),
- * `pinned` lists the slice ids that are falcon wilds. */
-export interface CezeriRingSpin { ring: number; stop: number; stripLength: number; slices: CezeriSymbol[]; pinned: number[] }
-/** `rings` are the rings that turn in this rotation (all 4 in round 0, the unlocked ones in a respin); `board` is the
- * complete board after the rotation (a copy; locked rings are identical to the previous board). */
+/** One ring turning to its stop (every ring turns in every rotation). `slices` is what the ring shows afterwards:
+ * `pinned` lists the slice ids that are permanent falcon wilds (gear), `held` the slice ids held by the Dişli Kilidi
+ * (the winning slices of earlier rotations of this chain: they keep their symbol and do not move). Every other slice comes
+ * from the strip window starting at `stop`. */
+export interface CezeriRingSpin { ring: number; stop: number; stripLength: number; slices: CezeriSymbol[]; pinned: number[]; held: number[] }
+/** `rings` has all 4 rings in ascending order; `board` is the complete board after the rotation (a copy). */
 export interface CezeriRotateStep { type: "rotate"; round: number; rings: CezeriRingSpin[]; board: CezeriBoard }
 /** One new spoke win. `cells` are the slices of the winning run (ring 0.. length-1, slice = spoke), `wildRings` the rings of
  * the run that show a gear. `fullHundredths` is the run's pay, `paidBefore` what the spoke already paid in this chain,
  * `payHundredths` = fullHundredths - paidBefore (> 0), `winHundredths` = payHundredths * hub. */
 export interface CezeriWinStep {
-  type: "win"; round: number; spoke: number; symbol: CezeriPaySymbol | "gear"; length: 3 | 4; cells: CezeriPos[]; wildRings: number[];
+  type: "win"; round: number; spoke: number; symbol: CezeriPaySymbol | "gear"; length: 3 | 4; startRing: 0 | 1; cells: CezeriPos[]; wildRings: number[];
   fullHundredths: number; paidBefore: number; payHundredths: number; hub: number; winHundredths: number;
 }
-/** After a rotation with new wins. `rings` = all locked rings now, `newRings` = locked by this rotation, `respinRings` =
- * the rings that turn next (empty = the chain ends). */
-export interface CezeriLockStep { type: "lock"; round: number; rings: number[]; newRings: number[]; respinRings: number[] }
-/** Chain finished. rotations = 1 + respins; hub = the hub of the last rotation. */
-export interface CezeriEndStep { type: "end"; rotations: number; respins: number; hub: number; lockedRings: number[]; chainHundredths: number }
+/** After a rotation with new wins. `held` = every slice that is held now, `newHeld` = slices held by this rotation's wins,
+ * `respin` = another rotation follows (false when the respin cap is reached or no free slice is left). */
+export interface CezeriLockStep { type: "lock"; round: number; held: CezeriPos[]; newHeld: CezeriPos[]; respin: boolean }
+/** Chain finished (the held slices are released now). rotations = 1 + respins; hub = the hub of the last rotation;
+ * chainCapped = the last rotation still paid but the respin cap (CEZERI_MAX_RESPINS) ended the chain. */
+export interface CezeriEndStep { type: "end"; rotations: number; respins: number; hub: number; heldSlices: number; chainCapped: boolean; chainHundredths: number }
 /** Vessels on the final board. `forged` lists the slices the buy guarantee turned into vessels (already in `cells`).
  * base: payHundredths for 3+ vessels; `freeSpinsAwarded` is what this spin really granted (10 on trigger, 4 on
  * retrigger, less when CEZERI_MAX_FREE_SPINS bounds it). */
@@ -200,6 +204,8 @@ export interface CezeriRingTable { /** Strip letters (A..H pay, W gear, V vessel
 export interface CezeriModeTables {
   /** Four rings, inner to outer. */
   base: readonly CezeriRingTable[];
+  /** Base game only: the strips the rings turn on in the respins of a chain (the first rotation uses `base`). Free spins use `free` for every rotation. */
+  respin: readonly CezeriRingTable[];
   free: readonly CezeriRingTable[];
   hubBase: CezeriWeighted<number>;
   hubFree: CezeriWeighted<number>;
@@ -216,21 +222,21 @@ const deepFreeze = (tables: Record<CezeriMode, CezeriModeTables>): Record<Cezeri
   for (const mode of Object.keys(tables) as CezeriMode[]) {
     const t = tables[mode];
     for (const list of [t.hubBase, t.hubFree] as readonly (readonly unknown[])[]) { for (const row of list) Object.freeze(row); Object.freeze(list); }
-    Object.freeze(t.base); Object.freeze(t.free); Object.freeze(t);
+    Object.freeze(t.base); Object.freeze(t.respin); Object.freeze(t.free); Object.freeze(t);
   }
   return Object.freeze(tables);
 };
 /** Weight tables per mode. Tuned by Monte Carlo; see ops/evidence/cezeri-20261012. */
 export const CEZERI_MODE_TABLES: Record<CezeriMode, CezeriModeTables> = deepFreeze({
-  standard: { base: rings(BASE_STRIPS, [24, 24, 24, 24]), free: rings(FREE_STRIPS, [30, 30, 30, 30]),
+  standard: { base: rings(BASE_STRIPS, [24, 24, 24, 24]), respin: rings(BASE_STRIPS, [24, 24, 24, 24]), free: rings(FREE_STRIPS, [30, 30, 30, 30]),
     hubBase: [[1, 40], [2, 26], [3, 17], [5, 11], [10, 6]],
     hubFree: [[1, 72], [2, 120], [3, 100], [5, 68], [10, 37]] },
   // Ante: base vessel stops weigh more (about 2x feature rate); free hub draws are a little tamer so the doubled trigger rate stays at about 95.5% of the (5/4) cost.
-  ante: { base: rings(BASE_STRIPS, [30, 30, 30, 30]), free: rings(FREE_STRIPS, [30, 30, 30, 30]),
+  ante: { base: rings(BASE_STRIPS, [30, 30, 30, 30]), respin: rings(BASE_STRIPS, [30, 30, 30, 30]), free: rings(FREE_STRIPS, [30, 30, 30, 30]),
     hubBase: [[1, 40], [2, 26], [3, 17], [5, 11], [10, 6]],
     hubFree: [[1, 330], [2, 300], [3, 215], [5, 95], [10, 50]] },
   // Buy: base as standard (plus the 3-vessel guarantee); one gear less per free ring and tamer hub draws so the guaranteed feature returns about 95.5% of its 100 x bet cost.
-  buy: { base: rings(BASE_STRIPS, [24, 24, 24, 24]), free: rings(FREE_STRIPS_BUY, [30, 30, 30, 30]),
+  buy: { base: rings(BASE_STRIPS, [24, 24, 24, 24]), respin: rings(BASE_STRIPS, [24, 24, 24, 24]), free: rings(FREE_STRIPS_BUY, [30, 30, 30, 30]),
     hubBase: [[1, 40], [2, 26], [3, 17], [5, 11], [10, 6]],
     hubFree: [[1, 196], [2, 126], [3, 44], [5, 22], [10, 6]] },
 });
@@ -251,14 +257,14 @@ export const CEZERI_RTP: Record<CezeriMode, CezeriRtp> = Object.freeze({
 // --- Compiled configuration ---------------------------------------------------------------------
 interface Compiled<T> { items: T[]; cumulative: number[]; total: number }
 interface CompiledRing { strip: CezeriSymbol[]; stops: Compiled<number> }
-interface ModeConfig { base: CompiledRing[]; free: CompiledRing[]; hubBase: Compiled<number>; hubFree: Compiled<number> }
+interface ModeConfig { base: CompiledRing[]; respin: CompiledRing[]; free: CompiledRing[]; hubBase: Compiled<number>; hubFree: Compiled<number> }
 interface EngineConfig {
   modes: Record<CezeriMode, ModeConfig>;
   paytable: Record<CezeriPaySymbol, readonly [number, number]>;
   gearPay: readonly [number, number];
   scatterPay: { 3: number; 4: number; 5: number };
   falcon: Compiled<number>;
-  capHundredths: number; maxFreeSpins: number; buyMinVessels: number;
+  capHundredths: number; maxFreeSpins: number; buyMinVessels: number; maxRespins: number;
 }
 export type CezeriTuning = Partial<{
   tables: Partial<Record<CezeriMode, Partial<CezeriModeTables>>>;
@@ -266,7 +272,7 @@ export type CezeriTuning = Partial<{
   gearPay: readonly [number, number];
   scatterPay: { 3: number; 4: number; 5: number };
   falconCount: CezeriWeighted<number>;
-  capHundredths: number; maxFreeSpins: number; buyMinVessels: number;
+  capHundredths: number; maxFreeSpins: number; buyMinVessels: number; maxRespins: number;
 }>;
 
 const PAY_SYMBOLS: readonly CezeriPaySymbol[] = ["h1", "h2", "h3", "h4", "l1", "l2", "l3", "l4"];
@@ -314,7 +320,7 @@ function configFrom(tuning: CezeriTuning): EngineConfig {
   for (const mode of CEZERI_MODES) {
     const t = CEZERI_MODE_TABLES[mode], over = tuning.tables?.[mode] ?? {};
     modes[mode] = {
-      base: compileRings(over.base ?? t.base), free: compileRings(over.free ?? t.free),
+      base: compileRings(over.base ?? t.base), respin: compileRings(over.respin ?? t.respin), free: compileRings(over.free ?? t.free),
       hubBase: compile(over.hubBase ?? t.hubBase), hubFree: compile(over.hubFree ?? t.hubFree),
     };
   }
@@ -322,7 +328,7 @@ function configFrom(tuning: CezeriTuning): EngineConfig {
     modes, paytable: tuning.paytable ?? CEZERI_PAYTABLE, gearPay: tuning.gearPay ?? CEZERI_GEAR_PAY,
     scatterPay: tuning.scatterPay ?? CEZERI_SCATTER_PAY, falcon: compile(tuning.falconCount ?? CEZERI_FALCON_COUNT),
     capHundredths: tuning.capHundredths ?? CEZERI_MAX_WIN_MULTIPLIER * 100,
-    maxFreeSpins: tuning.maxFreeSpins ?? CEZERI_MAX_FREE_SPINS, buyMinVessels: tuning.buyMinVessels ?? CEZERI_TRIGGER_VESSELS,
+    maxFreeSpins: tuning.maxFreeSpins ?? CEZERI_MAX_FREE_SPINS, buyMinVessels: tuning.buyMinVessels ?? CEZERI_TRIGGER_VESSELS, maxRespins: tuning.maxRespins ?? CEZERI_MAX_RESPINS,
   };
 }
 let defaultConfig: EngineConfig | undefined;
@@ -360,25 +366,32 @@ function createRng(seedHex: string): () => number {
 }
 
 // --- Spoke evaluation -----------------------------------------------------------------------------
-interface SpokeRun { symbol: CezeriPaySymbol | "gear"; length: 3 | 4; pay: number }
-/** Best run of a spoke given its four slices ring 0..3, or null. Pure-gear run vs run of the first non-gear symbol: the larger pay wins (ties: the symbol run). */
-function evalSpoke(cells: readonly CezeriSymbol[], paytable: EngineConfig["paytable"], gearPay: EngineConfig["gearPay"]): SpokeRun | null {
+interface SpokeRun { symbol: CezeriPaySymbol | "gear"; length: 3 | 4; pay: number; /** Ring of the first slice of the run (0 or 1). */ start: 0 | 1 }
+/** Best run that starts exactly at ring `start` (4 - start slices available, run length 3 or 4), or null. Pure-gear run vs run of the first
+ * non-gear symbol: the larger pay wins (ties: the symbol run). */
+function evalFrom(cells: readonly CezeriSymbol[], start: 0 | 1, paytable: EngineConfig["paytable"], gearPay: EngineConfig["gearPay"]): SpokeRun | null {
   let leading = 0;
-  while (leading < CEZERI_RINGS && cells[leading] === "gear") leading++;
+  while (start + leading < CEZERI_RINGS && cells[start + leading] === "gear") leading++;
   let best: SpokeRun | null = null;
-  if (leading >= 3) best = { symbol: "gear", length: leading as 3 | 4, pay: gearPay[leading - 3]! };
-  if (leading < CEZERI_RINGS) {
-    const target = cells[leading]!;
+  if (leading >= 3) best = { symbol: "gear", length: leading as 3 | 4, pay: gearPay[leading - 3]!, start };
+  if (start + leading < CEZERI_RINGS) {
+    const target = cells[start + leading]!;
     if (target !== "vessel" && target !== "gear") {
       let n = leading + 1;
-      while (n < CEZERI_RINGS && (cells[n] === target || cells[n] === "gear")) n++;
+      while (start + n < CEZERI_RINGS && (cells[start + n] === target || cells[start + n] === "gear")) n++;
       if (n >= 3) {
         const pay = paytable[target][n - 3]!;
-        if (!best || pay >= best.pay) best = { symbol: target, length: n as 3 | 4, pay };
+        if (!best || pay >= best.pay) best = { symbol: target, length: n as 3 | 4, pay, start };
       }
     }
   }
   return best;
+}
+/** Best run of a spoke given its four slices ring 0..3, or null: the better of the run that starts at ring 0 (3 or 4 slices) and the run
+ * that starts at ring 1 (3 slices, rings 1-3); a tie goes to the run from ring 0. */
+function evalSpoke(cells: readonly CezeriSymbol[], paytable: EngineConfig["paytable"], gearPay: EngineConfig["gearPay"]): SpokeRun | null {
+  const a = evalFrom(cells, 0, paytable, gearPay), b = evalFrom(cells, 1, paytable, gearPay);
+  return !b || (a && a.pay >= b.pay) ? a : b;
 }
 
 // --- Spin -----------------------------------------------------------------------------------------
@@ -388,14 +401,17 @@ interface State {
   wild: boolean[][];
 }
 const copyBoard = (board: CezeriBoard): CezeriBoard => board.map(ring => ring.slice());
-function spinRing(s: State, ring: CompiledRing, ringId: number, board: CezeriBoard, withWilds: boolean): CezeriRingSpin {
+function spinRing(s: State, ring: CompiledRing, ringId: number, board: CezeriBoard, withWilds: boolean, held: boolean[][]): CezeriRingSpin {
   const stop = pick(ring.stops, s.rng), length = ring.strip.length;
-  const slices: CezeriSymbol[] = [], pinned: number[] = [];
+  const previous = board[ringId]!;
+  const slices: CezeriSymbol[] = [], pinned: number[] = [], kept: number[] = [];
   for (let k = 0; k < CEZERI_SLICES; k++) {
-    if (withWilds && s.wild[ringId]![k]) { slices.push("gear"); pinned.push(k); } else slices.push(ring.strip[(stop + k) % length]!);
+    if (withWilds && s.wild[ringId]![k]) { slices.push("gear"); pinned.push(k); }
+    else if (held[ringId]![k]) { slices.push(previous[k]!); kept.push(k); }
+    else slices.push(ring.strip[(stop + k) % length]!);
   }
   board[ringId] = slices;
-  return { ring: ringId, stop, stripLength: length, slices: slices.slice(), pinned };
+  return { ring: ringId, stop, stripLength: length, slices: slices.slice(), pinned, held: kept };
 }
 const posOf = (ring: number, slice: number): CezeriPos => [ring, slice];
 
@@ -404,7 +420,7 @@ interface SpinCore {
   vesselCount: number; scatterHundredths: number; winHundredths: number; wanted: number;
 }
 /** One whole spin: hub draw, chain, vessel count (+ buy forge). `carriedHub` is 0 outside free spins. */
-function playSpin(s: State, ringsOf: CompiledRing[], hubTable: Compiled<number>, kind: "base" | "free", carriedHub: number, forge: number): SpinCore {
+function playSpin(s: State, ringsOf: CompiledRing[], respinOf: CompiledRing[], hubTable: Compiled<number>, kind: "base" | "free", carriedHub: number, forge: number): SpinCore {
   const { cfg } = s;
   const withWilds = kind === "free";
   const steps: CezeriStep[] = [];
@@ -413,46 +429,46 @@ function playSpin(s: State, ringsOf: CompiledRing[], hubTable: Compiled<number>,
   const hubStart = hub;
   steps.push({ type: "hub", round: 0, reason: "spin", value: hub, previous: 0, drawn, carried: carriedHub });
   const board: CezeriBoard = [[], [], [], []];
-  const first: CezeriRingSpin[] = [];
-  for (let r = 0; r < CEZERI_RINGS; r++) first.push(spinRing(s, ringsOf[r]!, r, board, withWilds));
-  steps.push({ type: "rotate", round: 0, rings: first, board: copyBoard(board) });
-  const locked: boolean[] = [false, false, false, false];
+  const held: boolean[][] = Array.from({ length: CEZERI_RINGS }, () => new Array<boolean>(CEZERI_SLICES).fill(false));
+  let heldCount = 0;
+  const spinAll = (tables: CompiledRing[]): CezeriRingSpin[] => tables.map((table, r) => spinRing(s, table, r, board, withWilds, held));
+  steps.push({ type: "rotate", round: 0, rings: spinAll(ringsOf), board: copyBoard(board) });
   const paid = new Array<number>(CEZERI_SPOKES).fill(0);
-  const winCells = new Set<number>(); // ring * 12 + slice of every winning run
-  let round = 0, chain = 0;
+  let round = 0, chain = 0, chainCapped = false;
   for (;;) {
-    const lockedNow: boolean[] = [false, false, false, false];
+    const newHeld: CezeriPos[] = [];
     let fresh = 0;
     for (let spoke = 0; spoke < CEZERI_SPOKES; spoke++) {
       const run = evalSpoke([board[0]![spoke]!, board[1]![spoke]!, board[2]![spoke]!, board[3]![spoke]!], cfg.paytable, cfg.gearPay);
       if (!run || run.pay <= paid[spoke]!) continue;
       const cells: CezeriPos[] = [], wildRings: number[] = [];
-      for (let r = 0; r < run.length; r++) {
-        cells.push(posOf(r, spoke)); lockedNow[r] = true; winCells.add(r * CEZERI_SLICES + spoke);
+      for (let r = run.start; r < run.start + run.length; r++) {
+        cells.push(posOf(r, spoke));
+        if (!held[r]![spoke]) { held[r]![spoke] = true; heldCount++; newHeld.push(posOf(r, spoke)); }
         if (board[r]![spoke] === "gear") wildRings.push(r);
       }
       const increment = run.pay - paid[spoke]!;
       steps.push({
-        type: "win", round, spoke, symbol: run.symbol, length: run.length, cells, wildRings,
+        type: "win", round, spoke, symbol: run.symbol, length: run.length, startRing: run.start, cells, wildRings,
         fullHundredths: run.pay, paidBefore: paid[spoke]!, payHundredths: increment, hub, winHundredths: increment * hub,
       });
       paid[spoke] = run.pay; chain += increment * hub; fresh++;
     }
     if (fresh === 0) break;
-    const newRings: number[] = [];
-    for (let r = 0; r < CEZERI_RINGS; r++) if (lockedNow[r] && !locked[r]) { locked[r] = true; newRings.push(r); }
-    const lockedRings = locked.flatMap((l, r) => (l ? [r] : []));
-    const respinRings = locked.flatMap((l, r) => (l ? [] : [r]));
-    steps.push({ type: "lock", round, rings: lockedRings, newRings, respinRings });
-    if (respinRings.length === 0) break;
+    const again = round < cfg.maxRespins && heldCount < CEZERI_RINGS * CEZERI_SLICES;
+    if (!again && round >= cfg.maxRespins) chainCapped = true;
+    const heldAll: CezeriPos[] = [];
+    for (let r = 0; r < CEZERI_RINGS; r++) for (let k = 0; k < CEZERI_SLICES; k++) if (held[r]![k]) heldAll.push(posOf(r, k));
+    steps.push({ type: "lock", round, held: heldAll, newHeld, respin: again });
+    if (!again) break;
     round++;
     steps.push({ type: "hub", round, reason: "respin", value: hub + 1, previous: hub, drawn: null, carried: carriedHub });
     hub++;
-    const spun: CezeriRingSpin[] = [];
-    for (const r of respinRings) spun.push(spinRing(s, ringsOf[r]!, r, board, withWilds));
-    steps.push({ type: "rotate", round, rings: spun, board: copyBoard(board) });
+    steps.push({ type: "rotate", round, rings: spinAll(respinOf), board: copyBoard(board) });
   }
-  steps.push({ type: "end", rotations: round + 1, respins: round, hub, lockedRings: locked.flatMap((l, r) => (l ? [r] : [])), chainHundredths: chain });
+  const winCells = new Set<number>(); // ring * 12 + slice of every winning run
+  for (let r = 0; r < CEZERI_RINGS; r++) for (let k = 0; k < CEZERI_SLICES; k++) if (held[r]![k]) winCells.add(r * CEZERI_SLICES + k);
+  steps.push({ type: "end", rotations: round + 1, respins: round, hub, heldSlices: heldCount, chainCapped, chainHundredths: chain });
   // Vessels on the final board, buy forge, scatter.
   let vessels = 0;
   for (const ring of board) for (const symbol of ring) if (symbol === "vessel") vessels++;
@@ -520,8 +536,8 @@ function playRound(cfg: EngineConfig, seedHex: string, betCents: number, mode: C
     const kind = index === 0 ? "base" : "free";
     if (kind === "free") freeLeft--;
     const core = kind === "base"
-      ? playSpin(s, tables.base, tables.hubBase, "base", 0, mode === "buy" ? cfg.buyMinVessels : 0)
-      : playSpin(s, tables.free, tables.hubFree, "free", carriedHub, 0);
+      ? playSpin(s, tables.base, tables.respin, tables.hubBase, "base", 0, mode === "buy" ? cfg.buyMinVessels : 0)
+      : playSpin(s, tables.free, tables.free, tables.hubFree, "free", carriedHub, 0);
     if (kind === "free") carriedHub = core.hubEnd;
     const awarded = Math.max(0, Math.min(core.wanted, cfg.maxFreeSpins - freeGranted));
     freeGranted += awarded;
