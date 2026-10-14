@@ -34,6 +34,8 @@ function quietBoard(r: () => number, keep?: Map<string, CezeriSymbol>): CezeriBo
   return b;
 }
 const FIRST = quietBoard(seeded(2026));
+/** cezeri-gears-1 (held-slice rule): base spin with 10 respins, hub 2 → 12, 120.34 × bet. */
+const LONG_CHAIN_SEED = '643d50cc643d50cc643d50cc643d50cc';
 const sleep = (ms: number) => new Promise<void>((r) => window.setTimeout(r, ms));
 const ringsOf = (b: CezeriBoardSlices, held: Set<string>): CezeriRingTarget[] => b.map((slices, ring) => ({ ring, slices, held: [...held].filter((k) => k.startsWith(`${ring},`)).map((k) => Number(k.split(',')[1])) }));
 
@@ -132,9 +134,9 @@ function LabBoard({ mood, onMood, scene, fpsOut, statusOut }: { mood: CezeriMood
   }, [hubTick, lock, spin, statusOut, win]);
 
   /** Plays a real engine round (any mode) through the same calls. */
-  const real = useCallback(async (mode: CezeriMode = 'standard') => {
+  const real = useCallback(async (mode: CezeriMode = 'standard', fixedSeed?: string) => {
     const words = crypto.getRandomValues(new Uint32Array(4));
-    const seed = Array.from(words, (w) => w.toString(16).padStart(8, '0')).join('');
+    const seed = fixedSeed ?? Array.from(words, (w) => w.toString(16).padStart(8, '0')).join('');
     const round = playCezeriRound(seed, 100, mode);
     let total = 0;
     B().clearWins();
@@ -226,7 +228,7 @@ function LabBoard({ mood, onMood, scene, fpsOut, statusOut }: { mood: CezeriMood
   const doFill = useCallback(() => setReservoir((v) => (v >= 3 ? 0 : v + 1)), []);
 
   useEffect(() => {
-    window.__cezeriLab = { sample, real, spin: singleSpin, lock: doLock, beam: doBeam, falcon: doFalcon, scatter: doScatter, awaken: doAwaken, steam: doSteam, hub: doHub, fill: doFill, stats: () => fx.current?.stats, setMood: onMood } as unknown as LabApi;
+    window.__cezeriLab = { sample, real, long: () => real('standard', LONG_CHAIN_SEED), spin: singleSpin, lock: doLock, beam: doBeam, falcon: doFalcon, scatter: doScatter, awaken: doAwaken, steam: doSteam, hub: doHub, fill: doFill, stats: () => fx.current?.stats, setMood: onMood } as unknown as LabApi;
     return () => { delete window.__cezeriLab; };
   }, [sample, real, singleSpin, doLock, doBeam, doFalcon, doScatter, doAwaken, doSteam, doHub, doFill, onMood]);
 
@@ -238,6 +240,7 @@ function LabBoard({ mood, onMood, scene, fpsOut, statusOut }: { mood: CezeriMood
         {b('Örnek zincir', sample, 'sample')}
         {b('Gerçek tur', () => real('standard'), 'real')}
         {b('Bonus satın al turu', () => real('buy'), 'real-buy')}
+        {b('Uzun zincir (10 dönüş)', () => real('standard', LONG_CHAIN_SEED), 'real-long')}
         {b('Dönüş', singleSpin, 'spin')}
         {b('Dişli Kilidi', doLock, 'lock')}
         {b('Göbek +1', doHub, 'hub')}

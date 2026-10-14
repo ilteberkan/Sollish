@@ -72,8 +72,6 @@ export interface CezeriBoardProps {
 }
 
 const key = (r: number, s: number) => r * CZ_SLICES + s;
-const FILLERS: CezeriSymbol[] = ['h1', 'h2', 'h3', 'h4', 'l1', 'l2', 'l3', 'l4', 'l1', 'l2', 'l3', 'l4', 'gear', 'vessel'];
-const filler = () => FILLERS[Math.floor(Math.random() * FILLERS.length)]!;
 const wait = (ms: number) => new Promise<void>((r) => window.setTimeout(r, Math.max(0, ms)));
 const prefersReduced = () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const r2 = (n: number) => Math.round(n * 100) / 100;
@@ -349,6 +347,29 @@ function Plate({ ring, slice, symbol, kind, fresh, uid }: { ring: number; slice:
   );
 }
 
+/** One ring layer; memoised so a ring swap re-renders only that ring (masks are 12-char strings). */
+const RingLayer = memo(function RingLayer({ ring, uid, slices, spin, under, win, vessel, ringRefs, cellRefs }: {
+  ring: number; uid: string; slices: readonly CezeriSymbol[]; spin: boolean; under: string; win: string; vessel: string;
+  ringRefs: React.RefObject<Array<HTMLDivElement | null>>; cellRefs: React.RefObject<Array<HTMLDivElement | null>>;
+}) {
+  return (
+    <div ref={(el) => { ringRefs.current[ring] = el; }} className={styles.ring} data-ring={ring} data-spin={spin ? '' : undefined} role="row" aria-label={`Halka ${ring + 1}`}>
+      <RingArt ring={ring} uid={uid} />
+      {slices.map((sym, s) => {
+        const k = key(ring, s);
+        const u = under[s] === '1';
+        return (
+          <div key={s} ref={(el) => { cellRefs.current[k] = el; }} className={styles.cell} style={cellStyle(ring, s)}
+            role="gridcell" aria-label={CEZERI_SYMBOL_LABELS[sym]} aria-hidden={u || undefined}
+            data-under={u ? '' : undefined} data-win={win[s] === '1' ? '' : undefined} data-vessel={vessel[s] === '1' ? '' : undefined}>
+            <div className={styles.cellArt}><CezeriSymbolUse symbol={sym} /></div>
+          </div>
+        );
+      })}
+    </div>
+  );
+});
+
 /* ------------------------------------------------------------------ board */
 function toSlices(b: EngineBoard | CezeriBoardSlices): CezeriBoardSlices { return b.map((r) => r.slice()); }
 
@@ -377,7 +398,7 @@ export function CezeriBoard({ initial, hubValue = 1, mood = 'base', className, s
   useEffect(() => () => { for (const t of timers.current) window.clearTimeout(t); }, []);
 
   const setRing = useCallback((ring: number, next: readonly CezeriSymbol[]) => {
-    flushSync(() => setSlices((cur) => { const out = cur.map((r) => r.slice()); out[ring] = next.slice(); return out; }));
+    flushSync(() => setSlices((cur) => { const out = cur.slice(); out[ring] = next.slice(); return out; }));
   }, []);
 
   useImperativeHandle(ref, () => ({
@@ -402,7 +423,6 @@ export function CezeriBoard({ initial, hubValue = 1, mood = 'base', className, s
         ringEl?.animate(plan.upKeyframes, { duration: plan.upMs, fill: 'forwards' });
         cells.forEach((c) => c.animate(plan.upCounter, { duration: plan.upMs, fill: 'forwards' }));
         later(plan.upMs * 0.35, () => flushSync(() => setSpinning((s) => { const n = s.slice(); n[ring] = true; return n; })));
-        later(plan.upMs * 0.55, () => setRing(ring, Array.from({ length: CZ_SLICES }, filler)));
         later(plan.upMs, () => {
           setRing(ring, t.slices);
           ringEl?.getAnimations().forEach((a) => a.cancel());
@@ -465,22 +485,13 @@ export function CezeriBoard({ initial, hubValue = 1, mood = 'base', className, s
   return (
     <div ref={rootRef} className={`${styles.board} ${className ?? ''}`} style={style} data-mood={mood} role="grid" aria-label={label}>
       <BackArt uid={uid} />
-      {Array.from({ length: CZ_RINGS }, (_, ring) => (
-        <div key={ring} ref={(el) => { ringRefs.current[ring] = el; }} className={styles.ring} data-ring={ring} data-spin={spinning[ring] ? '' : undefined} role="row" aria-label={`Halka ${ring + 1}`}>
-          <RingArt ring={ring} uid={uid} />
-          {slices[ring]!.map((sym, s) => {
-            const k = key(ring, s);
-            const under = held.has(k) || pinned.has(k);
-            return (
-              <div key={s} ref={(el) => { cellRefs.current[k] = el; }} className={styles.cell} style={cellStyle(ring, s)}
-                role="gridcell" aria-label={CEZERI_SYMBOL_LABELS[sym]} aria-hidden={under || undefined}
-                data-under={under ? '' : undefined} data-win={wins.has(k) ? '' : undefined} data-vessel={vessels.has(k) ? '' : undefined}>
-                <div className={styles.cellArt}><CezeriSymbolUse symbol={sym} /></div>
-              </div>
-            );
-          })}
-        </div>
-      ))}
+      {Array.from({ length: CZ_RINGS }, (_, ring) => {
+        const mask = (set: Set<number>, also?: Set<number>) => { let m = ''; for (let s = 0; s < CZ_SLICES; s++) { const k = key(ring, s); m += set.has(k) || also?.has(k) ? '1' : '0'; } return m; };
+        return (
+          <RingLayer key={ring} ring={ring} uid={uid} slices={slices[ring]!} spin={spinning[ring]!}
+            under={mask(new Set(held.keys()), pinned)} win={mask(wins)} vessel={mask(vessels)} ringRefs={ringRefs} cellRefs={cellRefs} />
+        );
+      })}
       <div className={styles.overlay}>
         <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false">
           <defs>
