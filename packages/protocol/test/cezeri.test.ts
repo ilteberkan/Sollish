@@ -55,11 +55,11 @@ const LETTER_SYMBOL: Record<string, CezeriSymbol> = { A: "h1", B: "h2", C: "h3",
 const heldKey = (r: number, k: number): string => `${r},${k}`;
 
 /** Replays the steps of one spin against the rules and checks every field (rotation strips included). */
-function replaySpin(spin: CezeriSpin, mode: CezeriMode, kind: "base" | "free", carried: number, wildsBefore: ReadonlySet<string>): void {
+function replaySpin(spin: CezeriSpin, mode: CezeriMode, kind: "base" | "free", carried: number, wildsBefore: ReadonlySet<string>, tuning: CezeriTuning = {}): void {
   assert.equal(spin.kind, kind);
   assert.match(typesOf(spin), /^HRW*(?:LHRW*)*L?ES?F?$/, typesOf(spin));
   if (kind === "base") assert.ok(!typesOf(spin).includes("F"));
-  const tables = CEZERI_MODE_TABLES[mode];
+  const tables = { ...CEZERI_MODE_TABLES[mode], ...(tuning.tables?.[mode] ?? {}) } as typeof CEZERI_MODE_TABLES[CezeriMode];
   const paid = new Array<number>(12).fill(0);
   const held = new Set<string>();
   let board: CezeriBoard | null = null, hub = 0, round = -1, chain = 0, respinPending = false, rotatedRound = -1, sawEnd = false, capEnded = false;
@@ -165,11 +165,11 @@ function replaySpin(spin: CezeriSpin, mode: CezeriMode, kind: "base" | "free", c
   assert.equal(spin.respins, round);
   assert.equal(spin.hubEnd, hub);
 }
-function replayRound(round: CezeriRound): void {
+function replayRound(round: CezeriRound, tuning: CezeriTuning = {}): void {
   let carried = 0;
   round.spins.forEach((spin, i) => {
     const wildsBefore = new Set<string>(i === 0 ? [] : round.spins[i - 1]!.wilds.map(([r, k]) => heldKey(r, k)));
-    replaySpin(spin, round.mode, i === 0 ? "base" : "free", i === 0 ? 0 : carried, wildsBefore);
+    replaySpin(spin, round.mode, i === 0 ? "base" : "free", i === 0 ? 0 : carried, wildsBefore, tuning);
     if (i > 0) carried = spin.hubEnd;
   });
 }
@@ -280,7 +280,7 @@ test("RNG and rules are frozen: a fingerprint of 200 fixed seeds across all mode
     const seed = createHash("sha256").update(`cezeri-gears-1-frozen:${i}`).digest("hex").slice(0, 32);
     hash.update(JSON.stringify(playCezeriRound(seed, bets[i % 4]!, MODES[i % 3]!)));
   }
-  assert.equal(hash.digest("hex"), "563533bd34b875ba171b01527e62ec327acf699c73abb8711a81db7378536f62");
+  assert.equal(hash.digest("hex"), "2889376e24700c96df1a958e1cda3c96257b8ae623b37d97479a0f43ffaf1871");
 });
 
 test("input validation throws RangeError for seed, bet level and mode", () => {
@@ -413,7 +413,7 @@ test("step grammar and chain replay: every step of thousands of rounds obeys the
 });
 
 test("chain length: respins per winning base spin average 1.8-2.5 with a visible tail; the cap of 10 respins is never exceeded and is reached sometimes", () => {
-  let winning = 0, respins = 0, tail = 0, capped = 0, rounds = 0;
+  let winning = 0, respins = 0, tail = 0, capped = 0, reachedTen = 0, rounds = 0;
   const play = __cezeriTest.player();
   const rng = __cezeriTest.createRng("c4a1c4a1c4a1c4a1c4a1c4a1c4a1c4a1");
   while (rounds < 300_000) {
@@ -423,16 +423,18 @@ test("chain length: respins per winning base spin average 1.8-2.5 with a visible
     assert.ok(spin.respins <= CEZERI_MAX_RESPINS && spin.rotations === spin.respins + 1);
     if (spin.chainHundredths > 0) { winning++; respins += spin.respins; if (spin.respins >= 5) tail++; }
     if (spin.respins === CEZERI_MAX_RESPINS) {
-      capped++;
+      reachedTen++;
       replayRound(round);
-      assert.equal((spin.steps.find(s => s.type === "end") as { chainCapped: boolean }).chainCapped, true);
       assert.equal(spin.hubEnd, spin.hubStart + CEZERI_MAX_RESPINS);
+      const end = spin.steps.find(s => s.type === "end") as { chainCapped: boolean };
+      assert.equal(end.chainCapped, spin.steps[spin.steps.findIndex(s => s.type === "end") - 1]!.type === "lock", "capped = the tenth respin still paid");
+      if (end.chainCapped) capped++;
     }
   }
   const avg = respins / winning;
   assert.ok(avg >= 1.8 && avg <= 2.5, `average respins per winning chain ${avg}`);
   assert.ok(tail / winning >= 0.01, `chains with 5+ respins: ${tail / winning}`);
-  assert.ok(capped > 0, "the 10-respin cap is reached in 300k spins");
+  assert.ok(reachedTen > 0 && capped > 0, `the 10-respin cap is reached in 300k spins (${reachedTen} reached, ${capped} still paying)`);
 });
 
 test("board and step data shapes: 4 rings x 12 slices, known symbols, snapshots are independent copies, fields are plain data", () => {
@@ -461,7 +463,8 @@ const NOWIN = [A30, B30, C30, "D".repeat(30)];
 
 test("Dişli Kilidi (forced board): winning slices are held, every ring turns underneath, held slices never move, the hub rises by 1 per respin", () => {
   // rings 0..2 show only h1, ring 3 only h2: 12 spokes pay h1 x3 (rings 0-2 of every spoke are held); all four rings turn again and find nothing new.
-  const round = __cezeriTest.play(SEED, 100, "standard", scenario("standard", [A30, A30, A30, B30], [A30, A30, A30, A30]));
+  const forcedTuning = scenario("standard", [A30, A30, A30, B30], [A30, A30, A30, A30]);
+  const round = __cezeriTest.play(SEED, 100, "standard", forcedTuning);
   assert.equal(round.spins.length, 1);
   const spin = round.spins[0]!;
   assert.equal(typesOf(spin), "HR" + "W".repeat(12) + "LHRE");
@@ -491,7 +494,7 @@ test("Dişli Kilidi (forced board): winning slices are held, every ring turns un
   assert.equal(spin.winHundredths, FIRST_SPIN);
   assert.equal(round.totalHundredths, spin.winHundredths);
   assert.equal(round.freeSpinsTriggered, false);
-  replayRound(round);
+  replayRound(round, forcedTuning);
   // the next spin starts clean: held slices are released at the end of the chain (a free spin of the same scenario holds nothing in its first rotation)
   const withFree = __cezeriTest.play(SEED, 100, "standard", scenario("standard", [V30, V30, V30, A30], [A30, A30, A30, B30]));
   for (const spin2 of withFree.spins.slice(1)) assert.ok(stepsOf(spin2, "rotate")[0]!.rings.every(r => r.held.length === 0));
@@ -503,7 +506,7 @@ test("Dişli Kilidi: a respin that extends a run or pays a new spoke pays only t
   let found = 0, multi = 0;
   for (const seed of seeds(400, "5eed5eed5eed5eed5eed5eed5eed5eed")) {
     const round = __cezeriTest.play(seed, 100, "standard", tuning);
-    replayRound(round);
+    replayRound(round, tuning);
     const spin = round.spins[0]!;
     const later = stepsOf(spin, "win").filter(w => w.round >= 1);
     const first = stepsOf(spin, "win").filter(w => w.round === 0);

@@ -2,7 +2,7 @@
   "kind": "cezeri-rtp-simulation",
   "scope": "DEMO credits only; Monte Carlo estimate, not a certified or guaranteed RTP; RTP is return / cost",
   "engine": "cezeri-gears-1",
-  "engineSourceSha256": "b09ece26f4183b7f3a1621654e4a89bca1647de2a784586dfae46a4bdfefe578",
+  "engineSourceSha256": "2695eae5731bf3f7b7260f5f86764e8402132fd018254cc134662ebed20d14c6",
   "engineSourceNote": "sha256 of packages/protocol/src/cezeri.ts with the CEZERI_RTP evidence block (between the @evidence-block markers) removed. The constants were filled after the run; no engine code, tables or RNG changed afterwards.",
   "seed": "cezeri-20261012-evidence",
   "workers": 2,
@@ -35,338 +35,389 @@
       "rounds": 20000000,
       "costBets": 1,
       "rtpVsCost": {
-        "pointEstimate": 0.94864,
-        "pointEstimatePct": 94.8645,
+        "pointEstimate": 0.95548,
+        "pointEstimatePct": 95.5478,
         "ci95": [
-          0.94232,
-          0.95497
+          0.95002,
+          0.96093
         ],
         "ci95Pct": [
-          94.2323,
-          95.4967
+          95.0024,
+          96.0933
         ],
-        "ci95HalfWidthPct": 0.6322
+        "ci95HalfWidthPct": 0.5454
       },
-      "integerPayoutCheckRtp": 0.94864,
-      "hitRate": 0.28735,
-      "baseChainHitRate": 0.28535,
-      "featureRate": 0.002878,
-      "featureOneIn": 347.5,
-      "featureCount": 57559,
-      "avgFreeSpinsPerRound": 0.03864,
-      "avgFreeSpinsPerTrigger": 13.425,
-      "freeSpinsPlayed": 772754,
-      "retriggers": 49291,
-      "maxFreeSpinsInOneRound": 50,
-      "freeSpinHitRate": 0.57185,
+      "integerPayoutCheckRtp": 0.95548,
+      "hitRate": 0.2952,
+      "baseChainHitRate": 0.29268,
+      "featureRate": 0.003149,
+      "featureOneIn": 317.6,
+      "featureCount": 62975,
+      "avgFreeSpinsPerRound": 0.03723,
+      "avgFreeSpinsPerTrigger": 11.824,
+      "freeSpinsPlayed": 744602,
+      "retriggers": 28713,
+      "maxFreeSpinsInOneRound": 38,
+      "freeSpinHitRate": 0.67884,
       "respinChain": {
         "baseRotationsHistogram": {
-          "rotations1": 15247917,
-          "rotations2": 4752083,
-          "rotations3": 0,
-          "rotations4": 0
+          "rotations1": 14146328,
+          "rotations2": 2910044,
+          "rotations3": 1397552,
+          "rotations4": 720104,
+          "rotations5": 385956,
+          "rotations6": 209370,
+          "rotations7": 112631,
+          "rotations8": 59772,
+          "rotations9": 30426,
+          "rotations10": 15171,
+          "rotations11": 12646
         },
-        "avgRespinsPerBaseSpin": 0.2376,
-        "avgRespinsPerWinningBaseChain": 0.83266,
+        "avgRespinsPerBaseSpin": 0.60284,
+        "avgRespinsPerWinningBaseChain": 2.05969,
+        "baseChainsWithAtLeast5RespinsShare": 0.07517,
+        "baseChainsWithAtLeast3RespinsShare": 0.2641,
+        "chainsEndedByRespinCap": 7124,
         "freeRotationsHistogram": {
-          "rotations1": 473498,
-          "rotations2": 299256,
-          "rotations3": 0,
-          "rotations4": 0
+          "rotations1": 239140,
+          "rotations2": 163840,
+          "rotations3": 113246,
+          "rotations4": 80401,
+          "rotations5": 55833,
+          "rotations6": 37111,
+          "rotations7": 23785,
+          "rotations8": 14688,
+          "rotations9": 8198,
+          "rotations10": 4498,
+          "rotations11": 3862
         },
-        "avgRespinsPerFreeSpin": 0.38726,
-        "avgRespinsPerWinningFreeChain": 0.6772,
-        "maxRotationsInOneSpin": 4
+        "avgRespinsPerFreeSpin": 1.92134,
+        "avgRespinsPerWinningFreeChain": 2.83035,
+        "maxRotationsInOneSpin": 11
       },
-      "avgFinalHubInFeatures": 12.37,
-      "maxFinalHub": 33,
-      "falconVisits": 227143,
-      "avgFalconWildsAtFeatureEnd": 6.52,
+      "avgFinalHubInFeatures": 28.21,
+      "maxFinalHub": 149,
+      "falconVisits": 218911,
+      "avgFalconWildsAtFeatureEnd": 5.73,
       "baseVesselsHistogram": {
-        "0": 13571750,
-        "1": 5530860,
-        "2": 839831,
-        "3": 56147,
-        "4": 1412,
+        "0": 13399777,
+        "1": 5649063,
+        "2": 888185,
+        "3": 61410,
+        "4": 1565,
         "5plus": 0
       },
-      "stdDevPerRoundCostUnits": 14.4244,
-      "stdDevPerRoundBetUnits": 14.4244,
+      "stdDevPerRoundCostUnits": 12.445,
+      "stdDevPerRoundBetUnits": 12.445,
       "contributionPctOfCost": {
-        "baseChain": 52.3784,
-        "scatterPayInBase": 0.6321,
-        "freeSpins": 41.854
+        "baseChain": 52.8774,
+        "scatterPayInBase": 0.6924,
+        "freeSpins": 41.9781
       },
-      "avgFreeWinPerTriggerBets": 145.43,
+      "avgFreeWinPerTriggerBets": 133.32,
       "winTiersShareOfRounds": {
-        "atLeast10xBet": 0.011029,
-        "atLeast25xBet": 0.0033702,
-        "atLeast50xBet": 0.0020287,
-        "atLeast100xBet": 0.0012344,
-        "atLeast500xBet": 0.00013655,
-        "atLeast1000xBet": 0.00003375,
-        "atLeast2000xBet": 0.0000052,
-        "atLeast5000xBet": 1.5e-7,
+        "atLeast10xBet": 0.013341,
+        "atLeast25xBet": 0.0038364,
+        "atLeast50xBet": 0.0022692,
+        "atLeast100xBet": 0.0013314,
+        "atLeast500xBet": 0.00011555,
+        "atLeast1000xBet": 0.00002035,
+        "atLeast2000xBet": 0.00000155,
+        "atLeast5000xBet": 0,
         "atLeast10000xBet": 0
       },
       "winTiersRounds": {
-        "atLeast10xBet": 220571,
-        "atLeast25xBet": 67403,
-        "atLeast50xBet": 40574,
-        "atLeast100xBet": 24688,
-        "atLeast500xBet": 2731,
-        "atLeast1000xBet": 675,
-        "atLeast2000xBet": 104,
-        "atLeast5000xBet": 3,
+        "atLeast10xBet": 266830,
+        "atLeast25xBet": 76728,
+        "atLeast50xBet": 45384,
+        "atLeast100xBet": 26628,
+        "atLeast500xBet": 2311,
+        "atLeast1000xBet": 407,
+        "atLeast2000xBet": 31,
+        "atLeast5000xBet": 0,
         "atLeast10000xBet": 0
       },
-      "maxObservedXBet": 6048.76,
-      "maxObservedXCost": 6048.76,
+      "maxObservedXBet": 4994.51,
+      "maxObservedXCost": 4994.51,
       "capHits": 0,
       "capHitShareOfRounds": 0,
       "capXBet": 10000,
       "minVesselsOnFirstBaseBoard": 0,
       "costMismatches": 0,
       "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
-      "runtimeSeconds": 162.9
+      "runtimeSeconds": 121.9
     },
     "ante": {
       "rounds": 20000000,
       "costBets": 1.25,
       "rtpVsCost": {
-        "pointEstimate": 0.9558,
-        "pointEstimatePct": 95.5796,
+        "pointEstimate": 0.95346,
+        "pointEstimatePct": 95.3455,
         "ci95": [
-          0.94969,
-          0.9619
+          0.94849,
+          0.95842
         ],
         "ci95Pct": [
-          94.9694,
-          96.1898
+          94.8494,
+          95.8417
         ],
-        "ci95HalfWidthPct": 0.6102
+        "ci95HalfWidthPct": 0.4961
       },
-      "integerPayoutCheckRtp": 0.9558,
-      "hitRate": 0.28965,
-      "baseChainHitRate": 0.28605,
-      "featureRate": 0.005174,
-      "featureOneIn": 193.3,
-      "featureCount": 103489,
-      "avgFreeSpinsPerRound": 0.06961,
-      "avgFreeSpinsPerTrigger": 13.453,
-      "freeSpinsPlayed": 1392246,
-      "retriggers": 89339,
-      "maxFreeSpinsInOneRound": 54,
-      "freeSpinHitRate": 0.57125,
+      "integerPayoutCheckRtp": 0.95346,
+      "hitRate": 0.29562,
+      "baseChainHitRate": 0.2909,
+      "featureRate": 0.005895,
+      "featureOneIn": 169.6,
+      "featureCount": 117910,
+      "avgFreeSpinsPerRound": 0.06803,
+      "avgFreeSpinsPerTrigger": 11.539,
+      "freeSpinsPlayed": 1360512,
+      "retriggers": 45353,
+      "maxFreeSpinsInOneRound": 38,
+      "freeSpinHitRate": 0.67309,
       "respinChain": {
         "baseRotationsHistogram": {
-          "rotations1": 15239487,
-          "rotations2": 4760513,
-          "rotations3": 0,
-          "rotations4": 0
+          "rotations1": 14181974,
+          "rotations2": 2901181,
+          "rotations3": 1389723,
+          "rotations4": 712028,
+          "rotations5": 382032,
+          "rotations6": 205712,
+          "rotations7": 111329,
+          "rotations8": 58381,
+          "rotations9": 30114,
+          "rotations10": 15143,
+          "rotations11": 12383
         },
-        "avgRespinsPerBaseSpin": 0.23803,
-        "avgRespinsPerWinningBaseChain": 0.83211,
+        "avgRespinsPerBaseSpin": 0.59755,
+        "avgRespinsPerWinningBaseChain": 2.05414,
+        "baseChainsWithAtLeast5RespinsShare": 0.07443,
+        "baseChainsWithAtLeast3RespinsShare": 0.2625,
+        "chainsEndedByRespinCap": 8262,
         "freeRotationsHistogram": {
-          "rotations1": 853900,
-          "rotations2": 538346,
-          "rotations3": 0,
-          "rotations4": 0
+          "rotations1": 444761,
+          "rotations2": 301062,
+          "rotations3": 206230,
+          "rotations4": 143673,
+          "rotations5": 99209,
+          "rotations6": 66953,
+          "rotations7": 43070,
+          "rotations8": 25990,
+          "rotations9": 14818,
+          "rotations10": 7841,
+          "rotations11": 6905
         },
-        "avgRespinsPerFreeSpin": 0.38667,
-        "avgRespinsPerWinningFreeChain": 0.67689,
-        "maxRotationsInOneSpin": 4
+        "avgRespinsPerFreeSpin": 1.89242,
+        "avgRespinsPerWinningFreeChain": 2.81152,
+        "maxRotationsInOneSpin": 11
       },
-      "avgFinalHubInFeatures": 10.95,
-      "maxFinalHub": 31,
-      "falconVisits": 409408,
-      "avgFalconWildsAtFeatureEnd": 6.52,
+      "avgFinalHubInFeatures": 25.75,
+      "maxFinalHub": 118,
+      "falconVisits": 400622,
+      "avgFalconWildsAtFeatureEnd": 5.61,
       "baseVesselsHistogram": {
-        "0": 12389148,
-        "1": 6309893,
-        "2": 1197470,
-        "3": 100294,
-        "4": 3195,
+        "0": 12098773,
+        "1": 6486679,
+        "2": 1296638,
+        "3": 114208,
+        "4": 3702,
         "5plus": 0
       },
-      "stdDevPerRoundCostUnits": 13.9231,
-      "stdDevPerRoundBetUnits": 17.4038,
+      "stdDevPerRoundCostUnits": 11.3203,
+      "stdDevPerRoundBetUnits": 14.1503,
       "contributionPctOfCost": {
-        "baseChain": 41.8501,
-        "scatterPayInBase": 0.9302,
-        "freeSpins": 52.7993
+        "baseChain": 41.5132,
+        "scatterPayInBase": 1.0617,
+        "freeSpins": 52.7706
       },
-      "avgFreeWinPerTriggerBets": 127.55,
+      "avgFreeWinPerTriggerBets": 111.89,
       "winTiersShareOfRounds": {
-        "atLeast10xBet": 0.013097,
-        "atLeast25xBet": 0.0051507,
-        "atLeast50xBet": 0.0032696,
-        "atLeast100xBet": 0.0019042,
-        "atLeast500xBet": 0.0002073,
-        "atLeast1000xBet": 0.00004685,
-        "atLeast2000xBet": 0.0000067,
-        "atLeast5000xBet": 3e-7,
+        "atLeast10xBet": 0.015669,
+        "atLeast25xBet": 0.0060751,
+        "atLeast50xBet": 0.0038532,
+        "atLeast100xBet": 0.0021185,
+        "atLeast500xBet": 0.0001428,
+        "atLeast1000xBet": 0.00002145,
+        "atLeast2000xBet": 0.0000012,
+        "atLeast5000xBet": 0,
         "atLeast10000xBet": 0
       },
       "winTiersRounds": {
-        "atLeast10xBet": 261937,
-        "atLeast25xBet": 103014,
-        "atLeast50xBet": 65392,
-        "atLeast100xBet": 38085,
-        "atLeast500xBet": 4146,
-        "atLeast1000xBet": 937,
-        "atLeast2000xBet": 134,
-        "atLeast5000xBet": 6,
+        "atLeast10xBet": 313386,
+        "atLeast25xBet": 121502,
+        "atLeast50xBet": 77065,
+        "atLeast100xBet": 42369,
+        "atLeast500xBet": 2856,
+        "atLeast1000xBet": 429,
+        "atLeast2000xBet": 24,
+        "atLeast5000xBet": 0,
         "atLeast10000xBet": 0
       },
-      "maxObservedXBet": 6774.57,
-      "maxObservedXCost": 5419.656,
+      "maxObservedXBet": 3080.21,
+      "maxObservedXCost": 2464.168,
       "capHits": 0,
       "capHitShareOfRounds": 0,
       "capXBet": 10000,
       "minVesselsOnFirstBaseBoard": 0,
       "costMismatches": 0,
       "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
-      "runtimeSeconds": 162.6
+      "runtimeSeconds": 119
     },
     "buy": {
       "rounds": 20000000,
       "costBets": 100,
       "rtpVsCost": {
-        "pointEstimate": 0.95471,
-        "pointEstimatePct": 95.4706,
+        "pointEstimate": 0.95742,
+        "pointEstimatePct": 95.7424,
         "ci95": [
-          0.95396,
-          0.95545
+          0.9569,
+          0.95794
         ],
         "ci95Pct": [
-          95.396,
-          95.5451
+          95.6905,
+          95.7943
         ],
-        "ci95HalfWidthPct": 0.0746
+        "ci95HalfWidthPct": 0.0519
       },
-      "integerPayoutCheckRtp": 0.95471,
+      "integerPayoutCheckRtp": 0.95742,
       "hitRate": 1,
-      "baseChainHitRate": 0.28535,
+      "baseChainHitRate": 0.29289,
       "featureRate": 1,
       "featureOneIn": 1,
       "featureCount": 20000000,
-      "avgFreeSpinsPerRound": 13.70833,
-      "avgFreeSpinsPerTrigger": 13.708,
-      "freeSpinsPlayed": 274166585,
-      "retriggers": 18541652,
-      "maxFreeSpinsInOneRound": 66,
-      "freeSpinHitRate": 0.52359,
+      "avgFreeSpinsPerRound": 11.27261,
+      "avgFreeSpinsPerTrigger": 11.273,
+      "freeSpinsPlayed": 225452208,
+      "retriggers": 6363052,
+      "maxFreeSpinsInOneRound": 42,
+      "freeSpinHitRate": 0.66851,
       "respinChain": {
         "baseRotationsHistogram": {
-          "rotations1": 15248349,
-          "rotations2": 4751651,
-          "rotations3": 0,
-          "rotations4": 0
+          "rotations1": 14142148,
+          "rotations2": 2912516,
+          "rotations3": 1399856,
+          "rotations4": 718710,
+          "rotations5": 385997,
+          "rotations6": 209365,
+          "rotations7": 112794,
+          "rotations8": 59794,
+          "rotations9": 31014,
+          "rotations10": 15154,
+          "rotations11": 12652
         },
-        "avgRespinsPerBaseSpin": 0.23758,
-        "avgRespinsPerWinningBaseChain": 0.8326,
+        "avgRespinsPerBaseSpin": 0.60328,
+        "avgRespinsPerWinningBaseChain": 2.05972,
+        "baseChainsWithAtLeast5RespinsShare": 0.07524,
+        "baseChainsWithAtLeast3RespinsShare": 0.2638,
+        "chainsEndedByRespinCap": 475668,
         "freeRotationsHistogram": {
-          "rotations1": 176324513,
-          "rotations2": 97842072,
-          "rotations3": 0,
-          "rotations4": 0
+          "rotations1": 74735027,
+          "rotations2": 49938760,
+          "rotations3": 34132080,
+          "rotations4": 23718134,
+          "rotations5": 16296611,
+          "rotations6": 10841688,
+          "rotations7": 6904565,
+          "rotations8": 4170045,
+          "rotations9": 2368062,
+          "rotations10": 1256929,
+          "rotations11": 1090307
         },
-        "avgRespinsPerFreeSpin": 0.35687,
-        "avgRespinsPerWinningFreeChain": 0.68158,
-        "maxRotationsInOneSpin": 4
+        "avgRespinsPerFreeSpin": 1.86527,
+        "avgRespinsPerWinningFreeChain": 2.79019,
+        "maxRotationsInOneSpin": 11
       },
-      "avgFinalHubInFeatures": 8.84,
-      "maxFinalHub": 36,
-      "falconVisits": 80670751,
-      "avgFalconWildsAtFeatureEnd": 6.65,
+      "avgFinalHubInFeatures": 23.35,
+      "maxFinalHub": 140,
+      "falconVisits": 66528799,
+      "avgFalconWildsAtFeatureEnd": 5.49,
       "baseVesselsHistogram": {
         "0": 0,
         "1": 0,
         "2": 0,
-        "3": 19998557,
-        "4": 1443,
+        "3": 19998415,
+        "4": 1585,
         "5plus": 0
       },
-      "stdDevPerRoundCostUnits": 1.7011,
-      "stdDevPerRoundBetUnits": 170.1116,
+      "stdDevPerRoundCostUnits": 1.1848,
+      "stdDevPerRoundBetUnits": 118.4775,
       "contributionPctOfCost": {
-        "baseChain": 0.5235,
+        "baseChain": 0.5293,
         "scatterPayInBase": 2.0006,
-        "freeSpins": 92.9465
+        "freeSpins": 93.2124
       },
-      "avgFreeWinPerTriggerBets": 92.95,
+      "avgFreeWinPerTriggerBets": 93.21,
       "winTiersShareOfRounds": {
-        "atLeast10xBet": 0.91182,
-        "atLeast25xBet": 0.70263,
-        "atLeast50xBet": 0.4657,
-        "atLeast100xBet": 0.25061,
-        "atLeast500xBet": 0.025907,
-        "atLeast1000xBet": 0.0058367,
-        "atLeast2000xBet": 0.0008449,
-        "atLeast5000xBet": 0.00002455,
-        "atLeast10000xBet": 3e-7
+        "atLeast10xBet": 0.96434,
+        "atLeast25xBet": 0.82108,
+        "atLeast50xBet": 0.57995,
+        "atLeast100xBet": 0.29415,
+        "atLeast500xBet": 0.014857,
+        "atLeast1000xBet": 0.0018372,
+        "atLeast2000xBet": 0.00010145,
+        "atLeast5000xBet": 3.5e-7,
+        "atLeast10000xBet": 0
       },
       "winTiersRounds": {
-        "atLeast10xBet": 18236314,
-        "atLeast25xBet": 14052584,
-        "atLeast50xBet": 9313938,
-        "atLeast100xBet": 5012126,
-        "atLeast500xBet": 518137,
-        "atLeast1000xBet": 116734,
-        "atLeast2000xBet": 16898,
-        "atLeast5000xBet": 491,
-        "atLeast10000xBet": 6
+        "atLeast10xBet": 19286806,
+        "atLeast25xBet": 16421644,
+        "atLeast50xBet": 11598969,
+        "atLeast100xBet": 5883009,
+        "atLeast500xBet": 297137,
+        "atLeast1000xBet": 36744,
+        "atLeast2000xBet": 2029,
+        "atLeast5000xBet": 7,
+        "atLeast10000xBet": 0
       },
-      "maxObservedXBet": 10000,
-      "maxObservedXCost": 100,
-      "capHits": 6,
-      "capHitShareOfRounds": 3e-7,
+      "maxObservedXBet": 6810.35,
+      "maxObservedXCost": 68.1035,
+      "capHits": 0,
+      "capHitShareOfRounds": 0,
       "capXBet": 10000,
       "minVesselsOnFirstBaseBoard": 0,
       "costMismatches": 0,
       "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
-      "runtimeSeconds": 1254
+      "runtimeSeconds": 1542.7
     }
   },
   "tables": {
     "paytableHundredths": {
       "h1": [
-        120,
-        600
+        23,
+        114
       ],
       "h2": [
-        80,
-        400
+        15,
+        76
       ],
       "h3": [
-        55,
-        280
+        10,
+        53
       ],
       "h4": [
-        40,
-        200
+        8,
+        38
       ],
       "l1": [
-        25,
-        125
+        5,
+        24
       ],
       "l2": [
-        20,
-        100
+        4,
+        19
       ],
       "l3": [
-        15,
-        75
+        3,
+        14
       ],
       "l4": [
-        12,
-        60
+        2,
+        11
       ]
     },
     "gearPayHundredths": [
-      200,
-      1000
+      38,
+      190
     ],
     "scatterPayHundredths": {
       "3": 200,
@@ -391,38 +442,56 @@
       "standard": {
         "base": [
           {
-            "strip": "VFAFBGFGBHEGEDCHDCGHEDCHEHGDEFWBFGA",
-            "vesselStop": 24
+            "strip": "VADHBCHECEFEBGABFCHGFACDBFDGAGDEH",
+            "vesselStop": 22
           },
           {
-            "strip": "VEHFEFWCBEGEDHFDFEGCGHFAHDCABHCGEBFGDHG",
-            "vesselStop": 24
+            "strip": "VGDHAFCHBAEDBEDAGFHBCFHCDCFEGABGE",
+            "vesselStop": 22
           },
           {
-            "strip": "VEGCEFAGHDCHEFDFGEGHCDBABEBHGWFCDABDFEHGFHG",
-            "vesselStop": 24
+            "strip": "VDCFGHGFEBFECBDEDFAGACAFDHAHBHGHBEGBCEDAC",
+            "vesselStop": 22
           },
           {
-            "strip": "VFAEWDAHBFCFGHGCDCBCGDGBEAGCEHDHDEFEDFBEFGFEHGH",
-            "vesselStop": 24
+            "strip": "VCFBGAFADEAHBDHFBEFCDCGAFGBDGHECHDACHEBGE",
+            "vesselStop": 22
+          }
+        ],
+        "respin": [
+          {
+            "strip": "VBAHBDEGCBGACHFWEDAECDHEGHFCBGFAFD",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VDAFDFDEWHABCBEGCBECADHGACBGHGFEHF",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VCWBDGHEBGBACFCEBDGCADHFABDEHAGFHADGECHFEF",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VAEDHBCFGCABADCDBHDGAEGCAEBHBGFWFCGDHFEFEH",
+            "vesselStop": 22
           }
         ],
         "free": [
           {
-            "strip": "VWCFEBEAGBDGHBDFHCFGDEAWFGBCDHACE",
-            "vesselStop": 30
+            "strip": "VCDCBDFGECEFDAGBHGAFHEHAFGBEWCBD",
+            "vesselStop": 23
           },
           {
-            "strip": "VGEWDFGCHBABFDHBFCEDFDEGACACDECGWHBFE",
-            "vesselStop": 30
+            "strip": "VHEDGBGHEAWDCAHGBACEDFCFDFEFEBDFBCGC",
+            "vesselStop": 23
           },
           {
-            "strip": "VCFDWAHBEHEDHABGCGCAGBEFBADFGDBCFGCHDEWFE",
-            "vesselStop": 30
+            "strip": "VFBEAGHAFDECAHEBEHBAHEDCGDWBDFCFGCGBFDCG",
+            "vesselStop": 23
           },
           {
-            "strip": "VCFABHEBDFAHBFEGCGFHEDCGECEDBWAGFDCACFDGDEWBH",
-            "vesselStop": 30
+            "strip": "VFEBFECGHDHABDFECWFCFGCGDHBAGDBDHEACADFCEGEB",
+            "vesselStop": 23
           }
         ],
         "hubBase": [
@@ -462,49 +531,67 @@
           ],
           [
             5,
-            68
+            67
           ],
           [
             10,
-            37
+            36
           ]
         ]
       },
       "ante": {
         "base": [
           {
-            "strip": "VFAFBGFGBHEGEDCHDCGHEDCHEHGDEFWBFGA",
-            "vesselStop": 30
+            "strip": "VADHBCHECEFEBGABFCHGFACDBFDGAGDEH",
+            "vesselStop": 28
           },
           {
-            "strip": "VEHFEFWCBEGEDHFDFEGCGHFAHDCABHCGEBFGDHG",
-            "vesselStop": 30
+            "strip": "VGDHAFCHBAEDBEDAGFHBCFHCDCFEGABGE",
+            "vesselStop": 28
           },
           {
-            "strip": "VEGCEFAGHDCHEFDFGEGHCDBABEBHGWFCDABDFEHGFHG",
-            "vesselStop": 30
+            "strip": "VDCFGHGFEBFECBDEDFAGACAFDHAHBHGHBEGBCEDAC",
+            "vesselStop": 28
           },
           {
-            "strip": "VFAEWDAHBFCFGHGCDCBCGDGBEAGCEHDHDEFEDFBEFGFEHGH",
-            "vesselStop": 30
+            "strip": "VCFBGAFADEAHBDHFBEFCDCGAFGBDGHECHDACHEBGE",
+            "vesselStop": 28
+          }
+        ],
+        "respin": [
+          {
+            "strip": "VBAHBDEGCBGACHFWEDAECDHEGHFCBGFAFD",
+            "vesselStop": 28
+          },
+          {
+            "strip": "VDAFDFDEWHABCBEGCBECADHGACBGHGFEHF",
+            "vesselStop": 28
+          },
+          {
+            "strip": "VCWBDGHEBGBACFCEBDGCADHFABDEHAGFHADGECHFEF",
+            "vesselStop": 28
+          },
+          {
+            "strip": "VAEDHBCFGCABADCDBHDGAEGCAEBHBGFWFCGDHFEFEH",
+            "vesselStop": 28
           }
         ],
         "free": [
           {
-            "strip": "VWCFEBEAGBDGHBDFHCFGDEAWFGBCDHACE",
-            "vesselStop": 30
+            "strip": "VCDCBDFGECEFDAGBHGAFHEHAFGBEWCBD",
+            "vesselStop": 21
           },
           {
-            "strip": "VGEWDFGCHBABFDHBFCEDFDEGACACDECGWHBFE",
-            "vesselStop": 30
+            "strip": "VHEDGBGHEAWDCAHGBACEDFCFDFEFEBDFBCGC",
+            "vesselStop": 21
           },
           {
-            "strip": "VCFDWAHBEHEDHABGCGCAGBEFBADFGDBCFGCHDEWFE",
-            "vesselStop": 30
+            "strip": "VFBEAGHAFDECAHEBEHBAHEDCGDWBDFCFGCGBFDCG",
+            "vesselStop": 21
           },
           {
-            "strip": "VCFABHEBDFAHBFEGCGFHEDCGECEDBWAGFDCACFDGDEWBH",
-            "vesselStop": 30
+            "strip": "VFEBFECGHDHABDFECWFCFGCGDHBAGDBDHEACADFCEGEB",
+            "vesselStop": 21
           }
         ],
         "hubBase": [
@@ -532,61 +619,79 @@
         "hubFree": [
           [
             1,
-            330
+            346
           ],
           [
             2,
-            300
+            308
           ],
           [
             3,
-            215
+            216
           ],
           [
             5,
-            95
+            82
           ],
           [
             10,
-            50
+            38
           ]
         ]
       },
       "buy": {
         "base": [
           {
-            "strip": "VFAFBGFGBHEGEDCHDCGHEDCHEHGDEFWBFGA",
-            "vesselStop": 24
+            "strip": "VADHBCHECEFEBGABFCHGFACDBFDGAGDEH",
+            "vesselStop": 22
           },
           {
-            "strip": "VEHFEFWCBEGEDHFDFEGCGHFAHDCABHCGEBFGDHG",
-            "vesselStop": 24
+            "strip": "VGDHAFCHBAEDBEDAGFHBCFHCDCFEGABGE",
+            "vesselStop": 22
           },
           {
-            "strip": "VEGCEFAGHDCHEFDFGEGHCDBABEBHGWFCDABDFEHGFHG",
-            "vesselStop": 24
+            "strip": "VDCFGHGFEBFECBDEDFAGACAFDHAHBHGHBEGBCEDAC",
+            "vesselStop": 22
           },
           {
-            "strip": "VFAEWDAHBFCFGHGCDCBCGDGBEAGCEHDHDEFEDFBEFGFEHGH",
-            "vesselStop": 24
+            "strip": "VCFBGAFADEAHBDHFBEFCDCGAFGBDGHECHDACHEBGE",
+            "vesselStop": 22
+          }
+        ],
+        "respin": [
+          {
+            "strip": "VBAHBDEGCBGACHFWEDAECDHEGHFCBGFAFD",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VDAFDFDEWHABCBEGCBECADHGACBGHGFEHF",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VCWBDGHEBGBACFCEBDGCADHFABDEHAGFHADGECHFEF",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VAEDHBCFGCABADCDBHDGAEGCAEBHBGFWFCGDHFEFEH",
+            "vesselStop": 22
           }
         ],
         "free": [
           {
-            "strip": "VDCBFHADWECBAGHGEBAFDHFBECEGCFGD",
-            "vesselStop": 30
+            "strip": "VCDCBDFGECEFDAGBHGAFHEHAFGBEWCBD",
+            "vesselStop": 19
           },
           {
-            "strip": "VDHEBWGECDGEBGFGAFDCFBEBFDEHCDCAFHCA",
-            "vesselStop": 30
+            "strip": "VHEDGBGHEAWDCAHGBACEDFCFDFEFEBDFBCGC",
+            "vesselStop": 19
           },
           {
-            "strip": "VDGEBDBGDEDGACEGCFHFAEFWHBFDECGACBFHACHB",
-            "vesselStop": 30
+            "strip": "VFBEAGHAFDECAHEBEHBAHEDCGDWBDFCFGCGBFDCG",
+            "vesselStop": 19
           },
           {
-            "strip": "VHCAEFBAECFCDGEHBGDFAHECAWGBFCDEDHGEFBDGBCFD",
-            "vesselStop": 30
+            "strip": "VFEBFECGHDHABDFECWFCFGCGDHBAGDBDHEACADFCEGEB",
+            "vesselStop": 19
           }
         ],
         "hubBase": [
@@ -614,7 +719,7 @@
         "hubFree": [
           [
             1,
-            196
+            220
           ],
           [
             2,
@@ -622,21 +727,21 @@
           ],
           [
             3,
-            44
+            38
           ],
           [
             5,
-            22
+            14
           ],
           [
             10,
-            6
+            2
           ]
         ]
       }
     }
   },
-  "runtimeSeconds": 1579.6,
+  "runtimeSeconds": 1783.6,
   "node": "v24.21.0",
-  "generatedAt": "2026-10-13T05:40:07.345Z"
+  "generatedAt": "2026-10-14T04:12:01.349Z"
 }

@@ -1,0 +1,515 @@
+{
+  "kind": "cezeri-rtp-simulation",
+  "scope": "DEMO credits only; Monte Carlo estimate, not a certified or guaranteed RTP; RTP is return / cost",
+  "engine": "cezeri-gears-1",
+  "engineSourceSha256": "2695eae5731bf3f7b7260f5f86764e8402132fd018254cc134662ebed20d14c6",
+  "engineSourceNote": "sha256 of packages/protocol/src/cezeri.ts with the CEZERI_RTP evidence block (between the @evidence-block markers) removed. The constants were filled after the run; no engine code, tables or RNG changed afterwards.",
+  "seed": "cezeri-20261012-evidence",
+  "workers": 2,
+  "betCentsSimulated": 100,
+  "betLevelsCents": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    800,
+    1000,
+    1500,
+    2000,
+    2500,
+    4000,
+    5000,
+    7500,
+    10000,
+    15000,
+    20000,
+    25000,
+    40000,
+    50000
+  ],
+  "winTierMeasure": "round total / bet",
+  "tuningOverride": null,
+  "modes": {
+    "standard": {
+      "rounds": 20000000,
+      "costBets": 1,
+      "rtpVsCost": {
+        "pointEstimate": 0.95548,
+        "pointEstimatePct": 95.5478,
+        "ci95": [
+          0.95002,
+          0.96093
+        ],
+        "ci95Pct": [
+          95.0024,
+          96.0933
+        ],
+        "ci95HalfWidthPct": 0.5454
+      },
+      "integerPayoutCheckRtp": 0.95548,
+      "hitRate": 0.2952,
+      "baseChainHitRate": 0.29268,
+      "featureRate": 0.003149,
+      "featureOneIn": 317.6,
+      "featureCount": 62975,
+      "avgFreeSpinsPerRound": 0.03723,
+      "avgFreeSpinsPerTrigger": 11.824,
+      "freeSpinsPlayed": 744602,
+      "retriggers": 28713,
+      "maxFreeSpinsInOneRound": 38,
+      "freeSpinHitRate": 0.67884,
+      "respinChain": {
+        "baseRotationsHistogram": {
+          "rotations1": 14146328,
+          "rotations2": 2910044,
+          "rotations3": 1397552,
+          "rotations4": 720104,
+          "rotations5": 385956,
+          "rotations6": 209370,
+          "rotations7": 112631,
+          "rotations8": 59772,
+          "rotations9": 30426,
+          "rotations10": 15171,
+          "rotations11": 12646
+        },
+        "avgRespinsPerBaseSpin": 0.60284,
+        "avgRespinsPerWinningBaseChain": 2.05969,
+        "baseChainsWithAtLeast5RespinsShare": 0.07517,
+        "baseChainsWithAtLeast3RespinsShare": 0.2641,
+        "chainsEndedByRespinCap": 7124,
+        "freeRotationsHistogram": {
+          "rotations1": 239140,
+          "rotations2": 163840,
+          "rotations3": 113246,
+          "rotations4": 80401,
+          "rotations5": 55833,
+          "rotations6": 37111,
+          "rotations7": 23785,
+          "rotations8": 14688,
+          "rotations9": 8198,
+          "rotations10": 4498,
+          "rotations11": 3862
+        },
+        "avgRespinsPerFreeSpin": 1.92134,
+        "avgRespinsPerWinningFreeChain": 2.83035,
+        "maxRotationsInOneSpin": 11
+      },
+      "avgFinalHubInFeatures": 28.21,
+      "maxFinalHub": 149,
+      "falconVisits": 218911,
+      "avgFalconWildsAtFeatureEnd": 5.73,
+      "baseVesselsHistogram": {
+        "0": 13399777,
+        "1": 5649063,
+        "2": 888185,
+        "3": 61410,
+        "4": 1565,
+        "5plus": 0
+      },
+      "stdDevPerRoundCostUnits": 12.445,
+      "stdDevPerRoundBetUnits": 12.445,
+      "contributionPctOfCost": {
+        "baseChain": 52.8774,
+        "scatterPayInBase": 0.6924,
+        "freeSpins": 41.9781
+      },
+      "avgFreeWinPerTriggerBets": 133.32,
+      "winTiersShareOfRounds": {
+        "atLeast10xBet": 0.013341,
+        "atLeast25xBet": 0.0038364,
+        "atLeast50xBet": 0.0022692,
+        "atLeast100xBet": 0.0013314,
+        "atLeast500xBet": 0.00011555,
+        "atLeast1000xBet": 0.00002035,
+        "atLeast2000xBet": 0.00000155,
+        "atLeast5000xBet": 0,
+        "atLeast10000xBet": 0
+      },
+      "winTiersRounds": {
+        "atLeast10xBet": 266830,
+        "atLeast25xBet": 76728,
+        "atLeast50xBet": 45384,
+        "atLeast100xBet": 26628,
+        "atLeast500xBet": 2311,
+        "atLeast1000xBet": 407,
+        "atLeast2000xBet": 31,
+        "atLeast5000xBet": 0,
+        "atLeast10000xBet": 0
+      },
+      "maxObservedXBet": 4994.51,
+      "maxObservedXCost": 4994.51,
+      "capHits": 0,
+      "capHitShareOfRounds": 0,
+      "capXBet": 10000,
+      "minVesselsOnFirstBaseBoard": 0,
+      "costMismatches": 0,
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 121.9
+    }
+  },
+  "tables": {
+    "paytableHundredths": {
+      "h1": [
+        23,
+        114
+      ],
+      "h2": [
+        15,
+        76
+      ],
+      "h3": [
+        10,
+        53
+      ],
+      "h4": [
+        8,
+        38
+      ],
+      "l1": [
+        5,
+        24
+      ],
+      "l2": [
+        4,
+        19
+      ],
+      "l3": [
+        3,
+        14
+      ],
+      "l4": [
+        2,
+        11
+      ]
+    },
+    "gearPayHundredths": [
+      38,
+      190
+    ],
+    "scatterPayHundredths": {
+      "3": 200,
+      "4": 1000,
+      "5": 5000
+    },
+    "falconCount": [
+      [
+        1,
+        50
+      ],
+      [
+        2,
+        35
+      ],
+      [
+        3,
+        15
+      ]
+    ],
+    "modeTables": {
+      "standard": {
+        "base": [
+          {
+            "strip": "VADHBCHECEFEBGABFCHGFACDBFDGAGDEH",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VGDHAFCHBAEDBEDAGFHBCFHCDCFEGABGE",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VDCFGHGFEBFECBDEDFAGACAFDHAHBHGHBEGBCEDAC",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VCFBGAFADEAHBDHFBEFCDCGAFGBDGHECHDACHEBGE",
+            "vesselStop": 22
+          }
+        ],
+        "respin": [
+          {
+            "strip": "VBAHBDEGCBGACHFWEDAECDHEGHFCBGFAFD",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VDAFDFDEWHABCBEGCBECADHGACBGHGFEHF",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VCWBDGHEBGBACFCEBDGCADHFABDEHAGFHADGECHFEF",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VAEDHBCFGCABADCDBHDGAEGCAEBHBGFWFCGDHFEFEH",
+            "vesselStop": 22
+          }
+        ],
+        "free": [
+          {
+            "strip": "VCDCBDFGECEFDAGBHGAFHEHAFGBEWCBD",
+            "vesselStop": 23
+          },
+          {
+            "strip": "VHEDGBGHEAWDCAHGBACEDFCFDFEFEBDFBCGC",
+            "vesselStop": 23
+          },
+          {
+            "strip": "VFBEAGHAFDECAHEBEHBAHEDCGDWBDFCFGCGBFDCG",
+            "vesselStop": 23
+          },
+          {
+            "strip": "VFEBFECGHDHABDFECWFCFGCGDHBAGDBDHEACADFCEGEB",
+            "vesselStop": 23
+          }
+        ],
+        "hubBase": [
+          [
+            1,
+            40
+          ],
+          [
+            2,
+            26
+          ],
+          [
+            3,
+            17
+          ],
+          [
+            5,
+            11
+          ],
+          [
+            10,
+            6
+          ]
+        ],
+        "hubFree": [
+          [
+            1,
+            72
+          ],
+          [
+            2,
+            120
+          ],
+          [
+            3,
+            100
+          ],
+          [
+            5,
+            67
+          ],
+          [
+            10,
+            36
+          ]
+        ]
+      },
+      "ante": {
+        "base": [
+          {
+            "strip": "VADHBCHECEFEBGABFCHGFACDBFDGAGDEH",
+            "vesselStop": 28
+          },
+          {
+            "strip": "VGDHAFCHBAEDBEDAGFHBCFHCDCFEGABGE",
+            "vesselStop": 28
+          },
+          {
+            "strip": "VDCFGHGFEBFECBDEDFAGACAFDHAHBHGHBEGBCEDAC",
+            "vesselStop": 28
+          },
+          {
+            "strip": "VCFBGAFADEAHBDHFBEFCDCGAFGBDGHECHDACHEBGE",
+            "vesselStop": 28
+          }
+        ],
+        "respin": [
+          {
+            "strip": "VBAHBDEGCBGACHFWEDAECDHEGHFCBGFAFD",
+            "vesselStop": 28
+          },
+          {
+            "strip": "VDAFDFDEWHABCBEGCBECADHGACBGHGFEHF",
+            "vesselStop": 28
+          },
+          {
+            "strip": "VCWBDGHEBGBACFCEBDGCADHFABDEHAGFHADGECHFEF",
+            "vesselStop": 28
+          },
+          {
+            "strip": "VAEDHBCFGCABADCDBHDGAEGCAEBHBGFWFCGDHFEFEH",
+            "vesselStop": 28
+          }
+        ],
+        "free": [
+          {
+            "strip": "VCDCBDFGECEFDAGBHGAFHEHAFGBEWCBD",
+            "vesselStop": 21
+          },
+          {
+            "strip": "VHEDGBGHEAWDCAHGBACEDFCFDFEFEBDFBCGC",
+            "vesselStop": 21
+          },
+          {
+            "strip": "VFBEAGHAFDECAHEBEHBAHEDCGDWBDFCFGCGBFDCG",
+            "vesselStop": 21
+          },
+          {
+            "strip": "VFEBFECGHDHABDFECWFCFGCGDHBAGDBDHEACADFCEGEB",
+            "vesselStop": 21
+          }
+        ],
+        "hubBase": [
+          [
+            1,
+            40
+          ],
+          [
+            2,
+            26
+          ],
+          [
+            3,
+            17
+          ],
+          [
+            5,
+            11
+          ],
+          [
+            10,
+            6
+          ]
+        ],
+        "hubFree": [
+          [
+            1,
+            346
+          ],
+          [
+            2,
+            308
+          ],
+          [
+            3,
+            216
+          ],
+          [
+            5,
+            82
+          ],
+          [
+            10,
+            38
+          ]
+        ]
+      },
+      "buy": {
+        "base": [
+          {
+            "strip": "VADHBCHECEFEBGABFCHGFACDBFDGAGDEH",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VGDHAFCHBAEDBEDAGFHBCFHCDCFEGABGE",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VDCFGHGFEBFECBDEDFAGACAFDHAHBHGHBEGBCEDAC",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VCFBGAFADEAHBDHFBEFCDCGAFGBDGHECHDACHEBGE",
+            "vesselStop": 22
+          }
+        ],
+        "respin": [
+          {
+            "strip": "VBAHBDEGCBGACHFWEDAECDHEGHFCBGFAFD",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VDAFDFDEWHABCBEGCBECADHGACBGHGFEHF",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VCWBDGHEBGBACFCEBDGCADHFABDEHAGFHADGECHFEF",
+            "vesselStop": 22
+          },
+          {
+            "strip": "VAEDHBCFGCABADCDBHDGAEGCAEBHBGFWFCGDHFEFEH",
+            "vesselStop": 22
+          }
+        ],
+        "free": [
+          {
+            "strip": "VCDCBDFGECEFDAGBHGAFHEHAFGBEWCBD",
+            "vesselStop": 19
+          },
+          {
+            "strip": "VHEDGBGHEAWDCAHGBACEDFCFDFEFEBDFBCGC",
+            "vesselStop": 19
+          },
+          {
+            "strip": "VFBEAGHAFDECAHEBEHBAHEDCGDWBDFCFGCGBFDCG",
+            "vesselStop": 19
+          },
+          {
+            "strip": "VFEBFECGHDHABDFECWFCFGCGDHBAGDBDHEACADFCEGEB",
+            "vesselStop": 19
+          }
+        ],
+        "hubBase": [
+          [
+            1,
+            40
+          ],
+          [
+            2,
+            26
+          ],
+          [
+            3,
+            17
+          ],
+          [
+            5,
+            11
+          ],
+          [
+            10,
+            6
+          ]
+        ],
+        "hubFree": [
+          [
+            1,
+            220
+          ],
+          [
+            2,
+            126
+          ],
+          [
+            3,
+            38
+          ],
+          [
+            5,
+            14
+          ],
+          [
+            10,
+            2
+          ]
+        ]
+      }
+    }
+  },
+  "runtimeSeconds": 121.9,
+  "node": "v24.21.0",
+  "generatedAt": "2026-10-14T03:44:19.364Z"
+}

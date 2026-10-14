@@ -1,15 +1,17 @@
 'use client';
-/** Game switcher for the development audio lab: Candy Cascade, Tarhun: Fırtına Tahtı or Ebru: Mürekkep Bahçesi (one engine at a time). */
+/** Game switcher for the development audio lab: Candy Cascade, Tarhun: Fırtına Tahtı, Ebru: Mürekkep Bahçesi or Cezeri: Zamanın Çarkları (one engine at a time). */
 import { useEffect, useState, type CSSProperties } from 'react';
 import { AudioLab } from '@/lib/slot-audio/lab-panel';
 import { StormAudioLab } from '@/lib/slot-audio/storm-lab-panel';
 import { EbruAudioLab } from '@/lib/slot-audio/ebru-lab-panel';
+import { CezeriAudioLab } from '@/lib/slot-audio/cezeri-lab-panel';
 
-type Game = 'cascade' | 'storm' | 'ebru';
+type Game = 'cascade' | 'storm' | 'ebru' | 'cezeri';
 const GAMES: { id: Game; label: string; note: string }[] = [
   { id: 'cascade', label: 'Candy Cascade', note: 'Gece pastanesi: F majör temel tema, D minör özellik teması.' },
   { id: 'storm', label: 'Tarhun: Fırtına Tahtı', note: 'Tunç çağı fırtına tanrısı: A Hicaz temel tema, D Hicaz özellik teması; zurna, ney, bağlama, davul, darbuka, boru, erkek korosu, yağmur ve gök gürültüsü.' },
   { id: 'ebru', label: 'Ebru: Mürekkep Bahçesi', note: 'Su üstünde renkler: G Rast temel tema (Uşşak ve Hüzzam renkli bölümler), D Rast özellik teması; kanun, ud, ney, cam armonika, su bardakları, kudüm, bendir, zil, “ah” korosu ve su dokuları. İmza: satır kaymalarını izleyen tarak süzülmesi.' },
+  { id: 'cezeri', label: 'Cezeri: Zamanın Çarkları', note: 'El-Cezerî’nin otomatları: C Nikriz temel tema (Eb Çargah ve su saati bölümleri), C Çargah “Fil Saati” özellik teması; santur, otomat flütü, su orgu, çan çubukları, nakkare, kös, el zilleri, zurna, ney, erkek korosu ve saat mekanizmasının kendisi (eşapman tik-tak, mandal, pirinç dişli, dişli vızıltısı, su saati damlaları). İmza: Dişli Kilidi zinciri — kilit, makamda tırmanan göbek tıkı, açılan gerilim yatağı.' },
 ];
 const tab: CSSProperties = { padding: '8px 14px', borderRadius: 999, border: '1px solid var(--line)', background: 'transparent', color: 'var(--text)', cursor: 'pointer', font: 'inherit', fontSize: 15 };
 const active: CSSProperties = { ...tab, border: '1px solid var(--accent)', color: 'var(--accent)' };
@@ -17,7 +19,7 @@ const active: CSSProperties = { ...tab, border: '1px solid var(--accent)', color
 export function AudioLabSwitch() {
   const [game, setGame] = useState<Game>('cascade');
   useEffect(() => {
-    try { const g = new URLSearchParams(window.location.search).get('game'); if (g === 'storm' || g === 'cascade' || g === 'ebru') setGame(g); } catch { /* no location */ }
+    try { const g = new URLSearchParams(window.location.search).get('game'); if (g === 'storm' || g === 'cascade' || g === 'ebru' || g === 'cezeri') setGame(g); } catch { /* no location */ }
   }, []);
   const pick = (g: Game) => {
     setGame(g);
@@ -31,7 +33,7 @@ export function AudioLabSwitch() {
       </div>
       <p style={{ color: 'var(--muted)', margin: 0, fontSize: 14 }}>{current.note}</p>
       {/* the key remounts the panel so the previous game's audio engine is disposed before the next one starts */}
-      {game === 'cascade' ? <AudioLab key="cascade" /> : game === 'storm' ? <StormAudioLab key="storm" /> : <EbruAudioLab key="ebru" />}
+      {game === 'cascade' ? <AudioLab key="cascade" /> : game === 'storm' ? <StormAudioLab key="storm" /> : game === 'ebru' ? <EbruAudioLab key="ebru" /> : <CezeriAudioLab key="cezeri" />}
     </div>
   );
 }
