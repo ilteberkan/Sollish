@@ -123,9 +123,9 @@ const FeatureArt = memo(function FeatureArt({ k }: { k: (n: string) => string })
       <defs>
         <radialGradient id={k('fglow')} cx="500" cy="500" r="500" gradientUnits="userSpaceOnUse">
           <stop offset={r2((R_WELL - 2) / 500)} stopColor="#5ff0e0" stopOpacity="0" />
-          <stop offset={r2((R_WELL + 14) / 500)} stopColor="#5ff0e0" stopOpacity=".55" />
-          <stop offset={r2((R_BEZEL - 10) / 500)} stopColor="#5ff0e0" stopOpacity=".12" />
-          <stop offset={r2((R_BEZEL + 30) / 500)} stopColor="#5ff0e0" stopOpacity=".35" />
+          <stop offset={r2((R_WELL + 14) / 500)} stopColor="#5ff0e0" stopOpacity=".14" />
+          <stop offset={r2((R_BEZEL - 10) / 500)} stopColor="#5ff0e0" stopOpacity=".04" />
+          <stop offset={r2((R_BEZEL + 30) / 500)} stopColor="#5ff0e0" stopOpacity=".26" />
           <stop offset="1" stopColor="#5ff0e0" stopOpacity="0" />
         </radialGradient>
       </defs>

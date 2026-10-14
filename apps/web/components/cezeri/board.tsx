@@ -338,8 +338,9 @@ function Plate({ ring, slice, symbol, kind, fresh, uid }: { ring: number; slice:
         <path d={d} fill={gold ? 'url(#' + uid + 'pinFill)' : 'url(#' + uid + 'heldFill)'} stroke="#140a02" strokeWidth="8" />
         <path d={d} fill="none" stroke={`url(#${uid}rimFill)`} strokeWidth="4.6" />
         <path d={inner} fill="none" stroke={gold ? '#fff2b0' : P.turq.hi} strokeWidth="1.6" strokeDasharray="6 5" opacity=".75" />
-        <path d={jaws.join('')} stroke="#140a02" strokeWidth="10" strokeLinecap="round" />
-        <path d={jaws.join('')} stroke={`url(#${uid}rimFill)`} strokeWidth="5.4" strokeLinecap="round" />
+        <path d={jaws.join('')} stroke="#140a02" strokeWidth="13" strokeLinecap="round" />
+        <path d={jaws.join('')} stroke={gold ? P.brass.hi : P.brass.light} strokeWidth="7.4" strokeLinecap="round" />
+        <path d={jaws.join('')} stroke="#fff" strokeWidth="2" strokeLinecap="round" opacity=".55" />
         {bolts.map(([x, y], i) => <circle key={i} cx={x} cy={y} r="3.6" fill={P.brass.hi} stroke="#140a02" strokeWidth="1.4" />)}
       </svg>
       <div className={styles.plateGlow} />

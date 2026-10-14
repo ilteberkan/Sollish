@@ -80,11 +80,13 @@
 @keyframes resWave { to { transform: translateX(-50%); } }
 .resLabel {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 2%;
+  left: -20%;
+  right: -20%;
+  top: 100%;
+  margin-top: 3px;
   text-align: center;
-  font: 600 clamp(10px, 2.4cqw, 14px)/1 var(--font-barlow), system-ui, sans-serif;
+  white-space: nowrap;
+  font: 600 clamp(9px, 12cqw, 14px)/1 var(--font-barlow), system-ui, sans-serif;
   color: #ffe7a0;
   letter-spacing: 0.08em;
   text-shadow: 0 1px 2px #000;

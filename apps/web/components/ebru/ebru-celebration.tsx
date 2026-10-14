@@ -28,7 +28,7 @@ function Rosette({ petals = 12, className }: { petals?: number; className?: stri
       <defs>
         <radialGradient id={`er${uid}p`} cx="100" cy="100" r="100" gradientUnits="userSpaceOnUse">
           <stop offset=".35" style={{ stopColor: 'var(--c-mid)', stopOpacity: 0.05 }} />
-          <stop offset=".7" style={{ stopColor: 'var(--c-mid)', stopOpacity: 0.55 }} />
+          <stop offset=".7" style={{ stopColor: 'var(--c-mid)', stopOpacity: 0.3 }} />
           <stop offset="1" style={{ stopColor: 'var(--c-hi)', stopOpacity: 0 }} />
         </radialGradient>
       </defs>
@@ -36,7 +36,7 @@ function Rosette({ petals = 12, className }: { petals?: number; className?: stri
         <g key={i} transform={`rotate(${f1((i / petals) * 360)} 100 100)`}>
           <path d={outer} fill={`url(#er${uid}p)`} />
           <path d={mid} fill="none" style={{ stroke: 'var(--c-hi)' }} strokeOpacity=".55" strokeWidth=".9" />
-          <path d={inner} style={{ fill: 'var(--c-hi)' }} fillOpacity=".35" />
+          <path d={inner} style={{ fill: 'var(--c-hi)' }} fillOpacity=".22" />
         </g>
       ))}
       <circle cx="100" cy="100" r="38" fill="none" style={{ stroke: 'var(--c-hi)' }} strokeOpacity=".35" strokeWidth="1" strokeDasharray="2 5" />

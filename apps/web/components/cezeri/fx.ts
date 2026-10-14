@@ -191,7 +191,13 @@ export class CezeriFx {
     if (this.reduced) return this.after(30);
     const now = this.now();
     const c = { x: 500, y: 500 };
-    this.addFlash({ x: 500, y: 500, born: now, life: 0.5, r: CZ_HUB_R * 2.6, color: '#ffe7a0', alpha: 1 });
+    this.addFlash({ x: 500, y: 500, born: now, life: 0.55, r: CZ_HUB_R * 3.4, color: '#ffe7a0', alpha: 1 });
+    this.addFlash({ x: 500, y: 500, born: now, life: 0.25, r: CZ_HUB_R * 1.6, color: '#ffffff', alpha: 1 });
+    // the escapement teeth light up one by one around the hub
+    for (let i = 0; i < 24; i++) {
+      const p = polar(CZ_HUB_R + 10, i * 15);
+      this.addFlashLater(i * 12, { x: p.x, y: p.y, life: 0.32, r: 26, color: '#fff2c0', alpha: 0.9 });
+    }
     this.addRing({ x: 500, y: 500, born: now, life: 0.55, r0: CZ_HUB_R, r1: CZ_HUB_R * 2.9, color: '#fff2c0', width: 10, alpha: 0.95 });
     this.addRing({ x: 500, y: 500, born: now + 0.08, life: 0.7, r0: CZ_HUB_R, r1: CZ_BOUNDS[2]!, color: '#ffb84a', width: 5, alpha: 0.7 });
     for (let i = 0; i < 28; i++) {
@@ -200,7 +206,7 @@ export class CezeriFx {
       this.push({ kind: 'spark', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, born: now, life: rand(0.35, 0.65), size: rand(2.4, 4.4), color: pick(BRASS_SPARK), g: 300, drag: 2.6, rot: 0, vr: 0 });
     }
     for (const deg of [45, 135, 225, 315]) this.steam(polar(CZ_HUB_R + 6, deg), deg, 4, 0.8);
-    this.texts.push({ text: opts.label ?? '+1', x: c.x, y: c.y - CZ_HUB_R - 30, born: now + 0.05, life: 0.95, size: 74, color: '#ffe7a0' });
+    this.texts.push({ text: opts.label ?? '+1', x: c.x, y: c.y - CZ_HUB_R - 46, born: now + 0.05, life: 1.05, size: 118, color: '#ffe7a0' });
     void value;
     this.kick();
     return this.after(dur);
@@ -250,7 +256,7 @@ export class CezeriFx {
       segMs.push(Math.max(260, d * 1.15));
     }
     const total = segMs.reduce((a, b) => a + b, 0);
-    this.falcons.push({ pts, born: now, segMs, total, size: 150 });
+    this.falcons.push({ pts, born: now, segMs, total, size: 190 });
     // drop times: when the falcon passes over each target (end of segment i, i = 0..)
     let t = 0;
     ordered.forEach((s, i) => {
@@ -343,6 +349,7 @@ export class CezeriFx {
     this.parts.push(p);
   }
   private addRing(r: Ring) { if (this.reduced) return; if (this.rings.length >= MAX_RINGS) this.rings.shift(); this.rings.push(r); this.kick(); }
+  private addFlashLater(ms: number, f: Omit<Flash, 'born'>) { this.later(ms, () => this.addFlash({ ...f, born: this.now() })); }
   private addFlash(f: Flash) { if (this.reduced) return; if (this.flashes.length >= MAX_FLASHES) this.flashes.shift(); this.flashes.push(f); this.kick(); }
   private scheduleGlint(ms: number) {
     this.later(ms, () => {
@@ -693,71 +700,72 @@ export class CezeriFx {
     }
     return alive;
   }
-  /** Brass automaton falcon (procedural): wings flap with wall-clock time. */
+  /** Brass automaton falcon seen from above (procedural): body along its heading, wings flap by foreshortening. */
   private drawFalcon(ctx: CanvasRenderingContext2D, x: number, y: number, size: number, heading: number, now: number) {
-    const flap = Math.sin(now * 15);
-    const flip = Math.cos(heading) < 0 ? -1 : 1;
+    const flap = Math.sin(now * 13);
+    const span = 0.55 + 0.45 * Math.abs(flap); // wing length seen from above
+    const sweep = flap * 0.12;
     ctx.save();
     ctx.translate(x, y);
-    ctx.scale(flip, 1);
-    ctx.rotate(flip > 0 ? heading * 0.5 : -(Math.PI - heading) * 0.5);
+    ctx.rotate(heading);
     const s = size / 100;
     ctx.scale(s, s);
-    // glow
     ctx.globalCompositeOperation = 'lighter';
-    ctx.globalAlpha = 0.5;
-    ctx.drawImage(this.sprite('#ffd66e'), -70, -60, 140, 120);
+    ctx.globalAlpha = 0.45;
+    ctx.drawImage(this.sprite('#ffd66e'), -80, -80, 160, 160);
     ctx.globalCompositeOperation = 'source-over';
     ctx.globalAlpha = 1;
-    const brass = ctx.createLinearGradient(0, -40, 0, 30);
-    brass.addColorStop(0, '#fff4c4'); brass.addColorStop(0.35, '#f6d27a'); brass.addColorStop(0.7, '#c98a26'); brass.addColorStop(1, '#5a3204');
+    const brass = ctx.createLinearGradient(-40, -70, 30, 60);
+    brass.addColorStop(0, '#fff4c4'); brass.addColorStop(0.3, '#f6d27a'); brass.addColorStop(0.65, '#d9a441'); brass.addColorStop(1, '#6a3c08');
+    const tq = ctx.createLinearGradient(0, -40, 0, 40);
+    tq.addColorStop(0, '#7fe8dc'); tq.addColorStop(0.5, '#1fb3ab'); tq.addColorStop(1, '#0b6b70');
     ctx.lineJoin = 'round';
-    ctx.strokeStyle = '#1a0d05';
-    ctx.lineWidth = 3;
-    // far wing (behind)
-    const wing = (sy: number) => {
+    ctx.lineCap = 'round';
+    const ink = '#1a0d05';
+    const wing = (side: number) => {
       ctx.save();
-      ctx.scale(1, Math.abs(sy) < 0.12 ? (sy < 0 ? -0.12 : 0.12) : sy);
+      ctx.rotate(side * sweep);
+      ctx.scale(1, side * span);
       ctx.beginPath();
-      ctx.moveTo(-6, -2);
-      ctx.bezierCurveTo(-10, -30, -30, -52, -54, -60);
-      for (let i = 0; i < 5; i++) { const fx = -54 + i * 11, fy = -60 + i * 9; ctx.lineTo(fx + 4, fy + 14); ctx.lineTo(fx + 11, fy + 9); }
-      ctx.lineTo(10, -4);
+      ctx.moveTo(10, -6);
+      ctx.bezierCurveTo(18, -30, 8, -58, -6, -76);
+      const fingers = [[-12, -70], [-15, -80], [-21, -70], [-25, -77], [-30, -64], [-35, -68], [-37, -54]];
+      for (const [fx, fy] of fingers) ctx.lineTo(fx!, fy!);
+      ctx.bezierCurveTo(-34, -36, -28, -18, -20, -6);
       ctx.closePath();
-      ctx.fillStyle = brass; ctx.fill(); ctx.stroke();
+      ctx.fillStyle = brass; ctx.fill();
+      ctx.lineWidth = 3; ctx.strokeStyle = ink; ctx.stroke();
+      // turquoise covert band and feather lines
       ctx.beginPath();
-      for (let i = 0; i < 4; i++) { ctx.moveTo(-8 - i * 9, -6 - i * 3); ctx.lineTo(-30 - i * 7, -40 - i * 4); }
-      ctx.strokeStyle = 'rgba(90,50,4,.8)'; ctx.lineWidth = 1.6; ctx.stroke();
-      ctx.strokeStyle = '#1a0d05'; ctx.lineWidth = 3;
+      ctx.moveTo(8, -10); ctx.bezierCurveTo(12, -26, 6, -40, -2, -50); ctx.lineTo(-16, -44); ctx.bezierCurveTo(-14, -30, -12, -18, -10, -8); ctx.closePath();
+      ctx.fillStyle = tq; ctx.fill(); ctx.lineWidth = 1.6; ctx.stroke();
+      ctx.beginPath();
+      for (let i = 0; i < 5; i++) { ctx.moveTo(-12 - i * 4.5, -10 - i * 2); ctx.lineTo(-14 - i * 5, -52 - i * 3); }
+      ctx.strokeStyle = 'rgba(74,42,8,.85)'; ctx.lineWidth = 1.4; ctx.stroke();
+      ctx.fillStyle = '#5a3204';
+      for (let i = 0; i < 3; i++) { ctx.beginPath(); ctx.arc(2 - i * 4, -16 - i * 9, 1.6, 0, Math.PI * 2); ctx.fill(); }
       ctx.restore();
     };
-    ctx.globalAlpha = 0.85;
-    wing(0.7 * flap + 0.15);
-    ctx.globalAlpha = 1;
+    // the gear it carries (under the body)
+    ctx.save(); ctx.rotate(now * 4); ctx.drawImage(this.gear(), -14, -14, 28, 28); ctx.restore();
     // tail fan
     ctx.beginPath();
-    ctx.moveTo(-28, 4); ctx.lineTo(-62, -6); ctx.lineTo(-66, 6); ctx.lineTo(-62, 18); ctx.closePath();
-    ctx.fillStyle = brass; ctx.fill(); ctx.stroke();
-    // body
-    ctx.beginPath();
-    ctx.ellipse(-4, 6, 34, 15, 0, 0, Math.PI * 2);
-    const tq = ctx.createLinearGradient(0, -10, 0, 22);
-    tq.addColorStop(0, '#d8fff8'); tq.addColorStop(0.5, '#1fb3ab'); tq.addColorStop(1, '#053238');
-    ctx.fillStyle = brass; ctx.fill(); ctx.stroke();
-    ctx.beginPath(); ctx.ellipse(-2, 9, 24, 8, 0, 0, Math.PI * 2); ctx.fillStyle = tq; ctx.fill();
-    // rivets
-    ctx.fillStyle = '#5a3204';
-    for (let i = 0; i < 4; i++) { ctx.beginPath(); ctx.arc(-18 + i * 9, 2, 1.6, 0, Math.PI * 2); ctx.fill(); }
-    // head + beak + eye
-    ctx.beginPath(); ctx.arc(30, -2, 11, 0, Math.PI * 2); ctx.fillStyle = brass; ctx.fill(); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(39, -6); ctx.quadraticCurveTo(52, -2, 46, 8); ctx.lineTo(40, 3); ctx.closePath(); ctx.fillStyle = '#4a2a08'; ctx.fill(); ctx.stroke();
-    ctx.beginPath(); ctx.arc(32, -5, 3, 0, Math.PI * 2); ctx.fillStyle = '#d6302c'; ctx.fill();
-    ctx.beginPath(); ctx.arc(31, -6, 1, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill();
-    // talons
-    ctx.strokeStyle = '#1a0d05'; ctx.lineWidth = 3;
-    ctx.beginPath(); ctx.moveTo(4, 18); ctx.lineTo(8, 30); ctx.moveTo(-6, 18); ctx.lineTo(-4, 30); ctx.stroke();
-    // near wing
-    wing(flap);
+    ctx.moveTo(-24, -6); ctx.lineTo(-58, -16); ctx.quadraticCurveTo(-66, 0, -58, 16); ctx.lineTo(-24, 6); ctx.closePath();
+    ctx.fillStyle = brass; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = ink; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(-28, 0); ctx.lineTo(-60, 0); ctx.moveTo(-28, -3); ctx.lineTo(-58, -10); ctx.moveTo(-28, 3); ctx.lineTo(-58, 10);
+    ctx.lineWidth = 1.3; ctx.strokeStyle = 'rgba(74,42,8,.85)'; ctx.stroke();
+    wing(-1);
+    wing(1);
+    // body + head
+    ctx.beginPath(); ctx.ellipse(2, 0, 30, 11, 0, 0, Math.PI * 2);
+    ctx.fillStyle = brass; ctx.fill(); ctx.lineWidth = 3; ctx.strokeStyle = ink; ctx.stroke();
+    ctx.beginPath(); ctx.ellipse(0, 0, 18, 5, 0, 0, Math.PI * 2); ctx.fillStyle = tq; ctx.fill();
+    ctx.beginPath(); ctx.arc(32, 0, 10, 0, Math.PI * 2); ctx.fillStyle = brass; ctx.fill(); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(40, -4); ctx.quadraticCurveTo(52, 0, 40, 5); ctx.closePath(); ctx.fillStyle = '#4a2a08'; ctx.fill(); ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#d6302c';
+    ctx.beginPath(); ctx.arc(35, -5, 2.4, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(35, 5, 2.4, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(-2, -5, 16, 2.4, 0, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255,255,255,.55)'; ctx.fill();
     ctx.restore();
   }
 }
