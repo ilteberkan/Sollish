@@ -4,14 +4,20 @@ export type PitchedVoice = 'celesta' | 'musicBox' | 'glock' | 'marimba' | 'pluck
   // Tarhun (storm-throne) voices, synth/anatolian.ts
   | 'zurna' | 'zurnaSoft' | 'ney' | 'baglama' | 'horn' | 'hornSwell' | 'bronze' | 'taikoPitched'
   // Ebru (ebru-ink) voices, synth/ebru.ts
-  | 'kanun' | 'kanunSoft' | 'ud' | 'glassHarp' | 'waterGlass';
+  | 'kanun' | 'kanunSoft' | 'ud' | 'glassHarp' | 'waterGlass'
+  // Cezeri (cezeri-gears) voices, synth/cezeri.ts
+  | 'santur' | 'santurSoft' | 'pipe' | 'waterOrgan' | 'chimeRod' | 'drip';
 export type PadVoice = 'padWarm' | 'padSaw' | 'padString' | 'padChoir' | 'padChoirMale' | 'padHorn';
 export type KitHit = 'kick' | 'kickSoft' | 'kickPunch' | 'brush' | 'snare' | 'clap' | 'hat' | 'hatOpen' | 'shaker' | 'snap' | 'wood' | 'woodHi' | 'tomHi' | 'tomMid' | 'tomLo' | 'timp' | 'timpLo' | 'crash'
   | 'davul' | 'davulLo' | 'davulRim' | 'dum' | 'tek' | 'ka' | 'frame' | 'taiko' | 'taikoLo'
-  | 'kudumDum' | 'kudumTek' | 'zil' | 'frameLo';
+  | 'kudumDum' | 'kudumTek' | 'zil' | 'frameLo'
+  // Cezeri: the clock mechanism and the automaton band
+  | 'escTick' | 'escTock' | 'ratchet' | 'clank' | 'naqDum' | 'naqTek' | 'kos' | 'kosLo' | 'cymbal' | 'cymbalSoft';
 export type FxKind = 'riser' | 'sparkle' | 'crash' | 'impact' | 'whoosh' | 'swell' | 'room' | 'thunder' | 'rumble' | 'rain' | 'wind'
   // Ebru: still-water bed and bubble bursts
-  | 'water' | 'bubbles';
+  | 'water' | 'bubbles'
+  // Cezeri: courtyard fountain + water clock bed, gear-train whirr, a vessel filling
+  | 'courtyard' | 'whirr' | 'pour';
 
 export interface PadEvent { t: number; d: number; ns: number[]; v: number }
 export interface FxEvent { t: number; d: number; k: FxKind; v: number; notes?: number[]; density?: number; shape?: 'swell' | 'decay' | 'flat' }

@@ -143,7 +143,7 @@ if (!isMainThread) {
   const tuneFile = args.get("tune");
   const tuning: AsenaTuning = tuneFile ? JSON.parse(readFileSync(resolve(tuneFile), "utf8")) : {};
   if (!Number.isSafeInteger(rounds) || rounds < 2 || !Number.isSafeInteger(workers) || workers < 1 || !Number.isSafeInteger(chunks) || chunks < 1 || !out || modes.some(m => !ASENA_MODES.includes(m))) {
-    console.error("usage: simulate.ts --rounds N --seed TEXT --out PATH [--modes standard,ante,buy] [--workers N] [--chunks N] [--tune FILE]"); process.exit(2);
+    console.error("usage: simulate.ts --rounds N --seed TEXT --out PATH [--modes standard,ante,buy] [--workers N] [--chunks N] [--ckpt DIR] [--tune FILE]"); process.exit(2);
   }
   const started = Date.now();
   const source = stripEvidenceBlock(readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "../../packages/protocol/src/asena.ts"), "utf8"));
@@ -156,7 +156,7 @@ if (!isMainThread) {
     const parts: Part[] = [];
     for (let k = 0; k < chunks; k++) {
       const chunkRounds = Math.floor(rounds / chunks) + (k < rounds % chunks ? 1 : 0), chunkSeed = chunks > 1 ? `${seed}/c${k}` : seed;
-      const ckpt = resolve(`${out}.ckpt`, `${mode}-${k}-of-${chunks}-${workers}w-${chunkRounds}.json`);
+      const ckpt = resolve(args.get("ckpt") ?? `${out}.ckpt`, `${mode}-${k}-of-${chunks}-${workers}w-${chunkRounds}.json`);
       if (chunks > 1 && existsSync(ckpt)) { parts.push(...(JSON.parse(readFileSync(ckpt, "utf8")) as Part[])); console.error(`chunk ${k + 1}/${chunks} of ${mode}: loaded checkpoint`); continue; }
       const share = Array.from({ length: workers }, (_, w) => Math.floor(chunkRounds / workers) + (w < chunkRounds % workers ? 1 : 0));
       const done = await Promise.all(share.map((n, w) => new Promise<Part>((ok, fail) => {

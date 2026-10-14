@@ -10,6 +10,7 @@ import {
 } from './synth/instruments';
 import { baglama, bronze, darbuka, davul, davulRim, frameDrum, horn, hornChord, ney, rain, taiko, thunderCrack, thunderRumble, wind, zurna } from './synth/anatolian';
 import { bubbles, glassHarpFast, kanun, kudum, ud, waterBed, waterGlassFast, zil } from './synth/ebru';
+import { chimeRod, courtyard, drip, escapement, gearClank, gearWhirr, handCymbal, kos, naqqara, pipeFast, pour, ratchet, santur } from './synth/cezeri';
 import { foldLoop, loudness, master } from './synth/master';
 import { HALL, ROOM, makeImpulse, type ImpulseSpec } from './synth/reverb';
 import type { Score, KitHit, PitchedVoice, Track } from './scores/types';
@@ -94,10 +95,18 @@ function pitched(ctx: VoiceCtx, voice: PitchedVoice, freq: number, vel: number, 
     case 'ud': return ud(ctx, freq, vel, held, 0.5 + 0.3 * bright);
     case 'glassHarp': return glassHarpFast(ctx, freq, vel, held);
     case 'waterGlass': return waterGlassFast(ctx, freq, vel, 1, bright);
+    // Cezeri voices (synth/cezeri.ts)
+    case 'santur': return santur(ctx, freq, vel, held, bright);
+    case 'santurSoft': return santur(ctx, freq, vel * 0.85, held, bright * 0.55, { courses: 2, ring: 0.45 });
+    case 'pipe': return pipeFast(ctx, freq, vel, held, { rank: 'flute', chiff: bright });
+    case 'waterOrgan': return pipeFast(ctx, freq, vel, held, { rank: 'organ', chiff: bright });
+    case 'chimeRod': return chimeRod(ctx, freq, vel, bright);
+    case 'drip': return drip(ctx, freq, vel, bright);
   }
 }
 
-const KIT_PAN: Partial<Record<KitHit, number>> = { hat: -0.25, hatOpen: -0.3, shaker: 0.3, wood: 0.35, woodHi: -0.35, snap: 0.15, tomHi: 0.3, tomLo: -0.3, brush: 0.05, davulRim: 0.25, tek: -0.3, ka: -0.38, dum: -0.2, frame: 0.3, kudumDum: -0.22, kudumTek: 0.22, zil: 0.4, frameLo: 0.15 };
+const KIT_PAN: Partial<Record<KitHit, number>> = { hat: -0.25, hatOpen: -0.3, shaker: 0.3, wood: 0.35, woodHi: -0.35, snap: 0.15, tomHi: 0.3, tomLo: -0.3, brush: 0.05, davulRim: 0.25, tek: -0.3, ka: -0.38, dum: -0.2, frame: 0.3, kudumDum: -0.22, kudumTek: 0.22, zil: 0.4, frameLo: 0.15,
+  escTick: 0.32, escTock: -0.32, ratchet: 0.2, naqDum: -0.25, naqTek: 0.25, cymbal: 0.35, cymbalSoft: -0.35, clank: -0.1 };
 
 function kit(ctx: VoiceCtx, k: KitHit, v: number): Float32Array | Stereo {
   switch (k) {
@@ -132,6 +141,16 @@ function kit(ctx: VoiceCtx, k: KitHit, v: number): Float32Array | Stereo {
     case 'kudumTek': return kudum(ctx, v, 'tek');
     case 'zil': return zil(ctx, v);
     case 'frameLo': return frameDrum(ctx, v, 92);
+    case 'escTick': return escapement(ctx, v, 'tick');
+    case 'escTock': return escapement(ctx, v, 'tock');
+    case 'ratchet': return ratchet(ctx, v);
+    case 'clank': return gearClank(ctx, v, 1, false);
+    case 'naqDum': return naqqara(ctx, v, 'dum');
+    case 'naqTek': return naqqara(ctx, v, 'tek');
+    case 'kos': return kos(ctx, v);
+    case 'kosLo': return kos(ctx, v, 49);
+    case 'cymbal': return handCymbal(ctx, v);
+    case 'cymbalSoft': return handCymbal(ctx, v * 0.7, 0.45, 540);
   }
 }
 
@@ -226,6 +245,9 @@ async function renderTrack(score: Score, track: Track, st: Stereo, env: RenderEn
         case 'rain': putStereo(rain(ctx, dur, f.v, f.density ?? 1), s, 1, pan, track.width ?? 1); break;
         case 'wind': putStereo(wind(ctx, dur, f.v), s, 1, pan, track.width ?? 1); break;
         case 'water': putStereo(waterBed(ctx, dur, f.v, f.density ?? 1), s, 1, pan, track.width ?? 1); break;
+        case 'courtyard': putStereo(courtyard(ctx, dur, f.v), s, 1, pan, track.width ?? 1); break;
+        case 'whirr': putStereo(gearWhirr(ctx, dur, f.v, f.density ?? 70), s, 1, pan, track.width ?? 1); break;
+        case 'pour': putStereo(pour(ctx, dur, f.v), s, 1, pan, track.width ?? 1); break;
         case 'bubbles': putStereo(bubbles(ctx, dur, Math.max(1, Math.round((f.density ?? 20) * dur)), f.v, 380, 1700, f.shape === 'swell' ? 'swell' : f.shape === 'flat' ? 'flat' : 'decay'), s, 1, pan, track.width ?? 1); break;
         case 'swell': {
           // reversed cymbal that lands exactly on t + d
@@ -319,15 +341,18 @@ export function tameStem(st: Stereo, lo: number, hi: number, crestDb: number): v
 }
 
 const EBRU_VOICE_COST = { kanun: 2.6, kanunSoft: 2.2, ud: 2.6, glassHarp: 2.6, waterGlass: 10 } as const;
+/** Cezeri voices, weighted by their measured synthesis cost (filled in from the worker trace, see ops/evidence/cezeri-20261012). */
+const CEZERI_VOICE_COST = { santur: 3, santurSoft: 1.8, pipe: 1.6, waterOrgan: 2.4, chimeRod: 2, drip: 1.5 } as const;
+const VOICE_COST: Partial<Record<string, number>> = { ...EBRU_VOICE_COST, ...CEZERI_VOICE_COST };
 
 /** Rough synthesis cost of a track, for spreading tracks over workers. */
 export function trackCost(track: Track): number {
   switch (track.kind) {
     // Ebru voices are weighted by their measured synthesis cost (three-string Karplus-Strong, long glass tones)
-    case 'pitched': return track.notes.length * (track.voice === 'pluck' ? 0.6 : (EBRU_VOICE_COST as Partial<Record<string, number>>)[track.voice] ?? 1);
+    case 'pitched': return track.notes.length * (track.voice === 'pluck' ? 0.6 : VOICE_COST[track.voice] ?? 1);
     case 'pad': return track.chords.reduce((s, c) => s + c.ns.length * (c.d + 2), 0) * (track.voice === 'padSaw' ? 1.2 : track.voice === 'padChoir' || track.voice === 'padChoirMale' ? 1.6 : track.voice === 'padHorn' ? 1.3 : 0.6);
     case 'kit': return 4 + track.hits.length * 0.15;
-    case 'fx': return track.fx.reduce((s, f) => s + (f.k === 'room' ? 40 : f.k === 'rain' ? 60 : f.k === 'wind' ? 30 : f.k === 'water' ? 45 : f.k === 'riser' || f.k === 'rumble' ? 8 : 3) + f.d, 0);
+    case 'fx': return track.fx.reduce((s, f) => s + (f.k === 'room' ? 40 : f.k === 'rain' ? 60 : f.k === 'wind' ? 30 : f.k === 'water' ? 45 : f.k === 'courtyard' ? 70 : f.k === 'whirr' ? 1.2 * f.d : f.k === 'riser' || f.k === 'rumble' ? 8 : 3) + f.d, 0);
   }
 }
 
