@@ -91,18 +91,18 @@ export const CEZERI_SFX: SfxDef[] = [
     },
   },
   {
-    // the meshing gear train (flat level; the runtime bends its rate and level along the ring's speed)
+    // the meshing gear train (flat level; the runtime loops it and bends its rate and level along the ring's speed)
     id: 'ring-whirr', variations: 3, level: 'light', send: 0, jitter: [0, 0.5], core: true,
     build: (ctx, v) => {
-      const out = sized(ctx, 3.6);
-      st(out, gearWhirr(ctx, 3.5, 0.9, 64 + v * 6), 0, 1);
+      const out = sized(ctx, 2.5);
+      st(out, gearWhirr(ctx, 2.4, 0.9, 64 + v * 6), 0, 1);
       return out;
     },
   },
   /* ---------------- the hub ---------------- */
   ...(['hub-x1', 'hub-x2', 'hub-x3', 'hub-x5', 'hub-x10'] as const).map((id, rank): SfxDef => ({
     // the hub dial settles on its value: the escapement catch, the counter drum flip and a chime on C that grows with the value
-    id, variations: 3, level: rank >= 4 ? 'major' : rank >= 2 ? 'medium' : 'light', send: 0.24 + rank * 0.03, jitter: [10, 0.8], core: true,
+    id, variations: 3, level: rank >= 4 ? 'major' : rank >= 2 ? 'medium' : 'light', send: 0.24 + rank * 0.03, jitter: [10, 0.8], core: rank <= 2,
     build: (ctx, v) => {
       const out = sized(ctx, 1.2 + rank * 0.35), sr = ctx.sr;
       mono(out, escapement(ctx, 0.9, 'tick'), 0, 0.55);
@@ -126,7 +126,7 @@ export const CEZERI_SFX: SfxDef[] = [
     return {
       // hub +1 on respin k: the escapement catch, the counter flip and a chime on the k-th Nikriz degree above C5; every step
       // adds a layer (santur 2, naqqara 3, the fifth 4, kös 5, cymbal 6, water organ 7, choir 8, bell 9, the full mechanism 10)
-      id: `hub-step-${k}`, variations: 2, level: hubLevel(k), send: 0.26 + k * 0.012, jitter: [5, 0.5], core: k <= 4,
+      id: `hub-step-${k}`, variations: 2, level: hubLevel(k), send: 0.26 + k * 0.012, jitter: [5, 0.5], core: k <= 2,
       build: (ctx, v) => {
         const sr = ctx.sr, p = 72 + HUB_STEPS_NIKRIZ[k]!, pc = HUB_STEPS_NIKRIZ[k]! % 12;
         const out = sized(ctx, 1 + k * 0.13);
@@ -234,9 +234,9 @@ export const CEZERI_SFX: SfxDef[] = [
   /* ---------------- spoke wins ---------------- */
   ...([['beam-1', 72], ['beam-2', 84], ['beam-3', 96]] as const).map(([id, note]): SfxDef => ({
     // one beam chime (a chime rod and a santur strike on the same note); the runtime pitches it per ring along the ladder
-    id, variations: 3, level: 'light', send: 0.3, jitter: [6, 0.8], core: true,
+    id, variations: 3, level: 'light', send: 0.22, jitter: [6, 0.8], core: true,
     build: (ctx, v) => {
-      const out = sized(ctx, 1.3);
+      const out = sized(ctx, 1);
       mono(out, chimeRod(ctx, hz(note), 0.8, 0.7), 0, 0.6, (v - 1) * 0.15);
       mono(out, santur(ctx, hz(note - (note > 90 ? 12 : 0)), 0.55, 0.1, 1.2, { ring: 0.3 }), 0.002 * ctx.sr, 0.4);
       return out;
@@ -254,7 +254,7 @@ export const CEZERI_SFX: SfxDef[] = [
   },
   {
     // the Altın Dişli (gear wild) in a win: a burst of meshing gears and a golden chime arpeggio C–G–C–G
-    id: 'gear-wild', variations: 3, level: 'medium', send: 0.3, jitter: [12, 0.8], core: true,
+    id: 'gear-wild', variations: 3, level: 'medium', send: 0.3, jitter: [12, 0.8], core: false,
     build: (ctx, v) => {
       const out = sized(ctx, 1.6), sr = ctx.sr;
       const w = gearWhirr(ctx, 0.45, 0.8, 110 + v * 10);
@@ -268,7 +268,7 @@ export const CEZERI_SFX: SfxDef[] = [
   },
   {
     // generic win highlight: a santur roll on the open C chord and a chime
-    id: 'win', variations: 3, level: 'medium', send: 0.3, jitter: [20, 1], core: true,
+    id: 'win', variations: 3, level: 'medium', send: 0.3, jitter: [20, 1], core: false,
     build: (ctx, v) => {
       const out = sized(ctx, 1.6);
       const notes = [[60, 67, 72, 79], [60, 67, 74, 79], [67, 72, 79, 84]][v]!;
@@ -320,7 +320,7 @@ export const CEZERI_SFX: SfxDef[] = [
   },
   {
     // count-up finish: chime rods C–G, a santur roll on the open fifth, a kös and sparkles
-    id: 'ding', variations: 3, level: 'medium', send: 0.32, jitter: [6, 0.5], core: true,
+    id: 'ding', variations: 3, level: 'medium', send: 0.32, jitter: [6, 0.5], core: false,
     build: (ctx, v) => {
       const out = sized(ctx, 2.2);
       chimes(ctx, out, [[84, 0, 0.85], [v === 2 ? 93 : 91, 0.01, 0.6]], 0.45, 1);

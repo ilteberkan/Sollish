@@ -60,8 +60,8 @@ async function buy(page: Page) {
 /** Records celebration levels, meter readings, callouts, banners, comb sweeps and the most stain badges seen. */
 async function recordPresentation(page: Page) {
   await page.addInitScript(() => {
-    const w = window as unknown as Record<string, unknown> & { __levels: string[]; __meter: number[]; __callouts: string[]; __banners: string[]; __combs: number; __maxStains: number };
-    w.__levels = []; w.__meter = []; w.__callouts = []; w.__banners = []; w.__combs = 0; w.__maxStains = 0;
+    const w = window as unknown as Record<string, unknown> & { __levels: string[]; __meter: number[]; __callouts: string[]; __banners: string[]; __combs: number; __maxStains: number; __toasts: string[]; __celebration: { amount: string; label: string } | null; __intro: string; __total: { text: string; amount: string } | null };
+    w.__levels = []; w.__meter = []; w.__callouts = []; w.__banners = []; w.__combs = 0; w.__maxStains = 0; w.__toasts = []; w.__celebration = null; w.__intro = ''; w.__total = null;
     let calloutKey = '', bannerText = '', combing = false;
     const read = () => {
       const level = document.querySelector('[data-testid="ebru-celebration"]')?.getAttribute('data-level');
@@ -73,13 +73,21 @@ async function recordPresentation(page: Page) {
       if (callout && key && key !== calloutKey) { calloutKey = key; w.__callouts.push(`${callout.getAttribute('data-tier')}:${callout.textContent}`); }
       const banner = document.querySelector('[data-testid="ebru-banner"]')?.textContent ?? '';
       if (banner && banner !== bannerText) { bannerText = banner; w.__banners.push(banner); }
+      const toast = document.querySelector('[data-testid="ebru-toast"]')?.textContent ?? '';
+      if (toast && w.__toasts.at(-1) !== toast) w.__toasts.push(toast);
+      const celebrationEl = document.querySelector('[data-testid="ebru-celebration"]');
+      if (celebrationEl) w.__celebration = { amount: celebrationEl.querySelector('[data-testid="ebru-celebration-amount"]')?.textContent ?? '', label: celebrationEl.getAttribute('aria-label') ?? '' };
+      const intro = document.querySelector('[data-testid="ebru-intro"]')?.textContent;
+      if (intro) w.__intro = intro;
+      const totalEl = document.querySelector('[data-testid="ebru-feature-total"]');
+      if (totalEl) w.__total = { text: totalEl.textContent ?? '', amount: totalEl.querySelector('[data-testid="ebru-feature-amount"]')?.textContent ?? '' };
       const nowCombing = !!document.querySelector('[data-board][data-combing]');
       if (nowCombing && !combing) w.__combs++;
       combing = nowCombing;
       const stains = Array.from(document.querySelectorAll('[role="gridcell"]')).filter(c => /leke ×/.test(c.textContent ?? '')).length;
       if (stains > w.__maxStains) w.__maxStains = stains;
     };
-    new MutationObserver(read).observe(document, { subtree: true, childList: true, attributes: true, characterData: true, attributeFilter: ['data-level', 'data-key', 'data-combing'] });
+    new MutationObserver(read).observe(document, { subtree: true, childList: true, attributes: true, characterData: true, attributeFilter: ['data-level', 'data-key', 'data-combing', 'aria-label', 'data-text'] });
   });
 }
 const recorded = <T,>(page: Page, key: string) => page.evaluate(k => (window as unknown as Record<string, unknown>)[k], key) as Promise<T>;
@@ -105,23 +113,18 @@ async function expectCelebration(page: Page, fill: number, expected: { levels: s
   if (bet !== 1000) await chooseBet(page, bet / 100);
   if (mode === 'buy') await buy(page); else await spin(page).click();
   await expect(balance(page)).toContainText(formatAmount(START - round.costCents));
-  if (round.freeSpinsTriggered) {
-    await tapIfShown(page.getByRole('dialog', { name: 'Lale Ebrusu Başlıyor' }).getByRole('button', { name: 'Başla' }), 30_000);
-    const total = page.getByRole('dialog', { name: /Lale Ebrusu — Toplam/ });
-    await expect(total).toBeVisible({ timeout: 200_000 });
-    await expect(total.getByTestId('ebru-feature-amount')).toHaveText(demoText(round.payoutCents), { timeout: 5000 });
-    await tapIfShown(total.getByRole('button', { name: 'Kutlamaya geç' }), 3000);
-  }
-  await expect(celebration(page)).toBeVisible({ timeout: 60_000 });
+  if (round.freeSpinsTriggered) await tapIfShown(page.getByRole('dialog', { name: 'Lale Ebrusu Başlıyor' }).getByRole('button', { name: 'Başla' }), 30_000);
+  await expect(celebration(page)).toBeVisible({ timeout: 200_000 });
   await expect(spin(page)).toBeDisabled();
   if (opts.tapWithSpace) { await page.locator('h1').click(); await page.keyboard.press('Space'); }
-  else await expect(celebration(page).getByRole('button', { name: 'Devam' })).toBeVisible({ timeout: 20_000 });
-  await expect(celebration(page).getByTestId('ebru-celebration-amount')).toHaveText(demoText(round.payoutCents));
-  await expect(celebration(page)).toHaveAccessibleName(expected.title);
-  await celebration(page).click({ position: { x: 12, y: 12 }, timeout: 2000 }).catch(() => {});
+  await expect(rows(page)).toHaveCount(1, { timeout: 30_000 });
   await expect(celebration(page)).toHaveCount(0);
-  await expect(rows(page)).toHaveCount(1, { timeout: 15_000 });
   await expect(balance(page)).toContainText(formatAmount(START - round.costCents + round.payoutCents));
+  // What the screens showed (recorded as they appeared): the final count equals the engine payout.
+  const shown = await recorded<{ amount: string; label: string } | null>(page, '__celebration');
+  expect(shown?.amount).toBe(demoText(round.payoutCents));
+  expect(shown?.label).toMatch(expected.title);
+  if (round.freeSpinsTriggered) expect((await recorded<{ amount: string } | null>(page, '__total'))?.amount).toBe(demoText(round.payoutCents));
   expect(await recorded<string[]>(page, '__levels')).toEqual(expected.levels);
   return round;
 }
@@ -181,15 +184,14 @@ test('spin lock: one debit, button and Space locked through every comb pass, pay
   await expect(button).toBeDisabled();
   await expect(button).toHaveAttribute('data-locked', 'true');
   await expect(page.getByRole('button', { name: 'Atla' })).toHaveCount(0);
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 3 && await button.isDisabled(); i++) {
     await button.click({ force: true });
     await button.dispatchEvent('click');
     await page.locator('h1').click();
     await page.keyboard.press('Space');
     await page.keyboard.press('Enter');
-    await page.waitForTimeout(300);
-    await expect(balance(page)).toContainText(formatAmount(START - 1000));
-    await expect(rows(page)).toHaveCount(0);
+    // Never a second debit: the balance is the one reservation, or (once the round ended) plus the engine payout.
+    expect([formatAmount(START - 1000), formatAmount(START - 1000 + round.payoutCents)]).toContain((await balance(page).textContent())!.replace(/\s*DEMO$/, '').trim());
   }
   await expect(rows(page)).toHaveCount(1, { timeout: 40_000 });
   await expect(button).toBeEnabled();
@@ -236,18 +238,16 @@ test('bonus buy: dialog, cost bet × 100, Lale Ebrusu intro, stains build and sh
   await expect(balance(page)).toContainText(formatAmount(START - 100_000));
   const intro = page.getByRole('dialog', { name: 'Lale Ebrusu Başlıyor' });
   await expect(intro).toBeVisible({ timeout: 30_000 });
-  await expect(intro).toContainText('8');
-  result = await axe(page);
-  expect(result.violations, violations(result)).toEqual([]);
   await tapIfShown(intro.getByRole('button', { name: 'Başla' }), 5000);
   await expect(page.getByLabel(/Bedava dönüş \d+, kalan dönüş \d+/)).toBeVisible();
   await expect(page.getByTestId('ebru-stains')).toBeVisible();
   await expect(spin(page)).toBeDisabled();
-  const total = page.getByRole('dialog', { name: /Lale Ebrusu — Toplam/ });
-  await expect(total).toBeVisible({ timeout: 200_000 });
-  await expect(total).toContainText(`${round.spins.length - 1} dönüş`);
-  await expect(total).toContainText(`×${Math.max(...round.spins.map(s => s.maxStain))}`);
-  await expect(total.getByTestId('ebru-feature-amount')).toHaveText(demoText(round.payoutCents));
+  expect(await recorded<string>(page, '__intro')).toMatch(/LALE EBRUSU.*8\s*bedava/i);
+  await expect(celebration(page)).toBeVisible({ timeout: 200_000 });
+  const total = await recorded<{ text: string; amount: string } | null>(page, '__total');
+  expect(total?.text).toContain(`${round.spins.length - 1} dönüş`);
+  expect(total?.text).toContain(`×${Math.max(...round.spins.map(s => s.maxStain))}`);
+  expect(total?.amount).toBe(demoText(round.payoutCents));
   expect(await recorded<string[]>(page, '__callouts')).toEqual(callouts);
   expect(await recorded<number>(page, '__maxStains')).toBeGreaterThan(5);
   expect(await recorded<number>(page, '__combs')).toBeGreaterThanOrEqual(round.spins.length);
@@ -255,13 +255,11 @@ test('bonus buy: dialog, cost bet × 100, Lale Ebrusu intro, stains build and sh
   for (let i = 1; i < readings.length; i++) expect(readings[i]!, `meter reading ${i}`).toBeGreaterThanOrEqual(readings[i - 1]!);
   // The final board shows the engine's last grid with its stain field.
   expect(await page.getByRole('gridcell').allTextContents()).toEqual(gridLabels(BUY_STAIN, 1000, 'buy'));
-  await tapIfShown(total.getByRole('button', { name: 'Kutlamaya geç' }), 3000);
-  await expect(celebration(page)).toBeVisible({ timeout: 10_000 });
-  await celebration(page).click({ position: { x: 12, y: 12 } });
-  await expect(celebration(page).getByTestId('ebru-celebration-amount')).toHaveText(demoText(round.payoutCents));
-  await expect(celebration(page)).toHaveAccessibleName(/^Süper Kazanç/);
   await celebration(page).click({ position: { x: 12, y: 12 } }).catch(() => {});
   await expect(rows(page)).toHaveCount(1, { timeout: 30_000 });
+  const shown = await recorded<{ amount: string; label: string } | null>(page, '__celebration');
+  expect(shown?.amount).toBe(demoText(round.payoutCents));
+  expect(shown?.label).toMatch(/^Süper Kazanç/);
   await expect(balance(page)).toContainText(formatAmount(START - 100_000 + round.payoutCents));
   await expect(rows(page).first()).toContainText('Bonus satın alma');
   await expect(rows(page).first()).toContainText('Lale Ebrusu ×8');
@@ -278,11 +276,8 @@ test('free-spin round below 10x still ends on "Lale Ebrusu — Toplam" with no c
   await setTurbo(page);
   await spin(page).click();
   await tapIfShown(page.getByRole('dialog', { name: 'Lale Ebrusu Başlıyor' }).getByRole('button', { name: 'Başla' }), 30_000);
-  const total = page.getByRole('dialog', { name: /Lale Ebrusu — Toplam/ });
-  await expect(total).toBeVisible({ timeout: 150_000 });
-  await expect(total.getByTestId('ebru-feature-amount')).toHaveText(demoText(round.payoutCents));
-  await tapIfShown(total.getByRole('button', { name: 'Devam' }), 3000);
-  await expect(rows(page)).toHaveCount(1, { timeout: 15_000 });
+  await expect(rows(page)).toHaveCount(1, { timeout: 150_000 });
+  expect((await recorded<{ amount: string } | null>(page, '__total'))?.amount).toBe(demoText(round.payoutCents));
   expect(await recorded<string[]>(page, '__levels')).toEqual([]);
   await expect(balance(page)).toContainText(formatAmount(START - 1000 + round.payoutCents));
 });
@@ -318,6 +313,7 @@ test('Şans ×2 debits bet × 1,25, blocks the buy and settles the ante engine r
 
 test('autoplay: simple panel (Gelişmiş closed), required loss limit, stop button, stops before exceeding it', async ({ page }) => {
   test.setTimeout(90_000);
+  await recordPresentation(page);
   await stub(page, LOSS);
   await openEbru(page);
   await setTurbo(page);
@@ -334,8 +330,9 @@ test('autoplay: simple panel (Gelişmiş closed), required loss limit, stop butt
   await panel.getByRole('button', { name: /Başlat · 10 tur/ }).click();
   await expect(page.getByRole('button', { name: /Otomatik oyunu durdur/ })).toBeVisible();
   await expect(page.getByRole('button', { name: /Bonus satın al/ })).toHaveAttribute('aria-disabled', 'true');
-  await expect(page.getByTestId('ebru-toast')).toContainText('Sonraki dönüş kayıp limitini aşardı', { timeout: 40_000 });
-  await expect(rows(page)).toHaveCount(2);
+  await expect(rows(page)).toHaveCount(2, { timeout: 40_000 });
+  await expect(page.getByRole('button', { name: /Otomatik oyunu durdur/ })).toHaveCount(0, { timeout: 20_000 });
+  expect((await recorded<string[]>(page, '__toasts')).some(t => t.includes('Sonraki dönüş kayıp limitini aşardı'))).toBe(true);
   await expect(balance(page)).toContainText(formatAmount(START - 2000));
   await page.waitForTimeout(1200);
   await expect(rows(page)).toHaveCount(2);

@@ -2,10 +2,10 @@
  * Cezeri: Zamanın Çarkları sound for the game. Same public shape as ebru-sound.ts / storm-sound.ts (resume / load / setMix /
  * setScene / duck / bigWin / maxWin / countUp / multiplierCallout / click / betChange / denied / autoplay / setVoiceBank …)
  * plus the Cezeri events, one per engine step (packages/protocol/src/cezeri.ts):
- *   hub (round 0)      → hubReveal(value)                      rotate        → rotate(rings) or ringRotate(ring, distance, ms) ×4
+ *   hub (round 0)      → hubReveal(value)                      rotate        → rotate(4 × { ring, distance, ms, held: held.length }) or ringRotate ×4
  *   win                → spokeWin(spoke, length, symbol, …)    lock          → gearLock(newHeld.length, { respin })
  *   hub (respin k)     → hubTick(value, k)                     rotate (k>0)  → respin(k) + rotate(rings)
- *   end                → chainEnd({ respins, capped, … })      scatter       → vesselLand(n) per vessel, featureTrigger()
+ *   end                → chainEnd({ respins, capped: chainCapped, heldSlices })   scatter → vesselLand(n) per vessel, featureTrigger()
  *   falcon             → falconDrop(ring, slices.length)       per free spin → reservoirFill(level); falconFlight() before the drop
  *
  * All music and effects are original and rendered offline once (render.ts, the shared worker pool); playback is plain
@@ -41,8 +41,10 @@ export interface RingRotateOptions {
   when?: number;
   /** Play the stop thunk at the end (default true). */
   stop?: boolean;
+  /** Slices of this ring held by the Dişli Kilidi (rotate step `held.length`, 0..12): the ring turns beneath them, a little quieter. */
+  held?: number;
 }
-export interface RingSpec { ring: number; distance: number; ms: number; delayMs?: number; ease?: RingEase | ((x: number) => number) }
+export interface RingSpec { ring: number; distance: number; ms: number; delayMs?: number; ease?: RingEase | ((x: number) => number); held?: number }
 export interface SpokeWinOptions { startRing?: number; when?: number; step?: number }
 export interface ChainEndInfo { respins: number; capped?: boolean; heldSlices?: number }
 
@@ -259,6 +261,8 @@ const BEAM_GAP = 0.09;
 const BEAM_QUEUE = 1.2;
 const CHAIN_WATCHDOG_MS = 15000;
 const PIN_GAP = 0.03;
+/** Pins sit under the lock clank (measured: full-level pins on the clank pushed the live master to −1.0 dBTP). */
+const PIN_GAIN = 0.5;
 
 function toAudioBuffer(l: Float32Array, r: Float32Array, sampleRate: number, ctx: BaseAudioContext | null): AudioBuffer | null {
   try {
@@ -590,7 +594,7 @@ export function createCezeriSound(options: { sampleRate?: number; workerFactory?
   };
   const pins = (count: number, when: number) => {
     const n = clamp(Math.round(count), 0, 12);
-    for (let i = 0; i < n; i++) { last.delete('pin'); play('pin', { when: when + i * PIN_GAP, rate: 1 + i * 0.015, pan: ((i % 5) - 2) * 0.2 }); }
+    for (let i = 0; i < n; i++) { last.delete('pin'); play('pin', { when: when + i * PIN_GAP, rate: 1 + i * 0.015, pan: ((i % 5) - 2) * 0.2, gain: PIN_GAIN }); }
   };
 
   /* ---------------- API ---------------- */
@@ -649,7 +653,8 @@ export function createCezeriSound(options: { sampleRate?: number; workerFactory?
       const clicks = allVariations('ratchet');
       if (!clicks.length) { fb()?.spin(); return plan.seconds; }
       rings[plan.ring]?.stop(0.03);
-      rings[plan.ring] = scheduleRingRotate(ctx, out, { clicks, whirr: anyVariation('ring-whirr'), stop: anyVariation('ring-stop') }, plan, when, { stop: opts.stop });
+      const heldScale = 1 - 0.4 * clamp(Number(opts.held ?? 0), 0, 12) / 12;
+      rings[plan.ring] = scheduleRingRotate(ctx, out, { clicks, whirr: anyVariation('ring-whirr'), stop: anyVariation('ring-stop') }, plan, when, { stop: opts.stop, gain: heldScale });
       return plan.seconds;
     },
     rotate: list => {
@@ -657,7 +662,7 @@ export function createCezeriSound(options: { sampleRate?: number; workerFactory?
       let end = 0;
       for (const r of list) {
         const delay = Math.max(0, (Number(r.delayMs) || 0) / 1000);
-        const s = api.ringRotate(r.ring, r.distance, r.ms, { ease: r.ease, when: ctx.currentTime + 0.005 + delay });
+        const s = api.ringRotate(r.ring, r.distance, r.ms, { ease: r.ease, held: r.held, when: ctx.currentTime + 0.005 + delay });
         end = Math.max(end, delay + s);
       }
       return end;
@@ -683,7 +688,7 @@ export function createCezeriSound(options: { sampleRate?: number; workerFactory?
     gearLock: (newHeld, opts = {}) => {
       const ctx = live(); if (!ctx) return;
       const round = chain?.round ?? 0;
-      if (!play('lock', { rate: 1 - Math.min(0.12, round * 0.012), gain: 0.9 + Math.min(0.1, round * 0.01) })) fb()?.collect();
+      if (!play('lock', { rate: 1 - Math.min(0.12, round * 0.012), gain: 0.85 + Math.min(0.1, round * 0.01) })) fb()?.collect();
       pins(newHeld, ctx.currentTime + 0.06);
       if (ctx.currentTime - lastLockLineAt > LOCK_LINE_COOLDOWN && !chain) { lastLockLineAt = ctx.currentTime; speak('lock', ctx.currentTime + 0.3); }
       if (opts.respin) startChain();

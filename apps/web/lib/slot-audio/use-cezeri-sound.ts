@@ -7,7 +7,7 @@
  * load from /audio/voice/cezeri (missing files are skipped by the engine). Same pattern as use-ebru-sound.ts.
  *
  * Engine step → call (packages/protocol/src/cezeri.ts, one spin):
- *   spin start → spinStart() · hub r0 → hubReveal(value) · rotate → rotate([{ ring, distance, ms, delayMs, ease }]) ·
+ *   spin start → spinStart() · hub r0 → hubReveal(value) · rotate → rotate([{ ring, distance, ms, delayMs, ease, held: held.length }] ×4) ·
  *   win → spokeWin(spoke, length, symbol, startRing) · lock → gearLock(newHeld.length, respin) ·
  *   hub rk → hubTick(value, k) · rotate rk → respin(k) + rotate(...) · end → chainEnd(respins, chainCapped, heldSlices) ·
  *   scatter → vesselLand(n)… + featureTrigger() / retrigger() · after a free spin → reservoirFill(level) ·
@@ -21,7 +21,8 @@ export interface CezeriSoundLoadState { started: boolean; ready: boolean; percen
 type Engine = Record<string, unknown>;
 type Progress = { done: number; total: number };
 export type CezeriRingEase = 'linear' | 'outQuad' | 'outCubic' | 'outQuart' | 'outExpo' | 'inOutCubic';
-export interface CezeriRingSound { ring: number; distance: number; ms: number; delayMs?: number; ease?: CezeriRingEase }
+/** One ring of a rotate step: slices passed (the board's animation distance), animation ms, start delay, easing, and `held` = that ring's rotate.rings[i].held.length. */
+export interface CezeriRingSound { ring: number; distance: number; ms: number; delayMs?: number; ease?: CezeriRingEase; held?: number }
 
 export const CEZERI_VOICE_BANK = '/audio/voice/cezeri';
 
