@@ -8,10 +8,11 @@ import { SymbolArt, type CascadeArtSymbol } from './cascade/symbols';
 import { StormSymbolArt, type StormSymbol } from './storm/symbols';
 import { EbruStainArt, EbruSymbolArt, type EbruSymbol } from './ebru/symbols';
 import { CezeriSymbolArt, type CezeriSymbol } from './cezeri/symbols';
+import { AsenaSymbolArt, type AsenaSymbol } from './asena/symbols';
 import styles from './rgs-pages.module.css';
 
 const api = configuredApi(process.env.NEXT_PUBLIC_API_URL);
-const GAME_NAMES: Record<string, string> = { cascade: 'Candy Cascade', tarhun: 'Tarhun: Fırtına Tahtı', ebru: 'Ebru: Mürekkep Bahçesi', cezeri: 'Cezeri: Zamanın Çarkları' };
+const GAME_NAMES: Record<string, string> = { cascade: 'Candy Cascade', tarhun: 'Tarhun: Fırtına Tahtı', ebru: 'Ebru: Mürekkep Bahçesi', cezeri: 'Cezeri: Zamanın Çarkları', asena: 'Asena: Yıldız Kurdu' };
 const MODE_NAMES: Record<string, string> = { standard: 'Standart', ante: 'Şans ×2', buy: 'Bonus satın alma' };
 const times = (hundredths: number) => (hundredths / 100).toFixed(2).replace('.', ',');
 type State = { phase: 'loading' } | { phase: 'error'; message: string } | { phase: 'ready'; replay: RemoteReplay; frames: ReturnType<typeof replayFrames>; verified: RowStatus };
@@ -22,6 +23,7 @@ function Cell({ game, cell, win }: { game: string; cell: ReplayCell; win: boolea
       {game === 'cascade' ? <SymbolArt symbol={cell.symbol as CascadeArtSymbol} multiplier={cell.multiplier} size="100%" />
         : game === 'ebru' ? <EbruSymbolArt symbol={cell.symbol as EbruSymbol} size="100%" />
         : game === 'cezeri' ? <CezeriSymbolArt symbol={cell.symbol as CezeriSymbol} size="100%" />
+        : game === 'asena' ? <AsenaSymbolArt symbol={cell.symbol as AsenaSymbol} size="100%" />
         : <StormSymbolArt symbol={cell.symbol as StormSymbol} multiplier={cell.multiplier} size="100%" />}
       {cell.stain ? <span className={styles.stain}><EbruStainArt value={cell.stain} size="100%" /></span> : null}
       {cell.multiplier ? <span className={styles.mult}>×{cell.multiplier}</span> : null}
@@ -81,7 +83,7 @@ export function ReplayView({ id }: { id: string }) {
         {frame ? (
           <>
             <p className={styles.meta} aria-live="polite">{frame.kind === 'base' ? 'Temel dönüş' : `Bedava dönüş ${frame.spin}`} · adım {frame.step + 1}/{frame.steps}{frame.stepHundredths > 0 ? ` · +${times(frame.stepHundredths)}×` : ''}{frame.step === frame.steps - 1 ? ` · toplam ${times(frame.totalAfterHundredths)}×` : ''}</p>
-            <div className={styles.board} role="img" aria-label={`Izgara, ${frame.winIds.length} kazanan ${replay.game === 'ebru' ? 'damla' : replay.game === 'cezeri' ? 'dilim' : 'taş'}`}
+            <div className={styles.board} role="img" aria-label={`Izgara, ${frame.winIds.length} kazanan ${replay.game === 'ebru' ? 'damla' : replay.game === 'cezeri' ? 'dilim' : replay.game === 'asena' ? 'yıldız' : 'taş'}`}
               style={{ gridTemplateColumns: `repeat(${frame.grid.length}, minmax(0, 1fr))`, aspectRatio: `${frame.grid.length} / ${frame.grid[0]?.length ?? 5}` }}>
               {Array.from({ length: frame.grid[0]?.length ?? 0 }, (_, row) => row).flatMap(row => frame.grid.map((column, col) => { const cell = column[row]!; return <Cell key={`${col}-${row}-${cell.id}`} game={replay.game} cell={cell} win={winSet.has(cell.id)} />; }))}
             </div>

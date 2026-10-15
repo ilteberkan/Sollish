@@ -10,6 +10,7 @@ const solo = [
   { title: 'Tarhun: Fırtına Tahtı', href: '/game/tarhun', text: 'Fırtına tanrısı taşlara yıldırım atar; çarpanlar bedava dönüşte birikir.', type: 'Tumble · çarpan', art: 'storm' },
   { title: 'Ebru: Mürekkep Bahçesi', href: '/game/ebru', text: 'Tarak suyu tarar, mürekkep dalga dalga yeniden dizilir; boya lekeleri çarpanla birlikte kayar.', type: 'Küme · tarak', art: 'ink' },
   { title: 'Cezeri: Zamanın Çarkları', href: '/game/cezeri', text: 'Dört pirinç çark döner; kazanan dilimler kenetlenir, çarklar yeniden döner ve göbek çarpanı her turda +1 atar.', type: 'Çark · zincir', art: 'gears' },
+  { title: 'Asena: Yıldız Kurdu', href: '/game/asena', text: 'Kümeler gökte takımyıldız çizer, Gök Kurt yürüyüp yıldız izi bırakır; Ergenekon haritası genel çarpanı ×5’e kadar açar.', type: 'Küme · takımyıldız', art: 'stars' },
 ] as const;
 export default function Games() { return <div className={styles.page}>
   <Link href="/live/ringside" prefetch={false} className={styles.hero} aria-label="Ringside canlı arenaya gir">
@@ -30,6 +31,8 @@ export default function Games() { return <div className={styles.page}>
         ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 20c6-2 11-7 18-16"/><path d="M15 4h6v6"/></svg>
         : game.art === 'storm'
         ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"><path d="M5 9.5a4.5 4.5 0 0 1 8.6-1.9A3.6 3.6 0 0 1 19.5 10a3 3 0 0 1-1 5.5H6.8A3.3 3.3 0 0 1 5 9.5Z"/><path d="m12.5 12.5-2.2 4h3l-1.8 4.5"/></svg>
+        : game.art === 'stars'
+        ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 17.5 9.5 9l5 3.5L19 5"/><circle cx="5" cy="17.5" r="1.6" fill="currentColor"/><circle cx="9.5" cy="9" r="1.6" fill="currentColor"/><circle cx="14.5" cy="12.5" r="1.6" fill="currentColor"/><circle cx="19" cy="5" r="1.6" fill="currentColor"/><path d="M14.5 12.5 17 19"/><circle cx="17" cy="19" r="1.2"/></svg>
         : game.art === 'gears'
         ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="9" cy="10" r="3"/><path d="M9 3.5v2M9 14.5v2M2.5 10h2M13.5 10h2M4.4 5.4l1.4 1.4M12.2 13.2l1.4 1.4M4.4 14.6l1.4-1.4M12.2 6.8l1.4-1.4"/><circle cx="17" cy="17" r="2.2"/><path d="M17 12.8v1.6M17 19.6v1.6M12.8 17h1.6M19.6 17h1.6"/></svg>
         : game.art === 'ink'

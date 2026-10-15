@@ -276,7 +276,7 @@ const Hub = memo(function Hub({ initial, uid, ref }: { initial: number; uid: str
   const box = { left: `${((CZ_C - hubBox) / 10)}%`, top: `${((CZ_C - hubBox) / 10)}%`, width: `${(hubBox * 2) / 10}%`, height: `${(hubBox * 2) / 10}%` };
   const vb = `${CZ_C - hubBox} ${CZ_C - hubBox} ${hubBox * 2} ${hubBox * 2}`;
   return (
-    <div className={styles.hub} style={box} data-digits={digits.length}>
+    <div className={styles.hub} style={box} data-digits={digits.length} aria-hidden="true">
       <div ref={teethRef} className={styles.hubTeeth}>
         <svg viewBox={vb} aria-hidden="true" focusable="false">
           <path d={gearTeethPath(CZ_HUB_R - 2, CZ_HUB_R + 9, 15, 7.5, 0.5)} fill={P.brass.base} stroke="#1a0e03" strokeWidth="1.4" strokeLinejoin="round" />
@@ -293,7 +293,7 @@ const Hub = memo(function Hub({ initial, uid, ref }: { initial: number; uid: str
         <circle cx={CZ_C} cy={CZ_C} r={CZ_HUB_R - 22} fill={`url(#${id('face')})`} stroke="#1a0e03" strokeWidth="2" />
         <path d={`M${CZ_C - 60} ${CZ_C - 30}Q${CZ_C - 40} ${CZ_C - 64} ${CZ_C} ${CZ_C - 70}`} fill="none" stroke="#fff" strokeWidth="5" strokeLinecap="round" opacity=".5" />
       </svg>
-      <div ref={windowRef} className={styles.hubWindow} role="status" aria-live="polite" aria-label={`Göbek çarpanı ×${digits.join('')}`}>
+      <div ref={windowRef} className={styles.hubWindow}>
         <span className={styles.hubX}>×</span>
         {digits.map((_, i) => (
           <span key={`${digits.length}-${i}`} className={styles.drum}>
@@ -332,7 +332,7 @@ function Plate({ ring, slice, symbol, kind, fresh, uid }: { ring: number; slice:
     for (const f of [0.06, 0.94]) { const r = bnd.inner + L * f; const p = polar(r, c + side * (CZ_SLICE_DEG / 2 - 560 / r)); bolts.push([r2(p.x), r2(p.y)]); }
   }
   return (
-    <div className={styles.plate} style={style} data-kind={kind} data-fresh={fresh ? '' : undefined} role="gridcell" aria-label={`${CEZERI_SYMBOL_LABELS[symbol]}${gold ? ', kalıcı joker' : ', kilitli'}`}>
+    <div className={styles.plate} style={style} data-kind={kind} data-fresh={fresh ? '' : undefined} aria-hidden="true">
       <svg viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`} className={styles.plateSvg} aria-hidden="true" focusable="false">
         <path d={d} fill="none" stroke={gold ? '#ffcf5a' : '#5ff0e0'} strokeWidth="16" opacity=".35" />
         <path d={d} fill={gold ? 'url(#' + uid + 'pinFill)' : 'url(#' + uid + 'heldFill)'} stroke="#140a02" strokeWidth="8" />
@@ -350,8 +350,8 @@ function Plate({ ring, slice, symbol, kind, fresh, uid }: { ring: number; slice:
 }
 
 /** One ring layer; memoised so a ring swap re-renders only that ring (masks are 12-char strings). */
-const RingLayer = memo(function RingLayer({ ring, uid, slices, spin, under, win, vessel, ringRefs, cellRefs }: {
-  ring: number; uid: string; slices: readonly CezeriSymbol[]; spin: boolean; under: string; win: string; vessel: string;
+const RingLayer = memo(function RingLayer({ ring, uid, slices, spin, under, pin, win, vessel, ringRefs, cellRefs }: {
+  ring: number; uid: string; slices: readonly CezeriSymbol[]; spin: boolean; under: string; pin: string; win: string; vessel: string;
   ringRefs: React.RefObject<Array<HTMLDivElement | null>>; cellRefs: React.RefObject<Array<HTMLDivElement | null>>;
 }) {
   return (
@@ -362,7 +362,7 @@ const RingLayer = memo(function RingLayer({ ring, uid, slices, spin, under, win,
         const u = under[s] === '1';
         return (
           <div key={s} ref={(el) => { cellRefs.current[k] = el; }} className={styles.cell} style={cellStyle(ring, s)}
-            role="gridcell" aria-label={CEZERI_SYMBOL_LABELS[sym]} aria-hidden={u || undefined}
+            role="gridcell" aria-label={`${CEZERI_SYMBOL_LABELS[pin[s] === '1' ? 'gear' : sym]}${pin[s] === '1' ? ', kalıcı joker' : u ? ', kilitli' : ''}`}
             data-under={u ? '' : undefined} data-win={win[s] === '1' ? '' : undefined} data-vessel={vessel[s] === '1' ? '' : undefined}>
             <div className={styles.cellArt}><CezeriSymbolUse symbol={sym} /></div>
           </div>
@@ -491,10 +491,10 @@ export function CezeriBoard({ initial, hubValue = 1, mood = 'base', className, s
         const mask = (set: Set<number>, also?: Set<number>) => { let m = ''; for (let s = 0; s < CZ_SLICES; s++) { const k = key(ring, s); m += set.has(k) || also?.has(k) ? '1' : '0'; } return m; };
         return (
           <RingLayer key={ring} ring={ring} uid={uid} slices={slices[ring]!} spin={spinning[ring]!}
-            under={mask(new Set(held.keys()), pinned)} win={mask(wins)} vessel={mask(vessels)} ringRefs={ringRefs} cellRefs={cellRefs} />
+            under={mask(new Set(held.keys()), pinned)} pin={mask(pinned)} win={mask(wins)} vessel={mask(vessels)} ringRefs={ringRefs} cellRefs={cellRefs} />
         );
       })}
-      <div className={styles.overlay}>
+      <div className={styles.overlay} aria-hidden="true">
         <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false">
           <defs>
             <radialGradient id={`${uid}heldFill`} cx="500" cy="500" r="500" gradientUnits="userSpaceOnUse"><stop offset=".15" stopColor="#2a9a9a" /><stop offset=".55" stopColor="#127078" /><stop offset="1" stopColor="#063a40" /></radialGradient>

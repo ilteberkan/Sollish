@@ -1,0 +1,181 @@
+/* Asena celebration, Ergenekon intro / total screens and the global-multiplier burst. Original lockups (night banner
+   with the star-wolf crest, constellation rays), tier colours from the steppe night: ice, aurora, violet, ember, gold.
+   Only transform/opacity animate; reduced motion keeps every screen static. */
+
+.back,
+.front {
+  position: absolute;
+  inset: 0;
+  /* Büyük: moonlit ice */
+  --c-hi: #eaf4ff;
+  --c-mid: #8fc4ff;
+  --c-lo: #2a4a9a;
+  --c-ink: #050a26;
+  --c-glow: rgba(140, 200, 255, 0.5);
+  --c-field: #121a5a;
+  --c-field-hi: #2c3ca8;
+}
+.back { z-index: 8; pointer-events: none; overflow: hidden; }
+.front {
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+/* Mega: aurora turquoise */
+.back[data-level='2'], .front[data-level='2'] { --c-hi: #d8fff6; --c-mid: #3fe6c8; --c-lo: #086a6a; --c-ink: #021e22; --c-glow: rgba(70, 240, 200, 0.5); --c-field: #07324a; --c-field-hi: #116a7a; }
+/* Süper: aurora violet */
+.back[data-level='3'], .front[data-level='3'] { --c-hi: #f0e2ff; --c-mid: #b07cff; --c-lo: #4a2296; --c-ink: #12063a; --c-glow: rgba(170, 120, 255, 0.55); --c-field: #1c0a52; --c-field-hi: #4a2aa8; }
+/* Efsane: forge ember of Ergenekon */
+.back[data-level='4'], .front[data-level='4'] { --c-hi: #ffe6c8; --c-mid: #ff8a3a; --c-lo: #8a240a; --c-ink: #2a0602; --c-glow: rgba(255, 130, 60, 0.55); --c-field: #3a0e10; --c-field-hi: #8a2a1a; }
+/* Azami: Kün Ana gold */
+.back[data-level='5'], .front[data-level='5'] { --c-hi: #ffffff; --c-mid: #ffd970; --c-lo: #a8680c; --c-ink: #241400; --c-glow: rgba(255, 236, 170, 0.72); --c-field: #3a2406; --c-field-hi: #8a5a12; }
+/* Ergenekon screens: aurora green over night blue */
+.back[data-level='intro'], .front[data-level='intro'],
+.back[data-level='feature'], .front[data-level='feature'] { --c-hi: #d8fff0; --c-mid: #6dffb4; --c-lo: #0a6a5a; --c-ink: #021a1c; --c-glow: rgba(90, 255, 190, 0.42); --c-field: #0c1a50; --c-field-hi: #1c3a8a; }
+
+.dim { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 46%, rgba(4, 6, 26, 0.55), rgba(2, 3, 12, 0.9)); animation: fadeIn 0.35s ease-out both; }
+.halo {
+  position: absolute; left: 50%; top: 46%; width: min(120vmin, 1100px); aspect-ratio: 1; translate: -50% -50%; border-radius: 50%;
+  background: radial-gradient(circle, var(--c-glow) 0%, transparent 62%);
+  animation: fadeIn 0.6s ease-out both, breathe 3.4s ease-in-out 0.6s infinite alternate;
+}
+.rays { position: absolute; left: 50%; top: 46%; width: min(108vmin, 960px); aspect-ratio: 1; translate: -50% -50%; overflow: visible; }
+.raysBack { animation: spin var(--spin, 40s) linear infinite, bloomIn 0.9s cubic-bezier(0.2, 1, 0.3, 1) both; opacity: 0.9; }
+.raysCounter { width: min(72vmin, 660px); animation: spin calc(var(--spin, 40s) * 1.4) linear infinite reverse, bloomIn 0.9s ease-out both; opacity: 0.6; }
+.flash { position: absolute; inset: 0; background: radial-gradient(circle at 50% 44%, rgba(255, 255, 255, 0.85), var(--c-glow) 40%, transparent 72%); animation: flash 0.7s ease-out both; }
+
+.column {
+  position: relative; width: min(560px, 100%); display: flex; flex-direction: column; align-items: center; gap: 10px;
+  text-align: center; color: #fff; font-family: var(--font-barlow, system-ui, sans-serif);
+}
+.pips { display: flex; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.pips li {
+  min-width: 52px; padding: 4px 8px; border-radius: 999px; font-size: 13px; font-weight: 700; color: rgba(255, 255, 255, 0.5);
+  background: rgba(4, 8, 30, 0.66); box-shadow: inset 0 0 0 1px rgba(190, 220, 255, 0.2); transition: background 0.3s ease, color 0.3s ease;
+}
+.pips li[data-on] { color: var(--c-ink); background: linear-gradient(180deg, var(--c-hi), var(--c-mid)); box-shadow: 0 0 14px var(--c-glow); }
+.lockup { position: relative; width: 100%; aspect-ratio: 520 / 190; display: grid; place-items: center; animation: unfurl 0.75s cubic-bezier(0.2, 1.25, 0.35, 1) both; }
+.banner { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.6)); }
+.word { position: relative; display: inline-block; font-size: clamp(44px, 11vw, 86px); font-weight: 800; line-height: 1; letter-spacing: 3px; transform: translateY(4%); }
+.word::before { content: attr(data-text); position: absolute; inset: 0; color: transparent; -webkit-text-stroke: 10px var(--c-ink); text-shadow: 0 6px 0 var(--c-ink), 0 0 28px var(--c-glow); }
+.wordFill { position: relative; background: linear-gradient(180deg, #ffffff 0%, var(--c-hi) 32%, var(--c-mid) 64%, var(--c-lo) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.tierWord { font-size: clamp(40px, 10vw, 80px); }
+.sub { position: absolute; left: 50%; bottom: 14%; translate: -50% 0; font-size: clamp(11px, 2.6vw, 15px); font-weight: 700; letter-spacing: 7px; color: #dcecff; text-shadow: 0 2px 0 #000; white-space: nowrap; }
+.plaque {
+  display: flex; align-items: baseline; gap: 8px; padding: 6px 28px 8px; border-radius: 999px;
+  background: linear-gradient(180deg, rgba(8, 12, 44, 0.9), rgba(3, 5, 18, 0.94));
+  box-shadow: inset 0 0 0 2px rgba(255, 217, 112, 0.55), inset 0 0 0 5px rgba(10, 14, 50, 0.9), inset 0 0 0 6px rgba(255, 217, 112, 0.25), 0 0 40px -6px var(--c-glow);
+}
+.amount { position: relative; font-size: clamp(36px, 9vw, 64px); font-weight: 800; line-height: 1.05; font-variant-numeric: tabular-nums; }
+.amount::before { content: attr(data-text); position: absolute; inset: 0; color: transparent; -webkit-text-stroke: 6px #050a20; }
+.amountFill { position: relative; background: linear-gradient(180deg, #fffdf0 0%, #ffe7a0 42%, #f2a42a 72%, #a8560e 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.unit { font-size: 16px; font-weight: 700; letter-spacing: 1.5px; color: #dfe8ff; }
+.mult { padding: 3px 14px; border-radius: 999px; font-size: 16px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; background: rgba(3, 5, 22, 0.76); text-shadow: 0 1px 2px #000; }
+.capNote { margin: 0; padding: 4px 14px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--c-hi); background: rgba(3, 5, 22, 0.8); text-shadow: 0 1px 2px #000; }
+.tap, .go {
+  margin-top: 6px; min-height: 48px; min-width: 180px; padding: 0 26px; border-radius: 999px; border: 0;
+  font: 700 16px/1 var(--font-barlow, system-ui, sans-serif); letter-spacing: 0.5px; color: #1a0e00;
+  background: linear-gradient(180deg, #fff7d6, #ffd970 52%, #b0560e);
+  box-shadow: inset 0 -3px 6px rgba(90, 40, 0, 0.45), inset 0 2px 2px rgba(255, 255, 255, 0.85), 0 0 0 3px rgba(4, 8, 30, 0.8), 0 10px 22px -8px rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+}
+.tap:focus-visible, .go:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+/* Ergenekon intro */
+.introColumn { gap: 12px; }
+.seals { display: flex; gap: 12px; }
+.seal { width: clamp(54px, 12vw, 80px); aspect-ratio: 1; animation: sealIn 0.7s cubic-bezier(0.2, 1.4, 0.4, 1) both; animation-delay: calc(var(--i) * 130ms); }
+.seal > svg { width: 100%; height: 100%; }
+.introTitle { margin: 0; animation: unfurl 0.75s cubic-bezier(0.2, 1.25, 0.35, 1) 0.25s both; }
+.introWord { font-size: clamp(36px, 9vw, 72px); transform: none; }
+.introCount { display: flex; align-items: center; gap: 12px; }
+.introCount strong {
+  font-size: clamp(64px, 16vw, 112px); font-weight: 800; line-height: 0.9;
+  background: linear-gradient(180deg, #ffffff, #d8fff0 45%, #3fe6c8); -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 4px 0 #021a1c) drop-shadow(0 0 18px rgba(90, 255, 190, 0.55));
+}
+.introCount span { font-size: 22px; font-weight: 800; line-height: 1.05; text-align: left; letter-spacing: 2px; text-transform: uppercase; color: #e6f4ff; }
+.introGlyphs { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.introGlyphs li {
+  display: flex; flex-direction: column; align-items: center; width: clamp(42px, 10vw, 58px); padding: 4px 2px; border-radius: 12px;
+  background: rgba(6, 10, 40, 0.72); box-shadow: inset 0 0 0 1px rgba(160, 220, 255, 0.3);
+  animation: sealIn 0.6s cubic-bezier(0.2, 1.4, 0.4, 1) both; animation-delay: calc(500ms + var(--i) * 90ms);
+}
+.introGlyphs svg { width: 100%; aspect-ratio: 1; }
+.introGlyphs span { font-size: 12px; font-weight: 700; color: #ffd970; }
+.introText { margin: 0; max-width: 470px; font-size: 15px; line-height: 1.5; color: #e2ebff; text-shadow: 0 1px 2px #000; }
+.introText strong { color: #ffe7a0; }
+.timer { width: min(260px, 70%); height: 4px; border-radius: 4px; background: linear-gradient(90deg, #ffe7a0, #3fe6c8); transform-origin: left center; animation: drain var(--hold) linear both; }
+
+/* Ergenekon total */
+.featureColumn { gap: 10px; }
+.ftTitle { margin: 0; font-size: 18px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: #d8fff0; text-shadow: 0 2px 0 #000; }
+.stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 0; }
+.stats > div { min-width: 128px; padding: 8px 14px; border-radius: 14px; background: rgba(4, 8, 30, 0.82); box-shadow: inset 0 0 0 1px rgba(255, 217, 112, 0.28); }
+.stats dt { font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #b8c8ee; }
+.stats dd { margin: 2px 0 0; font-size: 20px; font-weight: 700; color: #fff; display: flex; flex-direction: column; align-items: center; }
+.stats dd small { font-size: 12px; font-weight: 500; color: #aebcdc; }
+
+/* global-multiplier burst: the iron mountain cracks */
+.erg {
+  position: absolute; z-index: 9; left: 50%; top: 48%; width: min(76%, 460px); display: flex; flex-direction: column; align-items: center;
+  transform: translate(-50%, -50%); pointer-events: none; animation: ergIn var(--life, 1500ms) cubic-bezier(0.2, 1, 0.3, 1) both;
+}
+.ergGlow { position: absolute; left: 50%; top: 40%; width: 150%; aspect-ratio: 1; translate: -50% -50%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 170, 70, 0.55), rgba(255, 90, 30, 0.16) 45%, transparent 70%); }
+.ergArt { position: relative; width: 78%; height: auto; overflow: visible; filter: drop-shadow(0 12px 18px rgba(0, 0, 0, 0.7)); }
+.ergLeft, .ergRight { transform-box: view-box; transition: transform 0.6s cubic-bezier(0.3, 1.4, 0.4, 1); }
+.ergV1, .ergV2, .ergCleft { opacity: 0; }
+.erg[data-level='1'] .ergV1 { opacity: 1; animation: ember 0.5s ease-in-out 3 alternate; }
+.erg[data-level='2'] .ergV1, .erg[data-level='2'] .ergV2, .erg[data-level='3'] .ergV1, .erg[data-level='3'] .ergV2 { opacity: 1; animation: ember 0.45s ease-in-out 3 alternate; }
+.erg[data-level='2'] .ergCleft { opacity: 0.6; }
+.erg[data-level='3'] .ergCleft { opacity: 1; }
+.erg[data-level='2'] .ergLeft { animation: splitL2 var(--life, 1500ms) ease-out both; }
+.erg[data-level='2'] .ergRight { animation: splitR2 var(--life, 1500ms) ease-out both; }
+.erg[data-level='3'] .ergLeft { animation: splitL3 var(--life, 1500ms) cubic-bezier(0.3, 1.3, 0.4, 1) both; }
+.erg[data-level='3'] .ergRight { animation: splitR3 var(--life, 1500ms) cubic-bezier(0.3, 1.3, 0.4, 1) both; }
+.ergTag { position: relative; margin-top: -6px; padding: 4px 14px; border-radius: 999px; font-size: 13px; font-weight: 800; letter-spacing: 2px; color: #2a0a02; background: linear-gradient(180deg, #fff2c0, #ffb84a); box-shadow: 0 0 0 2px #2a0a02; white-space: nowrap; }
+.ergText { position: relative; font-size: clamp(64px, 14cqw, 132px); font-weight: 900; line-height: 1; font-family: var(--font-barlow, system-ui, sans-serif); }
+.ergText::before { content: attr(data-text); position: absolute; inset: 0; color: transparent; -webkit-text-stroke: 10px #2a0602; text-shadow: 0 7px 0 #2a0602; }
+.ergFill { position: relative; background: linear-gradient(180deg, #ffffff 0%, #fff2c0 32%, #ffb84a 64%, #c2380e 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.erg[data-level='3'] .ergFill { background-image: linear-gradient(180deg, #ffffff 0%, #fffbe0 30%, #ffd970 60%, #ff7a2a 100%); }
+
+@keyframes fadeIn { from { opacity: 0; } }
+@keyframes breathe { from { transform: scale(0.94); } to { transform: scale(1.06); } }
+@keyframes spin { to { rotate: 360deg; } }
+@keyframes flash { from { opacity: 1; } to { opacity: 0; } }
+@keyframes bloomIn { from { opacity: 0; transform: scale(0.35); } }
+@keyframes unfurl { 0% { opacity: 0; transform: scale(0.4, 0.15); } 55% { opacity: 1; transform: scale(1.06, 1.04); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes sealIn { from { opacity: 0; transform: translateY(-36px) scale(0.4) rotate(-24deg); } }
+@keyframes drain { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@keyframes ember { from { opacity: 1; } to { opacity: 0.55; } }
+@keyframes ergIn {
+  0% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
+  14% { transform: translate(-50%, -50%) scale(0.92); opacity: 1; }
+  24% { transform: translate(-50%, -50%) scale(1.04); }
+  32% { transform: translate(-50%, -50%) scale(1); }
+  82% { transform: translate(-50%, -50%) scale(1.03); opacity: 1; }
+  100% { transform: translate(-50%, -58%) scale(0.92); opacity: 0; }
+}
+@keyframes splitL2 { 0%, 25% { transform: translate(0, 0); } 40%, 100% { transform: translate(-4px, 1px) rotate(-1deg); } }
+@keyframes splitR2 { 0%, 25% { transform: translate(0, 0); } 40%, 100% { transform: translate(4px, 1px) rotate(1deg); } }
+@keyframes splitL3 { 0%, 22% { transform: translate(0, 0); } 42%, 100% { transform: translate(-18px, 4px) rotate(-4deg); } }
+@keyframes splitR3 { 0%, 22% { transform: translate(0, 0); } 42%, 100% { transform: translate(18px, 4px) rotate(4deg); } }
+
+.back[data-reduced] .raysBack, .back[data-reduced] .raysCounter, .back[data-reduced] .halo, .back[data-reduced] .flash,
+.front[data-reduced] .lockup, .front[data-reduced] .seal, .front[data-reduced] .introTitle, .front[data-reduced] .introGlyphs li { animation: none; }
+.erg[data-reduced], .erg[data-reduced] .ergLeft, .erg[data-reduced] .ergRight, .erg[data-reduced] .ergV1, .erg[data-reduced] .ergV2 { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  .raysBack, .raysCounter, .halo, .lockup, .seal, .introTitle, .introGlyphs li, .flash, .timer { animation: none; }
+  .erg, .ergLeft, .ergRight, .ergV1, .ergV2 { animation: none; }
+}
+@media (max-width: 520px) {
+  .pips li { min-width: 44px; font-size: 12px; }
+  .plaque { padding: 4px 18px 6px; }
+  .stats > div { min-width: 100px; padding: 6px 10px; }
+  .introCount span { font-size: 18px; }
+  .introText { font-size: 14px; }
+  .introGlyphs { gap: 4px; }
+}

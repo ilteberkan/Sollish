@@ -107,7 +107,7 @@ try {
  await start({ enabled: true, key: true, fresh: true });
  const health = await api('GET', '/v1/slots/health');
  assert.equal(health.status, 200); assert.equal(health.json.signature, 'worker'); assert.equal(health.headers.get('Access-Control-Allow-Origin'), origin);
- assert.deepEqual(health.json.games.map(g => [g.id, g.engineId]), [['cascade', 'candy-cascade-2'], ['tarhun', 'storm-throne-1'], ['ebru', 'ebru-ink-1'], ['cezeri', 'cezeri-gears-1']]); checks++;
+ assert.deepEqual(health.json.games.map(g => [g.id, g.engineId]), [['cascade', 'candy-cascade-2'], ['tarhun', 'storm-throne-1'], ['ebru', 'ebru-ink-1'], ['cezeri', 'cezeri-gears-1'], ['asena', 'asena-stars-1']]); checks++;
  // CORS and URL rules come before any session work.
  assert.equal((await api('POST', '/v1/slots/session', { body: {}, headers: { Origin: 'https://evil.invalid' } })).status, 403);
  assert.equal((await api('POST', '/v1/slots/session', { body: {}, noOrigin: true })).status, 403);
@@ -238,6 +238,14 @@ try {
  assert.deepEqual(z1.json.round, JSON.parse(JSON.stringify(SLOT_GAMES.cezeri.play(z1.json.fair.seedHex, 100, 'buy'))));
  assert.equal(z1.json.signature.value, receiptSig(z1.json));
  report.results.responseBytes.cezeriBuy = z1.text.length; checks++;
+
+ // Asena (asena-stars-1, 5000x cap): same registry, buy mode (the 3-moon guarantee, Ergenekon free spins with the map).
+ await wait(1100);
+ const a1 = await play(s1.token, 'asena', roundBody({ betCents: 100, mode: 'buy' }));
+ assert.equal(a1.status, 200, a1.text); assert.equal(a1.json.engineId, 'asena-stars-1'); assert.equal(a1.json.costCents, 8000);
+ assert.deepEqual(a1.json.round, JSON.parse(JSON.stringify(SLOT_GAMES.asena.play(a1.json.fair.seedHex, 100, 'buy'))));
+ assert.equal(a1.json.signature.value, receiptSig(a1.json));
+ report.results.responseBytes.asenaBuy = a1.text.length; checks++;
 
  // Recovery endpoint and history before the reveal.
  const lastCascade = await call('GET', '/v1/slots/cascade/rounds/last', { token: s1.token });

@@ -11,14 +11,14 @@
  * id as this build. The bearer token lives in sessionStorage and only ever travels in the Authorization header.
  */
 import {
-  SLOT_FAIR_VERSION, SLOT_GAMES, SLOT_HEX64_PATTERN, SLOT_ROUND_ID_PATTERN, SLOT_SEED_HEX_PATTERN, cascadeSeedFromEntropy, cezeriSeedFromEntropy, ebruSeedFromEntropy, isClientSeed, isSlotNonce,
-  playCascade2Round, playCezeriRound, playEbruRound, playStormRound, slotBytesToHex, stormSeedFromEntropy, type Cascade2Round, type CascadeMode, type CezeriRound, type EbruRound, type SlotRoundSummary, type StormRound,
+  SLOT_FAIR_VERSION, SLOT_GAMES, SLOT_HEX64_PATTERN, SLOT_ROUND_ID_PATTERN, SLOT_SEED_HEX_PATTERN, asenaSeedFromEntropy, cascadeSeedFromEntropy, cezeriSeedFromEntropy, ebruSeedFromEntropy, isClientSeed, isSlotNonce,
+  playAsenaRound, playCascade2Round, playCezeriRound, playEbruRound, playStormRound, slotBytesToHex, stormSeedFromEntropy, type AsenaRound, type Cascade2Round, type CascadeMode, type CezeriRound, type EbruRound, type SlotRoundSummary, type StormRound,
 } from '@sollish/protocol';
 import { configuredApi } from './chat';
 
-export type SlotGameId = 'cascade' | 'tarhun' | 'ebru' | 'cezeri';
+export type SlotGameId = 'cascade' | 'tarhun' | 'ebru' | 'cezeri' | 'asena';
 export type SlotMode = CascadeMode;
-export type RoundOf<G extends SlotGameId> = G extends 'cascade' ? Cascade2Round : G extends 'ebru' ? EbruRound : G extends 'cezeri' ? CezeriRound : StormRound;
+export type RoundOf<G extends SlotGameId> = G extends 'cascade' ? Cascade2Round : G extends 'ebru' ? EbruRound : G extends 'cezeri' ? CezeriRound : G extends 'asena' ? AsenaRound : StormRound;
 export const SOURCE_LABELS = Object.freeze({ local: 'Yerel demo', remote: 'Sunucu doğrulamalı' } as const);
 
 /* ---------------------------------------------------------------- local (unchanged behaviour) */
@@ -36,6 +36,7 @@ export function createLocalSource(entropy: (words: Uint32Array) => void = words 
       if (game === 'cascade') return playCascade2Round(cascadeSeedFromEntropy(words), betCents, mode) as RoundOf<G>;
       if (game === 'ebru') return playEbruRound(ebruSeedFromEntropy(words), betCents, mode) as RoundOf<G>;
       if (game === 'cezeri') return playCezeriRound(cezeriSeedFromEntropy(words), betCents, mode) as RoundOf<G>;
+      if (game === 'asena') return playAsenaRound(asenaSeedFromEntropy(words), betCents, mode) as RoundOf<G>;
       return playStormRound(stormSeedFromEntropy(words), betCents, mode) as RoundOf<G>;
     },
   });
@@ -85,7 +86,7 @@ export function rgsErrorMessage(error: unknown): string {
 
 /* ---------------------------------------------------------------- validation of what the server sends */
 const int = (n: unknown): n is number => typeof n === 'number' && Number.isSafeInteger(n) && n >= 0;
-const isGameId = (g: unknown): g is SlotGameId => g === 'cascade' || g === 'tarhun' || g === 'ebru' || g === 'cezeri';
+const isGameId = (g: unknown): g is SlotGameId => g === 'cascade' || g === 'tarhun' || g === 'ebru' || g === 'cezeri' || g === 'asena';
 function parseSignature(s: unknown): RemoteSignature {
   const v = s as Record<string, unknown> | null;
   if (!v || v.alg !== 'HMAC-SHA256' || (v.key !== 'worker' && v.key !== 'dev') || typeof v.value !== 'string' || !SLOT_HEX64_PATTERN.test(v.value)) throw new RgsError('ROUND_MISMATCH');

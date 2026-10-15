@@ -9,6 +9,7 @@ import { CASCADE2_BET_LEVELS_CENTS, CASCADE2_ENGINE_ID, CASCADE2_MAX_WIN_MULTIPL
 import { STORM_BET_LEVELS_CENTS, STORM_ENGINE_ID, STORM_MAX_WIN_MULTIPLIER, STORM_MODES, STORM_RTP, playStormRound, stormCostCents, type StormMode, type StormRound } from "./storm-throne";
 import { EBRU_BET_LEVELS_CENTS, EBRU_ENGINE_ID, EBRU_MAX_WIN_MULTIPLIER, EBRU_MODES, EBRU_RTP, ebruCostCents, playEbruRound, type EbruMode, type EbruRound } from "./ebru";
 import { CEZERI_BET_LEVELS_CENTS, CEZERI_ENGINE_ID, CEZERI_MAX_WIN_MULTIPLIER, CEZERI_MODES, CEZERI_RTP, cezeriCostCents, playCezeriRound, type CezeriMode, type CezeriRound } from "./cezeri";
+import { ASENA_BET_LEVELS_CENTS, ASENA_ENGINE_ID, ASENA_MAX_WIN_MULTIPLIER, ASENA_MODES, ASENA_RTP, asenaCostCents, playAsenaRound, type AsenaMode, type AsenaRound } from "./asena";
 import type { SlotRoundSummary, SlotVerifiableGame } from "./slot-fair";
 
 export interface SlotModeRtp { rtp: number; stdDev: number }
@@ -60,12 +61,20 @@ export const CEZERI_SLOT: SlotGameDefinition<CezeriRound> = Object.freeze({
   rtp: rtpTable(CEZERI_RTP),
 });
 
+export const ASENA_SLOT: SlotGameDefinition<AsenaRound> = Object.freeze({
+  id: "asena", engineId: ASENA_ENGINE_ID, modes: ASENA_MODES, betLevels: ASENA_BET_LEVELS_CENTS, maxMultiplier: ASENA_MAX_WIN_MULTIPLIER,
+  play: (seedHex: string, betCents: number, mode: string) => playAsenaRound(seedHex, betCents, mode as AsenaMode),
+  cost: (betCents: number, mode: string) => asenaCostCents(betCents, mode as AsenaMode),
+  rtp: rtpTable(ASENA_RTP),
+});
+
 /** id -> game. Frozen; new games are added here (other engines register when they ship). */
 export const SLOT_GAMES: Readonly<Record<string, SlotGameDefinition>> = Object.freeze({
   [CASCADE_SLOT.id]: CASCADE_SLOT as SlotGameDefinition,
   [TARHUN_SLOT.id]: TARHUN_SLOT as SlotGameDefinition,
   [EBRU_SLOT.id]: EBRU_SLOT as SlotGameDefinition,
   [CEZERI_SLOT.id]: CEZERI_SLOT as SlotGameDefinition,
+  [ASENA_SLOT.id]: ASENA_SLOT as SlotGameDefinition,
 });
 export const SLOT_GAME_ID_PATTERN = /^[a-z][a-z0-9-]{0,31}$/;
 

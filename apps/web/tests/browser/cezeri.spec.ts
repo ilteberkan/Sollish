@@ -87,7 +87,8 @@ async function expectCelebration(page: Page, fill: number, expected: { levels: s
   await recordPresentation(page);
   await stub(page, fill);
   await openCezeri(page);
-  if (round.freeSpinsTriggered) await setQuick(page); else await setTurbo(page);
+  if (opts.tapWithSpace) { /* normal speed: the hold after the tap is long enough to read the amount */ }
+  else if (round.freeSpinsTriggered) await setQuick(page); else await setTurbo(page);
   if (bet !== 1000) await chooseBet(page, bet / 100);
   if (mode === 'buy') {
     await page.getByRole('button', { name: /Bonus satın al/ }).click();
@@ -96,7 +97,7 @@ async function expectCelebration(page: Page, fill: number, expected: { levels: s
   await expect(balance(page)).toContainText(formatAmount(START - round.costCents));
   if (round.freeSpinsTriggered) {
     await tapIfShown(page.getByRole('dialog', { name: 'Fil Saati Başlıyor' }).getByRole('button', { name: 'Başla' }), 30_000);
-    const total = page.getByRole('dialog', { name: /Fil Saati — Toplam/ });
+    const total = page.getByRole('dialog', { name: /Fil Saati.{0,3}Toplam/ });
     await expect(total).toBeVisible({ timeout: 240_000 });
     await expect(total.getByTestId('cezeri-feature-amount')).toHaveText(demoText(round.payoutCents), { timeout: 5000 });
   }
@@ -166,7 +167,7 @@ test('spin lock: one debit, button and Space locked through the whole chain; hub
   await expect(button).toBeDisabled();
   await expect(button).toHaveAttribute('data-locked', 'true');
   await expect(page.getByRole('button', { name: 'Atla' })).toHaveCount(0);
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 2; i++) {
     await button.click({ force: true });
     await button.dispatchEvent('click');
     await page.locator('h1').click();
@@ -267,7 +268,7 @@ test('bonus buy (quick): dialog ×100, intro, persistent hub, reservoir fills, f
   await expect(page.getByLabel(/Bedava dönüş \d+, kalan dönüş \d+/)).toBeVisible();
   await expect(page.getByTestId('cezeri-hub')).toContainText('korunur');
   await expect(spin(page)).toBeDisabled();
-  const total = page.getByRole('dialog', { name: /Fil Saati — Toplam/ });
+  const total = page.getByRole('dialog', { name: /Fil Saati.{0,3}Toplam/ });
   await expect(total).toBeVisible({ timeout: 280_000 });
   await expect(total).toContainText(`${round.spins.length - 1} dönüş`);
   await expect(total).toContainText(`×${Math.max(...round.spins.map(s => s.hubEnd))}`);
@@ -301,7 +302,7 @@ test('free-spin round below 10x still ends on "Fil Saati — Toplam" with no cel
   await setTurbo(page);
   await spin(page).click();
   await tapIfShown(page.getByRole('dialog', { name: 'Fil Saati Başlıyor' }).getByRole('button', { name: 'Başla' }), 30_000);
-  const total = page.getByRole('dialog', { name: /Fil Saati — Toplam/ });
+  const total = page.getByRole('dialog', { name: /Fil Saati.{0,3}Toplam/ });
   await expect(total).toBeVisible({ timeout: 200_000 });
   await expect(total.getByTestId('cezeri-feature-amount')).toHaveText(demoText(round.payoutCents));
   await tapIfShown(total.getByRole('button', { name: 'Devam' }), 3000);

@@ -1,6 +1,6 @@
 /** Browser-side verification for /verify and /replay: recompute a server round from its revealed seed with the same
  * protocol engine and compare. Pure and testable; the network part lives in rgs-client.ts. */
-import { CEZERI_ENGINE_ID, EBRU_ENGINE_ID, SLOT_GAMES, isClientSeed, isSlotNonce, slotGame, verifySlotRound, type CezeriRound, type EbruGrid, type EbruRound, type EbruStains, type SlotRoundSummary, type SlotVerifyResult } from '@sollish/protocol';
+import { ASENA_ENGINE_ID, CEZERI_ENGINE_ID, EBRU_ENGINE_ID, SLOT_GAMES, isClientSeed, isSlotNonce, slotGame, verifySlotRound, type AsenaRound, type CezeriRound, type EbruGrid, type EbruRound, type EbruStains, type SlotRoundSummary, type SlotVerifyResult } from '@sollish/protocol';
 import type { RemoteHistoryRow, RemoteReplay } from './rgs-client';
 
 export interface VerifyFormInput {
@@ -76,6 +76,7 @@ export function replayFrames(round: SlotRoundSummary): ReplayFrame[] {
   if (!Array.isArray(spins)) return [];
   if (round.engine === EBRU_ENGINE_ID) return ebruFrames(round as unknown as EbruRound);
   if (round.engine === CEZERI_ENGINE_ID) return cezeriFrames(round as unknown as CezeriRound);
+  if (round.engine === ASENA_ENGINE_ID) return asenaFrames(round as unknown as AsenaRound);
   const frames: ReplayFrame[] = [];
   spins.forEach((spin, s) => spin.steps.forEach((step, t) => frames.push({
     spin: s, kind: spin.kind, step: t, steps: spin.steps.length, grid: step.grid, winIds: step.wins.flatMap(w => w.cells), stepHundredths: step.stepHundredths,
@@ -135,5 +136,19 @@ function cezeriFrames(round: CezeriRound): ReplayFrame[] {
       spinWinHundredths: spin.winHundredths, totalAfterHundredths: spin.totalHundredthsAfter, last: s === round.spins.length - 1 && t === raw.length - 1,
     }));
   });
+  return frames;
+}
+
+/** Asena (asena-stars-1): one frame per tumble step (the board at the start of the step: after the previous fall and
+ * the wolf walks), its clusters highlighted and the step win (global multiplier applied). Same grid[col][row] shape as
+ * the tumble games; wolves, star trails and moons are ordinary cells of the replay grid. */
+function asenaFrames(round: AsenaRound): ReplayFrame[] {
+  const frames: ReplayFrame[] = [];
+  round.spins.forEach((spin, s) => spin.steps.forEach((step, t) => frames.push({
+    spin: s, kind: spin.kind, step: t, steps: spin.steps.length,
+    grid: step.grid.map(column => column.map(cell => ({ id: cell.id, symbol: cell.symbol }))),
+    winIds: step.clusters.flatMap(c => c.cells), stepHundredths: step.winHundredths, spinWinHundredths: spin.winHundredths,
+    totalAfterHundredths: spin.totalHundredthsAfter, last: s === round.spins.length - 1 && t === spin.steps.length - 1,
+  })));
   return frames;
 }

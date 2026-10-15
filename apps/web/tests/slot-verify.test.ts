@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { deriveSeedHex, playCascade2Round, playEbruRound, playStormRound, slotServerSeedHash } from '@sollish/protocol';
+import { deriveSeedHex, playAsenaRound, playCascade2Round, playEbruRound, playStormRound, slotServerSeedHash } from '@sollish/protocol';
 import { replayFrames, verifyForm, verifyHistoryRow, verifyReplay } from '../lib/slot-verify';
 import type { RemoteHistoryRow, RemoteReplay } from '../lib/rgs-client';
 
@@ -60,4 +60,15 @@ test('Ebru replay frames: one per grid shown (deal, bleed, fall, comb), clusters
   const paid = round.spins.reduce((n, s) => n + s.steps.reduce((m, st) => m + (st.type === 'clusters' ? st.stepHundredths : 0), 0), 0);
   assert.equal(frames.reduce((n, f) => n + f.stepHundredths, 0), paid, 'every cluster step is shown on the grid it pays on');
   assert.ok(frames.some(f => f.kind === 'free' && f.grid.some(c => c.some(cell => (cell.stain ?? 0) > 0))), 'free-spin frames carry the stain field');
+});
+
+test('Asena replay frames: one per tumble step, clusters highlighted, step wins add up to the tumble wins, ends on the total', () => {
+  const round = playAsenaRound('0123456789abcdef0123456789abcdef', 1000, 'buy');
+  const frames = replayFrames(round);
+  assert.equal(frames.length, round.spins.reduce((n, s) => n + s.steps.length, 0));
+  assert.ok(frames.every(f => f.grid.length === 6 && f.grid.every(c => c.length === 6)));
+  assert.equal(frames.at(-1)!.last, true); assert.equal(frames.at(-1)!.totalAfterHundredths, round.totalHundredths);
+  assert.equal(frames.reduce((n, f) => n + f.stepHundredths, 0), round.spins.reduce((n, s) => n + s.tumbleHundredths, 0));
+  for (const f of frames) { const ids = new Set(f.grid.flat().map(c => c.id)); assert.ok(f.winIds.every(id => ids.has(id)), 'winners are on the frame grid'); }
+  assert.ok(frames.some(f => f.kind === 'free'));
 });
