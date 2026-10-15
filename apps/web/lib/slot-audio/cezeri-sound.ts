@@ -180,8 +180,8 @@ export function scheduleRingRotate(ctx: BaseAudioContext, dest: AudioNode, clips
   const list = { sources: [] as AudioBufferSourceNode[], gains: [] as GainNode[] };
   const v = RING_VOICE[plan.ring]!, gain = (opts.gain ?? 1) * v.gain, s = plan.seconds;
   if (clips.whirr) voiceInto(ctx, dest, clips.whirr, when, s, plan.whirrLevel.map(x => x * 0.32 * gain), plan.whirrRate.map(r => r * Math.sqrt(v.rate)), v.pan * 0.6, when + s + 0.05, list, true);
-  if (clips.clicks.length) plan.clicks.forEach((c, i) => voiceInto(ctx, dest, clips.clicks[i % clips.clicks.length]!, when + c.at, 0, 0.75 * c.gain * gain, v.rate * (1 + ((i * 7) % 5 - 2) * 0.006), v.pan, when + c.at + 0.12, list));
-  if (clips.stop && opts.stop !== false) voiceInto(ctx, dest, clips.stop, when + Math.max(0, s - 0.004), 0, 0.85 * gain, v.rate, v.pan, when + s + clips.stop.duration + 0.05, list);
+  if (clips.clicks.length) plan.clicks.forEach((c, i) => voiceInto(ctx, dest, clips.clicks[i % clips.clicks.length]!, when + c.at, 0, 0.5 * c.gain * gain, v.rate * (1 + ((i * 7) % 5 - 2) * 0.006), v.pan, when + c.at + 0.12, list));
+  if (clips.stop && opts.stop !== false) voiceInto(ctx, dest, clips.stop, when + Math.max(0, s - 0.004), 0, 0.7 * gain, v.rate, v.pan, when + s + clips.stop.duration + 0.05, list);
   return handleOf(ctx, when, when + s, list);
 }
 

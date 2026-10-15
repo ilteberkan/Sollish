@@ -415,7 +415,7 @@ function bed(level: BedLevel): Score {
   if (level >= 2) {
     tracks.push({ id: 'naq', kind: 'kit', level: -23, send: 0.1, hits: steps('naqDum', 'X...x...X...x...', 0, 4) });
     tracks.push({ id: 'organ', kind: 'pitched', voice: 'waterOrgan', level: -25.5, send: 0.5, notes: held(chords, 3, 60, 76, 0.65) });
-    tracks.push({ id: 'cymbal', kind: 'kit', level: -30, send: 0.35, hits: at([0, 8], 'cymbalSoft', 0.65) });
+    tracks.push({ id: 'cymbal', kind: 'kit', level: -30, send: 0.35, hits: at([4, 12], 'cymbalSoft', 0.65) });
   }
   if (level >= 3) {
     tracks.push({ id: 'santur', kind: 'pitched', voice: 'santur', level: -20, send: 0.3, notes: melody(BED_LEAD, 0, 4, lk), bright: 1.05 });
@@ -513,13 +513,13 @@ export const CHAIN_BED: Score = {
 export const CHAIN_BED_HI: Score = {
   id: 'cezeri-chain-bed-hi', bpm: 100, beatsPerBar: 4, bars: 2, swing: 0.5, loop: true, tail: 2, reverb: 'room', reverbDb: -7,
   target: { lufs: -16, measure: 'integrated' },
-  about: 'Dişli Kilidi upper layer, 100 BPM, 2-bar loop in lock-step with the tension bed: a santur gear train in sixteenths on C–G–D, naqqara tek sixteenths, accented ratchets, kös eighths and a soft cymbal on the downbeat. Pitched only on C, G and D.',
+  about: 'Dişli Kilidi upper layer, 100 BPM, 2-bar loop in lock-step with the tension bed: a santur gear train in sixteenths on C–G–D, naqqara tek sixteenths, accented ratchets, kös eighths and a soft cymbal on the second bar. Pitched only on C, G and D.',
   tracks: [
     { id: 'santur', kind: 'pitched', voice: 'santurSoft', level: -22, send: 0.2, bright: 0.8, notes: Array.from({ length: 32 }, (_, i) => ({ t: i * 0.25, d: 0.24, n: [72, 79, 84, 79, 86, 79, 84, 79][i % 8]!, v: i % 4 === 0 ? 0.85 : 0.6 })) },
     { id: 'naq', kind: 'kit', level: -24, send: 0.1, hits: hits(steps('naqTek', 'x.o.x.o.x.o.xoxo', 0, 2, 0.85), steps('naqDum', 'X.......X.......', 0, 2, 0.8)) },
     { id: 'ratchet', kind: 'kit', level: -26, send: 0.1, hits: steps('ratchet', 'x.g.x.g.x.g.xgxg', 0, 2, 0.8) },
     { id: 'kos', kind: 'kit', level: -24, send: 0.15, hits: steps('kos', '..x...x...x...x.', 0, 2, 0.7) },
-    { id: 'cymbal', kind: 'kit', level: -30, send: 0.3, hits: at([0], 'cymbalSoft', 0.6) },
+    { id: 'cymbal', kind: 'kit', level: -30, send: 0.3, hits: at([4], 'cymbalSoft', 0.6) },
   ],
 };
 

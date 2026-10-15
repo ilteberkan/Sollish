@@ -232,6 +232,7 @@ export function AsenaBoard({ initial, mood = 'base', className, style, ref, labe
       });
       const newNodes: Node[] = plan.nodes.map(([c, r], i) => ({ key: `${seq}:${i}`, x: c * 100 + 50, y: r * 100 + 50, delay: plan.nodeAt[i]!, big: i === plan.nodes.length - 1 }));
       flushSync(() => { setLinksLeaving(false); setLinks((l) => [...l, ...newLinks]); setNodes((n) => [...n, ...newNodes]); });
+      rootRef.current?.setAttribute('data-echo', '');
       // mark the template cells
       const pos = new Set(plan.nodes.map(([c, r]) => `${c},${r}`));
       for (const v of live()) if (pos.has(`${v.col},${v.row}`)) els.current.get(v.key)?.cell.setAttribute('data-star', '');
@@ -249,6 +250,7 @@ export function AsenaBoard({ initial, mood = 'base', className, style, ref, labe
     clearConstellations() {
       if (!linkEls.current.size && !nodeEls.current.size) return;
       setLinksLeaving(true);
+      rootRef.current?.removeAttribute('data-echo');
       window.setTimeout(() => { setLinks([]); setNodes([]); setLinksLeaving(false); }, prefersReduced() ? 0 : 260);
     },
     async burst(ids, opts = {}) {

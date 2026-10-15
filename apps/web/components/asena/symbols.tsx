@@ -8,7 +8,7 @@ import type { AsenaSymbol } from '@sollish/protocol';
             profile with a wind-blown gold mane and bronze bridle)
      lows   l1 Firuze Yıldız (four-point turquoise star gem) · l2 Al Yakut (ruby hexagon) · l3 Zümrüt Ok (emerald
             arrowhead) · l4 Ametist Damga (violet pebble with a carved, invented mark)
-     wilds  wolf: the walking sky wolf, a striding body of light with star joints inside a gold notched ring ·
+     wilds  wolf: Gök Kurt, a howling wolf head of light (profile, star-jointed mane) inside a gold notched ring ·
             trail: Yıldız İzi, a paw print made of stars on a cyan stardust glow
      scatter moon: Ay Ata, a silver full-moon face with a long beard of light inside a halo ring (no star-and-crescent
             pairing, deliberately unlike any flag)
@@ -279,6 +279,8 @@ function Zumrut({ k }: { k: K }) {
     </>
   );
 }
+/** Carved mark (invented): a rhombus eye with a pupil stroke, flanked by two horn hooks, and a base notch. */
+const RAM = 'M30 50L50 34L70 50L50 66ZM50 44V56M25 41C18 46 18 54 25 59M75 41C82 46 82 54 75 59M42 76H58';
 function Ametist({ k }: { k: K }) {
   const u = (n: string) => `url(#${k(n)})`;
   const V = P.violet;
@@ -289,10 +291,8 @@ function Ametist({ k }: { k: K }) {
       <path d="M50 8C72 8 90 24 91 47C92 72 74 92 50 92C27 92 9 74 9 51C9 27 28 8 50 8Z" fill={u('g')} stroke={INK} strokeWidth="2.2" />
       {/* carved mark (invented, decorative): ring, staff, chevron and two notches */}
       <g fill="none" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M50 25V77M41.6 33L50 25L58.4 33M38 70H44M56 70H62" stroke="#ffffff" strokeWidth="5" opacity=".28" transform="translate(0 1.4)" />
-        <circle cx="50" cy="52" r="13" stroke="#ffffff" strokeWidth="5" opacity=".28" transform="translate(0 1.4)" />
-        <path d="M50 25V77M41.6 33L50 25L58.4 33M38 70H44M56 70H62" stroke={V.dark} strokeWidth="4.4" />
-        <circle cx="50" cy="52" r="13" stroke={V.dark} strokeWidth="4.4" />
+        <path d={RAM} stroke="#ffffff" strokeWidth="5.4" opacity=".28" transform="translate(0 1.6)" />
+        <path d={RAM} stroke={V.dark} strokeWidth="4.6" />
       </g>
       {[[26, 30, 1.4], [72, 70, 1.2], [70, 26, 1], [30, 76, 1.1]].map(([x, y, r], i) => <circle key={i} cx={x} cy={y} r={r} fill={V.hi} opacity=".7" />)}
       <path d="M22 36Q28 18 46 14" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" opacity=".55" />
@@ -301,29 +301,33 @@ function Ametist({ k }: { k: K }) {
 }
 
 /* ---------- wild · Gök Kurt (walking wolf) ---------- */
-export const AS_WOLF_BODY = 'M27 47C35 43 47 42.4 59 43C65.4 41 69.4 37 72.4 31.6L74.6 23L78.4 30.4C82.6 31.4 87.4 34.4 91.4 38.4L92.6 42.6C88.6 44.4 83.6 45.4 79.6 45.4C76.6 49.4 74 53.4 72.4 56.4L74.4 66L71.4 77H67.4L68.4 66.4L66.4 60.4L62 70L58.4 78H55L58 68.4L58.4 59.4C50.4 61.4 42.4 61.4 37.4 59.4L33.4 68.4L30.4 77H26.4L28.4 66.4L28.4 58.4L24.4 66.4L18.4 74.4L15.4 72.4L20.4 63.4L22.6 54C18.4 56.4 13.4 60.4 8.4 64.4C11.4 56.4 17.4 49.4 27 47Z';
+export const AS_WOLF_HOWL = 'M27 90C26 72 30 57 39 46L34 23L48 35C55 30 61 26 67 20L83 8L88 12C84 18 79 23 74 27L81 28C74 37 68 45 65 53C63 63 66 76 72 90Z';
 function WolfWild({ k }: { k: K }) {
   const u = (n: string) => `url(#${k(n)})`;
   const notches = Array.from({ length: 24 }, (_, i) => {
     const a = (i / 24) * Math.PI * 2, r0 = i % 3 === 0 ? 40.4 : 42.4, r1 = 46.4;
     return `M${n1(50 + Math.cos(a) * r0)} ${n1(50 + Math.sin(a) * r0)}L${n1(50 + Math.cos(a) * r1)} ${n1(50 + Math.sin(a) * r1)}`;
   }).join('');
-  const joints: Array<[number, number]> = [[30, 50], [44, 46], [58, 46], [72, 36], [86, 39], [70, 74], [29, 74]];
+  const joints: Array<[number, number]> = [[34, 84], [36, 66], [42, 48], [56, 36], [80, 12], [66, 60], [64, 82]];
   return (
     <>
       <defs>
         {aura(k, '#ffd36a', 0.65)}
         <RG id={k('disc')} cx={0.5} cy={0.42} r={0.6} s={[[0, '#2a3a8e'], [0.6, P.night.base], [1, P.night.dark]]} />
         <LG id={k('ring')} x1={0} y1={0} x2={1} y2={1} s={[[0, P.gold.hi], [0.35, P.gold.light], [0.7, P.gold.base], [1, P.gold.deep]]} />
-        <RG id={k('body')} cx={0.65} cy={0.35} r={0.7} s={[[0, '#ffffff'], [0.45, '#fff2c4'], [1, '#f2b84a']]} />
+        <RG id={k('body')} cx={0.65} cy={0.3} r={0.8} s={[[0, '#ffffff'], [0.45, '#fff2c4'], [1, '#f2b84a']]} />
+        <clipPath id={k('clip')}><circle cx="50" cy="50" r="44" /></clipPath>
       </defs>
       <circle cx="50" cy="50" r="50" fill={u('aura')} />
       <circle cx="50" cy="50" r="44.4" fill={u('disc')} />
       {[[22, 24], [34, 16], [78, 18], [84, 64], [16, 40], [62, 86], [40, 88]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r={i % 2 ? 0.9 : 1.3} fill="#e8eeff" opacity=".85" />)}
-      <path d={AS_WOLF_BODY} fill={u('body')} stroke={P.gold.deep} strokeWidth="1.6" strokeLinejoin="round" />
-      <path d={joints.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join('')} fill="none" stroke="#fff" strokeWidth=".9" opacity=".7" />
-      {joints.map(([x, y], i) => <path key={i} d={asSparkle(x, y, i === 4 ? 4.4 : 3.2)} fill="#fff" />)}
-      <circle cx="84.6" cy="37.4" r="1.4" fill={P.night.base} />
+      <g clipPath={`url(#${k('clip')})`}>
+        <path d={AS_WOLF_HOWL} fill={u('body')} stroke={P.gold.deep} strokeWidth="1.6" strokeLinejoin="round" />
+        <path d="M30 62L36 60L31 70L38 68L33 78L40 77M44 46L39 52" fill="none" stroke={P.gold.deep} strokeWidth="1.2" strokeLinejoin="round" opacity=".7" />
+        <path d={joints.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join('')} fill="none" stroke="#fff" strokeWidth=".9" opacity=".75" />
+        {joints.map(([x, y], i) => <path key={i} d={asSparkle(x, y, i === 4 ? 4.4 : 3.2)} fill="#fff" />)}
+        <path d="M52 34.4L58 31.6" stroke={P.night.base} strokeWidth="2" strokeLinecap="round" />
+      </g>
       <circle cx="50" cy="50" r="44.4" fill="none" stroke={u('ring')} strokeWidth="5.4" />
       <circle cx="50" cy="50" r="47.4" fill="none" stroke={INK} strokeWidth="1.6" />
       <circle cx="50" cy="50" r="41.6" fill="none" stroke={INK} strokeWidth="1.2" />

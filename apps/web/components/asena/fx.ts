@@ -25,6 +25,8 @@ export interface AsenaFxOptions {
   front: HTMLCanvasElement;
   /** Sky canvas (behind the scene silhouettes). Optional. */
   sky?: HTMLCanvasElement | null;
+  /** Echo canvas (above the silhouettes, under the board) for the sky echo; falls back to the sky canvas. */
+  echo?: HTMLCanvasElement | null;
   /** The AsenaBoard element. */
   board?: HTMLElement | null;
   mood?: AsenaMood;
@@ -68,6 +70,8 @@ export class AsenaFx {
   private board: HTMLElement | null;
   private readonly fctx: CanvasRenderingContext2D | null;
   private sctx: CanvasRenderingContext2D | null;
+  private echoCanvas: HTMLCanvasElement | null;
+  private ectx: CanvasRenderingContext2D | null;
   private mood: AsenaMood;
   private reduced: boolean;
   private ambient: boolean;
@@ -118,6 +122,8 @@ export class AsenaFx {
     this.board = o.board ?? null;
     this.fctx = this.front.getContext('2d');
     this.sctx = this.sky?.getContext('2d') ?? null;
+    this.echoCanvas = o.echo ?? null;
+    this.ectx = this.echoCanvas?.getContext('2d') ?? null;
     this.mood = o.mood ?? 'base';
     this.ambient = o.ambient ?? true;
     this.mq = typeof window !== 'undefined' ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
@@ -177,7 +183,7 @@ export class AsenaFx {
    * announcement are done. `persist` keeps a faint echo in the sky (Ergenekon feature) until clearEcho(). */
   constellation(plan: AsenaConstellationPlan, opts: { persist?: boolean; label?: boolean; echo?: boolean } = {}): Promise<void> {
     const echo = opts.echo ?? true;
-    if (echo && this.sky) { this.echoes.push({ plan, born: this.now(), hold: 1.6, persist: !!opts.persist, residual: 0.2, fadeAt: null }); if (this.echoes.length > 8) this.echoes.shift(); this.skyDirty = true; }
+    if (echo && (this.sky || this.echoCanvas)) { this.echoes.push({ plan, born: this.now(), hold: 1.6, persist: !!opts.persist, residual: 0.2, fadeAt: null }); if (this.echoes.length > 8) this.echoes.shift(); this.skyDirty = true; }
     if (this.reduced) { this.kick(); return this.after(60); }
     const now = this.now(), k = this.bs / 600;
     for (const e of plan.edges) {
@@ -330,7 +336,7 @@ export class AsenaFx {
     this.gate = { born: now, life: dur, intensity };
     this.storm = Math.min(1.6, 0.8 + intensity * 0.5);
     this.stormUntil = now + dur;
-    const gx = this.bx + this.bs / 2, gy = Math.max(this.h * 0.12, this.by - this.bs * 0.18);
+    const gx = this.bx + this.bs / 2, gy = this.by + this.bs * 0.36;
     this.addFlash({ x: gx, y: gy, born: now + 0.3, life: 1, r: this.bs * 0.9, color: '#e6f4ff', alpha: 0.8 });
     const shower = (delay: number, n: number) => this.later(delay, () => {
       const t = this.now();
@@ -402,6 +408,7 @@ export class AsenaFx {
     this.front.width = Math.round(this.w * this.dpr);
     this.front.height = Math.round(this.h * this.dpr);
     if (this.sky) { this.sky.width = Math.round(this.w * this.sdpr); this.sky.height = Math.round(this.h * this.sdpr); }
+    if (this.echoCanvas) { this.echoCanvas.width = Math.round(this.w * this.sdpr); this.echoCanvas.height = Math.round(this.h * this.sdpr); }
     const b = this.board?.getBoundingClientRect();
     if (b && b.width > 0) { this.bx = b.left - r.left; this.by = b.top - r.top; this.bs = b.width; }
     else { const s = Math.min(this.w, this.h) * 0.8; this.bx = (this.w - s) / 2; this.by = (this.h - s) / 2; this.bs = s; }
@@ -458,8 +465,8 @@ export class AsenaFx {
     if (this.drawTimes.length > 90) this.drawTimes.shift();
     // sky: ~30 fps idle, every frame while it reacts
     const reacting = this.skyReacting(now);
-    const skyLive = !!this.sky && !this.reduced && (this.ambient || reacting);
-    if (this.sky && (this.skyDirty || (skyLive && (reacting || ts - this.lastSky > 31)))) {
+    const skyLive = !!(this.sky || this.echoCanvas) && !this.reduced && (this.ambient || reacting);
+    if ((this.sky || this.echoCanvas) && (this.skyDirty || (skyLive && (reacting || ts - this.lastSky > 31)))) {
       const s0 = performance.now();
       this.drawSky(now);
       this.skyTimes.push(performance.now() - s0);
@@ -523,13 +530,13 @@ export class AsenaFx {
 
   /* ---------------------------------------------------------------- sky */
   private drawSky(nowAbs: number) {
-    const ctx = this.sctx, sky = this.sky;
-    if (!ctx || !sky) return;
+    const ctx = this.sctx ?? this.ectx;
+    if (!ctx) return;
     const now = this.reduced ? 0 : nowAbs - this.epoch;
     const W = this.w, H = this.h;
     ctx.setTransform(this.sdpr, 0, 0, this.sdpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
-    if (this.starLayer) { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(this.starLayer, 0, 0); ctx.setTransform(this.sdpr, 0, 0, this.sdpr, 0, 0); }
+    if (this.starLayer && this.sctx) { ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(this.starLayer, 0, 0); ctx.setTransform(this.sdpr, 0, 0, this.sdpr, 0, 0); }
     // boost from wins + storm
     let boost = 0;
     this.boost = this.boost.filter((b) => nowAbs - b.born < b.life);
@@ -580,7 +587,7 @@ export class AsenaFx {
       const g = this.gate, t = (nowAbs - g.born) / g.life;
       if (t >= 1) this.gate = null;
       else if (t >= 0) {
-        const gx = this.bx + this.bs / 2, gy = Math.max(H * 0.12, this.by - this.bs * 0.18);
+        const gx = this.bx + this.bs / 2, gy = this.by + this.bs * 0.36;
         const open = easeOut(clamp01(t / 0.25)) * (1 - easeInOut(clamp01((t - 0.75) / 0.25)));
         const R = Math.max(W, H) * 1.1;
         ctx.save();
@@ -594,20 +601,14 @@ export class AsenaFx {
           ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(R, -R * (i % 2 ? 0.05 : 0.09)); ctx.lineTo(R, R * (i % 2 ? 0.05 : 0.09)); ctx.closePath(); ctx.fill();
         }
         ctx.restore();
-        // the gate: a tall luminous lens that opens
-        const gw = this.bs * 0.32 * open, gh = this.bs * 0.62 * (0.6 + 0.4 * open);
-        ctx.globalAlpha = open;
-        ctx.drawImage(this.sprite('#bfe6ff'), gx - gw * 2, gy - gh, gw * 4, gh * 2);
-        ctx.fillStyle = '#ffffff';
-        ctx.globalAlpha = 0.85 * open;
-        ctx.beginPath(); ctx.ellipse(gx, gy, Math.max(1, gw * 0.35), gh * 0.75, 0, 0, Math.PI * 2); ctx.fill();
       }
     }
-    // sky echoes
+    // sky echoes (own canvas above the silhouettes when given)
     this.echoes = this.echoes.filter((e) => e.persist || e.fadeAt === null || nowAbs - e.fadeAt < 1.2);
-    for (const e of this.echoes) this.drawEcho(ctx, e, nowAbs);
-    ctx.globalAlpha = 1;
-    ctx.globalCompositeOperation = 'source-over';
+    const ec = this.ectx ?? ctx;
+    if (this.ectx) { ec.setTransform(this.sdpr, 0, 0, this.sdpr, 0, 0); ec.clearRect(0, 0, W, H); ec.globalCompositeOperation = 'lighter'; }
+    for (const e of this.echoes) this.drawEcho(ec, e, nowAbs);
+    for (const c of [ctx, ec]) { c.globalAlpha = 1; c.globalCompositeOperation = 'source-over'; }
   }
   private drawEcho(ctx: CanvasRenderingContext2D, e: Echo, nowAbs: number) {
     const p = e.plan;
@@ -617,8 +618,8 @@ export class AsenaFx {
     if (e.fadeAt !== null) { const f = clamp01((nowAbs - e.fadeAt) / 1.2); alpha = e.persist ? 1 - (1 - e.residual) * f : 1 - f; }
     if (this.reduced && e.fadeAt === null) alpha = e.persist ? 0.5 : 0.8;
     // centre over the board, scaled up: the shape fills ~1.3 board heights
-    const cellPx = (this.bs * 1.25) / Math.max(4, Math.max(p.width, p.height));
-    const ox = this.bx + this.bs / 2 - (p.width * cellPx) / 2, oy = this.by + this.bs * 0.45 - (p.height * cellPx) / 2;
+    const cellPx = (Math.min(this.bs * 1.6, Math.max(this.h, this.bs) * 0.95)) / Math.max(4, Math.max(p.width, p.height));
+    const ox = this.bx + this.bs / 2 - (p.width * cellPx) / 2, oy = this.by + this.bs * 0.44 - (p.height * cellPx) / 2;
     const minC = Math.min(...p.nodes.map(([c]) => c)), minR = Math.min(...p.nodes.map(([, r]) => r));
     const at = ([c, r]: readonly [number, number]) => ({ x: ox + (c - minC + 0.5) * cellPx, y: oy + (r - minR + 0.5) * cellPx });
     ctx.lineCap = 'round';
@@ -730,6 +731,25 @@ export class AsenaFx {
         ctx.drawImage(this.starSprite(f.color), p.x - 20, p.y - 20, 40, 40);
       }
       ctx.restore();
+    }
+    // the sky gate lens over the board (rays are on the sky canvas)
+    if (this.gate) {
+      const g = this.gate, t = (now - g.born) / g.life;
+      if (t >= 0 && t < 1) {
+        alive = true;
+        const open = easeOut(clamp01(t / 0.25)) * (1 - easeInOut(clamp01((t - 0.72) / 0.28)));
+        const gx = this.bx + this.bs / 2, gy = this.by + this.bs * 0.36;
+        const gw = this.bs * 0.2 * open, gh = this.bs * 0.5 * (0.7 + 0.3 * open);
+        ctx.save();
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.globalAlpha = 0.9 * open;
+        ctx.drawImage(this.sprite('#9fd0ff'), gx - gw * 3, gy - gh * 1.2, gw * 6, gh * 2.4);
+        ctx.drawImage(this.sprite('#ffe7a0'), gx - gw * 1.5, gy - gh, gw * 3, gh * 2);
+        ctx.globalAlpha = 0.95 * open;
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath(); ctx.ellipse(gx, gy, Math.max(1, gw * 0.3), gh * 0.8, 0, 0, Math.PI * 2); ctx.fill();
+        ctx.restore();
+      }
     }
     // flashes
     if (this.flashes.length) {

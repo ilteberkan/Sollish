@@ -28,7 +28,7 @@ async function stub(page: Page, fill: number) {
 }
 async function enter(page: Page) {
   const play = page.getByRole('button', { name: 'Oyna', exact: true });
-  await expect(play.or(page.getByRole('button', { name: 'Çevir', exact: true }))).toBeVisible({ timeout: 30_000 });
+  await expect(play.or(page.getByRole('button', { name: 'Çevir', exact: true })).first()).toBeVisible({ timeout: 30_000 });
   if (await page.getByTestId('ebru-splash').count()) {
     await play.click();
     await expect(page.getByTestId('ebru-splash')).toHaveCount(0);
@@ -127,6 +127,7 @@ async function expectCelebration(page: Page, fill: number, expected: { levels: s
 }
 
 test('labelled 7x7 board and deck; info pages navigable, bet-scaled and axe-clean', async ({ page }) => {
+  test.setTimeout(90_000);
   await openEbru(page);
   const grid = page.getByRole('grid', { name: /Ebru ızgarası/ });
   await expect(grid.getByRole('row')).toHaveCount(7);
@@ -396,7 +397,7 @@ test('reduced motion plays every step (comb included) and settles with the engin
 });
 
 test('entropy failure never reserves credits; history replay never touches the balance; refill logs a line', async ({ page }) => {
-  test.setTimeout(60_000);
+  test.setTimeout(90_000);
   const round = engine(COMB_WIN);
   await stub(page, COMB_WIN);
   await openEbru(page);

@@ -72,6 +72,10 @@ const CALLOUT_TAGS: Record<EbruCalloutTier, string> = { 0: 'Leke çarpanı', 1: 
 const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hızlı', turbo: 'Turbo' };
 const ZERO: EbruMeter = { spin: 0, total: 0 };
 const BET_KEY = 'sollish:ebru:bet';
+/** Largest clock step per frame. The water shear and the sliding rows run on the wall clock (WAAPI / EbruWater), so on
+ * a slow device the timeline must keep near wall-clock pace or the comb sweep, its sound and the next step drift apart;
+ * a hidden tab gets no frames at all, and the first frame after it is still capped. Presentation only. */
+const EBRU_PLAYER_MAX_STEP_MS = 250;
 let bootedOnce = false;
 
 function usePrefersReducedMotion() {
@@ -564,7 +568,7 @@ export function EbruGame() {
     sound.unlock();
     sound.scene('base');
     sound.spinStart();
-    const next = new TimelinePlayer<EbruEvent>(current.timeline, event => { if (live.current === current) handle(event); });
+    const next = new TimelinePlayer<EbruEvent>(current.timeline, event => { if (live.current === current) handle(event); }, undefined, EBRU_PLAYER_MAX_STEP_MS);
     player.current = next;
     next.start();
   }, [handle, sound]);

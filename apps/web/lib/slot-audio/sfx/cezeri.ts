@@ -75,7 +75,7 @@ export const CEZERI_SFX: SfxDef[] = [
     id: 'ratchet', variations: 4, level: 'ui', send: 0, jitter: [45, 1.5], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 0.08);
-      mono(out, ratchet(ctx, 0.9, 0.95 + v * 0.04), 0, 1, (v - 1.5) * 0.1);
+      mono(out, softKnee(ratchet(ctx, 0.9, 0.95 + v * 0.04), 9, ctx.sr, 0.02), 0, 1, (v - 1.5) * 0.1);
       return out;
     },
   },
@@ -84,7 +84,7 @@ export const CEZERI_SFX: SfxDef[] = [
     id: 'ring-stop', variations: 4, level: 'light', send: 0.14, jitter: [25, 1], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 0.7);
-      mono(out, gearClank(ctx, 0.75, 1.3 + v * 0.06, false), 0, 0.7);
+      mono(out, softKnee(gearClank(ctx, 0.75, 1.3 + v * 0.06, false), 10, ctx.sr, 0.1), 0, 0.7);
       mono(out, kick(ctx, 0.6, 170, 62, 0.012, 0.16, 0.2, 1.2), 0, 0.5);
       mono(out, escapement(ctx, 0.8, 'tock'), 0.018 * ctx.sr, 0.45, 0.15);
       return out;

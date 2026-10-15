@@ -20,6 +20,8 @@ const mix = (dst: Float32Array, src: Float32Array, at = 0, gain = 1) => {
   return dst;
 };
 const grow = (a: Float32Array, length: number) => { if (a.length >= length) return a; const b = new Float32Array(length); b.set(a); return b; };
+/** A raised-cosine onset of `ms` (the mallet's contact): keeps a big drum's first samples from stepping hard. */
+const onset = (a: Float32Array, sr: number, ms = 0.7) => { const n = Math.min(a.length, Math.round(ms * 0.001 * sr)); for (let i = 0; i < n; i++) a[i]! *= 0.5 - 0.5 * Math.cos((Math.PI * i) / n); return a; };
 
 /* ---------------- hammered strings ---------------- */
 
@@ -131,7 +133,7 @@ export function pipeFast(ctx: VoiceCtx, freq: number, vel: number, held: number,
 export function chimeRod(ctx: VoiceCtx, freq: number, vel: number, length = 1): Float32Array {
   const s = clampNum((523 / freq) ** 0.4, 0.5, 1.7) * length;
   const out = modal(ctx, freq, [1, 1.0016, 2.756, 5.404, 8.933], [0.85, 0.35, 0.42, 0.17, 0.07], [3 * s, 2.6 * s, 1.2 * s, 0.55 * s, 0.28 * s], vel, 10, { attack: 0.0004, maxLen: 4 });
-  return mix(out, noiseHit(ctx, vel * 0.12, 5200, 2, 0.0002, 0.005, 3000, 10000), 0, 1);
+  return onset(mix(out, noiseHit(ctx, vel * 0.12, 5200, 2, 0.0002, 0.005, 3000, 10000), 0, 1), ctx.sr, 0.6);
 }
 
 /** Turkish hand cymbals clashed: two slightly detuned bronze plates (inharmonic modes with beating) and the bright clash noise. `length` scales the ring. */
@@ -141,7 +143,7 @@ export function handCymbal(ctx: VoiceCtx, vel: number, length = 1, freq = 470): 
   const out = modal(ctx, freq, ratios, amps, t60s, vel * 0.5, 10, { attack: 0.0004, maxLen: 3 });
   mix(out, modal(ctx, freq * 1.013, ratios, amps, t60s.map(t => t * 0.9), vel * 0.4, 10, { attack: 0.0006, maxLen: 3 }), 0, 1);
   const clash = noiseHit(ctx, vel * 0.9, 5600, 0.8, 0.0006, 0.32 * length, 2500, 11000);
-  return mix(grow(out, clash.length), clash, 0, 1);
+  return onset(mix(grow(out, clash.length), clash, 0, 1), ctx.sr, 1.5);
 }
 
 /** Escapement: the brass pallet catching the escape wheel. 'tick' is the bright entry pallet, 'tock' the duller exit pallet, both with the wooden case knock. */
@@ -189,7 +191,7 @@ export function naqqara(ctx: VoiceCtx, vel: number, stroke: 'dum' | 'tek', freq?
     const m = modal(ctx, f, [1, 1.5, 1.99, 2.47, 2.96], [0.6, 0.35, 0.2, 0.1, 0.05], [0.42, 0.25, 0.15, 0.1, 0.07], vel, 10, { attack: 0.0005 });
     const o = grow(out, m.length);
     mix(o, m, 0, 0.8);
-    return trimTail(mix(o, noiseHit(ctx, vel * 0.5, 2200, 1.2, 0.0003, 0.015, 700, 8000), 0, 1));
+    return onset(trimTail(mix(o, noiseHit(ctx, vel * 0.5, 2200, 1.2, 0.0003, 0.015, 700, 8000), 0, 1)), ctx.sr, 0.5);
   }
   const f = freq ?? 196;
   const out = modal(ctx, f, [1, 1.5, 1.99, 2.47, 2.96, 3.5], [0.65, 0.4, 0.25, 0.13, 0.07, 0.04], [0.26, 0.16, 0.1, 0.07, 0.05, 0.03], vel, 10, { attack: 0.0004 });
@@ -203,7 +205,7 @@ export function kos(ctx: VoiceCtx, vel: number, freq = 65.41): Float32Array {
   out = grow(out, m.length);
   mix(out, m, 0, 0.8);
   mix(out, noiseHit(ctx, vel * 0.45, 520, 0.7, 0.001, 0.06, 120, 3500), 0, 1);
-  return trimTail(out);
+  return onset(trimTail(out), ctx.sr, 1);
 }
 
 /* ---------------- water ---------------- */
