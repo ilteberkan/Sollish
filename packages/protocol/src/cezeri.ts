@@ -251,9 +251,9 @@ export interface CezeriRtp { rtp: number; ciLow: number; ciHigh: number; rounds:
  * stdDev = standard deviation of the per-round return in cost units (3 decimals); rounds = simulated rounds. DEMO estimate, not a certified RTP;
  * the 95% interval is a normal approximation and optimistic for this heavy tail. */
 export const CEZERI_RTP: Record<CezeriMode, CezeriRtp> = Object.freeze({
-  standard: Object.freeze({ rtp: 0.949, ciLow: 0.942, ciHigh: 0.955, rounds: 20_000_000, hitRate: 0.287, featureRate: 0.0029, stdDev: 14.424 }),
-  ante: Object.freeze({ rtp: 0.956, ciLow: 0.95, ciHigh: 0.962, rounds: 20_000_000, hitRate: 0.29, featureRate: 0.0052, stdDev: 13.923 }),
-  buy: Object.freeze({ rtp: 0.955, ciLow: 0.954, ciHigh: 0.955, rounds: 20_000_000, hitRate: 1, featureRate: 1, stdDev: 1.701 }),
+  standard: Object.freeze({ rtp: 0.955, ciLow: 0.95, ciHigh: 0.961, rounds: 20_000_000, hitRate: 0.295, featureRate: 0.0031, stdDev: 12.445 }),
+  ante: Object.freeze({ rtp: 0.953, ciLow: 0.948, ciHigh: 0.958, rounds: 20_000_000, hitRate: 0.296, featureRate: 0.0059, stdDev: 11.32 }),
+  buy: Object.freeze({ rtp: 0.957, ciLow: 0.957, ciHigh: 0.958, rounds: 20_000_000, hitRate: 1, featureRate: 1, stdDev: 1.185 }),
 });
 // @evidence-block-end
 
