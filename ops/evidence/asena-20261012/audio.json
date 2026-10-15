@@ -1,0 +1,2913 @@
+{
+ "schema": "sollish.audio-evidence.v1",
+ "game": "Asena: Yıldız Kurdu (asena-stars-1, DEMO)",
+ "generatedAt": "2026-10-15T18:48:18.057Z",
+ "scope": "Original sound set for the asena-stars slot: base / idle / feature (\"Ergenekon\") themes, steppe-night ambience, free-spins intro, retrigger, feature outro, total-win fanfare, win tiers 1–4 + max (heads, count-up beds, tier-ups, landings), 6 multiplier callout classes, the constellation signature (one star per lighting event of the art plan, a rising motif per template, six template ignitions, the synthesized wolf howl), column landings, cluster highlight and burst into stars by symbol, fall, wolf walk paws and star trail, moon landings 1–6 + tease and trigger, Ergenekon map pieces, the iron mountain cracking at ×2/×3/×5, +5 spins, UI effects, wordless placeholders for the sky voice and a 29-line recorded voice-bank slot. Presentation only; nothing reads or changes a result.",
+ "originality": "All music and effects are original note data and code synthesis (lib/slot-audio/scores/asena.ts, sfx/asena.ts, synth/asena.ts; ney, choir, bass, sparkles, whoosh, riser and the vox placeholder from the shared kit). No samples, no recordings, no third-party melodies or motifs; no existing game, film or song imitated; the wolf howl is a vocal-formant synth, not a sampled wolf. Instruments are synthesized approximations (kopuz/dombra-like Karplus-Strong lute, kıl-kopuz-like bowed fiddle, throat-singing-inspired overtone drone, kam davulu with pendants, hoofbeats, forge anvil, star bells, aurora pad, steppe wind/crickets/fire). Only the generic three-stroke gallop figure of steppe lute music is used.",
+ "musicDirection": {
+  "base": "E Hüseyni (E F# G A B C# D; dominant B, the natural sixth C#) on the Central-Asian anhemitonic pentatonic E G A B D; 80 BPM, 42 s loop; vast, slow, nocturnal; a throat-singing drone on E whose overtone whistle walks harmonics 6–16 (B, ~D, E, F#, B, E); a C natural (Kürdi shadow) in the B section.",
+  "feature": "\"Ergenekon\": B Kürdi (B C D E F# G A, the C→B cadence) for the iron mountain and the forge, opening to E Hüseyni (the C# returns) when the people ride out; 12/8 gallop at 100 dotted-quarter BPM, hoofbeats three per beat with the third accented, kargyraa drone on B, khoomei on E.",
+  "celebrations": "Major pentatonic daylight (Kün Ana) of the tier key, 120 BPM: Büyük E → Mega F# → Süper G# → Efsane B → Azami C#, hoofbeat triplets from Mega up.",
+  "signature": "The \"Asena call\" (E–G–B–D → E) opens the base hook and is the Kurt Başı constellation motif; every template has its own rising motif on the E pentatonic (hilal B D E · yay E G A → E6 · at B D E G A B · kartal E4 B4 B5 E6 · hayat-agaci E4 A4 D5 G5 B5 · kurt-basi E G B D E), nodes that light together ring as chords, then the template ignition bloom and the howl (great howl for Kurt Başı).",
+  "otherGames": "Ebru G Rast / A Uşşak / Hüzzam, Tarhun A/D Hicaz, Cezeri C Nikriz / Çargah: no makam shared."
+ },
+ "environment": {
+  "browser": "chromium 141.0.7390.37 headless",
+  "sampleRate": 44100,
+  "machine": "cloud container, 4 vCPU shared with other agents (load average up to ~10 during the load runs, so absolute times are pessimistic; Asena and Tarhun were measured interleaved in the same browser session)"
+ },
+ "method": "Headless Chromium (/opt/pw-browsers/chromium-1194), production code path: render worker bundle (Web Worker pool, 3 workers) for synthesis + OfflineAudioContext reverb + JS mastering; BS.1770 loudness, 4× true peak, loop seam statistic; 16-bit TPDF WAV export. Constellations, escalation and runtime chain through the real bus graph (buildBusGraph) at the default mix. Lab page: next dev :3311 /lab/audio?game=asena.",
+ "commands": [
+  "bash scripts/use-node.sh node <scratchpad>/audio/harness/asena-measure.tmp.mjs both|music|sfx|comb|chain|escalation|trace|tracesfx (harness kept in the scratchpad, not in the repo)",
+  "bash scripts/use-node.sh node <scratchpad>/audio/harness/asena-lab-check.tmp.mjs (against next dev -p 3311)",
+  "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck",
+  "bash scripts/use-node.sh pnpm --filter @sollish/web test"
+ ],
+ "keyLadder": {
+  "Büyük (≥10×)": "E major pentatonic",
+  "Mega (≥25×)": "F#",
+  "Süper (≥50×)": "G#",
+  "Efsane (≥100×)": "B",
+  "Azami kazanç": "C#"
+ },
+ "constellation": {
+  "cases": [
+   {
+    "template": "hilal",
+    "transform": 0,
+    "at": 0.4,
+    "events": [
+     {
+      "at": 0,
+      "semitones": [
+       -5
+      ]
+     },
+     {
+      "at": 0.7,
+      "semitones": [
+       -2,
+       -7
+      ]
+     },
+     {
+      "at": 1.4,
+      "semitones": [
+       0,
+       -5
+      ]
+     }
+    ],
+    "igniteAt": 1.4,
+    "howlAt": 1.56,
+    "howlRate": 0.7492
+   },
+   {
+    "template": "yay",
+    "transform": 1,
+    "at": 5.16,
+    "events": [
+     {
+      "at": 0,
+      "semitones": [
+       0
+      ]
+     },
+     {
+      "at": 0.28,
+      "semitones": [
+       3,
+       -2
+      ]
+     },
+     {
+      "at": 0.56,
+      "semitones": [
+       5,
+       0
+      ]
+     },
+     {
+      "at": 0.84,
+      "semitones": [
+       12
+      ]
+     }
+    ],
+    "igniteAt": 1.4,
+    "howlAt": 1.56,
+    "howlRate": 1
+   },
+   {
+    "template": "at",
+    "transform": 2,
+    "at": 9.92,
+    "events": [
+     {
+      "at": 0,
+      "semitones": [
+       -5
+      ]
+     },
+     {
+      "at": 0.28,
+      "semitones": [
+       -2
+      ]
+     },
+     {
+      "at": 0.56,
+      "semitones": [
+       0
+      ]
+     },
+     {
+      "at": 0.84,
+      "semitones": [
+       3
+      ]
+     },
+     {
+      "at": 1.12,
+      "semitones": [
+       5
+      ]
+     },
+     {
+      "at": 1.4,
+      "semitones": [
+       7
+      ]
+     }
+    ],
+    "igniteAt": 1.4,
+    "howlAt": 1.56,
+    "howlRate": 0.8909
+   },
+   {
+    "template": "kartal",
+    "transform": 3,
+    "at": 14.68,
+    "events": [
+     {
+      "at": 0,
+      "semitones": [
+       -12
+      ]
+     },
+     {
+      "at": 0.467,
+      "semitones": [
+       -5,
+       -9
+      ]
+     },
+     {
+      "at": 0.933,
+      "semitones": [
+       7,
+       3
+      ]
+     },
+     {
+      "at": 1.4,
+      "semitones": [
+       12,
+       7
+      ]
+     }
+    ],
+    "igniteAt": 1.4,
+    "howlAt": 1.56,
+    "howlRate": 1.1892
+   },
+   {
+    "template": "hayat-agaci",
+    "transform": 4,
+    "at": 19.44,
+    "events": [
+     {
+      "at": 0,
+      "semitones": [
+       -12
+      ]
+     },
+     {
+      "at": 0.259,
+      "semitones": [
+       -7
+      ]
+     },
+     {
+      "at": 0.517,
+      "semitones": [
+       -2
+      ]
+     },
+     {
+      "at": 0.776,
+      "semitones": [
+       3
+      ]
+     },
+     {
+      "at": 1.034,
+      "semitones": [
+       7,
+       3,
+       -2
+      ]
+     }
+    ],
+    "igniteAt": 1.4,
+    "howlAt": 1.56,
+    "howlRate": 1
+   },
+   {
+    "template": "kurt-basi",
+    "transform": 5,
+    "at": 24.2,
+    "events": [
+     {
+      "at": 0,
+      "semitones": [
+       0
+      ]
+     },
+     {
+      "at": 0.29,
+      "semitones": [
+       3
+      ]
+     },
+     {
+      "at": 0.7,
+      "semitones": [
+       7,
+       3
+      ]
+     },
+     {
+      "at": 0.99,
+      "semitones": [
+       10,
+       5
+      ]
+     },
+     {
+      "at": 1.4,
+      "semitones": [
+       12
+      ]
+     }
+    ],
+    "igniteAt": 1.4,
+    "howlAt": 1.56,
+    "howlRate": 1.1892
+   }
+  ],
+  "whole": {
+   "integratedLufs": -16.44,
+   "momentaryMaxLufs": -10.95,
+   "truePeakDbtp": -1.81
+  },
+  "overBase": {
+   "integratedLufs": -15.77,
+   "momentaryMaxLufs": -10.59,
+   "truePeakDbtp": -1.81
+  },
+  "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-constellations.wav",
+  "wavOverBase": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-constellations-over-base.wav",
+  "note": "All six templates in order (hilal, yay, at, kartal, hayat-agaci, kurt-basi; transforms 0..5) from components/asena/geometry.ts asenaConstellationPlan(…, 1400 ms), scheduled exactly as asena-sound.ts does (node clips at motif pitch, ignition at the plan end, howl 0.16 s later; TRACE_GAIN node 0.55, ignite 0.7, howl 0.75), with the scene ducked by 3 + 0.3 × multiplier dB."
+ },
+ "music": [
+  {
+   "key": "base",
+   "id": "asena-base",
+   "about": "E Hüseyni (E F# G A B C# D) on the E minor pentatonic, 80 BPM, 14-bar seamless loop (42 s). A: the \"Asena call\" hook (E–G–B–D → E, then the Hüseyni fall G–F#–E) on a kopuz/dombra-like lute with its drone string and dombra tremolo, a star bell on every hook bar, a throat-singing drone on E whose overtone whistle walks the drone's harmonics, one kam davulu stroke per bar · A': the kıl-kopuz-like bowed fiddle sings the low answer with the natural sixth C#, kopuz ostinato, soft bass · B: the sky opens — ney over an aurora pad, star bells on the changes, the drum heartbeat, a C natural (the Kürdi shadow) in the last bar · C: breakdown on the deep kargyraa drone with twinkling stars, a kopuz turn into the hook.",
+   "bpm": 80,
+   "bars": 14,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -15,
+   "seconds": 42,
+   "integratedLufs": -15.07,
+   "momentaryMaxLufs": -11.9,
+   "shortTermMaxLufs": -13.14,
+   "truePeakDbtp": -1.53,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.922,
+   "centroidHz": 628,
+   "energyAbove8kPct": 0.04,
+   "seam": {
+    "delta": 0.08271,
+    "medianDelta": 0.00787,
+    "p999Delta": 0.12738,
+    "percentile": 99.49,
+    "ratio": 10.51,
+    "rmsJumpDb": 16.6
+   },
+   "mastering": {
+    "normaliseGainDb": 1.8,
+    "peakLimitingDb": -1.21
+   },
+   "renderMsWorkers": 4963,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-base.wav"
+  },
+  {
+   "key": "idle",
+   "id": "asena-idle",
+   "about": "E Hüseyni, 80 BPM, 8-bar loop (24 s): a throat-singing drone on E with its overtone whistle, the Asena call hook on crystalline star bells, the kıl kopuz answer far below, an aurora pad breathing E–B and a slow kam davulu heartbeat; no lute.",
+   "bpm": 80,
+   "bars": 8,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -16,
+   "seconds": 24,
+   "integratedLufs": -16.05,
+   "momentaryMaxLufs": -11.44,
+   "shortTermMaxLufs": -13.81,
+   "truePeakDbtp": -5.03,
+   "samplePeakDbfs": -5.05,
+   "stereoCorrelation": 0.856,
+   "centroidHz": 655,
+   "energyAbove8kPct": 0,
+   "seam": {
+    "delta": 0.01737,
+    "medianDelta": 0.00691,
+    "p999Delta": 0.05715,
+    "percentile": 85.85,
+    "ratio": 2.51,
+    "rmsJumpDb": 7.12
+   },
+   "mastering": {
+    "normaliseGainDb": 1.87,
+    "peakLimitingDb": 0
+   },
+   "renderMsWorkers": 2049,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-idle.wav"
+  },
+  {
+   "key": "feature",
+   "id": "asena-feature",
+   "about": "\"Ergenekon\": 12/8 gallop at 100 dotted-quarter BPM, 16-bar loop (38.4 s). A (B Kürdi, the iron mountain): the kıl-kopuz-like fiddle leads low and wild, the kopuz doubles above, kopuz gallop strums, hoofbeats (three per beat, the third accented), kam davulu on 1 and 3 with its pendants on 2 and 4, the forge anvil, a kargyraa drone on B, the Kürdi C→B cadence · B (E Hüseyni, the people ride out): ney and a wordless female choir sing the opened sky up to E6 with the C# returning, aurora pad, star bells on the downbeats, the khoomei whistle on E, a riser and a kopuz pickup back into A.",
+   "bpm": 100,
+   "bars": 16,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -14.5,
+   "seconds": 38.4,
+   "integratedLufs": -14.55,
+   "momentaryMaxLufs": -12.45,
+   "shortTermMaxLufs": -13.8,
+   "truePeakDbtp": -1.56,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.925,
+   "centroidHz": 569,
+   "energyAbove8kPct": 0.07,
+   "seam": {
+    "delta": 0.00421,
+    "medianDelta": 0.00872,
+    "p999Delta": 0.12753,
+    "percentile": 27.69,
+    "ratio": 0.48,
+    "rmsJumpDb": 6.67
+   },
+   "mastering": {
+    "normaliseGainDb": -0.46,
+    "peakLimitingDb": -0.59
+   },
+   "renderMsWorkers": 3882,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-feature.wav"
+  },
+  {
+   "key": "ambience",
+   "id": "asena-ambience",
+   "about": "Ambience, 24 s seamless loop: a steppe night — wind over open grass with slow far gusts, a faint whistle wandering through the grass, two distant crickets and a far camp fire (low flame roar and sparse crackles); no tempo-bound material.",
+   "bpm": 60,
+   "bars": 6,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -30,
+   "seconds": 24,
+   "integratedLufs": -30.05,
+   "momentaryMaxLufs": -27.47,
+   "shortTermMaxLufs": -28.35,
+   "truePeakDbtp": -16.05,
+   "samplePeakDbfs": -16.05,
+   "stereoCorrelation": -0.328,
+   "centroidHz": 191,
+   "energyAbove8kPct": 0.02,
+   "seam": {
+    "delta": 0.00088,
+    "medianDelta": 0.00075,
+    "p999Delta": 0.0052,
+    "percentile": 56.94,
+    "ratio": 1.18,
+    "rmsJumpDb": 1.35
+   },
+   "mastering": {
+    "normaliseGainDb": 1.14,
+    "peakLimitingDb": 0
+   },
+   "renderMsWorkers": 1081,
+   "checks": {
+    "loudnessInMusicTarget": "n/a (ambience bed, −30 LUFS)",
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-ambience.wav"
+  },
+  {
+   "key": "fsIntro",
+   "id": "asena-fs-intro",
+   "about": "Free-spins intro (\"the sky gate opens\"), 100 BPM: star bells cascade up the E pentatonic over two octaves while the kıl kopuz swells from B2 to B3, a choir swell, a kam davulu roll into a deep stroke with its pendants, then a B power-chord kopuz strum with a kargyraa drone on B on beat 3; the feature theme enters at beat 5 (3.0 s).",
+   "bpm": 100,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 3,
+   "targetLufs": -14.5,
+   "seconds": 4.922,
+   "integratedLufs": -14.45,
+   "momentaryMaxLufs": -11.51,
+   "shortTermMaxLufs": -13.79,
+   "truePeakDbtp": -1.86,
+   "samplePeakDbfs": -1.88,
+   "stereoCorrelation": 0.858,
+   "centroidHz": 561,
+   "energyAbove8kPct": 0.09,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": 0.05,
+    "peakLimitingDb": 0
+   },
+   "renderMsWorkers": 799,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-fs-intro.wav"
+  },
+  {
+   "key": "retrigger",
+   "id": "asena-retrigger",
+   "about": "Retrigger (+3), B Kürdi/E pentatonic, 100 BPM, 1 bar: a 32nd-note star-bell and kopuz flourish B–D–E–F#–A–B up to B5, a bowed B3 with dombra tremolo, a kam davulu stroke with its pendants and a sparkle; ends at beat 3 (1.8 s) and rings over the feature theme.",
+   "bpm": 100,
+   "bars": 1,
+   "loop": false,
+   "musicalEndSeconds": 1.8,
+   "targetLufs": -14.5,
+   "seconds": 3.023,
+   "integratedLufs": -14.6,
+   "momentaryMaxLufs": -11.37,
+   "shortTermMaxLufs": -16.44,
+   "truePeakDbtp": -1.58,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.952,
+   "centroidHz": 779,
+   "energyAbove8kPct": 0.08,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": 1.42,
+    "peakLimitingDb": -1.87
+   },
+   "renderMsWorkers": 465,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-retrigger.wav"
+  },
+  {
+   "key": "fsOutro",
+   "id": "asena-fs-outro",
+   "about": "Feature outro (\"out of Ergenekon\"), E Hüseyni, 80 BPM: C – D | Em with a kıl kopuz phrase B–A–G–F#–G–F# falling to E, kopuz strums, the aurora pad and the choir, a last star bell on E6, the throat drone on E; the base theme may return at beat 6 (4.5 s).",
+   "bpm": 80,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 4.5,
+   "targetLufs": -15,
+   "seconds": 8.411,
+   "integratedLufs": -15.05,
+   "momentaryMaxLufs": -12.2,
+   "shortTermMaxLufs": -13.78,
+   "truePeakDbtp": -2.91,
+   "samplePeakDbfs": -2.92,
+   "stereoCorrelation": 0.843,
+   "centroidHz": 466,
+   "energyAbove8kPct": 0.01,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": 0.89,
+    "peakLimitingDb": 0
+   },
+   "renderMsWorkers": 1102,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-fs-outro.wav"
+  },
+  {
+   "key": "totalWin",
+   "id": "asena-total-win",
+   "about": "Total-win fanfare, E major pentatonic, 120 BPM, 4 s: E – C#m – A | B – E. A festive kopuz flourish with the kıl kopuz doubling, kopuz strums, aurora pad, choir on the final E with star bells, kam davulu with its pendants, hoofbeat triplets and a star shower.",
+   "bpm": 120,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 4,
+   "targetLufs": -14.5,
+   "seconds": 6.068,
+   "integratedLufs": -14.55,
+   "momentaryMaxLufs": -12.17,
+   "shortTermMaxLufs": -13.95,
+   "truePeakDbtp": -1.94,
+   "samplePeakDbfs": -1.96,
+   "stereoCorrelation": 0.875,
+   "centroidHz": 748,
+   "energyAbove8kPct": 0.11,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.11,
+    "peakLimitingDb": 0
+   },
+   "renderMsWorkers": 1124,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-total-win.wav"
+  },
+  {
+   "key": "bigWin1",
+   "id": "asena-bigwin-1",
+   "about": "Big win tier 1 (Büyük), E major pentatonic, 120 BPM, 2 bars (4 s): a kopuz climb with dombra tremolo on the long notes over a 16th kopuz ostinato, the kıl kopuz an octave below, aurora pad, the throat drone on the tonic, kam davulu; it lands on a held tonic with star bells, the drum's pendants and a star shower.",
+   "bpm": 120,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 4,
+   "targetLufs": -15,
+   "seconds": 6.111,
+   "integratedLufs": -15.08,
+   "momentaryMaxLufs": -11.9,
+   "shortTermMaxLufs": -14.22,
+   "truePeakDbtp": -1.6,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.907,
+   "centroidHz": 772,
+   "energyAbove8kPct": 0.07,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.33,
+    "peakLimitingDb": -0.35
+   },
+   "renderMsWorkers": 704,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-bigwin-1.wav"
+  },
+  {
+   "key": "bigWin2",
+   "id": "asena-bigwin-2",
+   "about": "Big win tier 2 (Mega), F# major pentatonic, 120 BPM, 2 bars (4 s): a kopuz climb with dombra tremolo on the long notes over a 16th kopuz ostinato, the kıl kopuz an octave below, aurora pad, wordless choir, hoofbeat triplets, the throat drone on the tonic, kam davulu; it lands on a held tonic with star bells, the drum's pendants and a star shower.",
+   "bpm": 120,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 4,
+   "targetLufs": -14.5,
+   "seconds": 6.108,
+   "integratedLufs": -14.62,
+   "momentaryMaxLufs": -12.73,
+   "shortTermMaxLufs": -14.07,
+   "truePeakDbtp": -1.6,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.877,
+   "centroidHz": 738,
+   "energyAbove8kPct": 0.05,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.81,
+    "peakLimitingDb": -1.48
+   },
+   "renderMsWorkers": 1354,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-bigwin-2.wav"
+  },
+  {
+   "key": "bigWin3",
+   "id": "asena-bigwin-3",
+   "about": "Big win tier 3 (Süper), G# major pentatonic, 120 BPM, 3 bars (6 s): a kopuz climb with dombra tremolo on the long notes over a 16th kopuz ostinato, the kıl kopuz an octave below, aurora pad, wordless choir, hoofbeat triplets, the throat drone on the tonic, kam davulu, a riser and double-time drum; it lands on a held tonic with star bells, the drum's pendants and a star shower.",
+   "bpm": 120,
+   "bars": 3,
+   "loop": false,
+   "musicalEndSeconds": 6,
+   "targetLufs": -14,
+   "seconds": 8.194,
+   "integratedLufs": -14.05,
+   "momentaryMaxLufs": -12.11,
+   "shortTermMaxLufs": -13.51,
+   "truePeakDbtp": -1.6,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.868,
+   "centroidHz": 704,
+   "energyAbove8kPct": 0.1,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.36,
+    "peakLimitingDb": -0.16
+   },
+   "renderMsWorkers": 1527,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-bigwin-3.wav"
+  },
+  {
+   "key": "bigWin4",
+   "id": "asena-bigwin-4",
+   "about": "Big win tier 4 (Efsane), B major pentatonic, 120 BPM, 3 bars (6 s): I – IV | ii – V | I. Kopuz lead with tremolo, the kıl kopuz doubling an octave below, full choir, aurora pad, throat drone, star bells on every downbeat, hoofbeat triplets, a kam davulu roll into the last bar and two star showers.",
+   "bpm": 120,
+   "bars": 3,
+   "loop": false,
+   "musicalEndSeconds": 6,
+   "targetLufs": -14,
+   "seconds": 8.075,
+   "integratedLufs": -14.05,
+   "momentaryMaxLufs": -11.91,
+   "shortTermMaxLufs": -13.08,
+   "truePeakDbtp": -1.61,
+   "samplePeakDbfs": -1.61,
+   "stereoCorrelation": 0.868,
+   "centroidHz": 640,
+   "energyAbove8kPct": 0.07,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.9,
+    "peakLimitingDb": 0
+   },
+   "renderMsWorkers": 1143,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-bigwin-4.wav"
+  },
+  {
+   "key": "maxWin",
+   "id": "asena-max-win",
+   "about": "Max win, C# (top of the key ladder), 120 BPM, 3 bars (6 s): IV – V – bVII – I (F# – G# – B – C#) with kopuz and kıl kopuz in octaves, dombra tremolo, full choir and aurora, throat drone, star bells climbing, a 16th kopuz ostinato, a kopuz strum, double-time kam davulu with a roll and its pendants, hoofbeat triplets and the biggest star shower.",
+   "bpm": 120,
+   "bars": 3,
+   "loop": false,
+   "musicalEndSeconds": 6,
+   "targetLufs": -14,
+   "seconds": 8.079,
+   "integratedLufs": -14.08,
+   "momentaryMaxLufs": -12.42,
+   "shortTermMaxLufs": -13.48,
+   "truePeakDbtp": -1.58,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.85,
+   "centroidHz": 680,
+   "energyAbove8kPct": 0.11,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -1.61,
+    "peakLimitingDb": -1.05
+   },
+   "renderMsWorkers": 1047,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-max-win.wav"
+  },
+  {
+   "key": "bed1",
+   "id": "asena-bed-1",
+   "about": "Count-up bed tier 1: I – bVII – IV – I/V in E major at 120 BPM, 4-bar seamless loop (8 s); kopuz 16ths, throat drone, bass, kam davulu pulse.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -15,
+   "seconds": 8,
+   "integratedLufs": -15.05,
+   "momentaryMaxLufs": -13.3,
+   "shortTermMaxLufs": -14.85,
+   "truePeakDbtp": -1.59,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.963,
+   "centroidHz": 442,
+   "energyAbove8kPct": 0.03,
+   "seam": {
+    "delta": 0.01979,
+    "medianDelta": 0.00889,
+    "p999Delta": 0.10733,
+    "percentile": 79.88,
+    "ratio": 2.23,
+    "rmsJumpDb": 14.97
+   },
+   "mastering": {
+    "normaliseGainDb": 3.4,
+    "peakLimitingDb": -0.27
+   },
+   "renderMsWorkers": 646,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-bed-1.wav"
+  },
+  {
+   "key": "bed2",
+   "id": "asena-bed-2",
+   "about": "Count-up bed tier 2: I – bVII – IV – I/V in F# major at 120 BPM, 4-bar seamless loop (8 s); kopuz 16ths, throat drone, bass, kam davulu pulse + drum groove, aurora pad, pendants.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -14.75,
+   "seconds": 8,
+   "integratedLufs": -14.82,
+   "momentaryMaxLufs": -12.85,
+   "shortTermMaxLufs": -14.6,
+   "truePeakDbtp": -1.58,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.93,
+   "centroidHz": 304,
+   "energyAbove8kPct": 0.02,
+   "seam": {
+    "delta": 0.02839,
+    "medianDelta": 0.00782,
+    "p999Delta": 0.09206,
+    "percentile": 92.37,
+    "ratio": 3.63,
+    "rmsJumpDb": 12.11
+   },
+   "mastering": {
+    "normaliseGainDb": 1.71,
+    "peakLimitingDb": -1.7
+   },
+   "renderMsWorkers": 774,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-bed-2.wav"
+  },
+  {
+   "key": "bed3",
+   "id": "asena-bed-3",
+   "about": "Count-up bed tier 3: I – bVII – IV – I/V in G# major at 120 BPM, 4-bar seamless loop (8 s); kopuz 16ths, throat drone, bass, kam davulu pulse + drum groove, aurora pad, pendants + kopuz lead and hoofbeat triplets.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -14.5,
+   "seconds": 8,
+   "integratedLufs": -14.6,
+   "momentaryMaxLufs": -11.89,
+   "shortTermMaxLufs": -13.7,
+   "truePeakDbtp": -1.52,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.942,
+   "centroidHz": 568,
+   "energyAbove8kPct": 0.06,
+   "seam": {
+    "delta": 0.09211,
+    "medianDelta": 0.00872,
+    "p999Delta": 0.15671,
+    "percentile": 99.06,
+    "ratio": 10.56,
+    "rmsJumpDb": 13.13
+   },
+   "mastering": {
+    "normaliseGainDb": 0.15,
+    "peakLimitingDb": -2.02
+   },
+   "renderMsWorkers": 1189,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-bed-3.wav"
+  },
+  {
+   "key": "bed4",
+   "id": "asena-bed-4",
+   "about": "Count-up bed tier 4: I – bVII – IV – I/V in B major at 120 BPM, 4-bar seamless loop (8 s); kopuz 16ths, throat drone, bass, kam davulu pulse + drum groove, aurora pad, pendants + kopuz lead and hoofbeat triplets + choir, star bells, deep strokes.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -14.25,
+   "seconds": 8,
+   "integratedLufs": -14.38,
+   "momentaryMaxLufs": -12.58,
+   "shortTermMaxLufs": -14.04,
+   "truePeakDbtp": -1.33,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.904,
+   "centroidHz": 512,
+   "energyAbove8kPct": 0.04,
+   "seam": {
+    "delta": 0.04871,
+    "medianDelta": 0.00982,
+    "p999Delta": 0.12904,
+    "percentile": 96.15,
+    "ratio": 4.96,
+    "rmsJumpDb": 11.18
+   },
+   "mastering": {
+    "normaliseGainDb": -0.2,
+    "peakLimitingDb": -3.29
+   },
+   "renderMsWorkers": 1100,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-bed-4.wav"
+  },
+  {
+   "key": "bedMax",
+   "id": "asena-bed-max",
+   "about": "Count-up bed max win: I – bVII – IV – I/V in C# major at 120 BPM, 4-bar seamless loop (8 s); kopuz 16ths, throat drone, bass, kam davulu pulse + drum groove, aurora pad, pendants + kopuz lead and hoofbeat triplets + choir, star bells, deep strokes + the kıl kopuz an octave below and a star shimmer.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -14,
+   "seconds": 8,
+   "integratedLufs": -14.1,
+   "momentaryMaxLufs": -12.65,
+   "shortTermMaxLufs": -13.82,
+   "truePeakDbtp": -1.56,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.9,
+   "centroidHz": 522,
+   "energyAbove8kPct": 0.04,
+   "seam": {
+    "delta": 0.01075,
+    "medianDelta": 0.01021,
+    "p999Delta": 0.13048,
+    "percentile": 52.06,
+    "ratio": 1.05,
+    "rmsJumpDb": 12.77
+   },
+   "mastering": {
+    "normaliseGainDb": -0.64,
+    "peakLimitingDb": -3.07
+   },
+   "renderMsWorkers": 1293,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-bed-max.wav"
+  }
+ ],
+ "sfx": {
+  "renderMsWorkersAllEffects": 15794,
+  "classes": {
+   "hero": -10,
+   "major": -11,
+   "medium": -12.5,
+   "light": -16,
+   "ui": -19.5
+  },
+  "clips": [
+   {
+    "id": "auto-off",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.17,
+    "seconds": 0.68,
+    "centroidHz": 1463,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-auto-off-1.wav"
+   },
+   {
+    "id": "auto-off",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.71,
+    "seconds": 0.65,
+    "centroidHz": 1706,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-auto-off-2.wav"
+   },
+   {
+    "id": "auto-off",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.58,
+    "seconds": 0.674,
+    "centroidHz": 1394,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-auto-off-3.wav"
+   },
+   {
+    "id": "auto-on",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.96,
+    "seconds": 0.631,
+    "centroidHz": 1440,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-auto-on-1.wav"
+   },
+   {
+    "id": "auto-on",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.65,
+    "seconds": 0.625,
+    "centroidHz": 1529,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-auto-on-2.wav"
+   },
+   {
+    "id": "auto-on",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.4,
+    "seconds": 0.663,
+    "centroidHz": 1609,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-auto-on-3.wav"
+   },
+   {
+    "id": "bet-down",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -8.94,
+    "seconds": 0.423,
+    "centroidHz": 1223,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-bet-down-1.wav"
+   },
+   {
+    "id": "bet-down",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -8.92,
+    "seconds": 0.435,
+    "centroidHz": 1225,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-bet-down-2.wav"
+   },
+   {
+    "id": "bet-down",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -8.28,
+    "seconds": 0.428,
+    "centroidHz": 1093,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-bet-down-3.wav"
+   },
+   {
+    "id": "bet-up",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -8.11,
+    "seconds": 0.406,
+    "centroidHz": 1172,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-bet-up-1.wav"
+   },
+   {
+    "id": "bet-up",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -8.11,
+    "seconds": 0.406,
+    "centroidHz": 1172,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-bet-up-2.wav"
+   },
+   {
+    "id": "bet-up",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -8.27,
+    "seconds": 0.416,
+    "centroidHz": 1048,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-bet-up-3.wav"
+   },
+   {
+    "id": "burst-l",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.12,
+    "deltaFromTargetDb": -0.12,
+    "truePeakDbtp": -1.59,
+    "seconds": 2.178,
+    "centroidHz": 869,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-burst-l-1.wav"
+   },
+   {
+    "id": "burst-l",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.14,
+    "deltaFromTargetDb": -0.14,
+    "truePeakDbtp": -1.53,
+    "seconds": 1.714,
+    "centroidHz": 1665,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-burst-l-2.wav"
+   },
+   {
+    "id": "burst-l",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.07,
+    "deltaFromTargetDb": -0.07,
+    "truePeakDbtp": -1.6,
+    "seconds": 2.189,
+    "centroidHz": 859,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-burst-l-3.wav"
+   },
+   {
+    "id": "burst-m",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.1,
+    "seconds": 1.607,
+    "centroidHz": 925,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-burst-m-1.wav"
+   },
+   {
+    "id": "burst-m",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.2,
+    "seconds": 1.278,
+    "centroidHz": 1712,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-burst-m-2.wav"
+   },
+   {
+    "id": "burst-m",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.11,
+    "seconds": 1.616,
+    "centroidHz": 897,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-burst-m-3.wav"
+   },
+   {
+    "id": "burst-s",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.21,
+    "seconds": 1.074,
+    "centroidHz": 975,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-burst-s-1.wav"
+   },
+   {
+    "id": "burst-s",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.72,
+    "seconds": 0.879,
+    "centroidHz": 1737,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-burst-s-2.wav"
+   },
+   {
+    "id": "burst-s",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.08,
+    "seconds": 1.074,
+    "centroidHz": 967,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-burst-s-3.wav"
+   },
+   {
+    "id": "callout-x2",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.8,
+    "seconds": 1.293,
+    "centroidHz": 1340,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-callout-x2-1.wav"
+   },
+   {
+    "id": "callout-x2",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.14,
+    "seconds": 1.313,
+    "centroidHz": 1354,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-callout-x2-2.wav"
+   },
+   {
+    "id": "callout-x10",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.19,
+    "seconds": 1.719,
+    "centroidHz": 1257,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-callout-x10-1.wav"
+   },
+   {
+    "id": "callout-x10",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.43,
+    "seconds": 1.715,
+    "centroidHz": 1232,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-callout-x10-2.wav"
+   },
+   {
+    "id": "callout-x25",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.06,
+    "seconds": 2.199,
+    "centroidHz": 1101,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-callout-x25-1.wav"
+   },
+   {
+    "id": "callout-x25",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.73,
+    "seconds": 2.198,
+    "centroidHz": 1078,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-callout-x25-2.wav"
+   },
+   {
+    "id": "callout-x50",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.8,
+    "seconds": 2.792,
+    "centroidHz": 1241,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-callout-x50-1.wav"
+   },
+   {
+    "id": "callout-x100",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.06,
+    "deltaFromTargetDb": -0.06,
+    "truePeakDbtp": -2.24,
+    "seconds": 2.807,
+    "centroidHz": 1364,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-callout-x100-1.wav"
+   },
+   {
+    "id": "callout-x250",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.06,
+    "deltaFromTargetDb": -0.06,
+    "truePeakDbtp": -2.03,
+    "seconds": 3.366,
+    "centroidHz": 1245,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-callout-x250-1.wav"
+   },
+   {
+    "id": "click",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.27,
+    "seconds": 0.139,
+    "centroidHz": 1764,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-click-1.wav"
+   },
+   {
+    "id": "click",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.59,
+    "deltaFromTargetDb": -0.09,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.139,
+    "centroidHz": 2002,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-click-2.wav"
+   },
+   {
+    "id": "click",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.72,
+    "seconds": 0.139,
+    "centroidHz": 1981,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-click-3.wav"
+   },
+   {
+    "id": "click",
+    "variation": 4,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.55,
+    "seconds": 0.139,
+    "centroidHz": 2051,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-click-4.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7,
+    "seconds": 0.261,
+    "centroidHz": 1594,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-coin-1.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.69,
+    "seconds": 0.258,
+    "centroidHz": 1600,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-coin-2.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.68,
+    "seconds": 0.249,
+    "centroidHz": 1607,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-coin-3.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 4,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.02,
+    "seconds": 0.254,
+    "centroidHz": 1613,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-coin-4.wav"
+   },
+   {
+    "id": "count-land-1",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.32,
+    "deltaFromTargetDb": -0.32,
+    "truePeakDbtp": -1.53,
+    "seconds": 2.261,
+    "centroidHz": 787,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-count-land-1-1.wav"
+   },
+   {
+    "id": "count-land-2",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.14,
+    "deltaFromTargetDb": -0.14,
+    "truePeakDbtp": -1.54,
+    "seconds": 2.166,
+    "centroidHz": 1092,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-count-land-2-1.wav"
+   },
+   {
+    "id": "count-land-3",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.15,
+    "deltaFromTargetDb": -0.15,
+    "truePeakDbtp": -1.56,
+    "seconds": 2.431,
+    "centroidHz": 1051,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-count-land-3-1.wav"
+   },
+   {
+    "id": "count-land-4",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.19,
+    "deltaFromTargetDb": -0.19,
+    "truePeakDbtp": -1.58,
+    "seconds": 2.482,
+    "centroidHz": 1076,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-count-land-4-1.wav"
+   },
+   {
+    "id": "count-land-max",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.1,
+    "deltaFromTargetDb": -0.1,
+    "truePeakDbtp": -1.55,
+    "seconds": 2.652,
+    "centroidHz": 1010,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-count-land-max-1.wav"
+   },
+   {
+    "id": "denied",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.11,
+    "seconds": 0.44,
+    "centroidHz": 1586,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-denied-1.wav"
+   },
+   {
+    "id": "denied",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.88,
+    "seconds": 0.449,
+    "centroidHz": 1897,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-denied-2.wav"
+   },
+   {
+    "id": "denied",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.59,
+    "seconds": 0.467,
+    "centroidHz": 1841,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-denied-3.wav"
+   },
+   {
+    "id": "ding",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.91,
+    "seconds": 1.926,
+    "centroidHz": 1201,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-ding-1.wav"
+   },
+   {
+    "id": "ding",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.59,
+    "seconds": 1.772,
+    "centroidHz": 1237,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-ding-2.wav"
+   },
+   {
+    "id": "ding",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.58,
+    "seconds": 1.709,
+    "centroidHz": 1449,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-ding-3.wav"
+   },
+   {
+    "id": "fall",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.14,
+    "seconds": 0.623,
+    "centroidHz": 1621,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-fall-1.wav"
+   },
+   {
+    "id": "fall",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.24,
+    "seconds": 0.623,
+    "centroidHz": 1638,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-fall-2.wav"
+   },
+   {
+    "id": "fall",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.48,
+    "seconds": 0.563,
+    "centroidHz": 1496,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-fall-3.wav"
+   },
+   {
+    "id": "howl",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.86,
+    "seconds": 3.336,
+    "centroidHz": 655,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-howl-1.wav"
+   },
+   {
+    "id": "howl",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.04,
+    "deltaFromTargetDb": -0.04,
+    "truePeakDbtp": -5.97,
+    "seconds": 3.476,
+    "centroidHz": 698,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-howl-2.wav"
+   },
+   {
+    "id": "howl-great",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.04,
+    "deltaFromTargetDb": -0.04,
+    "truePeakDbtp": -4.02,
+    "seconds": 4.51,
+    "centroidHz": 767,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-howl-great-1.wav"
+   },
+   {
+    "id": "howl-great",
+    "variation": 2,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.03,
+    "deltaFromTargetDb": -0.03,
+    "truePeakDbtp": -4.63,
+    "seconds": 4.731,
+    "centroidHz": 766,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-howl-great-2.wav"
+   },
+   {
+    "id": "ignite-at",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.59,
+    "seconds": 2.195,
+    "centroidHz": 1168,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-ignite-at-1.wav"
+   },
+   {
+    "id": "ignite-hayat-agaci",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.81,
+    "seconds": 2.632,
+    "centroidHz": 1138,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-ignite-hayat-agaci-1.wav"
+   },
+   {
+    "id": "ignite-hilal",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.02,
+    "seconds": 1.997,
+    "centroidHz": 1123,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-ignite-hilal-1.wav"
+   },
+   {
+    "id": "ignite-kartal",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.09,
+    "seconds": 2.255,
+    "centroidHz": 1365,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-ignite-kartal-1.wav"
+   },
+   {
+    "id": "ignite-kurt-basi",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.6,
+    "seconds": 3.028,
+    "centroidHz": 858,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-ignite-kurt-basi-1.wav"
+   },
+   {
+    "id": "ignite-yay",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.12,
+    "seconds": 2.195,
+    "centroidHz": 1263,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-ignite-yay-1.wav"
+   },
+   {
+    "id": "land",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.11,
+    "seconds": 0.509,
+    "centroidHz": 714,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-land-1.wav"
+   },
+   {
+    "id": "land",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.38,
+    "seconds": 0.558,
+    "centroidHz": 745,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-land-2.wav"
+   },
+   {
+    "id": "land",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.89,
+    "seconds": 0.546,
+    "centroidHz": 708,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-land-3.wav"
+   },
+   {
+    "id": "land",
+    "variation": 4,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.11,
+    "seconds": 0.516,
+    "centroidHz": 750,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-land-4.wav"
+   },
+   {
+    "id": "moon1",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.07,
+    "seconds": 1.774,
+    "centroidHz": 732,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon1-1.wav"
+   },
+   {
+    "id": "moon1",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.84,
+    "seconds": 1.764,
+    "centroidHz": 712,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon1-2.wav"
+   },
+   {
+    "id": "moon1",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.53,
+    "seconds": 1.762,
+    "centroidHz": 734,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon1-3.wav"
+   },
+   {
+    "id": "moon2",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.44,
+    "seconds": 1.802,
+    "centroidHz": 762,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon2-1.wav"
+   },
+   {
+    "id": "moon2",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.68,
+    "seconds": 1.805,
+    "centroidHz": 766,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon2-2.wav"
+   },
+   {
+    "id": "moon2",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.46,
+    "seconds": 1.805,
+    "centroidHz": 777,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon2-3.wav"
+   },
+   {
+    "id": "moon3",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.94,
+    "seconds": 2.293,
+    "centroidHz": 784,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon3-1.wav"
+   },
+   {
+    "id": "moon3",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.29,
+    "seconds": 2.285,
+    "centroidHz": 716,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon3-2.wav"
+   },
+   {
+    "id": "moon3",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.79,
+    "seconds": 2.314,
+    "centroidHz": 805,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon3-3.wav"
+   },
+   {
+    "id": "moon4",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.87,
+    "seconds": 2.295,
+    "centroidHz": 679,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon4-1.wav"
+   },
+   {
+    "id": "moon4",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.68,
+    "seconds": 2.296,
+    "centroidHz": 641,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon4-2.wav"
+   },
+   {
+    "id": "moon4",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.53,
+    "seconds": 2.291,
+    "centroidHz": 579,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon4-3.wav"
+   },
+   {
+    "id": "moon5",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.73,
+    "seconds": 2.293,
+    "centroidHz": 684,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon5-1.wav"
+   },
+   {
+    "id": "moon5",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.05,
+    "deltaFromTargetDb": -0.05,
+    "truePeakDbtp": -1.58,
+    "seconds": 2.29,
+    "centroidHz": 700,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon5-2.wav"
+   },
+   {
+    "id": "moon5",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.4,
+    "seconds": 2.293,
+    "centroidHz": 705,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon5-3.wav"
+   },
+   {
+    "id": "moon6",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.13,
+    "deltaFromTargetDb": -0.13,
+    "truePeakDbtp": -1.59,
+    "seconds": 2.284,
+    "centroidHz": 691,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon6-1.wav"
+   },
+   {
+    "id": "moon6",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.01,
+    "deltaFromTargetDb": -0.01,
+    "truePeakDbtp": -1.6,
+    "seconds": 2.291,
+    "centroidHz": 702,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon6-2.wav"
+   },
+   {
+    "id": "moon6",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.12,
+    "deltaFromTargetDb": -0.12,
+    "truePeakDbtp": -1.6,
+    "seconds": 2.29,
+    "centroidHz": 710,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-moon6-3.wav"
+   },
+   {
+    "id": "mount-1",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.35,
+    "deltaFromTargetDb": -0.35,
+    "truePeakDbtp": -1.57,
+    "seconds": 2.021,
+    "centroidHz": 259,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-mount-1-1.wav"
+   },
+   {
+    "id": "mount-1",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.49,
+    "deltaFromTargetDb": -0.49,
+    "truePeakDbtp": -1.59,
+    "seconds": 2.02,
+    "centroidHz": 265,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-mount-1-2.wav"
+   },
+   {
+    "id": "mount-2",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.29,
+    "deltaFromTargetDb": -0.29,
+    "truePeakDbtp": -1.55,
+    "seconds": 2.45,
+    "centroidHz": 256,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-mount-2-1.wav"
+   },
+   {
+    "id": "mount-2",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.21,
+    "deltaFromTargetDb": -0.21,
+    "truePeakDbtp": -1.54,
+    "seconds": 2.445,
+    "centroidHz": 257,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-mount-2-2.wav"
+   },
+   {
+    "id": "mount-3",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.56,
+    "deltaFromTargetDb": -0.56,
+    "truePeakDbtp": -1.56,
+    "seconds": 3.367,
+    "centroidHz": 440,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-mount-3-1.wav"
+   },
+   {
+    "id": "mount-3",
+    "variation": 2,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.55,
+    "deltaFromTargetDb": -0.55,
+    "truePeakDbtp": -1.58,
+    "seconds": 3.326,
+    "centroidHz": 421,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-mount-3-2.wav"
+   },
+   {
+    "id": "node",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.78,
+    "seconds": 1.696,
+    "centroidHz": 737,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-node-1.wav"
+   },
+   {
+    "id": "node",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.95,
+    "seconds": 1.766,
+    "centroidHz": 726,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-node-2.wav"
+   },
+   {
+    "id": "node",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.18,
+    "seconds": 1.765,
+    "centroidHz": 717,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-node-3.wav"
+   },
+   {
+    "id": "node-hi",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.2,
+    "seconds": 1.605,
+    "centroidHz": 1340,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-node-hi-1.wav"
+   },
+   {
+    "id": "node-hi",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.47,
+    "seconds": 1.694,
+    "centroidHz": 1333,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-node-hi-2.wav"
+   },
+   {
+    "id": "node-hi",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.89,
+    "seconds": 1.695,
+    "centroidHz": 1340,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-node-hi-3.wav"
+   },
+   {
+    "id": "node-lo",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.09,
+    "seconds": 1.699,
+    "centroidHz": 346,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-node-lo-1.wav"
+   },
+   {
+    "id": "node-lo",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.66,
+    "seconds": 1.71,
+    "centroidHz": 340,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-node-lo-2.wav"
+   },
+   {
+    "id": "node-lo",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.34,
+    "seconds": 1.802,
+    "centroidHz": 340,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-node-lo-3.wav"
+   },
+   {
+    "id": "paw",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -18.73,
+    "deltaFromTargetDb": -2.73,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.332,
+    "centroidHz": 89,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-paw-1.wav"
+   },
+   {
+    "id": "paw",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -18.13,
+    "deltaFromTargetDb": -2.13,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.331,
+    "centroidHz": 91,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-paw-2.wav"
+   },
+   {
+    "id": "paw",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -18.07,
+    "deltaFromTargetDb": -2.07,
+    "truePeakDbtp": -1.59,
+    "seconds": 0.304,
+    "centroidHz": 95,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-paw-3.wav"
+   },
+   {
+    "id": "paw",
+    "variation": 4,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -18.63,
+    "deltaFromTargetDb": -2.63,
+    "truePeakDbtp": -1.59,
+    "seconds": 0.332,
+    "centroidHz": 108,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-paw-4.wav"
+   },
+   {
+    "id": "piece",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.3,
+    "seconds": 2.096,
+    "centroidHz": 950,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-piece-1.wav"
+   },
+   {
+    "id": "piece",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.06,
+    "seconds": 2.065,
+    "centroidHz": 976,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-piece-2.wav"
+   },
+   {
+    "id": "piece",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.64,
+    "seconds": 2.132,
+    "centroidHz": 956,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-piece-3.wav"
+   },
+   {
+    "id": "spin",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.39,
+    "seconds": 0.697,
+    "centroidHz": 1769,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-spin-1.wav"
+   },
+   {
+    "id": "spin",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.97,
+    "seconds": 0.699,
+    "centroidHz": 1917,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-spin-2.wav"
+   },
+   {
+    "id": "spin",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.13,
+    "seconds": 0.709,
+    "centroidHz": 1767,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-spin-3.wav"
+   },
+   {
+    "id": "spin",
+    "variation": 4,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.48,
+    "seconds": 0.735,
+    "centroidHz": 1671,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-spin-4.wav"
+   },
+   {
+    "id": "spins-plus",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.06,
+    "seconds": 1.798,
+    "centroidHz": 1425,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-spins-plus-1.wav"
+   },
+   {
+    "id": "spins-plus",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.77,
+    "seconds": 1.797,
+    "centroidHz": 1350,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-spins-plus-2.wav"
+   },
+   {
+    "id": "spins-plus",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.59,
+    "seconds": 1.795,
+    "centroidHz": 1331,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-spins-plus-3.wav"
+   },
+   {
+    "id": "tease",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.56,
+    "deltaFromTargetDb": -0.06,
+    "truePeakDbtp": -5.34,
+    "seconds": 3.741,
+    "centroidHz": 606,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-tease-1.wav"
+   },
+   {
+    "id": "tease",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.56,
+    "deltaFromTargetDb": -0.06,
+    "truePeakDbtp": -6.82,
+    "seconds": 3.733,
+    "centroidHz": 881,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-tease-2.wav"
+   },
+   {
+    "id": "tease",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.56,
+    "deltaFromTargetDb": -0.06,
+    "truePeakDbtp": -6.18,
+    "seconds": 3.693,
+    "centroidHz": 659,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-tease-3.wav"
+   },
+   {
+    "id": "tick",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.29,
+    "seconds": 0.24,
+    "centroidHz": 2005,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-tick-1.wav"
+   },
+   {
+    "id": "tick",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.84,
+    "seconds": 0.242,
+    "centroidHz": 1688,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-tick-2.wav"
+   },
+   {
+    "id": "tick",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -8.09,
+    "seconds": 0.237,
+    "centroidHz": 2005,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-tick-3.wav"
+   },
+   {
+    "id": "tick",
+    "variation": 4,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.02,
+    "seconds": 0.242,
+    "centroidHz": 1688,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-tick-4.wav"
+   },
+   {
+    "id": "tier-up-2",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.19,
+    "deltaFromTargetDb": -0.19,
+    "truePeakDbtp": -1.58,
+    "seconds": 2.447,
+    "centroidHz": 946,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-tier-up-2-1.wav"
+   },
+   {
+    "id": "tier-up-3",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.11,
+    "deltaFromTargetDb": -0.11,
+    "truePeakDbtp": -1.47,
+    "seconds": 2.475,
+    "centroidHz": 978,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-tier-up-3-1.wav"
+   },
+   {
+    "id": "tier-up-4",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.14,
+    "deltaFromTargetDb": -0.14,
+    "truePeakDbtp": -1.58,
+    "seconds": 2.174,
+    "centroidHz": 843,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-tier-up-4-1.wav"
+   },
+   {
+    "id": "tier-up-max",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.01,
+    "seconds": 2.125,
+    "centroidHz": 921,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-tier-up-max-1.wav"
+   },
+   {
+    "id": "trail",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.94,
+    "seconds": 1.161,
+    "centroidHz": 1054,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-trail-1.wav"
+   },
+   {
+    "id": "trail",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.53,
+    "seconds": 1.097,
+    "centroidHz": 1205,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-trail-2.wav"
+   },
+   {
+    "id": "trail",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.98,
+    "seconds": 1.156,
+    "centroidHz": 1060,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-trail-3.wav"
+   },
+   {
+    "id": "trigger",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.04,
+    "deltaFromTargetDb": -0.04,
+    "truePeakDbtp": -6.59,
+    "seconds": 4.483,
+    "centroidHz": 596,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-trigger-1.wav"
+   },
+   {
+    "id": "trigger",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.04,
+    "deltaFromTargetDb": -0.04,
+    "truePeakDbtp": -7.65,
+    "seconds": 4.475,
+    "centroidHz": 598,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-trigger-2.wav"
+   },
+   {
+    "id": "trigger",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.16,
+    "deltaFromTargetDb": -0.16,
+    "truePeakDbtp": -1.56,
+    "seconds": 4.485,
+    "centroidHz": 968,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-trigger-3.wav"
+   },
+   {
+    "id": "vo-breath",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.15,
+    "seconds": 1.175,
+    "centroidHz": 486,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-vo-breath-1.wav"
+   },
+   {
+    "id": "vo-breath",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.86,
+    "seconds": 1.227,
+    "centroidHz": 489,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-vo-breath-2.wav"
+   },
+   {
+    "id": "vo-breath",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.04,
+    "seconds": 1.259,
+    "centroidHz": 500,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-vo-breath-3.wav"
+   },
+   {
+    "id": "vo-call",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.58,
+    "seconds": 1.219,
+    "centroidHz": 816,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-vo-call-1.wav"
+   },
+   {
+    "id": "vo-call",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.44,
+    "seconds": 1.265,
+    "centroidHz": 838,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-vo-call-2.wav"
+   },
+   {
+    "id": "vo-call",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.3,
+    "seconds": 1.219,
+    "centroidHz": 723,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-vo-call-3.wav"
+   },
+   {
+    "id": "vo-joy",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.33,
+    "seconds": 1.539,
+    "centroidHz": 712,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-vo-joy-1.wav"
+   },
+   {
+    "id": "vo-joy",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.19,
+    "seconds": 1.497,
+    "centroidHz": 783,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-vo-joy-2.wav"
+   },
+   {
+    "id": "vo-joy",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.59,
+    "seconds": 1.501,
+    "centroidHz": 779,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-vo-joy-3.wav"
+   },
+   {
+    "id": "win",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.92,
+    "seconds": 1.764,
+    "centroidHz": 1456,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-win-1.wav"
+   },
+   {
+    "id": "win",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.58,
+    "deltaFromTargetDb": -0.08,
+    "truePeakDbtp": -1.56,
+    "seconds": 1.791,
+    "centroidHz": 1590,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-win-2.wav"
+   },
+   {
+    "id": "win",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.13,
+    "seconds": 1.627,
+    "centroidHz": 1597,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/asena-win-3.wav"
+   }
+  ]
+ },
+ "runtimeChain": {
+  "musicOnlyUnitySliders": {
+   "integratedLufs": -17.21,
+   "momentaryMaxLufs": -13.1,
+   "truePeakDbtp": -2.13,
+   "samplePeakDbfs": -2.19
+  },
+  "musicOnlyDefaultMix": {
+   "integratedLufs": -20.01,
+   "momentaryMaxLufs": -15.79,
+   "truePeakDbtp": -4.82,
+   "samplePeakDbfs": -4.89
+  },
+  "musicPlusSfxStressUnity": {
+   "integratedLufs": -9.18,
+   "momentaryMaxLufs": -7.56,
+   "truePeakDbtp": -0.65,
+   "samplePeakDbfs": -0.67
+  },
+  "musicPlusSfxStressDefault": {
+   "integratedLufs": -9.67,
+   "momentaryMaxLufs": -7.77,
+   "truePeakDbtp": -0.79,
+   "samplePeakDbfs": -0.79
+  }
+ },
+ "escalation": {
+  "seconds": 26,
+  "hits": [
+   {
+    "target": 2,
+    "call": 5.3,
+    "hitAt": 5.5,
+    "onBeat": true
+   },
+   {
+    "target": 3,
+    "call": 8.15,
+    "hitAt": 8.5,
+    "onBeat": true
+   },
+   {
+    "target": 4,
+    "call": 10.7,
+    "hitAt": 11,
+    "onBeat": true
+   },
+   {
+    "target": "max",
+    "call": 13.25,
+    "hitAt": 13.5,
+    "onBeat": true
+   }
+  ],
+  "whole": {
+   "integratedLufs": -12.95,
+   "momentaryMaxLufs": -9.5,
+   "truePeakDbtp": -1.21
+  },
+  "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-escalation-max.wav",
+  "note": "Büyük → Mega → Süper → Efsane → max with count-up ticks; tier-up hits on the 120 BPM grid (planTierUp), landing at 22.3 s."
+ },
+ "loadTiming": {
+  "asena": [
+   {
+    "coreMs": 6827,
+    "allMs": 35352,
+    "maxMainThreadGapMsDuringCore": 71,
+    "maxMainThreadGapMs": 90,
+    "workers": 3,
+    "perStepMs": {
+     "base": 5304,
+     "sfx-core": 6808,
+     "core": 6826,
+     "ambience": 8310,
+     "sfx-extended": 10072,
+     "idle": 2162,
+     "fsIntro": 3698,
+     "retrigger": 440,
+     "feature": 6166,
+     "bigWin1": 1010,
+     "bed1": 1398,
+     "sfx-celebration": 5042,
+     "bigWin2": 1803,
+     "bed2": 2596,
+     "bigWin3": 1980,
+     "bed3": 1878,
+     "bigWin4": 2065,
+     "bed4": 1800,
+     "fsOutro": 1049,
+     "totalWin": 1486,
+     "maxWin": 2248,
+     "bedMax": 1513,
+     "all": 35351
+    }
+   },
+   {
+    "coreMs": 6476,
+    "allMs": 34632,
+    "maxMainThreadGapMsDuringCore": 124,
+    "maxMainThreadGapMs": 155,
+    "workers": 3,
+    "perStepMs": {
+     "base": 6325,
+     "sfx-core": 6441,
+     "core": 6475,
+     "ambience": 7012,
+     "idle": 2280,
+     "sfx-extended": 9357,
+     "fsIntro": 3980,
+     "retrigger": 439,
+     "feature": 6773,
+     "sfx-celebration": 3994,
+     "bigWin1": 1865,
+     "bed1": 1279,
+     "bed2": 1076,
+     "bigWin2": 2729,
+     "bigWin3": 2268,
+     "bed3": 1757,
+     "bigWin4": 2315,
+     "bed4": 2707,
+     "fsOutro": 833,
+     "totalWin": 1123,
+     "maxWin": 2041,
+     "bedMax": 1844,
+     "all": 34631
+    }
+   },
+   {
+    "coreMs": 6054,
+    "allMs": 34344,
+    "maxMainThreadGapMsDuringCore": 70,
+    "maxMainThreadGapMs": 90,
+    "workers": 3,
+    "perStepMs": {
+     "base": 5000,
+     "sfx-core": 6026,
+     "core": 6053,
+     "ambience": 7157,
+     "idle": 1908,
+     "sfx-extended": 9550,
+     "fsIntro": 3760,
+     "retrigger": 495,
+     "feature": 6427,
+     "sfx-celebration": 3429,
+     "bigWin1": 1795,
+     "bed1": 2380,
+     "bigWin2": 2124,
+     "bed2": 1465,
+     "bigWin3": 2157,
+     "bed3": 1938,
+     "bigWin4": 1739,
+     "fsOutro": 766,
+     "bed4": 2835,
+     "totalWin": 1280,
+     "maxWin": 2561,
+     "bedMax": 2449,
+     "all": 34344
+    }
+   }
+  ],
+  "tarhunSameRunInterleaved": [
+   {
+    "coreMs": 6587,
+    "allMs": 32286,
+    "maxMainThreadGapMsDuringCore": 132
+   },
+   {
+    "coreMs": 6038,
+    "allMs": 30717,
+    "maxMainThreadGapMsDuringCore": 164
+   },
+   {
+    "coreMs": 8010,
+    "allMs": 36369,
+    "maxMainThreadGapMsDuringCore": 224
+   }
+  ],
+  "meanCoreMs": {
+   "asena": 6452,
+   "tarhun": 6878
+  },
+  "baseScoreTrace": {
+   "generatedAt": "2026-10-15T18:28:43.913Z",
+   "browser": "chromium 141.0.7390.37 headless",
+   "sampleRate": 44100
+  },
+  "coreSfxTrace": {
+   "generatedAt": "2026-10-15T18:28:25.284Z",
+   "browser": "chromium 141.0.7390.37 headless",
+   "sampleRate": 44100
+  },
+  "note": "Core = base theme + base-game effects (land, burst s/m, fall, the three star-node clips, the hilal/yay/at/kartal ignitions, the howl, paws, trail, UI) rendered in parallel. The Hayat Ağacı and Kurt Başı ignitions, the large burst, the great howl, moons, Ergenekon and the celebration group follow lazily; until then the Kartal ignition (a whole tone lower), the medium burst, the ordinary howl or the live fallback voice stand in."
+ },
+ "labPage": {
+  "url": "next dev :3311 /lab/audio?game=asena",
+  "selectedTab": "Asena: Yıldız Kurdu",
+  "coreMs": 6695,
+  "loadMs": 30397,
+  "workers": [
+   "http://127.0.0.1:3311/workers/slot-audio-render.js?v=d863de108944"
+  ],
+  "pageErrors": [],
+  "consoleAndHttp": "only 404s for the absent voice files /audio/voice/asena/*.mp3 (expected, skipped silently)",
+  "voiceBank": "yüklü: yok · eksik (sessizce atlandı, yerine sözsüz yer tutucu): 29",
+  "escalationStateSamples": [
+   {
+    "ms": 1500,
+    "state": "kutlama: kademe 1 · sayıyor · bed1 · ses: win-big (0 kayıt)"
+   },
+   {
+    "ms": 4200,
+    "state": "kutlama: kademe 2 · sayıyor · bed2 · ses: win-mega (0 kayıt)"
+   },
+   {
+    "ms": 6800,
+    "state": "kutlama: kademe 3 · sayıyor · bed3 · ses: win-super (0 kayıt)"
+   },
+   {
+    "ms": 9300,
+    "state": "kutlama: kademe 4 · sayıyor · bed4 · ses: win-legend (0 kayıt)"
+   },
+   {
+    "ms": 12500,
+    "state": "kutlama: kademe 4 + azami · sayıyor · bedMax · ses: win-max (0 kayıt)"
+   },
+   {
+    "ms": 19200,
+    "state": "kutlama: kademe 0 · ses: — (0 kayıt) · base 5818 ms · sfx-core 6460 ms"
+   },
+   {
+    "ms": 21000,
+    "state": "kutlama: kademe 0 · ses: — (0 kayıt) · base 5818 ms · sfx-core 6460 ms"
+   }
+  ],
+  "switchBackToCascade": true,
+  "screenshot": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/asena-lab-audio.png"
+ },
+ "summary": {
+  "musicInLoudnessTarget": [
+   "base",
+   "idle",
+   "feature",
+   "fsIntro",
+   "retrigger",
+   "fsOutro",
+   "totalWin",
+   "bigWin1",
+   "bigWin2",
+   "bigWin3",
+   "bigWin4",
+   "maxWin",
+   "bed1",
+   "bed2",
+   "bed3",
+   "bed4",
+   "bedMax"
+  ],
+  "musicOutOfTarget": [],
+  "allAssetsTruePeakBelowMinus1": true,
+  "loopsSeamless": true,
+  "sfxMaxShortfallDb": -2.73,
+  "sfxMaxOverDb": 0,
+  "sfxShortfallOver1Db": [
+   "paw"
+  ],
+  "calloutSecondsByClass": {
+   "x2": 1.293,
+   "x10": 1.719,
+   "x25": 2.199,
+   "x50": 2.792,
+   "x100": 2.807,
+   "x250": 3.366
+  },
+  "tierUpHitsOnBeat": true,
+  "escalationTruePeakDbtp": -1.21,
+  "constellationOverBase": {
+   "integratedLufs": -15.77,
+   "momentaryMaxLufs": -10.59,
+   "truePeakDbtp": -1.81
+  },
+  "unitTests": "314/314 pass (apps/web, incl. tests/slot-audio-asena.test.ts 12 and tests/slot-audio-asena-sound.test.ts 3); web typecheck clean; worker cb090b0a42bb"
+ },
+ "limitations": [
+  "Nobody has listened to this set: the author cannot hear. Owner listening acceptance is required (WAV per asset; asena-constellations.wav is the signature, asena-escalation-max.wav the full climb).",
+  "Instruments are synthesized approximations, not recordings; kopuz, kıl kopuz, throat singing and the howl may read as \"synth\" on good speakers. Makam colours are 12-TET approximations (no quarter tones); the khoomei whistle uses natural harmonics, so its 7th harmonic is ~31 cents flat of D (intended).",
+  "Vocal callouts are wordless synthetic placeholders; the 29 recorded lines (ASENA_VOICE_TEXT, wise female sky voice) plug into setVoiceBank(\"/audio/voice/asena\") and were tested with fakes only. Template-name and \"Kurt yol gösteriyor…\" lines have no placeholder (silent until recorded).",
+  "The live master limiter is a DynamicsCompressor, not a true-peak limiter: see runtimeChain for the stacked-effects worst case (same behaviour as the other games). Every rendered asset is below −1 dBTP.",
+  "Very short effects (paw, click, tick, coin) read under their momentary class target because they are shorter than the 400 ms window (same as the other sets).",
+  "Not verified: GitHub CI, a production (build:cloudflare) runtime, Safari/Firefox, mobile devices, and the game screen wiring (components/asena/** and the /game/asena screen are other agents' work)."
+ ]
+}
