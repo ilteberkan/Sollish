@@ -254,8 +254,8 @@ test('bonus buy: dialog, cost bet × 100, Lale Ebrusu intro, stains build and sh
   for (let i = 1; i < readings.length; i++) expect(readings[i]!, `meter reading ${i}`).toBeGreaterThanOrEqual(readings[i - 1]!);
   // The final board shows the engine's last grid with its stain field.
   expect(await page.getByRole('gridcell').allTextContents()).toEqual(gridLabels(BUY_STAIN, 1000, 'buy'));
-  await celebration(page).click({ position: { x: 12, y: 12 } }).catch(() => {});
-  await expect(rows(page)).toHaveCount(1, { timeout: 30_000 });
+  // No tap: the counter climbs through every tier on its own (a tap would jump to the final level).
+  await expect(rows(page)).toHaveCount(1, { timeout: 60_000 });
   const shown = await recorded<{ amount: string; label: string } | null>(page, '__celebration');
   expect(shown?.amount).toBe(demoText(round.payoutCents));
   expect(shown?.label).toMatch(/^Süper Kazanç/);

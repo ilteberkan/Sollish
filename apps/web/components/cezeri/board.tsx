@@ -7,7 +7,7 @@ import type { CezeriBoard as EngineBoard, CezeriPos, CezeriSymbol } from '@solli
 import {
   CZ_BOUNDS, CZ_C, CZ_HUB_R, CZ_RIM_R, CZ_RINGS, CZ_SLICES, CZ_SLICE_DEG,
   annulusPath, cellStyle, czPct, cezeriSpinPlan, dividerPath, gearTeethPath, polar, ringBand, ringDirection, ringTeeth,
-  sliceAngle, slicePath, symbolBox, wedgeStyle,
+  sliceAngle, slicePath, symbolBox, wedgeStyle, type CzRingTiming,
 } from './geometry';
 import { CEZERI_SYMBOL_LABELS, CZ_PALETTE as P, CezeriSymbolUse } from './symbols';
 import styles from './board.module.css';
@@ -35,6 +35,8 @@ export interface CezeriRotateOptions {
   onTick?: (ring: number, tick: number, last: boolean) => void;
   /** Called when a ring has fully settled. */
   onRingStop?: (ring: number) => void;
+  /** Exact ring plans (cezeriRotateTiming), so the board, the timeline and the sound share one clock. */
+  timing?: readonly CzRingTiming[];
 }
 export interface CezeriBoardHandle {
   /** The board square element (for the FX canvas). */
@@ -417,7 +419,7 @@ export function CezeriBoard({ initial, hubValue = 1, mood = 'base', className, s
       let longest = 0;
       for (const t of targets) {
         const ring = t.ring;
-        const plan = cezeriSpinPlan({ ring, cruiseMs: 380 + ring * stagger / Math.max(speed, 0.2), slices: 6 + ring, ticks: 3, speed });
+        const plan = opts.timing?.find((x) => x.ring === ring)?.plan ?? cezeriSpinPlan({ ring, cruiseMs: 380 + ring * stagger / Math.max(speed, 0.2), slices: 6 + ring, ticks: 3, speed });
         const ringEl = ringRefs.current[ring];
         const cells = Array.from({ length: CZ_SLICES }, (_, s) => cellRefs.current[key(ring, s)]).filter(Boolean) as HTMLDivElement[];
         ringEl?.animate(plan.upKeyframes, { duration: plan.upMs, fill: 'forwards' });

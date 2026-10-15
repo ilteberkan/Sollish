@@ -8,6 +8,7 @@
 import { CASCADE2_BET_LEVELS_CENTS, CASCADE2_ENGINE_ID, CASCADE2_MAX_WIN_MULTIPLIER, CASCADE2_MODES, CASCADE2_RTP, cascadeCostCents, playCascade2Round, type Cascade2Round, type CascadeMode } from "./cascade-2";
 import { STORM_BET_LEVELS_CENTS, STORM_ENGINE_ID, STORM_MAX_WIN_MULTIPLIER, STORM_MODES, STORM_RTP, playStormRound, stormCostCents, type StormMode, type StormRound } from "./storm-throne";
 import { EBRU_BET_LEVELS_CENTS, EBRU_ENGINE_ID, EBRU_MAX_WIN_MULTIPLIER, EBRU_MODES, EBRU_RTP, ebruCostCents, playEbruRound, type EbruMode, type EbruRound } from "./ebru";
+import { CEZERI_BET_LEVELS_CENTS, CEZERI_ENGINE_ID, CEZERI_MAX_WIN_MULTIPLIER, CEZERI_MODES, CEZERI_RTP, cezeriCostCents, playCezeriRound, type CezeriMode, type CezeriRound } from "./cezeri";
 import type { SlotRoundSummary, SlotVerifiableGame } from "./slot-fair";
 
 export interface SlotModeRtp { rtp: number; stdDev: number }
@@ -52,11 +53,19 @@ export const EBRU_SLOT: SlotGameDefinition<EbruRound> = Object.freeze({
   rtp: rtpTable(EBRU_RTP),
 });
 
+export const CEZERI_SLOT: SlotGameDefinition<CezeriRound> = Object.freeze({
+  id: "cezeri", engineId: CEZERI_ENGINE_ID, modes: CEZERI_MODES, betLevels: CEZERI_BET_LEVELS_CENTS, maxMultiplier: CEZERI_MAX_WIN_MULTIPLIER,
+  play: (seedHex: string, betCents: number, mode: string) => playCezeriRound(seedHex, betCents, mode as CezeriMode),
+  cost: (betCents: number, mode: string) => cezeriCostCents(betCents, mode as CezeriMode),
+  rtp: rtpTable(CEZERI_RTP),
+});
+
 /** id -> game. Frozen; new games are added here (other engines register when they ship). */
 export const SLOT_GAMES: Readonly<Record<string, SlotGameDefinition>> = Object.freeze({
   [CASCADE_SLOT.id]: CASCADE_SLOT as SlotGameDefinition,
   [TARHUN_SLOT.id]: TARHUN_SLOT as SlotGameDefinition,
   [EBRU_SLOT.id]: EBRU_SLOT as SlotGameDefinition,
+  [CEZERI_SLOT.id]: CEZERI_SLOT as SlotGameDefinition,
 });
 export const SLOT_GAME_ID_PATTERN = /^[a-z][a-z0-9-]{0,31}$/;
 

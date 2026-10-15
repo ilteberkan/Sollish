@@ -176,6 +176,8 @@ export interface CzSpinPlan {
   /** Wall-clock times (ms after the spin starts) of each escapement tick (for clicks / sparks). */
   ticks: number[];
   total: number;
+  /** Slices the ring passes in the whole spin (cruise + settle), for the ratchet sound. */
+  distance: number;
 }
 export interface CzSpinOptions {
   ring: number;
@@ -241,7 +243,60 @@ export function cezeriSpinPlan(o: CzSpinOptions): CzSpinPlan {
     upKeyframes, upMs, settleKeyframes, settleMs,
     upCounter: neg(upKeyframes), settleCounter: neg(settleKeyframes),
     ticks: tickTimes.map((x) => upMs + x), total: upMs + settleMs,
+    distance: Math.round(Math.abs(cruiseDeg) / CZ_SLICE_DEG + slices),
   };
+}
+
+/* ------------------------------------------------------------------ rotation timing (board, timeline and sound share it) */
+/** First rotation of a spin or a Dişli Kilidi respin (the respins wind faster so a 10-respin chain stays watchable). */
+export type CzRotateKind = 'first' | 'respin';
+export interface CzRingTiming { ring: number; options: CzSpinOptions; plan: CzSpinPlan }
+/** Stagger (ms of extra cruise per ring) and settle slices per rotate kind. Pure: the timeline uses the same numbers. */
+const ROTATE_SHAPE: Readonly<Record<CzRotateKind, { cruise: number; stagger: number; slices: number; ticks: number }>> = {
+  first: { cruise: 380, stagger: 210, slices: 6, ticks: 3 },
+  respin: { cruise: 170, stagger: 120, slices: 4, ticks: 2 },
+};
+/** The four ring plans of one rotation at `speed` (1 normal, 0.6 quick, 0.35 turbo). Ring r stops after ring r - 1. */
+export function cezeriRotateTiming(kind: CzRotateKind, speed = 1): CzRingTiming[] {
+  const shape = ROTATE_SHAPE[kind];
+  return Array.from({ length: CZ_RINGS }, (_, ring) => {
+    const options: CzSpinOptions = { ring, cruiseMs: shape.cruise + ring * shape.stagger, slices: shape.slices + ring, ticks: shape.ticks, speed };
+    return { ring, options, plan: cezeriSpinPlan(options) };
+  });
+}
+
+/* ------------------------------------------------------------------ falcon flight (FX and timeline share it) */
+export interface CzFalconPlan {
+  /** Spline control points (board units; the first and last two are off-board). */
+  pts: CzPoint[];
+  /** Flight time of each spline segment (ms). */
+  segMs: number[];
+  total: number;
+  /** Target slices in flight order (clockwise by angle). */
+  order: number[];
+  /** ms after take-off when the gear for order[i] lands on its slice. */
+  drops: number[];
+  /** ms after take-off when the visit is over. */
+  end: number;
+}
+/** Deterministic flight path and timing of the automaton falcon over `slices` of `ring`. */
+export function cezeriFalconPlan(ring: number, slices: readonly number[], speed = 1): CzFalconPlan {
+  const k = Math.max(0.55, speed);
+  const pad = 260;
+  const order = [...slices].sort((x, y) => sliceAngle(x) - sliceAngle(y));
+  const over = order.map((s) => { const c = sliceCenter(ring, s); return { x: c.x, y: c.y - 120 }; });
+  const pts: CzPoint[] = [{ x: -pad - 200, y: -pad }, { x: -pad, y: -pad * 0.4 }, ...over, { x: 1000 + pad, y: -pad * 0.5 }, { x: 1000 + pad + 200, y: -pad }];
+  const segMs: number[] = [];
+  for (let i = 1; i < pts.length - 2; i++) {
+    const d = Math.hypot(pts[i + 1]!.x - pts[i]!.x, pts[i + 1]!.y - pts[i]!.y);
+    segMs.push(Math.round(Math.max(260, d * 1.15) * k));
+  }
+  const total = segMs.reduce((a, b) => a + b, 0);
+  const drops: number[] = [];
+  let t = 0;
+  order.forEach((_, i) => { t += segMs[i]!; drops.push(t + Math.round(240 * k)); });
+  const end = Math.max(total, t + Math.round(400 * k)) + 120;
+  return { pts, segMs, total, order, drops, end };
 }
 
 /** Bounding box (board units) of the wedge of (ring, slice), padded by `pad`. */

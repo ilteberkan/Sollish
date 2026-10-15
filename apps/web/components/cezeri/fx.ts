@@ -19,7 +19,7 @@
    particles, promises resolve almost at once (falcon drops still call onDrop in order). Counts are capped;
    the canvas is devicePixelRatio aware (≤ 2). */
 
-import { CZ_BOUNDS, CZ_HUB_R, CZ_RIM_R, CZ_RINGS, cezeriBoardLayout, polar, sliceAngle, symbolCircle, type CzLayout, type CzPoint } from './geometry';
+import { CZ_BOUNDS, CZ_HUB_R, CZ_RIM_R, CZ_RINGS, cezeriBoardLayout, cezeriFalconPlan, polar, sliceAngle, symbolCircle, type CzLayout, type CzPoint } from './geometry';
 
 // Canvas `ctx.font` does not resolve CSS custom properties, so read the Barlow family from the page once.
 let fontFamily: string | null = null;
@@ -132,6 +132,8 @@ export class CezeriFx {
 
   /* ================================================================ public API */
   setMood(m: CezeriMood) { this.mood = m; }
+  /** Lite mode (reduced motion or "fewer effects"): no particles, promises resolve at once. */
+  setLite(on: boolean) { this.reduced = on || !!this.mq?.matches; }
   setBoard(el: HTMLElement | null) { if (this.board && this.observer) this.observer.unobserve(this.board); this.board = el; if (el) this.observer?.observe(el); this.resize(); }
   get layout(): CzLayout { return this.L; }
   get stats(): CezeriFxStats {
@@ -250,36 +252,24 @@ export class CezeriFx {
     return this.after(dur * 1000);
   }
   /** The automaton falcon flies in and drops golden gears on `slices` of `ring`; onDrop(i) when gear i lands. */
-  falcon(ring: number, slices: readonly number[], opts: { onDrop?: (i: number, slice: number) => void; duration?: number } = {}): Promise<void> {
+  falcon(ring: number, slices: readonly number[], opts: { onDrop?: (i: number, slice: number) => void; duration?: number; speed?: number } = {}): Promise<void> {
+    const plan = cezeriFalconPlan(ring, slices, opts.speed ?? 1);
     if (this.reduced || !slices.length) {
-      slices.forEach((s, i) => opts.onDrop?.(i, s));
+      plan.order.forEach((s, i) => opts.onDrop?.(i, s));
       return this.after(30);
     }
     const now = this.now();
-    // host-space entry/exit in board units (the canvas may extend beyond the board)
-    const pad = 260;
-    const ordered = [...slices].sort((x, y) => sliceAngle(x) - sliceAngle(y));
-    const over = ordered.map((s) => { const c = this.cell(ring, s); return { x: c.x, y: c.y - 120 }; });
-    const pts: CzPoint[] = [{ x: -pad - 200, y: -pad }, { x: -pad, y: -pad * 0.4 }, ...over, { x: 1000 + pad, y: -pad * 0.5 }, { x: 1000 + pad + 200, y: -pad }];
-    const segMs: number[] = [];
-    for (let i = 1; i < pts.length - 2; i++) {
-      const d = Math.hypot(pts[i + 1]!.x - pts[i]!.x, pts[i + 1]!.y - pts[i]!.y);
-      segMs.push(Math.max(260, d * 1.15));
-    }
-    const total = segMs.reduce((a, b) => a + b, 0);
-    this.falcons.push({ pts, born: now, segMs, total, size: 190 });
-    // drop times: when the falcon passes over each target (end of segment i, i = 0..)
-    let t = 0;
-    ordered.forEach((s, i) => {
-      t += segMs[i]!;
-      const at = t;
+    // host-space entry/exit in board units (the canvas may extend beyond the board); timing from cezeriFalconPlan
+    this.falcons.push({ pts: plan.pts, born: now, segMs: plan.segMs, total: plan.total, size: 190 });
+    plan.order.forEach((s, i) => {
+      const at = plan.drops[i]!;
       const c = this.cell(ring, s);
-      this.later(at - 40, () => {
+      this.later(at - 280, () => {
         // the gear falls from the talons
         const n = this.now();
         this.push({ kind: 'gear', x: c.x, y: c.y - 110, vx: 0, vy: 380, born: n, life: 0.28, size: 46, color: '#ffd66e', g: 1600, drag: 0, rot: rand(0, 6), vr: 9 });
       });
-      this.later(at + 240, () => {
+      this.later(at, () => {
         this.addFlash({ x: c.x, y: c.y, born: this.now(), life: 0.5, r: 110, color: '#ffe7a0', alpha: 1 });
         this.addRing({ x: c.x, y: c.y, born: this.now(), life: 0.5, r0: 20, r1: 90, color: '#fff2c0', width: 6, alpha: 0.9 });
         this.sparksAt(c, 16, 1.1);
@@ -287,7 +277,7 @@ export class CezeriFx {
       });
     });
     this.kick();
-    return this.after(Math.max(total, t + 400) + 120);
+    return this.after(plan.end);
   }
   /** Vessel halos and water arcs from vessel to vessel. Halos stay until clearScatter() or `hold` ms. */
   scatter(cells: readonly CezeriFxPos[], opts: { hold?: number; arcMs?: number } = {}): Promise<void> {

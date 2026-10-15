@@ -54,12 +54,12 @@ export const isTemplateId = (id: unknown): id is AsenaTemplateId => typeof id ==
  *   hilal ×2       B4 D5 E5            a small crescent of steps
  *   yay ×3         E5 G5 A5 → E6        the bow drawn tight, then the arrow leaps an octave
  *   at ×4          B4 D5 E5 G5 A5 B5    a stepwise gallop up the scale
- *   kartal ×6      B4 B5 E6 B6          wide wing-beat leaps (octave, fourth, fifth)
+ *   kartal ×6      E4 B4 B5 E6          wide wing-beat leaps (fifth, octave, fourth)
  *   hayat-agaci ×8 E4 A4 D5 G5 B5       stacked fourths from the root up the trunk, the crown a chord
  *   kurt-basi ×10  E5 G5 B5 D6 E6       the Asena call — the base theme's opening arpeggio — into the howl
  */
 export const ASENA_MOTIFS: Readonly<Record<AsenaTemplateId, readonly number[]>> = Object.freeze({
-  hilal: [-5, -2, 0], yay: [0, 3, 5, 12], at: [-5, -2, 0, 3, 5, 7], kartal: [-5, 7, 12, 19], 'hayat-agaci': [-12, -7, -2, 3, 7], 'kurt-basi': [0, 3, 7, 10, 12],
+  hilal: [-5, -2, 0], yay: [0, 3, 5, 12], at: [-5, -2, 0, 3, 5, 7], kartal: [-12, -5, 7, 12], 'hayat-agaci': [-12, -7, -2, 3, 7], 'kurt-basi': [0, 3, 7, 10, 12],
 });
 /** Howl pitch per template (semitones from the howl clip's E5): the call continues where the motif ended. */
 export const HOWL_SEMITONES: Readonly<Record<AsenaTemplateId, number>> = Object.freeze({ hilal: -5, yay: 0, at: -2, kartal: 3, 'hayat-agaci': 0, 'kurt-basi': 3 });
@@ -152,11 +152,12 @@ export function pawTimes(ms: number): number[] {
   return [0.06, 0.3, 0.55, 0.82].map(x => +(x * s).toFixed(4));
 }
 
-/** Map piece pitch by template index 0..5 (kurt-basi … hilal) and the piece count (2nd piece an octave-ish higher). */
-export const PIECE_STEPS: readonly number[] = Object.freeze([4, 1, 2, 3, 5, 0]);
+/** Map piece pitch (semitones above the piece clip's E5) by template index 0..5 (kurt-basi … hilal): Kurt Başı highest,
+ *  Hilal lowest, six distinct ladder tones; the second piece of a template sits one ladder step higher. */
+export const PIECE_STEPS: readonly number[] = Object.freeze([4, 0, 1, 2, 3, -1]);
 export function pieceSemitones(template: number, count = 1): number {
   const t = Math.max(0, Math.min(5, Math.round(finite(template))));
-  return ladder(PIECE_STEPS[t]! + (finite(count, 1) >= 2 ? 3 : 0));
+  return ladder(PIECE_STEPS[t]! + (finite(count, 1) >= 2 ? 1 : 0));
 }
 
 /** Global multiplier class of the Ergenekon map: ×2 → 1, ×3 → 2, ×5 → 3 (the iron mountain cracks wider each time). */
