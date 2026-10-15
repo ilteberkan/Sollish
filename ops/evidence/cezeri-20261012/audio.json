@@ -1,0 +1,3696 @@
+{
+ "schema": "sollish.audio-evidence.v1",
+ "game": "Cezeri: Zamanın Çarkları (cezeri-gears-1, DEMO)",
+ "generatedAt": "2026-10-15T13:37:03.591Z",
+ "scope": "Original sound set for the cezeri-gears slot: base / idle / feature (\"Fil Saati\") themes, the courtyard ambience, the two-layer Dişli Kilidi tension bed, free-spins intro, retrigger, feature outro, total-win fanfare, win tiers 1–4 + max (heads, count-up beds, tier-ups, landings), 6 multiplier callout classes, the turning rings (pawl clicks per slice along the board easing, gear whirr, stop thunk), spoke-win beams (one chime per slice, pitched by symbol), hub reveal by value, the respin chain (lock clank + pins, 10-step hub tick ladder climbing the scene makam, tension bed opening per respin, short/big/full chain cadences), vessel scatters with tease and trigger, the Fil Saati reservoir and the mechanical falcon, UI effects, wordless male vocal placeholders and a 22-line recorded voice-bank slot. Presentation only; nothing reads or changes a result.",
+ "originality": "All music and effects are original note data and code synthesis (lib/slot-audio/scores/cezeri.ts, sfx/cezeri.ts, synth/cezeri.ts; shared ney/zurna/horn voices from synth/anatolian.ts, bubbles from synth/ebru.ts). No samples, no recordings, no third-party melodies or motifs; no existing game, film, song or real clock chime imitated. Makam colours (Nikriz, Çargah) are generic modal material used as 12-TET approximations. Instruments are synthesized approximations (santur-like hammered dulcimer, automaton flute and water organ, clock-gong chime rods, naqqara/kös-like kettledrums, hand cymbals, escapement, pawl-and-ratchet, brass gear clanks, gear-train whirr, water-clock drips, a filling vessel, water-whistle birds, wing beats, wordless male choir and vox).",
+ "musicDirection": {
+  "base": "C Nikriz (C D Eb F# G A Bb), 100 BPM, 20-bar loop (48 s): A hook = the \"escapement turn\" (C · G · F# G F# · Eb D C) on an automaton flute over a 16th santur gear train; B in Eb Çargah (the elephant walks; ney, water organ, kös); C = the water-clock breakdown (tuned drips, flute alone over F#dim7 – D7), wound back up by a ratchet roll and gear whirr into a santur run over G7.",
+  "feature": "Fil Saati: C Çargah (major) with the Nikriz F# kept as the chromatic neighbour of G, 112 BPM, 16-bar loop (34.3 s): the escapement turn in major on a zurna-like reed, then an automaton-band procession (flute, horn, male choir, kös on every downbeat, Ab – Bb lift).",
+  "clockwork": "The mechanism is part of the band: escapement tick on every beat and tock on every off-beat eighth (locked to the tempo in every loop), ratchet rolls into section changes, gear clanks as the mechanism engages, water-clock drips on C6/G5, a gear-train whirr winding into the loop point.",
+  "chainSystem": "Dişli Kilidi: lock = heavy brass clank with latch + one steel pin per newly held slice; hub +1 = escapement catch + counter flip + chime on the k-th degree of the scene makam (C Nikriz in the base game: D Eb F# G A Bb C D Eb F#, the 10th on the tense high F#; bent ≤1 semitone onto C Çargah in the feature), each step adding a layer (santur 2, naqqara 3, fifth 4, kös 5, cymbal 6, water organ 7, choir 8, bell 9, full mechanism + water whistle 10; loudness class light → medium → major → hero); two looped tension beds in lock-step (C–G–D only) behind a low-pass that opens 700 Hz → 14 kHz over the chain, the urgent upper layer rising from respin 4 to full at 8, the scene music ducked 6 → 14 dB; class callout + voice when the hub crosses ×10/×25/×50…; resolution on an open fifth (consonant with both makams): chain-end (1–2 respins), chain-end-big (3+), chain-full clock strike (10 respins or all 48 slices held).",
+  "keyLadder": {
+   "Büyük (≥10×)": "C Çargah-major",
+   "Mega (≥25×)": "D",
+   "Süper (≥50×)": "E",
+   "Efsane (≥100×)": "G",
+   "Azami kazanç": "A"
+  }
+ },
+ "environment": {
+  "browser": "chromium 141.0.7390.37 headless",
+  "sampleRate": 44100,
+  "machine": "cloud container, 4 vCPU shared with other agents (load average 2–9 during these runs; compare Cezeri with Tarhun measured interleaved in the same run)"
+ },
+ "method": "Headless Chromium, production code path: render worker bundle (Web Worker pool, 3 workers) for synthesis + OfflineAudioContext reverb + JS mastering; BS.1770 loudness, 4× true peak, loop seam statistic; 16-bit TPDF WAV export. The chain, escalation and runtime stress run through the real bus graph (buildBusGraph) at the default mix, scheduled by the production functions (scheduleRingRotate, scheduleSpokeBeam, startTensionBed/setTension, planTierUp).",
+ "commands": [
+  "bash scripts/use-node.sh node <scratchpad>/audio/harness/cezeri-measure.mjs music|sfx|chain|runtime|escalation|load|trace (harness and entry in the scratchpad, never in the repo)",
+  "bash scripts/use-node.sh pnpm --filter @sollish/web test",
+  "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck"
+ ],
+ "signatureChain": {
+  "cases": [
+   {
+    "respins": 10,
+    "hubStart": 2,
+    "seconds": 40,
+    "endAt": 37.13,
+    "events": [
+     {
+      "respin": 1,
+      "hub": 3,
+      "beamAt": 3.83,
+      "lockAt": 4.28,
+      "hubTickAt": 4.73,
+      "symbol": "3×l2"
+     },
+     {
+      "respin": 2,
+      "hub": 4,
+      "beamAt": 7.16,
+      "lockAt": 7.61,
+      "hubTickAt": 8.06,
+      "symbol": "3×h4"
+     },
+     {
+      "respin": 3,
+      "hub": 5,
+      "beamAt": 10.49,
+      "lockAt": 10.94,
+      "hubTickAt": 11.39,
+      "symbol": "4×l1"
+     },
+     {
+      "respin": 4,
+      "hub": 6,
+      "beamAt": 13.82,
+      "lockAt": 14.27,
+      "hubTickAt": 14.72,
+      "symbol": "3×h2"
+     },
+     {
+      "respin": 5,
+      "hub": 7,
+      "beamAt": 17.15,
+      "lockAt": 17.6,
+      "hubTickAt": 18.05,
+      "symbol": "3×gear"
+     },
+     {
+      "respin": 6,
+      "hub": 8,
+      "beamAt": 20.48,
+      "lockAt": 20.93,
+      "hubTickAt": 21.38,
+      "symbol": "4×h1"
+     },
+     {
+      "respin": 7,
+      "hub": 9,
+      "beamAt": 23.81,
+      "lockAt": 24.26,
+      "hubTickAt": 24.71,
+      "symbol": "3×h3"
+     },
+     {
+      "respin": 8,
+      "hub": 10,
+      "beamAt": 27.14,
+      "lockAt": 27.59,
+      "hubTickAt": 28.04,
+      "symbol": "3×l3"
+     },
+     {
+      "respin": 9,
+      "hub": 11,
+      "beamAt": 30.47,
+      "lockAt": 30.92,
+      "hubTickAt": 31.37,
+      "symbol": "4×h4"
+     },
+     {
+      "respin": 10,
+      "hub": 12,
+      "beamAt": 33.8,
+      "lockAt": 34.25,
+      "hubTickAt": 34.7,
+      "symbol": "3×h1"
+     }
+    ],
+    "whole": {
+     "integratedLufs": -15.26,
+     "momentaryMaxLufs": -10.41,
+     "truePeakDbtp": -1.46,
+     "samplePeakDbfs": -1.47
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-chain-10-over-base.wav"
+   },
+   {
+    "respins": 3,
+    "hubStart": 1,
+    "seconds": 18,
+    "endAt": 13.82,
+    "events": [
+     {
+      "respin": 1,
+      "hub": 2,
+      "beamAt": 3.83,
+      "lockAt": 4.28,
+      "hubTickAt": 4.73,
+      "symbol": "3×l2"
+     },
+     {
+      "respin": 2,
+      "hub": 3,
+      "beamAt": 7.16,
+      "lockAt": 7.61,
+      "hubTickAt": 8.06,
+      "symbol": "3×h4"
+     },
+     {
+      "respin": 3,
+      "hub": 4,
+      "beamAt": 10.49,
+      "lockAt": 10.94,
+      "hubTickAt": 11.39,
+      "symbol": "4×l1"
+     }
+    ],
+    "whole": {
+     "integratedLufs": -15.84,
+     "momentaryMaxLufs": -11.75,
+     "truePeakDbtp": -1.47,
+     "samplePeakDbfs": -1.49
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-chain-3-over-base.wav"
+   },
+   {
+    "respins": 10,
+    "hubStart": 2,
+    "seconds": 40,
+    "endAt": 37.13,
+    "events": [
+     {
+      "respin": 1,
+      "hub": 3,
+      "beamAt": 3.83,
+      "lockAt": 4.28,
+      "hubTickAt": 4.73,
+      "symbol": "3×l2"
+     },
+     {
+      "respin": 2,
+      "hub": 4,
+      "beamAt": 7.16,
+      "lockAt": 7.61,
+      "hubTickAt": 8.06,
+      "symbol": "3×h4"
+     },
+     {
+      "respin": 3,
+      "hub": 5,
+      "beamAt": 10.49,
+      "lockAt": 10.94,
+      "hubTickAt": 11.39,
+      "symbol": "4×l1"
+     },
+     {
+      "respin": 4,
+      "hub": 6,
+      "beamAt": 13.82,
+      "lockAt": 14.27,
+      "hubTickAt": 14.72,
+      "symbol": "3×h2"
+     },
+     {
+      "respin": 5,
+      "hub": 7,
+      "beamAt": 17.15,
+      "lockAt": 17.6,
+      "hubTickAt": 18.05,
+      "symbol": "3×gear"
+     },
+     {
+      "respin": 6,
+      "hub": 8,
+      "beamAt": 20.48,
+      "lockAt": 20.93,
+      "hubTickAt": 21.38,
+      "symbol": "4×h1"
+     },
+     {
+      "respin": 7,
+      "hub": 9,
+      "beamAt": 23.81,
+      "lockAt": 24.26,
+      "hubTickAt": 24.71,
+      "symbol": "3×h3"
+     },
+     {
+      "respin": 8,
+      "hub": 10,
+      "beamAt": 27.14,
+      "lockAt": 27.59,
+      "hubTickAt": 28.04,
+      "symbol": "3×l3"
+     },
+     {
+      "respin": 9,
+      "hub": 11,
+      "beamAt": 30.47,
+      "lockAt": 30.92,
+      "hubTickAt": 31.37,
+      "symbol": "4×h4"
+     },
+     {
+      "respin": 10,
+      "hub": 12,
+      "beamAt": 33.8,
+      "lockAt": 34.25,
+      "hubTickAt": 34.7,
+      "symbol": "3×h1"
+     }
+    ],
+    "whole": {
+     "integratedLufs": -15.7,
+     "momentaryMaxLufs": -10.42,
+     "truePeakDbtp": -1.54,
+     "samplePeakDbfs": -1.56
+    },
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-chain-10-alone.wav"
+   }
+  ],
+  "note": "Base spin + Dişli Kilidi chain: rings 0–3 rotate (30–57 slices, 1.3 s / 1.05 s outCubic, staggered), a spoke beam per respin, lock + pins, hub tick k, respin rush, tension bed opening per respin, the class callout when the hub reaches ×10, then the chain cadence. 10-respin case over the base theme is the viral moment (cezeri-chain-10-over-base.wav)."
+ },
+ "music": [
+  {
+   "key": "base",
+   "id": "cezeri-base",
+   "about": "C Nikriz (C D Eb F# G A Bb), 100 BPM, 20-bar seamless loop (48 s). A: the 4-bar \"escapement turn\" hook (C · G · F# G F# · Eb D C) on an automaton flute over a 16th santur gear train, its answer on the santur, naqqara in an automaton-drummer figure, the escapement tick-tock on the eighths and a gear clank as the mechanism engages · B: Eb Çargah — the elephant walks — ney over a water organ, santur tremolo, kös and hand cymbals · C: the water-clock breakdown — drips on tuned bowls (C6/G5), the flute alone over F#dim7 and D7, then the gear train winds up (ratchet roll, whirr, naqqara roll) and a santur run over G7 back into the hook.",
+   "bpm": 100,
+   "bars": 20,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -15,
+   "seconds": 48,
+   "integratedLufs": -15.1,
+   "momentaryMaxLufs": -12.14,
+   "shortTermMaxLufs": -14.24,
+   "truePeakDbtp": -1.48,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.925,
+   "centroidHz": 493,
+   "energyAbove8kPct": 0,
+   "seam": {
+    "delta": 0.01795,
+    "medianDelta": 0.00811,
+    "p999Delta": 0.17014,
+    "percentile": 83.87,
+    "ratio": 2.22,
+    "rmsJumpDb": 8.06
+   },
+   "mastering": {
+    "normaliseGainDb": 1.33,
+    "peakLimitingDb": -4.64
+   },
+   "renderMsWorkers": 5882,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-base.wav"
+  },
+  {
+   "key": "idle",
+   "id": "cezeri-idle",
+   "about": "C Nikriz, 100 BPM, 8-bar loop (19.2 s): the hook on the water organ, its answer on a soft santur, the escapement ticking quietly, water-clock drips on C6/G5, a C–G drone and one chime-rod strike per phrase; no drums.",
+   "bpm": 100,
+   "bars": 8,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -16,
+   "seconds": 19.2,
+   "integratedLufs": -16.04,
+   "momentaryMaxLufs": -13.56,
+   "shortTermMaxLufs": -14.77,
+   "truePeakDbtp": -1.95,
+   "samplePeakDbfs": -2.1,
+   "stereoCorrelation": 0.7,
+   "centroidHz": 761,
+   "energyAbove8kPct": 0.01,
+   "seam": {
+    "delta": 0.00553,
+    "medianDelta": 0.007,
+    "p999Delta": 0.11657,
+    "percentile": 42.35,
+    "ratio": 0.79,
+    "rmsJumpDb": 5.87
+   },
+   "mastering": {
+    "normaliseGainDb": 2.29,
+    "peakLimitingDb": 0
+   },
+   "renderMsWorkers": 1675,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-idle.wav"
+  },
+  {
+   "key": "feature",
+   "id": "cezeri-feature",
+   "about": "C Çargah (C major, the Nikriz F# kept as the chromatic neighbour of G), 112 BPM, 16-bar loop (34.3 s). A: the escapement turn in major on a zurna-like reed over a fast 16th santur gear train, naqqara driving, water-organ chords, the clock ticking on the eighths · B: the automaton procession — the flute sings the answer up to G6 with a horn below, wordless male choir, santur tremolo, kös on every downbeat, hand cymbals, an Ab – Bb lift and the gear train winding into the turnaround.",
+   "bpm": 112,
+   "bars": 16,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -14.5,
+   "seconds": 34.286,
+   "integratedLufs": -14.6,
+   "momentaryMaxLufs": -11.91,
+   "shortTermMaxLufs": -13.42,
+   "truePeakDbtp": -1.45,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.911,
+   "centroidHz": 603,
+   "energyAbove8kPct": 0.03,
+   "seam": {
+    "delta": 0.00309,
+    "medianDelta": 0.00928,
+    "p999Delta": 0.14961,
+    "percentile": 18.22,
+    "ratio": 0.33,
+    "rmsJumpDb": 11.66
+   },
+   "mastering": {
+    "normaliseGainDb": 0.71,
+    "peakLimitingDb": -4.12
+   },
+   "renderMsWorkers": 4725,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-feature.wav"
+  },
+  {
+   "key": "ambience",
+   "id": "cezeri-ambience",
+   "about": "Ambience, 24 s seamless loop: the palace courtyard — the fountain (falling water, splash and fine bubbles), the water clock dripping into two tuned bowls every 2.4 s, the far-off tick-tock of the great clock once a second and a few distant water-whistle birds, over a quiet room tone; no tempo-bound material.",
+   "bpm": 60,
+   "bars": 6,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -30,
+   "seconds": 24,
+   "integratedLufs": -30.05,
+   "momentaryMaxLufs": -28.46,
+   "shortTermMaxLufs": -29.49,
+   "truePeakDbtp": -18.4,
+   "samplePeakDbfs": -18.4,
+   "stereoCorrelation": -0.254,
+   "centroidHz": 267,
+   "energyAbove8kPct": 0.01,
+   "seam": {
+    "delta": 0.00347,
+    "medianDelta": 0.00111,
+    "p999Delta": 0.00569,
+    "percentile": 96.1,
+    "ratio": 3.12,
+    "rmsJumpDb": -0.41
+   },
+   "mastering": {
+    "normaliseGainDb": 1.71,
+    "peakLimitingDb": 0
+   },
+   "renderMsWorkers": 1685,
+   "checks": {
+    "loudnessInMusicTarget": "n/a (ambience bed, −30 LUFS)",
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-ambience.wav"
+  },
+  {
+   "key": "fsIntro",
+   "id": "cezeri-fs-intro",
+   "about": "Free-spins intro (\"the elephant clock strikes\"), C Çargah, 112 BPM: a kös boom and chime rods striking C7–G6–E6–C6 like the clock's hour, a 32nd-note santur glissando up the C pentatonic to A6, a naqqara roll and a rising gear whirr, then a C major roll on the santur with the water organ, male choir, hand cymbals and the kös on beat 4; the feature theme enters at beat 6 (3.21 s).",
+   "bpm": 112,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 3.214,
+   "targetLufs": -14.5,
+   "seconds": 5.135,
+   "integratedLufs": -14.58,
+   "momentaryMaxLufs": -11.23,
+   "shortTermMaxLufs": -13.82,
+   "truePeakDbtp": -1.56,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.866,
+   "centroidHz": 410,
+   "energyAbove8kPct": 0.02,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": 0.64,
+    "peakLimitingDb": -1.67
+   },
+   "renderMsWorkers": 702,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-fs-intro.wav"
+  },
+  {
+   "key": "retrigger",
+   "id": "cezeri-retrigger",
+   "about": "Retrigger (+4), C Çargah, 112 BPM, 1 bar: a 32nd-note santur flourish G–A–C–D–E–G up to a held C6 with its tremolo, chime rods C6/G6, a kös hit, a hand cymbal and a ratchet burst; ends at beat 3 (1.61 s) and rings over the feature theme.",
+   "bpm": 112,
+   "bars": 1,
+   "loop": false,
+   "musicalEndSeconds": 1.607,
+   "targetLufs": -14.5,
+   "seconds": 2.771,
+   "integratedLufs": -14.5,
+   "momentaryMaxLufs": -11.86,
+   "shortTermMaxLufs": -16.21,
+   "truePeakDbtp": -2.97,
+   "samplePeakDbfs": -3,
+   "stereoCorrelation": 0.961,
+   "centroidHz": 820,
+   "energyAbove8kPct": 0.05,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": 1.96,
+    "peakLimitingDb": 0
+   },
+   "renderMsWorkers": 619,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-retrigger.wav"
+  },
+  {
+   "key": "fsOutro",
+   "id": "cezeri-fs-outro",
+   "about": "Feature outro (\"the clock winds down\"), C Nikriz, 100 BPM: Eb – D7 | Cm with the escapement turn on the automaton flute falling to C, santur rolls, water organ, the last ticks of the escapement slowing, a final drip and a soft kös; the base theme may return at beat 6 (3.6 s).",
+   "bpm": 100,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 3.6,
+   "targetLufs": -15,
+   "seconds": 6.06,
+   "integratedLufs": -15.04,
+   "momentaryMaxLufs": -10.89,
+   "shortTermMaxLufs": -14.02,
+   "truePeakDbtp": -1.95,
+   "samplePeakDbfs": -1.95,
+   "stereoCorrelation": 0.945,
+   "centroidHz": 493,
+   "energyAbove8kPct": 0,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": 0.43,
+    "peakLimitingDb": 0
+   },
+   "renderMsWorkers": 911,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-fs-outro.wav"
+  },
+  {
+   "key": "totalWin",
+   "id": "cezeri-total-win",
+   "about": "Total-win fanfare, C Çargah-major, 120 BPM, 4 s: C – Am – F | G – C. A festive santur flourish doubled by the zurna-like reed and the automaton flute, santur rolls, water organ, male choir on the final C with chime rods, naqqara, kös and a cymbal clash.",
+   "bpm": 120,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 4,
+   "targetLufs": -14.5,
+   "seconds": 5.593,
+   "integratedLufs": -14.55,
+   "momentaryMaxLufs": -11.76,
+   "shortTermMaxLufs": -13.76,
+   "truePeakDbtp": -1.9,
+   "samplePeakDbfs": -1.91,
+   "stereoCorrelation": 0.929,
+   "centroidHz": 611,
+   "energyAbove8kPct": 0.01,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.12,
+    "peakLimitingDb": 0
+   },
+   "renderMsWorkers": 1264,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-total-win.wav"
+  },
+  {
+   "key": "bigWin1",
+   "id": "cezeri-bigwin-1",
+   "about": "Big win tier 1 (Büyük), C Çargah-major, 120 BPM, 2 bars (4 s): the escapement turn in major over a 16th santur gear train, water-organ chords, automaton flute on the long notes, naqqara; it lands on a held tonic with a kös, a hand cymbal, a santur roll and chime rods.",
+   "bpm": 120,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 4,
+   "targetLufs": -15,
+   "seconds": 5.226,
+   "integratedLufs": -15.16,
+   "momentaryMaxLufs": -11.63,
+   "shortTermMaxLufs": -14.37,
+   "truePeakDbtp": -1.57,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.951,
+   "centroidHz": 451,
+   "energyAbove8kPct": 0.02,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.29,
+    "peakLimitingDb": -1.55
+   },
+   "renderMsWorkers": 902,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-bigwin-1.wav"
+  },
+  {
+   "key": "bigWin2",
+   "id": "cezeri-bigwin-2",
+   "about": "Big win tier 2 (Mega), D Çargah-major, 120 BPM, 2 bars (4 s): a santur climb over a 16th santur gear train, water-organ chords, zurna-like reed on the long notes, wordless male choir, the escapement ticking, naqqara; it lands on a held tonic with a kös, a hand cymbal, a santur roll and chime rods.",
+   "bpm": 120,
+   "bars": 2,
+   "loop": false,
+   "musicalEndSeconds": 4,
+   "targetLufs": -14.5,
+   "seconds": 5.53,
+   "integratedLufs": -14.5,
+   "momentaryMaxLufs": -11.24,
+   "shortTermMaxLufs": -13.63,
+   "truePeakDbtp": -1.58,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.899,
+   "centroidHz": 593,
+   "energyAbove8kPct": 0.02,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.37,
+    "peakLimitingDb": -0.99
+   },
+   "renderMsWorkers": 1555,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-bigwin-2.wav"
+  },
+  {
+   "key": "bigWin3",
+   "id": "cezeri-bigwin-3",
+   "about": "Big win tier 3 (Süper), E Çargah-major, 120 BPM, 3 bars (6 s): a santur climb over a 16th santur gear train, water-organ chords, zurna-like reed on the long notes, wordless male choir, the escapement ticking, naqqara in double time with a gear-train wind-up; it lands on a held tonic with a kös, a hand cymbal, a santur roll and chime rods.",
+   "bpm": 120,
+   "bars": 3,
+   "loop": false,
+   "musicalEndSeconds": 6,
+   "targetLufs": -14,
+   "seconds": 7.506,
+   "integratedLufs": -14.08,
+   "momentaryMaxLufs": -11.64,
+   "shortTermMaxLufs": -13.34,
+   "truePeakDbtp": -1.53,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.845,
+   "centroidHz": 638,
+   "energyAbove8kPct": 0.01,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": 0.09,
+    "peakLimitingDb": -1.03
+   },
+   "renderMsWorkers": 1714,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-bigwin-3.wav"
+  },
+  {
+   "key": "bigWin4",
+   "id": "cezeri-bigwin-4",
+   "about": "Big win tier 4 (Efsane), G Çargah-major, 120 BPM, 3 bars (6 s): I – IV | ii – V | I. Santur lead with the zurna-like reed doubling and santur tremolo an octave below, full male choir, water organ, chime rods on every downbeat, the escapement in double time, a naqqara roll into the last bar, kös and hand cymbals.",
+   "bpm": 120,
+   "bars": 3,
+   "loop": false,
+   "musicalEndSeconds": 6,
+   "targetLufs": -14,
+   "seconds": 7.511,
+   "integratedLufs": -14.08,
+   "momentaryMaxLufs": -11.72,
+   "shortTermMaxLufs": -13.09,
+   "truePeakDbtp": -1.58,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.873,
+   "centroidHz": 585,
+   "energyAbove8kPct": 0.03,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -0.83,
+    "peakLimitingDb": -0.58
+   },
+   "renderMsWorkers": 1564,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-bigwin-4.wav"
+  },
+  {
+   "key": "maxWin",
+   "id": "cezeri-max-win",
+   "about": "Max win, A (top of the key ladder), 120 BPM, 3 bars (6 s): IV – V – bVII – I (D – E – G – A) with santur and the zurna-like reed in octaves, santur tremolo, full male choir, water organ, chime rods climbing, a 16th santur gear train, a santur roll, double-time naqqara with a roll, the escapement racing, the kös and the biggest cymbal clash, the gear train winding up.",
+   "bpm": 120,
+   "bars": 3,
+   "loop": false,
+   "musicalEndSeconds": 6,
+   "targetLufs": -14,
+   "seconds": 7.595,
+   "integratedLufs": -14.11,
+   "momentaryMaxLufs": -11.71,
+   "shortTermMaxLufs": -13.44,
+   "truePeakDbtp": -1.58,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.847,
+   "centroidHz": 562,
+   "energyAbove8kPct": 0.02,
+   "seam": null,
+   "mastering": {
+    "normaliseGainDb": -1.48,
+    "peakLimitingDb": -1.21
+   },
+   "renderMsWorkers": 1736,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": "n/a (one-shot)"
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-max-win.wav"
+  },
+  {
+   "key": "bed1",
+   "id": "cezeri-bed-1",
+   "about": "Count-up bed tier 1: I – IV – vi – IV/V in C Çargah-major at 120 BPM, 4-bar seamless loop (8 s); santur 16ths, drone, bass, the escapement and naqqara tek.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -15,
+   "seconds": 8,
+   "integratedLufs": -15.06,
+   "momentaryMaxLufs": -13,
+   "shortTermMaxLufs": -14.82,
+   "truePeakDbtp": -1.59,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.893,
+   "centroidHz": 282,
+   "energyAbove8kPct": 0,
+   "seam": {
+    "delta": 0.00778,
+    "medianDelta": 0.00397,
+    "p999Delta": 0.10221,
+    "percentile": 75.98,
+    "ratio": 1.96,
+    "rmsJumpDb": 5.99
+   },
+   "mastering": {
+    "normaliseGainDb": 3.03,
+    "peakLimitingDb": -0.61
+   },
+   "renderMsWorkers": 650,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-bed-1.wav"
+  },
+  {
+   "key": "bed2",
+   "id": "cezeri-bed-2",
+   "about": "Count-up bed tier 2: I – IV – vi – IV/V in D Çargah-major at 120 BPM, 4-bar seamless loop (8 s); santur 16ths, drone, bass, the escapement and naqqara tek + naqqara düm groove, water organ, hand cymbal.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -14.75,
+   "seconds": 8,
+   "integratedLufs": -14.81,
+   "momentaryMaxLufs": -13.28,
+   "shortTermMaxLufs": -14.56,
+   "truePeakDbtp": -1.56,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.902,
+   "centroidHz": 303,
+   "energyAbove8kPct": 0.01,
+   "seam": {
+    "delta": 0.00479,
+    "medianDelta": 0.00532,
+    "p999Delta": 0.08809,
+    "percentile": 45.75,
+    "ratio": 0.9,
+    "rmsJumpDb": 8.3
+   },
+   "mastering": {
+    "normaliseGainDb": 1.52,
+    "peakLimitingDb": -0.28
+   },
+   "renderMsWorkers": 1041,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-bed-2.wav"
+  },
+  {
+   "key": "bed3",
+   "id": "cezeri-bed-3",
+   "about": "Count-up bed tier 3: I – IV – vi – IV/V in E Çargah-major at 120 BPM, 4-bar seamless loop (8 s); santur 16ths, drone, bass, the escapement and naqqara tek + naqqara düm groove, water organ, hand cymbal + santur lead and tek 8ths.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -14.5,
+   "seconds": 8,
+   "integratedLufs": -14.61,
+   "momentaryMaxLufs": -12.72,
+   "shortTermMaxLufs": -14.37,
+   "truePeakDbtp": -1.5,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.92,
+   "centroidHz": 519,
+   "energyAbove8kPct": 0.01,
+   "seam": {
+    "delta": 0.05168,
+    "medianDelta": 0.00627,
+    "p999Delta": 0.09448,
+    "percentile": 98.63,
+    "ratio": 8.24,
+    "rmsJumpDb": 10.43
+   },
+   "mastering": {
+    "normaliseGainDb": 0.2,
+    "peakLimitingDb": -1.39
+   },
+   "renderMsWorkers": 1282,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-bed-3.wav"
+  },
+  {
+   "key": "bed4",
+   "id": "cezeri-bed-4",
+   "about": "Count-up bed tier 4: I – IV – vi – IV/V in G Çargah-major at 120 BPM, 4-bar seamless loop (8 s); santur 16ths, drone, bass, the escapement and naqqara tek + naqqara düm groove, water organ, hand cymbal + santur lead and tek 8ths + male choir, chime rods, kös.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -14.25,
+   "seconds": 8,
+   "integratedLufs": -14.35,
+   "momentaryMaxLufs": -12.85,
+   "shortTermMaxLufs": -14.13,
+   "truePeakDbtp": -1.57,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.882,
+   "centroidHz": 470,
+   "energyAbove8kPct": 0.01,
+   "seam": {
+    "delta": 0.01095,
+    "medianDelta": 0.0067,
+    "p999Delta": 0.08913,
+    "percentile": 70.19,
+    "ratio": 1.63,
+    "rmsJumpDb": 8.51
+   },
+   "mastering": {
+    "normaliseGainDb": -0.44,
+    "peakLimitingDb": -1.91
+   },
+   "renderMsWorkers": 1912,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-bed-4.wav"
+  },
+  {
+   "key": "bedMax",
+   "id": "cezeri-bed-max",
+   "about": "Count-up bed max win: I – IV – vi – IV/V in A Çargah-major at 120 BPM, 4-bar seamless loop (8 s); santur 16ths, drone, bass, the escapement and naqqara tek + naqqara düm groove, water organ, hand cymbal + santur lead and tek 8ths + male choir, chime rods, kös + zurna-like reed doubling the lead, a ratchet roll and gear whirr.",
+   "bpm": 120,
+   "bars": 4,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -14,
+   "seconds": 8,
+   "integratedLufs": -14.13,
+   "momentaryMaxLufs": -12.34,
+   "shortTermMaxLufs": -13.92,
+   "truePeakDbtp": -1.51,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.874,
+   "centroidHz": 533,
+   "energyAbove8kPct": 0.01,
+   "seam": {
+    "delta": 0.03608,
+    "medianDelta": 0.00869,
+    "p999Delta": 0.09349,
+    "percentile": 96.44,
+    "ratio": 4.15,
+    "rmsJumpDb": 6.96
+   },
+   "mastering": {
+    "normaliseGainDb": -0.46,
+    "peakLimitingDb": -1.91
+   },
+   "renderMsWorkers": 1600,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-bed-max.wav"
+  },
+  {
+   "key": "chainBed",
+   "id": "cezeri-chain-bed",
+   "about": "Dişli Kilidi tension bed, 100 BPM, 2-bar seamless loop (4.8 s): kös heartbeat on C, the escapement in sixteenths, ratchet ghosts, a gear clank on each bar, an open-fifth water-organ drone (C2–G2–C3) and the whirr of the gear train. Pitched only on C and G.",
+   "bpm": 100,
+   "bars": 2,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -16,
+   "seconds": 4.8,
+   "integratedLufs": -16.06,
+   "momentaryMaxLufs": -13.95,
+   "shortTermMaxLufs": -15.9,
+   "truePeakDbtp": -1.59,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.859,
+   "centroidHz": 426,
+   "energyAbove8kPct": 0.23,
+   "seam": {
+    "delta": 0.00193,
+    "medianDelta": 0.00145,
+    "p999Delta": 0.27744,
+    "percentile": 61.95,
+    "ratio": 1.33,
+    "rmsJumpDb": 10.31
+   },
+   "mastering": {
+    "normaliseGainDb": 2.29,
+    "peakLimitingDb": -0.24
+   },
+   "renderMsWorkers": 633,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-chain-bed.wav"
+  },
+  {
+   "key": "chainBedHi",
+   "id": "cezeri-chain-bed-hi",
+   "about": "Dişli Kilidi upper layer, 100 BPM, 2-bar loop in lock-step with the tension bed: a santur gear train in sixteenths on C–G–D, naqqara tek sixteenths, accented ratchets, kös eighths and a soft cymbal on the second bar. Pitched only on C, G and D.",
+   "bpm": 100,
+   "bars": 2,
+   "loop": true,
+   "musicalEndSeconds": null,
+   "targetLufs": -16,
+   "seconds": 4.8,
+   "integratedLufs": -16.08,
+   "momentaryMaxLufs": -14.1,
+   "shortTermMaxLufs": -15.84,
+   "truePeakDbtp": -1.51,
+   "samplePeakDbfs": -1.6,
+   "stereoCorrelation": 0.982,
+   "centroidHz": 541,
+   "energyAbove8kPct": 0.17,
+   "seam": {
+    "delta": 0.05394,
+    "medianDelta": 0.00589,
+    "p999Delta": 0.21562,
+    "percentile": 99.24,
+    "ratio": 9.17,
+    "rmsJumpDb": 11.16
+   },
+   "mastering": {
+    "normaliseGainDb": 1.9,
+    "peakLimitingDb": -2.03
+   },
+   "renderMsWorkers": 391,
+   "checks": {
+    "loudnessInMusicTarget": true,
+    "truePeakBelowMinus1": true,
+    "seamIsOrdinaryStep": true
+   },
+   "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-chain-bed-hi.wav"
+  }
+ ],
+ "sfx": {
+  "renderMsWorkersAllEffects": 12500,
+  "classes": {
+   "hero": -10,
+   "major": -11,
+   "medium": -12.5,
+   "light": -16,
+   "ui": -19.5
+  },
+  "clips": [
+   {
+    "id": "auto-off",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.64,
+    "seconds": 0.878,
+    "centroidHz": 969,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-auto-off-1.wav"
+   },
+   {
+    "id": "auto-off",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.25,
+    "seconds": 0.889,
+    "centroidHz": 947,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-auto-off-2.wav"
+   },
+   {
+    "id": "auto-off",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.71,
+    "seconds": 0.901,
+    "centroidHz": 927,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-auto-off-3.wav"
+   },
+   {
+    "id": "auto-on",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.18,
+    "seconds": 0.764,
+    "centroidHz": 970,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-auto-on-1.wav"
+   },
+   {
+    "id": "auto-on",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.51,
+    "seconds": 0.767,
+    "centroidHz": 1020,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-auto-on-2.wav"
+   },
+   {
+    "id": "auto-on",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.43,
+    "seconds": 0.763,
+    "centroidHz": 1082,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-auto-on-3.wav"
+   },
+   {
+    "id": "beam-1",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.1,
+    "seconds": 1.025,
+    "centroidHz": 629,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-1-1.wav"
+   },
+   {
+    "id": "beam-1",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.56,
+    "seconds": 1.005,
+    "centroidHz": 633,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-1-2.wav"
+   },
+   {
+    "id": "beam-1",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.07,
+    "seconds": 1.061,
+    "centroidHz": 631,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-1-3.wav"
+   },
+   {
+    "id": "beam-2",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.34,
+    "seconds": 0.996,
+    "centroidHz": 1128,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-2-1.wav"
+   },
+   {
+    "id": "beam-2",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.16,
+    "seconds": 0.996,
+    "centroidHz": 1127,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-2-2.wav"
+   },
+   {
+    "id": "beam-2",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.56,
+    "seconds": 0.995,
+    "centroidHz": 1127,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-2-3.wav"
+   },
+   {
+    "id": "beam-3",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.26,
+    "seconds": 0.978,
+    "centroidHz": 2187,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-3-1.wav"
+   },
+   {
+    "id": "beam-3",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.75,
+    "seconds": 0.968,
+    "centroidHz": 2193,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-3-2.wav"
+   },
+   {
+    "id": "beam-3",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.13,
+    "seconds": 0.955,
+    "centroidHz": 2191,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-3-3.wav"
+   },
+   {
+    "id": "beam-sweep",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.14,
+    "seconds": 0.671,
+    "centroidHz": 4398,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-sweep-1.wav"
+   },
+   {
+    "id": "beam-sweep",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.52,
+    "seconds": 0.709,
+    "centroidHz": 4034,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-sweep-2.wav"
+   },
+   {
+    "id": "beam-sweep",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.78,
+    "seconds": 0.669,
+    "centroidHz": 4446,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-beam-sweep-3.wav"
+   },
+   {
+    "id": "bet-down",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.68,
+    "seconds": 0.363,
+    "centroidHz": 1429,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-bet-down-1.wav"
+   },
+   {
+    "id": "bet-down",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.66,
+    "seconds": 0.363,
+    "centroidHz": 1429,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-bet-down-2.wav"
+   },
+   {
+    "id": "bet-down",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.58,
+    "seconds": 0.349,
+    "centroidHz": 1591,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-bet-down-3.wav"
+   },
+   {
+    "id": "bet-up",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.39,
+    "seconds": 0.349,
+    "centroidHz": 1374,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-bet-up-1.wav"
+   },
+   {
+    "id": "bet-up",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.38,
+    "seconds": 0.349,
+    "centroidHz": 1374,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-bet-up-2.wav"
+   },
+   {
+    "id": "bet-up",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -7.32,
+    "seconds": 0.339,
+    "centroidHz": 1523,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-bet-up-3.wav"
+   },
+   {
+    "id": "callout-x2",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.8,
+    "deltaFromTargetDb": -0.3,
+    "truePeakDbtp": -1.56,
+    "seconds": 1.093,
+    "centroidHz": 1288,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-callout-x2-1.wav"
+   },
+   {
+    "id": "callout-x2",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.82,
+    "deltaFromTargetDb": -0.32,
+    "truePeakDbtp": -1.54,
+    "seconds": 1.093,
+    "centroidHz": 1286,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-callout-x2-2.wav"
+   },
+   {
+    "id": "callout-x10",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.09,
+    "deltaFromTargetDb": -0.09,
+    "truePeakDbtp": -1.54,
+    "seconds": 1.391,
+    "centroidHz": 1295,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-callout-x10-1.wav"
+   },
+   {
+    "id": "callout-x10",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.08,
+    "deltaFromTargetDb": -0.08,
+    "truePeakDbtp": -1.56,
+    "seconds": 1.392,
+    "centroidHz": 1279,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-callout-x10-2.wav"
+   },
+   {
+    "id": "callout-x25",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.04,
+    "deltaFromTargetDb": -0.04,
+    "truePeakDbtp": -1.46,
+    "seconds": 2.059,
+    "centroidHz": 1277,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-callout-x25-1.wav"
+   },
+   {
+    "id": "callout-x25",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.03,
+    "deltaFromTargetDb": -0.03,
+    "truePeakDbtp": -1.53,
+    "seconds": 2.02,
+    "centroidHz": 1257,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-callout-x25-2.wav"
+   },
+   {
+    "id": "callout-x50",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.07,
+    "deltaFromTargetDb": -0.07,
+    "truePeakDbtp": -1.58,
+    "seconds": 2.323,
+    "centroidHz": 1214,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-callout-x50-1.wav"
+   },
+   {
+    "id": "callout-x100",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.08,
+    "deltaFromTargetDb": -0.08,
+    "truePeakDbtp": -1.58,
+    "seconds": 2.432,
+    "centroidHz": 1175,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-callout-x100-1.wav"
+   },
+   {
+    "id": "callout-x250",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.02,
+    "deltaFromTargetDb": -0.02,
+    "truePeakDbtp": -1.5,
+    "seconds": 2.893,
+    "centroidHz": 1212,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-callout-x250-1.wav"
+   },
+   {
+    "id": "chain-end",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.61,
+    "deltaFromTargetDb": -0.11,
+    "truePeakDbtp": -1.57,
+    "seconds": 1.552,
+    "centroidHz": 659,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-chain-end-1.wav"
+   },
+   {
+    "id": "chain-end",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.19,
+    "seconds": 1.489,
+    "centroidHz": 959,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-chain-end-2.wav"
+   },
+   {
+    "id": "chain-end",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.96,
+    "seconds": 1.567,
+    "centroidHz": 739,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-chain-end-3.wav"
+   },
+   {
+    "id": "chain-end-big",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.07,
+    "deltaFromTargetDb": -0.07,
+    "truePeakDbtp": -1.59,
+    "seconds": 1.954,
+    "centroidHz": 727,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-chain-end-big-1.wav"
+   },
+   {
+    "id": "chain-end-big",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.9,
+    "seconds": 1.954,
+    "centroidHz": 801,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-chain-end-big-2.wav"
+   },
+   {
+    "id": "chain-end-big",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.6,
+    "seconds": 1.946,
+    "centroidHz": 715,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-chain-end-big-3.wav"
+   },
+   {
+    "id": "chain-full",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.18,
+    "deltaFromTargetDb": -0.18,
+    "truePeakDbtp": -1.56,
+    "seconds": 3.578,
+    "centroidHz": 872,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-chain-full-1.wav"
+   },
+   {
+    "id": "click",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -23.59,
+    "deltaFromTargetDb": -4.09,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.037,
+    "centroidHz": 1150,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-click-1.wav"
+   },
+   {
+    "id": "click",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -23.58,
+    "deltaFromTargetDb": -4.08,
+    "truePeakDbtp": -1.41,
+    "seconds": 0.037,
+    "centroidHz": 1142,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-click-2.wav"
+   },
+   {
+    "id": "click",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -24.21,
+    "deltaFromTargetDb": -4.71,
+    "truePeakDbtp": -1.59,
+    "seconds": 0.037,
+    "centroidHz": 1111,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-click-3.wav"
+   },
+   {
+    "id": "click",
+    "variation": 4,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -24.52,
+    "deltaFromTargetDb": -5.02,
+    "truePeakDbtp": -1.47,
+    "seconds": 0.037,
+    "centroidHz": 1079,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-click-4.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.59,
+    "deltaFromTargetDb": -0.09,
+    "truePeakDbtp": -1.4,
+    "seconds": 0.168,
+    "centroidHz": 2122,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-coin-1.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.7,
+    "seconds": 0.165,
+    "centroidHz": 2130,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-coin-2.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -19.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.74,
+    "seconds": 0.165,
+    "centroidHz": 2139,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-coin-3.wav"
+   },
+   {
+    "id": "coin",
+    "variation": 4,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -20.11,
+    "deltaFromTargetDb": -0.61,
+    "truePeakDbtp": -1.59,
+    "seconds": 0.172,
+    "centroidHz": 2145,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-coin-4.wav"
+   },
+   {
+    "id": "count-land-1",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.27,
+    "deltaFromTargetDb": -0.27,
+    "truePeakDbtp": -1.56,
+    "seconds": 2.06,
+    "centroidHz": 816,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-count-land-1-1.wav"
+   },
+   {
+    "id": "count-land-2",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.1,
+    "deltaFromTargetDb": -0.1,
+    "truePeakDbtp": -1.58,
+    "seconds": 1.852,
+    "centroidHz": 1148,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-count-land-2-1.wav"
+   },
+   {
+    "id": "count-land-3",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.21,
+    "deltaFromTargetDb": -0.21,
+    "truePeakDbtp": -1.5,
+    "seconds": 1.893,
+    "centroidHz": 1082,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-count-land-3-1.wav"
+   },
+   {
+    "id": "count-land-4",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.22,
+    "deltaFromTargetDb": -0.22,
+    "truePeakDbtp": -1.46,
+    "seconds": 1.986,
+    "centroidHz": 1187,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-count-land-4-1.wav"
+   },
+   {
+    "id": "count-land-max",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.24,
+    "deltaFromTargetDb": -0.24,
+    "truePeakDbtp": -1.56,
+    "seconds": 2.42,
+    "centroidHz": 1240,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-count-land-max-1.wav"
+   },
+   {
+    "id": "denied",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.12,
+    "seconds": 0.599,
+    "centroidHz": 211,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-denied-1.wav"
+   },
+   {
+    "id": "denied",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16.14,
+    "deltaFromTargetDb": -0.14,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.598,
+    "centroidHz": 207,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-denied-2.wav"
+   },
+   {
+    "id": "denied",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.01,
+    "seconds": 0.598,
+    "centroidHz": 204,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-denied-3.wav"
+   },
+   {
+    "id": "ding",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.62,
+    "seconds": 1.838,
+    "centroidHz": 848,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ding-1.wav"
+   },
+   {
+    "id": "ding",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.35,
+    "seconds": 1.834,
+    "centroidHz": 856,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ding-2.wav"
+   },
+   {
+    "id": "ding",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.21,
+    "seconds": 1.831,
+    "centroidHz": 866,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ding-3.wav"
+   },
+   {
+    "id": "falcon-drop",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.23,
+    "deltaFromTargetDb": -0.23,
+    "truePeakDbtp": -1.54,
+    "seconds": 2.193,
+    "centroidHz": 1058,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-falcon-drop-1.wav"
+   },
+   {
+    "id": "falcon-drop",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.01,
+    "deltaFromTargetDb": -0.01,
+    "truePeakDbtp": -1.6,
+    "seconds": 2.191,
+    "centroidHz": 1230,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-falcon-drop-2.wav"
+   },
+   {
+    "id": "falcon-drop",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.26,
+    "deltaFromTargetDb": -0.26,
+    "truePeakDbtp": -1.54,
+    "seconds": 2.193,
+    "centroidHz": 1074,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-falcon-drop-3.wav"
+   },
+   {
+    "id": "falcon-flight",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.59,
+    "seconds": 1.501,
+    "centroidHz": 1967,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-falcon-flight-1.wav"
+   },
+   {
+    "id": "falcon-flight",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6,
+    "seconds": 1.483,
+    "centroidHz": 2092,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-falcon-flight-2.wav"
+   },
+   {
+    "id": "falcon-flight",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.22,
+    "seconds": 1.539,
+    "centroidHz": 2169,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-falcon-flight-3.wav"
+   },
+   {
+    "id": "gear-wild",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.45,
+    "seconds": 1.599,
+    "centroidHz": 925,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-gear-wild-1.wav"
+   },
+   {
+    "id": "gear-wild",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.81,
+    "seconds": 1.597,
+    "centroidHz": 1053,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-gear-wild-2.wav"
+   },
+   {
+    "id": "gear-wild",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.38,
+    "seconds": 1.599,
+    "centroidHz": 942,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-gear-wild-3.wav"
+   },
+   {
+    "id": "hub-step-1",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.58,
+    "seconds": 1.16,
+    "centroidHz": 637,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-1-1.wav"
+   },
+   {
+    "id": "hub-step-1",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.17,
+    "seconds": 1.129,
+    "centroidHz": 638,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-1-2.wav"
+   },
+   {
+    "id": "hub-step-2",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.14,
+    "seconds": 1.254,
+    "centroidHz": 727,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-2-1.wav"
+   },
+   {
+    "id": "hub-step-2",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.19,
+    "seconds": 1.255,
+    "centroidHz": 730,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-2-2.wav"
+   },
+   {
+    "id": "hub-step-3",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.34,
+    "seconds": 1.35,
+    "centroidHz": 802,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-3-1.wav"
+   },
+   {
+    "id": "hub-step-3",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.08,
+    "seconds": 1.324,
+    "centroidHz": 803,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-3-2.wav"
+   },
+   {
+    "id": "hub-step-4",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.24,
+    "seconds": 1.514,
+    "centroidHz": 838,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-4-1.wav"
+   },
+   {
+    "id": "hub-step-4",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.41,
+    "seconds": 1.512,
+    "centroidHz": 839,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-4-2.wav"
+   },
+   {
+    "id": "hub-step-5",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.73,
+    "deltaFromTargetDb": -0.23,
+    "truePeakDbtp": -1.56,
+    "seconds": 1.567,
+    "centroidHz": 836,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-5-1.wav"
+   },
+   {
+    "id": "hub-step-5",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.72,
+    "deltaFromTargetDb": -0.22,
+    "truePeakDbtp": -1.55,
+    "seconds": 1.572,
+    "centroidHz": 837,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-5-2.wav"
+   },
+   {
+    "id": "hub-step-6",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.7,
+    "deltaFromTargetDb": -0.2,
+    "truePeakDbtp": -1.6,
+    "seconds": 1.636,
+    "centroidHz": 891,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-6-1.wav"
+   },
+   {
+    "id": "hub-step-6",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.66,
+    "deltaFromTargetDb": -0.16,
+    "truePeakDbtp": -1.53,
+    "seconds": 1.669,
+    "centroidHz": 892,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-6-2.wav"
+   },
+   {
+    "id": "hub-step-7",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.25,
+    "deltaFromTargetDb": -0.25,
+    "truePeakDbtp": -1.54,
+    "seconds": 1.741,
+    "centroidHz": 796,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-7-1.wav"
+   },
+   {
+    "id": "hub-step-7",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.29,
+    "deltaFromTargetDb": -0.29,
+    "truePeakDbtp": -1.57,
+    "seconds": 1.751,
+    "centroidHz": 797,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-7-2.wav"
+   },
+   {
+    "id": "hub-step-8",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.41,
+    "deltaFromTargetDb": -0.41,
+    "truePeakDbtp": -1.51,
+    "seconds": 1.768,
+    "centroidHz": 856,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-8-1.wav"
+   },
+   {
+    "id": "hub-step-8",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.35,
+    "deltaFromTargetDb": -0.35,
+    "truePeakDbtp": -1.52,
+    "seconds": 1.762,
+    "centroidHz": 807,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-8-2.wav"
+   },
+   {
+    "id": "hub-step-9",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.25,
+    "deltaFromTargetDb": -0.25,
+    "truePeakDbtp": -1.55,
+    "seconds": 2.002,
+    "centroidHz": 862,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-9-1.wav"
+   },
+   {
+    "id": "hub-step-9",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.25,
+    "deltaFromTargetDb": -0.25,
+    "truePeakDbtp": -1.56,
+    "seconds": 2.018,
+    "centroidHz": 825,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-9-2.wav"
+   },
+   {
+    "id": "hub-step-10",
+    "variation": 1,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.07,
+    "deltaFromTargetDb": -0.07,
+    "truePeakDbtp": -1.55,
+    "seconds": 2.005,
+    "centroidHz": 993,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-10-1.wav"
+   },
+   {
+    "id": "hub-step-10",
+    "variation": 2,
+    "class": "hero",
+    "targetMomentaryLufs": -10,
+    "momentaryMaxLufs": -10.06,
+    "deltaFromTargetDb": -0.06,
+    "truePeakDbtp": -1.57,
+    "seconds": 1.99,
+    "centroidHz": 1006,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-step-10-2.wav"
+   },
+   {
+    "id": "hub-x1",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.75,
+    "seconds": 1.197,
+    "centroidHz": 582,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x1-1.wav"
+   },
+   {
+    "id": "hub-x1",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.74,
+    "seconds": 1.197,
+    "centroidHz": 583,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x1-2.wav"
+   },
+   {
+    "id": "hub-x1",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.09,
+    "seconds": 1.196,
+    "centroidHz": 589,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x1-3.wav"
+   },
+   {
+    "id": "hub-x2",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.21,
+    "seconds": 1.545,
+    "centroidHz": 695,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x2-1.wav"
+   },
+   {
+    "id": "hub-x2",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.05,
+    "seconds": 1.545,
+    "centroidHz": 695,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x2-2.wav"
+   },
+   {
+    "id": "hub-x2",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.04,
+    "seconds": 1.545,
+    "centroidHz": 698,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x2-3.wav"
+   },
+   {
+    "id": "hub-x3",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.68,
+    "deltaFromTargetDb": -0.18,
+    "truePeakDbtp": -1.58,
+    "seconds": 1.896,
+    "centroidHz": 757,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x3-1.wav"
+   },
+   {
+    "id": "hub-x3",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.67,
+    "deltaFromTargetDb": -0.17,
+    "truePeakDbtp": -1.59,
+    "seconds": 1.896,
+    "centroidHz": 757,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x3-2.wav"
+   },
+   {
+    "id": "hub-x3",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.66,
+    "deltaFromTargetDb": -0.16,
+    "truePeakDbtp": -1.59,
+    "seconds": 1.896,
+    "centroidHz": 763,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x3-3.wav"
+   },
+   {
+    "id": "hub-x5",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.53,
+    "seconds": 2.245,
+    "centroidHz": 772,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x5-1.wav"
+   },
+   {
+    "id": "hub-x5",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.5,
+    "seconds": 2.245,
+    "centroidHz": 772,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x5-2.wav"
+   },
+   {
+    "id": "hub-x5",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.52,
+    "seconds": 2.245,
+    "centroidHz": 773,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x5-3.wav"
+   },
+   {
+    "id": "hub-x10",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.62,
+    "seconds": 2.595,
+    "centroidHz": 730,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x10-1.wav"
+   },
+   {
+    "id": "hub-x10",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.1,
+    "deltaFromTargetDb": -0.1,
+    "truePeakDbtp": -1.59,
+    "seconds": 2.595,
+    "centroidHz": 729,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x10-2.wav"
+   },
+   {
+    "id": "hub-x10",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.62,
+    "seconds": 2.595,
+    "centroidHz": 710,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-hub-x10-3.wav"
+   },
+   {
+    "id": "lock",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -13.23,
+    "deltaFromTargetDb": -0.73,
+    "truePeakDbtp": -1.53,
+    "seconds": 1.085,
+    "centroidHz": 269,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-lock-1.wav"
+   },
+   {
+    "id": "lock",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -13.05,
+    "deltaFromTargetDb": -0.55,
+    "truePeakDbtp": -1.58,
+    "seconds": 1.077,
+    "centroidHz": 265,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-lock-2.wav"
+   },
+   {
+    "id": "lock",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.86,
+    "deltaFromTargetDb": -0.36,
+    "truePeakDbtp": -1.58,
+    "seconds": 1.069,
+    "centroidHz": 257,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-lock-3.wav"
+   },
+   {
+    "id": "pin",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -18.86,
+    "deltaFromTargetDb": -2.86,
+    "truePeakDbtp": -1.2,
+    "seconds": 0.442,
+    "centroidHz": 2166,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-pin-1.wav"
+   },
+   {
+    "id": "pin",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -18.43,
+    "deltaFromTargetDb": -2.43,
+    "truePeakDbtp": -1.14,
+    "seconds": 0.471,
+    "centroidHz": 1626,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-pin-2.wav"
+   },
+   {
+    "id": "pin",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -18.15,
+    "deltaFromTargetDb": -2.15,
+    "truePeakDbtp": -1.51,
+    "seconds": 0.406,
+    "centroidHz": 2415,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-pin-3.wav"
+   },
+   {
+    "id": "pin",
+    "variation": 4,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -18.4,
+    "deltaFromTargetDb": -2.4,
+    "truePeakDbtp": -1.55,
+    "seconds": 0.449,
+    "centroidHz": 1814,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-pin-4.wav"
+   },
+   {
+    "id": "ratchet",
+    "variation": 1,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -21.29,
+    "deltaFromTargetDb": -1.79,
+    "truePeakDbtp": -1.51,
+    "seconds": 0.024,
+    "centroidHz": 557,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ratchet-1.wav"
+   },
+   {
+    "id": "ratchet",
+    "variation": 2,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -20.93,
+    "deltaFromTargetDb": -1.43,
+    "truePeakDbtp": -1.5,
+    "seconds": 0.024,
+    "centroidHz": 535,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ratchet-2.wav"
+   },
+   {
+    "id": "ratchet",
+    "variation": 3,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -20.84,
+    "deltaFromTargetDb": -1.34,
+    "truePeakDbtp": -1.58,
+    "seconds": 0.024,
+    "centroidHz": 517,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ratchet-3.wav"
+   },
+   {
+    "id": "ratchet",
+    "variation": 4,
+    "class": "ui",
+    "targetMomentaryLufs": -19.5,
+    "momentaryMaxLufs": -21.41,
+    "deltaFromTargetDb": -1.91,
+    "truePeakDbtp": -1.59,
+    "seconds": 0.024,
+    "centroidHz": 499,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ratchet-4.wav"
+   },
+   {
+    "id": "reservoir-1",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.37,
+    "seconds": 1.71,
+    "centroidHz": 293,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-reservoir-1-1.wav"
+   },
+   {
+    "id": "reservoir-1",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.57,
+    "seconds": 1.709,
+    "centroidHz": 309,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-reservoir-1-2.wav"
+   },
+   {
+    "id": "reservoir-1",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.89,
+    "seconds": 1.709,
+    "centroidHz": 301,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-reservoir-1-3.wav"
+   },
+   {
+    "id": "reservoir-2",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.39,
+    "seconds": 1.639,
+    "centroidHz": 426,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-reservoir-2-1.wav"
+   },
+   {
+    "id": "reservoir-2",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.23,
+    "seconds": 1.64,
+    "centroidHz": 411,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-reservoir-2-2.wav"
+   },
+   {
+    "id": "reservoir-2",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.64,
+    "seconds": 1.64,
+    "centroidHz": 425,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-reservoir-2-3.wav"
+   },
+   {
+    "id": "reservoir-3",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.11,
+    "deltaFromTargetDb": -0.11,
+    "truePeakDbtp": -1.51,
+    "seconds": 2.432,
+    "centroidHz": 851,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-reservoir-3-1.wav"
+   },
+   {
+    "id": "reservoir-3",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.12,
+    "deltaFromTargetDb": -0.12,
+    "truePeakDbtp": -1.52,
+    "seconds": 2.43,
+    "centroidHz": 846,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-reservoir-3-2.wav"
+   },
+   {
+    "id": "reservoir-3",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.17,
+    "deltaFromTargetDb": -0.17,
+    "truePeakDbtp": -1.52,
+    "seconds": 2.43,
+    "centroidHz": 821,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-reservoir-3-3.wav"
+   },
+   {
+    "id": "respin",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.56,
+    "seconds": 0.75,
+    "centroidHz": 1831,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-respin-1.wav"
+   },
+   {
+    "id": "respin",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.44,
+    "seconds": 0.791,
+    "centroidHz": 1888,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-respin-2.wav"
+   },
+   {
+    "id": "respin",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.66,
+    "seconds": 0.768,
+    "centroidHz": 1916,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-respin-3.wav"
+   },
+   {
+    "id": "ring-stop",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.68,
+    "seconds": 0.677,
+    "centroidHz": 327,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ring-stop-1.wav"
+   },
+   {
+    "id": "ring-stop",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16.22,
+    "deltaFromTargetDb": -0.22,
+    "truePeakDbtp": -1.6,
+    "seconds": 0.672,
+    "centroidHz": 316,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ring-stop-2.wav"
+   },
+   {
+    "id": "ring-stop",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16.2,
+    "deltaFromTargetDb": -0.2,
+    "truePeakDbtp": -1.53,
+    "seconds": 0.69,
+    "centroidHz": 297,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ring-stop-3.wav"
+   },
+   {
+    "id": "ring-stop",
+    "variation": 4,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16.19,
+    "deltaFromTargetDb": -0.19,
+    "truePeakDbtp": -1.58,
+    "seconds": 0.69,
+    "centroidHz": 277,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ring-stop-4.wav"
+   },
+   {
+    "id": "ring-whirr",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.64,
+    "seconds": 2.4,
+    "centroidHz": 97,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ring-whirr-1.wav"
+   },
+   {
+    "id": "ring-whirr",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.14,
+    "seconds": 2.4,
+    "centroidHz": 102,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ring-whirr-2.wav"
+   },
+   {
+    "id": "ring-whirr",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.16,
+    "seconds": 2.4,
+    "centroidHz": 101,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-ring-whirr-3.wav"
+   },
+   {
+    "id": "spin",
+    "variation": 1,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.76,
+    "seconds": 0.97,
+    "centroidHz": 839,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-spin-1.wav"
+   },
+   {
+    "id": "spin",
+    "variation": 2,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.84,
+    "seconds": 0.922,
+    "centroidHz": 850,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-spin-2.wav"
+   },
+   {
+    "id": "spin",
+    "variation": 3,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.95,
+    "seconds": 0.975,
+    "centroidHz": 1026,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-spin-3.wav"
+   },
+   {
+    "id": "spin",
+    "variation": 4,
+    "class": "light",
+    "targetMomentaryLufs": -16,
+    "momentaryMaxLufs": -16,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -6.25,
+    "seconds": 0.922,
+    "centroidHz": 914,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-spin-4.wav"
+   },
+   {
+    "id": "tease",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.56,
+    "deltaFromTargetDb": -0.06,
+    "truePeakDbtp": -3.08,
+    "seconds": 3.664,
+    "centroidHz": 617,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-tease-1.wav"
+   },
+   {
+    "id": "tease",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.56,
+    "deltaFromTargetDb": -0.06,
+    "truePeakDbtp": -4.01,
+    "seconds": 3.681,
+    "centroidHz": 652,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-tease-2.wav"
+   },
+   {
+    "id": "tease",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.56,
+    "deltaFromTargetDb": -0.06,
+    "truePeakDbtp": -3.55,
+    "seconds": 3.674,
+    "centroidHz": 653,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-tease-3.wav"
+   },
+   {
+    "id": "tier-up-2",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.43,
+    "deltaFromTargetDb": -0.43,
+    "truePeakDbtp": -1.58,
+    "seconds": 1.911,
+    "centroidHz": 950,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-tier-up-2-1.wav"
+   },
+   {
+    "id": "tier-up-3",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.46,
+    "deltaFromTargetDb": -0.46,
+    "truePeakDbtp": -1.53,
+    "seconds": 1.889,
+    "centroidHz": 911,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-tier-up-3-1.wav"
+   },
+   {
+    "id": "tier-up-4",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.18,
+    "deltaFromTargetDb": -0.18,
+    "truePeakDbtp": -1.5,
+    "seconds": 1.81,
+    "centroidHz": 1011,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-tier-up-4-1.wav"
+   },
+   {
+    "id": "tier-up-max",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.24,
+    "deltaFromTargetDb": -0.24,
+    "truePeakDbtp": -1.58,
+    "seconds": 1.876,
+    "centroidHz": 1118,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-tier-up-max-1.wav"
+   },
+   {
+    "id": "trigger",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.08,
+    "deltaFromTargetDb": -0.08,
+    "truePeakDbtp": -1.6,
+    "seconds": 3.305,
+    "centroidHz": 799,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-trigger-1.wav"
+   },
+   {
+    "id": "trigger",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.22,
+    "deltaFromTargetDb": -0.22,
+    "truePeakDbtp": -1.58,
+    "seconds": 3.305,
+    "centroidHz": 804,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-trigger-2.wav"
+   },
+   {
+    "id": "trigger",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.12,
+    "deltaFromTargetDb": -0.12,
+    "truePeakDbtp": -1.58,
+    "seconds": 3.305,
+    "centroidHz": 800,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-trigger-3.wav"
+   },
+   {
+    "id": "vessel1",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.85,
+    "seconds": 1.695,
+    "centroidHz": 779,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel1-1.wav"
+   },
+   {
+    "id": "vessel1",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.13,
+    "seconds": 1.695,
+    "centroidHz": 782,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel1-2.wav"
+   },
+   {
+    "id": "vessel1",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.17,
+    "seconds": 1.695,
+    "centroidHz": 778,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel1-3.wav"
+   },
+   {
+    "id": "vessel2",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.6,
+    "deltaFromTargetDb": -0.1,
+    "truePeakDbtp": -1.57,
+    "seconds": 1.696,
+    "centroidHz": 865,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel2-1.wav"
+   },
+   {
+    "id": "vessel2",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.6,
+    "deltaFromTargetDb": -0.1,
+    "truePeakDbtp": -1.6,
+    "seconds": 1.696,
+    "centroidHz": 845,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel2-2.wav"
+   },
+   {
+    "id": "vessel2",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.52,
+    "deltaFromTargetDb": -0.02,
+    "truePeakDbtp": -1.59,
+    "seconds": 1.696,
+    "centroidHz": 852,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel2-3.wav"
+   },
+   {
+    "id": "vessel3",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.09,
+    "deltaFromTargetDb": -0.09,
+    "truePeakDbtp": -1.5,
+    "seconds": 1.876,
+    "centroidHz": 997,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel3-1.wav"
+   },
+   {
+    "id": "vessel3",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.23,
+    "deltaFromTargetDb": -0.23,
+    "truePeakDbtp": -1.58,
+    "seconds": 1.961,
+    "centroidHz": 1060,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel3-2.wav"
+   },
+   {
+    "id": "vessel3",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.08,
+    "deltaFromTargetDb": -0.08,
+    "truePeakDbtp": -1.53,
+    "seconds": 1.859,
+    "centroidHz": 1045,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel3-3.wav"
+   },
+   {
+    "id": "vessel4",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.17,
+    "deltaFromTargetDb": -0.17,
+    "truePeakDbtp": -1.49,
+    "seconds": 1.908,
+    "centroidHz": 1054,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel4-1.wav"
+   },
+   {
+    "id": "vessel4",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.11,
+    "deltaFromTargetDb": -0.11,
+    "truePeakDbtp": -1.52,
+    "seconds": 1.913,
+    "centroidHz": 1021,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel4-2.wav"
+   },
+   {
+    "id": "vessel4",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.63,
+    "seconds": 1.857,
+    "centroidHz": 1017,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel4-3.wav"
+   },
+   {
+    "id": "vessel5",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.21,
+    "deltaFromTargetDb": -0.21,
+    "truePeakDbtp": -1.52,
+    "seconds": 1.873,
+    "centroidHz": 1175,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel5-1.wav"
+   },
+   {
+    "id": "vessel5",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.33,
+    "deltaFromTargetDb": -0.33,
+    "truePeakDbtp": -1.55,
+    "seconds": 2.006,
+    "centroidHz": 1232,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel5-2.wav"
+   },
+   {
+    "id": "vessel5",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.33,
+    "deltaFromTargetDb": -0.33,
+    "truePeakDbtp": -1.57,
+    "seconds": 1.901,
+    "centroidHz": 1222,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel5-3.wav"
+   },
+   {
+    "id": "vessel6",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.16,
+    "deltaFromTargetDb": -0.16,
+    "truePeakDbtp": -1.59,
+    "seconds": 1.88,
+    "centroidHz": 1357,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel6-1.wav"
+   },
+   {
+    "id": "vessel6",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.09,
+    "deltaFromTargetDb": -0.09,
+    "truePeakDbtp": -1.58,
+    "seconds": 1.947,
+    "centroidHz": 1356,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel6-2.wav"
+   },
+   {
+    "id": "vessel6",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11.2,
+    "deltaFromTargetDb": -0.2,
+    "truePeakDbtp": -1.58,
+    "seconds": 1.949,
+    "centroidHz": 1363,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vessel6-3.wav"
+   },
+   {
+    "id": "vo-hey",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.82,
+    "seconds": 0.965,
+    "centroidHz": 785,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vo-hey-1.wav"
+   },
+   {
+    "id": "vo-hey",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.41,
+    "seconds": 0.986,
+    "centroidHz": 770,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vo-hey-2.wav"
+   },
+   {
+    "id": "vo-hey",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.23,
+    "seconds": 0.994,
+    "centroidHz": 765,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vo-hey-3.wav"
+   },
+   {
+    "id": "vo-hum",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -4.89,
+    "seconds": 1.153,
+    "centroidHz": 484,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vo-hum-1.wav"
+   },
+   {
+    "id": "vo-hum",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -5.04,
+    "seconds": 1.164,
+    "centroidHz": 454,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vo-hum-2.wav"
+   },
+   {
+    "id": "vo-hum",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.17,
+    "seconds": 1.166,
+    "centroidHz": 470,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vo-hum-3.wav"
+   },
+   {
+    "id": "vo-joy",
+    "variation": 1,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.88,
+    "seconds": 1.377,
+    "centroidHz": 826,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vo-joy-1.wav"
+   },
+   {
+    "id": "vo-joy",
+    "variation": 2,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.84,
+    "seconds": 1.397,
+    "centroidHz": 831,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vo-joy-2.wav"
+   },
+   {
+    "id": "vo-joy",
+    "variation": 3,
+    "class": "major",
+    "targetMomentaryLufs": -11,
+    "momentaryMaxLufs": -11,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -3.26,
+    "seconds": 1.376,
+    "centroidHz": 843,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-vo-joy-3.wav"
+   },
+   {
+    "id": "win",
+    "variation": 1,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.58,
+    "deltaFromTargetDb": -0.08,
+    "truePeakDbtp": -1.58,
+    "seconds": 1.208,
+    "centroidHz": 1068,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-win-1.wav"
+   },
+   {
+    "id": "win",
+    "variation": 2,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -2.09,
+    "seconds": 1.223,
+    "centroidHz": 1036,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-win-2.wav"
+   },
+   {
+    "id": "win",
+    "variation": 3,
+    "class": "medium",
+    "targetMomentaryLufs": -12.5,
+    "momentaryMaxLufs": -12.5,
+    "deltaFromTargetDb": 0,
+    "truePeakDbtp": -1.67,
+    "seconds": 1.122,
+    "centroidHz": 1076,
+    "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/sfx/cezeri-win-3.wav"
+   }
+  ]
+ },
+ "runtimeChain": {
+  "musicOnlyUnitySliders": {
+   "integratedLufs": -15.82,
+   "momentaryMaxLufs": -13.59,
+   "truePeakDbtp": -2.13,
+   "samplePeakDbfs": -2.17
+  },
+  "musicOnlyDefaultMix": {
+   "integratedLufs": -18.62,
+   "momentaryMaxLufs": -16.35,
+   "truePeakDbtp": -4.84,
+   "samplePeakDbfs": -4.88
+  },
+  "musicPlusSfxStressUnity": {
+   "integratedLufs": -9.33,
+   "momentaryMaxLufs": -7.53,
+   "truePeakDbtp": -0.95,
+   "samplePeakDbfs": -1.01
+  },
+  "musicPlusSfxStressDefault": {
+   "integratedLufs": -9.98,
+   "momentaryMaxLufs": -7.7,
+   "truePeakDbtp": -1.06,
+   "samplePeakDbfs": -1.12
+  }
+ },
+ "escalation": {
+  "seconds": 26,
+  "hits": [
+   {
+    "target": 2,
+    "call": 5.3,
+    "hitAt": 5.5,
+    "onBeat": true
+   },
+   {
+    "target": 3,
+    "call": 8.15,
+    "hitAt": 8.5,
+    "onBeat": true
+   },
+   {
+    "target": 4,
+    "call": 10.7,
+    "hitAt": 11,
+    "onBeat": true
+   },
+   {
+    "target": "max",
+    "call": 13.25,
+    "hitAt": 13.5,
+    "onBeat": true
+   }
+  ],
+  "whole": {
+   "integratedLufs": -13.62,
+   "momentaryMaxLufs": -10.3,
+   "truePeakDbtp": -1.24,
+   "samplePeakDbfs": -1.43
+  },
+  "wav": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/audio/cezeri-escalation-max.wav",
+  "note": "Büyük → Mega → Süper → Efsane → max with count-up ticks; tier-up hits on the 120 BPM grid (planTierUp), landing at 22.3 s."
+ },
+ "loadTiming": {
+  "cezeri": [
+   {
+    "coreMs": 4613,
+    "allMs": 24512,
+    "maxMainThreadGapMsDuringCore": 37,
+    "maxMainThreadGapMs": 133,
+    "workers": 3,
+    "workerFailure": null,
+    "perStepMs": {
+     "base": 4279,
+     "sfx-core": 4594,
+     "core": 4611,
+     "chainBed": 569,
+     "chainBedHi": 623,
+     "ambience": 2913,
+     "idle": 1978,
+     "fsIntro": 1525,
+     "sfx-extended": 9494,
+     "retrigger": 387,
+     "feature": 4580,
+     "bigWin1": 766,
+     "bed1": 835,
+     "sfx-celebration": 3113,
+     "bigWin2": 1136,
+     "bed2": 1142,
+     "bigWin3": 1296,
+     "bed3": 1462,
+     "bigWin4": 1342,
+     "bed4": 1480,
+     "fsOutro": 901,
+     "totalWin": 882,
+     "maxWin": 1289,
+     "bedMax": 1370,
+     "all": 24512
+    }
+   },
+   {
+    "coreMs": 5365,
+    "allMs": 29183,
+    "maxMainThreadGapMsDuringCore": 141,
+    "maxMainThreadGapMs": 141,
+    "workers": 3,
+    "workerFailure": null,
+    "perStepMs": {
+     "base": 4796,
+     "sfx-core": 5342,
+     "core": 5364,
+     "chainBed": 644,
+     "chainBedHi": 838,
+     "ambience": 2534,
+     "idle": 4458,
+     "fsIntro": 747,
+     "sfx-extended": 8407,
+     "retrigger": 1168,
+     "feature": 5194,
+     "sfx-celebration": 4008,
+     "bigWin1": 943,
+     "bed1": 1121,
+     "bigWin2": 1120,
+     "bed2": 1089,
+     "bigWin3": 1598,
+     "bed3": 2298,
+     "bigWin4": 2426,
+     "fsOutro": 632,
+     "bed4": 2208,
+     "totalWin": 1274,
+     "maxWin": 2165,
+     "bedMax": 2053,
+     "all": 29183
+    }
+   },
+   {
+    "coreMs": 7233,
+    "allMs": 34503,
+    "maxMainThreadGapMsDuringCore": 145,
+    "maxMainThreadGapMs": 145,
+    "workers": 3,
+    "workerFailure": null,
+    "perStepMs": {
+     "sfx-core": 7078,
+     "base": 7212,
+     "core": 7231,
+     "chainBed": 835,
+     "chainBedHi": 1060,
+     "ambience": 4731,
+     "idle": 4832,
+     "fsIntro": 744,
+     "sfx-extended": 10610,
+     "retrigger": 1788,
+     "feature": 5614,
+     "bigWin1": 674,
+     "bed1": 846,
+     "sfx-celebration": 5337,
+     "bigWin2": 1629,
+     "bed2": 2549,
+     "bigWin3": 1546,
+     "bed3": 1065,
+     "bigWin4": 2098,
+     "bed4": 2202,
+     "fsOutro": 721,
+     "totalWin": 1355,
+     "maxWin": 2390,
+     "bedMax": 1530,
+     "all": 34503
+    }
+   }
+  ],
+  "tarhunSameRun": [
+   {
+    "coreMs": 4576,
+    "allMs": 21542,
+    "maxMainThreadGapMsDuringCore": 91,
+    "maxMainThreadGapMs": 133,
+    "workers": 3,
+    "workerFailure": null,
+    "perStepMs": {
+     "base": 4376,
+     "sfx-core": 4550,
+     "core": 4575,
+     "ambience": 3500,
+     "sfx-extended": 5428,
+     "idle": 2017,
+     "fsIntro": 2236,
+     "retrigger": 339,
+     "feature": 4576,
+     "sfx-celebration": 2501,
+     "bigWin1": 963,
+     "bed1": 929,
+     "bigWin2": 677,
+     "bed2": 1089,
+     "bigWin3": 1605,
+     "bed3": 880,
+     "bigWin4": 1085,
+     "bed4": 1517,
+     "fsOutro": 717,
+     "totalWin": 845,
+     "maxWin": 1503,
+     "bedMax": 1203,
+     "all": 21541
+    }
+   },
+   {
+    "coreMs": 6122,
+    "allMs": 31526,
+    "maxMainThreadGapMsDuringCore": 129,
+    "maxMainThreadGapMs": 203,
+    "workers": 3,
+    "workerFailure": null,
+    "perStepMs": {
+     "sfx-core": 5780,
+     "base": 6100,
+     "core": 6120,
+     "ambience": 4784,
+     "idle": 3096,
+     "sfx-extended": 8356,
+     "fsIntro": 3334,
+     "retrigger": 432,
+     "feature": 6471,
+     "sfx-celebration": 4190,
+     "bigWin1": 1339,
+     "bed1": 833,
+     "bigWin2": 1237,
+     "bed2": 1655,
+     "bigWin3": 1440,
+     "bed3": 1668,
+     "bigWin4": 1718,
+     "fsOutro": 1394,
+     "bed4": 2568,
+     "totalWin": 1078,
+     "maxWin": 2333,
+     "bedMax": 2372,
+     "all": 31526
+    }
+   },
+   {
+    "coreMs": 6310,
+    "allMs": 30688,
+    "maxMainThreadGapMsDuringCore": 185,
+    "maxMainThreadGapMs": 185,
+    "workers": 3,
+    "workerFailure": null,
+    "perStepMs": {
+     "sfx-core": 5801,
+     "base": 6276,
+     "core": 6308,
+     "ambience": 5026,
+     "sfx-extended": 7809,
+     "idle": 2923,
+     "fsIntro": 2832,
+     "retrigger": 663,
+     "feature": 4389,
+     "bigWin1": 1822,
+     "bed1": 1500,
+     "sfx-celebration": 5416,
+     "bigWin2": 1844,
+     "bed2": 1213,
+     "bigWin3": 1505,
+     "bed3": 1339,
+     "bigWin4": 1611,
+     "bed4": 1917,
+     "fsOutro": 1032,
+     "totalWin": 1102,
+     "maxWin": 2126,
+     "bedMax": 2088,
+     "all": 30687
+    }
+   }
+  ],
+  "meanCoreMs": {
+   "cezeri": 5737,
+   "tarhun": 5669
+  },
+  "meanAllMs": {
+   "cezeri": 29399,
+   "tarhun": 27919
+  },
+  "workerTraceBeforeRebalance": [
+   {
+    "game": "cezeri",
+    "what": "base",
+    "ms": 3710,
+    "marks": [
+     [
+      "cezeri-base start",
+      16
+     ],
+     [
+      "cezeri-base tracks gears+fx+chime+gearkit+kos",
+      2253
+     ],
+     [
+      "cezeri-base tracks tremolo+santur+bass+drone+clock",
+      2295
+     ],
+     [
+      "cezeri-base tracks organ+pipe+ney+drips+naq+cymbal",
+      2852
+     ],
+     [
+      "cezeri-base reverb",
+      3306
+     ],
+     [
+      "cezeri-base finish",
+      3710
+     ]
+    ]
+   },
+   {
+    "game": "cezeri",
+    "what": "sfx",
+    "ms": 3497,
+    "marks": [
+     [
+      "sfx synth 9 (35.7 s)",
+      1176
+     ],
+     [
+      "sfx synth 10 (51.6 s)",
+      1503
+     ],
+     [
+      "sfx reverb",
+      1736
+     ],
+     [
+      "sfx reverb",
+      1895
+     ],
+     [
+      "sfx synth 9 (52.1 s)",
+      2689
+     ],
+     [
+      "sfx reverb",
+      3146
+     ]
+    ]
+   },
+   {
+    "game": "storm",
+    "what": "base",
+    "ms": 3148,
+    "marks": [
+     [
+      "storm-base start",
+      15
+     ],
+     [
+      "storm-base tracks choir+hand+davul",
+      2140
+     ],
+     [
+      "storm-base tracks drone+ostinato+saz+fx+ney",
+      2381
+     ],
+     [
+      "storm-base tracks horns+zurna+bass+hornline+taiko+gong",
+      2412
+     ],
+     [
+      "storm-base reverb",
+      2836
+     ],
+     [
+      "storm-base finish",
+      3148
+     ]
+    ]
+   },
+   {
+    "game": "storm",
+    "what": "sfx",
+    "ms": 1716,
+    "marks": [
+     [
+      "sfx synth 5 (18.7 s)",
+      791
+     ],
+     [
+      "sfx synth 5 (18.1 s)",
+      879
+     ],
+     [
+      "sfx synth 5 (21.7 s)",
+      892
+     ],
+     [
+      "sfx reverb",
+      924
+     ],
+     [
+      "sfx reverb",
+      1049
+     ],
+     [
+      "sfx reverb",
+      1161
+     ]
+    ]
+   },
+   {
+    "game": "cezeri",
+    "what": "base",
+    "ms": 4740,
+    "marks": [
+     [
+      "cezeri-base start",
+      25
+     ],
+     [
+      "cezeri-base tracks gears+fx+chime+gearkit+kos",
+      2729
+     ],
+     [
+      "cezeri-base tracks tremolo+santur+bass+drone+clock",
+      2843
+     ],
+     [
+      "cezeri-base tracks organ+pipe+ney+drips+naq+cymbal",
+      3583
+     ],
+     [
+      "cezeri-base reverb",
+      4259
+     ],
+     [
+      "cezeri-base finish",
+      4740
+     ]
+    ]
+   },
+   {
+    "game": "cezeri",
+    "what": "sfx",
+    "ms": 3947,
+    "marks": [
+     [
+      "sfx synth 9 (35.7 s)",
+      1536
+     ],
+     [
+      "sfx synth 10 (51.6 s)",
+      1718
+     ],
+     [
+      "sfx reverb",
+      2037
+     ],
+     [
+      "sfx reverb",
+      2159
+     ],
+     [
+      "sfx synth 9 (52.1 s)",
+      3000
+     ],
+     [
+      "sfx reverb",
+      3631
+     ]
+    ]
+   },
+   {
+    "game": "storm",
+    "what": "base",
+    "ms": 3895,
+    "marks": [
+     [
+      "storm-base start",
+      20
+     ],
+     [
+      "storm-base tracks choir+hand+davul",
+      2731
+     ],
+     [
+      "storm-base tracks horns+zurna+bass+hornline+taiko+gong",
+      2833
+     ],
+     [
+      "storm-base tracks drone+ostinato+saz+fx+ney",
+      2952
+     ],
+     [
+      "storm-base reverb",
+      3532
+     ],
+     [
+      "storm-base finish",
+      3895
+     ]
+    ]
+   },
+   {
+    "game": "storm",
+    "what": "sfx",
+    "ms": 1691,
+    "marks": [
+     [
+      "sfx synth 5 (18.7 s)",
+      825
+     ],
+     [
+      "sfx synth 5 (21.7 s)",
+      881
+     ],
+     [
+      "sfx synth 5 (18.1 s)",
+      967
+     ],
+     [
+      "sfx reverb",
+      1011
+     ],
+     [
+      "sfx reverb",
+      1088
+     ],
+     [
+      "sfx reverb",
+      1092
+     ]
+    ]
+   }
+  ],
+  "note": "Three interleaved pairs (Cezeri, Tarhun, …) in one browser session. Core = base theme + first-spin effects (spin, ratchet, ring-stop, ring-whirr, hub-x1..x3, hub-step-1..2, lock, pin, respin, chain-end, beam-1..3, beam-sweep, coin, click, bet). The tension beds lead the lazy batch (< 1 s after core), then hub-step-3..10, hub-x5/x10 and the feature effects; until an asset lands the event falls back (hub step → nearest lower step bent up, hub reveal → lower class, ding → chain-end, others → live fallback voice). The trace (before the rebalance) showed the first core batch at 2× Tarhun's effects audio and the pipe/organ cost weights too low; both were corrected (render.ts CEZERI_VOICE_COST)."
+ },
+ "engineContract": "packages/protocol/src/cezeri.ts cezeri-gears-1 v2 step contract: hub(round 0) → hubReveal(value); rotate (4 rings, held[], pinned[]) → rotate(4 × {ring, distance, ms, delayMs, ease, held: held.length}); win (startRing) → spokeWin(spoke, length, symbol, {startRing}); lock {round, held, newHeld, respin} → gearLock(newHeld.length, {respin}); hub(round k, reason respin) → hubTick(value, k); rotate(k>0) → respin(k) then rotate(...); end {respins, heldSlices, chainCapped} → chainEnd({respins, capped: chainCapped, heldSlices}); scatter → vesselLand(n)… + featureTrigger()/retrigger(); after each free spin → reservoirFill(level); falcon → falconFlight() then falconDrop(ring, slices.length). CEZERI_MAX_RESPINS = 10 in both.",
+ "labPage": null,
+ "summary": {
+  "musicInLoudnessTarget": [
+   "base",
+   "idle",
+   "feature",
+   "fsIntro",
+   "retrigger",
+   "fsOutro",
+   "totalWin",
+   "bigWin1",
+   "bigWin2",
+   "bigWin3",
+   "bigWin4",
+   "maxWin",
+   "bed1",
+   "bed2",
+   "bed3",
+   "bed4",
+   "bedMax",
+   "chainBed",
+   "chainBedHi"
+  ],
+  "musicOutOfTarget": [],
+  "allAssetsTruePeakBelowMinus1": true,
+  "maxAssetTruePeakDbtp": -1.14,
+  "loopsSeamless": true,
+  "sfxMaxShortfallDb": -5.02,
+  "sfxMaxOverDb": 0,
+  "calloutSecondsByClass": {
+   "x2": 1.093,
+   "x10": 1.391,
+   "x25": 2.059,
+   "x50": 2.323,
+   "x100": 2.432,
+   "x250": 2.893
+  },
+  "hubStepClassLadder": {
+   "hub-step-1": "light",
+   "hub-step-2": "light",
+   "hub-step-3": "light",
+   "hub-step-4": "medium",
+   "hub-step-5": "medium",
+   "hub-step-6": "medium",
+   "hub-step-7": "major",
+   "hub-step-8": "major",
+   "hub-step-9": "major",
+   "hub-step-10": "hero"
+  },
+  "signatureChainTruePeakDbtp": -1.46,
+  "tierUpHitsOnBeat": true,
+  "escalationTruePeakDbtp": -1.24,
+  "unitTests": "289/289 pass (apps/web, incl. tests/slot-audio-cezeri.test.ts 11 and tests/slot-audio-cezeri-sound.test.ts 4); web typecheck clean; worker 0c5214d456bd"
+ },
+ "limitations": [
+  "Nobody has listened to this set: the author cannot hear. Owner listening acceptance is required (WAV per asset; cezeri-chain-10-over-base.wav is the signature moment, cezeri-escalation-max.wav the full climb, cezeri-base.wav / cezeri-feature.wav the themes).",
+  "Instruments are synthesized approximations, not recordings; santur, flute, organ and reed colour may read as \"synth\" on good speakers. Makam colours are 12-TET approximations (no koma intervals).",
+  "Vocal callouts are wordless synthetic placeholders; recorded lines plug into setVoiceBank(\"/audio/voice/cezeri\") (22 lines, Turkish texts in CEZERI_VOICE_TEXT) and were tested with fakes only.",
+  "The live master limiter is a DynamicsCompressor, not a true-peak limiter: the stacked-effects stress at unity sliders reaches about −0.95 dBTP (default mix −1.06); every rendered asset and the realistic chain scenario stay below −1 dBTP.",
+  "Very short UI effects (click, pin, ratchet) read under their momentary class target because they are shorter than the 400 ms window (same as the other sets).",
+  "Load times are from a shared 4 vCPU container under other agents' load; only the same-run Cezeri vs Tarhun comparison is meaningful.",
+  "Not verified: GitHub CI, a production (next build / Cloudflare) runtime, the /lab/audio?game=cezeri page in a browser, Safari/Firefox, mobile devices, and the game screen wiring (components/cezeri/** is another agent's)."
+ ]
+}

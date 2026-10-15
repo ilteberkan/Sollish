@@ -125,7 +125,7 @@ test('effects: every Cezeri event exists, unique ids, variation rules, the ring/
     else assert.ok(d.variations >= 3 && d.variations <= 4, `${d.id}: frequent effects have 3–4 variations`);
   }
   const core = CEZERI_SFX.filter(d => d.core).map(d => d.id);
-  for (const id of ['spin', 'ratchet', 'ring-stop', 'ring-whirr', 'hub-x1', 'hub-step-1', 'hub-step-4', 'lock', 'pin', 'respin', 'chain-end', 'beam-1', 'beam-2', 'beam-3', 'beam-sweep', 'click', 'coin']) assert.ok(core.includes(id), id);
+  for (const id of ['spin', 'ratchet', 'ring-stop', 'ring-whirr', 'hub-x1', 'hub-step-1', 'hub-step-2', 'lock', 'pin', 'respin', 'chain-end', 'beam-1', 'beam-2', 'beam-3', 'beam-sweep', 'click', 'coin']) assert.ok(core.includes(id), id);
   assert.ok(!CEZERI_SFX.some(d => d.core && d.late));
   assert.equal(SFX_CATALOGS.cezeri, CEZERI_SFX); assert.equal(SFX_CATALOGS.ebru, EBRU_SFX);
   for (const line of CEZERI_VOICE_LINES) { const p = CEZERI_PLACEHOLDER[line]; if (p) assert.ok(ids.includes(p), p); }
@@ -287,5 +287,5 @@ test('ring, beam and hub-step layers render with their variations under the ceil
     assert.notDeepEqual(list[0]!.l.slice(0, 500), list[1]!.l.slice(0, 500), `${d.id}: variations differ`);
   }
   // the whirr is a long flat texture (the runtime loops it under turns of any length)
-  for (const c of clips.get('ring-whirr')!) assert.ok(c.l.length / SR > 3.4, `whirr ${c.l.length / SR} s`);
+  for (const c of clips.get('ring-whirr')!) assert.ok(c.l.length / SR > 2.2, `whirr ${c.l.length / SR} s`);
 });

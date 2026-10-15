@@ -24,7 +24,7 @@ import { clamp, microVariation, pickVariation, type MixSettings, type Quantize, 
 import { CELEBRATION_BPM, TIER_KEY, TIER_UP_PRE, VOICE_DUCK_DB, VOICE_DELAY, planTierUp, tierAction, toWinTier, type MultiplierClass, type WinTier } from './win-tiers';
 import {
   CEZERI_CLASS_VOICE, CEZERI_MAX_RESPINS, CEZERI_PLACEHOLDER, CEZERI_TIER_VOICE, CEZERI_VOICE_LINES, HUB_STEPS_NIKRIZ, RING_VOICE, beamPlan, cezeriCalloutClass, cezeriCalloutRank,
-  cezeriVoiceBankUrls, cezeriVoiceDecision, chainDuckDb, chainTension, chainVoice, crossedClass, hubRevealId, hubRound, hubSemitones, hubStepRate, loadCezeriVoiceBank, ratchetPlan,
+  cezeriVoiceBankUrls, cezeriVoiceDecision, chainDuckDb, chainTension, chainVoice, crossedClass, hubRevealId, hubRound, hubStepRate, loadCezeriVoiceBank, ratchetPlan,
   tensionCutoff, tensionUpper, type BeamClip, type BeamPlan, type CezeriVoiceLine, type HubMode, type RatchetPlan, type RingEase,
 } from './cezeri-tiers';
 import type { LoadProgress } from './cascade-sound';
@@ -52,7 +52,7 @@ export interface CezeriSound {
   /** Call from a user gesture; browsers keep audio suspended until then. */
   resume: () => Promise<void>;
   setEnabled: (on: boolean) => void;
-  /** Render the bank. Resolves when the core (base theme, tension beds, base-game effects incl. the ring and beam layers) is ready; the rest follows in the background. */
+  /** Render the bank. Resolves when the core (base theme, first-spin effects incl. the ring and beam layers) is ready; the rest follows in the background. */
   load: (onProgress?: (p: LoadProgress) => void) => Promise<void>;
   /** Resolves when everything (feature theme, stingers, celebration effects) is rendered. */
   loaded: () => Promise<void>;
@@ -240,8 +240,9 @@ export function setTension(bed: TensionBed, round: number, at: number) {
 /* ---------------- the controller ---------------- */
 
 type Stinger = 'fsIntro' | 'retrigger' | 'fsOutro' | 'bigWin1' | 'bigWin2' | 'bigWin3' | 'bigWin4' | 'maxWin' | 'totalWin';
-const CORE_SCORES: CezeriScoreId[] = ['base', 'chainBed', 'chainBedHi'];
-const EXTENDED_SCORES: CezeriScoreId[] = ['ambience', 'idle', 'fsIntro', 'feature', 'retrigger', 'bigWin1', 'bed1', 'bigWin2', 'bed2', 'bigWin3', 'bed3', 'bigWin4', 'bed4', 'fsOutro', 'totalWin', 'maxWin', 'bedMax'];
+const CORE_SCORES: CezeriScoreId[] = ['base'];
+/** The tension beds lead the lazy batch (a chain before they land plays its ticks and clanks without the bed). */
+const EXTENDED_SCORES: CezeriScoreId[] = ['chainBed', 'chainBedHi', 'ambience', 'idle', 'fsIntro', 'feature', 'retrigger', 'bigWin1', 'bed1', 'bigWin2', 'bed2', 'bigWin3', 'bed3', 'bigWin4', 'bed4', 'fsOutro', 'totalWin', 'maxWin', 'bedMax'];
 const SCENE_OF: Partial<Record<CezeriScoreId, SceneId>> = { base: 'base', idle: 'idle', feature: 'feature' };
 /** Count-up tick pitch per tier key (melodic material above E sits lower, as in the scores). */
 const tickShift = (key: number) => 2 ** ((key > 4 ? key - 12 : key) / 12);
@@ -434,17 +435,17 @@ export function createCezeriSound(options: { sampleRate?: number; workerFactory?
     const scoreStep = (id: CezeriScoreId, phase: LoadProgress['phase']) => step(id, phase, async () => { const a = await svc.score(CEZERI_SCORES[id]); if (!disposed) install(id, a); });
     report({ phase: 'core', done, total, label: 'start', ms: 0 });
     svc.prefetch();
-    // core: base theme, the two tension-bed loops and the base-game effects (ring, beam, hub and lock layers), in parallel
+    // core: the base theme and the first-spin effects (ring, beam, first hub and lock layers), in parallel
     loading = Promise.all([
       step('sfx-core', 'core', async () => { const c = await svc.sfx('cezeri', coreSfx); if (!disposed) installSfx(c); }),
       ...CORE_SCORES.map(id => scoreStep(id, 'core')),
     ]).then(() => { coreReady = true; renderMs.core = Math.round(ms()); });
-    // extended (lazy, in the background): the rest of the hub ladder and the feature effects, ambience/idle/intro/feature
-    // theme, then the celebration group (callouts, tier-ups, landings, heads and beds), two jobs at a time
+    // extended (lazy, in the background): the two tension beds, the rest of the hub ladder and the feature effects,
+    // ambience/idle/intro/feature theme, then the celebration group (callouts, tier-ups, landings, heads and beds), two jobs at a time
     extended = loading.then(async () => {
       const sfxStep = (label: string, ids: string[]) => () => step(label, 'extended', async () => { const c = await svc.sfx('cezeri', ids); if (!disposed) installSfx(c); });
       const scores = EXTENDED_SCORES.map(id => () => scoreStep(id, 'extended'));
-      const queue: (() => Promise<void>)[] = [sfxStep('sfx-extended', extSfx), ...scores.slice(0, 5), sfxStep('sfx-celebration', lateSfx), ...scores.slice(5)];
+      const queue: (() => Promise<void>)[] = [scores[0]!, scores[1]!, sfxStep('sfx-extended', extSfx), ...scores.slice(2, 7), sfxStep('sfx-celebration', lateSfx), ...scores.slice(7)];
       const lane = async () => { for (let job = queue.shift(); job && !disposed; job = queue.shift()) await job(); };
       await Promise.all([lane(), lane()]);
       if (disposed) return;
@@ -642,7 +643,8 @@ export function createCezeriSound(options: { sampleRate?: number; workerFactory?
     spinStart: () => { stopChain(0.3); if (!play('spin')) fb()?.spin(); },
     hubReveal: value => {
       const v = Number.isFinite(value) ? value : 1;
-      if (!play(hubRevealId(v), { rate: 2 ** ((hubSemitones(0, hubMode()) - hubSemitones(0)) / 12) })) fb()?.crystal(v);
+      const order: string[] = ['hub-x10', 'hub-x5', 'hub-x3', 'hub-x2', 'hub-x1'];
+      if (!order.slice(order.indexOf(hubRevealId(v))).some(id => play(id))) fb()?.crystal(v);
       if (v >= 10) classCallout(v, cezeriCalloutClass(v));
     },
     ringRotate: (ring, distance, ms, opts = {}) => {
@@ -830,7 +832,7 @@ export function createCezeriSound(options: { sampleRate?: number; workerFactory?
           endCelebration();
         } else {
           stopBed(0.6);
-          play('ding');
+          if (!play('ding')) play('chain-end');
         }
       }
     },
