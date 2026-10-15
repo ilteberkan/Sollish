@@ -326,7 +326,10 @@ function WolfWild({ k }: { k: K }) {
         <path d="M30 62L36 60L31 70L38 68L33 78L40 77M44 46L39 52" fill="none" stroke={P.gold.deep} strokeWidth="1.2" strokeLinejoin="round" opacity=".7" />
         <path d={joints.map(([x, y], i) => `${i ? 'L' : 'M'}${x} ${y}`).join('')} fill="none" stroke="#fff" strokeWidth=".9" opacity=".75" />
         {joints.map(([x, y], i) => <path key={i} d={asSparkle(x, y, i === 4 ? 4.4 : 3.2)} fill="#fff" />)}
-        <path d="M52 34.4L58 31.6" stroke={P.night.base} strokeWidth="2" strokeLinecap="round" />
+        <path d="M37 29L45.4 36.4L40.4 43Z" fill="#c07a1c" opacity=".55" />
+        <path d="M52 34.4L58 31.6" stroke={P.night.base} strokeWidth="2.2" strokeLinecap="round" />
+        <circle cx="85.4" cy="10.4" r="2" fill={P.night.base} />
+        <path d="M74 27.4L65 33.6M68 44L60 48M64 54L57 57M46 40Q44 50 46 58" fill="none" stroke={P.gold.deep} strokeWidth="1.3" strokeLinecap="round" opacity=".8" />
       </g>
       <circle cx="50" cy="50" r="44.4" fill="none" stroke={u('ring')} strokeWidth="5.4" />
       <circle cx="50" cy="50" r="47.4" fill="none" stroke={INK} strokeWidth="1.6" />

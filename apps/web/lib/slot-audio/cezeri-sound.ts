@@ -206,7 +206,7 @@ export function startTensionBed(ctx: BaseAudioContext, dest: AudioNode, lower: A
     const out = ctx.createGain(), lowG = ctx.createGain(), upG = ctx.createGain();
     let filter: BiquadFilterNode | null = null;
     try { filter = ctx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = tensionCutoff(1); filter.Q.value = 0.9; } catch { filter = null; }
-    try { out.gain.value = 0; out.gain.setValueAtTime(0, when); out.gain.linearRampToValueAtTime(0.8, when + fadeIn); } catch { /* fake */ }
+    try { out.gain.value = 0; out.gain.setValueAtTime(0, when); out.gain.linearRampToValueAtTime(0.65, when + fadeIn); } catch { /* fake */ }
     try { lowG.gain.value = 1; upG.gain.value = 0; } catch { /* fake */ }
     if (filter) { lowG.connect(filter); upG.connect(filter); filter.connect(out); } else { lowG.connect(out); upG.connect(out); }
     out.connect(dest);
@@ -232,7 +232,7 @@ export function setTension(bed: TensionBed, round: number, at: number) {
   const target = (p: AudioParam | undefined, v: number, tc: number) => { if (!p) return; try { p.setTargetAtTime(v, at, tc); } catch { try { p.value = v; } catch { /* fake */ } } };
   target(bed.filter?.frequency, tensionCutoff(round), 0.12);
   target(bed.upper.gain, tensionUpper(round) * 0.9, 0.15);
-  target(bed.out.gain, 0.8 + 0.2 * chainTension(round), 0.15);
+  target(bed.out.gain, 0.65 + 0.25 * chainTension(round), 0.15);
 }
 
 /* ---------------- the controller ---------------- */
