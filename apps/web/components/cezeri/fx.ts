@@ -21,6 +21,17 @@
 
 import { CZ_BOUNDS, CZ_HUB_R, CZ_RIM_R, CZ_RINGS, cezeriBoardLayout, polar, sliceAngle, symbolCircle, type CzLayout, type CzPoint } from './geometry';
 
+// Canvas `ctx.font` does not resolve CSS custom properties, so read the Barlow family from the page once.
+let fontFamily: string | null = null;
+function canvasFontFamily(): string {
+  if (fontFamily === null) {
+    const fam = typeof document !== 'undefined' ? getComputedStyle(document.body).getPropertyValue('--font-barlow').trim() : '';
+    fontFamily = `${fam ? `${fam}, ` : ''}'Arial Narrow', system-ui, sans-serif`;
+  }
+  return fontFamily;
+}
+
+
 export type CezeriMood = 'base' | 'feature' | 'bigwin';
 export type CezeriFxPos = readonly [ring: number, slice: number];
 export interface CezeriFxOptions {
@@ -683,7 +694,7 @@ export class CezeriFx {
         const s = tx.size * k * (t < 0.18 ? 0.5 + (t / 0.18) * 0.75 : 1.25 - (t - 0.18) * 0.3);
         ctx.save();
         ctx.globalAlpha = t < 0.7 ? 1 : 1 - (t - 0.7) / 0.3;
-        ctx.font = `600 ${Math.round(s)}px var(--font-barlow), 'Arial Narrow', system-ui, sans-serif`;
+        ctx.font = `600 ${Math.round(s)}px ${canvasFontFamily()}`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         const x = X(tx.x), y = Y(tx.y) - easeOut(t) * 60 * k;
