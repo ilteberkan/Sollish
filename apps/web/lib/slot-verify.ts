@@ -1,6 +1,6 @@
 /** Browser-side verification for /verify and /replay: recompute a server round from its revealed seed with the same
  * protocol engine and compare. Pure and testable; the network part lives in rgs-client.ts. */
-import { EBRU_ENGINE_ID, SLOT_GAMES, isClientSeed, isSlotNonce, slotGame, verifySlotRound, type EbruGrid, type EbruRound, type EbruStains, type SlotRoundSummary, type SlotVerifyResult } from '@sollish/protocol';
+import { CEZERI_ENGINE_ID, EBRU_ENGINE_ID, SLOT_GAMES, isClientSeed, isSlotNonce, slotGame, verifySlotRound, type CezeriRound, type EbruGrid, type EbruRound, type EbruStains, type SlotRoundSummary, type SlotVerifyResult } from '@sollish/protocol';
 import type { RemoteHistoryRow, RemoteReplay } from './rgs-client';
 
 export interface VerifyFormInput {
@@ -75,6 +75,7 @@ export function replayFrames(round: SlotRoundSummary): ReplayFrame[] {
   const spins = (round as unknown as { spins?: SpinLike[] }).spins;
   if (!Array.isArray(spins)) return [];
   if (round.engine === EBRU_ENGINE_ID) return ebruFrames(round as unknown as EbruRound);
+  if (round.engine === CEZERI_ENGINE_ID) return cezeriFrames(round as unknown as CezeriRound);
   const frames: ReplayFrame[] = [];
   spins.forEach((spin, s) => spin.steps.forEach((step, t) => frames.push({
     spin: s, kind: spin.kind, step: t, steps: spin.steps.length, grid: step.grid, winIds: step.wins.flatMap(w => w.cells), stepHundredths: step.stepHundredths,
@@ -107,6 +108,31 @@ function ebruFrames(round: EbruRound): ReplayFrame[] {
       grid: frame.grid.map((column, c) => column.map((cell, r) => { const stain = frame.stains?.[c]?.[r] ?? 0; return stain > 0 ? { id: cell.id, symbol: cell.symbol, stain } : { id: cell.id, symbol: cell.symbol }; })),
       winIds: frame.winIds, stepHundredths: frame.stepHundredths, spinWinHundredths: spin.winHundredths, totalAfterHundredths: spin.totalHundredthsAfter,
       last: s === round.spins.length - 1 && t === raw.length - 1,
+    }));
+  });
+  return frames;
+}
+
+/** Cezeri (cezeri-gears-1): one frame per rotation (the board after the rings stopped, held slices included) with that
+ * rotation's new spoke wins highlighted, plus the final board when the buy guarantee forged vessels. The grid is
+ * column = spoke (slice 0..11), row = ring 0..3 (inner on top), so a spoke win reads as a vertical run; id = ring × 12 + slice. */
+function cezeriFrames(round: CezeriRound): ReplayFrame[] {
+  type Raw = { board: string[][]; winIds: number[]; stepHundredths: number };
+  const frames: ReplayFrame[] = [];
+  const grid = (board: string[][]): ReplayCell[][] => Array.from({ length: 12 }, (_, slice) => board.map((ring, r) => ({ id: r * 12 + slice, symbol: ring[slice]! })));
+  round.spins.forEach((spin, s) => {
+    const raw: Raw[] = [];
+    for (const step of spin.steps) {
+      if (step.type === 'rotate') raw.push({ board: step.board, winIds: [], stepHundredths: 0 });
+      else if (step.type === 'win' && raw.length) {
+        const last = raw[raw.length - 1]!;
+        for (const [r, slice] of step.cells) if (!last.winIds.includes(r * 12 + slice)) last.winIds.push(r * 12 + slice);
+        last.stepHundredths += step.winHundredths;
+      } else if (step.type === 'scatter' && step.forged.length) raw.push({ board: spin.board, winIds: [], stepHundredths: step.payHundredths });
+    }
+    raw.forEach((frame, t) => frames.push({
+      spin: s, kind: spin.kind, step: t, steps: raw.length, grid: grid(frame.board), winIds: frame.winIds, stepHundredths: frame.stepHundredths,
+      spinWinHundredths: spin.winHundredths, totalAfterHundredths: spin.totalHundredthsAfter, last: s === round.spins.length - 1 && t === raw.length - 1,
     }));
   });
   return frames;

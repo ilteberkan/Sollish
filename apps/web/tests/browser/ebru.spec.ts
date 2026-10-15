@@ -346,11 +346,17 @@ test('autoplay stop button ends the run after the current round', async ({ page 
   const panel = page.getByRole('dialog', { name: 'Otomatik oyun' });
   await panel.getByRole('textbox', { name: /Kayıp limiti/ }).fill('500');
   await panel.getByRole('button', { name: /Başlat · 10 tur/ }).click();
-  await page.getByRole('button', { name: /Otomatik oyunu durdur/ }).click();
+  const stopButton = page.getByRole('button', { name: /Otomatik oyunu durdur/ });
+  await stopButton.waitFor();
+  const before = await rows(page).count();
+  await stopButton.click();
   await expect(page.getByTestId('ebru-toast')).toContainText('Otomatik oyun durdu', { timeout: 20_000 });
   await expect(spin(page)).toBeEnabled({ timeout: 20_000 });
+  // The round in progress when Stop landed still plays out and settles once; no new round starts after it. (A turbo
+  // no-win round is ~2 s, so on a slow headless page one more round may finish between reading the count and the click.)
   const done = await rows(page).count();
-  expect(done).toBeLessThanOrEqual(1);
+  expect(done).toBeGreaterThanOrEqual(before);
+  expect(done).toBeLessThanOrEqual(before + 2);
   await page.waitForTimeout(2500);
   await expect(rows(page)).toHaveCount(done);
   await expect(balance(page)).toContainText(formatAmount(START - 1000 * done));

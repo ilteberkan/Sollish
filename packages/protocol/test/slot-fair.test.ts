@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHash, createHmac } from "node:crypto";
 import {
-  CASCADE_SLOT, EBRU_SLOT, SLOT_GAMES, TARHUN_SLOT, deriveSeedHex, playEbruRound, isClientSeed, playCascade2Round, playStormRound, slotBytesToHex, slotGame, slotHexToBytes,
+  CASCADE_SLOT, CEZERI_SLOT, EBRU_SLOT, playCezeriRound, SLOT_GAMES, TARHUN_SLOT, deriveSeedHex, playEbruRound, isClientSeed, playCascade2Round, playStormRound, slotBytesToHex, slotGame, slotHexToBytes,
   slotNonceMessage, slotReceiptMessage, slotReplayMessage, slotServerSeedHash, verifySlotRound,
 } from "../src/index";
 
@@ -41,7 +41,7 @@ test("inputs are strict: seed length, client seed alphabet, nonce range, hex cas
 });
 
 test("registry: own ids only, engines and costs are the protocol functions", () => {
-  assert.deepEqual(Object.keys(SLOT_GAMES).sort(), ["cascade", "ebru", "tarhun"]);
+  assert.deepEqual(Object.keys(SLOT_GAMES).sort(), ["cascade", "cezeri", "ebru", "tarhun"]);
   for (const id of ["__proto__", "constructor", "toString", "Cascade", "", "cascade/x"]) assert.equal(slotGame(id), null);
   assert.equal(slotGame("cascade"), CASCADE_SLOT); assert.equal(slotGame("tarhun"), TARHUN_SLOT); assert.equal(slotGame("ebru"), EBRU_SLOT);
   const seed = "0123456789abcdef0123456789abcdef";
@@ -55,6 +55,11 @@ test("registry: own ids only, engines and costs are the protocol functions", () 
     assert.equal(game.maxMultiplier, game === EBRU_SLOT ? 10_000 : 5000);
   }
   assert.equal(EBRU_SLOT.engineId, "ebru-ink-1");
+  assert.equal(slotGame("cezeri"), CEZERI_SLOT); assert.equal(CEZERI_SLOT.engineId, "cezeri-gears-1"); assert.equal(CEZERI_SLOT.maxMultiplier, 10_000);
+  assert.deepEqual(CEZERI_SLOT.play(seed, 1000, "buy"), playCezeriRound(seed, 1000, "buy"));
+  assert.equal(CEZERI_SLOT.cost(1000, "standard"), 1000); assert.equal(CEZERI_SLOT.cost(1000, "ante"), 1250); assert.equal(CEZERI_SLOT.cost(1000, "buy"), 100_000);
+  assert.throws(() => CEZERI_SLOT.cost(1001, "standard"), RangeError);
+  for (const mode of CEZERI_SLOT.modes) assert.ok(CEZERI_SLOT.rtp[mode]!.rtp > 0.9 && CEZERI_SLOT.rtp[mode]!.rtp < 1);
 });
 
 test("verifySlotRound recomputes hash, seed, engine round, payout, total and cost and flags each mismatch", async () => {

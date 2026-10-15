@@ -8,7 +8,7 @@ import { verifyForm, verifyHistoryRow, type RowStatus, type VerifyOutcome } from
 import styles from './rgs-pages.module.css';
 
 const api = configuredApi(process.env.NEXT_PUBLIC_API_URL);
-const GAME_NAMES: Record<string, string> = { cascade: 'Candy Cascade', tarhun: 'Tarhun: Fırtına Tahtı', ebru: 'Ebru: Mürekkep Bahçesi' };
+const GAME_NAMES: Record<string, string> = { cascade: 'Candy Cascade', tarhun: 'Tarhun: Fırtına Tahtı', ebru: 'Ebru: Mürekkep Bahçesi', cezeri: 'Cezeri: Zamanın Çarkları' };
 const MODE_NAMES: Record<string, string> = { standard: 'Standart', ante: 'Şans ×2', buy: 'Bonus satın alma' };
 const STATUS_TEXT: Record<RowStatus | 'invalid', string> = { match: 'Eşleşti', mismatch: 'Uyuşmuyor', pending: 'Tohum açıklanmadı', invalid: 'Geçersiz giriş' };
 const times = (hundredths: number) => (hundredths / 100).toFixed(2).replace('.', ',');

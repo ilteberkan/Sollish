@@ -129,7 +129,7 @@ const SPARK = [88, 91, 93, 95, 98];
  * Form: A (4 bars: the Asena call hook on the kopuz with its drone string, a star bell on every hook bar, the throat
  *       drone on E alone with its overtone whistle, a single kam davulu stroke per bar) · A' (4 bars: the kıl kopuz sings
  *       the low answer with the Hüseyni C#, kopuz ostinato, soft bass) · B (4 bars: the sky opens — ney high over the
- *       aurora pad and a wordless female choir, star bells on the changes, the drum's heartbeat; the C natural shadow
+ *       aurora pad, star bells on the changes, the drum's heartbeat; the C natural shadow
  *       in bar 12) · C (2 bars: breakdown — the deep kargyraa drone with twinkling stars, a kopuz turn into the hook).
  * ===================================================================================== */
 
@@ -177,7 +177,7 @@ const baseFx: FxEvent[] = [
 export const BASE_THEME: Score = {
   id: 'asena-base', bpm: 80, beatsPerBar: 4, bars: 14, swing: 0.5, loop: true, tail: 3.5, reverb: 'hall', reverbDb: -4,
   target: { lufs: -15, measure: 'integrated' },
-  about: 'E Hüseyni (E F# G A B C# D) on the E minor pentatonic, 80 BPM, 14-bar seamless loop (42 s). A: the "Asena call" hook (E–G–B–D → E, then the Hüseyni fall G–F#–E) on a kopuz/dombra-like lute with its drone string and dombra tremolo, a star bell on every hook bar, a throat-singing drone on E whose overtone whistle walks the drone\'s harmonics, one kam davulu stroke per bar · A\': the kıl-kopuz-like bowed fiddle sings the low answer with the natural sixth C#, kopuz ostinato, soft bass · B: the sky opens — ney over an aurora pad and a wordless female choir, star bells on the changes, the drum heartbeat, a C natural (the Kürdi shadow) in the last bar · C: breakdown on the deep kargyraa drone with twinkling stars, a kopuz turn into the hook.',
+  about: 'E Hüseyni (E F# G A B C# D) on the E minor pentatonic, 80 BPM, 14-bar seamless loop (42 s). A: the "Asena call" hook (E–G–B–D → E, then the Hüseyni fall G–F#–E) on a kopuz/dombra-like lute with its drone string and dombra tremolo, a star bell on every hook bar, a throat-singing drone on E whose overtone whistle walks the drone\'s harmonics, one kam davulu stroke per bar · A\': the kıl-kopuz-like bowed fiddle sings the low answer with the natural sixth C#, kopuz ostinato, soft bass · B: the sky opens — ney over an aurora pad, star bells on the changes, the drum heartbeat, a C natural (the Kürdi shadow) in the last bar · C: breakdown on the deep kargyraa drone with twinkling stars, a kopuz turn into the hook.',
   tracks: [
     { id: 'kopuz', kind: 'pitched', voice: 'kopuz', level: -20, send: 0.3, pan: 0.06, bright: 1, notes: [...tremolo(melody(ASENA_HOOK, 0)), ...melody(BASE_TURN, 13)] },
     { id: 'bells', kind: 'pitched', voice: 'starBell', level: -27, send: 0.5, pan: 0.3, bright: 1.2, notes: [
@@ -191,7 +191,6 @@ export const BASE_THEME: Score = {
     { id: 'drone', kind: 'pitched', voice: 'khoomei', level: -24, send: 0.32, pan: -0.05, bright: 1, notes: drone(40, 0, 48, 8, 0.8) },
     { id: 'kargyraa', kind: 'pitched', voice: 'kargyraa', level: -24.5, send: 0.3, pan: 0.05, notes: drone(40, 48, 56, 8, 0.85) },
     { id: 'aurora', kind: 'pad', voice: 'padAurora', level: -26, send: 0.5, width: 1.6, chords: pads(within(BASE_CHORDS, 8, 14), 4, 59, 79, 0.7) },
-    { id: 'choir', kind: 'pad', voice: 'padChoir', level: -27, send: 0.5, width: 1.5, chords: pads(within(BASE_CHORDS, 8, 12), 3, 57, 74, 0.6) },
     { id: 'bass', kind: 'pitched', voice: 'bass', level: -27, send: 0.04, notes: bassLine(within(BASE_CHORDS, 4, 12), 'long', 0.7, 40, 28, 43) },
     { id: 'kam', kind: 'kit', level: -25, send: 0.22, width: 1.3, hits: baseKam },
     { id: 'fx', kind: 'fx', level: -30, send: 0.4, width: 1.5, fx: baseFx },

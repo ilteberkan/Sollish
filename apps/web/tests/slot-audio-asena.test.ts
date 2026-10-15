@@ -71,7 +71,7 @@ test('base theme: E Hüseyni, the Asena call hook = the Kurt Başı motif, C# in
   assert.ok(melody(BASE_ANSWER).some(n => n.n % 12 === 1), 'answer has the natural sixth C#');
   const base = ASENA_SCORES.base;
   const voices = new Set(base.tracks.flatMap(t => ('voice' in t ? [t.voice] : t.kind === 'kit' ? t.hits.map(h => h.k) : t.fx.map(f => f.k))));
-  for (const v of ['kopuz', 'kilKopuz', 'khoomei', 'kargyraa', 'starBell', 'ney', 'padAurora', 'padChoir', 'kamDum', 'kamTek', 'kamJingle']) assert.ok(voices.has(v as never), v);
+  for (const v of ['kopuz', 'kilKopuz', 'khoomei', 'kargyraa', 'starBell', 'ney', 'padAurora', 'kamDum', 'kamTek', 'kamJingle']) assert.ok(voices.has(v as never), v);
   const ney = base.tracks.find(t => t.id === 'ney'); assert.ok(ney && ney.kind === 'pitched');
   assert.ok(ney.notes.some(n => n.n % 12 === 0) && ney.notes.some(n => n.n % 12 === 1), 'B section: C# and the C natural shadow');
   const drone = base.tracks.find(t => t.id === 'drone'); assert.ok(drone && drone.kind === 'pitched');
@@ -119,11 +119,12 @@ test('effects: every Asena event exists, unique ids, variation rules, constellat
   for (const id of required) assert.ok(ids.includes(id), id);
   for (const d of ASENA_SFX) {
     if (d.late) assert.ok(d.variations >= 1 && d.variations <= 2, d.id);
-    else if (d.id.startsWith('ignite-') || d.id.startsWith('mount-') || d.id === 'howl-great') assert.equal(d.variations, 2, d.id);
+    else if (d.id.startsWith('ignite-')) assert.equal(d.variations, 1, d.id);
+    else if (d.id.startsWith('mount-') || d.id === 'howl-great' || d.id === 'howl') assert.equal(d.variations, 2, d.id);
     else assert.ok(d.variations >= 3 && d.variations <= 4, `${d.id}: frequent effects have 3–4 variations`);
   }
   const core = ASENA_SFX.filter(d => d.core).map(d => d.id);
-  for (const id of ['spin', 'land', 'burst-s', 'burst-m', 'fall', 'node-lo', 'node', 'node-hi', 'howl', 'paw', 'trail', 'click', 'coin', ...ASENA_TEMPLATE_ORDER.map(t => `ignite-${t}`)]) assert.ok(core.includes(id), id);
+  for (const id of ['spin', 'land', 'burst-s', 'burst-m', 'fall', 'node-lo', 'node', 'node-hi', 'howl', 'paw', 'trail', 'click', 'coin', 'ignite-hilal', 'ignite-yay', 'ignite-at', 'ignite-kartal']) assert.ok(core.includes(id), id);
   assert.ok(!ASENA_SFX.some(d => d.core && d.late));
   assert.equal(SFX_CATALOGS.asena, ASENA_SFX);
   for (const line of ASENA_VOICE_LINES) { const p = ASENA_PLACEHOLDER[line]; if (p) assert.ok(ids.includes(p), p); }
@@ -163,7 +164,7 @@ test('constellation trace follows the real art plan: one rising motif note per l
           assert.ok(E_PENTA.has(pcOfSemi(n.semitones)), 'every star on the ladder');
           const clip = { 'node-lo': -12, node: 0, 'node-hi': 12 }[n.clip];
           assert.ok(Math.abs(n.semitones - clip) <= 6 && Math.abs(2 ** ((n.semitones - clip) / 12) - n.rate) < 1e-9, 'nearest clip, at most half an octave');
-          assert.ok(n.pan >= -1 && n.pan <= 1 && n.gain > 0 && n.gain <= 1);
+          assert.ok(n.pan >= -1 && n.pan <= 1 && n.gain > 0 && n.gain <= 0.56);
         }
         e.notes.slice(1).forEach(n => assert.ok(n.semitones < e.notes[0]!.semitones, 'harmony below the lead'));
       }
@@ -278,7 +279,7 @@ test('renderer with the Asena voices (inline): a one-bar loop masters to target 
 });
 
 test('constellation layers and frequent effects render with their variations under the ceiling', async () => {
-  const defs = ASENA_SFX.filter(d => ['node', 'howl', 'paw', 'land', 'ignite-hilal'].includes(d.id));
+  const defs = ASENA_SFX.filter(d => ['node', 'howl', 'paw', 'land'].includes(d.id));
   const clips = await renderSfx(defs, { ...createRenderEnv(SR, 1e9), offline: false });
   for (const d of defs) {
     const list = clips.get(d.id)!;

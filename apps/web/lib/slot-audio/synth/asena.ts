@@ -275,7 +275,7 @@ export function paw(ctx: VoiceCtx, vel: number, crunch = 1): Float32Array {
 export function starBell(ctx: VoiceCtx, freq: number, vel: number, length = 1): Float32Array {
   const s = clampNum((880 / freq) ** 0.3, 0.6, 1.5) * clampNum(length, 0.15, 2.5);
   const beat = 1 + (0.6 + ctx.rng() * 0.6) / freq;
-  const out = modal(ctx, freq, [1, beat, 2, 3.01, 4.07, 5.43], [0.75, 0.45, 0.3, 0.1, 0.07, 0.04], [3.2 * s, 2.9 * s, 1.6 * s, 0.85 * s, 0.5 * s, 0.32 * s], vel, 10, { attack: 0.0004, maxLen: 5 });
+  const out = modal(ctx, freq, [1, beat, 2, 3.01, 4.07, 5.43], [0.75, 0.45, 0.3, 0.1, 0.07, 0.04], [2.5 * s, 2.2 * s, 1.3 * s, 0.75 * s, 0.45 * s, 0.3 * s], vel, 10, { attack: 0.0004, maxLen: 4 });
   const glintF = freq * 6.8;
   if (glintF < 9500) mix(out, modal(ctx, glintF, [1], [0.18], [0.05], vel, 10, { attack: 0.0002 }), 0, 1);
   return trimTail(out);
@@ -286,29 +286,35 @@ export function starBell(ctx: VoiceCtx, freq: number, vel: number, length = 1): 
  * own very slow level ripple and position, so the chord moves like a light curtain; a shimmer layer (octave and twelfth)
  * fades in and out on its own slow cycle. Render at half rate (content < 4 kHz).
  */
-export function auroraChord(ctx: VoiceCtx, freqs: number[], vel: number, held: number, opts: { attack?: number; release?: number; shimmer?: number } = {}): Stereo {
+export function auroraChord(ctx: VoiceCtx, freqs: number[], vel: number, held: number, opts: { attack?: number; release?: number; shimmer?: number; voices?: number } = {}): Stereo {
   const { sr, rng } = ctx;
   const attack = opts.attack ?? Math.min(1.6, Math.max(0.2, held * 0.4)), release = opts.release ?? 1.4, shimmer = opts.shimmer ?? 1;
   const len = Math.ceil((held + release * 2.2) * sr), out = stereo(len);
-  const norm = 0.42 / Math.sqrt(Math.max(1, freqs.length * 3));
+  const voices = Math.max(1, Math.min(3, Math.round(opts.voices ?? 3)));
+  const norm = 0.42 / Math.sqrt(Math.max(1, freqs.length * voices));
   const aN = Math.max(1, Math.round(attack * sr)), heldN = Math.floor(held * sr), relD = t60Factor(release * 2.2, sr);
   for (const freq of freqs) {
-    for (let v = 0; v < 3; v++) {
-      const f = freq * 2 ** (((v - 1) * 7 + (rng() - 0.5) * 3) / 1200);
-      const side = (v - 1) * 0.7 + (rng() - 0.5) * 0.3, gl = Math.sqrt(0.5 * (1 - side)), gr = Math.sqrt(0.5 * (1 + side));
+    for (let v = 0; v < voices; v++) {
+      const f = freq * 2 ** (((voices === 1 ? 0 : (v / (voices - 1)) * 2 - 1) * 7 + (rng() - 0.5) * 3) / 1200);
+      const side = (voices === 1 ? 0 : ((v / (voices - 1)) * 2 - 1) * 0.7) + (rng() - 0.5) * 0.3, gl = Math.sqrt(0.5 * (1 - side)), gr = Math.sqrt(0.5 * (1 + side));
       let p = rng(), lfo = rng(), sh = rng(), ripple = 1, glow = 0;
       const lRate = (0.07 + rng() * 0.12) / sr, sRate = (0.05 + rng() * 0.07) / sr, inc = f / sr;
       const h2 = f * 2 < sr * 0.45 ? 0.22 : 0, h3 = f * 3 < sr * 0.45 ? 0.1 : 0, s2 = f * 2 < sr * 0.45 ? 0.16 * shimmer : 0, s3 = f * 3 < sr * 0.45 ? 0.08 * shimmer : 0;
-      let relG = 1;
+      const relD64 = relD ** 64, L = out.l, R = out.r;
+      let relG = 1, k2 = 0, k3 = 0, amp = 0;
       for (let i = 0; i < len; i++) {
-        // the slow ripples run at control rate; the 2nd and 3rd partials come from sin/cos of the fundamental (Chebyshev)
-        if ((i & 63) === 0) { ripple = 0.65 + 0.35 * sinCycles(lfo); const g = Math.max(0, sinCycles(sh)); glow = g * g; lfo += 64 * lRate; sh += 64 * sRate; }
-        const sn = sinCycles(p), cs = sinCycles(p + 0.25), sin2 = 2 * sn * cs, sin3 = sn * (3 - 4 * sn * sn);
-        const y = sn + (h2 + glow * s2) * sin2 + (h3 + glow * s3) * sin3;
-        const env = i < aN ? Math.sin((i / aN) * Math.PI * 0.5) ** 2 : 1;
-        if (i >= heldN) relG *= relD;
-        const g = y * ripple * env * relG * vel * norm;
-        out.l[i]! += g * gl; out.r[i]! += g * gr;
+        // the slow ripples and the envelope run at control rate (64 samples); the 2nd and 3rd partials come from sin/cos of
+        // the fundamental (Chebyshev), so each voice costs two table lookups per sample
+        if ((i & 63) === 0) {
+          const g = Math.max(0, sinCycles(sh)); glow = g * g; lfo += 64 * lRate; sh += 64 * sRate;
+          ripple = 0.65 + 0.35 * sinCycles(lfo);
+          if (i >= heldN) { relG *= relD64; if (relG < 1e-4) break; }
+          const env = i < aN ? Math.sin((i / aN) * Math.PI * 0.5) ** 2 : 1;
+          amp = ripple * env * relG * vel * norm; k2 = h2 + glow * s2; k3 = h3 + glow * s3;
+        }
+        const sn = sinCycles(p), cs = sinCycles(p + 0.25);
+        const y = (sn + k2 * 2 * sn * cs + k3 * sn * (3 - 4 * sn * sn)) * amp;
+        L[i]! += y * gl; R[i]! += y * gr;
         p += inc; if (p >= 1) p -= 1;
       }
     }

@@ -30,11 +30,12 @@ function st(dst: Stereo, src: Stereo, at: number, gain: number, pan = 0, width =
 const SPARKS = [88, 91, 93, 95, 98];
 /** Wordless choir chord, synthesised at half rate and interpolated up into `out`. */
 function choirInto(ctx: VoiceCtx, out: Stereo, notes: number[], at: number, vel: number, held: number, gain: number, attack: number, release = 0.8, vowel: 'ah' | 'oo' | 'oh' = 'ah') {
-  const low = choirChord({ sr: ctx.sr / 2, rng: ctx.rng }, notes.map(hz), vel, held, { attack, release, vowel, voices: 3 });
+  // two voices per note: effects are short and sit over the music, the full three-voice ensemble is a score detail
+  const low = choirChord({ sr: ctx.sr / 2, rng: ctx.rng }, notes.map(hz), vel, held, { attack, release, vowel, voices: 2 });
   addStereoUpsampled(out, low, 2, Math.round(at), gain);
 }
 function auroraInto(ctx: VoiceCtx, out: Stereo, notes: number[], at: number, vel: number, held: number, gain: number, attack = 0.2, release = 0.9) {
-  addStereoUpsampled(out, auroraChord({ sr: ctx.sr / 2, rng: ctx.rng }, notes.map(hz), vel, held, { attack, release }), 2, Math.round(at), gain);
+  addStereoUpsampled(out, auroraChord({ sr: ctx.sr / 2, rng: ctx.rng }, notes.map(hz), vel, held, { attack, release, voices: 2 }), 2, Math.round(at), gain);
 }
 /** Kopuz notes [midi, start s, held s, velocity]. */
 function plucks(ctx: VoiceCtx, out: Stereo, notes: [number, number, number, number][], gain: number, bright = 1, pan = 0, drone = false) {
@@ -88,12 +89,12 @@ const IGNITE: Record<AsenaTemplateId, { chord: number[]; seconds: number; level:
     bells(ctx, out, [[76, 0, 0.8], [83, 0.04, 0.75], [88, 0.08, 0.85], [95, 0.12, 0.8, 1.3]], 0.48, 0.8);
     mono(out, kamDavul(ctx, 0.75, 'dum'), 0, 0.45);
     st(out, sparkles(ctx, 0.8, 34, SPARKS, 0.55, 'decay'), 0.05 * ctx.sr, 0.5, 0, 1.5);
-    if (v) choirInto(ctx, out, [64, 71, 76], 0, 0.6, 0.5, 0.35, 0.05, 0.7);
+    if (v) auroraInto(ctx, out, [64, 71, 76], 0, 0.6, 0.5, 0.4, 0.05, 0.7);
   } },
   // the tree of life: the deep drone rises from the root, a quartal choir crown E–A–D–G–B, bells
   'hayat-agaci': { chord: [52, 57, 62, 67, 71], seconds: 2.8, level: 'major', build: (ctx, out, v) => {
     mono(out, khoomeiFast(ctx, hz(40), 0.85, 1.6, { harmonics: [8, 12, 16], step: 0.45 }), 0, 0.5);
-    choirInto(ctx, out, [64, 69, 74, 79, 83], 0.02 * ctx.sr, 0.8, 0.9, 0.5, 0.08, 0.9);
+    auroraInto(ctx, out, [64, 69, 74, 79], 0.02 * ctx.sr, 0.85, 0.9, 0.6, 0.06, 0.9);
     bells(ctx, out, [[76, 0, 0.75], [81, 0.05, 0.7], [86, 0.1, 0.75], [91, 0.15, 0.8], [95, 0.2, 0.85, 1.4]], 0.45, 0.7);
     mono(out, kamDavul(ctx, 0.8, 'dum'), 0, 0.45);
     st(out, sparkles(ctx, 1, 36, SPARKS, 0.55, 'decay'), 0.05 * ctx.sr, 0.5, 0, 1.5);
@@ -103,8 +104,8 @@ const IGNITE: Record<AsenaTemplateId, { chord: number[]; seconds: number; level:
   'kurt-basi': { chord: [52, 55, 59, 62, 64], seconds: 3, level: 'hero', build: (ctx, out, v) => {
     mono(out, kamDavul(ctx, 1, 'dum'), 0, 0.55);
     mono(out, khoomeiFast(ctx, hz(40), 0.9, 1.8, { harmonics: KARGYRAA_HARMONICS, growl: 0.8 }), 0, 0.45);
-    choirInto(ctx, out, [52, 59, 64, 67, 71, 74], 0.02 * ctx.sr, 0.95, 1.1, 0.55, 0.06, 1);
-    auroraInto(ctx, out, [64, 71, 76, 79], 0, 0.8, 1.2, 0.45, 0.1, 1);
+    choirInto(ctx, out, [52, 59, 67, 74], 0.02 * ctx.sr, 0.95, 1.1, 0.55, 0.06, 1);
+    auroraInto(ctx, out, [64, 71, 76], 0, 0.8, 1.2, 0.45, 0.1, 1);
     bells(ctx, out, [[100, 0.02, 0.6], [98, 0.07, 0.65], [95, 0.12, 0.7], [91, 0.17, 0.7], [88, 0.22, 0.8], [83, 0.27, 0.8], [76, 0.32, 0.85, 1.5]], 0.45, 0.8);
     plucks(ctx, out, [[40, 0, 1.2, 0.95], [52, 0.02, 1.2, 0.85]], 0.45, 1, 0, true);
     st(out, sparkles(ctx, 1.4, 40, SPARKS, 0.6, 'decay'), 0.03 * ctx.sr, 0.55, 0, 1.6);
@@ -159,7 +160,7 @@ export const ASENA_SFX: SfxDef[] = [
   ...(['burst-s', 'burst-m', 'burst-l'] as const).map((id, size): SfxDef => ({
     // a cluster bursts into stars: a star-bell chord bloom on E, a spray of star dust and a puff of air; larger bursts add
     // a drum stroke and a choir breath (the runtime pitches it by symbol along the ladder)
-    id, variations: 3, level: size === 2 ? 'major' : size === 1 ? 'medium' : 'light', send: 0.3 + size * 0.04, jitter: [25, 1], core: true,
+    id, variations: 3, level: size === 2 ? 'major' : size === 1 ? 'medium' : 'light', send: 0.3 + size * 0.04, jitter: [25, 1], core: size < 2,
     build: (ctx, v) => {
       const out = sized(ctx, 1.4 + size * 0.4);
       const chord = [[76, 83], [76, 79, 83], [71, 76, 79, 83, 86]][size]!.map(n => n + (v === 1 ? 12 : 0));
@@ -167,7 +168,7 @@ export const ASENA_SFX: SfxDef[] = [
       st(out, sparkles(ctx, 0.4 + size * 0.2, 40 + size * 30, SPARKS, 0.6, 'decay'), 0, 0.6, 0, 1.4);
       st(out, whoosh(ctx, 0.25 + size * 0.08, 900, 5000, 0.4, -0.3, 0.3, 0.15), 0, 0.35);
       if (size >= 1) mono(out, kamDavul(ctx, 0.5 + size * 0.2, 'tek'), 0, 0.35);
-      if (size === 2) { mono(out, kamDavul(ctx, 0.7, 'dum'), 0, 0.4); choirInto(ctx, out, [64, 71, 76], 0, 0.6, 0.35, 0.3, 0.02, 0.6, 'oo'); }
+      if (size === 2) { mono(out, kamDavul(ctx, 0.7, 'dum'), 0, 0.4); auroraInto(ctx, out, [64, 71, 76], 0, 0.6, 0.35, 0.35, 0.02, 0.6); }
       return out;
     },
   })),
@@ -186,8 +187,8 @@ export const ASENA_SFX: SfxDef[] = [
     // breath of star dust (rendered at E4 / E5 / E6; the runtime plays each node at its motif pitch)
     id, variations: 3, level: 'medium', send: 0.38, jitter: [4, 0.6], core: true,
     build: (ctx, v) => {
-      const out = sized(ctx, 2.2);
-      mono(out, starBell(ctx, hz(n), 0.9, 1.1 + v * 0.1), 0, 0.7);
+      const out = sized(ctx, 1.7);
+      mono(out, starBell(ctx, hz(n), 0.9, 0.9 + v * 0.1), 0, 0.7);
       mono(out, starBell(ctx, hz(n + 12), 0.45, 0.6), 0.004 * ctx.sr, 0.25, v - 1);
       mono(out, kopuz(ctx, hz(n), 0.55, 0.2, 1.3, { ring: 0.4 }), 0.002 * ctx.sr, 0.3, -0.15);
       st(out, sparkles(ctx, 0.3, 26, SPARKS, 0.45, 'decay'), 0.01 * ctx.sr, 0.4, 0, 1.2);
@@ -195,16 +196,18 @@ export const ASENA_SFX: SfxDef[] = [
     },
   })),
   ...ASENA_TEMPLATE_ORDER.map((t): SfxDef => ({
-    // the constellation ignites: the template's own bloom (see IGNITE)
-    id: `ignite-${t}`, variations: 2, level: IGNITE[t].level, send: 0.4, jitter: [5, 0.5], core: true,
+    // the constellation ignites: the template's own bloom (see IGNITE). One variation (the runtime adds micro-variation);
+    // the two grandest blooms (Hayat Ağacı ×8, Kurt Başı ×10) render in the first background batch — until then the
+    // Kartal bloom stands in (asena-sound.ts)
+    id: `ignite-${t}`, variations: 1, level: IGNITE[t].level, send: 0.4, jitter: [5, 0.5], core: t !== 'kurt-basi' && t !== 'hayat-agaci',
     build: (ctx, v) => { const out = sized(ctx, IGNITE[t].seconds); IGNITE[t].build(ctx, out, v); return out; },
   })),
   {
     // the guiding wolf's call (synthesized vocal-formant howl on E5, scoop up, a fall), with its steppe echo
-    id: 'howl', variations: 3, level: 'major', send: 0.42, jitter: [12, 0.6], core: true,
+    id: 'howl', variations: 2, level: 'major', send: 0.42, jitter: [12, 0.6], core: true,
     build: (ctx, v) => {
-      const out = sized(ctx, 4);
-      const call = skyHowl(ctx, hz(76) * (1 + (v - 1) * 0.004), 2.1 + v * 0.15, 0.9, { from: 6 + v, fall: 9 + v, breakUp: v === 2 ? 3 : 0, growl: 0.45, breath: 0.5 });
+      const out = sized(ctx, 3.5);
+      const call = skyHowl(ctx, hz(76) * (1 + (v - 1) * 0.004), 2.1 + v * 0.15, 0.9, { from: 6 + v, fall: 9 + v, breakUp: v === 1 ? 3 : 0, growl: 0.45, breath: 0.5 });
       withEcho(ctx, out, call, 0, 0.8);
       st(out, whoosh(ctx, 1.4, 120, 700, 0.25, -0.4, 0.4, 0.4), 0, 0.3);
       return out;
@@ -215,7 +218,8 @@ export const ASENA_SFX: SfxDef[] = [
     id: 'paw', variations: 4, level: 'light', send: 0.12, jitter: [60, 1.5], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 0.25);
-      mono(out, paw(ctx, 0.9, 0.7 + v * 0.15), 0, 0.9, (v - 1.5) * 0.15);
+      // a short, peaky step: a soft knee brings it to its class without touching the sample-peak ceiling
+      mono(out, softKnee(paw(ctx, 0.9, 0.7 + v * 0.15), 8, ctx.sr, 0.08), 0, 0.9, (v - 1.5) * 0.15);
       return out;
     },
   },

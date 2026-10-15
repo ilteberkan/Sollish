@@ -118,7 +118,8 @@ export function buildCezeriTimeline(round: CezeriRound, options: CezeriTimelineO
   const d = (ms: number) => Math.round(ms * k);
   const hold = (ms: number) => (turbo ? Math.max(CEZERI_TURBO_MIN_HOLD, d(ms)) : ms);
   const screen = (ms: number) => (skipScreens ? Math.min(CEZERI_SKIP_SCREEN_HOLD, hold(ms)) : hold(ms));
-  const cap = CEZERI_MAX_WIN_MULTIPLIER * 100;
+  // the cap the engine applied: a capped round ends exactly on it (also with test tunings), otherwise the 10000x rule
+  const cap = round.capped ? round.totalHundredths : CEZERI_MAX_WIN_MULTIPLIER * 100;
   const events: CezeriEvent[] = [];
   const push = (event: CezeriEvent) => { events.push(event); };
   let t = 0, prevTotal = 0, freeNumber = 0, freeSpinsLeft = 0, shownHub = 0, topHub = 0, falconVisits = 0;
@@ -149,13 +150,15 @@ export function buildCezeriTimeline(round: CezeriRound, options: CezeriTimelineO
         }
         case 'rotate': {
           const kind: CzRotateKind = step.round === 0 ? 'first' : 'respin';
-          const plans = cezeriRotateTiming(kind, k);
+          // the machine gathers pace as the chain grows: respin k winds a little faster (down to 72 % of the plan)
+          const ringSpeed = step.round === 0 ? k : Math.round(k * Math.max(0.72, 1 - 0.035 * step.round) * 1000) / 1000;
+          const plans = cezeriRotateTiming(kind, ringSpeed);
           const timing: CezeriRingTimingInfo[] = step.rings.map(ring => {
             const plan = plans[ring.ring]!.plan;
             return { ring: ring.ring, ms: reducedMotion ? d(T.reducedRotate) : plan.total, distance: reducedMotion ? 0 : plan.distance, held: ring.held.length };
           });
           const dur = Math.max(...timing.map(x => x.ms)) + d(T.rotateTail);
-          push({ type: 'rotate', at: t, dur, spin: s, round: step.round, kind, speed: k, rings: step.rings.map(r => ({ ...r, slices: r.slices.slice(), held: r.held.slice(), pinned: r.pinned.slice() })), timing, board: step.board.map(r => r.slice()) });
+          push({ type: 'rotate', at: t, dur, spin: s, round: step.round, kind, speed: ringSpeed, rings: step.rings.map(r => ({ ...r, slices: r.slices.slice(), held: r.held.slice(), pinned: r.pinned.slice() })), timing, board: step.board.map(r => r.slice()) });
           // ring stops in settle order; vessels counted on the rings that have stopped
           const order = [...timing].sort((a, b) => a.ms - b.ms || a.ring - b.ring);
           let seen = 0;

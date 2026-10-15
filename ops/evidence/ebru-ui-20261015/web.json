@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-15",
+  "scope": "Ebru: Mürekkep Bahçesi game screen (/game/ebru) on engine ebru-ink-1 (unchanged): timeline lib/ebru-timeline.ts, controls lib/ebru-controls.ts, board/celebration/info/history in components/ebru, sound via lib/slot-audio/use-ebru-sound.ts (voice bank /audio/voice/ebru, files absent). RGS registry EBRU_SLOT; DEMO ledger ceiling 5000 -> 10000x; RGS maxExposureCents 250M -> 500M (500 DEMO x 10000).",
+  "environment": "local next dev (Turbopack) on 127.0.0.1:3007, headless Chromium 1194 via PW_CHROMIUM_PATH (software rendering, 3-15 fps). Other agents edited files concurrently (HMR recompiles). Not build:cloudflare preview, not hosted, no GitHub CI, no user visual/audio acceptance.",
+  "unit": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test", "result": "289/289 pass (incl. tests/ebru-timeline.test.ts 7, tests/ebru-controls.test.ts 6, Ebru replay frames, ledger 10000x)" },
+  "protocol": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/protocol test", "result": "302/302 pass" },
+  "typecheck": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck", "result": "clean" },
+  "realtime": [
+    { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime test:slots", "result": "pass, 32 checks (Ebru round through the registry, verified after reveal)" },
+    { "command": "node --import tsx --test test/slots.test.ts (apps/realtime)", "result": "6/6 pass" }
+  ],
+  "browser": [
+    { "command": "PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://127.0.0.1:3007 bash scripts/use-node.sh pnpm --filter @sollish/web test:browser tests/browser/ebru.spec.ts --workers=1", "result": "15/16 pass in one run (8.8 min); the failing 'autoplay stop button' check had a race in the test (fixed); rerun -g autoplay 2/2 pass" }
+  ],
+  "stub_seeds_bet_10_demo": {
+    "loss_standard_and_ante": 2654435761, "comb_win_3_passes_2.44x": 1788458060, "buyuk_11.20x": 2353484640, "mega_29.60x": 2825556777,
+    "free_low_8.37x": 1514186459, "buy_stains_to_x26_90.97x_super": 2950288811, "buy_bet_1_demo_capped_10000x": 3373783151
+  },
+  "notes": [
+    "Engine comb shifts can contain -0 (roundSine); JSON carries 0. Browser verification compares JSON so it matches; strict deepEqual in Node does not.",
+    "Ebru timeline player max step 250 ms (kit default 64 ms) so slow frames do not drift the timeline away from the wall-clock water/WAAPI comb; a hidden tab still pauses it."
+  ]
+}

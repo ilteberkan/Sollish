@@ -89,6 +89,11 @@
   .elephant { translate: 24% 2%; scale: 0.8; }
   .castle { translate: -28% 2%; scale: 0.8; }
 }
+/* corners (the game on a phone): small automata in the two top corners of the visible area, beside the logo */
+@container (max-aspect-ratio: 1 / 1) {
+  .root[data-corners] .elephant { left: calc(50% - 50cqw + 2px); top: 4px; width: 17cqw; height: calc(17cqw * 1.75); translate: none; scale: none; }
+  .root[data-corners] .castle { left: calc(50% + 50cqw - 2px - 16cqw); top: 4px; width: 16cqw; height: calc(16cqw * 1.8667); translate: none; scale: none; }
+}
 .dial, .zodiac, .falconPerch, .cymbals, .arm, .doorL, .doorR, .jet { position: absolute; will-change: transform; }
 .dial > svg, .zodiac > svg, .falconPerch > svg, .arm > svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .dial { animation: turn 60s linear infinite; }

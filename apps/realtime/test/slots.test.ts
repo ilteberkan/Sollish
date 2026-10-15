@@ -91,7 +91,7 @@ test('router without bindings: health reports the flag, default off is 503, orig
   const health = await call('/v1/slots/health', { headers: { Origin: 'http://localhost:3000' } }, on);
   assert.equal(health.status, 200); assert.equal(health.headers.get('Access-Control-Allow-Origin'), 'http://localhost:3000');
   const body = await health.json() as { signature: string; games: { id: string }[] };
-  assert.equal(body.signature, 'dev'); assert.deepEqual(body.games.map(g => g.id), ['cascade', 'tarhun', 'ebru']);
+  assert.equal(body.signature, 'dev'); assert.deepEqual(body.games.map(g => g.id), ['cascade', 'tarhun', 'ebru', 'cezeri']);
   assert.equal((await call('/v1/slots/session', { method: 'POST', headers: { Origin: 'https://evil.invalid' } }, on)).status, 403);
   assert.equal((await call('/v1/slots/session', { method: 'POST' }, on)).status, 403, 'no Origin header is refused');
   assert.equal((await call('/v1/slots/cascade/rounds?token=abc', { method: 'POST', headers: { Origin: 'http://localhost:3000' } }, on)).status, 400);

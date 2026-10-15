@@ -107,7 +107,7 @@ try {
  await start({ enabled: true, key: true, fresh: true });
  const health = await api('GET', '/v1/slots/health');
  assert.equal(health.status, 200); assert.equal(health.json.signature, 'worker'); assert.equal(health.headers.get('Access-Control-Allow-Origin'), origin);
- assert.deepEqual(health.json.games.map(g => [g.id, g.engineId]), [['cascade', 'candy-cascade-2'], ['tarhun', 'storm-throne-1'], ['ebru', 'ebru-ink-1']]); checks++;
+ assert.deepEqual(health.json.games.map(g => [g.id, g.engineId]), [['cascade', 'candy-cascade-2'], ['tarhun', 'storm-throne-1'], ['ebru', 'ebru-ink-1'], ['cezeri', 'cezeri-gears-1']]); checks++;
  // CORS and URL rules come before any session work.
  assert.equal((await api('POST', '/v1/slots/session', { body: {}, headers: { Origin: 'https://evil.invalid' } })).status, 403);
  assert.equal((await api('POST', '/v1/slots/session', { body: {}, noOrigin: true })).status, 403);
@@ -230,6 +230,14 @@ try {
  assert.deepEqual(e1.json.round, JSON.parse(JSON.stringify(SLOT_GAMES.ebru.play(e1.json.fair.seedHex, 100, 'standard')))); assert.equal(e1.json.costCents, 100);
  assert.equal(e1.json.signature.value, receiptSig(e1.json));
  report.results.responseBytes.ebruStandard = e1.text.length; checks++;
+
+ // Cezeri (cezeri-gears-1, 10000x cap): same registry, buy mode (the 3-vessel guarantee, free spins with the falcon).
+ await wait(1100);
+ const z1 = await play(s1.token, 'cezeri', roundBody({ betCents: 100, mode: 'buy' }));
+ assert.equal(z1.status, 200, z1.text); assert.equal(z1.json.engineId, 'cezeri-gears-1'); assert.equal(z1.json.costCents, 10000);
+ assert.deepEqual(z1.json.round, JSON.parse(JSON.stringify(SLOT_GAMES.cezeri.play(z1.json.fair.seedHex, 100, 'buy'))));
+ assert.equal(z1.json.signature.value, receiptSig(z1.json));
+ report.results.responseBytes.cezeriBuy = z1.text.length; checks++;
 
  // Recovery endpoint and history before the reveal.
  const lastCascade = await call('GET', '/v1/slots/cascade/rounds/last', { token: s1.token });

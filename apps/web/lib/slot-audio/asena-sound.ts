@@ -507,10 +507,12 @@ export function createAsenaSound(options: { sampleRate?: number; workerFactory?:
       const t0 = Math.max(ctx.currentTime + 0.01, opts.when ?? ctx.currentTime + 0.01);
       if (!sfx.has('node')) { fb()?.chimeRun(trace.events.length + 2, 64); return { seconds: trace.seconds, howlAt: t0 - ctx.currentTime + trace.howlAt, trace }; }
       for (const ev of trace.events) for (const n of ev.notes) play(n.clip, { when: t0 + ev.at, rate: n.rate, gain: n.gain, pan: n.pan, force: true });
-      play(`ignite-${trace.templateId}`, { when: t0 + trace.igniteAt - 0.02, force: true });
+      const igniteOpts = { when: t0 + trace.igniteAt - 0.02, gain: trace.igniteGain, force: true };
+      // the grandest blooms render in the first background batch; until then the Kartal bloom stands in, a little lower
+      if (!play(`ignite-${trace.templateId}`, igniteOpts)) play('ignite-kartal', { ...igniteOpts, rate: 2 ** (-2 / 12) });
       if (opts.howl !== false) {
         const great = trace.templateId === 'kurt-basi' && sfx.has('howl-great');
-        play(great ? 'howl-great' : 'howl', { when: t0 + trace.howlAt, rate: trace.howlRate, force: true });
+        play(great ? 'howl-great' : 'howl', { when: t0 + trace.howlAt, rate: trace.howlRate, gain: trace.howlGain, force: true });
       }
       engine.duck(3 + trace.multiplier * 0.3, (trace.howlAt + 1.6) * 1000, 120, 900);
       if (opts.voice !== false) speak(ASENA_TEMPLATE_VOICE[trace.templateId], t0 + trace.igniteAt + 0.05);

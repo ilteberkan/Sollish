@@ -1,17 +1,17 @@
 {
-  "at": "2026-10-13T17:57:05.394Z",
+  "at": "2026-10-15T18:24:55.588Z",
   "runtime": "local-workerd-sqlite-production-router",
   "node": "v24.21.0",
-  "checks": 31,
+  "checks": 32,
   "results": {
     "concurrency": {
       "twins": [
         200,
-        409
+        200
       ],
       "burst": [
         200,
-        409,
+        200,
         200,
         409,
         409,
@@ -19,11 +19,12 @@
       ]
     },
     "responseBytes": {
-      "cascadeStandard": 1889,
-      "tarhunBuy": 28230,
-      "ebruStandard": 7317
+      "cascadeStandard": 1899,
+      "tarhunBuy": 27502,
+      "ebruStandard": 3590,
+      "cezeriBuy": 50321
     },
-    "verifiedAfterReveal": 8,
+    "verifiedAfterReveal": 10,
     "rateLimit": {
       "roundBurst": [
         200,
@@ -47,7 +48,12 @@
       {
         "game": "cascade",
         "mode": "standard",
-        "rounds": 10
+        "rounds": 7
+      },
+      {
+        "game": "cezeri",
+        "mode": "buy",
+        "rounds": 1
       },
       {
         "game": "ebru",

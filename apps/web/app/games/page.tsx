@@ -9,6 +9,7 @@ const solo = [
   { title: 'Candy Cascade', href: '/game/cascade', text: 'Sekiz eşleşmede patlat, düşen şekerlerle zincir kur.', type: 'Tumble', art: 'candy' },
   { title: 'Tarhun: Fırtına Tahtı', href: '/game/tarhun', text: 'Fırtına tanrısı taşlara yıldırım atar; çarpanlar bedava dönüşte birikir.', type: 'Tumble · çarpan', art: 'storm' },
   { title: 'Ebru: Mürekkep Bahçesi', href: '/game/ebru', text: 'Tarak suyu tarar, mürekkep dalga dalga yeniden dizilir; boya lekeleri çarpanla birlikte kayar.', type: 'Küme · tarak', art: 'ink' },
+  { title: 'Cezeri: Zamanın Çarkları', href: '/game/cezeri', text: 'Dört pirinç çark döner; kazanan dilimler kenetlenir, çarklar yeniden döner ve göbek çarpanı her turda +1 atar.', type: 'Çark · zincir', art: 'gears' },
 ] as const;
 export default function Games() { return <div className={styles.page}>
   <Link href="/live/ringside" prefetch={false} className={styles.hero} aria-label="Ringside canlı arenaya gir">
@@ -29,6 +30,8 @@ export default function Games() { return <div className={styles.page}>
         ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 20c6-2 11-7 18-16"/><path d="M15 4h6v6"/></svg>
         : game.art === 'storm'
         ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"><path d="M5 9.5a4.5 4.5 0 0 1 8.6-1.9A3.6 3.6 0 0 1 19.5 10a3 3 0 0 1-1 5.5H6.8A3.3 3.3 0 0 1 5 9.5Z"/><path d="m12.5 12.5-2.2 4h3l-1.8 4.5"/></svg>
+        : game.art === 'gears'
+        ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="9" cy="10" r="3"/><path d="M9 3.5v2M9 14.5v2M2.5 10h2M13.5 10h2M4.4 5.4l1.4 1.4M12.2 13.2l1.4 1.4M4.4 14.6l1.4-1.4M12.2 6.8l1.4-1.4"/><circle cx="17" cy="17" r="2.2"/><path d="M17 12.8v1.6M17 19.6v1.6M12.8 17h1.6M19.6 17h1.6"/></svg>
         : game.art === 'ink'
         ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round"><path d="M12 3c2.8 3.6 4.6 6 4.6 8.4a4.6 4.6 0 0 1-9.2 0C7.4 9 9.2 6.6 12 3Z"/><path d="M10 12.2a2 2 0 0 0 2 1.8"/><path d="M4 20.5h16M6 20.5v-2.5M9.3 20.5v-2.5M12.6 20.5v-2.5M15.9 20.5v-2.5M19 20.5v-2.5"/></svg>
         : game.art === 'candy'

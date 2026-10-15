@@ -77,6 +77,9 @@ export const TRACE_MS = 1400;
 export const GROUP_TOLERANCE_MS = 30;
 /** The howl begins this long after the plan's end (the ignition bloom speaks first). */
 export const HOWL_DELAY = 0.16;
+/** Mix balance of the assembled constellation (playback gains): the stars, the ignition bloom and the howl overlap, so
+ *  each sits below its clip level; the whole moment peaks a few dB above the music, not over it. */
+export const TRACE_GAIN = Object.freeze({ node: 0.55, ignite: 0.7, howl: 0.75 });
 
 /** Star-node clips, rendered at E4, E5 and E6: each note uses the nearest one, so no clip moves more than half an octave. */
 export const NODE_CLIPS = [{ id: 'node-lo', semitones: -12 }, { id: 'node', semitones: 0 }, { id: 'node-hi', semitones: 12 }] as const;
@@ -101,6 +104,8 @@ export interface ConstellationTrace {
   howlAt: number;
   /** Howl playback rate. */
   howlRate: number;
+  /** Playback gains of the ignition and the howl (TRACE_GAIN). */
+  igniteGain: number; howlGain: number;
 }
 
 /**
@@ -136,12 +141,12 @@ export function constellationTrace(templateId: string, nodeAtMs?: readonly numbe
       const { clip, rate } = nodeClipFor(semi);
       const col = cols && Number.isFinite(cols[n.node]) ? cols[n.node]! : null;
       n.semitones = semi; n.clip = clip; n.rate = rate;
-      n.gain = (j === 0 ? 1 : 0.62 / Math.sqrt(j)) * (0.78 + 0.22 * (ev.index / Math.max(1, events.length - 1)));
+      n.gain = TRACE_GAIN.node * (j === 0 ? 1 : 0.62 / Math.sqrt(j)) * (0.78 + 0.22 * (ev.index / Math.max(1, events.length - 1)));
       n.pan = col === null ? (j % 2 ? 0.25 : -0.25) * (j ? 1 : 0) : columnPan(col);
     });
   }
   const seconds = dur / 1000;
-  return { templateId: id, multiplier: ASENA_TEMPLATE_MULTIPLIER[id], seconds, events, igniteAt: seconds, howlAt: seconds + HOWL_DELAY, howlRate: 2 ** (HOWL_SEMITONES[id] / 12) };
+  return { templateId: id, multiplier: ASENA_TEMPLATE_MULTIPLIER[id], seconds, events, igniteAt: seconds, howlAt: seconds + HOWL_DELAY, howlRate: 2 ** (HOWL_SEMITONES[id] / 12), igniteGain: TRACE_GAIN.ignite, howlGain: TRACE_GAIN.howl };
 }
 
 /* ---------------- wolf walk, map, Ergenekon ---------------- */

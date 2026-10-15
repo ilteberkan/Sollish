@@ -29,7 +29,11 @@ export interface CezeriSceneHandle {
   /** Briefly brighten the lamps. */
   glow(intensity?: number): void;
 }
-export interface CezeriSceneProps { mood?: CezeriMood; children?: ReactNode; className?: string; style?: CSSProperties; parallax?: boolean; ref?: Ref<CezeriSceneHandle> }
+export interface CezeriSceneProps {
+  mood?: CezeriMood; children?: ReactNode; className?: string; style?: CSSProperties; parallax?: boolean; ref?: Ref<CezeriSceneHandle>;
+  /** Portrait / square hosts (the game on a phone): the two automata sit small in the top corners instead of stepping inward. */
+  corners?: boolean;
+}
 
 const f1 = (n: number) => Math.round(n * 10) / 10;
 type Stop = readonly [number, string, number?];
@@ -179,7 +183,7 @@ function CastleArt({ k }: { k: (n: string) => string }) {
   );
 }
 
-export function CezeriScene({ mood = 'base', children, className, style, parallax = true, ref }: CezeriSceneProps) {
+export function CezeriScene({ mood = 'base', children, className, style, parallax = true, corners = false, ref }: CezeriSceneProps) {
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const k = (n: string) => `czsc${uid}${n}`;
   const url = (n: string) => `url(#${k(n)})`;
@@ -369,7 +373,7 @@ export function CezeriScene({ mood = 'base', children, className, style, paralla
   ), []);
 
   return (
-    <div ref={rootRef} className={`${styles.root} ${className ?? ''}`} data-mood={mood} style={style}>
+    <div ref={rootRef} className={`${styles.root} ${className ?? ''}`} data-mood={mood} data-corners={corners ? '' : undefined} style={style}>
       {back}
       <div className={styles.content}>{children}</div>
     </div>
