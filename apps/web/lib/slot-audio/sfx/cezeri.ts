@@ -19,6 +19,7 @@ import { addMono, addStereo, addStereoUpsampled, stereo, type Stereo } from '../
 import { bell, choirChord, kick, noiseHit, riser, sparkles, vox, whoosh, type VoiceCtx } from '../synth/instruments';
 import { bubble, bubbles } from '../synth/ebru';
 import { birdWhistle, chimeRod, drip, escapement, gearClank, gearWhirr, handCymbal, kos, naqqara, pipeFast, pour, ratchet, santur as santur4, wings, type SanturOptions } from '../synth/cezeri';
+import { softKnee } from '../synth/anatolian';
 import { midiToHz } from '../timing';
 import { MULTIPLIER_CLASSES, TIER_KEY, TIER_UP_PRE, type MultiplierClass, type WinTier } from '../win-tiers';
 import { CEZERI_MAX_RESPINS, CEZERI_TONIC, HUB_STEPS_NIKRIZ, reservoirSemitones, vesselSemitones, type CezeriVocal } from '../cezeri-tiers';
@@ -156,7 +157,7 @@ export const CEZERI_SFX: SfxDef[] = [
     id: 'lock', variations: 3, level: 'medium', send: 0.22, jitter: [15, 0.8], core: true,
     build: (ctx, v) => {
       const out = sized(ctx, 1.2), sr = ctx.sr;
-      mono(out, gearClank(ctx, 1, 1.2 + v * 0.08, true), 0, 0.85);
+      mono(out, softKnee(gearClank(ctx, 1, 1.2 + v * 0.08, true), 10, ctx.sr), 0, 0.85);
       mono(out, kos(ctx, 0.55, hz(36)), 0, 0.35);
       for (let k = 0; k < 3; k++) mono(out, ratchet(ctx, 0.6 - k * 0.1, 1.2), (0.07 + k * 0.035) * sr, 0.4, 0.2);
       mono(out, noiseHit(ctx, 0.5, 1800, 0.9, 0.0005, 0.06, 500, 7000), 0, 0.35);

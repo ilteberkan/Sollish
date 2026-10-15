@@ -503,7 +503,7 @@ export const CHAIN_BED: Score = {
   about: 'Dişli Kilidi tension bed, 100 BPM, 2-bar seamless loop (4.8 s): kös heartbeat on C, the escapement in sixteenths, ratchet ghosts, a gear clank on each bar, an open-fifth water-organ drone (C2–G2–C3) and the whirr of the gear train. Pitched only on C and G.',
   tracks: [
     { id: 'kos', kind: 'kit', level: -21, send: 0.15, hits: steps('kos', 'X...x...X...x...', 0, 2, 0.9) },
-    { id: 'clock', kind: 'kit', level: -24, send: 0.08, hits: hits(steps('escTick', 'X.x.x.x.X.x.x.x.', 0, 2), steps('escTock', '.o.o.o.o.o.o.o.o', 0, 2, 0.8)) },
+    { id: 'clock', kind: 'kit', level: -24.5, send: 0.08, tame: 8, hits: hits(steps('escTick', 'X.x.x.x.X.x.x.x.', 0, 2), steps('escTock', '.o.o.o.o.o.o.o.o', 0, 2, 0.8)) },
     { id: 'ratchet', kind: 'kit', level: -28, send: 0.1, hits: steps('ratchet', '..g...g...g.g.g.', 0, 2) },
     { id: 'clank', kind: 'kit', level: -27, send: 0.18, hits: at([0, 4], 'clank', 0.8) },
     { id: 'organ', kind: 'pitched', voice: 'waterOrgan', level: -27, send: 0.3, notes: [36, 43, 48].map(n => ({ t: 0, d: 8, n, v: 0.6 })) },

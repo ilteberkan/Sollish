@@ -142,9 +142,10 @@ function curveOn(param: AudioParam | undefined, curve: Float32Array, at: number,
 export interface ScheduledVoices { at: number; end: number; sources: AudioBufferSourceNode[]; stop: (fade?: number) => void }
 
 /** One buffer voice into `dest` with a number or curve for rate and level, a fixed pan; returns null on a partial context. */
-function voiceInto(ctx: BaseAudioContext, dest: AudioNode, buffer: AudioBuffer, at: number, seconds: number, level: number | Float32Array, rate: number | Float32Array, pan: number, stopAt: number, list: { sources: AudioBufferSourceNode[]; gains: GainNode[] }) {
+function voiceInto(ctx: BaseAudioContext, dest: AudioNode, buffer: AudioBuffer, at: number, seconds: number, level: number | Float32Array, rate: number | Float32Array, pan: number, stopAt: number, list: { sources: AudioBufferSourceNode[]; gains: GainNode[] }, loop = false) {
   try {
     const src = ctx.createBufferSource(); src.buffer = buffer;
+    if (loop) src.loop = true;
     const g = ctx.createGain();
     if (typeof rate === 'number') { try { src.playbackRate.value = rate; } catch { /* fake */ } } else curveOn(src.playbackRate, rate, at, seconds, rate[rate.length - 1]!);
     if (typeof level === 'number') { try { g.gain.value = level; } catch { /* fake */ } } else { try { g.gain.value = 0; } catch { /* fake */ } curveOn(g.gain, level, at, seconds, 0); }
@@ -171,14 +172,14 @@ function handleOf(ctx: BaseAudioContext, at: number, end: number, list: { source
 
 export interface RingClips { clicks: AudioBuffer[]; whirr: AudioBuffer | null; stop: AudioBuffer | null }
 /**
- * Schedule one turning ring on any BaseAudioContext (live or offline) into `dest`: the whirr with rate and level curves
- * from the plan, one click per planned slice (at its own level, the ring's rate, variations cycling) and the stop thunk at
+ * Schedule one turning ring on any BaseAudioContext (live or offline) into `dest`: the whirr (looped, so any turn length
+ * is covered) with rate and level curves from the plan, one click per planned slice (at its own level, the ring's rate, variations cycling) and the stop thunk at
  * the end. Missing clips are skipped.
  */
 export function scheduleRingRotate(ctx: BaseAudioContext, dest: AudioNode, clips: RingClips, plan: RatchetPlan, when: number, opts: { gain?: number; stop?: boolean } = {}): ScheduledVoices {
   const list = { sources: [] as AudioBufferSourceNode[], gains: [] as GainNode[] };
   const v = RING_VOICE[plan.ring]!, gain = (opts.gain ?? 1) * v.gain, s = plan.seconds;
-  if (clips.whirr) voiceInto(ctx, dest, clips.whirr, when, s, plan.whirrLevel.map(x => x * 0.32 * gain), plan.whirrRate.map(r => r * Math.sqrt(v.rate)), v.pan * 0.6, when + s + 0.05, list);
+  if (clips.whirr) voiceInto(ctx, dest, clips.whirr, when, s, plan.whirrLevel.map(x => x * 0.32 * gain), plan.whirrRate.map(r => r * Math.sqrt(v.rate)), v.pan * 0.6, when + s + 0.05, list, true);
   if (clips.clicks.length) plan.clicks.forEach((c, i) => voiceInto(ctx, dest, clips.clicks[i % clips.clicks.length]!, when + c.at, 0, 0.75 * c.gain * gain, v.rate * (1 + ((i * 7) % 5 - 2) * 0.006), v.pan, when + c.at + 0.12, list));
   if (clips.stop && opts.stop !== false) voiceInto(ctx, dest, clips.stop, when + Math.max(0, s - 0.004), 0, 0.85 * gain, v.rate, v.pan, when + s + clips.stop.duration + 0.05, list);
   return handleOf(ctx, when, when + s, list);
