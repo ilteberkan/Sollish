@@ -296,18 +296,20 @@ export function auroraChord(ctx: VoiceCtx, freqs: number[], vel: number, held: n
     for (let v = 0; v < 3; v++) {
       const f = freq * 2 ** (((v - 1) * 7 + (rng() - 0.5) * 3) / 1200);
       const side = (v - 1) * 0.7 + (rng() - 0.5) * 0.3, gl = Math.sqrt(0.5 * (1 - side)), gr = Math.sqrt(0.5 * (1 + side));
-      let p = rng(), lfo = rng(), sh = rng();
+      let p = rng(), lfo = rng(), sh = rng(), ripple = 1, glow = 0;
       const lRate = (0.07 + rng() * 0.12) / sr, sRate = (0.05 + rng() * 0.07) / sr, inc = f / sr;
       const h2 = f * 2 < sr * 0.45 ? 0.22 : 0, h3 = f * 3 < sr * 0.45 ? 0.1 : 0, s2 = f * 2 < sr * 0.45 ? 0.16 * shimmer : 0, s3 = f * 3 < sr * 0.45 ? 0.08 * shimmer : 0;
       let relG = 1;
       for (let i = 0; i < len; i++) {
-        const ripple = 0.65 + 0.35 * sinCycles(lfo), glow = Math.max(0, sinCycles(sh)) ** 2;
-        const y = sinCycles(p) + h2 * sinCycles(2 * p) + h3 * sinCycles(3 * p) + glow * (s2 * sinCycles(2 * p + 0.25) + s3 * sinCycles(3 * p + 0.5));
+        // the slow ripples run at control rate; the 2nd and 3rd partials come from sin/cos of the fundamental (Chebyshev)
+        if ((i & 63) === 0) { ripple = 0.65 + 0.35 * sinCycles(lfo); const g = Math.max(0, sinCycles(sh)); glow = g * g; lfo += 64 * lRate; sh += 64 * sRate; }
+        const sn = sinCycles(p), cs = sinCycles(p + 0.25), sin2 = 2 * sn * cs, sin3 = sn * (3 - 4 * sn * sn);
+        const y = sn + (h2 + glow * s2) * sin2 + (h3 + glow * s3) * sin3;
         const env = i < aN ? Math.sin((i / aN) * Math.PI * 0.5) ** 2 : 1;
         if (i >= heldN) relG *= relD;
         const g = y * ripple * env * relG * vel * norm;
         out.l[i]! += g * gl; out.r[i]! += g * gr;
-        p += inc; lfo += lRate; sh += sRate;
+        p += inc; if (p >= 1) p -= 1;
       }
     }
   }

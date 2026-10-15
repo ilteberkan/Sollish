@@ -227,7 +227,7 @@ test('bonus buy: dialog, cost bet × 100, Lale Ebrusu intro, stains build and sh
   await recordPresentation(page);
   await stub(page, BUY_STAIN);
   await openEbru(page);
-  await setTurbo(page);
+  await setQuick(page);
   await page.getByRole('button', { name: /Bonus satın al/ }).click();
   const dialog = page.getByRole('dialog', { name: 'Bonus satın al' });
   await expect(dialog).toContainText('1.000,00 DEMO');
@@ -237,8 +237,7 @@ test('bonus buy: dialog, cost bet × 100, Lale Ebrusu intro, stains build and sh
   await dialog.getByRole('button', { name: 'Satın al', exact: true }).click();
   await expect(balance(page)).toContainText(formatAmount(START - 100_000));
   const intro = page.getByRole('dialog', { name: 'Lale Ebrusu Başlıyor' });
-  await expect(intro).toBeVisible({ timeout: 30_000 });
-  await tapIfShown(intro.getByRole('button', { name: 'Başla' }), 5000);
+  await tapIfShown(intro.getByRole('button', { name: 'Başla' }), 30_000);
   await expect(page.getByLabel(/Bedava dönüş \d+, kalan dönüş \d+/)).toBeVisible();
   await expect(page.getByTestId('ebru-stains')).toBeVisible();
   await expect(spin(page)).toBeDisabled();

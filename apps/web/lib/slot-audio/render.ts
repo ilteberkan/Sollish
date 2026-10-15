@@ -361,7 +361,7 @@ const EBRU_VOICE_COST = { kanun: 2.6, kanunSoft: 2.2, ud: 2.6, glassHarp: 2.6, w
 /** Cezeri voices, weighted by their measured synthesis cost (filled in from the worker trace, see ops/evidence/cezeri-20261012). */
 const CEZERI_VOICE_COST = { santur: 3, santurSoft: 1.8, pipe: 2.6, waterOrgan: 4, chimeRod: 2, drip: 2.5 } as const;
 /** Asena voices, weighted by their measured synthesis cost (per note, see ops/evidence/asena-20261012/audio.json). */
-const ASENA_VOICE_COST = { kopuz: 1.2, kopuzMute: 0.5, kilKopuz: 2.2, khoomei: 9, kargyraa: 9, starBell: 0.8 } as const;
+const ASENA_VOICE_COST = { kopuz: 1.2, kopuzMute: 0.25, kilKopuz: 2.2, khoomei: 9, kargyraa: 12, starBell: 3 } as const;
 const VOICE_COST: Partial<Record<string, number>> = { ...EBRU_VOICE_COST, ...CEZERI_VOICE_COST, ...ASENA_VOICE_COST };
 
 /** Rough synthesis cost of a track, for spreading tracks over workers. */
@@ -369,7 +369,7 @@ export function trackCost(track: Track): number {
   switch (track.kind) {
     // Ebru voices are weighted by their measured synthesis cost (three-string Karplus-Strong, long glass tones)
     case 'pitched': return track.notes.length * (track.voice === 'pluck' ? 0.6 : VOICE_COST[track.voice] ?? 1);
-    case 'pad': return track.chords.reduce((s, c) => s + c.ns.length * (c.d + 2), 0) * (track.voice === 'padSaw' ? 1.2 : track.voice === 'padChoir' || track.voice === 'padChoirMale' ? 1.6 : track.voice === 'padHorn' ? 1.3 : track.voice === 'padAurora' ? 1.4 : 0.6);
+    case 'pad': return track.chords.reduce((s, c) => s + c.ns.length * (c.d + 2), 0) * (track.voice === 'padSaw' ? 1.2 : track.voice === 'padChoir' || track.voice === 'padChoirMale' ? 1.6 : track.voice === 'padHorn' ? 1.3 : 0.6);
     case 'kit': return 4 + track.hits.length * 0.15;
     case 'fx': return track.fx.reduce((s, f) => s + (f.k === 'room' ? 40 : f.k === 'rain' ? 60 : f.k === 'wind' ? 30 : f.k === 'water' ? 45 : f.k === 'courtyard' ? 70 : f.k === 'steppe' ? 55 : f.k === 'fire' ? 0.6 * f.d : f.k === 'whirr' ? 1.2 * f.d : f.k === 'riser' || f.k === 'rumble' ? 8 : 3) + f.d, 0);
   }
