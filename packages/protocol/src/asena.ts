@@ -330,9 +330,9 @@ export interface AsenaRtp { rtp: number; ciLow: number; ciHigh: number; rounds: 
  * simulated rounds. DEMO estimate, not a certified RTP; the 95% interval is a normal approximation and optimistic for this heavy
  * tail. */
 export const ASENA_RTP: Record<AsenaMode, AsenaRtp> = Object.freeze({
-  standard: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
-  ante: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
-  buy: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
+  standard: Object.freeze({ rtp: 0.952, ciLow: 0.942, ciHigh: 0.961, rounds: 20_000_000, hitRate: 0.254, featureRate: 0.0031, stdDev: 21.369 }),
+  ante: Object.freeze({ rtp: 0.943, ciLow: 0.935, ciHigh: 0.951, rounds: 20_000_000, hitRate: 0.254, featureRate: 0.0057, stdDev: 18.479 }),
+  buy: Object.freeze({ rtp: 0.958, ciLow: 0.957, ciHigh: 0.960, rounds: 20_000_000, hitRate: 1.000, featureRate: 1, stdDev: 2.587 }),
 });
 // @evidence-block-end
 

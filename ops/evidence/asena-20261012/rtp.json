@@ -1,0 +1,1113 @@
+{
+  "kind": "asena-rtp-simulation",
+  "scope": "DEMO credits only; Monte Carlo estimate, not a certified or guaranteed RTP; RTP is return / cost",
+  "engine": "asena-stars-1",
+  "engineSourceSha256": "99f25778e57dfa0139521e8ef54d46aab3407c3a3f3de57df31f03a4bd42d1af",
+  "engineSourceNote": "sha256 of packages/protocol/src/asena.ts with the ASENA_RTP evidence block (between the @evidence-block markers) removed. The constants were filled after the run; no engine code, tables or RNG changed afterwards.",
+  "seed": "asena-20261012-evidence",
+  "workers": 2,
+  "chunks": 20,
+  "betCentsSimulated": 100,
+  "betLevelsCents": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    800,
+    1000,
+    1500,
+    2000,
+    2500,
+    4000,
+    5000,
+    7500,
+    10000,
+    15000,
+    20000,
+    25000,
+    40000,
+    50000
+  ],
+  "winTierMeasure": "round total / bet",
+  "tuningOverride": null,
+  "modes": {
+    "standard": {
+      "rounds": 20000000,
+      "costBets": 1,
+      "rtpVsCost": {
+        "pointEstimate": 0.95154,
+        "pointEstimatePct": 95.1539,
+        "ci95": [
+          0.94217,
+          0.9609
+        ],
+        "ci95Pct": [
+          94.2174,
+          96.0904
+        ],
+        "ci95HalfWidthPct": 0.9365
+      },
+      "integerPayoutCheckRtp": 0.95154,
+      "hitRate": 0.2541,
+      "featureRate": 0.003133,
+      "featureOneIn": 319.2,
+      "featureCount": 62658,
+      "avgFreeSpinsPerRound": 0.04824,
+      "avgFreeSpinsPlayedPerTrigger": 15.398,
+      "freeSpinsPlayed": 964810,
+      "retriggers": 67913,
+      "maxFreeSpinsInOneRound": 32,
+      "freeSpinHitRate": 0.77806,
+      "stdDevPerRoundCostUnits": 21.3685,
+      "stdDevPerRoundBetUnits": 21.3685,
+      "contributionPctOfCost": {
+        "baseGame": 59.2598,
+        "freeSpins": 35.894,
+        "scatterPayInBase": 2.3148
+      },
+      "avgFreeWinPerTriggerBets": 114.57,
+      "winTiersShareOfRounds": {
+        "atLeast10xBet": 0.0085115,
+        "atLeast25xBet": 0.0051592,
+        "atLeast50xBet": 0.0033302,
+        "atLeast100xBet": 0.0018472,
+        "atLeast500xBet": 0.0002814,
+        "atLeast1000xBet": 0.0000737,
+        "atLeast2000xBet": 0.0000169,
+        "atLeast5000xBet": 0.0000013
+      },
+      "winTiersRounds": {
+        "atLeast10xBet": 170230,
+        "atLeast25xBet": 103185,
+        "atLeast50xBet": 66603,
+        "atLeast100xBet": 36944,
+        "atLeast500xBet": 5628,
+        "atLeast1000xBet": 1474,
+        "atLeast2000xBet": 338,
+        "atLeast5000xBet": 26
+      },
+      "maxObservedXBet": 5000,
+      "maxObservedXCost": 5000,
+      "maxStepsInOneSpin": 101,
+      "capHits": 26,
+      "capHitShareOfRounds": 0.0000013,
+      "capXBet": 5000,
+      "minMoonsInInitialBaseGrid": 0,
+      "costMismatches": 0,
+      "constellations": {
+        "clustersInBase": 15529867,
+        "clustersInFree": 2967973,
+        "perTemplate": {
+          "kurt-basi": {
+            "multiplier": 10,
+            "cells": 7,
+            "ignitionsInBase": 88056,
+            "ignitionsInFree": 76194,
+            "perBaseCluster": 0.00567,
+            "perFreeCluster": 0.02567,
+            "perBaseSpin": 0.004403,
+            "perFreeSpin": 0.07897
+          },
+          "yay": {
+            "multiplier": 3,
+            "cells": 6,
+            "ignitionsInBase": 616763,
+            "ignitionsInFree": 153291,
+            "perBaseCluster": 0.03971,
+            "perFreeCluster": 0.05165,
+            "perBaseSpin": 0.03084,
+            "perFreeSpin": 0.1589
+          },
+          "at": {
+            "multiplier": 4,
+            "cells": 6,
+            "ignitionsInBase": 583075,
+            "ignitionsInFree": 235762,
+            "perBaseCluster": 0.03755,
+            "perFreeCluster": 0.07944,
+            "perBaseSpin": 0.02915,
+            "perFreeSpin": 0.2444
+          },
+          "kartal": {
+            "multiplier": 6,
+            "cells": 7,
+            "ignitionsInBase": 129141,
+            "ignitionsInFree": 53051,
+            "perBaseCluster": 0.008316,
+            "perFreeCluster": 0.01787,
+            "perBaseSpin": 0.006457,
+            "perFreeSpin": 0.05499
+          },
+          "hayat-agaci": {
+            "multiplier": 8,
+            "cells": 7,
+            "ignitionsInBase": 39017,
+            "ignitionsInFree": 32835,
+            "perBaseCluster": 0.002512,
+            "perFreeCluster": 0.01106,
+            "perBaseSpin": 0.001951,
+            "perFreeSpin": 0.03403
+          },
+          "hilal": {
+            "multiplier": 2,
+            "cells": 5,
+            "ignitionsInBase": 2986358,
+            "ignitionsInFree": 591897,
+            "perBaseCluster": 0.1923,
+            "perFreeCluster": 0.1994,
+            "perBaseSpin": 0.1493,
+            "perFreeSpin": 0.6135
+          }
+        },
+        "baseSpinsWithIgnitionShare": 0.07936,
+        "freeSpinsWithIgnitionShare": 0.52517,
+        "baseClustersPerSpin": 0.7765,
+        "freeClustersPerSpin": 3.0762
+      },
+      "wolf": {
+        "baseSpinsWithWolfOnInitialBoardShare": 0.23391,
+        "freeSpinsWithWolfOnInitialBoardShare": 0.25058,
+        "totalWalks": 9577279,
+        "walksInBase": 8393680,
+        "walksInFree": 1183599,
+        "walksPerBaseSpin": 0.4197,
+        "walksPerFreeSpin": 1.2268,
+        "spinsWithAtLeastOneWalkShare": 0.06306,
+        "spinsEndingWithTrailWildsShare": 0.06305,
+        "maxWalksInOneSpin": 582,
+        "maxTrailWildsOnFinalBoard": 5,
+        "maxWolfPathCells": 101,
+        "clustersContainingATrailWild": 10354492
+      },
+      "ergenekon": {
+        "features": 62658,
+        "avgDistinctConstellationsAtEnd": 4.116,
+        "distinctAtEndHistogram": {
+          "0": 42,
+          "1": 1116,
+          "2": 7830,
+          "3": 7575,
+          "4": 19814,
+          "5": 18532,
+          "6": 7749
+        },
+        "shareReaching3Distinct": 0.85655,
+        "shareReaching6Distinct": 0.1237,
+        "shareAllSixTwice": 0.02924,
+        "finalGlobalMultiplierHistogram": {
+          "1": 8988,
+          "2": 45921,
+          "3": 5917,
+          "5": 1832
+        },
+        "avgFinalGlobalMultiplier": 2.039,
+        "spinsAwardedByMoons": 658068,
+        "spinsAwardedByMap": 307095,
+        "avgFreeSpinsGrantedPerTrigger": 15.404
+      },
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 269.3
+    },
+    "ante": {
+      "rounds": 20000000,
+      "costBets": 1.25,
+      "rtpVsCost": {
+        "pointEstimate": 0.94264,
+        "pointEstimatePct": 94.2643,
+        "ci95": [
+          0.93454,
+          0.95074
+        ],
+        "ci95Pct": [
+          93.4544,
+          95.0742
+        ],
+        "ci95HalfWidthPct": 0.8099
+      },
+      "integerPayoutCheckRtp": 0.94264,
+      "hitRate": 0.25407,
+      "featureRate": 0.00571,
+      "featureOneIn": 175.1,
+      "featureCount": 114192,
+      "avgFreeSpinsPerRound": 0.08787,
+      "avgFreeSpinsPlayedPerTrigger": 15.39,
+      "freeSpinsPlayed": 1757386,
+      "retriggers": 123811,
+      "maxFreeSpinsInOneRound": 35,
+      "freeSpinHitRate": 0.77763,
+      "stdDevPerRoundCostUnits": 18.4792,
+      "stdDevPerRoundBetUnits": 23.099,
+      "contributionPctOfCost": {
+        "baseGame": 43.388,
+        "freeSpins": 50.8763,
+        "scatterPayInBase": 3.0024
+      },
+      "avgFreeWinPerTriggerBets": 111.38,
+      "winTiersShareOfRounds": {
+        "atLeast10xBet": 0.010455,
+        "atLeast25xBet": 0.0069838,
+        "atLeast50xBet": 0.004908,
+        "atLeast100xBet": 0.0026307,
+        "atLeast500xBet": 0.00030045,
+        "atLeast1000xBet": 0.0000839,
+        "atLeast2000xBet": 0.00001865,
+        "atLeast5000xBet": 0.00000135
+      },
+      "winTiersRounds": {
+        "atLeast10xBet": 209097,
+        "atLeast25xBet": 139675,
+        "atLeast50xBet": 98159,
+        "atLeast100xBet": 52615,
+        "atLeast500xBet": 6009,
+        "atLeast1000xBet": 1678,
+        "atLeast2000xBet": 373,
+        "atLeast5000xBet": 27
+      },
+      "maxObservedXBet": 5000,
+      "maxObservedXCost": 4000,
+      "maxStepsInOneSpin": 101,
+      "capHits": 27,
+      "capHitShareOfRounds": 0.00000135,
+      "capXBet": 5000,
+      "minMoonsInInitialBaseGrid": 0,
+      "costMismatches": 0,
+      "constellations": {
+        "clustersInBase": 14634955,
+        "clustersInFree": 5305683,
+        "perTemplate": {
+          "kurt-basi": {
+            "multiplier": 10,
+            "cells": 7,
+            "ignitionsInBase": 80136,
+            "ignitionsInFree": 136244,
+            "perBaseCluster": 0.005476,
+            "perFreeCluster": 0.02568,
+            "perBaseSpin": 0.004007,
+            "perFreeSpin": 0.07753
+          },
+          "yay": {
+            "multiplier": 3,
+            "cells": 6,
+            "ignitionsInBase": 542030,
+            "ignitionsInFree": 273919,
+            "perBaseCluster": 0.03704,
+            "perFreeCluster": 0.05163,
+            "perBaseSpin": 0.0271,
+            "perFreeSpin": 0.1559
+          },
+          "at": {
+            "multiplier": 4,
+            "cells": 6,
+            "ignitionsInBase": 544518,
+            "ignitionsInFree": 423284,
+            "perBaseCluster": 0.03721,
+            "perFreeCluster": 0.07978,
+            "perBaseSpin": 0.02723,
+            "perFreeSpin": 0.2409
+          },
+          "kartal": {
+            "multiplier": 6,
+            "cells": 7,
+            "ignitionsInBase": 107479,
+            "ignitionsInFree": 94368,
+            "perBaseCluster": 0.007344,
+            "perFreeCluster": 0.01779,
+            "perBaseSpin": 0.005374,
+            "perFreeSpin": 0.0537
+          },
+          "hayat-agaci": {
+            "multiplier": 8,
+            "cells": 7,
+            "ignitionsInBase": 36179,
+            "ignitionsInFree": 58798,
+            "perBaseCluster": 0.002472,
+            "perFreeCluster": 0.01108,
+            "perBaseSpin": 0.001809,
+            "perFreeSpin": 0.03346
+          },
+          "hilal": {
+            "multiplier": 2,
+            "cells": 5,
+            "ignitionsInBase": 2764093,
+            "ignitionsInFree": 1055073,
+            "perBaseCluster": 0.1889,
+            "perFreeCluster": 0.1989,
+            "perBaseSpin": 0.1382,
+            "perFreeSpin": 0.6004
+          }
+        },
+        "baseSpinsWithIgnitionShare": 0.07855,
+        "freeSpinsWithIgnitionShare": 0.52461,
+        "baseClustersPerSpin": 0.7317,
+        "freeClustersPerSpin": 3.0191
+      },
+      "wolf": {
+        "baseSpinsWithWolfOnInitialBoardShare": 0.2334,
+        "freeSpinsWithWolfOnInitialBoardShare": 0.24528,
+        "totalWalks": 9841821,
+        "walksInBase": 7764952,
+        "walksInFree": 2076869,
+        "walksPerBaseSpin": 0.3882,
+        "walksPerFreeSpin": 1.1818,
+        "spinsWithAtLeastOneWalkShare": 0.06603,
+        "spinsEndingWithTrailWildsShare": 0.06601,
+        "maxWalksInOneSpin": 536,
+        "maxTrailWildsOnFinalBoard": 5,
+        "maxWolfPathCells": 101,
+        "clustersContainingATrailWild": 10457232
+      },
+      "ergenekon": {
+        "features": 114192,
+        "avgDistinctConstellationsAtEnd": 4.109,
+        "distinctAtEndHistogram": {
+          "0": 60,
+          "1": 2036,
+          "2": 14255,
+          "3": 13990,
+          "4": 36418,
+          "5": 33595,
+          "6": 13838
+        },
+        "shareReaching3Distinct": 0.85681,
+        "shareReaching6Distinct": 0.1212,
+        "shareAllSixTwice": 0.02752,
+        "finalGlobalMultiplierHistogram": {
+          "1": 16351,
+          "2": 84003,
+          "3": 10695,
+          "5": 3143
+        },
+        "avgFinalGlobalMultiplier": 2.033,
+        "spinsAwardedByMoons": 1199346,
+        "spinsAwardedByMap": 558395,
+        "avgFreeSpinsGrantedPerTrigger": 15.393
+      },
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 460.4
+    },
+    "buy": {
+      "rounds": 20000000,
+      "costBets": 80,
+      "rtpVsCost": {
+        "pointEstimate": 0.95836,
+        "pointEstimatePct": 95.8363,
+        "ci95": [
+          0.95723,
+          0.9595
+        ],
+        "ci95Pct": [
+          95.7229,
+          95.9497
+        ],
+        "ci95HalfWidthPct": 0.1134
+      },
+      "integerPayoutCheckRtp": 0.95836,
+      "hitRate": 1,
+      "featureRate": 1,
+      "featureOneIn": 1,
+      "featureCount": 20000000,
+      "avgFreeSpinsPerRound": 14.14228,
+      "avgFreeSpinsPlayedPerTrigger": 14.142,
+      "freeSpinsPlayed": 282845584,
+      "retriggers": 16589981,
+      "maxFreeSpinsInOneRound": 41,
+      "freeSpinHitRate": 0.6885,
+      "stdDevPerRoundCostUnits": 2.5874,
+      "stdDevPerRoundBetUnits": 206.9946,
+      "contributionPctOfCost": {
+        "baseGame": 4.1641,
+        "freeSpins": 91.6722,
+        "scatterPayInBase": 3.8768
+      },
+      "avgFreeWinPerTriggerBets": 73.34,
+      "winTiersShareOfRounds": {
+        "atLeast10xBet": 0.83007,
+        "atLeast25xBet": 0.62345,
+        "atLeast50xBet": 0.38966,
+        "atLeast100xBet": 0.15303,
+        "atLeast500xBet": 0.018552,
+        "atLeast1000xBet": 0.007776,
+        "atLeast2000xBet": 0.0024013,
+        "atLeast5000xBet": 0.00028875
+      },
+      "winTiersRounds": {
+        "atLeast10xBet": 16601420,
+        "atLeast25xBet": 12469045,
+        "atLeast50xBet": 7793121,
+        "atLeast100xBet": 3060613,
+        "atLeast500xBet": 371045,
+        "atLeast1000xBet": 155520,
+        "atLeast2000xBet": 48026,
+        "atLeast5000xBet": 5775
+      },
+      "maxObservedXBet": 5000,
+      "maxObservedXCost": 62.5,
+      "maxStepsInOneSpin": 101,
+      "capHits": 5775,
+      "capHitShareOfRounds": 0.00028875,
+      "capXBet": 5000,
+      "minMoonsInInitialBaseGrid": 3,
+      "costMismatches": 0,
+      "constellations": {
+        "clustersInBase": 8324287,
+        "clustersInFree": 751876117,
+        "perTemplate": {
+          "kurt-basi": {
+            "multiplier": 10,
+            "cells": 7,
+            "ignitionsInBase": 43642,
+            "ignitionsInFree": 14100736,
+            "perBaseCluster": 0.005243,
+            "perFreeCluster": 0.01875,
+            "perBaseSpin": 0.002182,
+            "perFreeSpin": 0.04985
+          },
+          "yay": {
+            "multiplier": 3,
+            "cells": 6,
+            "ignitionsInBase": 203413,
+            "ignitionsInFree": 37384963,
+            "perBaseCluster": 0.02444,
+            "perFreeCluster": 0.04972,
+            "perBaseSpin": 0.01017,
+            "perFreeSpin": 0.1322
+          },
+          "at": {
+            "multiplier": 4,
+            "cells": 6,
+            "ignitionsInBase": 306652,
+            "ignitionsInFree": 52827893,
+            "perBaseCluster": 0.03684,
+            "perFreeCluster": 0.07026,
+            "perBaseSpin": 0.01533,
+            "perFreeSpin": 0.1868
+          },
+          "kartal": {
+            "multiplier": 6,
+            "cells": 7,
+            "ignitionsInBase": 26337,
+            "ignitionsInFree": 11251590,
+            "perBaseCluster": 0.003164,
+            "perFreeCluster": 0.01496,
+            "perBaseSpin": 0.001317,
+            "perFreeSpin": 0.03978
+          },
+          "hayat-agaci": {
+            "multiplier": 8,
+            "cells": 7,
+            "ignitionsInBase": 19828,
+            "ignitionsInFree": 6375971,
+            "perBaseCluster": 0.002382,
+            "perFreeCluster": 0.00848,
+            "perBaseSpin": 0.0009914,
+            "perFreeSpin": 0.02254
+          },
+          "hilal": {
+            "multiplier": 2,
+            "cells": 5,
+            "ignitionsInBase": 1543021,
+            "ignitionsInFree": 151053627,
+            "perBaseCluster": 0.1854,
+            "perFreeCluster": 0.2009,
+            "perBaseSpin": 0.07715,
+            "perFreeSpin": 0.534
+          }
+        },
+        "baseSpinsWithIgnitionShare": 0.05097,
+        "freeSpinsWithIgnitionShare": 0.41269,
+        "baseClustersPerSpin": 0.4162,
+        "freeClustersPerSpin": 2.6583
+      },
+      "wolf": {
+        "baseSpinsWithWolfOnInitialBoardShare": 0.21792,
+        "freeSpinsWithWolfOnInitialBoardShare": 0.27034,
+        "totalWalks": 345642828,
+        "walksInBase": 4362274,
+        "walksInFree": 341280554,
+        "walksPerBaseSpin": 0.2181,
+        "walksPerFreeSpin": 1.2066,
+        "spinsWithAtLeastOneWalkShare": 0.14682,
+        "spinsEndingWithTrailWildsShare": 0.14676,
+        "maxWalksInOneSpin": 584,
+        "maxTrailWildsOnFinalBoard": 5,
+        "maxWolfPathCells": 101,
+        "clustersContainingATrailWild": 362926004
+      },
+      "ergenekon": {
+        "features": 20000000,
+        "avgDistinctConstellationsAtEnd": 3.373,
+        "distinctAtEndHistogram": {
+          "0": 93927,
+          "1": 1389063,
+          "2": 4976589,
+          "3": 3648174,
+          "4": 5453182,
+          "5": 3270595,
+          "6": 1168470
+        },
+        "shareReaching3Distinct": 0.67702,
+        "shareReaching6Distinct": 0.05842,
+        "shareAllSixTwice": 0.01423,
+        "finalGlobalMultiplierHistogram": {
+          "1": 6459579,
+          "2": 12371951,
+          "3": 883841,
+          "5": 284629
+        },
+        "avgFinalGlobalMultiplier": 1.764,
+        "spinsAwardedByMoons": 209382395,
+        "spinsAwardedByMap": 73544455,
+        "avgFreeSpinsGrantedPerTrigger": 14.146
+      },
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 680.4
+    }
+  },
+  "tables": {
+    "paytableHundredths": {
+      "h1": [
+        60,
+        120,
+        240,
+        480,
+        960,
+        1680,
+        2880
+      ],
+      "h2": [
+        40,
+        80,
+        160,
+        320,
+        640,
+        1120,
+        1920
+      ],
+      "h3": [
+        28,
+        56,
+        112,
+        224,
+        448,
+        784,
+        1344
+      ],
+      "h4": [
+        20,
+        40,
+        80,
+        160,
+        320,
+        560,
+        960
+      ],
+      "l1": [
+        14,
+        28,
+        56,
+        112,
+        224,
+        392,
+        672
+      ],
+      "l2": [
+        10,
+        20,
+        40,
+        80,
+        160,
+        280,
+        480
+      ],
+      "l3": [
+        8,
+        16,
+        32,
+        64,
+        128,
+        224,
+        384
+      ],
+      "l4": [
+        6,
+        12,
+        24,
+        48,
+        96,
+        168,
+        288
+      ]
+    },
+    "scatterPayHundredths": {
+      "3": 300,
+      "4": 800,
+      "5": 6000
+    },
+    "mapMultipliers": {
+      "3": 2,
+      "6": 3,
+      "twice": 5
+    },
+    "modeTables": {
+      "standard": {
+        "base": [
+          [
+            "h1",
+            5600
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8600
+          ],
+          [
+            "h4",
+            10200
+          ],
+          [
+            "l1",
+            12200
+          ],
+          [
+            "l2",
+            14400
+          ],
+          [
+            "l3",
+            16600
+          ],
+          [
+            "l4",
+            19000
+          ],
+          [
+            "wolf",
+            700
+          ],
+          [
+            "moon",
+            640
+          ]
+        ],
+        "free": [
+          [
+            "h1",
+            1600
+          ],
+          [
+            "h2",
+            2500
+          ],
+          [
+            "h3",
+            4000
+          ],
+          [
+            "h4",
+            6200
+          ],
+          [
+            "l1",
+            10000
+          ],
+          [
+            "l2",
+            15500
+          ],
+          [
+            "l3",
+            24000
+          ],
+          [
+            "l4",
+            40000
+          ],
+          [
+            "wolf",
+            840
+          ],
+          [
+            "moon",
+            800
+          ]
+        ]
+      },
+      "ante": {
+        "base": [
+          [
+            "h1",
+            5600
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8600
+          ],
+          [
+            "h4",
+            10200
+          ],
+          [
+            "l1",
+            12200
+          ],
+          [
+            "l2",
+            14400
+          ],
+          [
+            "l3",
+            16600
+          ],
+          [
+            "l4",
+            19000
+          ],
+          [
+            "wolf",
+            700
+          ],
+          [
+            "moon",
+            830
+          ]
+        ],
+        "free": [
+          [
+            "h1",
+            1600
+          ],
+          [
+            "h2",
+            2500
+          ],
+          [
+            "h3",
+            4000
+          ],
+          [
+            "h4",
+            6200
+          ],
+          [
+            "l1",
+            10000
+          ],
+          [
+            "l2",
+            15500
+          ],
+          [
+            "l3",
+            24000
+          ],
+          [
+            "l4",
+            40000
+          ],
+          [
+            "wolf",
+            820
+          ],
+          [
+            "moon",
+            800
+          ]
+        ]
+      },
+      "buy": {
+        "base": [
+          [
+            "h1",
+            5600
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8600
+          ],
+          [
+            "h4",
+            10200
+          ],
+          [
+            "l1",
+            12200
+          ],
+          [
+            "l2",
+            14400
+          ],
+          [
+            "l3",
+            16600
+          ],
+          [
+            "l4",
+            19000
+          ],
+          [
+            "wolf",
+            700
+          ],
+          [
+            "moon",
+            640
+          ]
+        ],
+        "free": [
+          [
+            "h1",
+            2000
+          ],
+          [
+            "h2",
+            3000
+          ],
+          [
+            "h3",
+            4500
+          ],
+          [
+            "h4",
+            6500
+          ],
+          [
+            "l1",
+            10000
+          ],
+          [
+            "l2",
+            15000
+          ],
+          [
+            "l3",
+            22000
+          ],
+          [
+            "l4",
+            34000
+          ],
+          [
+            "wolf",
+            860
+          ],
+          [
+            "moon",
+            800
+          ]
+        ]
+      }
+    },
+    "templates": [
+      {
+        "id": "kurt-basi",
+        "name": "Kurt Başı",
+        "multiplier": 10,
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      },
+      {
+        "id": "yay",
+        "name": "Yay",
+        "multiplier": 3,
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            0,
+            3
+          ]
+        ]
+      },
+      {
+        "id": "at",
+        "name": "At",
+        "multiplier": 4,
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            3,
+            2
+          ]
+        ]
+      },
+      {
+        "id": "kartal",
+        "name": "Kartal",
+        "multiplier": 6,
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            3,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ]
+      },
+      {
+        "id": "hayat-agaci",
+        "name": "Hayat Ağacı",
+        "multiplier": 8,
+        "cells": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ]
+        ]
+      },
+      {
+        "id": "hilal",
+        "name": "Hilal",
+        "multiplier": 2,
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      }
+    ]
+  },
+  "runtimeSeconds": 1410.1,
+  "node": "v24.21.0",
+  "generatedAt": "2026-10-15T08:33:12.033Z",
+  "mergedFrom": 3
+}
