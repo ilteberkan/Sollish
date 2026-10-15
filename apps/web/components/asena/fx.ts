@@ -240,7 +240,7 @@ export class AsenaFx {
     if (this.reduced) return this.after(30);
     const now = this.now(), k = this.bs / 600;
     const a = this.cell(from[0], from[1]), b = this.cell(to[0], to[1]);
-    const dust = (p: AsPoint, n: number, at: number) => { for (let i = 0; i < n; i++) { const ang = rand(Math.PI * 0.9, Math.PI * 2.1); this.push({ kind: 'dust', x: p.x + rand(-14, 14) * k, y: p.y + 34 * k, vx: Math.cos(ang) * rand(30, 110) * k, vy: Math.sin(ang) * rand(10, 50) * k - 20 * k, born: at + rand(0, 0.05), life: rand(0.6, 1.1), size: rand(14, 26) * k, color: pick(DUST), g: -20 * k, drag: 2, rot: 0, vr: 0 }); } };
+    const dust = (p: AsPoint, n: number, at: number) => { for (let i = 0; i < n; i++) { const ang = rand(Math.PI * 0.9, Math.PI * 2.1); this.push({ kind: 'dust', x: p.x + rand(-18, 18) * k, y: p.y + 42 * k, vx: Math.cos(ang) * rand(40, 120) * k, vy: Math.sin(ang) * rand(6, 24) * k - 10 * k, born: at + rand(0, 0.05), life: rand(0.5, 0.9), size: rand(8, 15) * k, color: pick(DUST), g: -20 * k, drag: 2, rot: 0, vr: 0 }); } };
     dust(a, 7, now);
     const steps = 12;
     for (let i = 0; i <= steps; i++) {
@@ -813,7 +813,7 @@ export class AsenaFx {
           }
           case 'dust': {
             ctx.globalCompositeOperation = 'source-over';
-            ctx.globalAlpha = 0.3 * Math.sin(Math.min(1, u * 1.3) * Math.PI);
+            ctx.globalAlpha = 0.2 * Math.sin(Math.min(1, u * 1.3) * Math.PI);
             const r = p.size * (0.6 + u * 1.4);
             ctx.drawImage(this.sprite(p.color), x - r, y - r, r * 2, r * 2);
             break;

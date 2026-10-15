@@ -98,6 +98,8 @@ function LabStage({ mood, onMood, scene, fpsOut }: { mood: AsenaMood; onMood: (m
   const [mode, setMode] = useState<AsenaMode>('standard');
   const erg = useRef(0);
   const [clean, setClean] = useState(false);
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => { const mq = window.matchMedia('(max-width: 1000px), (max-aspect-ratio: 1 / 1)'); const on = () => setNarrow(mq.matches); on(); mq.addEventListener('change', on); return () => mq.removeEventListener('change', on); }, []);
 
   useEffect(() => {
     const root = stageRef.current, front = canvasRef.current;
@@ -323,7 +325,7 @@ function LabStage({ mood, onMood, scene, fpsOut }: { mood: AsenaMood; onMood: (m
   return (
     <div ref={stageRef} className={styles.labStage} data-clean={clean || undefined}>
       <div className={styles.labLogo}><AsenaLogo /></div>
-      <div className={styles.labMap}><AsenaSkyMap ref={map} pieces={pieces} multiplier={mult} inactive={!mapOn} orientation="column" /></div>
+      <div className={styles.labMap}><AsenaSkyMap ref={map} pieces={pieces} multiplier={mult} inactive={!mapOn} orientation={narrow ? 'row' : 'column'} /></div>
       <div className={styles.labBoardWrap}>
         <AsenaFrame mood={mood === 'feature' ? 'feature' : 'base'}>
           <AsenaBoard ref={board} mood={mood === 'feature' ? 'feature' : 'base'} />

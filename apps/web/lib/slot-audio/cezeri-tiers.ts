@@ -54,7 +54,7 @@ export function beamPlan(spoke: number, length: number, startRing: number, symbo
   const notes: BeamNote[] = Array.from({ length: len }, (_, i) => {
     const semitones = ladder(root + i);
     const clip = BEAM_CLIPS.reduce((best, c) => (Math.abs(c.semitones - semitones) < Math.abs(best.semitones - semitones) ? c : best));
-    return { ring: start + i, at: i * dt, semitones, clip: clip.id, rate: 2 ** ((semitones - clip.semitones) / 12), pan, gain: 0.7 + 0.1 * i + (len === 4 && i === 3 ? 0.1 : 0) };
+    return { ring: start + i, at: i * dt, semitones, clip: clip.id, rate: 2 ** ((semitones - clip.semitones) / 12), pan, gain: 0.5 + 0.07 * i + (len === 4 && i === 3 ? 0.08 : 0) };
   });
   return { spoke: ((Math.round(Number.isFinite(spoke) ? spoke : 0) % 12) + 12) % 12, seconds: (len - 1) * dt, notes, pan, gear: symbol === 'gear' };
 }
