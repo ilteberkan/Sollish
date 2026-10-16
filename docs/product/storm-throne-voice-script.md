@@ -33,3 +33,8 @@ Deneme repliği: «Gökler benim! Fırtına başlıyor... Yüz kat!»
 | `feature-end.mp3` | «Fırtına dindi.» | bedava dönüş toplam ekranı |
 
 Toplam 19 replik ve 4 deneme repliği. Maliyet ön kontrolü (12 Ekim 2026): ElevenLabs ile replik başına 0,15 kredi, yani toplam yaklaşık 3,5 kredi.
+
+## Üretim kaydı (16 Ekim 2026)
+- Ses: Higgsfield `text2speech_v2`, motor ElevenLabs, hazır ses **Gideon** (dört aday arasında en derin: ortalama F0 ≈ 73 Hz; Orion 111, Barrett 90, Vlad 79). Replik başına 0,15 kredi, toplam 19 replik ≈ 2,85 kredi (+ 4 deneme 0,6).
+- İşleme: baş/son sessizlik kırpıldı, `loudnorm` I = −16 LUFS, TP −1,5 dBTP, 44,1 kHz mono MP3 128 kb/s → `apps/web/public/audio/voice/storm/*.mp3`.
+- Sahibin dinleme kabulü bekleniyor; telaffuzu yanlış olan replik yeniden üretilir.
