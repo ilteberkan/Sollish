@@ -69,6 +69,7 @@ export function SettingsPanel({ settings, onChange, onReset, showLanguage = true
         <section className={styles.group} aria-labelledby={`${id}-lang`}>
           <h3 id={`${id}-lang`} className={styles.groupTitle}>{t('settings.language')}</h3>
           <Segmented<Locale>
+            className={styles.langChips}
             label={<span className={styles.srOnly}>{t('settings.language')}</span>}
             layout="chips"
             options={LOCALES.map(code => ({ value: code, label: <span lang={HTML_LANG[code]}>{LOCALE_NATIVE_NAMES[code]}</span> }))}

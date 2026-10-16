@@ -450,3 +450,7 @@
   .modal, .modal::backdrop { transition: none !important; }
   .stopBtn::after { display: none; }
 }
+
+/* Language picker in SettingsPanel: native names differ a lot in width ("中文" vs "Português"), so columns fit the longest. */
+.langChips .segChips { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
+.langChips .segFace span { white-space: nowrap; }

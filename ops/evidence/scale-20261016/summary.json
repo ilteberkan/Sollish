@@ -122,6 +122,27 @@
    },
    "monitorReached": true,
    "pass": true
+  },
+  "slot-load-200x3-tmpfs.json": {
+   "players": 200,
+   "ratePerPlayer": 3,
+   "state": "tmpfs",
+   "offered": 600,
+   "accepted": 163.1,
+   "firstTryMs": {
+    "n": 2109,
+    "p50": 1187.4,
+    "p95": 1808.5,
+    "p99": 1841.7,
+    "max": 1899.2,
+    "mean": 1181.4
+   },
+   "responses": {
+    "OK": 2109
+   },
+   "finalErrorRate": 0,
+   "workerdCpuMsPerRound": 7.26,
+   "pass": true
   }
  },
  "relayFanout": {
@@ -306,15 +327,15 @@
   },
   "turbopackFirstLoad": {
    "/": {
-    "raw": 495328,
-    "gzip": 148694,
+    "raw": 508636,
+    "gzip": 152874,
     "routeSpecificRaw": 0,
     "contains": []
    },
    "/game/asena": {
-    "raw": 822371,
-    "gzip": 248509,
-    "routeSpecificRaw": 327043,
+    "raw": 839873,
+    "gzip": 253614,
+    "routeSpecificRaw": 331237,
     "contains": [
      "cascade engine",
      "tarhun engine",
@@ -324,9 +345,9 @@
     ]
    },
    "/game/cascade": {
-    "raw": 965337,
-    "gzip": 295603,
-    "routeSpecificRaw": 470009,
+    "raw": 983175,
+    "gzip": 300771,
+    "routeSpecificRaw": 474539,
     "contains": [
      "cascade engine",
      "tarhun engine",
@@ -336,9 +357,9 @@
     ]
    },
    "/game/cezeri": {
-    "raw": 838160,
-    "gzip": 247638,
-    "routeSpecificRaw": 342832,
+    "raw": 855731,
+    "gzip": 252762,
+    "routeSpecificRaw": 347095,
     "contains": [
      "cascade engine",
      "tarhun engine",
@@ -348,21 +369,21 @@
     ]
    },
    "/game/coinflip": {
-    "raw": 526466,
-    "gzip": 158883,
-    "routeSpecificRaw": 31138,
+    "raw": 539590,
+    "gzip": 162942,
+    "routeSpecificRaw": 30954,
     "contains": []
    },
    "/game/crash": {
-    "raw": 514863,
-    "gzip": 155116,
-    "routeSpecificRaw": 19535,
+    "raw": 527987,
+    "gzip": 159139,
+    "routeSpecificRaw": 19351,
     "contains": []
    },
    "/game/ebru": {
-    "raw": 814091,
-    "gzip": 246882,
-    "routeSpecificRaw": 318763,
+    "raw": 831622,
+    "gzip": 251987,
+    "routeSpecificRaw": 322986,
     "contains": [
      "ebru engine",
      "cascade engine",
@@ -372,9 +393,9 @@
     ]
    },
    "/game/tarhun": {
-    "raw": 875467,
-    "gzip": 262693,
-    "routeSpecificRaw": 380139,
+    "raw": 892977,
+    "gzip": 267766,
+    "routeSpecificRaw": 384341,
     "contains": [
      "cascade engine",
      "tarhun engine",
@@ -384,23 +405,23 @@
     ]
    },
    "/games": {
-    "raw": 510122,
-    "gzip": 154287,
+    "raw": 523430,
+    "gzip": 158467,
     "routeSpecificRaw": 14794,
     "contains": []
    },
    "/live/ringside": {
-    "raw": 1020518,
-    "gzip": 320686,
+    "raw": 1033826,
+    "gzip": 324866,
     "routeSpecificRaw": 525190,
     "contains": [
      "ringside contact engine"
     ]
    },
    "/replay/[id]": {
-    "raw": 757110,
-    "gzip": 224012,
-    "routeSpecificRaw": 261782,
+    "raw": 770245,
+    "gzip": 227941,
+    "routeSpecificRaw": 261609,
     "contains": [
      "cascade engine",
      "tarhun engine",
@@ -410,21 +431,21 @@
     ]
    },
    "/rewards": {
-    "raw": 522854,
-    "gzip": 156969,
+    "raw": 536162,
+    "gzip": 161149,
     "routeSpecificRaw": 27526,
     "contains": []
    },
    "/stake": {
-    "raw": 522463,
-    "gzip": 156850,
+    "raw": 535771,
+    "gzip": 161030,
     "routeSpecificRaw": 27135,
     "contains": []
    },
    "/verify": {
-    "raw": 574329,
-    "gzip": 172221,
-    "routeSpecificRaw": 79001,
+    "raw": 587149,
+    "gzip": 175971,
+    "routeSpecificRaw": 78513,
     "contains": [
      "cascade engine",
      "tarhun engine",
@@ -434,6 +455,84 @@
     ]
    }
   },
-  "turbopackNote": "(BUILD_ID missing: compile finished, later build step did not)"
+  "turbopackNote": "buildId JpEUqEHEm4FOYVKBgzfGK"
+ },
+ "preview": {
+  "note": "local wrangler preview (workerd) of build:cloudflare, loopback, warm, 20 samples after 5 warm-up; not a hosted/mobile number",
+  "buildId": "JpEUqEHEm4FOYVKBgzfGK",
+  "routes": {
+   "/games": {
+    "ttfbMsP50": 42.1,
+    "ttfbMsP95": 64.0,
+    "bytes": 46469,
+    "n": 20
+   },
+   "/game/tarhun": {
+    "ttfbMsP50": 70.3,
+    "ttfbMsP95": 106.0,
+    "bytes": 600329,
+    "n": 20
+   },
+   "/game/cascade": {
+    "ttfbMsP50": 57.6,
+    "ttfbMsP95": 88.2,
+    "bytes": 234058,
+    "n": 20
+   },
+   "/live/ringside": {
+    "ttfbMsP50": 38.1,
+    "ttfbMsP95": 49.9,
+    "bytes": 35263,
+    "n": 20
+   },
+   "/audio/voice/ebru/tr/x10.mp3": {
+    "ttfbMsP50": 5.6,
+    "ttfbMsP95": 16.7,
+    "bytes": 14254,
+    "n": 20
+   }
+  },
+  "htmlCompressedBytes": {
+   "/games": 10168,
+   "/game/tarhun": 84367,
+   "/game/cascade": 32521,
+   "/game/ebru": 101019,
+   "/game/cezeri": 69164,
+   "/game/asena": 40410,
+   "/live/ringside": 9805
+  },
+  "htmlInlineSvgRawBytes": {
+   "/games": 8573,
+   "/game/tarhun": 549507,
+   "/game/cascade": 179631,
+   "/game/ebru": 370661,
+   "/game/cezeri": 329042,
+   "/game/asena": 169553,
+   "/live/ringside": 7447
+  },
+  "headersVerified": {
+   "/_next/static/chunks/*": "public, max-age=31536000, immutable",
+   "/workers/slot-audio-render.js?v=...": "public, max-age=31536000, immutable",
+   "/fonts/*": "public, max-age=31536000, immutable",
+   "/audio/voice/ebru/tr/x10.mp3": "public, max-age=3600, stale-while-revalidate=86400 + ETag",
+   "/images/*": "same as audio",
+   "HTML": "private, no-cache, no-store, max-age=0, must-revalidate (every route dynamic: lib/i18n/server.ts reads cookies()/headers())",
+   "/": "307 -> /games (one extra round trip on first visit)"
+  }
+ },
+ "build": {
+  "command": "pnpm --filter @sollish/web build:cloudflare",
+  "buildId": "JpEUqEHEm4FOYVKBgzfGK",
+  "result": "ok, 1m13s, all app routes dynamic"
+ },
+ "checks": {
+  "realtimeUnit": "20/20",
+  "protocolUnit": "302/302",
+  "realtimeTypecheck": "clean",
+  "webTypecheck": "clean",
+  "test:slots": "33/33",
+  "contactV5": "14/14",
+  "contactV3V4": "16/16",
+  "ringsideV2": "12/12 (one earlier failure was two runs overlapping on one port)"
  }
 }

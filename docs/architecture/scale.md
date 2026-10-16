@@ -14,9 +14,10 @@ Kanıt klasörü: `ops/evidence/scale-20261016/` (özet `summary.json`).
 | --- | --- | --- |
 | Spin API (POST `/v1/slots/:game/rounds`) gecikmesi, oyuncunun bölgesinde, sunucu tarafı | p50 ≤ 40 ms, p99 ≤ 150 ms | Yerel, kapasite altında (50 oyuncu × 1 spin/sn, disk): p50 11 ms, p95 28 ms, p99 33 ms. Barındırılan ölçüm yok. |
 | Spin API hata oranı (yeniden denemeden sonra) | < 0,01 % ; çift çekim **0** | Yerel bütün koşularda nihai hata 0, defter/nonce/idempotency 100 % tutarlı (aşırı yükte bile). |
-| Lobi HTML TTFB (p75, mobil, sıcak kenar) | ≤ 200 ms | Ölçülmedi (barındırılan yok). |
+| Lobi HTML TTFB (p75, mobil, sıcak kenar) | ≤ 200 ms | Barındırılan yok. Yerel workerd önizleme (loopback, sıcak): `/games` p50 42 ms, `/game/tarhun` 70 ms; her sayfa her istekte SSR (§6.3). |
 | Lobi LCP (p75, orta segment Android, 4G) | ≤ 2,5 s | Ölçülmedi. |
-| Oyun rotası ilk yük JS (gzip, framework dahil) | ≤ 250 KB | Turbopack çıktısı: slot rotaları 241–289 KB (`first-load-js-after.json`); düzeltmeden önce ~+157 KB daha (bkz. §6). |
+| Oyun rotası ilk yük JS (gzip, framework dahil) | ≤ 250 KB | `build:cloudflare` (build `JpEUqEHEm4FOYVKBgzfGK`): slot rotaları 246–294 KB (`first-load-js-after.json`); düzeltmeden önce rota kodu ~+157 KB gz daha (esbuild tahmini, §6.2). |
+| Oyun sayfası HTML (sıkıştırılmış) | ≤ 30 KB | 33–101 KB; ham HTML'in %76–92'si sunucuda çizilmiş satır içi SVG (§6.3). |
 | Oyun içi kare hızı (orta segment telefon) | 60 fps, ≥ 50 fps p5 | Ölçülmedi. |
 | Canlı yayın yayılma gecikmesi (kök arena → izleyici) | p99 ≤ 1 s | Yerel, 2.000 izleyici / 4 relay: "güncel duruma yetişme" p50 196 ms, p99 641 ms (250 ms birleştirme dahil, yüklü konteyner; ayrıntı §5). |
 | Geç katılan izleyicinin ilk karesi | ≤ 300 ms | Yerel relay: tek istek, önbellekteki son anlık görüntü. |
@@ -111,7 +112,7 @@ Spin başına SQLite satır yazımı ≈ 10 (slot_rounds 1 + 4 dizin, ledger 1, 
 | `/fonts/*` | aynı | sabit lisanslı dosyalar (next/font hash'li kopya da üretir) |
 | `/workers/*` | aynı (**yeni**) | tek tüketici `?v=<sha256>` ile yükler (`build-audio-worker.mjs`) |
 | `/audio/*`, `/sprites/*`, `/images/*` | `public, max-age=3600, stale-while-revalidate=86400` (**yeni**; önce `max-age=0`) | adlar sabit, dosyalar yerinde değişiyor (ses dosyaları `/audio/voice/<oyun>/<tr|en>/`) |
-| HTML | Next varsayılanı (statik sayfa `s-maxage=31536000`, dinamik `no-store`) | tarayıcı HTML'i önbelleğe almaz; kenar önbelleği kurulursa dağıtımda temizlenmeli |
+| HTML | `private, no-cache, no-store` (doğrulandı: bütün rotalar dinamik) | i18n katmanı her istekte çerez/başlık okuyor (§6.3) |
 
 **Sürümlü varlık URL'leri [TASARIM, ses ajanının dosyalarına dokunur]:** derleme betiği `public/audio|sprites|images` için `asset-manifest.generated.ts` (yol → içerik hash'i) üretir; ses bankaları `setVoiceBank('/audio/voice/ebru/tr')` yerine dosya başına `?v=<hash>` URL'si verir. Bütün tüketiciler geçince bu klasörler `immutable` olur ve tekrar ziyarette ağ isteği sıfırlanır.
 
@@ -130,15 +131,18 @@ Spin başına SQLite satır yazımı ≈ 10 (slot_rounds 1 + 4 dizin, ledger 1, 
 | /game/asena | 992 / 326 KB | 517 / 168 KB |
 | /verify | 544 / 179 KB | 69 / 22 KB |
 
-Gerçek Turbopack üretim derlemesi (düzeltme sonrası; `first-load-js-after.json`, framework + layout + sayfa, nomodule polyfill hariç): `/` 145 KB gz, `/games` 151, slot rotaları 241–289, `/live/ringside` 313, `/verify` 168. Turbopack çıktısında slot rotalarında connectome işareti yok.
+Gerçek üretim derlemesi (`build:cloudflare`, düzeltme sonrası, build `JpEUqEHEm4FOYVKBgzfGK`; `first-load-js-after.json`, framework + layout + sayfa, nomodule polyfill 110 KB hariç): `/` 149 KB gz, `/games` 155, slot rotaları 246 (ebru) – 294 (cascade), `/live/ringside` 317, `/verify` 172. Slot rotalarının parçalarında Ringside motor/connectome işareti yok; beş slot motorunun işareti her slot rotasında var (aşağıdaki 1. madde). Önizlemede başlıklar doğrulandı (`preview-ttfb.json`).
 
 **Kalan sızıntı (her slot rotasında ~134–147 KB min, ≈ %26) [TASARIM — dosyalar diğer ajanlarda]:**
 1. `lib/rgs-client.ts` yerel kaynak beş motoru da statik çağırıyor ve `SLOT_GAMES` kaydını (motor fonksiyonlarıyla) kullanıyor → ~45 KB min. Çözüm: `createLocalSource(TARHUN_SLOT)` gibi oyun başına motor enjeksiyonu + motorsuz meta kayıt (`slot-game-meta.ts`); her oyun bileşeni kendi tanımını verir.
 2. `lib/slot-audio/render.ts` (ana iş parçacığı yedeği) bütün oyunların synth/sfx'ini içe aktarıyor → ~90 KB min. Çözüm: render yedeğini `import()` ile tembel yüklemek ve oyun başına sfx/synth kayıtları.
 Bu iki adım slot rotalarını ~290 → ~250 KB gz'ye indirir (tahmin; ölçüm gerekir).
 
-### 6.3 HTML ve TTFB
-OpenNext yapılandırması (`open-next.config.ts`) artımlı önbellek tanımlamıyor; statik sayfalar her istekte Worker'da üretilebilir. Tasarım: salt-okunur `staticAssetsIncrementalCache` (yalnız derleme anı çıktısı, çalışma zamanı verisi yok) + `enableCacheInterception`; önce önizlemede güvenlik başlıklarının korunduğu doğrulanmalı. Bu teslimde değiştirilmedi.
+### 6.3 HTML, TTFB ve sayfa ağırlığı (önizlemede ölçüldü, `preview-ttfb.json`)
+- **Bulgu 1 — her sayfa dinamik:** `lib/i18n/server.ts` her istekte `cookies()` ve `headers()` okuyor; derleme çıktısında bütün rotalar `ƒ (Dynamic)`, HTML `no-store`. Her sayfa görüntüleme Worker'da React SSR'dir (CPU maliyeti, önbelleklenemez). Tasarım: dili URL'de taşımak (`/en/games`, `generateStaticParams` ile 9 dil × rota önceden üretilir) veya statik kabuk + istemcide dil; sonra salt-okunur `staticAssetsIncrementalCache` ile HTML'i Workers Assets'ten sunmak. i18n ajanının alanı; bu teslimde değiştirilmedi.
+- **Bulgu 2 — `/` 307 ile `/games`'e yönleniyor:** ilk ziyarette bir gidiş-dönüş fazla (mobilde 100–300 ms). Tasarım: kökü doğrudan lobi olarak sunmak veya kalıcı (308) yönlendirme.
+- **Bulgu 3 — oyun HTML'i ağır:** sıkıştırılmış HTML Tarhun 84 KB, Ebru 101 KB, Cezeri 69 KB, Asena 40 KB, Cascade 33 KB; ham HTML'in 170–550 KB'ı sunucuda çizilmiş satır içi SVG (sembol sanatı ve sahne). Aynı sanat istemci paketinde de var (hidrasyon), DOM düğüm sayısı yüksek → orta segment telefonda ayrıştırma/stil maliyeti. Tasarım: sembolleri bir kez `<symbol>` + `<use>` ile (bazı oyunlarda `*SymbolSprites` zaten var) veya derleme anında rasterleştirilmiş, içerik hash'li WebP/AVIF atlasla çizmek; tahtayı ilk boyamadan sonra istemcide kurmak. Bileşen dosyaları diğer ajanların çalıştığı alanda; ölçüm burada, değişiklik yapılmadı.
+- Yerel önizleme TTFB (loopback, sıcak, 20 örnek p50/p95): `/games` 42/64 ms, `/game/cascade` 58/88, `/game/tarhun` 70/106, `/live/ringside` 38/50, ses dosyası 6/17 ms. Barındırılan ve mobil değil.
 
 ### 6.4 Cihaz performansı (tasarım)
 Hedef cihaz sınıfı: 4 GB RAM orta segment Android. Kurallar: oyun sahnesi tek `requestAnimationFrame` döngüsü, gizli sekmede durdurma (sunum; sonuç/ödeme etkilenmez), `prefers-reduced-motion`, ses worker'da önceden üretim (var), görseller AVIF/WebP + `sizes`, yazı tipi `display: swap` (var). Ölçüm: WebPageTest/Lighthouse mobil profili + gerçek cihazda Performance panel; kanıt yok.
@@ -189,9 +193,9 @@ Tek konteyner (4 vCPU, 16 GB), tek workerd süreci her DO'yu çalıştırır; sa
 | 50 oyuncu × 1/s, disk | 50/s | 46,6 | 11 / 28 / 33 ms | 0 | 50/50 bakiye, nonce, replay |
 | 200 × 3/s, disk (aşırı yük) | 600/s | 56 | 2,8 / 3,7 / 3,7 s (kuyruk) | 0 (104 yerel 500 yeniden denendi) | 200/200 |
 | 1.000 × 0,15/s, tmpfs | 150/s | 102 | 3,9 / 7,9 / 8,3 s | 0 | 1.000/1.000 |
-| 200 × 3/s, tmpfs (tanı) | 600/s | 197 | 1,0 / 1,7 / 1,9 s | 0 | 200/200 |
+| 200 × 3/s, tmpfs (tanı) | 600/s | 163 | 1,2 / 1,8 / 1,8 s | 0 | 200/200 |
 
-Yorum: yerel tavan ~60–200 tur/s, darboğaz tek workerd süreci ve yerel diskte commit başına fsync (tmpfs'te 2,5–3,5×). Barındırılan ortamda her oturum ayrı DO olduğundan tavan DO sayısıyla yatay büyür; bunun kanıtı barındırılan yük testidir (aşağıda).
+Yorum: yerel tavan ~60–200 tur/s, darboğaz tek workerd süreci ve yerel diskte commit başına fsync (tmpfs'te ~3×). Dosyalar: `slot-load-50x1-disk.json`, `slot-load-200x3-disk.json`, `slot-load-200x3-tmpfs.json`, `slot-load-1000x0.15-tmpfs.json`. Barındırılan ortamda her oturum ayrı DO olduğundan tavan DO sayısıyla yatay büyür; bunun kanıtı barındırılan yük testidir (aşağıda).
 
 ## 12. Barındırılan doğrulama planı ve onay gerektirenler
 1. **[SAHİP ONAYI]** realtime'ın ayrı bir yük ortamına (`sollish-realtime-load`, ayrı Worker adı, DEMO) dağıtımı; `SLOT_SIGNING_KEY` sırrı; `SLOTS_ENABLED=true`.

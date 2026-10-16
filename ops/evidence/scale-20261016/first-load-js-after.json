@@ -1,21 +1,21 @@
 {
-  "buildId": "(BUILD_ID missing: compile finished, later build step did not)",
-  "generatedAt": "2026-10-16T19:37:02.440Z",
+  "buildId": "JpEUqEHEm4FOYVKBgzfGK",
+  "generatedAt": "2026-10-16T23:34:50.582Z",
   "method": "rootMainFiles + entryJSFiles[layout] + entryJSFiles[page] (polyfills excluded: nomodule)",
   "polyfillRaw": 112594,
   "routes": {
     "/": {
       "chunks": 7,
-      "firstLoadJsRaw": 495328,
-      "firstLoadJsGzip": 148694,
+      "firstLoadJsRaw": 508636,
+      "firstLoadJsGzip": 152874,
       "routeSpecificRaw": 0,
       "contains": []
     },
     "/game/asena": {
       "chunks": 13,
-      "firstLoadJsRaw": 822371,
-      "firstLoadJsGzip": 248509,
-      "routeSpecificRaw": 327043,
+      "firstLoadJsRaw": 839873,
+      "firstLoadJsGzip": 253614,
+      "routeSpecificRaw": 331237,
       "contains": [
         "cascade engine",
         "tarhun engine",
@@ -26,9 +26,9 @@
     },
     "/game/cascade": {
       "chunks": 12,
-      "firstLoadJsRaw": 965337,
-      "firstLoadJsGzip": 295603,
-      "routeSpecificRaw": 470009,
+      "firstLoadJsRaw": 983175,
+      "firstLoadJsGzip": 300771,
+      "routeSpecificRaw": 474539,
       "contains": [
         "cascade engine",
         "tarhun engine",
@@ -39,9 +39,9 @@
     },
     "/game/cezeri": {
       "chunks": 13,
-      "firstLoadJsRaw": 838160,
-      "firstLoadJsGzip": 247638,
-      "routeSpecificRaw": 342832,
+      "firstLoadJsRaw": 855731,
+      "firstLoadJsGzip": 252762,
+      "routeSpecificRaw": 347095,
       "contains": [
         "cascade engine",
         "tarhun engine",
@@ -52,23 +52,23 @@
     },
     "/game/coinflip": {
       "chunks": 8,
-      "firstLoadJsRaw": 526466,
-      "firstLoadJsGzip": 158883,
-      "routeSpecificRaw": 31138,
+      "firstLoadJsRaw": 539590,
+      "firstLoadJsGzip": 162942,
+      "routeSpecificRaw": 30954,
       "contains": []
     },
     "/game/crash": {
       "chunks": 8,
-      "firstLoadJsRaw": 514863,
-      "firstLoadJsGzip": 155116,
-      "routeSpecificRaw": 19535,
+      "firstLoadJsRaw": 527987,
+      "firstLoadJsGzip": 159139,
+      "routeSpecificRaw": 19351,
       "contains": []
     },
     "/game/ebru": {
       "chunks": 13,
-      "firstLoadJsRaw": 814091,
-      "firstLoadJsGzip": 246882,
-      "routeSpecificRaw": 318763,
+      "firstLoadJsRaw": 831622,
+      "firstLoadJsGzip": 251987,
+      "routeSpecificRaw": 322986,
       "contains": [
         "ebru engine",
         "cascade engine",
@@ -79,9 +79,9 @@
     },
     "/game/tarhun": {
       "chunks": 13,
-      "firstLoadJsRaw": 875467,
-      "firstLoadJsGzip": 262693,
-      "routeSpecificRaw": 380139,
+      "firstLoadJsRaw": 892977,
+      "firstLoadJsGzip": 267766,
+      "routeSpecificRaw": 384341,
       "contains": [
         "cascade engine",
         "tarhun engine",
@@ -92,15 +92,15 @@
     },
     "/games": {
       "chunks": 8,
-      "firstLoadJsRaw": 510122,
-      "firstLoadJsGzip": 154287,
+      "firstLoadJsRaw": 523430,
+      "firstLoadJsGzip": 158467,
       "routeSpecificRaw": 14794,
       "contains": []
     },
     "/live/ringside": {
       "chunks": 10,
-      "firstLoadJsRaw": 1020518,
-      "firstLoadJsGzip": 320686,
+      "firstLoadJsRaw": 1033826,
+      "firstLoadJsGzip": 324866,
       "routeSpecificRaw": 525190,
       "contains": [
         "ringside contact engine"
@@ -108,9 +108,9 @@
     },
     "/replay/[id]": {
       "chunks": 11,
-      "firstLoadJsRaw": 757110,
-      "firstLoadJsGzip": 224012,
-      "routeSpecificRaw": 261782,
+      "firstLoadJsRaw": 770245,
+      "firstLoadJsGzip": 227941,
+      "routeSpecificRaw": 261609,
       "contains": [
         "cascade engine",
         "tarhun engine",
@@ -121,23 +121,23 @@
     },
     "/rewards": {
       "chunks": 8,
-      "firstLoadJsRaw": 522854,
-      "firstLoadJsGzip": 156969,
+      "firstLoadJsRaw": 536162,
+      "firstLoadJsGzip": 161149,
       "routeSpecificRaw": 27526,
       "contains": []
     },
     "/stake": {
       "chunks": 8,
-      "firstLoadJsRaw": 522463,
-      "firstLoadJsGzip": 156850,
+      "firstLoadJsRaw": 535771,
+      "firstLoadJsGzip": 161030,
       "routeSpecificRaw": 27135,
       "contains": []
     },
     "/verify": {
       "chunks": 9,
-      "firstLoadJsRaw": 574329,
-      "firstLoadJsGzip": 172221,
-      "routeSpecificRaw": 79001,
+      "firstLoadJsRaw": 587149,
+      "firstLoadJsGzip": 175971,
+      "routeSpecificRaw": 78513,
       "contains": [
         "cascade engine",
         "tarhun engine",

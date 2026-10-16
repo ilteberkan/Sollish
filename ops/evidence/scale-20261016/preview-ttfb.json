@@ -1,0 +1,63 @@
+{
+ "note": "local wrangler preview (workerd) of build:cloudflare, loopback, warm, 20 samples after 5 warm-up; not a hosted/mobile number",
+ "buildId": "JpEUqEHEm4FOYVKBgzfGK",
+ "routes": {
+  "/games": {
+   "ttfbMsP50": 42.1,
+   "ttfbMsP95": 64.0,
+   "bytes": 46469,
+   "n": 20
+  },
+  "/game/tarhun": {
+   "ttfbMsP50": 70.3,
+   "ttfbMsP95": 106.0,
+   "bytes": 600329,
+   "n": 20
+  },
+  "/game/cascade": {
+   "ttfbMsP50": 57.6,
+   "ttfbMsP95": 88.2,
+   "bytes": 234058,
+   "n": 20
+  },
+  "/live/ringside": {
+   "ttfbMsP50": 38.1,
+   "ttfbMsP95": 49.9,
+   "bytes": 35263,
+   "n": 20
+  },
+  "/audio/voice/ebru/tr/x10.mp3": {
+   "ttfbMsP50": 5.6,
+   "ttfbMsP95": 16.7,
+   "bytes": 14254,
+   "n": 20
+  }
+ },
+ "htmlCompressedBytes": {
+  "/games": 10168,
+  "/game/tarhun": 84367,
+  "/game/cascade": 32521,
+  "/game/ebru": 101019,
+  "/game/cezeri": 69164,
+  "/game/asena": 40410,
+  "/live/ringside": 9805
+ },
+ "htmlInlineSvgRawBytes": {
+  "/games": 8573,
+  "/game/tarhun": 549507,
+  "/game/cascade": 179631,
+  "/game/ebru": 370661,
+  "/game/cezeri": 329042,
+  "/game/asena": 169553,
+  "/live/ringside": 7447
+ },
+ "headersVerified": {
+  "/_next/static/chunks/*": "public, max-age=31536000, immutable",
+  "/workers/slot-audio-render.js?v=...": "public, max-age=31536000, immutable",
+  "/fonts/*": "public, max-age=31536000, immutable",
+  "/audio/voice/ebru/tr/x10.mp3": "public, max-age=3600, stale-while-revalidate=86400 + ETag",
+  "/images/*": "same as audio",
+  "HTML": "private, no-cache, no-store, max-age=0, must-revalidate (every route dynamic: lib/i18n/server.ts reads cookies()/headers())",
+  "/": "307 -> /games (one extra round trip on first visit)"
+ }
+}

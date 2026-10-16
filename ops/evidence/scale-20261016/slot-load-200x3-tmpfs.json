@@ -1,0 +1,116 @@
+{
+  "at": "2026-10-16T23:36:49.759Z",
+  "runtime": "wrangler dev (local workerd + SQLite DO), production router src/index.ts",
+  "machine": {
+    "cpus": 4,
+    "model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+    "memGB": 16,
+    "node": "v24.21.0"
+  },
+  "config": {
+    "stateDir": "custom (see --state)",
+    "players": 200,
+    "seconds": 12,
+    "targetRatePerPlayer": 3,
+    "games": [
+      "cascade",
+      "tarhun",
+      "ebru",
+      "cezeri",
+      "asena"
+    ],
+    "betCents": 100,
+    "mode": "standard",
+    "monitorFlushMs": 30000,
+    "monitorRollupMs": 5000,
+    "monitorShards": 64,
+    "note": "production defaults"
+  },
+  "warmup": {
+    "sessionMs": 33,
+    "roundMs": 24,
+    "roundStatus": 200
+  },
+  "sessions": {
+    "created": 200,
+    "wallMs": 2359,
+    "latencyMs": {
+      "n": 200,
+      "p50": 2304.8423399999997,
+      "p95": 2328.1313430000005,
+      "p99": 2328.919999,
+      "max": 2329.004028,
+      "mean": 2116.12
+    },
+    "errors": {}
+  },
+  "spins": {
+    "acceptedRounds": 2109,
+    "wallSeconds": 12.93,
+    "throughputRoundsPerSecond": 163.1,
+    "offeredRoundsPerSecond": 600,
+    "attempts": 2109,
+    "retries": 0,
+    "gaveUp": 0,
+    "firstTryNonOkRate": 0,
+    "finalErrorRate": 0,
+    "responses": {
+      "OK": 2109
+    },
+    "nonOkSamples": [],
+    "latencyFirstTryMs": {
+      "n": 2109,
+      "p50": 1187.3502149999986,
+      "p95": 1808.4536380000009,
+      "p99": 1841.693433999999,
+      "max": 1899.2070830000002,
+      "mean": 1181.41
+    },
+    "latencyAcceptedIncludingRetriesMs": {
+      "n": 2109,
+      "p50": 1187.415402999999,
+      "p95": 1808.4940970000007,
+      "p99": 1841.717470999998,
+      "max": 1899.250723,
+      "mean": 1181.48
+    },
+    "cpu": {
+      "workerdSeconds": 15.31,
+      "wranglerNodeSeconds": 0.2,
+      "workerdCoresBusy": 1.18,
+      "workerdCpuMsPerAcceptedRound": 7.26,
+      "note": "includes router, token HMAC, DO SQLite commit, engine run, receipt HMAC, monitor flushes and local dev proxy overhead"
+    },
+    "perSecond": [
+      35,
+      198,
+      139,
+      186,
+      145,
+      148,
+      157,
+      200,
+      66,
+      237,
+      199,
+      199,
+      200
+    ]
+  },
+  "correctness": {
+    "sessions": 200,
+    "balanceMatches": 200,
+    "nonceSequencesIntact": 200,
+    "idempotentReplaysChecked": 400,
+    "idempotentReplaysSameBytes": 400,
+    "mismatches": []
+  },
+  "monitor": {
+    "expectedAtLeast": 2110,
+    "globalRounds": 2110,
+    "reached": true,
+    "path": "SlotWallet -> shard:<k> (64) -> global"
+  },
+  "pass": true,
+  "scope": "Local only: one workerd process on this container runs the Worker and every Durable Object. Measures per-request cost and correctness (idempotency, one-in-flight, ledger conservation, monitor rollup) under concurrency; not hosted, not multi-region, not Cloudflare capacity."
+}
