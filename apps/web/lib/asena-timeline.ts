@@ -118,13 +118,13 @@ export interface AsenaTimeline { events: AsenaEvent[]; duration: number; speed: 
 /** Base timings (ms, normal speed). Reduced motion keeps every step (constellations included) with short fades. */
 const NORMAL = {
   spinStart: 120, freeSpinStart: 420, settle: 110, highlight: 560,
-  constellationHold: 900, calloutHold: 1250, flight: 720, flightStagger: 120, mapTail: 220,
+  constellationHold: 900, constellationHoldLow: 600, calloutHold: 1250, cascade: 0.5, wolfOverlap: 0.62, flight: 720, flightStagger: 120, mapTail: 220,
   ergenekon: 1500, mapSpins: 900, wolfGap: 60,
   moons: 1500, scatterPay: 760, scatterTrigger: 1300, retrigger: 1300, freeIntro: 3200, freeOutro: 3400, totalWin: 900,
   spinEndWin: 560, spinEndNone: 260, freeSpinEndWin: 640, freeSpinEndNone: 240,
 };
 const REDUCED: typeof NORMAL = {
-  ...NORMAL, highlight: 420, constellationHold: 600, calloutHold: 900, flight: 30, flightStagger: 0, mapTail: 260,
+  ...NORMAL, highlight: 420, constellationHold: 600, constellationHoldLow: 500, calloutHold: 900, flight: 30, flightStagger: 0, mapTail: 260,
   ergenekon: 1000, moons: 800, scatterTrigger: 900, retrigger: 900,
 };
 
@@ -270,7 +270,9 @@ export function buildAsenaTimeline(round: AsenaRound, options: AsenaTimelineOpti
       // constellations, in cluster order
       const globalBefore = step.map ? step.map.globalMultiplierBefore : step.globalMultiplier;
       const plans: AsenaConstellationPlan[] = [];
-      let index = 0;
+      // Several constellations of one step draw in a cascade: each starts when the previous is half traced (reduced
+      // motion: one after another), so a chain of ignitions stays a sequence of drawings without stalling the round.
+      let index = 0, start = t, end = t;
       for (const cl of step.clusters) {
         if (!cl.constellation) continue;
         const plan = asenaConstellationPlan(cl.constellation, traceMs);
@@ -278,12 +280,14 @@ export function buildAsenaTimeline(round: AsenaRound, options: AsenaTimelineOpti
         if (free) constellationsFree++;
         const value = cl.templateMultiplier * globalBefore;
         const callout = value >= 10 ? { value, tier: asenaCalloutTier(value) } : null;
-        const dur = traceMs + d(callout ? T.calloutHold : T.constellationHold);
-        push({ type: 'constellation', at: t, dur, spin: s, step: i, index, ignition: cl.constellation, plan, symbol: cl.symbol, payHundredths: cl.payHundredths, persist: free, freeSpins: free });
-        push({ type: 'howl', at: t + traceMs + ASENA_HOWL_DELAY_MS, dur: 0, spin: s, step: i, index, templateId: cl.constellation.templateId, multiplier: cl.templateMultiplier, callout });
-        t += dur;
+        if (index > 0) start += reducedMotion ? traceMs : Math.round(traceMs * T.cascade);
+        const dur = traceMs + d(callout ? T.calloutHold : cl.templateMultiplier >= 6 ? T.constellationHold : T.constellationHoldLow);
+        push({ type: 'constellation', at: start, dur, spin: s, step: i, index, ignition: cl.constellation, plan, symbol: cl.symbol, payHundredths: cl.payHundredths, persist: free, freeSpins: free });
+        push({ type: 'howl', at: start + traceMs + ASENA_HOWL_DELAY_MS, dur: 0, spin: s, step: i, index, templateId: cl.constellation.templateId, multiplier: cl.templateMultiplier, callout });
+        end = Math.max(end, start + dur);
         index++;
       }
+      t = end;
 
       // Ergenekon map (free spins only)
       if (step.map) {
@@ -322,10 +326,13 @@ export function buildAsenaTimeline(round: AsenaRound, options: AsenaTimelineOpti
         if (!step.wolfWalks.length) tease(t, step.fall.grid);
       }
       // wolf walks, one after another
+      // Wolves walk one after another (engine order); the next hop starts while the previous lands.
       step.wolfWalks.forEach((walk, n) => {
         const ms = Math.round((reducedMotion ? 160 : 640) * k);
-        push({ type: 'wolf-walk', at: t, dur: ms + d(T.wolfGap), spin: s, step: i, index: n, walk, speed: k, ms });
-        t += ms + d(T.wolfGap);
+        const last = n === step.wolfWalks.length - 1;
+        const next = reducedMotion ? ms + d(T.wolfGap) : Math.round(ms * T.wolfOverlap);
+        push({ type: 'wolf-walk', at: t, dur: last ? ms + d(T.wolfGap) : next, spin: s, step: i, index: n, walk, speed: k, ms });
+        t += last ? ms + d(T.wolfGap) : next;
         if (free) wolfStepsFree++;
       });
       if (step.wolfWalks.length && step.fall) tease(t, asenaApplyWalks(step.fall.grid, step.wolfWalks));

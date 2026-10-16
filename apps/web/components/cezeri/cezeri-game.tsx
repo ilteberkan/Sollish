@@ -736,6 +736,8 @@ export function CezeriGame() {
       pause: () => { player.current?.stop(); return true; },
       resume: () => { player.current?.start(); return true; },
       time: () => player.current?.time ?? -1,
+      /** The live round's event list (type, time, round/level) for timed visual QA. */
+      events: () => live.current?.timeline.events.map(e => ({ type: e.type, at: e.at, dur: e.dur, round: 'round' in e ? e.round : undefined, level: 'level' in e ? e.level : undefined })) ?? [],
     };
     return () => { delete w.__cezeriPreview; };
   }, [openCelebration, reducedMotion, showCallout, sound]);

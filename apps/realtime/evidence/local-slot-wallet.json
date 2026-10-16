@@ -1,8 +1,8 @@
 {
-  "at": "2026-10-15T18:24:55.588Z",
+  "at": "2026-10-15T23:39:48.914Z",
   "runtime": "local-workerd-sqlite-production-router",
   "node": "v24.21.0",
-  "checks": 32,
+  "checks": 33,
   "results": {
     "concurrency": {
       "twins": [
@@ -19,12 +19,13 @@
       ]
     },
     "responseBytes": {
-      "cascadeStandard": 1899,
-      "tarhunBuy": 27502,
+      "cascadeStandard": 2896,
+      "tarhunBuy": 30099,
       "ebruStandard": 3590,
-      "cezeriBuy": 50321
+      "cezeriBuy": 39677,
+      "asenaBuy": 56626
     },
-    "verifiedAfterReveal": 10,
+    "verifiedAfterReveal": 11,
     "rateLimit": {
       "roundBurst": [
         200,
@@ -40,6 +41,11 @@
       "minuteRetryAfter": 30
     },
     "monitor": [
+      {
+        "game": "asena",
+        "mode": "buy",
+        "rounds": 1
+      },
       {
         "game": "cascade",
         "mode": "ante",

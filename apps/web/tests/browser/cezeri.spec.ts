@@ -116,6 +116,7 @@ async function expectCelebration(page: Page, fill: number, expected: { levels: s
 }
 
 test('labelled 4-ring board and deck; info pages navigable, bet-scaled and axe-clean', async ({ page }) => {
+  test.setTimeout(60_000); // first page load compiles the route in dev and runs axe three times
   await openCezeri(page);
   const grid = page.getByRole('grid', { name: /Cezeri çarkları/ });
   await expect(grid.getByRole('row')).toHaveCount(4);

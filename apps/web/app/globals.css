@@ -63,3 +63,8 @@ body{font-size:16px}
 .page-footer{font-size:14px}
 @media(max-width:768px){.primary-nav>a{font-size:15px}.wallet-button{font-size:14px}}
 @media(prefers-reduced-motion:reduce){.wallet-button{transition:none}}
+
+/* Ten primary links (Asena added): keep the desktop header on one line. */
+@media(min-width:769px) and (max-width:1599px){.site-header{gap:24px}.primary-nav{gap:14px}.primary-nav>a{white-space:nowrap}}
+@media(min-width:769px) and (max-width:1499px){.primary-nav>a>svg{display:none}}
+@media(min-width:769px) and (max-width:1599px){.network-label{display:none}}

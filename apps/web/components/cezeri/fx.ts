@@ -457,13 +457,18 @@ export class CezeriFx {
         ctx.translate(X(500), Y(500));
         ctx.rotate(now * 0.35);
         const R = Math.max(this.w, this.h);
-        for (let i = 0; i < 16; i++) {
-          ctx.rotate((Math.PI * 2) / 16);
+        // soft god-rays: many narrow wedges, transparent at the hub, brightest a third out, fading to nothing at the edge
+        const n = 24;
+        for (let i = 0; i < n; i++) {
+          ctx.rotate((Math.PI * 2) / n);
           const grd = ctx.createLinearGradient(0, 0, R, 0);
-          grd.addColorStop(0, `rgba(255,220,120,${(0.32 * a).toFixed(3)})`);
+          grd.addColorStop(0, 'rgba(255,220,120,0)');
+          grd.addColorStop(0.18, `rgba(255,220,130,${(0.2 * a).toFixed(3)})`);
+          grd.addColorStop(0.55, `rgba(255,190,80,${(0.08 * a).toFixed(3)})`);
           grd.addColorStop(1, 'rgba(255,180,60,0)');
           ctx.fillStyle = grd;
-          ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(R, -R * (i % 2 ? 0.06 : 0.1)); ctx.lineTo(R, R * (i % 2 ? 0.06 : 0.1)); ctx.closePath(); ctx.fill();
+          const half = i % 3 === 0 ? 0.07 : 0.035;
+          ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(R, -R * half); ctx.lineTo(R, R * half); ctx.closePath(); ctx.fill();
         }
         ctx.restore();
       }

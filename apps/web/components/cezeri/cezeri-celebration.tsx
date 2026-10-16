@@ -18,7 +18,7 @@ import c from './cezeri-celebration.module.css';
 const PIPS = [{ level: 1, x: '10×' }, { level: 2, x: '25×' }, { level: 3, x: '50×' }, { level: 4, x: '100×' }] as const;
 
 /** Crown of gear teeth and spokes radiating from the centre (rotated slowly by CSS). */
-function BoltCrown({ count = 24, className }: { count?: number; className?: string }) {
+function BoltCrown({ count = 36, className }: { count?: number; className?: string }) {
   const teeth: string[] = [];
   for (let i = 0; i < count; i++) teeth.push(`rotate(${((i / count) * 360).toFixed(1)} 100 100)`);
   return (
@@ -26,13 +26,14 @@ function BoltCrown({ count = 24, className }: { count?: number; className?: stri
       <defs>
         <linearGradient id="czCrownTooth" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" style={{ stopColor: 'var(--c-hi)', stopOpacity: 0 }} />
-          <stop offset=".6" style={{ stopColor: 'var(--c-hi)', stopOpacity: 0.8 }} />
-          <stop offset="1" style={{ stopColor: '#ffffff', stopOpacity: 1 }} />
+          <stop offset=".55" style={{ stopColor: 'var(--c-mid)', stopOpacity: 0.35 }} />
+          <stop offset="1" style={{ stopColor: 'var(--c-hi)', stopOpacity: 0.85 }} />
         </linearGradient>
       </defs>
-      <circle cx="100" cy="100" r="62" fill="none" stroke="var(--c-mid)" strokeOpacity=".35" strokeWidth="3" strokeDasharray="2 5" />
+      <circle cx="100" cy="100" r="62" fill="none" stroke="var(--c-mid)" strokeOpacity=".35" strokeWidth="2" strokeDasharray="1.5 6" />
+      <circle cx="100" cy="100" r="70" fill="none" stroke="var(--c-hi)" strokeOpacity=".18" strokeWidth="1" />
       {teeth.map((t, i) => (
-        <path key={i} transform={t} d={i % 2 ? 'M96 6h8l3 26h-14Z' : 'M98.6 18h2.8l1 22h-4.8Z'} fill="url(#czCrownTooth)" />
+        <path key={i} transform={t} d={i % 2 ? 'M99.7 0h0.6l1.1 44h-2.8Z' : 'M99.8 14h0.4l0.7 26h-1.8Z'} fill="url(#czCrownTooth)" />
       ))}
     </svg>
   );
