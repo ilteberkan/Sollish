@@ -25,6 +25,8 @@ import { SLOT_GAMES } from '@sollish/protocol';
 const args = Object.fromEntries(process.argv.slice(2).filter(a => a !== '--').reduce((acc, a, i, all) => (a.startsWith('--') ? [...acc, [a.slice(2), all[i + 1]?.startsWith('--') || all[i + 1] === undefined ? 'true' : all[i + 1]]] : acc), []));
 const PLAYERS = Number(args.players ?? 100), SECONDS = Number(args.seconds ?? 15), RATE = Number(args.rate ?? 3), PORT = Number(args.port ?? 18894);
 const GAMES = (args.games ?? 'cascade,tarhun,ebru,cezeri,asena').split(',');
+// pnpm exec does not forward SIGTERM to wrangler/workerd in every environment: signal the whole process group.
+const killTree = c => { try { process.kill(-c.pid, 'SIGTERM'); } catch { c.kill('SIGTERM'); } };
 const root = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 const folder = resolve(root, '.tooling/slot-load');
 const stateDir = args.state ? resolve(args.state) : resolve(folder, 'state');
@@ -50,9 +52,9 @@ await writeFile(resolve(folder, 'wrangler.json'), JSON.stringify({ name: 'sollis
 const wait = ms => new Promise(r => setTimeout(r, ms));
 let logs = '';
 const child = spawn('pnpm', ['exec', 'wrangler', 'dev', '--config', resolve(folder, 'wrangler.json'), '--port', String(PORT), '--ip', '127.0.0.1', '--persist-to', stateDir, '--log-level', 'warn', '--show-interactive-dev-session=false'],
-  { cwd: resolve(root, 'apps/realtime'), env: { ...process.env, WRANGLER_SEND_METRICS: 'false' }, stdio: ['ignore', 'pipe', 'pipe'] });
+  { detached: true, cwd: resolve(root, 'apps/realtime'), env: { ...process.env, WRANGLER_SEND_METRICS: 'false' }, stdio: ['ignore', 'pipe', 'pipe'] });
 for (const s of [child.stdout, child.stderr]) s.on('data', b => { logs = (logs + b).slice(-100000); });
-const stop = async () => { child.kill('SIGTERM'); await Promise.race([new Promise(r => child.once('exit', r)), wait(6000)]); };
+const stop = async () => { killTree(child); await Promise.race([new Promise(r => child.once('exit', r)), wait(6000)]); };
 
 /** CPU seconds (user+system) of the wrangler child's process tree, split into workerd and the rest (Linux /proc only). */
 async function treeCpu() {

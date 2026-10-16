@@ -79,7 +79,9 @@
     "page": "第 {n} 页 / 共 {total} 页：{title}",
     "empty": "暂无信息页。"
   },
-  "modal": { "close": "关闭" },
+  "modal": {
+    "close": "关闭"
+  },
   "reality": {
     "title": "会话提醒",
     "quit": "退出",
@@ -88,7 +90,12 @@
     "duration": "会话时长",
     "net": "净结果"
   },
-  "session": { "aria": "会话信息", "clock": "时间", "session": "会话", "net": "净额" },
+  "session": {
+    "aria": "会话信息",
+    "clock": "时间",
+    "session": "会话",
+    "net": "净额"
+  },
   "settings": {
     "title": "设置",
     "sound": "声音",
@@ -98,6 +105,13 @@
     "music": "音乐",
     "sfx": "音效",
     "ambience": "环境音",
+    "voice": "语音播报",
+    "voiceFull": "完整",
+    "voiceFullHint": "每句台词",
+    "voiceKey": "关键时刻",
+    "voiceKeyHint": "中奖与特色功能",
+    "voiceOff": "关闭",
+    "voiceOffHint": "静音",
     "play": "玩法",
     "speed": "旋转速度",
     "speedNormal": "普通",
@@ -115,11 +129,26 @@
     "language": "语言"
   },
   "winTier": {
-    "big": { "title": "大奖", "word": "大奖" },
-    "mega": { "title": "巨奖", "word": "巨奖" },
-    "super": { "title": "超级大奖", "word": "超级" },
-    "epic": { "title": "史诗大奖", "word": "史诗" },
-    "max": { "title": "最高奖", "word": "最高" }
+    "big": {
+      "title": "大奖",
+      "word": "大奖"
+    },
+    "mega": {
+      "title": "巨奖",
+      "word": "巨奖"
+    },
+    "super": {
+      "title": "超级大奖",
+      "word": "超级"
+    },
+    "epic": {
+      "title": "史诗大奖",
+      "word": "史诗"
+    },
+    "max": {
+      "title": "最高奖",
+      "word": "最高"
+    }
   },
   "winWord": "赢"
 }

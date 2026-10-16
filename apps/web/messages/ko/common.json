@@ -3,15 +3,25 @@
     "title": "Sollish — 게임의 주도권은 당신에게",
     "description": "Sollish 오리지널 게임: Ringside 라이브 복싱, Crash, Coinflip, 오리지널 슬롯. 로컬 데모에서는 실제 돈이나 토큰을 사용하지 않습니다."
   },
-  "locale": { "label": "언어", "current": "언어: {name}" },
+  "locale": {
+    "label": "언어",
+    "current": "언어: {name}"
+  },
   "shell": {
     "skipLink": "게임 영역으로 건너뛰기",
     "home": "Sollish 홈",
     "primaryNav": "주 메뉴",
     "liveSuffix": " (라이브)",
-    "nav": { "rewards": "보상", "stake": "스테이킹" },
-    "network": { "devnet": "Devnet 미리보기", "demo": "데모 미리보기" },
+    "nav": {
+      "rewards": "보상",
+      "stake": "스테이킹"
+    },
+    "network": {
+      "devnet": "Devnet 미리보기",
+      "demo": "데모 미리보기"
+    },
     "connectWallet": "지갑 연결",
+    "connectWalletShort": "연결",
     "openChat": "채팅 열기",
     "closeChat": "채팅 닫기",
     "restoreChat": "채팅 패널 열기",
@@ -31,7 +41,11 @@
     "airdropText": "시간별 기간, 조건, 확인된 권리는 보상 화면에서 볼 수 있습니다. 데모 게임은 권리를 만들지 않습니다.",
     "airdropLink": "보상 자세히 보기",
     "channel": "일반 채팅",
-    "status": { "connected": "연결됨", "connecting": "연결 중", "offline": "오프라인" },
+    "status": {
+      "connected": "연결됨",
+      "connecting": "연결 중",
+      "offline": "오프라인"
+    },
     "log": "채팅 메시지",
     "emptyTitle": "아직 메시지가 없습니다.",
     "emptyText": "확인된 커뮤니티 메시지가 여기에 표시됩니다.",
@@ -129,6 +143,14 @@
     "cezeri": "Cezeri: 시간의 톱니바퀴",
     "asena": "Asena: 별의 늑대"
   },
-  "modes": { "standard": "일반", "ante": "찬스 ×2", "buy": "보너스 구매" },
-  "duration": { "seconds": "{s}초", "minutes": "{m}분", "hoursMinutes": "{h}시간 {mm}분" }
+  "modes": {
+    "standard": "일반",
+    "ante": "찬스 ×2",
+    "buy": "보너스 구매"
+  },
+  "duration": {
+    "seconds": "{s}초",
+    "minutes": "{m}분",
+    "hoursMinutes": "{h}시간 {mm}분"
+  }
 }

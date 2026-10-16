@@ -79,7 +79,9 @@
     "page": "Page {n} / {total}: {title}",
     "empty": "No info pages."
   },
-  "modal": { "close": "Close" },
+  "modal": {
+    "close": "Close"
+  },
   "reality": {
     "title": "Session reminder",
     "quit": "Quit",
@@ -88,7 +90,12 @@
     "duration": "Session time",
     "net": "Net result"
   },
-  "session": { "aria": "Session info", "clock": "Time", "session": "Session", "net": "Net" },
+  "session": {
+    "aria": "Session info",
+    "clock": "Time",
+    "session": "Session",
+    "net": "Net"
+  },
   "settings": {
     "title": "Settings",
     "sound": "Sound",
@@ -98,6 +105,13 @@
     "music": "Music",
     "sfx": "Effects",
     "ambience": "Ambience",
+    "voice": "Voice-over",
+    "voiceFull": "Full",
+    "voiceFullHint": "Every line",
+    "voiceKey": "Key moments",
+    "voiceKeyHint": "Wins and features",
+    "voiceOff": "Off",
+    "voiceOffHint": "Silent",
     "play": "Gameplay",
     "speed": "Spin speed",
     "speedNormal": "Normal",
@@ -115,11 +129,26 @@
     "language": "Language"
   },
   "winTier": {
-    "big": { "title": "Big Win", "word": "BIG" },
-    "mega": { "title": "Mega Win", "word": "MEGA" },
-    "super": { "title": "Super Win", "word": "SUPER" },
-    "epic": { "title": "Epic Win", "word": "EPIC" },
-    "max": { "title": "Max Win", "word": "MAX" }
+    "big": {
+      "title": "Big Win",
+      "word": "BIG"
+    },
+    "mega": {
+      "title": "Mega Win",
+      "word": "MEGA"
+    },
+    "super": {
+      "title": "Super Win",
+      "word": "SUPER"
+    },
+    "epic": {
+      "title": "Epic Win",
+      "word": "EPIC"
+    },
+    "max": {
+      "title": "Max Win",
+      "word": "MAX"
+    }
   },
   "winWord": "WIN"
 }

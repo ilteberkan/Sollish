@@ -79,7 +79,9 @@
     "page": "Seite {n} / {total}: {title}",
     "empty": "Keine Infoseiten."
   },
-  "modal": { "close": "Schließen" },
+  "modal": {
+    "close": "Schließen"
+  },
   "reality": {
     "title": "Sitzungserinnerung",
     "quit": "Beenden",
@@ -88,7 +90,12 @@
     "duration": "Sitzungsdauer",
     "net": "Nettoergebnis"
   },
-  "session": { "aria": "Sitzungsinfo", "clock": "Uhrzeit", "session": "Sitzung", "net": "Netto" },
+  "session": {
+    "aria": "Sitzungsinfo",
+    "clock": "Uhrzeit",
+    "session": "Sitzung",
+    "net": "Netto"
+  },
   "settings": {
     "title": "Einstellungen",
     "sound": "Ton",
@@ -98,6 +105,13 @@
     "music": "Musik",
     "sfx": "Effekte",
     "ambience": "Umgebung",
+    "voice": "Sprachausgabe",
+    "voiceFull": "Voll",
+    "voiceFullHint": "Jede Zeile",
+    "voiceKey": "Schlüsselmomente",
+    "voiceKeyHint": "Gewinne und Features",
+    "voiceOff": "Aus",
+    "voiceOffHint": "Stumm",
     "play": "Spielablauf",
     "speed": "Spin-Tempo",
     "speedNormal": "Normal",
@@ -115,11 +129,26 @@
     "language": "Sprache"
   },
   "winTier": {
-    "big": { "title": "Großer Gewinn", "word": "GROSS" },
-    "mega": { "title": "Mega-Gewinn", "word": "MEGA" },
-    "super": { "title": "Super-Gewinn", "word": "SUPER" },
-    "epic": { "title": "Epischer Gewinn", "word": "EPISCH" },
-    "max": { "title": "Maximalgewinn", "word": "MAX" }
+    "big": {
+      "title": "Großer Gewinn",
+      "word": "GROSS"
+    },
+    "mega": {
+      "title": "Mega-Gewinn",
+      "word": "MEGA"
+    },
+    "super": {
+      "title": "Super-Gewinn",
+      "word": "SUPER"
+    },
+    "epic": {
+      "title": "Epischer Gewinn",
+      "word": "EPISCH"
+    },
+    "max": {
+      "title": "Maximalgewinn",
+      "word": "MAX"
+    }
   },
   "winWord": "GEWINN"
 }

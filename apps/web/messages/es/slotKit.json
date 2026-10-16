@@ -79,7 +79,9 @@
     "page": "Página {n} / {total}: {title}",
     "empty": "No hay páginas de información."
   },
-  "modal": { "close": "Cerrar" },
+  "modal": {
+    "close": "Cerrar"
+  },
   "reality": {
     "title": "Recordatorio de sesión",
     "quit": "Salir",
@@ -88,7 +90,12 @@
     "duration": "Duración de la sesión",
     "net": "Resultado neto"
   },
-  "session": { "aria": "Información de la sesión", "clock": "Hora", "session": "Sesión", "net": "Neto" },
+  "session": {
+    "aria": "Información de la sesión",
+    "clock": "Hora",
+    "session": "Sesión",
+    "net": "Neto"
+  },
   "settings": {
     "title": "Ajustes",
     "sound": "Sonido",
@@ -98,6 +105,13 @@
     "music": "Música",
     "sfx": "Efectos",
     "ambience": "Ambiente",
+    "voice": "Locución",
+    "voiceFull": "Completa",
+    "voiceFullHint": "Cada frase",
+    "voiceKey": "Momentos clave",
+    "voiceKeyHint": "Premios y funciones",
+    "voiceOff": "Desactivada",
+    "voiceOffHint": "Silencio",
     "play": "Juego",
     "speed": "Velocidad de giro",
     "speedNormal": "Normal",
@@ -115,11 +129,26 @@
     "language": "Idioma"
   },
   "winTier": {
-    "big": { "title": "Gran Premio", "word": "GRAN" },
-    "mega": { "title": "Mega Premio", "word": "MEGA" },
-    "super": { "title": "Súper Premio", "word": "SÚPER" },
-    "epic": { "title": "Premio Épico", "word": "ÉPICO" },
-    "max": { "title": "Premio Máximo", "word": "MÁXIMO" }
+    "big": {
+      "title": "Gran Premio",
+      "word": "GRAN"
+    },
+    "mega": {
+      "title": "Mega Premio",
+      "word": "MEGA"
+    },
+    "super": {
+      "title": "Súper Premio",
+      "word": "SÚPER"
+    },
+    "epic": {
+      "title": "Premio Épico",
+      "word": "ÉPICO"
+    },
+    "max": {
+      "title": "Premio Máximo",
+      "word": "MÁXIMO"
+    }
   },
   "winWord": "PREMIO"
 }

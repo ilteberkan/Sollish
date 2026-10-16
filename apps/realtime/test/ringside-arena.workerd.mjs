@@ -10,6 +10,8 @@ import { fileURLToPath } from 'node:url';
 import { createHash, randomUUID } from 'node:crypto';
 import { parseRingServer, RINGSIDE_MARKETS, RINGSIDE_OPEN_MS, COMBAT_DURATION_MS, RINGSIDE_RESULT_MS, ringCommitmentInput, combatResults, simulateCombat } from '@sollish/protocol';
 
+// pnpm exec does not forward SIGTERM to wrangler/workerd in every environment: signal the whole process group.
+const killTree = c => { try { process.kill(-c.pid, 'SIGTERM'); } catch { c.kill('SIGTERM'); } };
 const root = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 const folder = resolve(root, '.tooling/ringside-arena-integration');
 const port = 18886, base = `http://127.0.0.1:${port}`, origin = 'http://localhost:3000';
@@ -38,14 +40,14 @@ const checks = [], sockets = [];
 const wait = ms => new Promise(r => setTimeout(r, ms));
 async function until(fn, timeout = 12_000) { const end = Date.now() + timeout; while (Date.now() < end) { if (invalidFrame) throw new Error('INVALID_SERVER_FRAME: ' + invalidFrame); const value = await fn(); if (value) return value; await wait(15); } throw new Error('RINGSIDE_TEST_TIMEOUT'); }
 async function start() {
- child = spawn('pnpm', ['exec', 'wrangler', 'dev', '--config', resolve(folder, 'wrangler.json'), '--port', String(port), '--ip', '127.0.0.1', '--persist-to', resolve(folder, 'state'), '--show-interactive-dev-session=false'], { cwd: resolve(root, 'apps/realtime'), env: { ...process.env, WRANGLER_SEND_METRICS: 'false' }, stdio: ['ignore', 'pipe', 'pipe'] });
+ child = spawn('pnpm', ['exec', 'wrangler', 'dev', '--config', resolve(folder, 'wrangler.json'), '--port', String(port), '--ip', '127.0.0.1', '--persist-to', resolve(folder, 'state'), '--show-interactive-dev-session=false'], { detached: true, cwd: resolve(root, 'apps/realtime'), env: { ...process.env, WRANGLER_SEND_METRICS: 'false' }, stdio: ['ignore', 'pipe', 'pipe'] });
  for (const stream of [child.stdout, child.stderr]) stream.on('data', b => { logs = (logs + b).slice(-30_000); });
  await until(async () => { try { return (await fetch(`${base}/ready`)).ok; } catch { return false; } }, 30_000);
 }
 async function stop() {
  for (const c of sockets) { try { c.ws.close(); } catch {} }
  if (!child) return;
- const stopped = new Promise(r => child.once('exit', r)); child.kill('SIGTERM'); await Promise.race([stopped, wait(5_000)]); child = null;
+ const stopped = new Promise(r => child.once('exit', r)); killTree(child); await Promise.race([stopped, wait(5_000)]); child = null;
 }
 async function control(path) { const response = await fetch(base + path); assert.ok(response.ok, `${path}: HTTP ${response.status}`); return response; }
 const inspect = async () => (await control('/__inspect')).json();

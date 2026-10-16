@@ -3,15 +3,25 @@
     "title": "Sollish — Tú decides el juego",
     "description": "Juegos originales de Sollish: boxeo en vivo Ringside, Crash, Coinflip y tragamonedas propias. La demo local no usa dinero real ni tokens."
   },
-  "locale": { "label": "Idioma", "current": "Idioma: {name}" },
+  "locale": {
+    "label": "Idioma",
+    "current": "Idioma: {name}"
+  },
   "shell": {
     "skipLink": "Ir al área de juego",
     "home": "Inicio de Sollish",
     "primaryNav": "Navegación principal",
     "liveSuffix": " (en vivo)",
-    "nav": { "rewards": "Recompensas", "stake": "Stake" },
-    "network": { "devnet": "Vista previa Devnet", "demo": "Vista previa demo" },
+    "nav": {
+      "rewards": "Recompensas",
+      "stake": "Stake"
+    },
+    "network": {
+      "devnet": "Vista previa Devnet",
+      "demo": "Vista previa demo"
+    },
     "connectWallet": "Conectar billetera",
+    "connectWalletShort": "Conectar",
     "openChat": "Abrir chat",
     "closeChat": "Cerrar chat",
     "restoreChat": "Abrir panel de chat",
@@ -31,7 +41,11 @@
     "airdropText": "Consulta el periodo, las condiciones y tus derechos verificados en la pantalla de recompensas. Los juegos demo no generan derechos.",
     "airdropLink": "Detalles de recompensas",
     "channel": "Chat general",
-    "status": { "connected": "Conectado", "connecting": "Conectando", "offline": "Sin conexión" },
+    "status": {
+      "connected": "Conectado",
+      "connecting": "Conectando",
+      "offline": "Sin conexión"
+    },
     "log": "Mensajes del chat",
     "emptyTitle": "Aún no hay mensajes.",
     "emptyText": "Aquí aparecen los mensajes verificados de la comunidad.",
@@ -129,6 +143,14 @@
     "cezeri": "Cezeri: Ruedas del Tiempo",
     "asena": "Asena: Loba de las Estrellas"
   },
-  "modes": { "standard": "Estándar", "ante": "Chance ×2", "buy": "Compra de bono" },
-  "duration": { "seconds": "{s} s", "minutes": "{m} min", "hoursMinutes": "{h} h {mm} min" }
+  "modes": {
+    "standard": "Estándar",
+    "ante": "Chance ×2",
+    "buy": "Compra de bono"
+  },
+  "duration": {
+    "seconds": "{s} s",
+    "minutes": "{m} min",
+    "hoursMinutes": "{h} h {mm} min"
+  }
 }

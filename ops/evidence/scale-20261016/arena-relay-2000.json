@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-16T19:43:56.458Z",
+  "at": "2026-10-16T22:54:06.714Z",
   "runtime": "wrangler dev (local workerd), production router, ContactArenaV5 root + ArenaRelay",
   "machine": {
     "cpus": 4,
@@ -8,18 +8,56 @@
   "config": {
     "viewers": 2000,
     "relays": 4,
-    "bettors": 12,
+    "bettors": 40,
     "minIntervalMs": 250
   },
   "checks": [
     "watch: no-upgrade 400, foreign origin 403",
-    "2000 viewers connected through 4 relays; each received an initial snapshot"
+    "2000 viewers connected through 4 relays; each received an initial snapshot",
+    "40 root sessions, 0 root tickets; viewer bet frame created no ticket; every viewer reached root revision 43",
+    "late joiner received the root's latest revision immediately",
+    "viewer > 20 messages/min closed with 1008"
   ],
   "connect": {
     "viewers": 2000,
-    "wallMs": 27104
+    "wallMs": 21836
   },
-  "pass": false,
-  "error": "AssertionError [ERR_ASSERTION]: ROUND_CLOSED\n    at file:///home/user/Sollish/apps/realtime/test/arena-relay.workerd.mjs:101:52",
+  "rootTraffic": {
+    "sessions": 40,
+    "ticketsPlaced": 0,
+    "refusedClosedWindow": 0,
+    "phaseAtStart": "fighting"
+  },
+  "fanout": {
+    "rootRevisions": 42,
+    "viewerDeliveries": 80022,
+    "coalescedSkips": 3978,
+    "caughtUpDelayMs": {
+      "n": 84000,
+      "p50": 196.3,
+      "p95": 454.8,
+      "p99": 640.6,
+      "max": 898.5
+    },
+    "exactRevisionDelayMs": {
+      "n": 80022,
+      "p50": 188.1,
+      "p95": 404.9,
+      "p99": 496.7,
+      "max": 688.6
+    },
+    "finalRevisionDelayMs": {
+      "n": 2000,
+      "p50": 206.9,
+      "p95": 330,
+      "p99": 332.5,
+      "max": 333
+    }
+  },
+  "lateJoiner": {
+    "firstSnapshotMs": 20.4,
+    "revision": 43
+  },
+  "pass": true,
   "scope": "Local only: one workerd process, one Node client process on this container. Shows the relay tier delivers ordered, read-only, coalesced snapshots to thousands of hibernatable sockets and never touches the ledger; not hosted, not multi-colo, not a Cloudflare capacity number."
 }

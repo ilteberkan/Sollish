@@ -79,7 +79,9 @@
     "page": "Página {n} / {total}: {title}",
     "empty": "Sem páginas de informação."
   },
-  "modal": { "close": "Fechar" },
+  "modal": {
+    "close": "Fechar"
+  },
   "reality": {
     "title": "Lembrete de sessão",
     "quit": "Sair",
@@ -88,7 +90,12 @@
     "duration": "Tempo de sessão",
     "net": "Resultado líquido"
   },
-  "session": { "aria": "Informações da sessão", "clock": "Hora", "session": "Sessão", "net": "Líquido" },
+  "session": {
+    "aria": "Informações da sessão",
+    "clock": "Hora",
+    "session": "Sessão",
+    "net": "Líquido"
+  },
   "settings": {
     "title": "Configurações",
     "sound": "Som",
@@ -98,6 +105,13 @@
     "music": "Música",
     "sfx": "Efeitos",
     "ambience": "Ambiente",
+    "voice": "Narração",
+    "voiceFull": "Completa",
+    "voiceFullHint": "Todas as falas",
+    "voiceKey": "Momentos-chave",
+    "voiceKeyHint": "Ganhos e recursos",
+    "voiceOff": "Desligada",
+    "voiceOffHint": "Silêncio",
     "play": "Jogabilidade",
     "speed": "Velocidade do giro",
     "speedNormal": "Normal",
@@ -115,11 +129,26 @@
     "language": "Idioma"
   },
   "winTier": {
-    "big": { "title": "Grande Ganho", "word": "GRANDE" },
-    "mega": { "title": "Mega Ganho", "word": "MEGA" },
-    "super": { "title": "Super Ganho", "word": "SUPER" },
-    "epic": { "title": "Ganho Épico", "word": "ÉPICO" },
-    "max": { "title": "Ganho Máximo", "word": "MÁXIMO" }
+    "big": {
+      "title": "Grande Ganho",
+      "word": "GRANDE"
+    },
+    "mega": {
+      "title": "Mega Ganho",
+      "word": "MEGA"
+    },
+    "super": {
+      "title": "Super Ganho",
+      "word": "SUPER"
+    },
+    "epic": {
+      "title": "Ganho Épico",
+      "word": "ÉPICO"
+    },
+    "max": {
+      "title": "Ganho Máximo",
+      "word": "MÁXIMO"
+    }
   },
   "winWord": "GANHO"
 }

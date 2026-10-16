@@ -3,15 +3,25 @@
     "title": "Sollish — Il gioco è nelle tue mani",
     "description": "Giochi originali Sollish: boxe dal vivo Ringside, Crash, Coinflip e slot originali. La demo locale non usa denaro reale né token."
   },
-  "locale": { "label": "Lingua", "current": "Lingua: {name}" },
+  "locale": {
+    "label": "Lingua",
+    "current": "Lingua: {name}"
+  },
   "shell": {
     "skipLink": "Vai all’area di gioco",
     "home": "Home di Sollish",
     "primaryNav": "Navigazione principale",
     "liveSuffix": " (dal vivo)",
-    "nav": { "rewards": "Premi", "stake": "Stake" },
-    "network": { "devnet": "Anteprima Devnet", "demo": "Anteprima demo" },
+    "nav": {
+      "rewards": "Premi",
+      "stake": "Stake"
+    },
+    "network": {
+      "devnet": "Anteprima Devnet",
+      "demo": "Anteprima demo"
+    },
     "connectWallet": "Collega wallet",
+    "connectWalletShort": "Collega",
     "openChat": "Apri la chat",
     "closeChat": "Chiudi la chat",
     "restoreChat": "Apri il pannello chat",
@@ -31,7 +41,11 @@
     "airdropText": "Consulta il periodo orario, le condizioni e i tuoi diritti verificati nella schermata dei premi. I giochi demo non generano diritti.",
     "airdropLink": "Dettagli dei premi",
     "channel": "Chat generale",
-    "status": { "connected": "Connesso", "connecting": "Connessione in corso", "offline": "Offline" },
+    "status": {
+      "connected": "Connesso",
+      "connecting": "Connessione in corso",
+      "offline": "Offline"
+    },
     "log": "Messaggi della chat",
     "emptyTitle": "Ancora nessun messaggio.",
     "emptyText": "Qui compaiono i messaggi verificati della community.",
@@ -129,6 +143,14 @@
     "cezeri": "Cezeri: Ruote del Tempo",
     "asena": "Asena: Lupa delle Stelle"
   },
-  "modes": { "standard": "Standard", "ante": "Chance ×2", "buy": "Acquisto bonus" },
-  "duration": { "seconds": "{s} s", "minutes": "{m} min", "hoursMinutes": "{h} h {mm} min" }
+  "modes": {
+    "standard": "Standard",
+    "ante": "Chance ×2",
+    "buy": "Acquisto bonus"
+  },
+  "duration": {
+    "seconds": "{s} s",
+    "minutes": "{m} min",
+    "hoursMinutes": "{h} h {mm} min"
+  }
 }

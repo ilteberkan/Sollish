@@ -12,9 +12,16 @@
     "home": "Sollish home",
     "primaryNav": "Main navigation",
     "liveSuffix": " (live)",
-    "nav": { "rewards": "Rewards", "stake": "Stake" },
-    "network": { "devnet": "Devnet preview", "demo": "Demo preview" },
+    "nav": {
+      "rewards": "Rewards",
+      "stake": "Stake"
+    },
+    "network": {
+      "devnet": "Devnet preview",
+      "demo": "Demo preview"
+    },
     "connectWallet": "Connect wallet",
+    "connectWalletShort": "Connect",
     "openChat": "Open chat",
     "closeChat": "Close chat",
     "restoreChat": "Open chat panel",
@@ -34,7 +41,11 @@
     "airdropText": "See the hourly period, the conditions and your verified entitlements on the rewards screen. Demo games do not create entitlements.",
     "airdropLink": "Reward details",
     "channel": "General chat",
-    "status": { "connected": "Connected", "connecting": "Connecting", "offline": "Offline" },
+    "status": {
+      "connected": "Connected",
+      "connecting": "Connecting",
+      "offline": "Offline"
+    },
     "log": "Chat messages",
     "emptyTitle": "No messages yet.",
     "emptyText": "Verified community messages appear here.",
@@ -132,6 +143,14 @@
     "cezeri": "Cezeri: Wheels of Time",
     "asena": "Asena: Star Wolf"
   },
-  "modes": { "standard": "Standard", "ante": "Chance ×2", "buy": "Bonus buy" },
-  "duration": { "seconds": "{s} s", "minutes": "{m} min", "hoursMinutes": "{h} h {mm} min" }
+  "modes": {
+    "standard": "Standard",
+    "ante": "Chance ×2",
+    "buy": "Bonus buy"
+  },
+  "duration": {
+    "seconds": "{s} s",
+    "minutes": "{m} min",
+    "hoursMinutes": "{h} h {mm} min"
+  }
 }

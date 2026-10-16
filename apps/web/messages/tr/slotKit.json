@@ -79,7 +79,9 @@
     "page": "Sayfa {n} / {total}: {title}",
     "empty": "Bilgi sayfası yok."
   },
-  "modal": { "close": "Kapat" },
+  "modal": {
+    "close": "Kapat"
+  },
   "reality": {
     "title": "Oturum hatırlatması",
     "quit": "Çık",
@@ -88,7 +90,12 @@
     "duration": "Oturum süresi",
     "net": "Net sonuç"
   },
-  "session": { "aria": "Oturum bilgisi", "clock": "Saat", "session": "Oturum", "net": "Net" },
+  "session": {
+    "aria": "Oturum bilgisi",
+    "clock": "Saat",
+    "session": "Oturum",
+    "net": "Net"
+  },
   "settings": {
     "title": "Ayarlar",
     "sound": "Ses",
@@ -98,6 +105,13 @@
     "music": "Müzik",
     "sfx": "Efektler",
     "ambience": "Ortam sesi",
+    "voice": "Ses anonsu",
+    "voiceFull": "Tam",
+    "voiceFullHint": "Her replik",
+    "voiceKey": "Önemli anlar",
+    "voiceKeyHint": "Kazanç ve özellikler",
+    "voiceOff": "Kapalı",
+    "voiceOffHint": "Sessiz",
     "play": "Oynanış",
     "speed": "Dönüş hızı",
     "speedNormal": "Normal",
@@ -115,11 +129,26 @@
     "language": "Dil"
   },
   "winTier": {
-    "big": { "title": "Büyük Kazanç", "word": "BÜYÜK" },
-    "mega": { "title": "Mega Kazanç", "word": "MEGA" },
-    "super": { "title": "Süper Kazanç", "word": "SÜPER" },
-    "epic": { "title": "Efsane Kazanç", "word": "EFSANE" },
-    "max": { "title": "Azami Kazanç", "word": "AZAMİ" }
+    "big": {
+      "title": "Büyük Kazanç",
+      "word": "BÜYÜK"
+    },
+    "mega": {
+      "title": "Mega Kazanç",
+      "word": "MEGA"
+    },
+    "super": {
+      "title": "Süper Kazanç",
+      "word": "SÜPER"
+    },
+    "epic": {
+      "title": "Efsane Kazanç",
+      "word": "EFSANE"
+    },
+    "max": {
+      "title": "Azami Kazanç",
+      "word": "AZAMİ"
+    }
   },
   "winWord": "KAZANÇ"
 }

@@ -8,7 +8,7 @@ import { Icon } from './icons';
  * reader and phone pickers work out of the box). Options use their own language names and `lang`.
  */
 export function LocaleSwitcher({ className = '' }: { className?: string }) {
-  const { locale, setLocale, pending } = useLocale();
+  const { locale, selected, setLocale, pending } = useLocale();
   const t = useT('common');
   return (
     <label className={`locale-switcher ${className}`} data-pending={pending || undefined} title={t('locale.current', { name: LOCALE_NATIVE_NAMES[locale] })}>
@@ -18,7 +18,7 @@ export function LocaleSwitcher({ className = '' }: { className?: string }) {
         data-testid="locale-switcher"
         aria-label={t('locale.label')}
         aria-busy={pending || undefined}
-        value={locale}
+        value={selected}
         onChange={event => { if (isLocale(event.target.value)) void setLocale(event.target.value); }}
       >
         {LOCALES.map(code => <option key={code} value={code} lang={HTML_LANG[code]}>{LOCALE_NATIVE_NAMES[code]}</option>)}

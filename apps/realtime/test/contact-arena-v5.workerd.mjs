@@ -12,6 +12,8 @@ import { fileURLToPath } from 'node:url';
 import { createHash, randomUUID } from 'node:crypto';
 import { parseRingServer, RINGSIDE_RESULT_MS, COMBAT_V5_VERSION, COMBAT_V5_DURATION_MS, V5_PLAN_LEAD_MS, PLAN_COUNT, MATCH_OPEN_MS, MATCH_MARKETS, combatResults, contactCommitmentInputV5, replayContactV5, verifyPlanChain, verifyMatchHistory, matchResults, matchSeedHash, roundOutcome } from '@sollish/protocol';
 
+// pnpm exec does not forward SIGTERM to wrangler/workerd in every environment: signal the whole process group.
+const killTree = c => { try { process.kill(-c.pid, 'SIGTERM'); } catch { c.kill('SIGTERM'); } };
 const root = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 const folder = resolve(root, '.tooling/contact-arena-v5-integration');
 const port = 18891, base = `http://127.0.0.1:${port}`, origin = 'http://localhost:3000', KEY = 'test-key-not-a-secret-0123456789';
@@ -56,14 +58,14 @@ const checks = [], sockets = [];
 const wait = ms => new Promise(r => setTimeout(r, ms));
 async function until(fn, timeout = 15_000) { const end = Date.now() + timeout; while (Date.now() < end) { if (invalidFrame) throw new Error('INVALID_SERVER_FRAME: ' + invalidFrame); const v = await fn(); if (v) return v; await wait(15); } throw new Error('V5_TEST_TIMEOUT'); }
 async function start() {
-  child = spawn('pnpm', ['exec', 'wrangler', 'dev', '--config', resolve(folder, 'wrangler.json'), '--port', String(port), '--ip', '127.0.0.1', '--persist-to', resolve(folder, 'state'), '--show-interactive-dev-session=false'], { cwd: resolve(root, 'apps/realtime'), env: { ...process.env, WRANGLER_SEND_METRICS: 'false' } });
+  child = spawn('pnpm', ['exec', 'wrangler', 'dev', '--config', resolve(folder, 'wrangler.json'), '--port', String(port), '--ip', '127.0.0.1', '--persist-to', resolve(folder, 'state'), '--show-interactive-dev-session=false'], { detached: true, cwd: resolve(root, 'apps/realtime'), env: { ...process.env, WRANGLER_SEND_METRICS: 'false' } });
   for (const s of [child.stdout, child.stderr]) s.on('data', b => { logs = (logs + b).slice(-30_000); });
   await until(async () => { try { return (await fetch(`${base}/ready`)).ok; } catch { return false; } }, 40_000);
 }
 async function stop() {
   for (const c of sockets) { try { c.ws.close(); } catch {} }
   if (!child) return;
-  const stopped = new Promise(r => child.once('exit', r)); child.kill('SIGTERM'); await Promise.race([stopped, wait(5_000)]); child = null;
+  const stopped = new Promise(r => child.once('exit', r)); killTree(child); await Promise.race([stopped, wait(5_000)]); child = null;
   await until(async () => { try { await fetch(`${base}/ready`); return false; } catch { return true; } }, 8_000);
 }
 async function control(path) { const r = await fetch(base + path); assert.ok(r.ok, `${path}: HTTP ${r.status} ${await r.clone().text()}`); return r; }

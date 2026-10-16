@@ -11,6 +11,8 @@ import { fileURLToPath } from 'node:url';
 import { createHash, createHmac, randomBytes } from 'node:crypto';
 import { SLOT_GAMES, deriveSeedHex, slotReceiptMessage, slotReplayMessage, slotServerSeedHash, verifySlotRound } from '@sollish/protocol';
 
+// pnpm exec does not forward SIGTERM to wrangler/workerd in every environment: signal the whole process group.
+const killTree = c => { try { process.kill(-c.pid, 'SIGTERM'); } catch { c.kill('SIGTERM'); } };
 const root = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 const folder = resolve(root, '.tooling/slot-wallet-integration');
 const port = 18893, base = `http://127.0.0.1:${port}`, origin = 'http://localhost:3000';
@@ -57,11 +59,11 @@ async function start({ enabled, key, fresh }) {
  await writeFile(resolve(folder, 'wrangler.json'), JSON.stringify({ name: 'sollish-slot-wallet-local-test', main: resolve(folder, 'entry.ts'), compatibility_date: '2026-10-01', compatibility_flags: ['nodejs_compat'], vars,
   durable_objects: { bindings: [{ name: 'ADMISSION', class_name: 'AdmissionGate' }, { name: 'SLOT_WALLET', class_name: 'ProbeSlotWallet' }, { name: 'SLOT_REPLAY', class_name: 'SlotReplay' }, { name: 'SLOT_MONITOR', class_name: 'SlotMonitor' }] },
   migrations: [{ tag: 'v1', new_sqlite_classes: ['AdmissionGate', 'ProbeSlotWallet', 'SlotReplay', 'SlotMonitor'] }] }));
- child = spawn('pnpm', ['exec', 'wrangler', 'dev', '--config', resolve(folder, 'wrangler.json'), '--port', String(port), '--ip', '127.0.0.1', '--persist-to', resolve(folder, 'state'), '--show-interactive-dev-session=false'], { cwd: resolve(root, 'apps/realtime'), env: { ...process.env, WRANGLER_SEND_METRICS: 'false' }, stdio: ['ignore', 'pipe', 'pipe'] });
+ child = spawn('pnpm', ['exec', 'wrangler', 'dev', '--config', resolve(folder, 'wrangler.json'), '--port', String(port), '--ip', '127.0.0.1', '--persist-to', resolve(folder, 'state'), '--show-interactive-dev-session=false'], { detached: true, cwd: resolve(root, 'apps/realtime'), env: { ...process.env, WRANGLER_SEND_METRICS: 'false' }, stdio: ['ignore', 'pipe', 'pipe'] });
  for (const s of [child.stdout, child.stderr]) s.on('data', b => { logs = (logs + b).slice(-200000); });
  await until(async () => { try { return (await fetch(`${base}/ready`)).ok; } catch { return false; } }, 40000);
 }
-async function stop() { child?.kill('SIGTERM'); if (child) await Promise.race([new Promise(r => child.once('exit', r)), wait(6000)]); child = null; }
+async function stop() { if (child) killTree(child); if (child) await Promise.race([new Promise(r => child.once('exit', r)), wait(6000)]); child = null; }
 
 const hex = n => randomBytes(n).toString('hex');
 const sha = t => createHash('sha256').update(t).digest('hex');

@@ -79,7 +79,9 @@
     "page": "Page {n} / {total} : {title}",
     "empty": "Aucune page d’information."
   },
-  "modal": { "close": "Fermer" },
+  "modal": {
+    "close": "Fermer"
+  },
   "reality": {
     "title": "Rappel de session",
     "quit": "Quitter",
@@ -88,7 +90,12 @@
     "duration": "Durée de la session",
     "net": "Résultat net"
   },
-  "session": { "aria": "Infos de session", "clock": "Heure", "session": "Session", "net": "Net" },
+  "session": {
+    "aria": "Infos de session",
+    "clock": "Heure",
+    "session": "Session",
+    "net": "Net"
+  },
   "settings": {
     "title": "Paramètres",
     "sound": "Son",
@@ -98,6 +105,13 @@
     "music": "Musique",
     "sfx": "Effets",
     "ambience": "Ambiance",
+    "voice": "Voix off",
+    "voiceFull": "Complète",
+    "voiceFullHint": "Chaque réplique",
+    "voiceKey": "Moments clés",
+    "voiceKeyHint": "Gains et fonctions",
+    "voiceOff": "Désactivée",
+    "voiceOffHint": "Silencieux",
     "play": "Jeu",
     "speed": "Vitesse des tours",
     "speedNormal": "Normale",
@@ -115,11 +129,26 @@
     "language": "Langue"
   },
   "winTier": {
-    "big": { "title": "Gros Gain", "word": "GROS" },
-    "mega": { "title": "Méga Gain", "word": "MÉGA" },
-    "super": { "title": "Super Gain", "word": "SUPER" },
-    "epic": { "title": "Gain Épique", "word": "ÉPIQUE" },
-    "max": { "title": "Gain Max", "word": "MAX" }
+    "big": {
+      "title": "Gros Gain",
+      "word": "GROS"
+    },
+    "mega": {
+      "title": "Méga Gain",
+      "word": "MÉGA"
+    },
+    "super": {
+      "title": "Super Gain",
+      "word": "SUPER"
+    },
+    "epic": {
+      "title": "Gain Épique",
+      "word": "ÉPIQUE"
+    },
+    "max": {
+      "title": "Gain Max",
+      "word": "MAX"
+    }
   },
   "winWord": "GAIN"
 }

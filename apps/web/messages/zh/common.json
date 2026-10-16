@@ -3,15 +3,25 @@
     "title": "Sollish — 游戏由你掌控",
     "description": "Sollish 原创游戏：Ringside 实时拳击、Crash、Coinflip 及原创老虎机。本地演示不使用真实资金或代币。"
   },
-  "locale": { "label": "语言", "current": "语言：{name}" },
+  "locale": {
+    "label": "语言",
+    "current": "语言：{name}"
+  },
   "shell": {
     "skipLink": "跳到游戏区域",
     "home": "Sollish 首页",
     "primaryNav": "主导航",
     "liveSuffix": "（直播）",
-    "nav": { "rewards": "奖励", "stake": "质押" },
-    "network": { "devnet": "Devnet 预览", "demo": "演示预览" },
+    "nav": {
+      "rewards": "奖励",
+      "stake": "质押"
+    },
+    "network": {
+      "devnet": "Devnet 预览",
+      "demo": "演示预览"
+    },
     "connectWallet": "连接钱包",
+    "connectWalletShort": "连接",
     "openChat": "打开聊天",
     "closeChat": "关闭聊天",
     "restoreChat": "打开聊天面板",
@@ -31,7 +41,11 @@
     "airdropText": "在奖励页面查看每小时周期、条件以及已验证的权益。演示游戏不产生任何权益。",
     "airdropLink": "奖励详情",
     "channel": "综合聊天",
-    "status": { "connected": "已连接", "connecting": "连接中", "offline": "离线" },
+    "status": {
+      "connected": "已连接",
+      "connecting": "连接中",
+      "offline": "离线"
+    },
     "log": "聊天消息",
     "emptyTitle": "还没有消息。",
     "emptyText": "经过验证的社区消息会显示在这里。",
@@ -129,6 +143,14 @@
     "cezeri": "Cezeri：时间之轮",
     "asena": "Asena：星狼"
   },
-  "modes": { "standard": "标准", "ante": "机会 ×2", "buy": "购买奖励" },
-  "duration": { "seconds": "{s} 秒", "minutes": "{m} 分钟", "hoursMinutes": "{h} 小时 {mm} 分" }
+  "modes": {
+    "standard": "标准",
+    "ante": "机会 ×2",
+    "buy": "购买奖励"
+  },
+  "duration": {
+    "seconds": "{s} 秒",
+    "minutes": "{m} 分钟",
+    "hoursMinutes": "{h} 小时 {mm} 分"
+  }
 }

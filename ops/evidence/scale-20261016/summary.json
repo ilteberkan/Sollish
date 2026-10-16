@@ -1,0 +1,439 @@
+{
+ "date": "2026-10-16",
+ "scope": "Local only (cloud container, 4 vCPU, 16 GB). Not hosted, not multi-region, not a Cloudflare capacity measurement. DEMO credits only.",
+ "doc": "docs/architecture/scale.md",
+ "changes": {
+  "protocolSideEffectsFalse": "packages/protocol/package.json \"sideEffects\": false (tree-shaking of the barrel; no behaviour change, protocol 302/302)",
+  "slotMonitorSharding": "apps/realtime/src/slot-monitor.ts, slot-stats.ts, slot-wallet.ts: SlotWallet -> shard:<k> (64, 30 s) -> global (5 s); SLOT_MONITOR_SHARDS=0 = old path",
+  "arenaRelays": "apps/realtime/src/arena-relay.ts, relay-publisher.ts, ringside-arena.ts, contact-arena-v5.ts, index.ts (/v5/arena/ringside/watch), wrangler.jsonc migration v8 ArenaRelay, LIVE_RELAYS=\"0\" (off)",
+  "webHeaders": "apps/web/public/_headers: /workers immutable, /audio /sprites /images max-age=3600 + swr=86400",
+  "testHarness": "workerd test harnesses kill the wrangler process group (pnpm exec did not forward SIGTERM here; v5/contact restarts hung)",
+  "tools": [
+   "apps/realtime/test/slot-load.mjs (loadtest:slots)",
+   "apps/realtime/test/arena-relay.workerd.mjs (test:relay)",
+   "apps/realtime/test/arena-relay.test.ts",
+   "apps/web/scripts/route-bundle-report.mjs",
+   "apps/web/scripts/first-load-report.mjs"
+  ]
+ },
+ "engineCost": {
+  "note": "Node, 2000 rounds each, play()+JSON.stringify",
+  "msPerRound": {
+   "cascade": 0.023,
+   "tarhun": 0.016,
+   "ebru": 0.038,
+   "cezeri": 0.023,
+   "asena": 0.027
+  },
+  "receiptRoundBytes": {
+   "cascade": 1774,
+   "tarhun": 1674,
+   "ebru": 4132,
+   "cezeri": 2645,
+   "asena": 2875
+  },
+  "deriveSeedHexMs": 0.07
+ },
+ "slotLoad": {
+  "slot-load-1000x0.15-tmpfs.json": {
+   "players": 1000,
+   "ratePerPlayer": 0.15,
+   "state": "custom (see --state)",
+   "offered": 150,
+   "accepted": 102.1,
+   "firstTryMs": {
+    "n": 2205,
+    "p50": 3906.1,
+    "p95": 7944.3,
+    "p99": 8303.1,
+    "max": 8423.4,
+    "mean": 4160.2
+   },
+   "responses": {
+    "OK": 2205
+   },
+   "finalErrorRate": 0,
+   "workerdCpuMsPerRound": 12.08,
+   "correctness": {
+    "sessions": 1000,
+    "balanceMatches": 1000,
+    "nonceSequencesIntact": 1000,
+    "idempotentReplaysChecked": 2000,
+    "idempotentReplaysSameBytes": 2000
+   },
+   "monitorReached": true,
+   "pass": true
+  },
+  "slot-load-200x3-disk.json": {
+   "players": 200,
+   "ratePerPlayer": 3,
+   "state": ".tooling/slot-load/state",
+   "offered": 600,
+   "accepted": 56,
+   "firstTryMs": {
+    "n": 985,
+    "p50": 2816.8,
+    "p95": 3715.5,
+    "p99": 3718.4,
+    "max": 4887.9,
+    "mean": 2627.9
+   },
+   "responses": {
+    "500": 104,
+    "OK": 985
+   },
+   "finalErrorRate": 0,
+   "workerdCpuMsPerRound": 15.88,
+   "correctness": {
+    "sessions": 200,
+    "balanceMatches": 200,
+    "nonceSequencesIntact": 200,
+    "idempotentReplaysChecked": 400,
+    "idempotentReplaysSameBytes": 400
+   },
+   "monitorReached": true,
+   "pass": true
+  },
+  "slot-load-50x1-disk.json": {
+   "players": 50,
+   "ratePerPlayer": 1,
+   "state": ".tooling/slot-load/state",
+   "offered": 50,
+   "accepted": 46.6,
+   "firstTryMs": {
+    "n": 746,
+    "p50": 11.1,
+    "p95": 27.5,
+    "p99": 33.5,
+    "max": 60.4,
+    "mean": 13.9
+   },
+   "responses": {
+    "OK": 746
+   },
+   "finalErrorRate": 0,
+   "workerdCpuMsPerRound": 8.12,
+   "correctness": {
+    "sessions": 50,
+    "balanceMatches": 50,
+    "nonceSequencesIntact": 50,
+    "idempotentReplaysChecked": 100,
+    "idempotentReplaysSameBytes": 100
+   },
+   "monitorReached": true,
+   "pass": true
+  }
+ },
+ "relayFanout": {
+  "arena-relay-200-bets.json": {
+   "config": {
+    "viewers": 200,
+    "relays": 2,
+    "bettors": 12,
+    "minIntervalMs": 250
+   },
+   "connect": {
+    "viewers": 200,
+    "wallMs": 2150
+   },
+   "rootTraffic": {
+    "sessions": 12,
+    "ticketsPlaced": 36,
+    "refusedClosedWindow": 0,
+    "phaseAtStart": "open"
+   },
+   "fanout": {
+    "rootRevisions": 48,
+    "viewerDeliveries": 3800,
+    "coalescedSkips": 5800,
+    "caughtUpDelayMs": {
+     "n": 9600,
+     "p50": 143.2,
+     "p95": 256.1,
+     "p99": 275.8,
+     "max": 291.9
+    },
+    "exactRevisionDelayMs": {
+     "n": 3800,
+     "p50": 62,
+     "p95": 159.3,
+     "p99": 199.7,
+     "max": 200.5
+    },
+    "finalRevisionDelayMs": {
+     "n": 200,
+     "p50": 84.7,
+     "p95": 120.3,
+     "p99": 120.6,
+     "max": 120.7
+    }
+   },
+   "lateJoiner": {
+    "firstSnapshotMs": 20.8,
+    "revision": 49
+   },
+   "checks": [
+    "watch: no-upgrade 400, foreign origin 403",
+    "200 viewers connected through 2 relays; each received an initial snapshot",
+    "12 root sessions, 36 root tickets; viewer bet frame created no ticket; every viewer reached root revision 49",
+    "late joiner received the root's latest revision immediately",
+    "viewer > 20 messages/min closed with 1008"
+   ],
+   "pass": true
+  },
+  "arena-relay-2000.json": {
+   "config": {
+    "viewers": 2000,
+    "relays": 4,
+    "bettors": 40,
+    "minIntervalMs": 250
+   },
+   "connect": {
+    "viewers": 2000,
+    "wallMs": 21836
+   },
+   "rootTraffic": {
+    "sessions": 40,
+    "ticketsPlaced": 0,
+    "refusedClosedWindow": 0,
+    "phaseAtStart": "fighting"
+   },
+   "fanout": {
+    "rootRevisions": 42,
+    "viewerDeliveries": 80022,
+    "coalescedSkips": 3978,
+    "caughtUpDelayMs": {
+     "n": 84000,
+     "p50": 196.3,
+     "p95": 454.8,
+     "p99": 640.6,
+     "max": 898.5
+    },
+    "exactRevisionDelayMs": {
+     "n": 80022,
+     "p50": 188.1,
+     "p95": 404.9,
+     "p99": 496.7,
+     "max": 688.6
+    },
+    "finalRevisionDelayMs": {
+     "n": 2000,
+     "p50": 206.9,
+     "p95": 330,
+     "p99": 332.5,
+     "max": 333
+    }
+   },
+   "lateJoiner": {
+    "firstSnapshotMs": 20.4,
+    "revision": 43
+   },
+   "checks": [
+    "watch: no-upgrade 400, foreign origin 403",
+    "2000 viewers connected through 4 relays; each received an initial snapshot",
+    "40 root sessions, 0 root tickets; viewer bet frame created no ticket; every viewer reached root revision 43",
+    "late joiner received the root's latest revision immediately",
+    "viewer > 20 messages/min closed with 1008"
+   ],
+   "pass": true
+  }
+ },
+ "bundles": {
+  "esbuildRouteCode": {
+   "/": {
+    "beforeMin": 90,
+    "beforeGzip": 100,
+    "afterMin": 90,
+    "afterGzip": 100,
+    "foreignAfterMin": 0
+   },
+   "/games": {
+    "beforeMin": 8682,
+    "beforeGzip": 3112,
+    "afterMin": 8682,
+    "afterGzip": 3112,
+    "foreignAfterMin": 0
+   },
+   "/game/cascade": {
+    "beforeMin": 903814,
+    "beforeGzip": 296601,
+    "afterMin": 428636,
+    "afterGzip": 139239,
+    "foreignAfterMin": 133762
+   },
+   "/game/tarhun": {
+    "beforeMin": 1037270,
+    "beforeGzip": 338821,
+    "afterMin": 562077,
+    "afterGzip": 180285,
+    "foreignAfterMin": 146871
+   },
+   "/game/ebru": {
+    "beforeMin": 986647,
+    "beforeGzip": 325395,
+    "afterMin": 511484,
+    "afterGzip": 167208,
+    "foreignAfterMin": 146186
+   },
+   "/game/cezeri": {
+    "beforeMin": 1011706,
+    "beforeGzip": 327923,
+    "afterMin": 536408,
+    "afterGzip": 170457,
+    "foreignAfterMin": 140587
+   },
+   "/game/asena": {
+    "beforeMin": 992197,
+    "beforeGzip": 325906,
+    "afterMin": 516902,
+    "afterGzip": 167870,
+    "foreignAfterMin": 135289
+   },
+   "/live/ringside": {
+    "beforeMin": 712175,
+    "beforeGzip": 245841,
+    "afterMin": 712145,
+    "afterGzip": 245814,
+    "foreignAfterMin": 45435
+   },
+   "/verify": {
+    "beforeMin": 543632,
+    "beforeGzip": 178775,
+    "afterMin": 68879,
+    "afterGzip": 21597,
+    "foreignAfterMin": 45824
+   }
+  },
+  "turbopackFirstLoad": {
+   "/": {
+    "raw": 495328,
+    "gzip": 148694,
+    "routeSpecificRaw": 0,
+    "contains": []
+   },
+   "/game/asena": {
+    "raw": 822371,
+    "gzip": 248509,
+    "routeSpecificRaw": 327043,
+    "contains": [
+     "cascade engine",
+     "tarhun engine",
+     "ebru engine",
+     "cezeri engine",
+     "asena engine"
+    ]
+   },
+   "/game/cascade": {
+    "raw": 965337,
+    "gzip": 295603,
+    "routeSpecificRaw": 470009,
+    "contains": [
+     "cascade engine",
+     "tarhun engine",
+     "ebru engine",
+     "cezeri engine",
+     "asena engine"
+    ]
+   },
+   "/game/cezeri": {
+    "raw": 838160,
+    "gzip": 247638,
+    "routeSpecificRaw": 342832,
+    "contains": [
+     "cascade engine",
+     "tarhun engine",
+     "ebru engine",
+     "cezeri engine",
+     "asena engine"
+    ]
+   },
+   "/game/coinflip": {
+    "raw": 526466,
+    "gzip": 158883,
+    "routeSpecificRaw": 31138,
+    "contains": []
+   },
+   "/game/crash": {
+    "raw": 514863,
+    "gzip": 155116,
+    "routeSpecificRaw": 19535,
+    "contains": []
+   },
+   "/game/ebru": {
+    "raw": 814091,
+    "gzip": 246882,
+    "routeSpecificRaw": 318763,
+    "contains": [
+     "ebru engine",
+     "cascade engine",
+     "tarhun engine",
+     "cezeri engine",
+     "asena engine"
+    ]
+   },
+   "/game/tarhun": {
+    "raw": 875467,
+    "gzip": 262693,
+    "routeSpecificRaw": 380139,
+    "contains": [
+     "cascade engine",
+     "tarhun engine",
+     "ebru engine",
+     "cezeri engine",
+     "asena engine"
+    ]
+   },
+   "/games": {
+    "raw": 510122,
+    "gzip": 154287,
+    "routeSpecificRaw": 14794,
+    "contains": []
+   },
+   "/live/ringside": {
+    "raw": 1020518,
+    "gzip": 320686,
+    "routeSpecificRaw": 525190,
+    "contains": [
+     "ringside contact engine"
+    ]
+   },
+   "/replay/[id]": {
+    "raw": 757110,
+    "gzip": 224012,
+    "routeSpecificRaw": 261782,
+    "contains": [
+     "cascade engine",
+     "tarhun engine",
+     "ebru engine",
+     "cezeri engine",
+     "asena engine"
+    ]
+   },
+   "/rewards": {
+    "raw": 522854,
+    "gzip": 156969,
+    "routeSpecificRaw": 27526,
+    "contains": []
+   },
+   "/stake": {
+    "raw": 522463,
+    "gzip": 156850,
+    "routeSpecificRaw": 27135,
+    "contains": []
+   },
+   "/verify": {
+    "raw": 574329,
+    "gzip": 172221,
+    "routeSpecificRaw": 79001,
+    "contains": [
+     "cascade engine",
+     "tarhun engine",
+     "ebru engine",
+     "cezeri engine",
+     "asena engine"
+    ]
+   }
+  },
+  "turbopackNote": "(BUILD_ID missing: compile finished, later build step did not)"
+ }
+}

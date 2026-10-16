@@ -20,6 +20,8 @@ import os from 'node:os';
 const argv = process.argv.slice(2).filter(a => a !== '--');
 const arg = (name, fallback) => { const i = argv.indexOf(`--${name}`); return i >= 0 ? argv[i + 1] : fallback; };
 const VIEWERS = Number(arg('viewers', 2000)), RELAYS = Number(arg('relays', 4)), BETTORS = Number(arg('bettors', 40)), OUT = arg('out', null);
+// pnpm exec does not forward SIGTERM to wrangler/workerd in every environment: signal the whole process group.
+const killTree = c => { try { process.kill(-c.pid, 'SIGTERM'); } catch { c.kill('SIGTERM'); } };
 const root = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 const folder = resolve(root, '.tooling/arena-relay-integration');
 const port = 18895, origin = 'http://localhost:3000';
@@ -42,9 +44,9 @@ await writeFile(resolve(folder, 'wrangler.json'), JSON.stringify({ name: 'sollis
 const wait = ms => new Promise(r => setTimeout(r, ms));
 let logs = '';
 const child = spawn('pnpm', ['exec', 'wrangler', 'dev', '--config', resolve(folder, 'wrangler.json'), '--port', String(port), '--ip', '127.0.0.1', '--persist-to', resolve(folder, 'state'), '--log-level', 'warn', '--show-interactive-dev-session=false'],
-  { cwd: resolve(root, 'apps/realtime'), env: { ...process.env, WRANGLER_SEND_METRICS: 'false' }, stdio: ['ignore', 'pipe', 'pipe'] });
+  { detached: true, cwd: resolve(root, 'apps/realtime'), env: { ...process.env, WRANGLER_SEND_METRICS: 'false' }, stdio: ['ignore', 'pipe', 'pipe'] });
 for (const s of [child.stdout, child.stderr]) s.on('data', b => { logs = (logs + b).slice(-60000); });
-const stop = async () => { child.kill('SIGTERM'); await Promise.race([new Promise(r => child.once('exit', r)), wait(6000)]); };
+const stop = async () => { killTree(child); await Promise.race([new Promise(r => child.once('exit', r)), wait(6000)]); };
 async function until(fn, ms = 30000) { const end = Date.now() + ms; while (Date.now() < end) { const v = await fn(); if (v) return v; await wait(20); } throw new Error('RELAY_TEST_TIMEOUT'); }
 const pct = (s, p) => s.length ? s[Math.min(s.length - 1, Math.floor(p / 100 * s.length))] : null;
 const summary = list => { const s = [...list].sort((a, b) => a - b); return { n: s.length, p50: pct(s, 50), p95: pct(s, 95), p99: pct(s, 99), max: s.at(-1) ?? null }; };
@@ -85,11 +87,15 @@ try {
 
   // Root clients: each creates a DEMO session (the root broadcasts on every new session, at any phase) and, if the
   // match's betting window is still open, places one bet per market (another broadcast each). Sequential, 60 ms apart.
-  const bettors = Array.from({ length: BETTORS }, (_, i) => open('/v5/arena/ringside', `198.19.0.${Math.floor(i / 20) + 1}`));
-  await Promise.all(bettors.map(c => c.opened));
-  await until(() => bettors.every(b => b.last));
-  const revBefore = Math.min(...bettors.map(b => b.last.revision));
-  for (const b of bettors) { b.ws.send(JSON.stringify({ v: 2, type: 'session' })); await until(() => b.frames.includes('session')); await wait(60); }
+  // Each root socket is opened right before its session request (an anonymous root socket is closed after 10 s).
+  const bettors = [];
+  let revBefore = null;
+  for (let i = 0; i < BETTORS; i++) {
+    const b = open('/v5/arena/ringside', `198.19.0.${Math.floor(i / 20) + 1}`); bettors.push(b);
+    await b.opened; await until(() => b.last);
+    revBefore ??= b.last.revision;
+    b.ws.send(JSON.stringify({ v: 2, type: 'session' })); await until(() => b.frames.includes('session') || b.error || b.closed !== null, 15000).catch(() => { throw new Error(`SESSION_TIMEOUT bettor ${i} frames=${b.frames.join(',')}`); }); if (!b.frames.includes('session')) throw new Error(`SESSION_FAILED bettor ${i}: ${b.error ?? 'closed ' + b.closed}`); await wait(60);
+  }
   const round = bettors[0].last.round, ledger = round.bout.id;
   const markets = [['match-winner', ['kor', 'draw', 'ayaz']], ['match-method', ['kor-stop', 'kor-points', 'draw', 'ayaz-points', 'ayaz-stop']], ['match-knockdowns', ['0-1', '2', '3-plus']]];
   let placed = 0, closed = 0;
@@ -132,7 +138,9 @@ try {
   // Late joiner gets the latest snapshot at once.
   const late = open('/v5/arena/ringside/watch', '198.18.250.250'); await late.opened;
   const lateStart = performance.now(); await until(() => late.last);
-  assert.equal(late.last.revision, rootLatest);
+  // The show keeps moving (plan commits, phase changes): the joiner must hold the root's newest revision at that moment.
+  await until(() => late.last.revision >= Math.max(...bettors.map(b => b.last.revision)), 5000);
+  assert.ok(late.last.revision >= rootLatest);
   report.lateJoiner = { firstSnapshotMs: Number((performance.now() - lateStart).toFixed(1)), revision: late.last.revision };
   report.checks.push('late joiner received the root\'s latest revision immediately');
 

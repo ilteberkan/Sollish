@@ -3,15 +3,25 @@
     "title": "Sollish — À vous de jouer",
     "description": "Jeux originaux Sollish : boxe en direct Ringside, Crash, Coinflip et machines à sous originales. La démo locale n’utilise ni argent réel ni jeton."
   },
-  "locale": { "label": "Langue", "current": "Langue : {name}" },
+  "locale": {
+    "label": "Langue",
+    "current": "Langue : {name}"
+  },
   "shell": {
     "skipLink": "Aller à l’espace de jeu",
     "home": "Accueil Sollish",
     "primaryNav": "Navigation principale",
     "liveSuffix": " (en direct)",
-    "nav": { "rewards": "Récompenses", "stake": "Stake" },
-    "network": { "devnet": "Aperçu Devnet", "demo": "Aperçu démo" },
+    "nav": {
+      "rewards": "Récompenses",
+      "stake": "Stake"
+    },
+    "network": {
+      "devnet": "Aperçu Devnet",
+      "demo": "Aperçu démo"
+    },
     "connectWallet": "Connecter le portefeuille",
+    "connectWalletShort": "Connecter",
     "openChat": "Ouvrir le chat",
     "closeChat": "Fermer le chat",
     "restoreChat": "Ouvrir le panneau de chat",
@@ -31,7 +41,11 @@
     "airdropText": "Consultez la période horaire, les conditions et vos droits vérifiés dans l’écran des récompenses. Les jeux démo ne créent aucun droit.",
     "airdropLink": "Détails des récompenses",
     "channel": "Chat général",
-    "status": { "connected": "Connecté", "connecting": "Connexion", "offline": "Hors ligne" },
+    "status": {
+      "connected": "Connecté",
+      "connecting": "Connexion",
+      "offline": "Hors ligne"
+    },
     "log": "Messages du chat",
     "emptyTitle": "Aucun message pour l’instant.",
     "emptyText": "Les messages vérifiés de la communauté s’affichent ici.",
@@ -129,6 +143,14 @@
     "cezeri": "Cezeri : Roues du Temps",
     "asena": "Asena : Louve des Étoiles"
   },
-  "modes": { "standard": "Standard", "ante": "Chance ×2", "buy": "Achat de bonus" },
-  "duration": { "seconds": "{s} s", "minutes": "{m} min", "hoursMinutes": "{h} h {mm} min" }
+  "modes": {
+    "standard": "Standard",
+    "ante": "Chance ×2",
+    "buy": "Achat de bonus"
+  },
+  "duration": {
+    "seconds": "{s} s",
+    "minutes": "{m} min",
+    "hoursMinutes": "{h} h {mm} min"
+  }
 }

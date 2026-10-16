@@ -3,15 +3,25 @@
     "title": "Sollish — Dein Spiel, deine Entscheidung",
     "description": "Original-Spiele von Sollish: Ringside Live-Boxen, Crash, Coinflip und eigene Slots. In der lokalen Demo wird kein echtes Geld und kein Token verwendet."
   },
-  "locale": { "label": "Sprache", "current": "Sprache: {name}" },
+  "locale": {
+    "label": "Sprache",
+    "current": "Sprache: {name}"
+  },
   "shell": {
     "skipLink": "Zum Spielbereich springen",
     "home": "Sollish Startseite",
     "primaryNav": "Hauptnavigation",
     "liveSuffix": " (live)",
-    "nav": { "rewards": "Prämien", "stake": "Stake" },
-    "network": { "devnet": "Devnet-Vorschau", "demo": "Demo-Vorschau" },
+    "nav": {
+      "rewards": "Prämien",
+      "stake": "Stake"
+    },
+    "network": {
+      "devnet": "Devnet-Vorschau",
+      "demo": "Demo-Vorschau"
+    },
     "connectWallet": "Wallet verbinden",
+    "connectWalletShort": "Wallet",
     "openChat": "Chat öffnen",
     "closeChat": "Chat schließen",
     "restoreChat": "Chat-Bereich öffnen",
@@ -31,7 +41,11 @@
     "airdropText": "Zeitraum, Bedingungen und deine bestätigten Ansprüche siehst du im Prämienbereich. Demo-Spiele begründen keine Ansprüche.",
     "airdropLink": "Prämien-Details",
     "channel": "Allgemeiner Chat",
-    "status": { "connected": "Verbunden", "connecting": "Verbindung wird hergestellt", "offline": "Offline" },
+    "status": {
+      "connected": "Verbunden",
+      "connecting": "Verbindung wird hergestellt",
+      "offline": "Offline"
+    },
     "log": "Chat-Nachrichten",
     "emptyTitle": "Noch keine Nachrichten.",
     "emptyText": "Bestätigte Community-Nachrichten erscheinen hier.",
@@ -129,6 +143,14 @@
     "cezeri": "Cezeri: Räder der Zeit",
     "asena": "Asena: Sternenwolf"
   },
-  "modes": { "standard": "Standard", "ante": "Chance ×2", "buy": "Bonuskauf" },
-  "duration": { "seconds": "{s} Sek.", "minutes": "{m} Min.", "hoursMinutes": "{h} Std. {mm} Min." }
+  "modes": {
+    "standard": "Standard",
+    "ante": "Chance ×2",
+    "buy": "Bonuskauf"
+  },
+  "duration": {
+    "seconds": "{s} Sek.",
+    "minutes": "{m} Min.",
+    "hoursMinutes": "{h} Std. {mm} Min."
+  }
 }

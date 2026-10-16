@@ -45,7 +45,7 @@ Kod: `apps/realtime/src/{slots,slot-wallet,slot-replay,slot-monitor,slot-stats,s
 ### Durable Object'ler
 - `SlotWallet`, ad `slot:<sha256(token)>`, oturum başına bir örnek. Tablolar: `slot_session` (belirteç yalnız SHA-256), `slot_seeds` (sunucu tohumu, özet, `next_nonce`, `revealed_at`), `slot_rounds` (`UNIQUE(idem)`, `UNIQUE(seed_id, nonce)`), `slot_ledger` (`grant` / `round` / `reset`, borç-alacak-sonraki bakiye), `slot_stats`, `slot_shares`. `CHECK(balance>=0)`. Bilinmeyen belirteçle gelen istek şema oluşturmaz (depolama bırakmaz).
 - `SlotReplay`, ad `replay:<roundId ilk 2 hex>` (256 parça). Yalnız paylaşılan turlar; 30 gün sonra silinir.
-- `SlotMonitor`, ad `global`. Oturumlar sayaç farklarını tur yolunda değil alarmla (5 sn) gönderir; en az bir kez teslim (kayıp onayda bir parti iki kez sayılabilir).
+- `SlotMonitor`: oturumlar sayaç farklarını tur yolunda değil alarmla (`SLOT_MONITOR_FLUSH_MS`, varsayılan 30 sn) kendi shard'ına (`shard:<token hash ilk 8 hex mod SLOT_MONITOR_SHARDS>`, varsayılan 64) gönderir; shard'lar 5 sn'de bir `global`'e toplar (16 Ekim, `docs/architecture/scale.md` §4.2; `SLOT_MONITOR_SHARDS=0` eski doğrudan yol). Her iki atlama en az bir kez teslim (kayıp onayda bir parti iki kez sayılabilir).
 
 ### Belirteç
 `hex(32 rastgele bayt) + HMAC-SHA256(SLOT_SIGNING_KEY, "sollish-slot-token-1\n"+rastgele)[0..16 bayt]` = 96 küçük hex. Worker etiketi sabit zamanlı karşılaştırır; sahte belirteç hiçbir DO'ya ulaşmaz. Yalnız `Authorization: Bearer <token>`; sorgu dizesi olan her slot isteği 400. Tarayıcıda `sessionStorage` (`sollish:rgs:v1`, API kökenine bağlı).

@@ -12,9 +12,16 @@
     "home": "Sollish ana sayfa",
     "primaryNav": "Ana gezinme",
     "liveSuffix": " (canlı)",
-    "nav": { "rewards": "Ödüller", "stake": "Stake" },
-    "network": { "devnet": "Devnet önizleme", "demo": "Demo önizleme" },
+    "nav": {
+      "rewards": "Ödüller",
+      "stake": "Stake"
+    },
+    "network": {
+      "devnet": "Devnet önizleme",
+      "demo": "Demo önizleme"
+    },
     "connectWallet": "Cüzdan bağla",
+    "connectWalletShort": "Bağla",
     "openChat": "Chat’i aç",
     "closeChat": "Chat’i kapat",
     "restoreChat": "Chat panelini aç",
@@ -34,7 +41,11 @@
     "airdropText": "Saatlik dönemi, koşulları ve doğrulanan haklarını ödüller ekranından görüntüle. Demo oyunları hak oluşturmaz.",
     "airdropLink": "Ödül detayları",
     "channel": "Genel sohbet",
-    "status": { "connected": "Bağlı", "connecting": "Bağlanıyor", "offline": "Çevrimdışı" },
+    "status": {
+      "connected": "Bağlı",
+      "connecting": "Bağlanıyor",
+      "offline": "Çevrimdışı"
+    },
     "log": "Sohbet mesajları",
     "emptyTitle": "Henüz bir mesaj yok.",
     "emptyText": "Doğrulanan topluluk mesajları bu alanda görünür.",
@@ -132,6 +143,14 @@
     "cezeri": "Cezeri: Zamanın Çarkları",
     "asena": "Asena: Yıldız Kurdu"
   },
-  "modes": { "standard": "Standart", "ante": "Şans ×2", "buy": "Bonus satın alma" },
-  "duration": { "seconds": "{s} sn", "minutes": "{m} dk", "hoursMinutes": "{h} sa {mm} dk" }
+  "modes": {
+    "standard": "Standart",
+    "ante": "Şans ×2",
+    "buy": "Bonus satın alma"
+  },
+  "duration": {
+    "seconds": "{s} sn",
+    "minutes": "{m} dk",
+    "hoursMinutes": "{h} sa {mm} dk"
+  }
 }

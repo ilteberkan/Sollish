@@ -1,7 +1,7 @@
 import { DurableObject } from 'cloudflare:workers';
 import { COMBAT_V3_VERSION, COMBAT_V4_VERSION, CONTACT_ENGINES, CONTACT_INITIAL, type ContactEngine, type ContactBout, COMBAT_VERSION, COMBAT_DURATION_MS, RINGSIDE_OPEN_MS, RINGSIDE_RESULT_MS, RINGSIDE_FEE_BPS, RINGSIDE_MARKETS, type RingMarketSpec, carryInitial, parseRingClient, simulateCombat, combatResults, ringCommitmentInput, settlePariMutuelPool, type RingRound, type RingTicket, type RingPool, type RingSnapshot, type RingServer, type RingMarket, type RingTapeEntry } from '@sollish/protocol';
 import { allowedOrigin } from './security';
-import { RELAY_AUDIENCE_MS, RelayPublisher, type RelayArena, type RelayEnv } from './arena-relay';
+import { RELAY_AUDIENCE_MS, RelayPublisher, type RelayArena, type RelayEnv } from './relay-publisher';
 interface Env extends RelayEnv { ALLOWED_ORIGINS?:string; LIVE_ARENA_ENABLED?:string }
 type Attachment = { session:string|null; at:number; window:number; count:number };
 type Session = { id:string; alias:string; balance:number; expires:number };

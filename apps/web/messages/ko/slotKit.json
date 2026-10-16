@@ -79,7 +79,9 @@
     "page": "{total}쪽 중 {n}쪽: {title}",
     "empty": "정보 페이지가 없습니다."
   },
-  "modal": { "close": "닫기" },
+  "modal": {
+    "close": "닫기"
+  },
   "reality": {
     "title": "세션 알림",
     "quit": "나가기",
@@ -88,7 +90,12 @@
     "duration": "세션 시간",
     "net": "순결과"
   },
-  "session": { "aria": "세션 정보", "clock": "시각", "session": "세션", "net": "순" },
+  "session": {
+    "aria": "세션 정보",
+    "clock": "시각",
+    "session": "세션",
+    "net": "순"
+  },
   "settings": {
     "title": "설정",
     "sound": "사운드",
@@ -98,6 +105,13 @@
     "music": "음악",
     "sfx": "효과음",
     "ambience": "환경음",
+    "voice": "음성 안내",
+    "voiceFull": "전체",
+    "voiceFullHint": "모든 대사",
+    "voiceKey": "주요 순간",
+    "voiceKeyHint": "당첨과 피처",
+    "voiceOff": "끄기",
+    "voiceOffHint": "무음",
     "play": "게임 플레이",
     "speed": "스핀 속도",
     "speedNormal": "보통",
@@ -115,11 +129,26 @@
     "language": "언어"
   },
   "winTier": {
-    "big": { "title": "빅 윈", "word": "빅" },
-    "mega": { "title": "메가 윈", "word": "메가" },
-    "super": { "title": "슈퍼 윈", "word": "슈퍼" },
-    "epic": { "title": "에픽 윈", "word": "에픽" },
-    "max": { "title": "맥스 윈", "word": "맥스" }
+    "big": {
+      "title": "빅 윈",
+      "word": "빅"
+    },
+    "mega": {
+      "title": "메가 윈",
+      "word": "메가"
+    },
+    "super": {
+      "title": "슈퍼 윈",
+      "word": "슈퍼"
+    },
+    "epic": {
+      "title": "에픽 윈",
+      "word": "에픽"
+    },
+    "max": {
+      "title": "맥스 윈",
+      "word": "맥스"
+    }
   },
   "winWord": "윈"
 }

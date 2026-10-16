@@ -1,6 +1,7 @@
 'use client';
 import { useId } from 'react';
 import type { SlotSettings, SpinSpeed } from '@/lib/slot-kit/settings';
+import type { VoiceLevel } from '@/lib/slot-audio/voice-policy';
 import { HTML_LANG, LOCALE_NATIVE_NAMES, LOCALES, type Locale } from '@/lib/i18n/config';
 import { useLocale, useT } from '@/lib/i18n/client';
 import { Segmented, Slider, Toggle } from './controls';
@@ -20,11 +21,29 @@ export interface SettingsPanelProps {
 const SPEEDS = ['normal', 'quick', 'turbo'] as const satisfies readonly SpinSpeed[];
 const SPEED_KEY = { normal: 'settings.speedNormal', quick: 'settings.speedQuick', turbo: 'settings.speedTurbo' } as const;
 
+/**
+ * Character voice level. The translated labels live in slotKit `settings.voice*` (all 9 locales); this constant keeps
+ * the original Turkish text for reference and existing imports.
+ */
+export const VOICE_LEVEL_UI: { label: string; options: ReadonlyArray<{ value: VoiceLevel; label: string; hint: string }> } = {
+  label: 'Ses anonsu',
+  options: [
+    { value: 'full', label: 'Tam', hint: 'Her replik' },
+    { value: 'key', label: 'Önemli anlar', hint: 'Kazanç ve özellikler' },
+    { value: 'off', label: 'Kapalı', hint: 'Sessiz' },
+  ],
+};
+const VOICE_KEY = {
+  full: { label: 'settings.voiceFull', hint: 'settings.voiceFullHint' },
+  key: { label: 'settings.voiceKey', hint: 'settings.voiceKeyHint' },
+  off: { label: 'settings.voiceOff', hint: 'settings.voiceOffHint' },
+} as const satisfies Record<VoiceLevel, { label: string; hint: string }>;
+
 /** Sound mix, spin speed, comfort options and the site language. Controlled: the parent owns `settings`. */
 export function SettingsPanel({ settings, onChange, onReset, showLanguage = true, className }: SettingsPanelProps) {
   const id = useId();
   const t = useT('slotKit');
-  const { locale, setLocale } = useLocale();
+  const { selected, setLocale } = useLocale();
   return (
     <div className={cx(styles.kit, styles.panel, className)}>
       <section className={styles.group} aria-labelledby={`${id}-sound`}>
@@ -36,6 +55,7 @@ export function SettingsPanel({ settings, onChange, onReset, showLanguage = true
           <Slider label={t('settings.sfx')} value={settings.sfx} onChange={sfx => onChange({ sfx })} />
           <Slider label={t('settings.ambience')} value={settings.ambience} onChange={ambience => onChange({ ambience })} />
         </div>
+        <Segmented label={t('settings.voice')} options={VOICE_LEVEL_UI.options.map(({ value }) => ({ value, label: t(VOICE_KEY[value].label), hint: t(VOICE_KEY[value].hint) }))} value={settings.voice} onChange={voice => onChange({ voice })} />
       </section>
       <section className={styles.group} aria-labelledby={`${id}-play`}>
         <h3 id={`${id}-play`} className={styles.groupTitle}>{t('settings.play')}</h3>
@@ -52,7 +72,7 @@ export function SettingsPanel({ settings, onChange, onReset, showLanguage = true
             label={<span className={styles.srOnly}>{t('settings.language')}</span>}
             layout="chips"
             options={LOCALES.map(code => ({ value: code, label: <span lang={HTML_LANG[code]}>{LOCALE_NATIVE_NAMES[code]}</span> }))}
-            value={locale}
+            value={selected}
             onChange={next => { void setLocale(next); }}
           />
         </section>

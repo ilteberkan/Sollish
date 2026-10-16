@@ -3,15 +3,25 @@
     "title": "Sollish — O jogo é seu",
     "description": "Jogos originais da Sollish: boxe ao vivo Ringside, Crash, Coinflip e slots próprios. A demo local não usa dinheiro real nem tokens."
   },
-  "locale": { "label": "Idioma", "current": "Idioma: {name}" },
+  "locale": {
+    "label": "Idioma",
+    "current": "Idioma: {name}"
+  },
   "shell": {
     "skipLink": "Ir para a área de jogo",
     "home": "Página inicial da Sollish",
     "primaryNav": "Navegação principal",
     "liveSuffix": " (ao vivo)",
-    "nav": { "rewards": "Recompensas", "stake": "Stake" },
-    "network": { "devnet": "Prévia Devnet", "demo": "Prévia demo" },
+    "nav": {
+      "rewards": "Recompensas",
+      "stake": "Stake"
+    },
+    "network": {
+      "devnet": "Prévia Devnet",
+      "demo": "Prévia demo"
+    },
     "connectWallet": "Conectar carteira",
+    "connectWalletShort": "Conectar",
     "openChat": "Abrir chat",
     "closeChat": "Fechar chat",
     "restoreChat": "Abrir painel do chat",
@@ -31,7 +41,11 @@
     "airdropText": "Veja o período, as condições e seus direitos verificados na tela de recompensas. Jogos demo não geram direitos.",
     "airdropLink": "Detalhes das recompensas",
     "channel": "Chat geral",
-    "status": { "connected": "Conectado", "connecting": "Conectando", "offline": "Offline" },
+    "status": {
+      "connected": "Conectado",
+      "connecting": "Conectando",
+      "offline": "Offline"
+    },
     "log": "Mensagens do chat",
     "emptyTitle": "Ainda não há mensagens.",
     "emptyText": "Mensagens verificadas da comunidade aparecem aqui.",
@@ -129,6 +143,14 @@
     "cezeri": "Cezeri: Engrenagens do Tempo",
     "asena": "Asena: Loba das Estrelas"
   },
-  "modes": { "standard": "Padrão", "ante": "Chance ×2", "buy": "Compra de bônus" },
-  "duration": { "seconds": "{s} s", "minutes": "{m} min", "hoursMinutes": "{h} h {mm} min" }
+  "modes": {
+    "standard": "Padrão",
+    "ante": "Chance ×2",
+    "buy": "Compra de bônus"
+  },
+  "duration": {
+    "seconds": "{s} s",
+    "minutes": "{m} min",
+    "hoursMinutes": "{h} h {mm} min"
+  }
 }

@@ -17,6 +17,8 @@ interface I18nContextValue {
   locale: Locale;
   /** True while the namespaces of a newly chosen locale are loading. */
   pending: boolean;
+  /** The locale the player picked: equals `locale` except while that choice is still loading (for pickers). */
+  selected: Locale;
   setLocale: (next: Locale) => Promise<void>;
   dictionary: (locale: Locale, namespace: Namespace) => Dictionary | undefined;
   seed: (locale: Locale, messages: LoadedMessages) => void;
@@ -42,6 +44,7 @@ export function I18nProvider({ locale: serverLocale, messages, children }: { loc
   const router = useRouter();
   const [locale, setLocaleState] = useState<Locale>(serverLocale);
   const [pending, setPending] = useState(false);
+  const [target, setTarget] = useState<Locale | null>(null);
   const store = useRef(new Map<string, Dictionary>());
   const namespaces = useRef(new Set<Namespace>());
   const request = useRef(0);
@@ -64,6 +67,7 @@ export function I18nProvider({ locale: serverLocale, messages, children }: { loc
     const id = ++request.current;
     writeChoice(next);
     setPending(true);
+    setTarget(next);
     try {
       await Promise.all([...namespaces.current].map(async ns => {
         const dict = await loadNamespace(next, ns);
@@ -75,6 +79,7 @@ export function I18nProvider({ locale: serverLocale, messages, children }: { loc
     if (id !== request.current) return;
     setLocaleState(next);
     setPending(false);
+    setTarget(null);
     startTransition(() => router.refresh());
   }, [router]);
 
@@ -100,7 +105,8 @@ export function I18nProvider({ locale: serverLocale, messages, children }: { loc
   }, []);
 
   const dictionary = useCallback((at: Locale, ns: Namespace) => store.current.get(`${at}:${ns}`), []);
-  const value = useMemo<I18nContextValue>(() => ({ locale, pending, setLocale, dictionary, seed }), [locale, pending, setLocale, dictionary, seed]);
+  const selected = target ?? locale;
+  const value = useMemo<I18nContextValue>(() => ({ locale, pending, selected, setLocale, dictionary, seed }), [locale, pending, selected, setLocale, dictionary, seed]);
   return <I18nContext value={value}>{children}</I18nContext>;
 }
 
@@ -111,15 +117,15 @@ export function I18nMessagesClient({ locale, messages, children }: { locale: Loc
   return <>{children}</>;
 }
 
-const FALLBACK: I18nContextValue = { locale: DEFAULT_LOCALE, pending: false, setLocale: async () => {}, dictionary: () => undefined, seed: () => {} };
+const FALLBACK: I18nContextValue = { locale: DEFAULT_LOCALE, pending: false, selected: DEFAULT_LOCALE, setLocale: async () => {}, dictionary: () => undefined, seed: () => {} };
 function useI18nContext(): I18nContextValue {
   return useContext(I18nContext) ?? FALLBACK;
 }
 
 /** Current locale and the switch function. */
-export function useLocale(): { locale: Locale; setLocale: (next: Locale) => Promise<void>; pending: boolean } {
-  const { locale, setLocale, pending } = useI18nContext();
-  return { locale, setLocale, pending };
+export function useLocale(): { locale: Locale; selected: Locale; setLocale: (next: Locale) => Promise<void>; pending: boolean } {
+  const { locale, selected, setLocale, pending } = useI18nContext();
+  return { locale, selected, setLocale, pending };
 }
 
 /** Typed translator for one namespace: `const t = useT('slotKit'); t('bet.label')`. */

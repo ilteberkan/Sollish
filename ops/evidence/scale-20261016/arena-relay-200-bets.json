@@ -1,0 +1,63 @@
+{
+  "at": "2026-10-16T22:54:59.160Z",
+  "runtime": "wrangler dev (local workerd), production router, ContactArenaV5 root + ArenaRelay",
+  "machine": {
+    "cpus": 4,
+    "memGB": 16
+  },
+  "config": {
+    "viewers": 200,
+    "relays": 2,
+    "bettors": 12,
+    "minIntervalMs": 250
+  },
+  "checks": [
+    "watch: no-upgrade 400, foreign origin 403",
+    "200 viewers connected through 2 relays; each received an initial snapshot",
+    "12 root sessions, 36 root tickets; viewer bet frame created no ticket; every viewer reached root revision 49",
+    "late joiner received the root's latest revision immediately",
+    "viewer > 20 messages/min closed with 1008"
+  ],
+  "connect": {
+    "viewers": 200,
+    "wallMs": 2150
+  },
+  "rootTraffic": {
+    "sessions": 12,
+    "ticketsPlaced": 36,
+    "refusedClosedWindow": 0,
+    "phaseAtStart": "open"
+  },
+  "fanout": {
+    "rootRevisions": 48,
+    "viewerDeliveries": 3800,
+    "coalescedSkips": 5800,
+    "caughtUpDelayMs": {
+      "n": 9600,
+      "p50": 143.2,
+      "p95": 256.1,
+      "p99": 275.8,
+      "max": 291.9
+    },
+    "exactRevisionDelayMs": {
+      "n": 3800,
+      "p50": 62,
+      "p95": 159.3,
+      "p99": 199.7,
+      "max": 200.5
+    },
+    "finalRevisionDelayMs": {
+      "n": 200,
+      "p50": 84.7,
+      "p95": 120.3,
+      "p99": 120.6,
+      "max": 120.7
+    }
+  },
+  "lateJoiner": {
+    "firstSnapshotMs": 20.8,
+    "revision": 49
+  },
+  "pass": true,
+  "scope": "Local only: one workerd process, one Node client process on this container. Shows the relay tier delivers ordered, read-only, coalesced snapshots to thousands of hibernatable sockets and never touches the ledger; not hosted, not multi-colo, not a Cloudflare capacity number."
+}

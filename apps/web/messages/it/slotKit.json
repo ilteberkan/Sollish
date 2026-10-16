@@ -79,7 +79,9 @@
     "page": "Pagina {n} / {total}: {title}",
     "empty": "Nessuna pagina informativa."
   },
-  "modal": { "close": "Chiudi" },
+  "modal": {
+    "close": "Chiudi"
+  },
   "reality": {
     "title": "Promemoria di sessione",
     "quit": "Esci",
@@ -88,7 +90,12 @@
     "duration": "Durata della sessione",
     "net": "Risultato netto"
   },
-  "session": { "aria": "Info sessione", "clock": "Ora", "session": "Sessione", "net": "Netto" },
+  "session": {
+    "aria": "Info sessione",
+    "clock": "Ora",
+    "session": "Sessione",
+    "net": "Netto"
+  },
   "settings": {
     "title": "Impostazioni",
     "sound": "Audio",
@@ -98,6 +105,13 @@
     "music": "Musica",
     "sfx": "Effetti",
     "ambience": "Ambiente",
+    "voice": "Voce narrante",
+    "voiceFull": "Completa",
+    "voiceFullHint": "Ogni battuta",
+    "voiceKey": "Momenti chiave",
+    "voiceKeyHint": "Vincite e funzioni",
+    "voiceOff": "Disattivata",
+    "voiceOffHint": "Silenzio",
     "play": "Gioco",
     "speed": "Velocità di giro",
     "speedNormal": "Normale",
@@ -115,11 +129,26 @@
     "language": "Lingua"
   },
   "winTier": {
-    "big": { "title": "Grande Vincita", "word": "GRANDE" },
-    "mega": { "title": "Mega Vincita", "word": "MEGA" },
-    "super": { "title": "Super Vincita", "word": "SUPER" },
-    "epic": { "title": "Vincita Epica", "word": "EPICA" },
-    "max": { "title": "Vincita Massima", "word": "MAX" }
+    "big": {
+      "title": "Grande Vincita",
+      "word": "GRANDE"
+    },
+    "mega": {
+      "title": "Mega Vincita",
+      "word": "MEGA"
+    },
+    "super": {
+      "title": "Super Vincita",
+      "word": "SUPER"
+    },
+    "epic": {
+      "title": "Vincita Epica",
+      "word": "EPICA"
+    },
+    "max": {
+      "title": "Vincita Massima",
+      "word": "MAX"
+    }
   },
   "winWord": "VINCITA"
 }
