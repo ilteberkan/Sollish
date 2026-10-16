@@ -117,7 +117,7 @@ async function expectCelebration(page: Page, fill: number, expected: { levels: s
   if (mode === 'buy') await buy(page); else await spin(page).click();
   await expect(balance(page)).toContainText(formatAmount(START - round.costCents));
   if (round.freeSpinsTriggered) await tapIfShown(page.getByRole('dialog', { name: 'Ergenekon Başlıyor' }).getByRole('button', { name: 'Başla' }), 30_000);
-  await expect(celebration(page)).toBeVisible({ timeout: 200_000 });
+  await expect(celebration(page)).toBeVisible({ timeout: 420_000 });
   await expect(spin(page)).toBeDisabled();
   if (opts.tapWithSpace) { await page.locator('h1').click(); await page.keyboard.press('Space'); }
   await expect(rows(page)).toHaveCount(1, { timeout: 30_000 });
@@ -304,7 +304,8 @@ test('free-spin round below 10x still ends on "Ergenekon — Toplam" with no cel
 });
 
 test('capped buy at 1 DEMO climbs every tier and ends on Azami Kazanç = 5000x bet', async ({ page }) => {
-  test.setTimeout(240_000);
+  // The 5000x round is a 105-step chain (two free spins under the x5 map): about 5.5 minutes even in turbo.
+  test.setTimeout(540_000);
   const round = engine(BUY_CAP, 100, 'buy');
   expect(round.capped).toBe(true);
   expect(round.payoutCents).toBe(500_000);

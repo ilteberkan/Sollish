@@ -118,7 +118,7 @@ export interface AsenaTimeline { events: AsenaEvent[]; duration: number; speed: 
 /** Base timings (ms, normal speed). Reduced motion keeps every step (constellations included) with short fades. */
 const NORMAL = {
   spinStart: 120, freeSpinStart: 420, settle: 110, highlight: 560,
-  constellationHold: 900, constellationHoldLow: 600, calloutHold: 1250, cascade: 0.5, wolfOverlap: 0.62, flight: 720, flightStagger: 120, mapTail: 220,
+  constellationHold: 900, constellationHoldLow: 600, calloutHold: 1250, cascade: 0.5, cascadeSpan: 1800, wolfOverlap: 0.62, wolfSpan: 1400, flight: 720, flightStagger: 120, mapTail: 220,
   ergenekon: 1500, mapSpins: 900, wolfGap: 60,
   moons: 1500, scatterPay: 760, scatterTrigger: 1300, retrigger: 1300, freeIntro: 3200, freeOutro: 3400, totalWin: 900,
   spinEndWin: 560, spinEndNone: 260, freeSpinEndWin: 640, freeSpinEndNone: 240,
@@ -263,7 +263,9 @@ export function buildAsenaTimeline(round: AsenaRound, options: AsenaTimelineOpti
           centroid: { x: x / Math.max(1, positions.length), y: y / Math.max(1, positions.length) },
         };
       });
-      const highlightDur = d(T.highlight);
+      // Long tumble chains tighten after the 8th step of a spin (the holds, never a board animation or the trace).
+      const pace = i >= 8 ? 0.7 : 1;
+      const highlightDur = d(T.highlight * pace);
       push({ type: 'highlight', at: t, dur: highlightDur, spin: s, step: i, clusters, stepHundredths: step.winHundredths, globalMultiplier: step.globalMultiplier });
       t += highlightDur;
 
@@ -272,6 +274,9 @@ export function buildAsenaTimeline(round: AsenaRound, options: AsenaTimelineOpti
       const plans: AsenaConstellationPlan[] = [];
       // Several constellations of one step draw in a cascade: each starts when the previous is half traced (reduced
       // motion: one after another), so a chain of ignitions stays a sequence of drawings without stalling the round.
+      // A long chain (wild networks can light many constellations at once) keeps the cascade inside one span.
+      const ignited = step.clusters.filter(cl => cl.constellation).length;
+      const stagger = ignited > 1 ? Math.min(Math.round(traceMs * T.cascade), Math.round(d(T.cascadeSpan) / (ignited - 1))) : 0;
       let index = 0, start = t, end = t;
       for (const cl of step.clusters) {
         if (!cl.constellation) continue;
@@ -280,8 +285,8 @@ export function buildAsenaTimeline(round: AsenaRound, options: AsenaTimelineOpti
         if (free) constellationsFree++;
         const value = cl.templateMultiplier * globalBefore;
         const callout = value >= 10 ? { value, tier: asenaCalloutTier(value) } : null;
-        if (index > 0) start += reducedMotion ? traceMs : Math.round(traceMs * T.cascade);
-        const dur = traceMs + d(callout ? T.calloutHold : cl.templateMultiplier >= 6 ? T.constellationHold : T.constellationHoldLow);
+        if (index > 0) start += reducedMotion ? Math.round(traceMs * 0.6) : stagger;
+        const dur = traceMs + Math.max(ASENA_HOWL_DELAY_MS + 60, d((callout ? T.calloutHold : cl.templateMultiplier >= 6 ? T.constellationHold : T.constellationHoldLow) * (callout ? 1 : pace)));
         push({ type: 'constellation', at: start, dur, spin: s, step: i, index, ignition: cl.constellation, plan, symbol: cl.symbol, payHundredths: cl.payHundredths, persist: free, freeSpins: free });
         push({ type: 'howl', at: start + traceMs + ASENA_HOWL_DELAY_MS, dur: 0, spin: s, step: i, index, templateId: cl.constellation.templateId, multiplier: cl.templateMultiplier, callout });
         end = Math.max(end, start + dur);
@@ -330,7 +335,7 @@ export function buildAsenaTimeline(round: AsenaRound, options: AsenaTimelineOpti
       step.wolfWalks.forEach((walk, n) => {
         const ms = Math.round((reducedMotion ? 160 : 640) * k);
         const last = n === step.wolfWalks.length - 1;
-        const next = reducedMotion ? ms + d(T.wolfGap) : Math.round(ms * T.wolfOverlap);
+        const next = reducedMotion ? ms + d(T.wolfGap) : Math.min(Math.round(ms * T.wolfOverlap), Math.round(d(T.wolfSpan) / Math.max(1, step.wolfWalks.length - 1)));
         push({ type: 'wolf-walk', at: t, dur: last ? ms + d(T.wolfGap) : next, spin: s, step: i, index: n, walk, speed: k, ms });
         t += last ? ms + d(T.wolfGap) : next;
         if (free) wolfStepsFree++;

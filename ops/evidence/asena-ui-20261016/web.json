@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-16",
+  "scope": "Asena: Yıldız Kurdu game screen (/game/asena) on engine asena-stars-1 (unchanged): timeline lib/asena-timeline.ts, controls lib/asena-controls.ts, components/asena/asena-game.tsx + celebration/info/history/template-glyph, art from 07967cd (sky-map pips got role=img for axe), sound via lib/slot-audio/use-asena-sound.ts (voice bank /audio/voice/asena: files absent, 404 and skipped). RGS registry ASENA_SLOT (5000x, buy x80); lobby, nav, rgs-client, slot-verify replay frames, replay-view, verify-panel; desktop header breakpoint for ten nav links (globals.css).",
+  "environment": "local next dev (Turbopack) on 127.0.0.1:3011 (own server, stopped after the run), headless Chromium 1194 via PW_CHROMIUM_PATH (software rendering). Other agents edited files concurrently. Not build:cloudflare preview, not hosted, no GitHub CI, no user visual/audio acceptance.",
+  "unit": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test", "result": "328/328 pass (incl. tests/asena-timeline.test.ts 7, tests/asena-controls.test.ts 6, Asena replay frames)" },
+  "protocol": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/protocol test", "result": "302/302 pass (registry includes asena)" },
+  "typecheck": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck", "result": "clean" },
+  "realtime": [
+    { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime test:slots", "result": "pass, 33 checks (Asena buy round through the registry, response 110013 bytes)" },
+    { "command": "node --import tsx --test test/slots.test.ts (apps/realtime)", "result": "6/6 pass" }
+  ],
+  "browser": [
+    { "command": "PW_CHROMIUM_PATH=... PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://127.0.0.1:3011 bash scripts/use-node.sh pnpm --filter @sollish/web test:browser tests/browser/asena.spec.ts --workers=1", "result": "17/17 pass (10.5 min; the 5000x capped buy alone 5.5 min in turbo)" }
+  ],
+  "limits": [
+    "Round length: a 5000x capped round is 105 tumble steps, about 5.4 min turbo / 13 min normal; a typical Ergenekon 1.5-4 min normal.",
+    "Recorded Asena voice lines are not in public/audio/voice/asena (sound plays without them).",
+    "Desktop 761-1240 px: base game hides the logo/sky map so the board keeps its height; the sky map shows as a row in Ergenekon.",
+    "The scene's iron mountain sits mostly behind the deck; the Ergenekon multiplier rise is shown by the mountain burst over the board, the sky-map emblem and the scene cracks."
+  ]
+}

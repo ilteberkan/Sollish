@@ -28,7 +28,7 @@ export const AsenaHistory = memo(function AsenaHistory({ onReplay, replayDisable
         <span className="small muted">Bu oturum · tekrar bakiyeyi değiştirmez</span>
       </div>
       {relevant.length ? (
-        <div className="table-scroll">
+        <div className="table-scroll" role="region" aria-label="Oyun geçmişi tablosu" tabIndex={0}>
           <table className={`history-table ${styles.historyTable}`}>
             <thead>
               <tr>
