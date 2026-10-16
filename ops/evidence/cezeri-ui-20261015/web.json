@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-15/16",
+  "scope": "Cezeri: Zamanın Çarkları game screen (/game/cezeri) on engine cezeri-gears-1 (unchanged): timeline lib/cezeri-timeline.ts, controls lib/cezeri-controls.ts, game/celebration/info/history in components/cezeri, sound via lib/slot-audio/use-cezeri-sound.ts (voice bank /audio/voice/cezeri, files absent -> 404, skipped). Ring plans (geometry cezeriRotateTiming) and the falcon flight (cezeriFalconPlan) are shared by board, FX, timeline and sound. RGS registry CEZERI_SLOT (id cezeri, 10000x cap); /verify generic, /replay frames per rotation.",
+  "environment": "local next dev (Turbopack) on 127.0.0.1:3008, headless Chromium 1194 via PW_CHROMIUM_PATH (software rendering). Container restarted twice during the work; other agents edited shared files concurrently. Not build:cloudflare preview, not hosted, no GitHub CI, no user visual/audio acceptance.",
+  "unit": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test", "result": "321/322 pass; all 10 tests/cezeri-timeline.test.ts pass; the 1 failure is tests/asena-timeline.test.ts (Asena agent, work in progress)" },
+  "protocol": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/protocol test", "result": "302/302 pass (slot-fair registry includes cezeri)" },
+  "typecheck": { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck", "result": "clean for Cezeri files; last run reports one error in tests/browser/asena.spec.ts (Asena agent)" },
+  "realtime": [
+    { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime test:slots", "result": "pass, 33 checks (Cezeri buy round at 1 DEMO through the registry, receipt signature, engine recomputation)" },
+    { "command": "bash scripts/use-node.sh pnpm --filter @sollish/realtime test", "result": "17/17 pass" }
+  ],
+  "browser": [
+    { "command": "PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://127.0.0.1:3008 bash scripts/use-node.sh pnpm --filter @sollish/web test:browser tests/browser/cezeri.spec.ts --workers=1", "result": "16/17 in one full run (6.8 min); the failing first test hit the 30 s timeout on a cold dev compile (raised to 60 s), rerun 1/1 pass" }
+  ],
+  "stub_seeds": {
+    "loss_standard_10_demo": 1107666780, "chain_2_respins_2.30x": 4072214393, "hub_x10_callout": 3175850668, "buyuk_12.77x": 3690074171, "mega_25.34x": 1792267404,
+    "long_chain_10_respins_21.23x": 1846062645, "free_low_9.38x": 2288122716, "buy_1_demo_4_falcons_39.81x_mega": 1865544835, "ante_loss": 147934750
+  },
+  "notes": [
+    "Timeline player max step 250 ms: the rings turn on the wall clock (WAAPI), the timeline must not lag behind them.",
+    "Respin k winds at max(0.72, 1 - 0.035 k) of the plan time: a 10-respin chain takes 39 s normal, 14 s turbo.",
+    "No base-game Efsane (>=100x) or capped round found in 400k standard / 300k buy seeds; Azami and Efsane are covered by the timeline unit test with a test cap and by the dev-only __cezeriPreview.celebrate screen."
+  ]
+}

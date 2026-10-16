@@ -101,7 +101,7 @@ export function AsenaSkyMap({ pieces = [0, 0, 0, 0, 0, 0], multiplier = 1, orien
             <div key={t.id} ref={(el) => { tiles.current[i] = el; }} className={styles.tile} data-n={n} title={`${t.name} ×${t.multiplier}`}>
               <Glyph index={i} />
               <div className={styles.tileText}><b>{ASENA_TEMPLATE_INFO[t.id].name}</b><span>×{t.multiplier}</span></div>
-              <div className={styles.pips} aria-label={`${n} kez yandı`}><i data-on={n >= 1 || undefined} /><i data-on={n >= 2 || undefined} /></div>
+              <div className={styles.pips} role="img" aria-label={`${n} kez yandı`}><i data-on={n >= 1 || undefined} /><i data-on={n >= 2 || undefined} /></div>
             </div>
           );
         })}
