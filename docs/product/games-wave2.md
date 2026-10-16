@@ -47,3 +47,24 @@ Ortak yenilik (platform): **Paylaşılabilir tur tekrarı** — her tur determin
 - Her oyunun **imza anı** (viral klip): Cezeri — çarkların kenetlenip dişli sesiyle dönmesi ve göbek çarpanının sayaç gibi atması; Ebru — tarağın suyu taraması ve mürekkebin dalga dalga yeniden dizilmesi; Asena — takımyıldızın gökte çizilip kurdun uluması.
 - Animasyon uyumu: her adımın süresi zaman çizelgesinde tanımlı; ses vuruşları ve görsel darbeler aynı zaman damgasına bağlı (`lib/slot-kit/timeline-player.ts`).
 - Kutlamalar, kilit, birikimli kazanç, sade otomatik oyun: §6.
+
+---
+
+## Üretim kaydı: Türkçe seslendirme (16 Ekim 2026)
+Kaynak metinler `apps/web/lib/slot-audio/{cezeri,ebru,asena}-tiers.ts` içindeki `*_VOICE_TEXT`; yazım "…" yerine "..." olarak gönderildi, geri kalanı aynen. Çıktı `apps/web/public/audio/voice/<oyun>/<satır>.mp3` (Storm klasörüne dokunulmadı).
+
+- **Model:** Higgsfield `text2speech_v2`, varyant `elevenlabs`, hazır (preset) ses, `use_unlim: false`. Seslendirme yapay sestir; gerçek bir kişinin kaydı değildir.
+- **Cezeri (22 satır):** Barrett (`d603a8cd-3fe1-55e0-9245-617a2589131e`), yaşlı, ölçülü erkek mühendis sesi.
+- **Ses seçimi (Ebru ve Asena):** aynı cümle («Gök açıldı! Kurt yol gösteriyor...») ile üç aday denendi; medyan F0, 16 kHz mono otokorelasyon (30/50/60 ms pencere, aralık 60-400 Hz):
+
+  | Aday | Medyan F0 |
+  |---|---|
+  | Elena | ~243-272 Hz |
+  | Vesper | ~159-166 Hz |
+  | Nora | ~151-152 Hz |
+
+  En düşük perde **Nora → Asena (29 satır)**; bir sonraki **Vesper → Ebru (18 satır)**. Elena elendi. Vesper ile Nora arasındaki fark küçük (~8-10 Hz); seçim kural gereği F0 sırasına göre yapıldı, kulak kararı değildir.
+- **Kredi:** 46,55 → 35,75 (10,80 kredi; 72 başarılı iş x 0,15: 69 satır + 3 deneme). 429 `rate_limit_reached` alan istekler yalnızca o kalem için, iş kimliği alınmadan yeniden gönderildi; iş kimliği alan hiçbir kalem tekrarlanmadı. Başarısız üretim yok.
+- **İşleme (ffmpeg):** baş/son sessizlik kırpma (`silenceremove` -45 dB, 0,05 s / 0,12 s), `loudnorm=I=-16:TP=-1.5:LRA=7`, 44,1 kHz, mono, 128 kb/s MP3.
+- **Doğrulama (ebur128):** 69 dosyanın tamamında gerçek tepe <= -1,8 dBTP (sınır -1,5). Bütünleşik gürültü 64 dosyada -16 LUFS civarında (en fazla 0,8 LU sapma), ancak 5 kısa ve tepe değerli kayıt tepe sınırı yüzünden hedefe ulaşamadı (iki geçişli loudnorm de aynı sonucu verdi): `cezeri/reservoir` -17,2, `cezeri/retrigger` -17,3, `asena/tpl-at` -17,6, `asena/tpl-kurt-basi` -18,0, `asena/sky-open` -19,0 LUFS. Dosya sayısı satır sayısına eşit: Cezeri 22, Ebru 18, Asena 29.
+- **Durum:** sahibin dinleme kabulü bekleniyor. Kabul edilmeden ses seçimi (özellikle Ebru ve Asena) kesin sayılmaz; beğenilmezse yalnızca ilgili oyunun satırları yeniden üretilir (ek kredi gerekir).
