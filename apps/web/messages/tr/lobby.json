@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "title": "Oyunlar — Canlı & Solo",
+    "description": "Sollish oyunları. Ortak canlı Ringside maçına katıl veya tek kişilik oyunları dene."
+  },
+  "hero": {
+    "aria": "Ringside canlı arenaya gir",
+    "tag": "CANLI · HERKES AYNI MAÇI İZLER",
+    "text": "Yumruk ve tekmelerle üç rauntluk dövüş. Maç başlamadan seçimini yap, sonra kuponunu raunt raunt izle. Dövüşçüleri eğitilmiş bir ağ yönetir, köşesinden Jev taktik verir.",
+    "cta": "Arenaya gir",
+    "factWindowValue": "30 sn",
+    "factWindow": "bahis penceresi",
+    "factRoundsValue": "3 × 45 sn",
+    "factRounds": "raunt",
+    "factMarketsValue": "3",
+    "factMarkets": "maç pazarı",
+    "factFeeValue": "%2",
+    "factFee": "havuz kesintisi"
+  },
+  "solo": {
+    "title": "Tek kişilik",
+    "subtitle": "Kendi hızında, anında sonuç.",
+    "demo": "DEMO"
+  },
+  "cards": {
+    "crash": { "text": "Çarpan yükselirken çıkış anını sen seç.", "type": "Manuel çıkış" },
+    "coinflip": { "text": "İki yüz, bir seçim, anında sonuç.", "type": "Klasik" },
+    "cascade": { "text": "Sekiz eşleşmede patlat, düşen şekerlerle zincir kur.", "type": "Tumble" },
+    "tarhun": { "text": "Fırtına tanrısı taşlara yıldırım atar; çarpanlar bedava dönüşte birikir.", "type": "Tumble · çarpan" },
+    "ebru": { "text": "Tarak suyu tarar, mürekkep dalga dalga yeniden dizilir; boya lekeleri çarpanla birlikte kayar.", "type": "Küme · tarak" },
+    "cezeri": { "text": "Dört pirinç çark döner; kazanan dilimler kenetlenir, çarklar yeniden döner ve göbek çarpanı her turda +1 atar.", "type": "Çark · zincir" },
+    "asena": { "text": "Kümeler gökte takımyıldız çizer, Gök Kurt yürüyüp yıldız izi bırakır; Ergenekon haritası genel çarpanı ×5’e kadar açar.", "type": "Küme · takımyıldız" }
+  },
+  "trust": {
+    "aria": "Kurallar",
+    "poolTitle": "Havuz sistemi",
+    "poolText": "Bahisler pazar başına ayrı havuzda toplanır, %2 kesintiden sonra kazananlara paylaşılır. Kasa ek kazanç vaat etmez.",
+    "verifyTitle": "Doğrulanabilir maç",
+    "verifyText": "Üç raundun seed hash’i bahisten önce yayımlanır. Tarayıcın her rauntu yeniden oynatıp sonucu kontrol eder.",
+    "demoTitle": "Yalnız DEMO",
+    "demoText": "Krediler değersizdir, çekilemez, token veya airdrop hakkı vermez. Gerçek para doğrulamalar bitene kadar kapalı."
+  },
+  "faq": {
+    "title": "Sık sorulanlar",
+    "bettingQ": "Ringside’da bahis nasıl çalışır?",
+    "bettingA": "Her maç için bahis yalnız R1 başlamadan 30 saniye açıktır. Kazanan, tam sonuç (kazanan ve biçim) ve toplam yere düşme sayısı için ayrı havuzlar vardır; her pazarda maç başına tek bilet alınır. Raunt aralarında yeni bahis alınmaz. Maç durdurmayla ya da üçüncü raundun sonunda biter ve her havuz bir kez sonuçlanır. Tek taraflı ya da kazananı olmayan havuz kesintisiz iade edilir; doğru seçimde bile dönüş yatırdığından az olabilir.",
+    "fightersQ": "Dövüşçüler nasıl karar veriyor?",
+    "fightersA": "Her yumruk, tekme, seri, mesafe ve savunma seçimini maç içinde öğrenen bir ağ yapar; MaleCNS sinek bağlantı ağı sabit bir rezervuar olarak kullanılır. Köşe antrenörü Jev her 9 saniyede plan önerir; plan bahis kapandıktan sonra geldiği için oyun yalnız DEMO’dur. Tam beyin ya da bağlantı yapısının üstünlüğü iddiası yoktur.",
+    "demoQ": "Demo ile gerçek bahis arasındaki sınır",
+    "demoA": "Buradaki DEMO kredilerinin parasal değeri yoktur. Gerçek SOL bahisleri; sözleşme dağıtımı, oracle kurtarma, Crash gizliliği ve ödeme akışları doğrulanana kadar kapalıdır. Bağımsız denetim yapılmış gibi bir iddiada bulunmuyoruz. Bu sürümlerin VRF kanıtı yoktur."
+  }
+}

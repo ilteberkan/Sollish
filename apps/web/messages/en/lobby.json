@@ -1,0 +1,52 @@
+{
+  "meta": {
+    "title": "Games — Live & Solo",
+    "description": "Sollish games. Join the shared live Ringside match or try the single-player games."
+  },
+  "hero": {
+    "aria": "Enter the Ringside live arena",
+    "tag": "LIVE · EVERYONE WATCHES THE SAME MATCH",
+    "text": "A three-round fight with punches and kicks. Make your pick before the match starts, then follow your slip round by round. A trained network controls the fighters, and Jev gives tactics from the corner.",
+    "cta": "Enter the arena",
+    "factWindowValue": "30 s",
+    "factWindow": "betting window",
+    "factRoundsValue": "3 × 45 s",
+    "factRounds": "rounds",
+    "factMarketsValue": "3",
+    "factMarkets": "match markets",
+    "factFeeValue": "2%",
+    "factFee": "pool fee"
+  },
+  "solo": {
+    "title": "Single player",
+    "subtitle": "At your own pace, instant results.",
+    "demo": "DEMO"
+  },
+  "cards": {
+    "crash": { "text": "Pick your moment to cash out while the multiplier climbs.", "type": "Manual cash-out" },
+    "coinflip": { "text": "Two sides, one choice, an instant result.", "type": "Classic" },
+    "cascade": { "text": "Pop eight of a kind and build chains with the falling candies.", "type": "Tumble" },
+    "tarhun": { "text": "The storm god strikes the stones with lightning; multipliers build up during free spins.", "type": "Tumble · multiplier" },
+    "ebru": { "text": "The comb sweeps the water and the ink rearranges wave by wave; paint stains slide along with their multipliers.", "type": "Cluster · comb" },
+    "cezeri": { "text": "Four brass wheels turn; winning segments lock, the wheels spin again and the hub multiplier rises by +1 each time.", "type": "Wheel · chain" },
+    "asena": { "text": "Clusters draw constellations in the sky and the Sky Wolf walks, leaving a star trail; the Ergenekon map raises the global multiplier up to ×5.", "type": "Cluster · constellation" }
+  },
+  "trust": {
+    "aria": "Rules",
+    "poolTitle": "Pool system",
+    "poolText": "Bets are collected in a separate pool for each market and shared among the winners after a 2% fee. The house promises no extra return.",
+    "verifyTitle": "Verifiable match",
+    "verifyText": "The seed hashes of all three rounds are published before betting opens. Your browser replays every round and checks the result.",
+    "demoTitle": "DEMO only",
+    "demoText": "Credits have no value, cannot be withdrawn and grant no token or airdrop rights. Real money stays disabled until the validations are complete."
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "bettingQ": "How does betting work in Ringside?",
+    "bettingA": "For each match, betting is open only for the 30 seconds before R1 starts. There are separate pools for the winner, the exact result (winner and method) and the total number of knockdowns; you can place one ticket per market per match. No new bets are accepted between rounds. The match ends by stoppage or at the end of the third round, and each pool is settled once. A one-sided pool or a pool without a winner is refunded in full with no fee; even with a correct pick, the return can be less than your stake.",
+    "fightersQ": "How do the fighters decide?",
+    "fightersA": "Every punch, kick, combination, distance and defence choice is made by a network that learns during the match; the MaleCNS fly connectome is used as a fixed reservoir. The corner coach Jev suggests a plan every 9 seconds; because the plan arrives after betting closes, the game is DEMO only. There is no claim of a complete brain or of any superiority of the connectome.",
+    "demoQ": "The line between demo and real betting",
+    "demoA": "The DEMO credits here have no monetary value. Real SOL betting stays disabled until the contract deployment, oracle recovery, Crash privacy and payment flows are validated. We do not claim that an independent audit has been carried out. These versions have no VRF proof."
+  }
+}

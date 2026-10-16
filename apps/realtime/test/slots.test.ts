@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createHmac } from 'node:crypto';
 import { ASENA_SLOT, CASCADE_SLOT, EBRU_SLOT, TARHUN_SLOT } from '@sollish/protocol';
 import { SLOT_LIMITS, SlotError, admitBet, bearerToken, handleSlots, mintToken, parseExactObject, parseRoundBody, signText, signingSecret, timingSafeEqualHex, tokenValid } from '../src/slots';
-import { parseDeltas, rtpAlert, rtpDeviation } from '../src/slot-stats';
+import { monitorFlushMs, monitorRollupMs, monitorShardCount, monitorTarget, parseDeltas, rtpAlert, rtpDeviation } from '../src/slot-stats';
 import { isReplayRecord } from '../src/slot-records';
 
 const code = (fn: () => unknown) => { try { fn(); } catch (e) { return e instanceof SlotError ? e.code : 'OTHER'; } return 'OK'; };
@@ -99,4 +99,19 @@ test('router without bindings: health reports the flag, default off is 503, orig
   const pre = await call('/v1/slots/cascade/rounds', { method: 'OPTIONS', headers: { Origin: 'http://localhost:3000' } }, on);
   assert.equal(pre.status, 204); assert.match(pre.headers.get('Access-Control-Allow-Headers') ?? '', /Authorization/);
   assert.equal((await call('/v1/slots/cascade/rounds', { method: 'OPTIONS', headers: { Origin: 'https://evil.invalid' } }, on)).status, 403);
+});
+
+test('monitor sharding: stable uniform shard per session, 0 = direct to global, bounded settings', () => {
+  assert.equal(monitorShardCount({}), 64); assert.equal(monitorShardCount({ SLOT_MONITOR_SHARDS: '0' }), 0); assert.equal(monitorShardCount({ SLOT_MONITOR_SHARDS: '5000' }), 64); assert.equal(monitorShardCount({ SLOT_MONITOR_SHARDS: 'x' }), 64);
+  assert.equal(monitorFlushMs({}), 30_000); assert.equal(monitorFlushMs({ SLOT_MONITOR_FLUSH_MS: '10' }), 30_000); assert.equal(monitorFlushMs({ SLOT_MONITOR_FLUSH_MS: '1000' }), 1000);
+  assert.equal(monitorRollupMs({}), 5_000);
+  assert.deepEqual(monitorTarget('a'.repeat(64), 0), { name: 'global', path: '/add' });
+  assert.deepEqual(monitorTarget('not-hex', 64), { name: 'global', path: '/add' });
+  const hash = '0000002a' + 'f'.repeat(56);
+  assert.deepEqual(monitorTarget(hash, 64), { name: 'shard:42', path: '/shard/add' });
+  assert.deepEqual(monitorTarget(hash, 64), monitorTarget(hash, 64));
+  // Uniformity over random SHA-256 hashes: every shard used, none above 2x the mean.
+  const counts = new Array(64).fill(0);
+  for (let i = 0; i < 64_000; i++) counts[Number(monitorTarget(createHmac('sha256', 'k').update(String(i)).digest('hex'), 64).name.slice(6))]++;
+  assert.ok(Math.min(...counts) > 500 && Math.max(...counts) < 2000, JSON.stringify(counts));
 });

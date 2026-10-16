@@ -17,6 +17,13 @@ export interface SlotEnv {
   SLOT_SIGNING_KEY?: string;
   /** Rounds per game/mode before the observed-RTP deviation check may log (default 1000). */
   SLOT_RTP_MIN_ROUNDS?: string;
+  /** Monitor shards between the session objects and the one "global" rollup (default 64; "0" = sessions post to "global"
+   * directly, the v7 behaviour). docs/architecture/scale.md "SlotMonitor". */
+  SLOT_MONITOR_SHARDS?: string;
+  /** How often a session with new rounds pushes its counter deltas to its shard (default 30000 ms, min 1000). */
+  SLOT_MONITOR_FLUSH_MS?: string;
+  /** How often a shard pushes its pending deltas to "global" (default 5000 ms, min 1000). */
+  SLOT_MONITOR_ROLLUP_MS?: string;
   SLOT_WALLET?: DurableObjectNamespace<SlotWallet>;
   SLOT_REPLAY?: DurableObjectNamespace<SlotReplay>;
   SLOT_MONITOR?: DurableObjectNamespace<SlotMonitor>;
@@ -41,7 +48,11 @@ export const SLOT_LIMITS = Object.freeze({
   maxExposureCents: 500_000_000,
   historyRows: 50,
   revealedSeedsShown: 10,
-  monitorFlushMs: 5_000,
+  /** Session -> monitor shard push interval (counters only; never on the round path). */
+  monitorFlushMs: 30_000,
+  /** Shard -> "global" rollup interval. */
+  monitorRollupMs: 5_000,
+  monitorShards: 64,
   rtpMinRounds: 1_000,
   rtpAlertSigma: 4,
 });

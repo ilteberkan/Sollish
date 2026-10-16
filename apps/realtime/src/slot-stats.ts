@@ -8,7 +8,7 @@
  * Counters only: no session, token, seed, IP or other personal data.
  */
 import { slotGame } from "@sollish/protocol";
-import { SLOT_LIMITS } from "./slots";
+import { SLOT_LIMITS, type SlotEnv } from "./slots";
 
 export interface RtpTotals { rounds: number; costCents: number; payoutCents: number; costSquares: number }
 export interface RtpDeviation { observedRtp: number; expectedRtp: number; z: number }
@@ -41,4 +41,23 @@ export function parseDeltas(value: unknown): StatDelta[] | null {
     out.push({ game: d.game, mode: d.mode, rounds: d.rounds, cost: d.cost, payout: d.payout, costSq: d.costSq, maxPayout: d.maxPayout });
   }
   return out;
+}
+
+/* ---------------------------------------------------------------- monitor sharding (docs/architecture/scale.md) */
+// Two levels so no single object takes one request per active session: SlotWallet -> "shard:<k>" (every
+// SLOT_MONITOR_FLUSH_MS while it has new rounds) -> "global" (every SLOT_MONITOR_ROLLUP_MS while the shard holds deltas).
+// At-least-once at both hops (a lost acknowledgement can count a batch twice); alerts are for humans, never for payouts.
+const intVar = (raw: string | undefined, min: number, max: number, fallback: number): number => {
+  const value = Number.parseInt(raw ?? "", 10);
+  return Number.isSafeInteger(value) && value >= min && value <= max ? value : fallback;
+};
+/** 0 means "post straight to global" (the original single-object path). */
+export function monitorShardCount(env: Pick<SlotEnv, "SLOT_MONITOR_SHARDS">): number { return intVar(env.SLOT_MONITOR_SHARDS, 0, 1024, SLOT_LIMITS.monitorShards); }
+export function monitorFlushMs(env: Pick<SlotEnv, "SLOT_MONITOR_FLUSH_MS">): number { return intVar(env.SLOT_MONITOR_FLUSH_MS, 1000, 3_600_000, SLOT_LIMITS.monitorFlushMs); }
+export function monitorRollupMs(env: Pick<SlotEnv, "SLOT_MONITOR_ROLLUP_MS">): number { return intVar(env.SLOT_MONITOR_ROLLUP_MS, 1000, 3_600_000, SLOT_LIMITS.monitorRollupMs); }
+export const MONITOR_GLOBAL = "global";
+/** Stable shard of one session: the first 8 hex of its SHA-256 token hash (uniform) modulo the shard count. */
+export function monitorTarget(tokenHash: string, shards: number): { name: string; path: "/add" | "/shard/add" } {
+  if (shards <= 0 || !/^[0-9a-f]{8}/.test(tokenHash)) return { name: MONITOR_GLOBAL, path: "/add" };
+  return { name: `shard:${Number.parseInt(tokenHash.slice(0, 8), 16) % shards}`, path: "/shard/add" };
 }

@@ -17,7 +17,7 @@ import {
   type SlotGameDefinition, type SlotReceiptFields, type SlotRoundSummary,
 } from "@sollish/protocol";
 import { SLOT_LIMITS, SlotError, admitBet, errorResponseFor, parseExactObject, parseRoundBody, rtpMinRounds, signText, signingSecret, slotErrorResponse, slotJson, timingSafeEqualHex, type SlotEnv, type SlotSignature } from "./slots";
-import { rtpAlert } from "./slot-stats";
+import { monitorFlushMs, monitorShardCount, monitorTarget, rtpAlert } from "./slot-stats";
 import { replayFields, type SlotReplayRecord } from "./slot-records";
 
 type SessionRow = { token_hash: string; balance: number; seed_id: number; rounds: number; rotations: number; shares: number; created_at: number; last_seen: number };
@@ -313,18 +313,21 @@ export class SlotWallet extends DurableObject<SlotEnv> {
     const session = this.sessionRow(); if (!session) return;
     let desired = session.last_seen + SLOT_LIMITS.sessionIdleMs;
     const pending = this.env.SLOT_MONITOR && this.query<{ n: number }>("SELECT COUNT(*) AS n FROM slot_stats WHERE pending_rounds > 0")[0]!.n > 0;
-    if (pending) desired = Math.min(desired, now + SLOT_LIMITS.monitorFlushMs);
+    if (pending) desired = Math.min(desired, now + monitorFlushMs(this.env));
     const current = await this.ctx.storage.getAlarm();
     if (current === null || current > desired) await this.ctx.storage.setAlarm(Math.max(now + 1, desired));
   }
-  /** Counters only, at least once (a lost acknowledgement can count a batch twice). Never on the round path. */
+  /** Counters only, at least once (a lost acknowledgement can count a batch twice). Never on the round path. Goes to this
+   * session's monitor shard (stable by token hash), which rolls up to "global"; SLOT_MONITOR_SHARDS=0 posts to "global". */
   private async flushStats(): Promise<void> {
     const monitor = this.env.SLOT_MONITOR; if (!monitor) return;
+    const session = this.sessionRow(); if (!session) return;
+    const target = monitorTarget(session.token_hash, monitorShardCount(this.env));
     const rows = this.query<StatsRow>("SELECT * FROM slot_stats WHERE pending_rounds > 0");
     if (!rows.length) return;
     const deltas = rows.map(r => ({ game: r.game, mode: r.mode, rounds: r.pending_rounds, cost: r.pending_cost, payout: r.pending_payout, costSq: r.pending_cost_sq, maxPayout: r.pending_max_payout }));
     let ok = false;
-    try { ok = (await monitor.get(monitor.idFromName("global")).fetch("https://slot-monitor.internal/add", { method: "POST", body: JSON.stringify({ deltas }) })).ok; } catch { ok = false; }
+    try { ok = (await monitor.get(monitor.idFromName(target.name)).fetch(`https://slot-monitor.internal${target.path}`, { method: "POST", body: JSON.stringify({ deltas }) })).ok; } catch { ok = false; }
     if (!ok) return;
     this.ctx.storage.transactionSync(() => {
       for (const d of deltas) this.exec(`UPDATE slot_stats SET pending_rounds=pending_rounds-?, pending_cost=pending_cost-?, pending_payout=pending_payout-?, pending_cost_sq=MAX(0, pending_cost_sq-?),

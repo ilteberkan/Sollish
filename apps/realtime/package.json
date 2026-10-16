@@ -13,7 +13,8 @@
     "test:arena:stress": "node --import tsx test/live-arena-stress.workerd.mjs",
     "test:contact": "node --import tsx test/contact-arena.workerd.mjs",
     "test:ringside": "node --import tsx test/ringside-arena.workerd.mjs",
-    "test:slots": "node --import tsx test/slot-wallet.workerd.mjs"
+    "test:slots": "node --import tsx test/slot-wallet.workerd.mjs",
+    "loadtest:slots": "node --import tsx test/slot-load.mjs"
   },
   "dependencies": {
     "@sollish/protocol": "workspace:*",

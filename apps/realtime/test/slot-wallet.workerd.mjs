@@ -53,7 +53,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 async function until(fn, ms = 20000) { const end = Date.now() + ms; while (Date.now() < end) { const v = await fn(); if (v) return v; await wait(25); } throw new Error('LOCAL_SLOT_TEST_TIMEOUT'); }
 async function start({ enabled, key, fresh }) {
  if (fresh) await rm(resolve(folder, 'state'), { recursive: true, force: true });
- const vars = { ALLOWED_ORIGINS: origin, SLOTS_ENABLED: enabled ? 'true' : 'false', SLOT_RTP_MIN_ROUNDS: '10', ...(key ? { SLOT_SIGNING_KEY: KEY } : {}) };
+ const vars = { ALLOWED_ORIGINS: origin, SLOTS_ENABLED: enabled ? 'true' : 'false', SLOT_RTP_MIN_ROUNDS: '10', SLOT_MONITOR_FLUSH_MS: '1000', SLOT_MONITOR_ROLLUP_MS: '1000', ...(key ? { SLOT_SIGNING_KEY: KEY } : {}) };
  await writeFile(resolve(folder, 'wrangler.json'), JSON.stringify({ name: 'sollish-slot-wallet-local-test', main: resolve(folder, 'entry.ts'), compatibility_date: '2026-10-01', compatibility_flags: ['nodejs_compat'], vars,
   durable_objects: { bindings: [{ name: 'ADMISSION', class_name: 'AdmissionGate' }, { name: 'SLOT_WALLET', class_name: 'ProbeSlotWallet' }, { name: 'SLOT_REPLAY', class_name: 'SlotReplay' }, { name: 'SLOT_MONITOR', class_name: 'SlotMonitor' }] },
   migrations: [{ tag: 'v1', new_sqlite_classes: ['AdmissionGate', 'ProbeSlotWallet', 'SlotReplay', 'SlotMonitor'] }] }));
@@ -341,7 +341,7 @@ try {
  assert.equal(expired.json.code, 'SESSION_EXPIRED'); assert.equal((await probe(se.token, 'inspect')).exists, false);
  assert.equal((await api('GET', '/v1/slots/session', { token: se.token })).json.code, 'AUTH_INVALID'); checks++;
 
- // Observed-RTP counters reach the global monitor by alarm; a crafted 4-sigma batch logs one line without secrets.
+ // Observed-RTP counters reach the global monitor by alarm (session -> shard:<k> -> global, default 64 shards); a crafted 4-sigma batch logs one line without secrets.
  const monitored = await until(async () => { const m = await (await fetch(`${base}/__monitor`)).json(); const row = m.stats.find(s => s.game === 'cascade' && s.mode === 'standard'); return row && row.rounds >= 5 ? m : null; }, 25000);
  report.results.monitor = monitored.stats.map(s => ({ game: s.game, mode: s.mode, rounds: s.rounds }));
  const exp = SLOT_GAMES.cascade.rtp.buy, n = 2000, cost = 100000, sd = exp.stdDev * Math.sqrt(n * cost * cost);
