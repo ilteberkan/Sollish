@@ -1,7 +1,7 @@
 'use client';
 import type { ReactNode } from 'react';
-import { formatDemo } from '@/lib/slot-kit/bet';
 import { Modal } from './modal';
+import { useFormat, useT } from '@/lib/i18n/client';
 import { WarnIcon } from './icons';
 import { cx } from './cx';
 import styles from './kit.module.css';
@@ -25,34 +25,36 @@ export interface BuyFeatureDialogProps {
 }
 
 /** Confirmation for buying a bonus: price, mode RTP, and a visible reason when it cannot be bought. */
-export function BuyFeatureDialog({ open, onClose, onConfirm, featureName, priceCents, rtpText, description, disabledReason, balanceCents, busy, title = 'Bonus satın al' }: BuyFeatureDialogProps) {
+export function BuyFeatureDialog({ open, onClose, onConfirm, featureName, priceCents, rtpText, description, disabledReason, balanceCents, busy, title }: BuyFeatureDialogProps) {
+  const t = useT('slotKit');
+  const format = useFormat();
   const short = balanceCents !== undefined && balanceCents < priceCents;
-  const reason = disabledReason ?? (short ? 'Bakiye yetersiz' : undefined);
+  const reason = disabledReason ?? (short ? t('buy.insufficient') : undefined);
   const blocked = reason !== undefined || busy === true;
   return (
     <Modal
       open={open}
       onClose={onClose}
-      title={title}
+      title={title ?? t('buy.title')}
       size="sm"
       dismissible={!busy}
       footer={
         <>
-          <button type="button" className={cx(styles.btn, styles.btnGhost)} onClick={onClose} disabled={busy} data-autofocus="">Vazgeç</button>
-          <button type="button" className={cx(styles.btn, styles.btnPrimary)} onClick={onConfirm} disabled={blocked}>Satın al</button>
+          <button type="button" className={cx(styles.btn, styles.btnGhost)} onClick={onClose} disabled={busy} data-autofocus="">{t('buy.cancel')}</button>
+          <button type="button" className={cx(styles.btn, styles.btnPrimary)} onClick={onConfirm} disabled={blocked}>{t('buy.confirm')}</button>
         </>
       }
     >
       <p className={styles.featureName}>{featureName}</p>
       <div className={styles.price}>
-        <span>Fiyat</span>
-        <strong>{formatDemo(priceCents)}</strong>
-        {balanceCents !== undefined && <small>Bakiye {formatDemo(balanceCents)}</small>}
+        <span>{t('buy.price')}</span>
+        <strong>{format.demo(priceCents)}</strong>
+        {balanceCents !== undefined && <small>{t('buy.balance', { amount: format.demo(balanceCents) })}</small>}
       </div>
       {description && <div className={styles.copy}>{description}</div>}
       <p className={styles.rtp}>{rtpText}</p>
       {reason && <p className={styles.warn} role="alert"><WarnIcon /> <span>{reason}</span></p>}
-      <p className={styles.note}>DEMO tutarı gerçek para değildir. Satın alma, standart moddan ayrı bir RTP ile çalışır.</p>
+      <p className={styles.note}>{t('buy.note')}</p>
     </Modal>
   );
 }

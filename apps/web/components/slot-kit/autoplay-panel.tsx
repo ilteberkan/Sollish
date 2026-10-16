@@ -1,7 +1,8 @@
 'use client';
 import { useId, useMemo, useState } from 'react';
-import { AUTOPLAY_ADVANCED_DEFAULTS, AUTOPLAY_SPIN_OPTIONS, autoplayAdvancedSummary, validateAutoplayConfig, type AutoplayConfig, type AutoplaySpins } from '@/lib/slot-kit/autoplay';
-import { formatDemo, parseDemoAmountCents } from '@/lib/slot-kit/bet';
+import { AUTOPLAY_ADVANCED_DEFAULTS, AUTOPLAY_SPIN_OPTIONS, autoplayAdvancedConditions, validateAutoplayConfig, type AutoplayConfig, type AutoplaySpins } from '@/lib/slot-kit/autoplay';
+import { parseDemoAmountCents } from '@/lib/slot-kit/bet';
+import { useFormat, useT } from '@/lib/i18n/client';
 import { Segmented, Toggle } from './controls';
 import { cx } from './cx';
 import styles from './kit.module.css';
@@ -14,6 +15,7 @@ export interface AutoplayPanelProps {
   balanceCents?: number;
   disabled?: boolean;
   initialSpins?: AutoplaySpins;
+  /** Defaults to the translated "Start". */
   startLabel?: string;
   className?: string;
   /** Open the "Gelişmiş" (optional stop conditions) section initially. Default: closed. */
@@ -22,10 +24,10 @@ export interface AutoplayPanelProps {
 
 const SHORTCUTS = [10, 25, 50, 100] as const;
 
-/** Plain input text for a cents value: 1250 -> "12,5", 5000 -> "50". */
-function centsText(cents: number): string {
+/** Plain input text for a cents value: 1250 -> "12,5" (or "12.5"), 5000 -> "50". No grouping: the parser rejects it. */
+function centsText(cents: number, decimal: string): string {
   const fraction = String(cents % 100).padStart(2, '0').replace(/0$/, '');
-  return fraction === '' ? String(Math.floor(cents / 100)) : `${Math.floor(cents / 100)},${fraction}`;
+  return fraction === '' ? String(Math.floor(cents / 100)) : `${Math.floor(cents / 100)}${decimal === ',' ? ',' : '.'}${fraction}`;
 }
 
 interface AmountFieldProps {
@@ -41,10 +43,11 @@ interface AmountFieldProps {
 function AmountField({ label, hint, value, onChange, error, required, disabled }: AmountFieldProps) {
   const id = useId();
   const [touched, setTouched] = useState(false);
+  const t = useT('slotKit');
   const showError = error !== null && (touched || value !== '');
   return (
     <div className={styles.field}>
-      <label htmlFor={id} className={styles.fieldLabel}>{label}{required && <span className={styles.req}> · zorunlu</span>}</label>
+      <label htmlFor={id} className={styles.fieldLabel}>{label}{required && <span className={styles.req}>{t('autoplay.required')}</span>}</label>
       <div className={cx(styles.inputWrap, showError && styles.inputBad)}>
         <input
           id={id}
@@ -53,7 +56,7 @@ function AmountField({ label, hint, value, onChange, error, required, disabled }
           inputMode="decimal"
           autoComplete="off"
           enterKeyHint="done"
-          placeholder={required ? 'örn. 50' : 'kapalı'}
+          placeholder={required ? t('autoplay.placeholderRequired') : t('autoplay.placeholderOff')}
           value={value}
           disabled={disabled}
           required={required}
@@ -69,10 +72,10 @@ function AmountField({ label, hint, value, onChange, error, required, disabled }
   );
 }
 
-const optionalCents = (text: string): { cents: number | undefined; error: string | null } => {
+const optionalCents = (text: string, invalid: string): { cents: number | undefined; error: string | null } => {
   if (text.trim() === '') return { cents: undefined, error: null };
   const cents = parseDemoAmountCents(text);
-  return cents === null ? { cents: undefined, error: 'Geçerli bir tutar girin (örn. 25 veya 12,50)' } : { cents, error: null };
+  return cents === null ? { cents: undefined, error: invalid } : { cents, error: null };
 };
 
 /**
@@ -80,7 +83,7 @@ const optionalCents = (text: string): { cents: number | undefined; error: string
  * The optional stop conditions sit in a closed "Gelişmiş" section ("bedava dönüşte dur" on by default). The Start
  * button stays disabled until the config passes `validateAutoplayConfig`.
  */
-export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, initialSpins = 10, startLabel = 'Başlat', className, defaultAdvancedOpen = false }: AutoplayPanelProps) {
+export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, initialSpins = 10, startLabel, className, defaultAdvancedOpen = false }: AutoplayPanelProps) {
   const [spins, setSpins] = useState<AutoplaySpins>(initialSpins);
   const [lossText, setLossText] = useState('');
   const [singleText, setSingleText] = useState('');
@@ -88,15 +91,17 @@ export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, 
   const [stopOnAnyWin, setStopOnAnyWin] = useState(AUTOPLAY_ADVANCED_DEFAULTS.stopOnAnyWin);
   const [stopOnFeature, setStopOnFeature] = useState(AUTOPLAY_ADVANCED_DEFAULTS.stopOnFeature);
   const [advancedOpen, setAdvancedOpen] = useState(defaultAdvancedOpen);
+  const t = useT('slotKit');
+  const format = useFormat();
 
   const parsed = useMemo(() => {
     const loss = lossText.trim() === '' ? null : parseDemoAmountCents(lossText);
     let lossError: string | null = null;
-    if (lossText.trim() === '') lossError = 'Kayıp limiti zorunlu';
-    else if (loss === null) lossError = 'Geçerli bir tutar girin (örn. 50 veya 12,50)';
-    else if (spinCostCents !== undefined && loss < spinCostCents) lossError = `En az bir dönüş kadar olmalı (${formatDemo(spinCostCents)})`;
-    const single = optionalCents(singleText);
-    const increase = optionalCents(increaseText);
+    if (lossText.trim() === '') lossError = t('autoplay.lossRequired');
+    else if (loss === null) lossError = t('autoplay.invalidLoss');
+    else if (spinCostCents !== undefined && loss < spinCostCents) lossError = t('autoplay.lossMin', { amount: format.demo(spinCostCents) });
+    const single = optionalCents(singleText, t('autoplay.invalidAmount'));
+    const increase = optionalCents(increaseText, t('autoplay.invalidAmount'));
     const config: AutoplayConfig | null = lossError === null && single.error === null && increase.error === null && loss !== null
       ? {
           spins, lossLimitCents: loss, stopOnAnyWin, stopOnFeature,
@@ -105,16 +110,18 @@ export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, 
         }
       : null;
     return { loss, lossError, single, increase, config: config && validateAutoplayConfig(config).length === 0 ? config : null };
-  }, [lossText, singleText, increaseText, spins, stopOnAnyWin, stopOnFeature, spinCostCents]);
+  }, [lossText, singleText, increaseText, spins, stopOnAnyWin, stopOnFeature, spinCostCents, t, format]);
 
   const lossHint = parsed.loss !== null && balanceCents !== undefined && parsed.loss > balanceCents
-    ? 'Bakiyeden büyük; bakiye bitince yine durur.'
-    : 'Net kayıp bu tutarı aşacaksa durur.';
-  const summary = autoplayAdvancedSummary({
+    ? t('autoplay.lossHintOver')
+    : t('autoplay.lossHint');
+  const summary = autoplayAdvancedConditions({
     stopOnAnyWin, stopOnFeature,
     ...(parsed.single.cents !== undefined ? { singleWinLimitCents: parsed.single.cents } : {}),
     ...(parsed.increase.cents !== undefined ? { balanceIncreaseCents: parsed.increase.cents } : {}),
-  });
+  }).map(c => c.kind === 'any-win' ? t('autoplay.summaryAnyWin') : c.kind === 'feature' ? t('autoplay.summaryFeature')
+    : c.kind === 'single-win' ? t('autoplay.summarySingleWin', { amount: format.demo(c.cents, { trimZeros: true }) })
+    : t('autoplay.summaryBalance', { amount: format.demo(c.cents, { trimZeros: true }) }));
 
   return (
     <form
@@ -123,7 +130,7 @@ export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, 
       onSubmit={event => { event.preventDefault(); if (parsed.config && !disabled) onStart(parsed.config); }}
     >
       <Segmented
-        label="Tur sayısı"
+        label={t('autoplay.spins')}
         layout="chips"
         options={AUTOPLAY_SPIN_OPTIONS.map(n => ({ value: n, label: String(n) }))}
         value={spins}
@@ -131,11 +138,11 @@ export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, 
         disabled={disabled}
       />
       <section className={styles.group}>
-        <AmountField label="Kayıp limiti" required hint={lossHint} value={lossText} onChange={setLossText} error={parsed.lossError} disabled={disabled} />
+        <AmountField label={t('autoplay.lossLimit')} required hint={lossHint} value={lossText} onChange={setLossText} error={parsed.lossError} disabled={disabled} />
         {spinCostCents !== undefined && (
-          <div className={cx(styles.shortcuts, styles.shortcutsRow)} role="group" aria-label="Kayıp limiti kısayolları">
+          <div className={cx(styles.shortcuts, styles.shortcutsRow)} role="group" aria-label={t('autoplay.shortcuts')}>
             {SHORTCUTS.map(n => (
-              <button key={n} type="button" className={styles.chip} disabled={disabled} onClick={() => setLossText(centsText(spinCostCents * n))}>{n}× bahis</button>
+              <button key={n} type="button" className={styles.chip} disabled={disabled} onClick={() => setLossText(centsText(spinCostCents * n, format.decimal))}>{t('autoplay.shortcut', { n })}</button>
             ))}
           </div>
         )}
@@ -146,18 +153,18 @@ export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, 
         onToggle={event => setAdvancedOpen((event.currentTarget as HTMLDetailsElement).open)}
       >
         <summary className={styles.advancedSummary}>
-          <span className={styles.advancedTitle}>Gelişmiş</span>
-          <span className={styles.advancedState}>{summary.length ? `Durur: ${summary.join(' · ')}` : 'Ek durma koşulu yok'}</span>
+          <span className={styles.advancedTitle}>{t('autoplay.advanced')}</span>
+          <span className={styles.advancedState}>{summary.length ? t('autoplay.stopsOn', { list: summary.join(' · ') }) : t('autoplay.noExtra')}</span>
         </summary>
-        <div className={styles.advancedBody} role="group" aria-label="Ek durma koşulları">
-          <Toggle label="Her kazançta dur" checked={stopOnAnyWin} onChange={setStopOnAnyWin} disabled={disabled} />
-          <Toggle label="Bedava dönüşte dur" checked={stopOnFeature} onChange={setStopOnFeature} disabled={disabled} />
-          <AmountField label="Tek kazanç şu tutarı aşarsa dur" hint="Boş = kapalı." value={singleText} onChange={setSingleText} error={parsed.single.error} disabled={disabled} />
-          <AmountField label="Bakiye şu kadar artarsa dur" hint="Başlangıca göre. Boş = kapalı." value={increaseText} onChange={setIncreaseText} error={parsed.increase.error} disabled={disabled} />
+        <div className={styles.advancedBody} role="group" aria-label={t('autoplay.extraGroup')}>
+          <Toggle label={t('autoplay.stopAnyWin')} checked={stopOnAnyWin} onChange={setStopOnAnyWin} disabled={disabled} />
+          <Toggle label={t('autoplay.stopFeature')} checked={stopOnFeature} onChange={setStopOnFeature} disabled={disabled} />
+          <AmountField label={t('autoplay.singleWin')} hint={t('autoplay.singleWinHint')} value={singleText} onChange={setSingleText} error={parsed.single.error} disabled={disabled} />
+          <AmountField label={t('autoplay.balanceIncrease')} hint={t('autoplay.balanceIncreaseHint')} value={increaseText} onChange={setIncreaseText} error={parsed.increase.error} disabled={disabled} />
         </div>
       </details>
       <button type="submit" className={cx(styles.btn, styles.btnPrimary)} disabled={disabled || parsed.config === null}>
-        {startLabel} · {spins} tur
+        {t('autoplay.startWith', { label: startLabel ?? t('autoplay.start'), spins })}
       </button>
     </form>
   );
@@ -172,16 +179,17 @@ export interface AutoplayStopButtonProps {
 
 /** Round stop button that replaces the spin button while autoplay runs; shows the spins left. */
 export function AutoplayStopButton({ remaining, onStop, disabled, className }: AutoplayStopButtonProps) {
+  const t = useT('slotKit');
   return (
     <button
       type="button"
       className={cx(styles.kit, styles.stopBtn, className)}
       onClick={onStop}
       disabled={disabled}
-      aria-label={`Otomatik oyunu durdur, ${remaining} tur kaldı`}
+      aria-label={t('autoplay.stopAria', { remaining })}
     >
       <span className={styles.stopNum} aria-hidden="true">{remaining}</span>
-      <span className={styles.stopText} aria-hidden="true">DURDUR</span>
+      <span className={styles.stopText} aria-hidden="true">{t('autoplay.stop')}</span>
     </button>
   );
 }

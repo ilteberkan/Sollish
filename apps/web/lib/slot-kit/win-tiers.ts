@@ -26,6 +26,7 @@ export interface WinTierInfo {
   /** Minimum round total in hundredths of the base bet (0 for Azami: the cap decides). */
   minHundredths: number;
 }
+/** Turkish names (legacy). Translated UI: slotKit `winTier.<id>.title|word` and `winWord`, keyed by `WIN_TIER_INFO[level].id`. */
 export const WIN_TIER_INFO: Readonly<Record<CelebrationLevel, WinTierInfo>> = Object.freeze({
   1: Object.freeze({ level: 1, id: 'big', title: 'Büyük Kazanç', word: 'BÜYÜK', minHundredths: TIER_MULTIPLES[1] * 100 }),
   2: Object.freeze({ level: 2, id: 'mega', title: 'Mega Kazanç', word: 'MEGA', minHundredths: TIER_MULTIPLES[2] * 100 }),

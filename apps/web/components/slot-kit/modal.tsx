@@ -2,6 +2,7 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { containDialogFocus } from '@/lib/dialog';
 import { CloseIcon } from './icons';
+import { useT } from '@/lib/i18n/client';
 import { cx } from './cx';
 import styles from './kit.module.css';
 
@@ -50,7 +51,8 @@ const prefersReducedMotion = () => typeof window !== 'undefined' && window.match
  * Tab trap, aria-modal, scroll lock and a phone bottom-sheet layout under 600px.
  * Mark one control with `data-autofocus` to choose the initially focused element.
  */
-export function Modal({ open, onClose, title, children, footer, size = 'md', dismissible = true, role = 'dialog', descriptionId, closeLabel = 'Kapat', className }: ModalProps) {
+export function Modal({ open, onClose, title, children, footer, size = 'md', dismissible = true, role = 'dialog', descriptionId, closeLabel, className }: ModalProps) {
+  const t = useT('slotKit');
   const ref = useRef<HTMLDialogElement>(null);
   const [phase, setPhase] = useState<Phase>('closed');
   const titleId = useId();
@@ -117,7 +119,7 @@ export function Modal({ open, onClose, title, children, footer, size = 'md', dis
           <header className={styles.modalHead}>
             <h2 id={titleId} className={styles.modalTitle}>{title}</h2>
             {dismissible && (
-              <button type="button" className={styles.iconBtn} onClick={onClose} aria-label={closeLabel}><CloseIcon /></button>
+              <button type="button" className={styles.iconBtn} onClick={onClose} aria-label={closeLabel ?? t('modal.close')}><CloseIcon /></button>
             )}
           </header>
           <div className={styles.modalBody}>{children}</div>

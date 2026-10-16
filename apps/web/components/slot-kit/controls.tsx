@@ -1,6 +1,7 @@
 'use client';
 import { useId, type CSSProperties, type ReactNode } from 'react';
 import { cx } from './cx';
+import { useFormat } from '@/lib/i18n/client';
 import styles from './kit.module.css';
 
 export interface ToggleProps {
@@ -42,19 +43,18 @@ export interface SliderProps {
   min?: number;
   max?: number;
   step?: number;
-  /** Text shown live and used as aria-valuetext. Default: percent, "%70". */
+  /** Text shown live and used as aria-valuetext. Default: the locale's percent, "70%" (en) / "%70" (tr). */
   format?: (value: number) => string;
   disabled?: boolean;
   className?: string;
 }
 
-const percent = (v: number) => `%${Math.round(v * 100)}`;
-
-export function Slider({ label, value, onChange, min = 0, max = 1, step = 0.01, format = percent, disabled, className }: SliderProps) {
+export function Slider({ label, value, onChange, min = 0, max = 1, step = 0.01, format, disabled, className }: SliderProps) {
   const id = useId();
+  const locale = useFormat();
   const span = max - min;
   const fill = span > 0 ? Math.min(100, Math.max(0, ((value - min) / span) * 100)) : 0;
-  const text = format(value);
+  const text = format ? format(value) : locale.percent(value);
   return (
     <div className={cx(styles.kit, styles.slider, className)} data-disabled={disabled || undefined}>
       <div className={styles.sliderHead}>

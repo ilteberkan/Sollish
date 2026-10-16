@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-16T19:42:25.768Z",
+  "at": "2026-10-16T19:43:56.458Z",
   "runtime": "wrangler dev (local workerd), production router, ContactArenaV5 root + ArenaRelay",
   "machine": {
     "cpus": 4,
@@ -17,9 +17,9 @@
   ],
   "connect": {
     "viewers": 2000,
-    "wallMs": 57456
+    "wallMs": 27104
   },
   "pass": false,
-  "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n'fighting' !== 'open'\n\n    at file:///home/user/Sollish/apps/realtime/test/arena-relay.workerd.mjs:92:10",
+  "error": "AssertionError [ERR_ASSERTION]: ROUND_CLOSED\n    at file:///home/user/Sollish/apps/realtime/test/arena-relay.workerd.mjs:101:52",
   "scope": "Local only: one workerd process, one Node client process on this container. Shows the relay tier delivers ordered, read-only, coalesced snapshots to thousands of hibernatable sockets and never touches the ledger; not hosted, not multi-colo, not a Cloudflare capacity number."
 }

@@ -29,14 +29,26 @@ export interface AutoplayConfig {
  */
 export const AUTOPLAY_ADVANCED_DEFAULTS: Readonly<Pick<AutoplayConfig, 'stopOnAnyWin' | 'stopOnFeature'>> = Object.freeze({ stopOnAnyWin: false, stopOnFeature: true });
 
-/** Short labels of the active optional stop conditions, for the collapsed "Gelişmiş" summary line. */
-export function autoplayAdvancedSummary(config: Pick<AutoplayConfig, 'stopOnAnyWin' | 'stopOnFeature' | 'singleWinLimitCents' | 'balanceIncreaseCents'>): string[] {
-  const out: string[] = [];
-  if (config.stopOnAnyWin) out.push('Her kazançta');
-  if (config.stopOnFeature) out.push('Bedava dönüşte');
-  if (config.singleWinLimitCents !== undefined) out.push(`Tek kazanç ≥ ${formatDemo(config.singleWinLimitCents, { trimZeros: true })}`);
-  if (config.balanceIncreaseCents !== undefined) out.push(`Bakiye +${formatDemo(config.balanceIncreaseCents, { trimZeros: true })}`);
+export type AutoplayCondition =
+  | { kind: 'any-win' } | { kind: 'feature' } | { kind: 'single-win'; cents: number } | { kind: 'balance-increase'; cents: number };
+
+/** The active optional stop conditions, in display order (language-neutral; the UI translates them). */
+export function autoplayAdvancedConditions(config: Pick<AutoplayConfig, 'stopOnAnyWin' | 'stopOnFeature' | 'singleWinLimitCents' | 'balanceIncreaseCents'>): AutoplayCondition[] {
+  const out: AutoplayCondition[] = [];
+  if (config.stopOnAnyWin) out.push({ kind: 'any-win' });
+  if (config.stopOnFeature) out.push({ kind: 'feature' });
+  if (config.singleWinLimitCents !== undefined) out.push({ kind: 'single-win', cents: config.singleWinLimitCents });
+  if (config.balanceIncreaseCents !== undefined) out.push({ kind: 'balance-increase', cents: config.balanceIncreaseCents });
   return out;
+}
+
+/**
+ * Turkish short labels of the active optional stop conditions (legacy; kept for existing callers and tests).
+ * Translated UI: `autoplayAdvancedConditions` + slotKit `autoplay.summary*` messages.
+ */
+export function autoplayAdvancedSummary(config: Pick<AutoplayConfig, 'stopOnAnyWin' | 'stopOnFeature' | 'singleWinLimitCents' | 'balanceIncreaseCents'>): string[] {
+  return autoplayAdvancedConditions(config).map(c => c.kind === 'any-win' ? 'Her kazançta' : c.kind === 'feature' ? 'Bedava dönüşte'
+    : c.kind === 'single-win' ? `Tek kazanç ≥ ${formatDemo(c.cents, { trimZeros: true })}` : `Bakiye +${formatDemo(c.cents, { trimZeros: true })}`);
 }
 
 export type AutoplayStopCode =
@@ -52,6 +64,7 @@ export type AutoplayStopCode =
   | 'any-win'
   | 'completed';
 
+/** Turkish stop texts (legacy). Translated UI: slotKit `autoplay.reasons.<code>` (same codes). */
 export const AUTOPLAY_STOP_REASONS: Readonly<Record<AutoplayStopCode, string>> = Object.freeze({
   cancelled: 'Otomatik oyun durduruldu',
   'tab-hidden': 'Sekme gizlendiği için durduruldu',

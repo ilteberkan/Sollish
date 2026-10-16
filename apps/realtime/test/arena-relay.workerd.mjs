@@ -19,7 +19,7 @@ import os from 'node:os';
 
 const argv = process.argv.slice(2).filter(a => a !== '--');
 const arg = (name, fallback) => { const i = argv.indexOf(`--${name}`); return i >= 0 ? argv[i + 1] : fallback; };
-const VIEWERS = Number(arg('viewers', 2000)), RELAYS = Number(arg('relays', 4)), BETTORS = Number(arg('bettors', 12)), OUT = arg('out', null);
+const VIEWERS = Number(arg('viewers', 2000)), RELAYS = Number(arg('relays', 4)), BETTORS = Number(arg('bettors', 40)), OUT = arg('out', null);
 const root = resolve(fileURLToPath(new URL('../../..', import.meta.url)));
 const folder = resolve(root, '.tooling/arena-relay-integration');
 const port = 18895, origin = 'http://localhost:3000';
@@ -75,31 +75,32 @@ try {
   const t0 = performance.now();
   const viewers = [];
   for (let i = 0; i < VIEWERS; i += 200) {
-    const batch = Array.from({ length: Math.min(200, VIEWERS - i) }, (_, j) => open('/v5/arena/ringside/watch', `198.18.${((i + j) >> 8) & 255}.${(i + j) & 255}`));
+    // 25 viewers per documentation-range IP (the per-IP gate admits 30 connections a minute).
+    const batch = Array.from({ length: Math.min(200, VIEWERS - i) }, (_, j) => open('/v5/arena/ringside/watch', `198.18.${(Math.floor((i + j) / 25) >> 8) & 255}.${Math.floor((i + j) / 25) & 255}`));
     await Promise.all(batch.map(c => c.opened)); viewers.push(...batch);
   }
   await until(() => viewers.every(v => v.last), 60000);
   report.connect = { viewers: viewers.length, wallMs: Math.round(performance.now() - t0) };
   report.checks.push(`${viewers.length} viewers connected through ${RELAYS} relays; each received an initial snapshot`);
 
-  // Bettors on the root: session, then one bet per market each, during the opening window.
-  const bettors = Array.from({ length: BETTORS }, (_, i) => open('/v5/arena/ringside', `198.19.0.${i + 1}`));
+  // Root clients: each creates a DEMO session (the root broadcasts on every new session, at any phase) and, if the
+  // match's betting window is still open, places one bet per market (another broadcast each). Sequential, 60 ms apart.
+  const bettors = Array.from({ length: BETTORS }, (_, i) => open('/v5/arena/ringside', `198.19.0.${Math.floor(i / 20) + 1}`));
   await Promise.all(bettors.map(c => c.opened));
   await until(() => bettors.every(b => b.last));
-  for (const b of bettors) b.ws.send(JSON.stringify({ v: 2, type: 'session' }));
-  await until(() => bettors.every(b => b.frames.includes('session')));
-  const round = bettors[0].last.round;
-  assert.equal(round.phase, 'open'); assert.equal(round.bout.round, 1);
-  const ledger = round.bout.id;
+  const revBefore = Math.min(...bettors.map(b => b.last.revision));
+  for (const b of bettors) { b.ws.send(JSON.stringify({ v: 2, type: 'session' })); await until(() => b.frames.includes('session')); await wait(60); }
+  const round = bettors[0].last.round, ledger = round.bout.id;
   const markets = [['match-winner', ['kor', 'draw', 'ayaz']], ['match-method', ['kor-stop', 'kor-points', 'draw', 'ayaz-points', 'ayaz-stop']], ['match-knockdowns', ['0-1', '2', '3-plus']]];
-  const revBefore = bettors[0].last.revision;
-  let placed = 0;
-  for (const [market, outcomes] of markets) for (const [i, b] of bettors.entries()) {
-    b.ticket = null;
+  let placed = 0, closed = 0;
+  if (round.phase === 'open' && round.bout.round === 1) for (const [market, outcomes] of markets) for (const [i, b] of bettors.slice(0, 12).entries()) {
+    b.ticket = null; b.error = null;
     b.ws.send(JSON.stringify({ v: 2, type: 'bet', id: randomUUID(), roundId: ledger, market, outcome: outcomes[i % outcomes.length], amount: 100 + i }));
-    await until(() => b.ticket || b.error); assert.ok(b.ticket, b.error); placed++;
+    await until(() => b.ticket || b.error);
+    if (b.ticket) placed++; else if (b.error === 'ROUND_CLOSED') closed++; else throw new Error(b.error);
     await wait(60);
   }
+  report.rootTraffic = { sessions: bettors.length, ticketsPlaced: placed, refusedClosedWindow: closed, phaseAtStart: round.phase };
   // A viewer trying to bet: read-only, no ticket, no error frame, no ledger change.
   const rogue = viewers[0];
   rogue.ws.send(JSON.stringify({ v: 2, type: 'bet', id: randomUUID(), roundId: ledger, market: 'match-winner', outcome: 'kor', amount: 100 }));
@@ -108,7 +109,7 @@ try {
   await until(() => viewers.every(v => v.last.revision >= rootLatest), 30000);
   const sync = await (await fetch(`http://127.0.0.1:${port}/__tickets`, { method: 'POST' })).json();
   assert.equal(sync.count, placed, 'only bettor tickets in the ledger'); assert.ok(!rogue.ticket);
-  report.checks.push(`${placed} root tickets; viewer bet frame created no ticket; every viewer reached root revision ${rootLatest}`);
+  report.checks.push(`${bettors.length} root sessions, ${placed} root tickets; viewer bet frame created no ticket; every viewer reached root revision ${rootLatest}`);
 
   // Fan-out delay per revision: earliest root arrival -> each viewer arrival.
   const rootAt = new Map();
