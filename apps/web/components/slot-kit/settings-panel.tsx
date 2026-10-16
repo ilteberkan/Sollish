@@ -1,6 +1,7 @@
 'use client';
 import { useId } from 'react';
 import type { SlotSettings, SpinSpeed } from '@/lib/slot-kit/settings';
+import type { VoiceLevel } from '@/lib/slot-audio/voice-policy';
 import { Segmented, Slider, Toggle } from './controls';
 import { cx } from './cx';
 import styles from './kit.module.css';
@@ -19,6 +20,16 @@ const SPEEDS: ReadonlyArray<{ value: SpinSpeed; label: string }> = [
   { value: 'turbo', label: 'Turbo' },
 ];
 
+/** Character voice level: every label of the "Voice" control lives here so the translation layer finds them in one place. */
+export const VOICE_LEVEL_UI: { label: string; options: ReadonlyArray<{ value: VoiceLevel; label: string; hint: string }> } = {
+  label: 'Ses anonsu',
+  options: [
+    { value: 'full', label: 'Tam', hint: 'Her replik' },
+    { value: 'key', label: 'Önemli anlar', hint: 'Kazanç ve özellikler' },
+    { value: 'off', label: 'Kapalı', hint: 'Sessiz' },
+  ],
+};
+
 /** Sound mix, spin speed and comfort options. Controlled: the parent owns `settings`. */
 export function SettingsPanel({ settings, onChange, onReset, className }: SettingsPanelProps) {
   const id = useId();
@@ -33,6 +44,7 @@ export function SettingsPanel({ settings, onChange, onReset, className }: Settin
           <Slider label="Efektler" value={settings.sfx} onChange={sfx => onChange({ sfx })} />
           <Slider label="Ortam sesi" value={settings.ambience} onChange={ambience => onChange({ ambience })} />
         </div>
+        <Segmented label={VOICE_LEVEL_UI.label} options={VOICE_LEVEL_UI.options} value={settings.voice} onChange={voice => onChange({ voice })} />
       </section>
       <section className={styles.group} aria-labelledby={`${id}-play`}>
         <h3 id={`${id}-play`} className={styles.groupTitle}>Oynanış</h3>

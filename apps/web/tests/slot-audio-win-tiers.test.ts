@@ -155,7 +155,7 @@ test('voice lines: loaded per class, missing ones skipped, layered over the call
   const fetched: string[] = [];
   scope.fetch = async (url: string) => { fetched.push(url); return url.endsWith('/x100.mp3') ? { ok: true, arrayBuffer: async () => new ArrayBuffer(6) } : { ok: false, arrayBuffer: async () => new ArrayBuffer(0) }; };
   try {
-    const sound = createCascadeSound({ workerFactory: null });
+    const sound = createCascadeSound({ workerFactory: null, voicePolicy: { minGap: 0, repeatWindow: 0, minorCooldown: 0, ambientCooldown: 0 } });
     sound.setEnabled(true);
     const r = await sound.setVoiceBank('/audio/voice/cascade');
     assert.deepEqual(r.loaded, ['x100']);

@@ -14,6 +14,7 @@
  * opens with every respin while the hub ticks climb the makam. Presentation only: driven by already-resolved round
  * steps, it never feeds back into a result, payout or timing of the game.
  */
+import { createVoicePolicy, type VoiceLevel, type VoicePolicyOptions } from './voice-policy';
 import { SlotAudioEngine, type VoiceHandle } from './engine';
 import { createFallbackVoice, type FallbackVoice } from './fallback';
 import { isCancelled, type RenderedAsset, type SfxClip } from './render';
@@ -122,6 +123,8 @@ export interface CezeriSound {
   autoplay: (on: boolean) => void;
   /** Recorded voice lines: a folder (`/audio/voice/cezeri` → `/audio/voice/cezeri/x10.mp3` …) or a URL per line. Missing files are skipped silently. */
   setVoiceBank: (urls: string | Partial<Record<CezeriVoiceLine, string | null>>) => Promise<{ loaded: CezeriVoiceLine[]; missing: CezeriVoiceLine[] }>;
+  /** Voice level (Full / Key moments / Off) and \"fast\" (turbo or autoplay: only tier and feature lines). */
+  setVoicePolicy: (p: { level?: VoiceLevel; fast?: boolean }) => void;
   readonly voiceLines: Map<CezeriVoiceLine, AudioBuffer | null>;
   playSfx: (id: string, opts?: { rate?: number; gain?: number; pan?: number }) => void;
   playStinger: (id: CezeriScoreId) => void;
@@ -278,7 +281,7 @@ function toAudioBuffer(l: Float32Array, r: Float32Array, sampleRate: number, ctx
 /** The part of RenderService the sound uses (tests and the measurement harness may inject their own). */
 export type CezeriRenderService = Pick<RenderService, 'score' | 'sfx' | 'prefetch' | 'dispose' | 'parallelism' | 'workerJobs' | 'failure' | 'trace'>;
 
-export function createCezeriSound(options: { sampleRate?: number; workerFactory?: WorkerFactory | null; trace?: (label: string, ms: number) => void; service?: () => CezeriRenderService } = {}): CezeriSound {
+export function createCezeriSound(options: { sampleRate?: number; workerFactory?: WorkerFactory | null; trace?: (label: string, ms: number) => void; voicePolicy?: VoicePolicyOptions; service?: () => CezeriRenderService } = {}): CezeriSound {
   const engine = new SlotAudioEngine();
   const random = Math.random;
   const sfx = new Map<string, (AudioBuffer | SfxClip)[]>();
@@ -372,7 +375,16 @@ export function createCezeriSound(options: { sampleRate?: number; workerFactory?
 
   /* ---------------- voice: recorded lines, or the wordless placeholder ---------------- */
 
+  /** Shared "never annoying" policy (voice-policy.ts): level, spacing, repeats, cooldowns, turbo/autoplay. */
+  const voicePolicy = createVoicePolicy({ minorInKey: false, ...options.voicePolicy });
+  let bankToken = 0;
   const speak = (line: CezeriVoiceLine, when?: number): 'line' | 'placeholder' | null => {
+    const ctx = live(); if (!ctx) return null;
+    let result: 'line' | 'placeholder' | null = null;
+    voicePolicy.request(line, ctx.currentTime, () => { result = speakNow(line, when); return result !== null; });
+    return result;
+  };
+  const speakNow = (line: CezeriVoiceLine, when?: number): 'line' | 'placeholder' | null => {
     const ctx = live(); if (!ctx) return null;
     const at = Math.max(ctx.currentTime, when ?? ctx.currentTime + VOICE_DELAY);
     const buffer = voiceLines.get(line) ?? null, placeholder = CEZERI_PLACEHOLDER[line];
@@ -803,10 +815,12 @@ export function createCezeriSound(options: { sampleRate?: number; workerFactory?
       if (t - lastNiceAt < NICE_COOLDOWN) return;
       if (speak('nice')) lastNiceAt = t;
     },
+    setVoicePolicy: p => { if (p && p.level !== undefined) voicePolicy.setLevel(p.level); if (p && p.fast !== undefined) voicePolicy.setFast(p.fast); },
     setVoiceBank: async urls => {
+      const myBank = ++bankToken; voiceLines.clear();
       const loaded = await loadCezeriVoiceBank(cezeriVoiceBankUrls(urls), fetchVoice);
       const result = { loaded: [] as CezeriVoiceLine[], missing: [] as CezeriVoiceLine[] };
-      if (disposed) return result;
+      if (disposed || myBank !== bankToken) return result;
       voiceLines.clear();
       for (const line of CEZERI_VOICE_LINES) { const buffer = loaded.get(line) ?? null; voiceLines.set(line, buffer); (buffer ? result.loaded : result.missing).push(line); }
       return result;

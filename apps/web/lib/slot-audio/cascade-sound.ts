@@ -14,6 +14,7 @@
  *   multiplierCallout(value)             – applied multipliers (optional voice lines: setVoiceBank)
  *   totalWinFanfare(); featureOutro(); setScene('base')
  */
+import { createVoicePolicy, type VoiceLevel, type VoicePolicyOptions } from './voice-policy';
 import { SlotAudioEngine, type VoiceHandle } from './engine';
 import { createFallbackVoice, type FallbackVoice } from './fallback';
 import { isCancelled, type RenderedAsset, type SfxClip } from './render';
@@ -81,6 +82,8 @@ export interface CascadeSound extends CascadeAudio {
   setVoiceBank: (urls: string | Partial<Record<MultiplierClass, string | null>>) => Promise<{ loaded: MultiplierClass[]; missing: MultiplierClass[] }>;
   /** Decoded voice lines per class (null = none; the non-verbal callout plays alone). */
   readonly voiceLines: Map<MultiplierClass, AudioBuffer | null>;
+  /** Voice level (Full / Key moments / Off) and "fast" (turbo or autoplay: callout lines are not spoken). */
+  setVoicePolicy: (p: { level?: VoiceLevel; fast?: boolean }) => void;
   autoplay: (on: boolean) => void;
   /** Lab/diagnostics: play any rendered effect by id. */
   playSfx: (id: string, opts?: { rate?: number; gain?: number; pan?: number }) => void;
@@ -123,7 +126,7 @@ function toAudioBuffer(l: Float32Array, r: Float32Array, sampleRate: number, ctx
   } catch { return null; }
 }
 
-export function createCascadeSound(options: { sampleRate?: number; workerFactory?: WorkerFactory | null; trace?: (label: string, ms: number) => void } = {}): CascadeSound {
+export function createCascadeSound(options: { sampleRate?: number; workerFactory?: WorkerFactory | null; trace?: (label: string, ms: number) => void; voicePolicy?: VoicePolicyOptions } = {}): CascadeSound {
   const engine = new SlotAudioEngine();
   const random = Math.random;
   const sfx = new Map<string, (AudioBuffer | SfxClip)[]>();
@@ -142,6 +145,8 @@ export function createCascadeSound(options: { sampleRate?: number; workerFactory
   let head: VoiceHandle | null = null;
   let bed: VoiceHandle | null = null, bedPlaying: CascadeScoreId | null = null, bedTimer: ReturnType<typeof setTimeout> | null = null;
   const voiceLines = new Map<MultiplierClass, AudioBuffer | null>();
+  const voicePolicy = createVoicePolicy(options.voicePolicy);
+  let bankToken = 0;
   let voiceDecoder: BaseAudioContext | null = null;
   let counting = false, countTimer: ReturnType<typeof setInterval> | null = null, countNext = 0, countStart = 0;
   const progressListeners = new Set<(p: LoadProgress) => void>();
@@ -474,9 +479,12 @@ export function createCascadeSound(options: { sampleRate?: number; workerFactory
       engine.duck(3 + rank * 1.5, 250 + rank * 250, 20, 500);
       const voice = voiceLines.get(cls);
       if (voice) {
-        const at = ctx.currentTime + VOICE_DELAY;
-        engine.playBuffer('sfx', voice, { when: at });
-        engine.duckMusicBus(VOICE_DUCK_DB, voice.duration, at - 0.04);
+        voicePolicy.request(cls, ctx.currentTime, () => {
+          const at = ctx.currentTime + VOICE_DELAY;
+          engine.playBuffer('sfx', voice, { when: at });
+          engine.duckMusicBus(VOICE_DUCK_DB, voice.duration, at - 0.04);
+          return true;
+        });
       }
     },
     totalWinFanfare: () => {
@@ -484,10 +492,12 @@ export function createCascadeSound(options: { sampleRate?: number; workerFactory
       const s = stinger('totalWin', 'beat', 16, 150);
       if (s) pendingSceneAt = s.end; else fb()?.chimeRun(7, 77);
     },
+    setVoicePolicy: p => { if (p && p.level !== undefined) voicePolicy.setLevel(p.level); if (p && p.fast !== undefined) voicePolicy.setFast(p.fast); },
     setVoiceBank: async urls => {
+      const myBank = ++bankToken; voiceLines.clear();
       const loaded = await loadVoiceBank(voiceBankUrls(urls), fetchVoice);
       const result = { loaded: [] as MultiplierClass[], missing: [] as MultiplierClass[] };
-      if (disposed) return result;
+      if (disposed || myBank !== bankToken) return result;
       voiceLines.clear();
       for (const [cls, buffer] of loaded) { voiceLines.set(cls, buffer); (buffer ? result.loaded : result.missing).push(cls); }
       return result;

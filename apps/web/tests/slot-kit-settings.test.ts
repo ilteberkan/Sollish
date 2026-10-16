@@ -12,7 +12,7 @@ const throwing: SettingsStorage = { getItem() { throw new Error('blocked'); }, s
 
 test('defaults match the requirements', () => {
   assert.deepEqual({ ...DEFAULT_SLOT_SETTINGS }, {
-    master: 0.9, music: 0.6, sfx: 0.8, ambience: 0.4, muted: true, spinSpeed: 'normal', skipScreens: false, spaceToSpin: true, reducedEffects: false, introScreen: true,
+    master: 0.9, music: 0.6, sfx: 0.8, ambience: 0.4, muted: true, spinSpeed: 'normal', skipScreens: false, spaceToSpin: true, reducedEffects: false, introScreen: true, voice: 'key',
   });
   assert.ok(Object.isFrozen(DEFAULT_SLOT_SETTINGS));
   assert.deepEqual({ ...loadSettings('candy-cascade', memoryStorage()) }, { ...DEFAULT_SLOT_SETTINGS });
@@ -20,7 +20,7 @@ test('defaults match the requirements', () => {
 
 test('save then load round-trips through two namespaced keys', () => {
   const storage = memoryStorage();
-  const custom: SlotSettings = { master: 0.5, music: 0.1, sfx: 0.2, ambience: 0.3, muted: false, spinSpeed: 'turbo', skipScreens: true, spaceToSpin: false, reducedEffects: true, introScreen: false };
+  const custom: SlotSettings = { master: 0.5, music: 0.1, sfx: 0.2, ambience: 0.3, muted: false, spinSpeed: 'turbo', skipScreens: true, spaceToSpin: false, reducedEffects: true, introScreen: false, voice: 'full' };
   assert.equal(saveSettings('candy-cascade', custom, storage), true);
   assert.deepEqual([...storage.data.keys()].sort(), ['sollish:slot:game:candy-cascade', 'sollish:slot:shared']);
   assert.deepEqual(loadSettings('candy-cascade', storage), custom);

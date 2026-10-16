@@ -96,7 +96,7 @@ test('game events play their clips at their pitch; the comb sweep follows the ro
   scope.fetch = async (url: string) => (url.endsWith('/x100.mp3') ? { ok: true, arrayBuffer: async () => new ArrayBuffer(6) } : { ok: false, arrayBuffer: async () => new ArrayBuffer(0) });
   const ctxOf = (s: ReturnType<typeof createEbruSound>) => s.engine.context as unknown as { currentTime: number };
   try {
-    const sound = createEbruSound({ service: fakeService });
+    const sound = createEbruSound({ service: fakeService, voicePolicy: { minGap: 0, repeatWindow: 0, minorCooldown: 0, ambientCooldown: 0 } }); sound.setVoicePolicy({ level: 'full' });
     sound.setEnabled(true);
     await sound.loaded();
     assert.ok(sound.status().core && sound.status().extended);

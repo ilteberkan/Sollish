@@ -17,6 +17,7 @@
  *   bigWin(tier); countUp(true) … bigWin(higher tier) … maxWin() … countUp(false)
  *   setVoiceBank('/audio/voice/storm')    – recorded lines (optional; missing files are skipped silently)
  */
+import { createVoicePolicy, type VoiceLevel, type VoicePolicyOptions } from './voice-policy';
 import { SlotAudioEngine, type VoiceHandle } from './engine';
 import { createFallbackVoice, type FallbackVoice } from './fallback';
 import { isCancelled, type RenderedAsset, type SfxClip } from './render';
@@ -108,6 +109,8 @@ export interface StormSound {
    * a line that exists replaces the non-verbal placeholder vocal for its event. Never rejects.
    */
   setVoiceBank: (urls: string | Partial<Record<StormVoiceLine, string | null>>) => Promise<{ loaded: StormVoiceLine[]; missing: StormVoiceLine[] }>;
+  /** Voice level (Full / Key moments / Off) and \"fast\" (turbo or autoplay: only tier and feature lines). */
+  setVoicePolicy: (p: { level?: VoiceLevel; fast?: boolean }) => void;
   readonly voiceLines: Map<StormVoiceLine, AudioBuffer | null>;
   /** Lab/diagnostics: play any rendered effect by id. */
   playSfx: (id: string, opts?: { rate?: number; gain?: number; pan?: number }) => void;
@@ -156,7 +159,7 @@ function toAudioBuffer(l: Float32Array, r: Float32Array, sampleRate: number, ctx
 /** The part of RenderService the sound uses (tests and the measurement harness may inject their own). */
 export type StormRenderService = Pick<RenderService, 'score' | 'sfx' | 'prefetch' | 'dispose' | 'parallelism' | 'workerJobs' | 'failure' | 'trace'>;
 
-export function createStormSound(options: { sampleRate?: number; workerFactory?: WorkerFactory | null; trace?: (label: string, ms: number) => void; service?: () => StormRenderService } = {}): StormSound {
+export function createStormSound(options: { sampleRate?: number; workerFactory?: WorkerFactory | null; trace?: (label: string, ms: number) => void; voicePolicy?: VoicePolicyOptions; service?: () => StormRenderService } = {}): StormSound {
   const engine = new SlotAudioEngine();
   const random = Math.random;
   const sfx = new Map<string, (AudioBuffer | SfxClip)[]>();
@@ -245,7 +248,16 @@ export function createStormSound(options: { sampleRate?: number; workerFactory?:
    * Speak `line` at `when` (default: just after the event's impact). The recorded line plays when it exists
    * (music bus ducked under it); otherwise the placeholder vocal, if the event has one. One voice at a time.
    */
+  /** Shared "never annoying" policy (voice-policy.ts): level, spacing, repeats, cooldowns, turbo/autoplay. */
+  const voicePolicy = createVoicePolicy({ minorInKey: true, ...options.voicePolicy });
+  let bankToken = 0;
   const speak = (line: StormVoiceLine, when?: number): 'line' | 'placeholder' | null => {
+    const ctx = live(); if (!ctx) return null;
+    let result: 'line' | 'placeholder' | null = null;
+    voicePolicy.request(line, ctx.currentTime, () => { result = speakNow(line, when); return result !== null; });
+    return result;
+  };
+  const speakNow = (line: StormVoiceLine, when?: number): 'line' | 'placeholder' | null => {
     const ctx = live(); if (!ctx) return null;
     const at = Math.max(ctx.currentTime, when ?? ctx.currentTime + VOICE_DELAY);
     const buffer = voiceLines.get(line) ?? null, placeholder = STORM_PLACEHOLDER[line];
@@ -575,10 +587,12 @@ export function createStormSound(options: { sampleRate?: number; workerFactory?:
       if (t - lastNiceAt < NICE_COOLDOWN) return;
       if (speak('nice')) lastNiceAt = t;
     },
+    setVoicePolicy: p => { if (p && p.level !== undefined) voicePolicy.setLevel(p.level); if (p && p.fast !== undefined) voicePolicy.setFast(p.fast); },
     setVoiceBank: async urls => {
+      const myBank = ++bankToken; voiceLines.clear();
       const loaded = await loadStormVoiceBank(stormVoiceBankUrls(urls), fetchVoice);
       const result = { loaded: [] as StormVoiceLine[], missing: [] as StormVoiceLine[] };
-      if (disposed) return result;
+      if (disposed || myBank !== bankToken) return result;
       voiceLines.clear();
       for (const line of STORM_VOICE_LINES) { const buffer = loaded.get(line) ?? null; voiceLines.set(line, buffer); (buffer ? result.loaded : result.missing).push(line); }
       return result;

@@ -8,6 +8,8 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { SlotSettings } from '@/lib/slot-kit/settings';
+import { onVoiceLanguageChange, voiceBankFolder, voiceLanguage, type VoiceLanguage } from '@/lib/slot-audio/voice-locale';
+import { voicePolicyInput } from '@/lib/slot-audio/voice-policy';
 
 export type AsenaSoundScene = 'idle' | 'base' | 'feature' | 'bigwin' | 'none';
 export interface AsenaSoundLoadState { started: boolean; ready: boolean; percent: number }
@@ -102,6 +104,8 @@ export function useAsenaSound(settings: SlotSettings): { sound: AsenaSoundContro
   const pendingScene = useRef<AsenaSoundScene>('idle');
   const unlocked = useRef(false);
   const loadStarted = useRef(false);
+  const autoplayOn = useRef(false);
+  const voiceLang = useRef<VoiceLanguage | null>(null);
   const [loadState, setLoadState] = useState<AsenaSoundLoadState>({ started: false, ready: false, percent: 0 });
 
   const applyMix = () => {
@@ -109,12 +113,14 @@ export function useAsenaSound(settings: SlotSettings): { sound: AsenaSoundContro
     const hidden = typeof document !== 'undefined' && document.hidden;
     call(e, 'setMix', { master: s.master, music: s.music, sfx: s.sfx, ambience: s.ambience, muted: s.muted });
     call(e, 'setEnabled', !s.muted && !hidden);
+    call(e, 'setVoicePolicy', voicePolicyInput(s, autoplayOn.current));
   };
   const startLoad = () => {
     const e = engine.current;
     if (loadStarted.current || !e || !unlocked.current) return;
     loadStarted.current = true;
-    call(e, 'setVoiceBank', ASENA_VOICE_BANK);
+    voiceLang.current = voiceLanguage();
+    call(e, 'setVoiceBank', voiceBankFolder(ASENA_VOICE_BANK, voiceLang.current));
     if (typeof e.load !== 'function') { setLoadState({ started: true, ready: true, percent: 100 }); return; }
     setLoadState({ started: true, ready: false, percent: 0 });
     const onProgress = (p: Progress) => {
@@ -151,7 +157,14 @@ export function useAsenaSound(settings: SlotSettings): { sound: AsenaSoundContro
     document.addEventListener('visibilitychange', applyMix);
     return () => document.removeEventListener('visibilitychange', applyMix);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [settings.master, settings.music, settings.sfx, settings.ambience, settings.muted]);
+  }, [settings.master, settings.music, settings.sfx, settings.ambience, settings.muted, settings.voice, settings.spinSpeed]);
+
+  // Site language switch: reload the voice bank in the new language (the engine disposes the old buffers).
+  useEffect(() => onVoiceLanguageChange(lang => {
+    if (!loadStarted.current || voiceLang.current === lang) return;
+    voiceLang.current = lang;
+    call(engine.current, 'setVoiceBank', voiceBankFolder(ASENA_VOICE_BANK, lang));
+  }), []);
 
   const sound = useMemo<AsenaSoundControls>(() => {
     const e = () => engine.current;
@@ -190,7 +203,7 @@ export function useAsenaSound(settings: SlotSettings): { sound: AsenaSoundContro
       click: () => c('click'),
       betChange: direction => c('betChange', direction),
       denied: () => c('denied'),
-      autoplay: on => c('autoplay', on),
+      autoplay: on => { autoplayOn.current = on; applyMix(); c('autoplay', on); },
       duck: (db, ms) => c('duck', db, ms),
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

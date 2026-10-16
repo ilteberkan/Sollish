@@ -72,3 +72,4 @@ Son güncelleme: 16 Ekim 2026. Bu dosyayı yalnız güncel durumla tut. Oturum b
 - Geliştirmede broadcast host'unda `ringPreview(seed)`, `ringSeek(ms)`, `ringRender(now)` kancaları var; üretimde yok.
 - Eğitim: `experiments/ringside-learner/run-v4b.sh`; çıktılar `runs/rule-v4b/`. Her kural ayrı seed kullanır (`test4`, `test5`…).
 - :3000'de önceden açık bir `next dev` vardı (bu oturum başlatmadı).
+- **Oyun seslendirmesi İngilizce + Türkçe (16 Ekim 2026):** beş DEMO oyunun hepsinde `apps/web/public/audio/voice/<oyun>/<tr|en>/` (storm 19, ebru 18, cezeri 22, asena 29, cascade 6 satır, her dilde). Metinler `docs/product/voice-scripts.md`; dil `lib/slot-audio/voice-locale.ts` (`<html lang>` + `sollish:locale` olayı), sıklık politikası `voice-policy.ts`, ayar `voice` (Tam / Önemli anlar / Kapalı). Sahibin dinleme kabulü bekleniyor (Candy Cascade sesi Skye, ölçümle seçildi).

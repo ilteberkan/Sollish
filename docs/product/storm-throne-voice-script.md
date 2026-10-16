@@ -6,7 +6,7 @@ Karakter: Anadolu'nun tunç çağı fırtına tanrısından esinlenen **özgün*
 - Model: Text to Speech V2, motor **ElevenLabs** (Türkçe telaffuz en iyi). Yedek: Seed Audio.
 - Ses: derin erkek preset (aday sırası: Gideon, Orion, Barrett, Vlad). Önce aşağıdaki deneme repliğini dört sesle üret, en "tanrısal" olanı seç; bütün replikleri aynı sesle üret.
 - Biçim: WAV veya MP3, 44,1/48 kHz. Her replik ayrı dosya; başta ve sonda en fazla 0,2 sn sessizlik.
-- Dosyaları aşağıdaki adlarla `apps/web/public/audio/voice/storm/` klasörüne koyacağız (bana göndermen yeterli).
+- Dosyaları aşağıdaki adlarla `apps/web/public/audio/voice/storm/tr/` klasörüne (İngilizce: `storm/en/`, bkz. `voice-scripts.md`) koyacağız (bana göndermen yeterli).
 
 Deneme repliği: «Gökler benim! Fırtına başlıyor... Yüz kat!»
 

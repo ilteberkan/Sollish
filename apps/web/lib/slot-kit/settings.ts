@@ -6,6 +6,8 @@
  * volume, speed and comfort options) and one per game id (music/sfx/ambience mix and intro).
  */
 
+import { DEFAULT_VOICE_LEVEL, sanitizeVoiceLevel, type VoiceLevel } from '@/lib/slot-audio/voice-policy';
+
 export const SPIN_SPEEDS = ['normal', 'quick', 'turbo'] as const;
 export type SpinSpeed = (typeof SPIN_SPEEDS)[number];
 
@@ -20,6 +22,8 @@ export interface SlotSettings {
   spaceToSpin: boolean;
   reducedEffects: boolean;
   introScreen: boolean;
+  /** Character voice-over: Full / Key moments (default) / Off. Rules: lib/slot-audio/voice-policy.ts */
+  voice: VoiceLevel;
 }
 
 export const DEFAULT_SLOT_SETTINGS: Readonly<SlotSettings> = Object.freeze({
@@ -33,12 +37,13 @@ export const DEFAULT_SLOT_SETTINGS: Readonly<SlotSettings> = Object.freeze({
   spaceToSpin: true,
   reducedEffects: false,
   introScreen: true,
+  voice: DEFAULT_VOICE_LEVEL,
 });
 
 export type SlotAudioChannel = 'music' | 'sfx' | 'ambience';
 
 /** Fields stored once for every game. */
-export const SHARED_SETTING_KEYS = ['master', 'muted', 'spinSpeed', 'skipScreens', 'spaceToSpin', 'reducedEffects'] as const;
+export const SHARED_SETTING_KEYS = ['master', 'muted', 'spinSpeed', 'skipScreens', 'spaceToSpin', 'reducedEffects', 'voice'] as const;
 /** Fields stored per game id. */
 export const GAME_SETTING_KEYS = ['music', 'sfx', 'ambience', 'introScreen'] as const;
 
@@ -81,6 +86,7 @@ export function sanitizeSettings(input: unknown, base: Readonly<SlotSettings> = 
     spaceToSpin: flag(own(src, 'spaceToSpin'), base.spaceToSpin),
     reducedEffects: flag(own(src, 'reducedEffects'), base.reducedEffects),
     introScreen: flag(own(src, 'introScreen'), base.introScreen),
+    voice: sanitizeVoiceLevel(own(src, 'voice'), base.voice),
   };
 }
 

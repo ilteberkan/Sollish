@@ -90,7 +90,7 @@ test('voice lines replace the non-verbal placeholder; missing lines fall back to
   const lines: Record<string, number> = { 'x100.mp3': 6, 'win-big.mp3': 8, 'nice.mp3': 4 };
   scope.fetch = async (url: string) => { fetched.push(url); const k = Object.keys(lines).find(f => url.endsWith(`/${f}`)); return k ? { ok: true, arrayBuffer: async () => new ArrayBuffer(lines[k]!) } : { ok: false, arrayBuffer: async () => new ArrayBuffer(0) }; };
   try {
-    const sound = createStormSound({ service: fakeService });
+    const sound = createStormSound({ service: fakeService, voicePolicy: { minGap: 0, repeatWindow: 0, minorCooldown: 0, ambientCooldown: 0 } }); sound.setVoicePolicy({ level: 'full' });
     sound.setEnabled(true);
     await sound.loaded();
     assert.ok(sound.status().core && sound.status().extended);
@@ -186,4 +186,40 @@ test('two games side by side: Candy Cascade keeps its own API and effects', () =
   assert.equal(typeof cascade.crystal, 'function'); assert.equal(typeof storm.orbLand, 'function');
   assert.ok(!('orbLand' in cascade));
   cascade.dispose(); storm.dispose();
+});
+
+test('voice policy in the engine: Key moments by default, repeats and spacing held back, Off is silent, turbo keeps only tier lines', async () => {
+  const log: string[] = [];
+  const scope = globalThis as Record<string, unknown>;
+  const realFetch = scope.fetch;
+  scope.AudioContext = fakeAudio(log);
+  scope.OfflineAudioContext = class {};
+  const lines: Record<string, number> = { 'x100.mp3': 6, 'win-big.mp3': 8, 'nice.mp3': 4 };
+  scope.fetch = async (url: string) => { const k = Object.keys(lines).find(f => url.endsWith(`/${f}`)); return k ? { ok: true, arrayBuffer: async () => new ArrayBuffer(lines[k]!) } : { ok: false, arrayBuffer: async () => new ArrayBuffer(0) }; };
+  const at = (s: ReturnType<typeof createStormSound>, t: number) => { (s.engine.context as unknown as { currentTime: number }).currentTime = t; log.length = 0; };
+  const spoke = (len: number) => log.filter(l => l.startsWith('start(') && l.endsWith(`,${len})`)).length;
+  try {
+    const sound = createStormSound({ service: fakeService });
+    sound.setEnabled(true);
+    await sound.loaded();
+    await sound.setVoiceBank('/audio/voice/storm/en');
+    at(sound, 10); sound.multiplierCallout(150);
+    assert.equal(spoke(1.5), 1, 'the ×100 line is spoken');
+    at(sound, 14); sound.multiplierCallout(150);
+    assert.equal(spoke(1.5), 0, 'the same line is not repeated within 20 s');
+    assert.equal(startsOf(log, 'callout-x100').length, 1, 'the callout sound itself still plays');
+    at(sound, 40); sound.nice();
+    assert.equal(spoke(1), 0, 'ambient remarks are silent at the Key moments level');
+    sound.setVoicePolicy({ level: 'full' });
+    at(sound, 80); sound.nice();
+    assert.equal(spoke(1), 1, 'Full allows the ambient remark');
+    sound.setVoicePolicy({ level: 'off' });
+    at(sound, 200); sound.multiplierCallout(150); sound.bigWin(1);
+    assert.equal(spoke(1.5) + spoke(2), 0, 'Off: no recorded line and no placeholder vocal');
+    assert.equal(startsOf(log, 'vo-laugh').length + startsOf(log, 'vo-grunt').length, 0);
+    sound.setVoicePolicy({ level: 'key', fast: true });
+    at(sound, 300); sound.multiplierCallout(150);
+    assert.equal(spoke(1.5), 0, 'turbo/autoplay: no callout lines');
+    sound.dispose();
+  } finally { delete scope.AudioContext; delete scope.OfflineAudioContext; if (realFetch) scope.fetch = realFetch; else delete scope.fetch; }
 });

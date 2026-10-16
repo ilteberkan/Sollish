@@ -9,6 +9,7 @@ import { CASCADE_SCORES, type CascadeScoreId } from './scores/cascade';
 import { CASCADE_SFX } from './sfx/cascade';
 import { DEFAULT_MIX, type MixSettings, type SceneId } from './timing';
 import { MULTIPLIER_CLASSES, MULTIPLIER_CLASS_MIN, WIN_TIERS, WIN_TIER_NAMES, WIN_TIER_THRESHOLDS, type MultiplierClass, type WinTier } from './win-tiers';
+import { voiceBankFolder } from './voice-locale';
 
 const card: CSSProperties = { border: '1px solid var(--line)', borderRadius: 12, padding: 16, background: 'var(--surface)', display: 'grid', gap: 10 };
 const row: CSSProperties = { display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' };
@@ -87,7 +88,7 @@ export function AudioLab() {
   const loadVoices = async () => {
     const x = s(); if (!x) return;
     setVoiceBank('yükleniyor…');
-    const r = await x.setVoiceBank(VOICE_FOLDER);
+    const r = await x.setVoiceBank(voiceBankFolder(VOICE_FOLDER));
     setVoiceBank(`yüklü: ${r.loaded.join(', ') || 'yok'} · eksik (sessizce atlandı): ${r.missing.join(', ') || 'yok'}`);
   };
   const landSweep = () => { for (let c = 0; c < 6; c++) setTimeout(() => s()?.land(c), c * 70); };
