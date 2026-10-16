@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "title": "Juegos — En vivo y en solitario",
+    "description": "Juegos de Sollish. Únete al combate Ringside en vivo compartido o prueba los juegos individuales."
+  },
+  "hero": {
+    "aria": "Entrar en la arena en vivo de Ringside",
+    "tag": "EN VIVO · TODOS VEN EL MISMO COMBATE",
+    "text": "Un combate a tres asaltos con puñetazos y patadas. Haz tu elección antes de que empiece y sigue tu boleto asalto a asalto. Una red entrenada dirige a los luchadores y Jev da la táctica desde la esquina.",
+    "cta": "Entrar en la arena",
+    "factWindowValue": "30 s",
+    "factWindow": "ventana de apuestas",
+    "factRoundsValue": "3 × 45 s",
+    "factRounds": "asaltos",
+    "factMarketsValue": "3",
+    "factMarkets": "mercados del combate",
+    "factFeeValue": "2 %",
+    "factFee": "comisión del bote"
+  },
+  "solo": { "title": "Individual", "subtitle": "A tu ritmo, resultado al instante.", "demo": "DEMO" },
+  "cards": {
+    "crash": { "text": "Elige el momento de retirarte mientras sube el multiplicador.", "type": "Retiro manual" },
+    "coinflip": { "text": "Dos caras, una elección, resultado al instante.", "type": "Clásico" },
+    "cascade": { "text": "Haz estallar ocho iguales y forma cadenas con los caramelos que caen.", "type": "Tumble" },
+    "tarhun": { "text": "El dios de la tormenta lanza rayos sobre las piedras; los multiplicadores se acumulan en los giros gratis.", "type": "Tumble · multiplicador" },
+    "ebru": { "text": "El peine recorre el agua y la tinta se reordena ola tras ola; las manchas de color se deslizan con sus multiplicadores.", "type": "Grupo · peine" },
+    "cezeri": { "text": "Cuatro ruedas de latón giran; los segmentos ganadores se bloquean, las ruedas vuelven a girar y el multiplicador central sube +1 cada vez.", "type": "Rueda · cadena" },
+    "asena": { "text": "Los grupos dibujan constelaciones en el cielo y la Loba celeste camina dejando un rastro de estrellas; el mapa de Ergenekon eleva el multiplicador global hasta ×5.", "type": "Grupo · constelación" }
+  },
+  "trust": {
+    "aria": "Reglas",
+    "poolTitle": "Sistema de botes",
+    "poolText": "Las apuestas se reúnen en un bote separado por mercado y se reparten entre los ganadores tras una comisión del 2 %. La casa no promete ganancias adicionales.",
+    "verifyTitle": "Combate verificable",
+    "verifyText": "Los hashes de las semillas de los tres asaltos se publican antes de las apuestas. Tu navegador reproduce cada asalto y comprueba el resultado.",
+    "demoTitle": "Solo DEMO",
+    "demoText": "Los créditos no tienen valor, no se pueden retirar y no dan derecho a tokens ni airdrops. El dinero real seguirá desactivado hasta que terminen las validaciones."
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "bettingQ": "¿Cómo funcionan las apuestas en Ringside?",
+    "bettingA": "En cada combate, las apuestas solo están abiertas durante los 30 segundos previos al inicio del R1. Hay botes separados para el ganador, el resultado exacto (ganador y método) y el número total de caídas; se permite un boleto por mercado y combate. No se aceptan apuestas nuevas entre asaltos. El combate termina por detención o al final del tercer asalto, y cada bote se liquida una sola vez. Un bote unilateral o sin ganadores se reembolsa íntegramente, sin comisión; incluso acertando, el retorno puede ser menor que lo apostado.",
+    "fightersQ": "¿Cómo deciden los luchadores?",
+    "fightersA": "Cada puñetazo, patada, combinación, distancia y defensa la elige una red que aprende durante el combate; el conectoma de mosca MaleCNS se usa como reservorio fijo. El entrenador de esquina Jev propone un plan cada 9 segundos; como el plan llega después del cierre de apuestas, el juego es solo DEMO. No se afirma que sea un cerebro completo ni que el conectoma sea superior.",
+    "demoQ": "La frontera entre demo y apuestas reales",
+    "demoA": "Los créditos DEMO de aquí no tienen valor monetario. Las apuestas reales en SOL seguirán desactivadas hasta validar el despliegue del contrato, la recuperación del oráculo, la privacidad de Crash y los flujos de pago. No afirmamos que se haya realizado una auditoría independiente. Estas versiones no tienen prueba VRF."
+  }
+}

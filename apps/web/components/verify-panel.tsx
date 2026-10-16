@@ -1,17 +1,17 @@
 'use client';
 import { useState } from 'react';
 import { SLOT_GAMES } from '@sollish/protocol';
-import { demoNumber } from '@/lib/demo';
 import { configuredApi } from '@/lib/chat';
 import { RgsClient, rgsErrorMessage, safeSessionStorage, type RemoteHistoryRow } from '@/lib/rgs-client';
 import { verifyForm, verifyHistoryRow, type RowStatus, type VerifyOutcome } from '@/lib/slot-verify';
 import styles from './rgs-pages.module.css';
+import { useFormat, useT } from '@/lib/i18n/client';
+import type { MessageKey } from '@/lib/i18n/catalog';
 
 const api = configuredApi(process.env.NEXT_PUBLIC_API_URL);
-const GAME_NAMES: Record<string, string> = { cascade: 'Candy Cascade', tarhun: 'Tarhun: Fırtına Tahtı', ebru: 'Ebru: Mürekkep Bahçesi', cezeri: 'Cezeri: Zamanın Çarkları', asena: 'Asena: Yıldız Kurdu' };
-const MODE_NAMES: Record<string, string> = { standard: 'Standart', ante: 'Şans ×2', buy: 'Bonus satın alma' };
-const STATUS_TEXT: Record<RowStatus | 'invalid', string> = { match: 'Eşleşti', mismatch: 'Uyuşmuyor', pending: 'Tohum açıklanmadı', invalid: 'Geçersiz giriş' };
-const times = (hundredths: number) => (hundredths / 100).toFixed(2).replace('.', ',');
+const GAME_KEYS = new Set(['cascade', 'tarhun', 'ebru', 'cezeri', 'asena']);
+const MODE_KEYS = new Set(['standard', 'ante', 'buy']);
+const STATUS_KEY: Record<RowStatus | 'invalid', MessageKey<'verify'>> = { match: 'verify.statusMatch', mismatch: 'verify.statusMismatch', pending: 'verify.statusPending', invalid: 'verify.statusInvalid' };
 type Form = { game: string; mode: string; betCents: string; serverSeed: string; serverSeedHash: string; clientSeed: string; nonce: string; expectedSeedHex: string; expectedPayoutCents: string };
 const EMPTY: Form = { game: 'cascade', mode: 'standard', betCents: '1000', serverSeed: '', serverSeedHash: '', clientSeed: '', nonce: '0', expectedSeedHex: '', expectedPayoutCents: '' };
 type Row = RemoteHistoryRow & { status: RowStatus };
@@ -23,7 +23,15 @@ export function VerifyPanel() {
   const [outcome, setOutcome] = useState<VerifyOutcome | null>(null);
   const [busy, setBusy] = useState(false);
   const [rows, setRows] = useState<Row[] | null>(null);
+  /** A message key; `rgs:` notes carry an already formatted lib message (TODO(i18n): lib/rgs-client codes). */
   const [note, setNote] = useState('');
+  const t = useT('verify');
+  const common = useT('common');
+  const format = useFormat();
+  const gameName = (id: string) => (GAME_KEYS.has(id) ? common(`games.${id}` as MessageKey<'common'>) : id);
+  const modeName = (id: string) => (MODE_KEYS.has(id) ? common(`modes.${id}` as MessageKey<'common'>) : id);
+  const times = (hundredths: number) => format.amount(hundredths);
+  const noteText = note.startsWith('verify.') ? t(note as MessageKey<'verify'>) : note;
   const game = SLOT_GAMES[form.game]!;
   const set = (key: keyof Form) => (event: { target: { value: string } }) => setForm(f => ({ ...f, [key]: event.target.value }));
 
@@ -34,19 +42,19 @@ export function VerifyPanel() {
   const client = () => (api ? new RgsClient({ baseUrl: api, storage: safeSessionStorage() }) : null);
   const load = async () => {
     const c = client();
-    if (!c) { setNote('Sunucu bu yapıda tanımlı değil (NEXT_PUBLIC_API_URL).'); return; }
-    if (!c.hasSession) { setNote('Bu sekmede sunucu doğrulamalı oturum yok. Önce bir oyunu sunucu modunda oyna.'); return; }
+    if (!c) { setNote('verify.noteNoServer'); return; }
+    if (!c.hasSession) { setNote('verify.noteNoSession'); return; }
     setBusy(true); setNote('');
     try {
       const history = await c.history();
       setRows(await Promise.all(history.rounds.map(async row => ({ ...row, status: (await verifyHistoryRow(row)).status }))));
-      if (!history.rounds.length) setNote('Bu oturumda henüz sunucu turu yok.');
+      if (!history.rounds.length) setNote('verify.noteEmpty');
     } catch (error) { setNote(rgsErrorMessage(error)); } finally { setBusy(false); }
   };
   const reveal = async () => {
     const c = client(); if (!c?.hasSession) return;
     setBusy(true);
-    try { await c.rotate(); setNote('Sunucu tohumu açıklandı ve yenisine geçildi. Önceki turlar artık doğrulanabilir.'); } catch (error) { setNote(rgsErrorMessage(error)); setBusy(false); return; }
+    try { await c.rotate(); setNote('verify.noteRevealed'); } catch (error) { setNote(rgsErrorMessage(error)); setBusy(false); return; }
     setBusy(false);
     await load();
   };
@@ -59,40 +67,40 @@ export function VerifyPanel() {
   return (
     <div className={`game-page ${styles.page}`}>
       <div>
-        <h1>Tur doğrulama</h1>
-        <p className={styles.lead}>Sunucu doğrulamalı DEMO turlarında sunucu tohumunun özeti tur oynanmadan önce gösterilir. Tohum açıklanınca bu sayfa tur tohumunu (HMAC-SHA256), motorun bütün turunu ve kazancı tarayıcında yeniden hesaplar. Sertifikalı RNG değildir; DEMO kredisi değersizdir.</p>
+        <h1>{t('verify.title')}</h1>
+        <p className={styles.lead}>{t('verify.lead')}</p>
       </div>
 
       <section className={styles.card} aria-labelledby="verify-form-title">
-        <h2 id="verify-form-title">Tohumla hesapla</h2>
+        <h2 id="verify-form-title">{t('verify.formTitle')}</h2>
         <form className={styles.form} onSubmit={event => { event.preventDefault(); void run(form); }}>
-          <div className={styles.field}><label htmlFor="v-game">Oyun</label>
+          <div className={styles.field}><label htmlFor="v-game">{t('verify.game')}</label>
             <select id="v-game" value={form.game} onChange={event => setForm(f => ({ ...f, game: event.target.value, betCents: String(SLOT_GAMES[event.target.value]!.betLevels.includes(Number(f.betCents)) ? f.betCents : SLOT_GAMES[event.target.value]!.betLevels[0]) }))}>
-              {Object.values(SLOT_GAMES).map(g => <option key={g.id} value={g.id}>{GAME_NAMES[g.id] ?? g.id} ({g.engineId})</option>)}
+              {Object.values(SLOT_GAMES).map(g => <option key={g.id} value={g.id}>{gameName(g.id)} ({g.engineId})</option>)}
             </select></div>
-          <div className={styles.field}><label htmlFor="v-mode">Mod</label>
-            <select id="v-mode" value={form.mode} onChange={set('mode')}>{game.modes.map(m => <option key={m} value={m}>{MODE_NAMES[m] ?? m}</option>)}</select></div>
-          <div className={styles.field}><label htmlFor="v-bet">Bahis</label>
-            <select id="v-bet" value={form.betCents} onChange={set('betCents')}>{game.betLevels.map(b => <option key={b} value={b}>{demoNumber(b)} DEMO</option>)}</select></div>
-          <div className={styles.field}><label htmlFor="v-nonce">Nonce</label><input id="v-nonce" inputMode="numeric" value={form.nonce} onChange={set('nonce')} autoComplete="off" /></div>
-          <div className={`${styles.field} ${styles.wide}`}><label htmlFor="v-seed">Açıklanan sunucu tohumu (64 karakter)</label><input id="v-seed" className={styles.mono} value={form.serverSeed} onChange={set('serverSeed')} autoComplete="off" spellCheck={false} /></div>
-          <div className={`${styles.field} ${styles.wide}`}><label htmlFor="v-hash">Önceden gösterilen tohum özeti (isteğe bağlı)</label><input id="v-hash" className={styles.mono} value={form.serverSeedHash} onChange={set('serverSeedHash')} autoComplete="off" spellCheck={false} /></div>
-          <div className={styles.field}><label htmlFor="v-client">Oyuncu tohumu</label><input id="v-client" className={styles.mono} value={form.clientSeed} onChange={set('clientSeed')} autoComplete="off" spellCheck={false} /></div>
-          <div className={styles.field}><label htmlFor="v-expected-seed">Beklenen tur tohumu (isteğe bağlı)</label><input id="v-expected-seed" className={styles.mono} value={form.expectedSeedHex} onChange={set('expectedSeedHex')} autoComplete="off" spellCheck={false} /></div>
-          <div className={styles.field}><label htmlFor="v-expected-pay">Beklenen kazanç, DEMO kuruş (isteğe bağlı)</label><input id="v-expected-pay" inputMode="numeric" value={form.expectedPayoutCents} onChange={set('expectedPayoutCents')} autoComplete="off" /></div>
-          <div className={`${styles.actions} ${styles.wide}`}><button type="submit" className={styles.button} disabled={busy}>Doğrula</button><button type="button" className={styles.ghost} onClick={() => { setForm(EMPTY); setOutcome(null); }}>Temizle</button></div>
+          <div className={styles.field}><label htmlFor="v-mode">{t('verify.mode')}</label>
+            <select id="v-mode" value={form.mode} onChange={set('mode')}>{game.modes.map(m => <option key={m} value={m}>{modeName(m)}</option>)}</select></div>
+          <div className={styles.field}><label htmlFor="v-bet">{t('verify.bet')}</label>
+            <select id="v-bet" value={form.betCents} onChange={set('betCents')}>{game.betLevels.map(b => <option key={b} value={b}>{format.number(b / 100)} DEMO</option>)}</select></div>
+          <div className={styles.field}><label htmlFor="v-nonce">{t('verify.nonce')}</label><input id="v-nonce" inputMode="numeric" value={form.nonce} onChange={set('nonce')} autoComplete="off" /></div>
+          <div className={`${styles.field} ${styles.wide}`}><label htmlFor="v-seed">{t('verify.serverSeed')}</label><input id="v-seed" className={styles.mono} value={form.serverSeed} onChange={set('serverSeed')} autoComplete="off" spellCheck={false} /></div>
+          <div className={`${styles.field} ${styles.wide}`}><label htmlFor="v-hash">{t('verify.seedHash')}</label><input id="v-hash" className={styles.mono} value={form.serverSeedHash} onChange={set('serverSeedHash')} autoComplete="off" spellCheck={false} /></div>
+          <div className={styles.field}><label htmlFor="v-client">{t('verify.clientSeed')}</label><input id="v-client" className={styles.mono} value={form.clientSeed} onChange={set('clientSeed')} autoComplete="off" spellCheck={false} /></div>
+          <div className={styles.field}><label htmlFor="v-expected-seed">{t('verify.expectedSeed')}</label><input id="v-expected-seed" className={styles.mono} value={form.expectedSeedHex} onChange={set('expectedSeedHex')} autoComplete="off" spellCheck={false} /></div>
+          <div className={styles.field}><label htmlFor="v-expected-pay">{t('verify.expectedPayout')}</label><input id="v-expected-pay" inputMode="numeric" value={form.expectedPayoutCents} onChange={set('expectedPayoutCents')} autoComplete="off" /></div>
+          <div className={`${styles.actions} ${styles.wide}`}><button type="submit" className={styles.button} disabled={busy}>{t('verify.submit')}</button><button type="button" className={styles.ghost} onClick={() => { setForm(EMPTY); setOutcome(null); }}>{t('verify.clear')}</button></div>
         </form>
         {outcome && (
           <div role="status" aria-live="polite" data-testid="verify-result">
-            <p><span className={`${styles.status} ${styles[outcome.status === 'invalid' ? 'pending' : outcome.status]}`}>{STATUS_TEXT[outcome.status]}</span> {outcome.message}</p>
+            <p><span className={`${styles.status} ${styles[outcome.status === 'invalid' ? 'pending' : outcome.status]}`}>{t(STATUS_KEY[outcome.status])}</span> {outcome.message}</p>
             {outcome.result?.round && (
               <dl className={styles.facts}>
-                <dt>Tohum özeti</dt><dd className={styles.mono}>{outcome.result.serverSeedHash} {outcome.result.checks.hash === null ? '' : outcome.result.checks.hash ? '✓' : '✗'}</dd>
-                <dt>Tur tohumu</dt><dd className={styles.mono}>{outcome.result.seedHex} {outcome.result.checks.seed === null ? '' : outcome.result.checks.seed ? '✓' : '✗'}</dd>
-                <dt>Motor</dt><dd>{outcome.result.round.engine}</dd>
-                <dt>Maliyet</dt><dd>{demoNumber(outcome.result.round.costCents)} DEMO</dd>
-                <dt>Kazanç</dt><dd>{demoNumber(outcome.result.round.payoutCents)} DEMO · {times(outcome.result.round.totalHundredths)}× {outcome.result.checks.payout === null ? '' : outcome.result.checks.payout ? '✓' : '✗'}</dd>
-                <dt>Bedava dönüş</dt><dd>{outcome.result.round.freeSpinsTriggered ? 'Tetiklendi' : 'Yok'}{outcome.result.round.capped ? ' · azami kazanç' : ''}</dd>
+                <dt>{t('verify.factSeedHash')}</dt><dd className={styles.mono}>{outcome.result.serverSeedHash} {outcome.result.checks.hash === null ? '' : outcome.result.checks.hash ? '✓' : '✗'}</dd>
+                <dt>{t('verify.factRoundSeed')}</dt><dd className={styles.mono}>{outcome.result.seedHex} {outcome.result.checks.seed === null ? '' : outcome.result.checks.seed ? '✓' : '✗'}</dd>
+                <dt>{t('verify.factEngine')}</dt><dd>{outcome.result.round.engine}</dd>
+                <dt>{t('verify.factCost')}</dt><dd>{format.number(outcome.result.round.costCents / 100)} DEMO</dd>
+                <dt>{t('verify.factPayout')}</dt><dd>{format.number(outcome.result.round.payoutCents / 100)} DEMO · {times(outcome.result.round.totalHundredths)}× {outcome.result.checks.payout === null ? '' : outcome.result.checks.payout ? '✓' : '✗'}</dd>
+                <dt>{t('verify.factFreeSpins')}</dt><dd>{outcome.result.round.freeSpinsTriggered ? t('verify.triggered') : t('verify.none')}{outcome.result.round.capped ? t('verify.maxWin') : ''}</dd>
               </dl>
             )}
           </div>
@@ -100,24 +108,24 @@ export function VerifyPanel() {
       </section>
 
       <section className={styles.card} aria-labelledby="verify-history-title">
-        <h2 id="verify-history-title">Oturum geçmişim</h2>
-        <p className={styles.meta}>Bu sekmedeki sunucu oturumunun son 50 turu. Açıklanmamış tohumun turları “Tohum açıklanmadı” görünür; “Tohumu açıkla” mevcut tohumu açıklar ve yeni bir tohuma geçer.</p>
+        <h2 id="verify-history-title">{t('verify.historyTitle')}</h2>
+        <p className={styles.meta}>{t('verify.historyText')}</p>
         <div className={styles.actions}>
-          <button type="button" className={styles.ghost} onClick={() => void load()} disabled={busy || !api}>Oturum geçmişini yükle</button>
-          <button type="button" className={styles.ghost} onClick={() => void reveal()} disabled={busy || !rows}>Tohumu açıkla</button>
+          <button type="button" className={styles.ghost} onClick={() => void load()} disabled={busy || !api}>{t('verify.load')}</button>
+          <button type="button" className={styles.ghost} onClick={() => void reveal()} disabled={busy || !rows}>{t('verify.reveal')}</button>
         </div>
-        {note && <p role="status" className={styles.meta}>{note}</p>}
+        {note && <p role="status" className={styles.meta}>{noteText}</p>}
         {rows && rows.length > 0 && (
           <div className={styles.tableWrap}>
             <table className={styles.table}>
-              <thead><tr><th scope="col">Zaman</th><th scope="col">Oyun</th><th scope="col">Mod</th><th scope="col">Bahis</th><th scope="col">Kazanç</th><th scope="col">Nonce</th><th scope="col">Durum</th><th scope="col"><span className="sr-only">Forma aktar</span></th></tr></thead>
+              <thead><tr><th scope="col">{t('verify.colTime')}</th><th scope="col">{t('verify.colGame')}</th><th scope="col">{t('verify.colMode')}</th><th scope="col">{t('verify.colBet')}</th><th scope="col">{t('verify.colPayout')}</th><th scope="col">{t('verify.colNonce')}</th><th scope="col">{t('verify.colStatus')}</th><th scope="col"><span className="sr-only">{t('verify.fill')}</span></th></tr></thead>
               <tbody>
                 {rows.map(row => (
                   <tr key={row.roundId} data-status={row.status}>
-                    <td>{new Date(row.at).toLocaleTimeString('tr-TR')}</td><td>{GAME_NAMES[row.game] ?? row.game}</td><td>{MODE_NAMES[row.mode] ?? row.mode}</td>
-                    <td>{demoNumber(row.betCents)}</td><td>{demoNumber(row.payoutCents)}</td><td>{row.fair.nonce}</td>
-                    <td><span className={`${styles.status} ${styles[row.status]}`}>{STATUS_TEXT[row.status]}</span></td>
-                    <td><button type="button" className={styles.ghost} onClick={() => fill(row)}>Forma aktar</button></td>
+                    <td>{format.time(row.at)}</td><td>{gameName(row.game)}</td><td>{modeName(row.mode)}</td>
+                    <td>{format.number(row.betCents / 100)}</td><td>{format.number(row.payoutCents / 100)}</td><td>{row.fair.nonce}</td>
+                    <td><span className={`${styles.status} ${styles[row.status]}`}>{t(STATUS_KEY[row.status])}</span></td>
+                    <td><button type="button" className={styles.ghost} onClick={() => fill(row)}>{t('verify.fill')}</button></td>
                   </tr>
                 ))}
               </tbody>

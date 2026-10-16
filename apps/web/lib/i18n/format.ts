@@ -11,6 +11,8 @@ export interface Formatter {
   readonly locale: Locale;
   /** BCP 47 tag used for Intl (e.g. "tr-TR"). */
   readonly intl: string;
+  /** Decimal separator of the locale ("." or ","), e.g. for prefilled input text. */
+  readonly decimal: string;
   /** Plain number, up to `maxFractionDigits` (default 2). */
   number(value: number, maxFractionDigits?: number): string;
   /** 123456 → "1,234.56" (en) / "1.234,56" (tr). Not a safe integer → "—". Negative uses the true minus sign. */
@@ -60,6 +62,7 @@ export function getFormatter(locale: Locale): Formatter {
   const formatter: Formatter = {
     locale,
     intl,
+    decimal,
     number: (value, maxFractionDigits = 2) => (Number.isFinite(value) ? numberWith(maxFractionDigits).format(value) : '—'),
     amount,
     demo,

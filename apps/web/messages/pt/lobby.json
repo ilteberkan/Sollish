@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "title": "Jogos — Ao vivo e solo",
+    "description": "Jogos da Sollish. Entre na luta ao vivo compartilhada do Ringside ou experimente os jogos individuais."
+  },
+  "hero": {
+    "aria": "Entrar na arena ao vivo do Ringside",
+    "tag": "AO VIVO · TODOS ASSISTEM À MESMA LUTA",
+    "text": "Uma luta de três rounds com socos e chutes. Faça sua escolha antes do início e acompanhe seu bilhete round a round. Uma rede treinada controla os lutadores, e Jev passa táticas do corner.",
+    "cta": "Entrar na arena",
+    "factWindowValue": "30 s",
+    "factWindow": "janela de apostas",
+    "factRoundsValue": "3 × 45 s",
+    "factRounds": "rounds",
+    "factMarketsValue": "3",
+    "factMarkets": "mercados da luta",
+    "factFeeValue": "2%",
+    "factFee": "taxa do pool"
+  },
+  "solo": { "title": "Individual", "subtitle": "No seu ritmo, resultado na hora.", "demo": "DEMO" },
+  "cards": {
+    "crash": { "text": "Escolha o momento de sacar enquanto o multiplicador sobe.", "type": "Saque manual" },
+    "coinflip": { "text": "Dois lados, uma escolha, resultado na hora.", "type": "Clássico" },
+    "cascade": { "text": "Estoure oito iguais e monte correntes com os doces que caem.", "type": "Tumble" },
+    "tarhun": { "text": "O deus da tempestade lança raios nas pedras; os multiplicadores se acumulam nas rodadas grátis.", "type": "Tumble · multiplicador" },
+    "ebru": { "text": "O pente passa pela água e a tinta se reorganiza onda a onda; as manchas de cor deslizam junto com seus multiplicadores.", "type": "Cluster · pente" },
+    "cezeri": { "text": "Quatro rodas de latão giram; os segmentos vencedores travam, as rodas giram de novo e o multiplicador central sobe +1 a cada vez.", "type": "Roda · corrente" },
+    "asena": { "text": "Os clusters desenham constelações no céu e a Loba Celeste caminha deixando um rastro de estrelas; o mapa de Ergenekon eleva o multiplicador global até ×5.", "type": "Cluster · constelação" }
+  },
+  "trust": {
+    "aria": "Regras",
+    "poolTitle": "Sistema de pools",
+    "poolText": "As apostas ficam em um pool separado por mercado e são divididas entre os vencedores após uma taxa de 2%. A casa não promete ganho extra.",
+    "verifyTitle": "Luta verificável",
+    "verifyText": "Os hashes das sementes dos três rounds são publicados antes das apostas. Seu navegador reproduz cada round e confere o resultado.",
+    "demoTitle": "Somente DEMO",
+    "demoText": "Os créditos não têm valor, não podem ser sacados e não dão direito a tokens nem airdrops. O dinheiro real fica desativado até que as validações terminem."
+  },
+  "faq": {
+    "title": "Perguntas frequentes",
+    "bettingQ": "Como funcionam as apostas no Ringside?",
+    "bettingA": "Em cada luta, as apostas ficam abertas apenas nos 30 segundos antes do início do R1. Há pools separados para o vencedor, o resultado exato (vencedor e método) e o número total de quedas; é possível um bilhete por mercado em cada luta. Não são aceitas novas apostas entre os rounds. A luta termina por interrupção ou ao fim do terceiro round, e cada pool é liquidado uma única vez. Um pool unilateral ou sem vencedor é reembolsado integralmente, sem taxa; mesmo acertando, o retorno pode ser menor do que o valor apostado.",
+    "fightersQ": "Como os lutadores decidem?",
+    "fightersA": "Cada soco, chute, sequência, distância e defesa é escolhido por uma rede que aprende durante a luta; o conectoma de mosca MaleCNS é usado como reservatório fixo. O treinador de corner Jev sugere um plano a cada 9 segundos; como o plano chega depois do fechamento das apostas, o jogo é somente DEMO. Não afirmamos que seja um cérebro completo nem que o conectoma seja superior.",
+    "demoQ": "O limite entre demo e apostas reais",
+    "demoA": "Os créditos DEMO aqui não têm valor monetário. Apostas reais em SOL continuam desativadas até que a implantação do contrato, a recuperação do oráculo, a privacidade do Crash e os fluxos de pagamento sejam validados. Não afirmamos que houve auditoria independente. Estas versões não têm prova VRF."
+  }
+}

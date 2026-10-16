@@ -9,11 +9,13 @@ import { SLOT_PATH_PREFIX, handleSlots, type SlotEnv } from "./slots";
 import { SlotWallet } from "./slot-wallet";
 import { SlotReplay } from "./slot-replay";
 import { SlotMonitor } from "./slot-monitor";
+import { ArenaRelay, relayCount, relayName, type RelayEnv } from "./arena-relay";
 export { RingsideArena, ContactArena, ContactArenaV4, ContactArenaV5 };
 export { LiveArena };
 export { SlotWallet, SlotReplay, SlotMonitor };
+export { ArenaRelay };
 
-export interface Env extends AuthEnv, SlotEnv { CONTACT_ARENA: DurableObjectNamespace<ContactArena>; CONTACT_ARENA_V4: DurableObjectNamespace<ContactArenaV4>; CONTACT_ARENA_V5: DurableObjectNamespace<ContactArenaV5>; RINGSIDE_ARENA: DurableObjectNamespace<RingsideArena>; LIVE_ARENA: DurableObjectNamespace<LiveArena>; LIVE_ARENA_ENABLED?: string; ROOMS: DurableObjectNamespace<RoomCoordinator>; BUCKETS: DurableObjectNamespace<FanoutBucket>; ADMISSION: DurableObjectNamespace<AdmissionGate>; FANOUT_BUCKETS?: string }
+export interface Env extends AuthEnv, SlotEnv, RelayEnv { CONTACT_ARENA: DurableObjectNamespace<ContactArena>; CONTACT_ARENA_V4: DurableObjectNamespace<ContactArenaV4>; CONTACT_ARENA_V5: DurableObjectNamespace<ContactArenaV5>; RINGSIDE_ARENA: DurableObjectNamespace<RingsideArena>; LIVE_ARENA: DurableObjectNamespace<LiveArena>; LIVE_ARENA_ENABLED?: string; ROOMS: DurableObjectNamespace<RoomCoordinator>; BUCKETS: DurableObjectNamespace<FanoutBucket>; ADMISSION: DurableObjectNamespace<AdmissionGate>; FANOUT_BUCKETS?: string }
 const json = (value: unknown, status = 200) => Response.json(value, { status, headers: { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" } });
 const errorCode = (e: unknown): ErrorCode => e instanceof ServiceError ? e.code : "SERVICE_UNAVAILABLE";
 const buckets = (env: Env) => Math.max(1, Math.min(64, Number.parseInt(env.FANOUT_BUCKETS ?? "8", 10) || 8));
@@ -48,6 +50,20 @@ export default {
     try {
       if (url.pathname === "/health") { const ready = (await status(env)).chat.available; return cors(json({ service: "realtime", ready, status: ready ? "operational" : "unavailable" }, ready ? 200 : 503)); }
       if (request.method === "GET" && url.pathname === "/v1/public/status") return cors(json(await status(env)));
+      // Read-only viewers of the shared LIVE arena through relays (arena-relay.ts). Off unless LIVE_RELAYS > 0.
+      if (request.method === "GET" && url.pathname === "/v5/arena/ringside/watch") {
+        if (!allowedOrigin(origin, env)) return json({ code: "FORBIDDEN" }, 403);
+        if (env.LIVE_ARENA_ENABLED !== "true" || !env.ARENA_RELAY || relayCount(env) === 0) return json({ code: "SERVICE_UNAVAILABLE" }, 503);
+        if (url.search || request.headers.get("Upgrade")?.toLowerCase() !== "websocket") return json({ code: "INVALID_MESSAGE" }, 400);
+        const ip = request.headers.get("CF-Connecting-IP") ?? "local";
+        const key = await bodyDigest(`arena:${env.PUBLISH_SIGNING_KEY ?? "local-demo"}:${ip}`);
+        const admitted = await env.ADMISSION.get(env.ADMISSION.idFromName(key)).fetch("https://internal/admit", { method: "POST" });
+        if (!admitted.ok) return json({ code: "RATE_LIMITED" }, 429);
+        const k = crypto.getRandomValues(new Uint32Array(1))[0]! % relayCount(env);
+        const forward = new Request("https://internal/connect", request);
+        forward.headers.set("x-relay-arena", "v5");
+        return env.ARENA_RELAY.get(env.ARENA_RELAY.idFromName(relayName("v5", k))).fetch(forward);
+      }
       if (request.method === "GET" && ["/v1/arena/ringside", "/v2/arena/ringside", "/v3/arena/ringside", "/v4/arena/ringside", "/v5/arena/ringside"].includes(url.pathname)) {
         if (!allowedOrigin(origin, env)) return json({ code: "FORBIDDEN" }, 403);
         if (env.LIVE_ARENA_ENABLED !== "true") return json({ code: "SERVICE_UNAVAILABLE" }, 503);

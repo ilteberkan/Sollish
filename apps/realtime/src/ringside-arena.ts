@@ -1,7 +1,8 @@
 import { DurableObject } from 'cloudflare:workers';
 import { COMBAT_V3_VERSION, COMBAT_V4_VERSION, CONTACT_ENGINES, CONTACT_INITIAL, type ContactEngine, type ContactBout, COMBAT_VERSION, COMBAT_DURATION_MS, RINGSIDE_OPEN_MS, RINGSIDE_RESULT_MS, RINGSIDE_FEE_BPS, RINGSIDE_MARKETS, type RingMarketSpec, carryInitial, parseRingClient, simulateCombat, combatResults, ringCommitmentInput, settlePariMutuelPool, type RingRound, type RingTicket, type RingPool, type RingSnapshot, type RingServer, type RingMarket, type RingTapeEntry } from '@sollish/protocol';
 import { allowedOrigin } from './security';
-interface Env { ALLOWED_ORIGINS?:string; LIVE_ARENA_ENABLED?:string }
+import { RELAY_AUDIENCE_MS, RelayPublisher, type RelayArena, type RelayEnv } from './arena-relay';
+interface Env extends RelayEnv { ALLOWED_ORIGINS?:string; LIVE_ARENA_ENABLED?:string }
 type Attachment = { session:string|null; at:number; window:number; count:number };
 type Session = { id:string; alias:string; balance:number; expires:number };
 type Ticket = { seq:number; session:string; client:string; round:string; market:RingMarket; outcome:string; amount:number; status:RingTicket['status']; payout:number; accepted:number; alias:string };
@@ -34,6 +35,12 @@ export class RingsideArena extends DurableObject<Env> {
  /** Returns the outcome every pool settles on now, or null when this round does not settle the ledger. */
  protected settlement(_saved:StoredRound,results:Record<string,string>,_replay:unknown):{results:Record<string,string>;extras:Partial<RingRound>}|null{return {results,extras:{}};}
  private queue:Promise<unknown>=Promise.resolve();
+ /** Viewer relays (arena-relay.ts). null = this arena publishes to none (v2-v4). Presentation only, never the ledger. */
+ protected relayArena():RelayArena|null{return null;}
+ private relayPublisher:RelayPublisher|null|undefined;
+ /** Until when a relay heartbeat counts as an audience for opening the next round (memory; relays repeat every 30 s). */
+ private watchersUntil=0;
+ private relays():RelayPublisher|null{if(this.relayPublisher===undefined){const a=this.relayArena();this.relayPublisher=a?new RelayPublisher(a,this.env):null;}return this.relayPublisher;}
  constructor(ctx:DurableObjectState,env:Env){super(ctx,env);
   ctx.storage.sql.exec('CREATE TABLE IF NOT EXISTS ring_round (id INTEGER PRIMARY KEY CHECK(id=1), body TEXT NOT NULL)');
   ctx.storage.sql.exec('CREATE TABLE IF NOT EXISTS ring_meta (id INTEGER PRIMARY KEY CHECK(id=1), revision INTEGER NOT NULL)');
@@ -65,6 +72,7 @@ export class RingsideArena extends DurableObject<Env> {
  protected async broadcast(now:number,changed:Set<string>=new Set()){
   this.ctx.storage.sql.exec('UPDATE ring_meta SET revision=revision+1 WHERE id=1');await this.ctx.storage.sync();
   const state=this.snapshot(now);for(const w of this.sockets()){this.send(w,state);const id=this.att(w).session;if(id&&changed.has(id))this.private(w);}
+  this.relays()?.publish(JSON.stringify(state));
  }
  private async open(previous:StoredRound|null,now:number){
   const id=String(Number(previous?.public.id??0)+1);
@@ -109,7 +117,7 @@ export class RingsideArena extends DurableObject<Env> {
     r={...r,phase:'result',results,...settle?.extras};saved={...saved!,public:r};this.save(saved);
    });await this.ctx.storage.sync();changed=true;
   }
-  if(r.phase==='result'&&now>=r.nextAt!&&(connection||this.sockets().length)){saved=await this.open(saved,now);r=saved.public;changed=true;}
+  if(r.phase==='result'&&now>=r.nextAt!&&(connection||this.sockets().length||now<this.watchersUntil)){saved=await this.open(saved,now);r=saved.public;changed=true;}
   // Current-round records remain intact for public totals even after the session expires.
   this.ctx.storage.transactionSync(()=>{
    this.ctx.storage.sql.exec("DELETE FROM ring_tickets WHERE round<>? AND status<>'accepted' AND session IN(SELECT id FROM ring_sessions WHERE expires<=?)",this.ledgerOf(r),now);
@@ -120,6 +128,8 @@ export class RingsideArena extends DurableObject<Env> {
  }
  fetch(request:Request):Promise<Response>{return this.exclusive(async()=>{
   if(this.env.LIVE_ARENA_ENABLED!=='true')return Response.json({code:'SERVICE_UNAVAILABLE'},{status:503});
+  // Internal only (the router forwards public requests as /connect): a relay's heartbeat + latest public snapshot.
+  if(new URL(request.url).pathname==='/relay/sync'&&request.method==='POST'&&this.relayArena()){const now=Date.now();this.watchersUntil=now+RELAY_AUDIENCE_MS;try{await this.advance(now,true);await this.schedule(now);return new Response(JSON.stringify(this.snapshot(now)),{headers:{'Content-Type':'application/json'}});}catch{return Response.json({code:'SERVICE_UNAVAILABLE'},{status:503});}}
   if(!allowedOrigin(request.headers.get('Origin'),this.env))return Response.json({code:'FORBIDDEN'},{status:403});
   if(request.method!=='GET'||new URL(request.url).search||request.headers.get('Upgrade')?.toLowerCase()!=='websocket')return Response.json({code:'INVALID_MESSAGE'},{status:400});
   if(this.sockets().length>=256)return Response.json({code:'CAPACITY'},{status:503});

@@ -1,6 +1,7 @@
 {
   "tool": "esbuild metafile (minified, framework external)",
-  "generatedAt": "2026-10-16T19:17:47.217Z",
+  "ignoreSideEffects": true,
+  "generatedAt": "2026-10-16T19:37:31.352Z",
   "routes": {
     "/": {
       "minifiedBytes": 90,
@@ -19,73 +20,73 @@
       }
     },
     "/game/cascade": {
-      "minifiedBytes": 903378,
-      "gzipBytes": 296402,
-      "foreignGameBytes": 521382,
+      "minifiedBytes": 903814,
+      "gzipBytes": 296601,
+      "foreignGameBytes": 608808,
       "bytesByOwner": {
         "ringside": 474870,
-        "shared": 234159,
-        "cascade": 147799,
-        "asena": 15044,
-        "cezeri": 12451,
-        "ebru": 11764,
-        "tarhun": 7253
+        "cascade": 181101,
+        "shared": 113867,
+        "asena": 40371,
+        "cezeri": 35247,
+        "ebru": 29494,
+        "tarhun": 28826
       }
     },
     "/game/tarhun": {
-      "minifiedBytes": 1036830,
-      "gzipBytes": 338648,
-      "foreignGameBytes": 522188,
+      "minifiedBytes": 1037270,
+      "gzipBytes": 338821,
+      "foreignGameBytes": 622014,
       "bytesByOwner": {
         "ringside": 474934,
-        "tarhun": 279065,
-        "shared": 235410,
-        "asena": 15107,
-        "cezeri": 12517,
-        "ebru": 11826,
-        "cascade": 7804
+        "tarhun": 300831,
+        "shared": 114258,
+        "cascade": 41260,
+        "asena": 40624,
+        "cezeri": 35487,
+        "ebru": 29709
       }
     },
     "/game/ebru": {
-      "minifiedBytes": 986211,
-      "gzipBytes": 325212,
-      "foreignGameBytes": 517607,
+      "minifiedBytes": 986647,
+      "gzipBytes": 325395,
+      "foreignGameBytes": 621205,
       "bytesByOwner": {
         "ringside": 474901,
-        "shared": 235316,
-        "ebru": 233121,
-        "asena": 15102,
-        "cezeri": 12508,
-        "cascade": 7804,
-        "tarhun": 7292
+        "ebru": 250984,
+        "shared": 114291,
+        "cascade": 41260,
+        "asena": 40568,
+        "cezeri": 35459,
+        "tarhun": 29017
       }
     },
     "/game/cezeri": {
-      "minifiedBytes": 1011270,
-      "gzipBytes": 327756,
-      "foreignGameBytes": 517011,
+      "minifiedBytes": 1011706,
+      "gzipBytes": 327923,
+      "foreignGameBytes": 615605,
       "bytesByOwner": {
         "ringside": 474985,
-        "cezeri": 258441,
-        "shared": 235651,
-        "asena": 15107,
-        "ebru": 11823,
-        "cascade": 7804,
-        "tarhun": 7292
+        "cezeri": 281411,
+        "shared": 114523,
+        "cascade": 41260,
+        "asena": 40622,
+        "ebru": 29706,
+        "tarhun": 29032
       }
     },
     "/game/asena": {
-      "minifiedBytes": 991761,
-      "gzipBytes": 325716,
-      "foreignGameBytes": 514384,
+      "minifiedBytes": 992197,
+      "gzipBytes": 325906,
+      "foreignGameBytes": 610359,
       "bytesByOwner": {
         "ringside": 474971,
-        "asena": 241807,
-        "shared": 235403,
-        "cezeri": 12508,
-        "ebru": 11809,
-        "cascade": 7804,
-        "tarhun": 7292
+        "asena": 267283,
+        "shared": 114388,
+        "cascade": 41260,
+        "cezeri": 35459,
+        "ebru": 29675,
+        "tarhun": 28994
       }
     },
     "/live/ringside": {

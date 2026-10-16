@@ -2,30 +2,36 @@ import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
 import styles from './page.module.css';
-export const metadata: Metadata = { title: 'Oyunlar — Canlı & Solo', description: 'Sollish oyunları. Ortak canlı Ringside maçına katıl veya tek kişilik oyunları dene.' };
+import { getTranslator } from '@/lib/i18n/server';
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslator('lobby');
+  return { title: t('meta.title'), description: t('meta.description') };
+}
 const solo = [
-  { title: 'Crash', href: '/game/crash', text: 'Çarpan yükselirken çıkış anını sen seç.', type: 'Manuel çıkış', art: 'crash' },
-  { title: 'Coinflip', href: '/game/coinflip', text: 'İki yüz, bir seçim, anında sonuç.', type: 'Klasik', art: 'coin' },
-  { title: 'Candy Cascade', href: '/game/cascade', text: 'Sekiz eşleşmede patlat, düşen şekerlerle zincir kur.', type: 'Tumble', art: 'candy' },
-  { title: 'Tarhun: Fırtına Tahtı', href: '/game/tarhun', text: 'Fırtına tanrısı taşlara yıldırım atar; çarpanlar bedava dönüşte birikir.', type: 'Tumble · çarpan', art: 'storm' },
-  { title: 'Ebru: Mürekkep Bahçesi', href: '/game/ebru', text: 'Tarak suyu tarar, mürekkep dalga dalga yeniden dizilir; boya lekeleri çarpanla birlikte kayar.', type: 'Küme · tarak', art: 'ink' },
-  { title: 'Cezeri: Zamanın Çarkları', href: '/game/cezeri', text: 'Dört pirinç çark döner; kazanan dilimler kenetlenir, çarklar yeniden döner ve göbek çarpanı her turda +1 atar.', type: 'Çark · zincir', art: 'gears' },
-  { title: 'Asena: Yıldız Kurdu', href: '/game/asena', text: 'Kümeler gökte takımyıldız çizer, Gök Kurt yürüyüp yıldız izi bırakır; Ergenekon haritası genel çarpanı ×5’e kadar açar.', type: 'Küme · takımyıldız', art: 'stars' },
+  { id: 'crash', href: '/game/crash', art: 'crash' },
+  { id: 'coinflip', href: '/game/coinflip', art: 'coin' },
+  { id: 'cascade', href: '/game/cascade', art: 'candy' },
+  { id: 'tarhun', href: '/game/tarhun', art: 'storm' },
+  { id: 'ebru', href: '/game/ebru', art: 'ink' },
+  { id: 'cezeri', href: '/game/cezeri', art: 'gears' },
+  { id: 'asena', href: '/game/asena', art: 'stars' },
 ] as const;
-export default function Games() { return <div className={styles.page}>
-  <Link href="/live/ringside" prefetch={false} className={styles.hero} aria-label="Ringside canlı arenaya gir">
+export default async function Games() {
+  const [t, common] = await Promise.all([getTranslator('lobby'), getTranslator('common')]);
+  return <div className={styles.page}>
+  <Link href="/live/ringside" prefetch={false} className={styles.hero} aria-label={t('hero.aria')}>
     <Image src="/images/ringside-hero.jpg" alt="" fill unoptimized priority sizes="(max-width: 900px) 100vw, 1240px" className={styles.poster}/>
     <div className={styles.heroCopy}>
-      <span className={styles.liveTag}><i/>CANLI · HERKES AYNI MAÇI İZLER</span>
-      <h1>Ringside</h1>
-      <p>Yumruk ve tekmelerle üç rauntluk dövüş. Maç başlamadan seçimini yap, sonra kuponunu raunt raunt izle. Dövüşçüleri eğitilmiş bir ağ yönetir, köşesinden Jev taktik verir.</p>
-      <span className={styles.cta}>Arenaya gir <b>→</b></span>
-      <ul className={styles.facts}><li><b>30 sn</b>bahis penceresi</li><li><b>3 × 45 sn</b>raunt</li><li><b>3</b>maç pazarı</li><li><b>%2</b>havuz kesintisi</li></ul>
+      <span className={styles.liveTag}><i/>{t('hero.tag')}</span>
+      <h1>{common('games.ringside')}</h1>
+      <p>{t('hero.text')}</p>
+      <span className={styles.cta}>{t('hero.cta')} <b>→</b></span>
+      <ul className={styles.facts}><li><b>{t('hero.factWindowValue')}</b>{t('hero.factWindow')}</li><li><b>{t('hero.factRoundsValue')}</b>{t('hero.factRounds')}</li><li><b>{t('hero.factMarketsValue')}</b>{t('hero.factMarkets')}</li><li><b>{t('hero.factFeeValue')}</b>{t('hero.factFee')}</li></ul>
     </div>
   </Link>
 
   <section className={styles.section} aria-labelledby="solo-title">
-    <div className={styles.sectionTitle}><h2 id="solo-title">Tek kişilik</h2><p>Kendi hızında, anında sonuç.</p></div>
+    <div className={styles.sectionTitle}><h2 id="solo-title">{t('solo.title')}</h2><p>{t('solo.subtitle')}</p></div>
     <div className={styles.soloGrid}>{solo.map(game => <Link href={game.href} prefetch={false} className={styles.soloCard} key={game.href}>
       <span className={styles.soloArt} data-art={game.art} aria-hidden="true">{game.art === 'crash'
         ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 20c6-2 11-7 18-16"/><path d="M15 4h6v6"/></svg>
@@ -40,21 +46,22 @@ export default function Games() { return <div className={styles.page}>
         : game.art === 'candy'
         ? <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M7.2 9.4 3 7.5l1.2 4.5L3 16.5l4.2-1.9M16.8 9.4 21 7.5l-1.2 4.5 1.2 4.5-4.2-1.9"/></svg>
         : <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>}</span>
-      <span className={styles.soloCopy}><b>{game.title}</b><span>{game.text}</span><small>{game.type} · DEMO</small></span>
+      <span className={styles.soloCopy}><b>{common(`games.${game.id}`)}</b><span>{t(`cards.${game.id}.text`)}</span><small>{t(`cards.${game.id}.type`)} · {t('solo.demo')}</small></span>
       <span className={styles.arrow} aria-hidden="true">→</span>
     </Link>)}</div>
   </section>
 
-  <section className={styles.trust} aria-label="Kurallar">
-    <div><b>Havuz sistemi</b><p>Bahisler pazar başına ayrı havuzda toplanır, %2 kesintiden sonra kazananlara paylaşılır. Kasa ek kazanç vaat etmez.</p></div>
-    <div><b>Doğrulanabilir maç</b><p>Üç raundun seed hash’i bahisten önce yayımlanır. Tarayıcın her rauntu yeniden oynatıp sonucu kontrol eder.</p></div>
-    <div><b>Yalnız DEMO</b><p>Krediler değersizdir, çekilemez, token veya airdrop hakkı vermez. Gerçek para doğrulamalar bitene kadar kapalı.</p></div>
+  <section className={styles.trust} aria-label={t('trust.aria')}>
+    <div><b>{t('trust.poolTitle')}</b><p>{t('trust.poolText')}</p></div>
+    <div><b>{t('trust.verifyTitle')}</b><p>{t('trust.verifyText')}</p></div>
+    <div><b>{t('trust.demoTitle')}</b><p>{t('trust.demoText')}</p></div>
   </section>
 
   <section id="fairness" className={styles.faq} aria-labelledby="faq-title">
-    <h2 id="faq-title">Sık sorulanlar</h2>
-    <details><summary>Ringside’da bahis nasıl çalışır?</summary><p>Her maç için bahis yalnız R1 başlamadan 30 saniye açıktır. Kazanan, tam sonuç (kazanan ve biçim) ve toplam yere düşme sayısı için ayrı havuzlar vardır; her pazarda maç başına tek bilet alınır. Raunt aralarında yeni bahis alınmaz. Maç durdurmayla ya da üçüncü raundun sonunda biter ve her havuz bir kez sonuçlanır. Tek taraflı ya da kazananı olmayan havuz kesintisiz iade edilir; doğru seçimde bile dönüş yatırdığından az olabilir.</p></details>
-    <details><summary>Dövüşçüler nasıl karar veriyor?</summary><p>Her yumruk, tekme, seri, mesafe ve savunma seçimini maç içinde öğrenen bir ağ yapar; MaleCNS sinek bağlantı ağı sabit bir rezervuar olarak kullanılır. Köşe antrenörü Jev her 9 saniyede plan önerir; plan bahis kapandıktan sonra geldiği için oyun yalnız DEMO’dur. Tam beyin ya da bağlantı yapısının üstünlüğü iddiası yoktur.</p></details>
-    <details><summary>Demo ile gerçek bahis arasındaki sınır</summary><p>Buradaki DEMO kredilerinin parasal değeri yoktur. Gerçek SOL bahisleri; sözleşme dağıtımı, oracle kurtarma, Crash gizliliği ve ödeme akışları doğrulanana kadar kapalıdır. Bağımsız denetim yapılmış gibi bir iddiada bulunmuyoruz. Bu sürümlerin VRF kanıtı yoktur.</p></details>
+    <h2 id="faq-title">{t('faq.title')}</h2>
+    <details><summary>{t('faq.bettingQ')}</summary><p>{t('faq.bettingA')}</p></details>
+    <details><summary>{t('faq.fightersQ')}</summary><p>{t('faq.fightersA')}</p></details>
+    <details><summary>{t('faq.demoQ')}</summary><p>{t('faq.demoA')}</p></details>
   </section>
-</div>; }
+</div>;
+}

@@ -10,6 +10,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { createCascadeAudio } from '@/lib/cascade-audio';
 import type { SlotSettings } from '@/lib/slot-kit/settings';
+import { onVoiceLanguageChange, voiceBankFolder, voiceLanguage, type VoiceLanguage } from '@/lib/slot-audio/voice-locale';
+import { voicePolicyInput, type VoiceLevel } from '@/lib/slot-audio/voice-policy';
+
+/** Recorded callout lines live in /audio/voice/cascade/<tr|en>/ (missing files are skipped by the engine). */
+export const CASCADE_VOICE_BANK = '/audio/voice/cascade';
 
 export type SoundScene = 'idle' | 'base' | 'feature' | 'bigwin' | 'none';
 export interface SoundLoadProgress { done: number; total: number; label?: string; phase?: string }
@@ -50,6 +55,8 @@ interface RichSound {
   featureOutro: () => void;
   maxWin: () => void;
   autoplay: (on: boolean) => void;
+  setVoiceBank: (urls: string) => Promise<unknown>;
+  setVoicePolicy: (p: { level?: VoiceLevel; fast?: boolean }) => void;
 }
 type AnySound = CoreSound & Partial<RichSound>;
 
@@ -98,6 +105,9 @@ export function useCascadeSound(settings: SlotSettings): { sound: CascadeSoundCo
   const settingsRef = useRef(settings);
   settingsRef.current = settings;
   const loadStarted = useRef(false);
+  const applyRef = useRef<() => void>(() => {});
+  const autoplayOn = useRef(false);
+  const voiceLang = useRef<VoiceLanguage | null>(null);
   const [loadState, setLoadState] = useState<SoundLoadState>({ started: false, ready: false, percent: 0 });
 
   useEffect(() => {
@@ -120,11 +130,20 @@ export function useCascadeSound(settings: SlotSettings): { sound: CascadeSoundCo
       const hidden = typeof document !== 'undefined' && document.hidden;
       call(e, 'setMix', { master: s.master, music: s.music, sfx: s.sfx, ambience: s.ambience, muted: s.muted });
       call(e, 'setEnabled', !s.muted && !hidden);
+      call(e, 'setVoicePolicy', voicePolicyInput(s, autoplayOn.current));
     };
+    applyRef.current = apply;
     apply();
     document.addEventListener('visibilitychange', apply);
     return () => document.removeEventListener('visibilitychange', apply);
-  }, [settings.master, settings.music, settings.sfx, settings.ambience, settings.muted]);
+  }, [settings.master, settings.music, settings.sfx, settings.ambience, settings.muted, settings.voice, settings.spinSpeed]);
+
+  // Site language switch: reload the voice bank in the new language (the engine disposes the old buffers).
+  useEffect(() => onVoiceLanguageChange(lang => {
+    if (!loadStarted.current || voiceLang.current === lang) return;
+    voiceLang.current = lang;
+    call(engine.current, 'setVoiceBank', voiceBankFolder(CASCADE_VOICE_BANK, lang));
+  }), []);
 
   const sound = useMemo<CascadeSoundControls>(() => {
     const e = () => engine.current;
@@ -132,6 +151,8 @@ export function useCascadeSound(settings: SlotSettings): { sound: CascadeSoundCo
     const startLoad = () => {
       if (loadStarted.current || !has('load')) return;
       loadStarted.current = true;
+      voiceLang.current = voiceLanguage();
+      call(e(), 'setVoiceBank', voiceBankFolder(CASCADE_VOICE_BANK, voiceLang.current));
       setLoadState({ started: true, ready: false, percent: 0 });
       const onProgress = (p: SoundLoadProgress) => {
         if (p.total > 0) setLoadState(prev => (prev.ready ? prev : { started: true, ready: false, percent: Math.min(99, Math.round((p.done / p.total) * 100)) }));
@@ -171,7 +192,7 @@ export function useCascadeSound(settings: SlotSettings): { sound: CascadeSoundCo
       click: () => { call(e(), 'click'); },
       betChange: direction => { call(e(), 'betChange', direction); },
       denied: () => { call(e(), 'denied'); },
-      autoplay: on => { call(e(), 'autoplay', on); },
+      autoplay: on => { autoplayOn.current = on; applyRef.current(); call(e(), 'autoplay', on); },
     };
   }, []);
   return { sound, loadState };

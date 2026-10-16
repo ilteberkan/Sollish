@@ -26,11 +26,11 @@ const routes = {
 };
 // Which source files belong to which game (anything else is shared platform code).
 const GAME_OF = [
-  ['cascade', [/components\/cascade\//, /lib\/cascade-/, /protocol\/src\/cascade(-2)?\.ts$/, /slot-audio\/(cascade|lab-panel)/]],
-  ['tarhun', [/components\/storm\//, /lib\/storm-/, /protocol\/src\/storm-throne\.ts$/, /slot-audio\/(storm|use-storm)/, /slot-audio\/scores\/storm/]],
-  ['ebru', [/components\/ebru\//, /lib\/ebru-/, /protocol\/src\/ebru\.ts$/, /slot-audio\/(ebru|use-ebru)/, /slot-audio\/scores\/ebru/]],
-  ['cezeri', [/components\/cezeri\//, /lib\/cezeri-/, /protocol\/src\/cezeri\.ts$/, /slot-audio\/(cezeri|use-cezeri)/, /slot-audio\/scores\/cezeri/]],
-  ['asena', [/components\/asena\//, /lib\/asena-/, /protocol\/src\/asena\.ts$/, /slot-audio\/(asena|use-asena)/, /slot-audio\/scores\/asena/]],
+  ['cascade', [/components\/cascade\//, /lib\/cascade-/, /protocol\/src\/cascade(-2)?\.ts$/, /slot-audio\/(cascade|lab-panel)/, /slot-audio\/(sfx|synth|scores)\/cascade/]],
+  ['tarhun', [/components\/storm\//, /lib\/storm-/, /protocol\/src\/storm-throne\.ts$/, /slot-audio\/(storm|use-storm)/, /slot-audio\/(sfx|synth|scores)\/(storm|anatolian)/]],
+  ['ebru', [/components\/ebru\//, /lib\/ebru-/, /protocol\/src\/ebru\.ts$/, /slot-audio\/(ebru|use-ebru)/, /slot-audio\/(sfx|synth|scores)\/ebru/]],
+  ['cezeri', [/components\/cezeri\//, /lib\/cezeri-/, /protocol\/src\/cezeri\.ts$/, /slot-audio\/(cezeri|use-cezeri)/, /slot-audio\/(sfx|synth|scores)\/cezeri/]],
+  ['asena', [/components\/asena\//, /lib\/asena-/, /protocol\/src\/asena\.ts$/, /slot-audio\/(asena|use-asena)/, /slot-audio\/(sfx|synth|scores)\/asena/]],
   ['ringside', [/ringside/, /protocol\/src\/(combat|contact|neuro|connectome|corner-plan|fight-style|live-round|pari-mutuel)/]],
 ];
 const gameOf = file => GAME_OF.find(([, patterns]) => patterns.some(p => p.test(file)))?.[0] ?? null;
@@ -48,13 +48,16 @@ function resolveTs(p) {
   return p;
 }
 
-const out = { tool: 'esbuild metafile (minified, framework external)', generatedAt: new Date().toISOString(), routes: {} };
+const out = { tool: 'esbuild metafile (minified, framework external)', ignoreSideEffects: process.argv.includes('--ignore-side-effects'), generatedAt: new Date().toISOString(), routes: {} };
 for (const [route, file] of Object.entries(routes)) {
   if (!existsSync(resolve(web, file))) continue;
   const result = await build({
     entryPoints: [resolve(web, file)], bundle: true, write: false, minify: true, format: 'esm', platform: 'browser', target: 'es2022',
     jsx: 'automatic', metafile: true, logLevel: 'silent', plugins: [ext], outdir: '/tmp/unused',
     define: { 'process.env.NODE_ENV': '"production"' },
+    // --ignore-side-effects reproduces the tree before packages/protocol declared "sideEffects": false (esbuild then
+    // ignores every package's sideEffects field and /* @__PURE__ */ annotations).
+    ignoreAnnotations: process.argv.includes('--ignore-side-effects'),
     loader: { '.ts': 'ts', '.tsx': 'tsx' },
   });
   const js = result.outputFiles.find(f => f.path.endsWith('.js'));

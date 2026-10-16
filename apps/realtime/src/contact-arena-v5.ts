@@ -12,6 +12,7 @@
  */
 import { COMBAT_V5_VERSION, MATCH_LEDGER, MATCH_MARKETS, MATCH_OPEN_MS, combatResults, matchComplete, matchResults, matchSeedHash, roundOutcome, type V5Replay, type ContactBout, type RingMarketSpec, JEV_CORNER_MODEL, PLAN_COUNT, PLAN_TICKS, V5_PLAN_LEAD_MS, V5_TICK_MS, cornerObsHash, fallbackPlans, planEntry, replayContactV5, replayMatchRounds, type V5Carry, type CornerObservation, type CornerPlan, type ContactEngine, type RingRound } from '@sollish/protocol';
 import { RingsideArena, type StoredRound } from './ringside-arena';
+import type { RelayArena } from './arena-relay';
 import { askJevCorner, validKey, JEV_DEADLINE_MS, type JevFailure, type JevResult } from './jev-corner';
 
 type CoachEnv = { TYPESAFE_API_KEY?: string; DECISION_AGENT_ENABLED?: string; JEV_CALL_BUDGET?: string };
@@ -25,6 +26,8 @@ export class ContactArenaV5 extends RingsideArena {
   protected override contactVersion = true;
   protected override contactEngine: ContactEngine = COMBAT_V5_VERSION;
   protected override fightLeadMs = V5_PLAN_LEAD_MS;
+  /** The shared LIVE arena may feed read-only viewer relays (LIVE_RELAYS > 0); the ledger and tickets stay here. */
+  protected override relayArena(): RelayArena { return 'v5'; }
   private inflight: { round: string; k: number } | null = null;
 
   constructor(ctx: DurableObjectState, env: ConstructorParameters<typeof RingsideArena>[1]) {

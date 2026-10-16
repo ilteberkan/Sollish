@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "title": "Spiele — Live & Solo",
+    "description": "Sollish-Spiele. Sei beim gemeinsamen Live-Kampf in Ringside dabei oder probiere die Einzelspieler-Spiele aus."
+  },
+  "hero": {
+    "aria": "Die Ringside-Live-Arena betreten",
+    "tag": "LIVE · ALLE SEHEN DENSELBEN KAMPF",
+    "text": "Ein Kampf über drei Runden mit Schlägen und Tritten. Triff deine Wahl vor Kampfbeginn und verfolge deinen Schein Runde für Runde. Ein trainiertes Netz steuert die Kämpfer, Jev gibt aus der Ecke Taktik vor.",
+    "cta": "Zur Arena",
+    "factWindowValue": "30 Sek.",
+    "factWindow": "Wettfenster",
+    "factRoundsValue": "3 × 45 Sek.",
+    "factRounds": "Runden",
+    "factMarketsValue": "3",
+    "factMarkets": "Kampfmärkte",
+    "factFeeValue": "2 %",
+    "factFee": "Poolgebühr"
+  },
+  "solo": { "title": "Einzelspieler", "subtitle": "In deinem Tempo, sofortiges Ergebnis.", "demo": "DEMO" },
+  "cards": {
+    "crash": { "text": "Wähle selbst den Moment zum Auszahlen, während der Multiplikator steigt.", "type": "Manuelles Auszahlen" },
+    "coinflip": { "text": "Zwei Seiten, eine Wahl, sofortiges Ergebnis.", "type": "Klassiker" },
+    "cascade": { "text": "Lass acht Gleiche platzen und baue Ketten mit fallenden Bonbons.", "type": "Tumble" },
+    "tarhun": { "text": "Der Sturmgott schleudert Blitze auf die Steine; in den Freispielen sammeln sich die Multiplikatoren.", "type": "Tumble · Multiplikator" },
+    "ebru": { "text": "Der Kamm zieht durchs Wasser, die Tinte ordnet sich Welle um Welle neu; Farbflecken gleiten mit ihren Multiplikatoren mit.", "type": "Cluster · Kamm" },
+    "cezeri": { "text": "Vier Messingräder drehen sich; Gewinnsegmente rasten ein, die Räder drehen erneut und der Nabenmultiplikator steigt jedes Mal um +1.", "type": "Rad · Kette" },
+    "asena": { "text": "Cluster zeichnen Sternbilder an den Himmel, der Himmelswolf wandert und hinterlässt eine Sternenspur; die Ergenekon-Karte hebt den Gesamtmultiplikator bis ×5.", "type": "Cluster · Sternbild" }
+  },
+  "trust": {
+    "aria": "Regeln",
+    "poolTitle": "Poolsystem",
+    "poolText": "Einsätze werden pro Markt in einem eigenen Pool gesammelt und nach 2 % Gebühr unter den Gewinnern aufgeteilt. Das Haus verspricht keinen zusätzlichen Gewinn.",
+    "verifyTitle": "Überprüfbarer Kampf",
+    "verifyText": "Die Seed-Hashes aller drei Runden werden vor den Wetten veröffentlicht. Dein Browser spielt jede Runde nach und prüft das Ergebnis.",
+    "demoTitle": "Nur DEMO",
+    "demoText": "Guthaben ist wertlos, nicht auszahlbar und gewährt keine Token- oder Airdrop-Rechte. Echtgeld bleibt gesperrt, bis die Prüfungen abgeschlossen sind."
+  },
+  "faq": {
+    "title": "Häufige Fragen",
+    "bettingQ": "Wie funktionieren Wetten bei Ringside?",
+    "bettingA": "Für jeden Kampf sind Wetten nur in den 30 Sekunden vor Beginn von R1 möglich. Es gibt getrennte Pools für Sieger, genaues Ergebnis (Sieger und Art) und Gesamtzahl der Niederschläge; pro Markt und Kampf ist ein Schein möglich. Zwischen den Runden werden keine neuen Wetten angenommen. Der Kampf endet durch Abbruch oder nach der dritten Runde, und jeder Pool wird einmal abgerechnet. Ein einseitiger Pool oder ein Pool ohne Gewinner wird ohne Abzug erstattet; auch bei richtiger Wahl kann die Auszahlung kleiner sein als dein Einsatz.",
+    "fightersQ": "Wie entscheiden die Kämpfer?",
+    "fightersA": "Jeden Schlag, Tritt, jede Serie, Distanz und Abwehr wählt ein Netz, das während des Kampfes lernt; das MaleCNS-Konnektom der Fliege dient als festes Reservoir. Eckcoach Jev schlägt alle 9 Sekunden einen Plan vor; da der Plan nach Wettschluss kommt, ist das Spiel nur DEMO. Es wird weder ein vollständiges Gehirn noch eine Überlegenheit des Konnektoms behauptet.",
+    "demoQ": "Die Grenze zwischen Demo und echten Wetten",
+    "demoA": "Die DEMO-Guthaben hier haben keinen Geldwert. Echte SOL-Wetten bleiben gesperrt, bis Vertragsbereitstellung, Oracle-Wiederherstellung, Crash-Datenschutz und Zahlungsabläufe geprüft sind. Wir behaupten nicht, dass eine unabhängige Prüfung stattgefunden hat. Diese Versionen haben keinen VRF-Nachweis."
+  }
+}

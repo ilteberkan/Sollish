@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "title": "Jeux — En direct & solo",
+    "description": "Jeux Sollish. Rejoignez le combat Ringside en direct partagé ou essayez les jeux solo."
+  },
+  "hero": {
+    "aria": "Entrer dans l’arène Ringside en direct",
+    "tag": "EN DIRECT · TOUT LE MONDE REGARDE LE MÊME COMBAT",
+    "text": "Un combat en trois rounds avec coups de poing et de pied. Faites votre choix avant le début, puis suivez votre ticket round après round. Un réseau entraîné dirige les combattants et Jev donne la tactique depuis le coin.",
+    "cta": "Entrer dans l’arène",
+    "factWindowValue": "30 s",
+    "factWindow": "fenêtre de paris",
+    "factRoundsValue": "3 × 45 s",
+    "factRounds": "rounds",
+    "factMarketsValue": "3",
+    "factMarkets": "marchés du combat",
+    "factFeeValue": "2 %",
+    "factFee": "commission du pool"
+  },
+  "solo": { "title": "Solo", "subtitle": "À votre rythme, résultat immédiat.", "demo": "DEMO" },
+  "cards": {
+    "crash": { "text": "Choisissez le moment d’encaisser pendant que le multiplicateur grimpe.", "type": "Encaissement manuel" },
+    "coinflip": { "text": "Deux faces, un choix, un résultat immédiat.", "type": "Classique" },
+    "cascade": { "text": "Faites éclater huit symboles identiques et enchaînez avec les bonbons qui tombent.", "type": "Tumble" },
+    "tarhun": { "text": "Le dieu de la tempête frappe les pierres de ses éclairs ; les multiplicateurs s’accumulent pendant les tours gratuits.", "type": "Tumble · multiplicateur" },
+    "ebru": { "text": "Le peigne balaie l’eau et l’encre se réorganise vague après vague ; les taches de couleur glissent avec leurs multiplicateurs.", "type": "Grappe · peigne" },
+    "cezeri": { "text": "Quatre roues de laiton tournent ; les segments gagnants se verrouillent, les roues repartent et le multiplicateur central gagne +1 à chaque fois.", "type": "Roue · chaîne" },
+    "asena": { "text": "Les grappes dessinent des constellations dans le ciel et la Louve céleste avance en laissant une traînée d’étoiles ; la carte d’Ergenekon porte le multiplicateur global jusqu’à ×5.", "type": "Grappe · constellation" }
+  },
+  "trust": {
+    "aria": "Règles",
+    "poolTitle": "Système de pools",
+    "poolText": "Les mises sont réunies dans un pool distinct par marché, puis partagées entre les gagnants après une commission de 2 %. La maison ne promet aucun gain supplémentaire.",
+    "verifyTitle": "Combat vérifiable",
+    "verifyText": "Les hachages des graines des trois rounds sont publiés avant les paris. Votre navigateur rejoue chaque round et vérifie le résultat.",
+    "demoTitle": "DEMO uniquement",
+    "demoText": "Les crédits n’ont aucune valeur, ne peuvent pas être retirés et ne donnent droit à aucun jeton ni airdrop. L’argent réel reste désactivé tant que les validations ne sont pas terminées."
+  },
+  "faq": {
+    "title": "Questions fréquentes",
+    "bettingQ": "Comment fonctionnent les paris sur Ringside ?",
+    "bettingA": "Pour chaque combat, les paris ne sont ouverts que pendant les 30 secondes qui précèdent le début du R1. Il existe des pools distincts pour le vainqueur, le résultat exact (vainqueur et méthode) et le nombre total de chutes ; un seul ticket par marché et par combat. Aucun nouveau pari n’est accepté entre les rounds. Le combat se termine par arrêt ou à la fin du troisième round, et chaque pool est réglé une seule fois. Un pool à sens unique ou sans gagnant est remboursé intégralement, sans commission ; même avec un bon choix, le retour peut être inférieur à votre mise.",
+    "fightersQ": "Comment les combattants décident-ils ?",
+    "fightersA": "Chaque coup de poing, coup de pied, enchaînement, distance et défense est choisi par un réseau qui apprend pendant le combat ; le connectome de mouche MaleCNS sert de réservoir fixe. L’entraîneur de coin Jev propose un plan toutes les 9 secondes ; comme ce plan arrive après la clôture des paris, le jeu reste en DEMO uniquement. Nous n’affirmons ni qu’il s’agit d’un cerveau complet ni que le connectome est supérieur.",
+    "demoQ": "La limite entre démo et paris réels",
+    "demoA": "Les crédits DEMO n’ont ici aucune valeur monétaire. Les paris réels en SOL restent désactivés tant que le déploiement du contrat, la reprise de l’oracle, la confidentialité de Crash et les flux de paiement ne sont pas validés. Nous ne prétendons pas qu’un audit indépendant a été réalisé. Ces versions n’ont pas de preuve VRF."
+  }
+}

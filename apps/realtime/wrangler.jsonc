@@ -7,7 +7,7 @@
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "dev": { "port": 8787 },
-  "vars": { "ALLOWED_ORIGINS": "https://sollish-web-devnet.sollish-web.workers.dev", "FANOUT_BUCKETS": "8", "LIVE_ARENA_ENABLED": "true", "SLOTS_ENABLED": "false" },
+  "vars": { "ALLOWED_ORIGINS": "https://sollish-web-devnet.sollish-web.workers.dev", "FANOUT_BUCKETS": "8", "LIVE_ARENA_ENABLED": "true", "SLOTS_ENABLED": "false", "LIVE_RELAYS": "0" },
   "durable_objects": { "bindings": [
     { "name": "ROOMS", "class_name": "RoomCoordinator" },
     { "name": "BUCKETS", "class_name": "FanoutBucket" },
@@ -19,8 +19,9 @@
     { "name": "CONTACT_ARENA_V5", "class_name": "ContactArenaV5" },
     { "name": "SLOT_WALLET", "class_name": "SlotWallet" },
     { "name": "SLOT_REPLAY", "class_name": "SlotReplay" },
-    { "name": "SLOT_MONITOR", "class_name": "SlotMonitor" }
+    { "name": "SLOT_MONITOR", "class_name": "SlotMonitor" },
+    { "name": "ARENA_RELAY", "class_name": "ArenaRelay" }
   ] },
-  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RoomCoordinator", "FanoutBucket", "AdmissionGate"] }, { "tag": "v2", "new_sqlite_classes": ["LiveArena"] }, { "tag": "v3", "new_sqlite_classes": ["RingsideArena"] }, { "tag": "v4", "new_sqlite_classes": ["ContactArena"] }, { "tag": "v5", "new_sqlite_classes": ["ContactArenaV4"] }, { "tag": "v6", "new_sqlite_classes": ["ContactArenaV5"] }, { "tag": "v7", "new_sqlite_classes": ["SlotWallet", "SlotReplay", "SlotMonitor"] }],
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["RoomCoordinator", "FanoutBucket", "AdmissionGate"] }, { "tag": "v2", "new_sqlite_classes": ["LiveArena"] }, { "tag": "v3", "new_sqlite_classes": ["RingsideArena"] }, { "tag": "v4", "new_sqlite_classes": ["ContactArena"] }, { "tag": "v5", "new_sqlite_classes": ["ContactArenaV4"] }, { "tag": "v6", "new_sqlite_classes": ["ContactArenaV5"] }, { "tag": "v7", "new_sqlite_classes": ["SlotWallet", "SlotReplay", "SlotMonitor"] }, { "tag": "v8", "new_sqlite_classes": ["ArenaRelay"] }],
   "observability": { "enabled": false }
 }

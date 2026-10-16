@@ -1,4 +1,26 @@
+# Cloudflare Workers static-asset headers (copied to .open-next/assets by build:cloudflare). Policy and reasons:
+# docs/architecture/scale.md "Web caching". Rule: a file may be `immutable` only when its URL changes whenever its bytes
+# change (content hash in the name or in a ?v= query that every consumer uses). Everything else revalidates with ETag.
+
+# Next build output: content-hashed file names.
 /_next/static/*
-  Cache-Control: public,max-age=31536000,immutable
+  Cache-Control: public, max-age=31536000, immutable
+
+# Self-hosted fonts (next/font also emits hashed copies under /_next/static/media).
 /fonts/*
-  Cache-Control: public,max-age=31536000,immutable
+  Cache-Control: public, max-age=31536000, immutable
+
+# Audio render worker: the only consumer loads /workers/slot-audio-render.js?v=<sha256 of the bytes>
+# (scripts/build-audio-worker.mjs writes the hash into lib/slot-audio/worker-version.generated.ts).
+/workers/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Voice lines, Ringside sprites/audio and images keep stable names and are replaced in place, so they are NOT immutable:
+# one hour fresh, then served stale for up to a day while the browser revalidates (304 with ETag, no body).
+# Move a folder to `immutable` only after its consumers load versioned URLs (scale.md "Versioned asset URLs").
+/audio/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/sprites/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/images/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400

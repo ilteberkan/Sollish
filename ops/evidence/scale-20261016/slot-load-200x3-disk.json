@@ -1,0 +1,143 @@
+{
+  "at": "2026-10-16T19:30:35.168Z",
+  "runtime": "wrangler dev (local workerd + SQLite DO), production router src/index.ts",
+  "machine": {
+    "cpus": 4,
+    "model": "Intel(R) Xeon(R) Processor @ 2.80GHz",
+    "memGB": 16,
+    "node": "v24.21.0"
+  },
+  "config": {
+    "stateDir": ".tooling/slot-load/state",
+    "players": 200,
+    "seconds": 15,
+    "targetRatePerPlayer": 3,
+    "games": [
+      "cascade",
+      "tarhun",
+      "ebru",
+      "cezeri",
+      "asena"
+    ],
+    "betCents": 100,
+    "mode": "standard",
+    "monitorFlushMs": 30000,
+    "monitorRollupMs": 5000,
+    "monitorShards": 64,
+    "note": "production defaults"
+  },
+  "warmup": {
+    "sessionMs": 122,
+    "roundMs": 37,
+    "roundStatus": 200
+  },
+  "sessions": {
+    "created": 200,
+    "wallMs": 10781,
+    "latencyMs": {
+      "n": 200,
+      "p50": 10685.798188,
+      "p95": 10746.938787,
+      "p99": 10747.984553000002,
+      "max": 10748.083504000002,
+      "mean": 8800.59
+    },
+    "errors": {}
+  },
+  "spins": {
+    "acceptedRounds": 985,
+    "wallSeconds": 17.6,
+    "throughputRoundsPerSecond": 56,
+    "offeredRoundsPerSecond": 600,
+    "attempts": 1089,
+    "retries": 104,
+    "gaveUp": 0,
+    "firstTryNonOkRate": 0.1056,
+    "finalErrorRate": 0,
+    "responses": {
+      "500": 104,
+      "OK": 985
+    },
+    "nonOkSamples": [
+      {
+        "status": 500,
+        "body": "Error: Network connection lost.\n    at async Object.fetch (file:///home/user/Sollish/node_modules/.pnpm/miniflare@5.20260930.0-alpha_@types+node@24.19.0_bufferutil@4.1.0/node_modules/miniflare/dist/src/workers/core/entry.worker.js:5330:22)"
+      },
+      {
+        "status": 500,
+        "body": "Error: Network connection lost.\n    at async Object.fetch (file:///home/user/Sollish/node_modules/.pnpm/miniflare@5.20260930.0-alpha_@types+node@24.19.0_bufferutil@4.1.0/node_modules/miniflare/dist/src/workers/core/entry.worker.js:5330:22)"
+      },
+      {
+        "status": 500,
+        "body": "Error: Network connection lost.\n    at async Object.fetch (file:///home/user/Sollish/node_modules/.pnpm/miniflare@5.20260930.0-alpha_@types+node@24.19.0_bufferutil@4.1.0/node_modules/miniflare/dist/src/workers/core/entry.worker.js:5330:22)"
+      },
+      {
+        "status": 500,
+        "body": "Error: Network connection lost.\n    at async Object.fetch (file:///home/user/Sollish/node_modules/.pnpm/miniflare@5.20260930.0-alpha_@types+node@24.19.0_bufferutil@4.1.0/node_modules/miniflare/dist/src/workers/core/entry.worker.js:5330:22)"
+      },
+      {
+        "status": 500,
+        "body": "Error: Network connection lost.\n    at async Object.fetch (file:///home/user/Sollish/node_modules/.pnpm/miniflare@5.20260930.0-alpha_@types+node@24.19.0_bufferutil@4.1.0/node_modules/miniflare/dist/src/workers/core/entry.worker.js:5330:22)"
+      }
+    ],
+    "latencyFirstTryMs": {
+      "n": 985,
+      "p50": 2816.845933000004,
+      "p95": 3715.521947000001,
+      "p99": 3718.3724250000014,
+      "max": 4887.906271,
+      "mean": 2627.89
+    },
+    "latencyAcceptedIncludingRetriesMs": {
+      "n": 985,
+      "p50": 2885.434902000001,
+      "p95": 9074.993709999999,
+      "p99": 9139.197209000002,
+      "max": 9154.577436,
+      "mean": 3307.79
+    },
+    "cpu": {
+      "workerdSeconds": 15.64,
+      "wranglerNodeSeconds": 1.28,
+      "workerdCoresBusy": 0.89,
+      "workerdCpuMsPerAcceptedRound": 15.88,
+      "note": "includes router, token HMAC, DO SQLite commit, engine run, receipt HMAC, monitor flushes and local dev proxy overhead"
+    },
+    "perSecond": [
+      0,
+      5,
+      0,
+      128,
+      0,
+      133,
+      0,
+      0,
+      0,
+      201,
+      0,
+      0,
+      199,
+      0,
+      119,
+      82,
+      0,
+      118
+    ]
+  },
+  "correctness": {
+    "sessions": 200,
+    "balanceMatches": 200,
+    "nonceSequencesIntact": 200,
+    "idempotentReplaysChecked": 400,
+    "idempotentReplaysSameBytes": 400,
+    "mismatches": []
+  },
+  "monitor": {
+    "expectedAtLeast": 986,
+    "globalRounds": 986,
+    "reached": true,
+    "path": "SlotWallet -> shard:<k> (64) -> global"
+  },
+  "pass": true,
+  "scope": "Local only: one workerd process on this container runs the Worker and every Durable Object. Measures per-request cost and correctness (idempotency, one-in-flight, ledger conservation, monitor rollup) under concurrency; not hosted, not multi-region, not Cloudflare capacity."
+}
