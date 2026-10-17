@@ -1,5 +1,5 @@
 {
-  "at": "2026-10-16T23:08:24.895Z",
+  "at": "2026-10-17T03:51:13.825Z",
   "runtime": "local-workerd-sqlite-production-router",
   "node": "v24.21.0",
   "checks": 33,
@@ -11,19 +11,19 @@
       ],
       "burst": [
         200,
+        200,
+        200,
         409,
-        200,
-        200,
         409,
         409
       ]
     },
     "responseBytes": {
-      "cascadeStandard": 1898,
-      "tarhunBuy": 24663,
-      "ebruStandard": 8521,
-      "cezeriBuy": 25922,
-      "asenaBuy": 115410
+      "cascadeStandard": 3951,
+      "tarhunBuy": 37599,
+      "ebruStandard": 3601,
+      "cezeriBuy": 49542,
+      "asenaBuy": 51651
     },
     "verifiedAfterReveal": 11,
     "rateLimit": {

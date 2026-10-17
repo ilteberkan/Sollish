@@ -111,10 +111,11 @@ Spin başına SQLite satır yazımı ≈ 10 (slot_rounds 1 + 4 dizin, ledger 1, 
 | `/_next/static/*` | `public, max-age=31536000, immutable` | içerik hash'li ad |
 | `/fonts/*` | aynı | sabit lisanslı dosyalar (next/font hash'li kopya da üretir) |
 | `/workers/*` | aynı (**yeni**) | tek tüketici `?v=<sha256>` ile yükler (`build-audio-worker.mjs`) |
-| `/audio/*`, `/sprites/*`, `/images/*` | `public, max-age=3600, stale-while-revalidate=86400` (**yeni**; önce `max-age=0`) | adlar sabit, dosyalar yerinde değişiyor (ses dosyaları `/audio/voice/<oyun>/<tr|en>/`) |
+| `/audio/voice/*` | `public, max-age=31536000, immutable` (**yeni**) | her yükleyici `?v=<klasör hash'i>` ekler (6.2) |
+| `/audio/ringside/*`, `/sprites/*`, `/images/*` | `public, max-age=3600, stale-while-revalidate=86400` | adlar sabit, dosyalar yerinde değişiyor |
 | HTML | `private, no-cache, no-store` (doğrulandı: bütün rotalar dinamik) | i18n katmanı her istekte çerez/başlık okuyor (§6.3) |
 
-**Sürümlü varlık URL'leri [TASARIM, ses ajanının dosyalarına dokunur]:** derleme betiği `public/audio|sprites|images` için `asset-manifest.generated.ts` (yol → içerik hash'i) üretir; ses bankaları `setVoiceBank('/audio/voice/ebru/tr')` yerine dosya başına `?v=<hash>` URL'si verir. Bütün tüketiciler geçince bu klasörler `immutable` olur ve tekrar ziyarette ağ isteği sıfırlanır.
+**Sürümlü varlık URL'leri:** ses dosyaları için uygulandı (aşağıdaki 6.2 notu, `/audio/voice/*` artık `immutable`). `sprites`, `images` ve `audio/ringside` için hâlâ tasarım: derleme betiği `asset-manifest.generated.ts` (yol → içerik hash'i) üretir, tüketiciler `?v=<hash>` kullanır, sonra o klasörler `immutable` olur.
 
 ### 6.2 Rota başına kod bölme [ŞİMDİ UYGULANDI kısmen]
 **Bulgu:** `@sollish/protocol` barrel'ı (`index.ts`) `sideEffects` beyan etmiyordu; bu yüzden her slot rotası Ringside connectome ağırlıklarını ve dövüş motorlarını (connectome-policy 255 KB, reservoir 129 KB, contact-v5-weights 38 KB …) indiriyordu.
@@ -133,10 +134,23 @@ Spin başına SQLite satır yazımı ≈ 10 (slot_rounds 1 + 4 dizin, ledger 1, 
 
 Gerçek üretim derlemesi (`build:cloudflare`, düzeltme sonrası, build `JpEUqEHEm4FOYVKBgzfGK`; `first-load-js-after.json`, framework + layout + sayfa, nomodule polyfill 110 KB hariç): `/` 149 KB gz, `/games` 155, slot rotaları 246 (ebru) – 294 (cascade), `/live/ringside` 317, `/verify` 172. Slot rotalarının parçalarında Ringside motor/connectome işareti yok; beş slot motorunun işareti her slot rotasında var (aşağıdaki 1. madde). Önizlemede başlıklar doğrulandı (`preview-ttfb.json`).
 
-**Kalan sızıntı (her slot rotasında ~134–147 KB min, ≈ %26) [TASARIM — dosyalar diğer ajanlarda]:**
-1. `lib/rgs-client.ts` yerel kaynak beş motoru da statik çağırıyor ve `SLOT_GAMES` kaydını (motor fonksiyonlarıyla) kullanıyor → ~45 KB min. Çözüm: `createLocalSource(TARHUN_SLOT)` gibi oyun başına motor enjeksiyonu + motorsuz meta kayıt (`slot-game-meta.ts`); her oyun bileşeni kendi tanımını verir.
-2. `lib/slot-audio/render.ts` (ana iş parçacığı yedeği) bütün oyunların synth/sfx'ini içe aktarıyor → ~90 KB min. Çözüm: render yedeğini `import()` ile tembel yüklemek ve oyun başına sfx/synth kayıtları.
-Bu iki adım slot rotalarını ~290 → ~250 KB gz'ye indirir (tahmin; ölçüm gerekir).
+**Kalan sızıntı giderildi (17 Ekim 2026) [ŞİMDİ UYGULANDI, esbuild tahmini]:** her slot rotasında ~134–147 KB min başka oyunların kodu vardı; üç neden kapatıldı, davranış değişmedi.
+1. `lib/rgs-client.ts` artık motor içe aktarmıyor. Motorsuz meta `packages/protocol/src/slot-game-meta.ts` (`SLOT_GAME_META`; sunucunun kullandığı `SLOT_GAMES` kaydı değişmedi, protocol testi iki kaydın alan alan eşitliğini doğrular). Her oyun yalnız kendi motorunu `lib/slot-engines/<oyun>.ts` ile verir (`useRoundSource(TARHUN_ENGINE)`, `localSourceFor`, `RgsClient({ engines })`); motoru olmayan oyun turu istemeden önce `ENGINE_MISSING` ile reddedilir (sunucu yanlışlıkla borçlandırmaz). `/verify` ve `/replay` `lib/slot-engines/all.ts` ile hepsini yükler.
+2. `render-service.ts` yalnız `render-shared.ts`'i (sabitler, tipler, `splitTracks`, OfflineAudioContext reverb) statik içe aktarır; bütün oyunların synth'ini taşıyan `render.ts` ana iş parçacığı yedeği için yalnız worker yolu başarısız olunca `import()` ile yüklenir (ayrı parça). Worker (`render.worker.ts` → `render.ts`) hâlâ hizmet modülünü içe aktarmaz. Her oyunun ses modülü yalnız kendi efekt kataloğunu (`catalogs`) verir. `loadMixSettings`/`saveMixSettings` `cascade-sound.ts`'ten `mix-settings.ts`'e taşındı (diğer oyunlar onu yeniden dışa aktarırken Cascade'in skor ve efektlerini çekiyordu).
+3. Ses dosyaları `?v=<12 hex>` ile yüklenir: sürüm, o oyun/dil klasöründeki tüm dosyaların sha256'sından türetilir (`scripts/build-audio-worker.mjs` → `lib/slot-audio/voice-version.generated.ts`, dev/build/typecheck/test'ten önce çalışır; beş banka yükleyicisi `versionedVoiceUrl` kullanır). `public/_headers`: `/audio/voice/*` `public, max-age=31536000, immutable`; `/audio/*` kuralı `/audio/ringside/*` ile değişti (Workers eşleşen kuralların aynı başlığını birleştirir, iki Cache-Control olmasın). Klasördeki tek bir dosya değişirse o oyun/dil bankasının tamamı yeni URL alır.
+
+Ölçüm (`ops/evidence/scale-20261016/bundle-trim.json`; `route-bundle-report.mjs` artık kod bölmeli ve `--overlay` ile eski revizyonu ölçebiliyor; önce = `bfc0255` ağacı, sonra = bugünkü; framework ve dil kataloğu hariç, min / gzip KB, parantez içi başka oyun kodu):
+
+| Rota | Önce | Sonra |
+| --- | ---: | ---: |
+| /game/cascade | 427 / 139 (131) | 283 / 95 (0) |
+| /game/tarhun | 554 / 179 (142) | 399 / 135 (0) |
+| /game/ebru | 505 / 165 (142) | 359 / 125 (8) |
+| /game/cezeri | 529 / 168 (136) | 394 / 132 (14) |
+| /game/asena | 510 / 166 (131) | 375 / 129 (8) |
+| /verify | 75 / 24 | 74 / 24 |
+
+Kalan 8–14 KB, ebru/cezeri/asena'nın kendi efektlerinin kullandığı ortak enstrümanlar (`synth/anatolian.ts`, `synth/ebru.ts`); başka oyunun skoru veya motoru değil. `/verify` bilerek beş motoru da yükler. Yedek `render.ts` parçası (36–50 KB, normal ziyarette yüklenmez) ayrı. Sınır: bu esbuild tahminidir; `build:cloudflare` ve `first-load-report.mjs` yeniden çalıştırılmadı, gerçek gzip ilk-yük sayısı bir sonraki üretim derlemesinde doğrulanmalı.
 
 ### 6.3 HTML, TTFB ve sayfa ağırlığı (önizlemede ölçüldü, `preview-ttfb.json`)
 - **Bulgu 1 — her sayfa dinamik:** `lib/i18n/server.ts` her istekte `cookies()` ve `headers()` okuyor; derleme çıktısında bütün rotalar `ƒ (Dynamic)`, HTML `no-store`. Her sayfa görüntüleme Worker'da React SSR'dir (CPU maliyeti, önbelleklenemez). Tasarım: dili URL'de taşımak (`/en/games`, `generateStaticParams` ile 9 dil × rota önceden üretilir) veya statik kabuk + istemcide dil; sonra salt-okunur `staticAssetsIncrementalCache` ile HTML'i Workers Assets'ten sunmak. i18n ajanının alanı; bu teslimde değiştirilmedi.
