@@ -4,6 +4,7 @@
  * which non-verbal placeholder vocal stands in for a missing line, and the one-voice-at-a-time policy.
  * No Web Audio here, so it is unit tested in Node. Presentation only: nothing here reads or changes a result.
  */
+import { versionedVoiceUrl } from './voice-version';
 import type { WinTier } from './win-tiers';
 
 /** Applied-multiplier callout classes, named by their lower bound (x2 = anything below ×10). */
@@ -76,7 +77,7 @@ export function voiceDecision(current: { line: StormVoiceLine; until: number } |
 export function stormVoiceBankUrls(spec: string | Partial<Record<StormVoiceLine, string | null>>, ext = 'mp3'): Record<StormVoiceLine, string | null> {
   const out = {} as Record<StormVoiceLine, string | null>;
   for (const line of STORM_VOICE_LINES) {
-    if (typeof spec === 'string') out[line] = spec.trim() ? `${spec.trim().replace(/\/+$/, '')}/${line}.${ext}` : null;
+    if (typeof spec === 'string') out[line] = spec.trim() ? versionedVoiceUrl(`${spec.trim().replace(/\/+$/, '')}/${line}.${ext}`) : null;
     else { const u = spec[line]; out[line] = typeof u === 'string' && u.trim() ? u : null; }
   }
   return out;

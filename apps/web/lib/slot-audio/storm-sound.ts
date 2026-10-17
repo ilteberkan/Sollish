@@ -20,7 +20,7 @@
 import { createVoicePolicy, type VoiceLevel, type VoicePolicyOptions } from './voice-policy';
 import { SlotAudioEngine, type VoiceHandle } from './engine';
 import { createFallbackVoice, type FallbackVoice } from './fallback';
-import { isCancelled, type RenderedAsset, type SfxClip } from './render';
+import { isCancelled, type RenderedAsset, type SfxClip } from './render-shared';
 import { RenderService, type WorkerFactory } from './render-service';
 import { STORM_SCORES, type StormScoreId } from './scores/storm';
 import { STORM_SFX } from './sfx/storm';
@@ -33,7 +33,7 @@ import {
 import type { LoadProgress } from './cascade-sound';
 
 export type { LoadProgress } from './cascade-sound';
-export { loadMixSettings, saveMixSettings } from './cascade-sound';
+export { loadMixSettings, saveMixSettings } from './mix-settings';
 export type { StormMultiplierClass, StormVoiceLine } from './storm-tiers';
 export type { WinTier } from './win-tiers';
 
@@ -300,7 +300,7 @@ export function createStormSound(options: { sampleRate?: number; workerFactory?:
     if (loading) return loading;
     const Offline = (globalThis as unknown as { OfflineAudioContext?: unknown }).OfflineAudioContext;
     if (!Offline || !SlotAudioEngine.supported()) { loading = Promise.resolve(); extended = loading; return loading; }
-    service = options.service ? options.service() : new RenderService({ sampleRate: options.sampleRate, workerFactory: options.workerFactory });
+    service = options.service ? options.service() : new RenderService({ sampleRate: options.sampleRate, workerFactory: options.workerFactory, catalogs: { storm: STORM_SFX } });
     const svc = service;
     svc.trace = options.trace ?? null;
     const coreSfx = STORM_SFX.filter(s => s.core).map(s => s.id), extSfx = STORM_SFX.filter(s => !s.core && !s.late).map(s => s.id);

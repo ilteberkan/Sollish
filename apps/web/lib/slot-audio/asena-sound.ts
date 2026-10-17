@@ -26,7 +26,7 @@
 import { createVoicePolicy, type VoiceLevel, type VoicePolicyOptions } from './voice-policy';
 import { SlotAudioEngine, type VoiceHandle } from './engine';
 import { createFallbackVoice, type FallbackVoice } from './fallback';
-import { isCancelled, type RenderedAsset, type SfxClip } from './render';
+import { isCancelled, type RenderedAsset, type SfxClip } from './render-shared';
 import { RenderService, type WorkerFactory } from './render-service';
 import { ASENA_SCORES, type AsenaScoreId } from './scores/asena';
 import { ASENA_SFX } from './sfx/asena';
@@ -40,7 +40,7 @@ import {
 import type { LoadProgress } from './cascade-sound';
 
 export type { LoadProgress } from './cascade-sound';
-export { loadMixSettings, saveMixSettings } from './cascade-sound';
+export { loadMixSettings, saveMixSettings } from './mix-settings';
 export type { AsenaVoiceLine, ConstellationTrace } from './asena-tiers';
 export type { WinTier } from './win-tiers';
 
@@ -311,7 +311,7 @@ export function createAsenaSound(options: { sampleRate?: number; workerFactory?:
     if (loading) return loading;
     const Offline = (globalThis as unknown as { OfflineAudioContext?: unknown }).OfflineAudioContext;
     if (!Offline || !SlotAudioEngine.supported()) { loading = Promise.resolve(); extended = loading; return loading; }
-    service = options.service ? options.service() : new RenderService({ sampleRate: options.sampleRate, workerFactory: options.workerFactory });
+    service = options.service ? options.service() : new RenderService({ sampleRate: options.sampleRate, workerFactory: options.workerFactory, catalogs: { asena: ASENA_SFX } });
     const svc = service;
     svc.trace = options.trace ?? null;
     const coreSfx = ASENA_SFX.filter(s => s.core).map(s => s.id), extSfx = ASENA_SFX.filter(s => !s.core && !s.late).map(s => s.id);

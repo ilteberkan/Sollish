@@ -17,7 +17,7 @@
 import { createVoicePolicy, type VoiceLevel, type VoicePolicyOptions } from './voice-policy';
 import { SlotAudioEngine, type VoiceHandle } from './engine';
 import { createFallbackVoice, type FallbackVoice } from './fallback';
-import { isCancelled, type RenderedAsset, type SfxClip } from './render';
+import { isCancelled, type RenderedAsset, type SfxClip } from './render-shared';
 import { RenderService, type WorkerFactory } from './render-service';
 import { CEZERI_SCORES, type CezeriScoreId } from './scores/cezeri';
 import { CEZERI_SFX } from './sfx/cezeri';
@@ -31,7 +31,7 @@ import {
 import type { LoadProgress } from './cascade-sound';
 
 export type { LoadProgress } from './cascade-sound';
-export { loadMixSettings, saveMixSettings } from './cascade-sound';
+export { loadMixSettings, saveMixSettings } from './mix-settings';
 export type { CezeriVoiceLine, RatchetPlan, BeamPlan, RingEase } from './cezeri-tiers';
 export type { WinTier } from './win-tiers';
 
@@ -427,7 +427,7 @@ export function createCezeriSound(options: { sampleRate?: number; workerFactory?
     if (loading) return loading;
     const Offline = (globalThis as unknown as { OfflineAudioContext?: unknown }).OfflineAudioContext;
     if (!Offline || !SlotAudioEngine.supported()) { loading = Promise.resolve(); extended = loading; return loading; }
-    service = options.service ? options.service() : new RenderService({ sampleRate: options.sampleRate, workerFactory: options.workerFactory });
+    service = options.service ? options.service() : new RenderService({ sampleRate: options.sampleRate, workerFactory: options.workerFactory, catalogs: { cezeri: CEZERI_SFX } });
     const svc = service;
     svc.trace = options.trace ?? null;
     const coreSfx = CEZERI_SFX.filter(s => s.core).map(s => s.id), extSfx = CEZERI_SFX.filter(s => !s.core && !s.late).map(s => s.id);

@@ -3,6 +3,7 @@
  * transition timing and the optional voice-line bank. No Web Audio here, so it is unit tested in Node.
  * Presentation only: tiers are derived from an already-settled win; nothing here feeds back into a result.
  */
+import { versionedVoiceUrl } from './voice-version';
 
 /** Win tiers (round total ÷ base bet, game-standards §6): 1 Büyük ≥10×, 2 Mega ≥25×, 3 Süper ≥50×, 4 Efsane ≥100×. */
 export type WinTier = 1 | 2 | 3 | 4;
@@ -89,7 +90,7 @@ export const VOICE_DUCK_DB = 8;
 export function voiceBankUrls(spec: string | Partial<Record<MultiplierClass, string | null>>, ext = 'mp3'): Record<MultiplierClass, string | null> {
   const out = {} as Record<MultiplierClass, string | null>;
   for (const c of MULTIPLIER_CLASSES) {
-    if (typeof spec === 'string') out[c] = spec.trim() ? `${spec.replace(/\/+$/, '')}/${c}.${ext}` : null;
+    if (typeof spec === 'string') out[c] = spec.trim() ? versionedVoiceUrl(`${spec.replace(/\/+$/, '')}/${c}.${ext}`) : null;
     else { const u = spec[c]; out[c] = typeof u === 'string' && u.trim() ? u : null; }
   }
   return out;

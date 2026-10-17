@@ -7,6 +7,7 @@
  * No Web Audio here, so it is unit tested in Node. Presentation only: nothing here reads or changes a result; it only
  * maps already-resolved steps (packages/protocol/src/cezeri.ts) to sound parameters.
  */
+import { versionedVoiceUrl } from './voice-version';
 import { MULTIPLIER_CLASSES, multiplierClass, multiplierRank, type MultiplierClass, type WinTier } from './win-tiers';
 
 /** Tonic (MIDI) of the Cezeri base key: C (C Nikriz). Celebration tiers climb from here by TIER_KEY (C → D → E → G → A). */
@@ -237,7 +238,7 @@ export function cezeriVoiceDecision(current: { line: CezeriVoiceLine; until: num
 export function cezeriVoiceBankUrls(spec: string | Partial<Record<CezeriVoiceLine, string | null>>, ext = 'mp3'): Record<CezeriVoiceLine, string | null> {
   const out = {} as Record<CezeriVoiceLine, string | null>;
   for (const line of CEZERI_VOICE_LINES) {
-    if (typeof spec === 'string') out[line] = spec.trim() ? `${spec.trim().replace(/\/+$/, '')}/${line}.${ext}` : null;
+    if (typeof spec === 'string') out[line] = spec.trim() ? versionedVoiceUrl(`${spec.trim().replace(/\/+$/, '')}/${line}.${ext}`) : null;
     else { const u = spec[line]; out[line] = typeof u === 'string' && u.trim() ? u : null; }
   }
   return out;

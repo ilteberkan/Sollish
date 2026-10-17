@@ -6,6 +6,7 @@
  * in Node. Presentation only: nothing here reads or changes a result; it only maps already-resolved steps
  * (packages/protocol/src/ebru.ts) to sound parameters.
  */
+import { versionedVoiceUrl } from './voice-version';
 import { MULTIPLIER_CLASSES, multiplierClass, multiplierRank, type MultiplierClass, type WinTier } from './win-tiers';
 
 /** Tonic (MIDI) of the Ebru base key: G (G Rast). Celebration tiers climb from here by TIER_KEY (G → A → B → D → E). */
@@ -158,7 +159,7 @@ export function ebruVoiceDecision(current: { line: EbruVoiceLine; until: number 
 export function ebruVoiceBankUrls(spec: string | Partial<Record<EbruVoiceLine, string | null>>, ext = 'mp3'): Record<EbruVoiceLine, string | null> {
   const out = {} as Record<EbruVoiceLine, string | null>;
   for (const line of EBRU_VOICE_LINES) {
-    if (typeof spec === 'string') out[line] = spec.trim() ? `${spec.trim().replace(/\/+$/, '')}/${line}.${ext}` : null;
+    if (typeof spec === 'string') out[line] = spec.trim() ? versionedVoiceUrl(`${spec.trim().replace(/\/+$/, '')}/${line}.${ext}`) : null;
     else { const u = spec[line]; out[line] = typeof u === 'string' && u.trim() ? u : null; }
   }
   return out;

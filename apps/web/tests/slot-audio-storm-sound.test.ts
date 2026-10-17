@@ -195,7 +195,7 @@ test('voice policy in the engine: Key moments by default, repeats and spacing he
   scope.AudioContext = fakeAudio(log);
   scope.OfflineAudioContext = class {};
   const lines: Record<string, number> = { 'x100.mp3': 6, 'win-big.mp3': 8, 'nice.mp3': 4 };
-  scope.fetch = async (url: string) => { const k = Object.keys(lines).find(f => url.endsWith(`/${f}`)); return k ? { ok: true, arrayBuffer: async () => new ArrayBuffer(lines[k]!) } : { ok: false, arrayBuffer: async () => new ArrayBuffer(0) }; };
+  scope.fetch = async (url: string) => { const path = url.split('?')[0]!; const k = Object.keys(lines).find(f => path.endsWith(`/${f}`)); return k ? { ok: true, arrayBuffer: async () => new ArrayBuffer(lines[k]!) } : { ok: false, arrayBuffer: async () => new ArrayBuffer(0) }; };
   const at = (s: ReturnType<typeof createStormSound>, t: number) => { (s.engine.context as unknown as { currentTime: number }).currentTime = t; log.length = 0; };
   const spoke = (len: number) => log.filter(l => l.startsWith('start(') && l.endsWith(`,${len})`)).length;
   try {

@@ -5,15 +5,22 @@
  * everything runs inline with cooperative yielding.
  */
 import {
-  REVERB_DECIMATION, RENDER_SAMPLE_RATE, createRenderEnv, finishScore, finishSfx, isCancelled, reverbWet, scoreImpulse, sfxTail, splitTracks, synthSfx, synthTracks,
+  REVERB_DECIMATION, RENDER_SAMPLE_RATE, createRenderEnv, isCancelled, reverbWet, sfxTail, splitTracks,
   type RenderEnv, type RenderedAsset, type SfxClip, type SfxPart, type StemSum,
-} from './render';
+} from './render-shared';
 import type { Stereo } from './synth/dsp';
 import type { Score } from './scores/types';
+import type { SfxDef } from './sfx/cascade';
 import { SLOT_AUDIO_WORKER_VERSION } from './worker-version.generated';
-import { SFX_CATALOGS, type WithoutId, type WorkerRequest, type WorkerResponse } from './render-protocol';
+// Types only: render-protocol.ts imports every game's effects catalogue (the worker needs them all), so a value import
+// here would put all five games' synthesis into every route. The catalogue of the game is passed in as `catalogs`.
+import type { WithoutId, WorkerRequest, WorkerResponse } from './render-protocol';
 
-export { SFX_CATALOGS, type WorkerRequest, type WorkerResponse } from './render-protocol';
+export type { WorkerRequest, WorkerResponse } from './render-protocol';
+
+/** The inline (main-thread) renderer: every instrument of every game, so it is a separate chunk loaded only when the
+ * worker path failed or does not exist. The prebuilt worker bundles render.ts itself and never imports this module. */
+const loadInline = () => import('./render');
 
 export type WorkerFactory = () => Worker | null;
 
@@ -37,13 +44,15 @@ export class RenderService {
   private seq = 0;
   private disposed = false;
   private env: RenderEnv;
+  private readonly catalogs: Readonly<Record<string, readonly SfxDef[]>>;
   private impulses = new Map<string, Promise<Stereo>>();
   /** Optional phase timings (ms since construction) for diagnostics. */
   trace: ((label: string, ms: number) => void) | null = null;
   private readonly born = now();
   private mark(label: string) { this.trace?.(label, Math.round(now() - this.born)); }
 
-  constructor(opts: { sampleRate?: number; workerFactory?: WorkerFactory | null; maxWorkers?: number } = {}) {
+  constructor(opts: { sampleRate?: number; workerFactory?: WorkerFactory | null; maxWorkers?: number; catalogs?: Readonly<Record<string, readonly SfxDef[]>> } = {}) {
+    this.catalogs = opts.catalogs ?? {};
     this.sampleRate = opts.sampleRate ?? RENDER_SAMPLE_RATE;
     this.factory = opts.workerFactory === undefined ? defaultWorkerFactory : opts.workerFactory;
     const cores = typeof navigator !== 'undefined' && navigator.hardwareConcurrency ? navigator.hardwareConcurrency : 2;
@@ -120,7 +129,7 @@ export class RenderService {
     if (!p) {
       p = this.withFallback(
         () => this.call<Stereo>({ type: 'impulse', name, sampleRate: this.sampleRate }),
-        () => scoreImpulse(this.env, name),
+        async () => (await loadInline()).scoreImpulse(this.env, name),
       );
       this.impulses.set(name, p);
       p.catch(() => this.impulses.delete(name));
@@ -142,6 +151,7 @@ export class RenderService {
       asset.renderMs = now() - t0;
       return asset;
     }, async () => {
+      const { synthTracks, finishScore } = await loadInline();
       const sum = await synthTracks(score, null, this.env);
       const ir = await this.impulse(score.reverb);
       const wet = await reverbWet([sum.send], ir, rr);
@@ -151,7 +161,7 @@ export class RenderService {
   }
 
   async sfx(catalog: string, ids: string[]): Promise<Map<string, SfxClip[]>> {
-    const sr = this.sampleRate, rr = sr / REVERB_DECIMATION, defs = (SFX_CATALOGS[catalog] ?? []).filter(d => ids.includes(d.id));
+    const sr = this.sampleRate, rr = sr / REVERB_DECIMATION, defs = (this.catalogs[catalog] ?? []).filter(d => ids.includes(d.id));
     return this.withFallback(async () => {
       const ir = await this.impulse('room'), tail = sfxTail(ir);
       // spread effects over the pool by their variation count
@@ -168,8 +178,9 @@ export class RenderService {
       for (const m of parts) for (const [k, v] of m) out.set(k, v);
       return out;
     }, async () => {
+      const { synthSfx, finishSfx } = await loadInline();
       const ir = await this.impulse('room'), tail = sfxTail(ir);
-      const s = await synthSfx(defs, this.env, tail);
+      const s = await synthSfx([...defs], this.env, tail);
       const wet = await reverbWet([s.sum.send], ir, rr);
       return finishSfx(s.parts, s.sum.dry, wet, sr, tail);
     });

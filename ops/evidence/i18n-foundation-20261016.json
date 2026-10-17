@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "i18n-foundation-20261016",
+  "recordedAt": "2026-10-17T00:00:00Z",
+  "subject": "Web i18n foundation: 9 locales (en default, de, pt, fr, it, es, tr, zh, ko), cookie → Accept-Language → en resolution, SSR <html lang/dir>, sollish:locale event, typed ICU-subset t(), lazy per-locale/namespace catalogs, Intl formatting, CJK font stack, header + slot-settings language pickers; shell, chat, wallet, lobby, game-common shared texts, /verify, /replay and the shared slot kit migrated",
+  "spec": "docs/architecture/i18n.md",
+  "deployed": false,
+  "realAssets": false,
+  "nativeSpeakerReview": false,
+  "runtime": "next dev 16.3.8 (Turbopack) on 127.0.0.1:3021 only; no build:cloudflare preview, no hosted run, no CI",
+  "checks": [
+    { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck", "result": "pass (tsc clean)" },
+    { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test", "result": "351/351 pass (includes tests/i18n.test.ts 8/8: key parity, no extras, argument/tag parity, parse, negotiation, plurals, formatter tr == legacy slot-kit formatter)" },
+    { "command": "playwright test i18n.spec.ts (Chromium 1194 via executablePath, next dev :3021)", "result": "3/3 pass: de Accept-Language SSR; header en → 中文 → Türkçe (lang, cookie, localStorage, sollish:locale events, no reload, SSR after reload); slot settings dialog chips 中文/English" },
+    { "command": "playwright test product.spec.ts", "result": "14/14 pass (after phone header fit fix: 320/390 px no overflow in all 9 locales)" },
+    { "command": "playwright test asena cascade cezeri ebru tarhun solo-lifecycle rgs-remote wallet-reconnect demo-entropy (tr forced via config cookie)", "result": "103 passed, 2 skipped (rgs-remote needs a realtime server)" },
+    { "command": "rerun i18n + product + tarhun after final CSS/selected-locale change", "result": "33 passed, 1 failed (tarhun.spec.ts:241 bonus buy timed out at 3.8 min under load); same test rerun alone: pass (1.1 min). Passed in the full run above. Treated as load-sensitive timing, not an i18n regression." }
+  ],
+  "screenshots": "/tmp/claude-0/-home-user-Sollish/4db1d970-fcb2-5f98-9360-6925c43696ea/scratchpad/i18n-{lobby,settings,settings-lang}-{en,tr,zh,ko}-{1440,390}.png (session scratchpad, not committed)",
+  "limits": [
+    "Per-game components (cascade, storm/tarhun, ebru, cezeri, asena, crash, coinflip, ringside, rewards, stake) still Turkish; checklist in docs/architecture/i18n.md",
+    "lib/slot-verify.ts, lib/rgs-client.ts messages still Turkish",
+    "Translations written without native-speaker or legal review; required before real-money use",
+    "All pages render dynamically (cookie/header read in root layout)"
+  ]
+}

@@ -17,7 +17,7 @@
 import { createVoicePolicy, type VoiceLevel, type VoicePolicyOptions } from './voice-policy';
 import { SlotAudioEngine, type VoiceHandle } from './engine';
 import { createFallbackVoice, type FallbackVoice } from './fallback';
-import { isCancelled, type RenderedAsset, type SfxClip } from './render';
+import { isCancelled, type RenderedAsset, type SfxClip } from './render-shared';
 import { RenderService, type WorkerFactory } from './render-service';
 import { CASCADE_SCORES, type CascadeScoreId } from './scores/cascade';
 import { CASCADE_SFX } from './sfx/cascade';
@@ -28,6 +28,7 @@ import {
 } from './win-tiers';
 
 export type { MultiplierClass, WinTier } from './win-tiers';
+export { loadMixSettings, saveMixSettings } from './mix-settings';
 
 /** The original interface, kept so existing callers work unchanged. */
 export type CascadeAudio = {
@@ -91,15 +92,6 @@ export interface CascadeSound extends CascadeAudio {
   playStinger: (id: CascadeScoreId) => void;
   readonly engine: SlotAudioEngine;
   readonly status: () => { core: boolean; extended: boolean; rendered: string[]; renderMs: Record<string, number>; workers: number; workerJobs: number; workerFailure: string | null; celebration: { tier: 0 | WinTier; max: boolean; counting: boolean; bed: string | null } };
-}
-
-const MIX_KEY = 'sollish.audio.mix.v1';
-/** Read the saved mix (sliders + mute) from localStorage; safe everywhere. */
-export function loadMixSettings(): Partial<MixSettings> | null {
-  try { const raw = globalThis.localStorage?.getItem(MIX_KEY); return raw ? (JSON.parse(raw) as Partial<MixSettings>) : null; } catch { return null; }
-}
-export function saveMixSettings(mix: MixSettings): void {
-  try { globalThis.localStorage?.setItem(MIX_KEY, JSON.stringify(mix)); } catch { /* storage blocked */ }
 }
 
 type Stinger = 'fsIntro' | 'fsOutro' | 'bigWin1' | 'bigWin2' | 'bigWin3' | 'bigWin4' | 'maxWin' | 'totalWin';
@@ -227,7 +219,7 @@ export function createCascadeSound(options: { sampleRate?: number; workerFactory
     if (loading) return loading;
     const Offline = (globalThis as unknown as { OfflineAudioContext?: unknown }).OfflineAudioContext;
     if (!Offline || !SlotAudioEngine.supported()) { loading = Promise.resolve(); extended = loading; return loading; }
-    service = new RenderService({ sampleRate: options.sampleRate, workerFactory: options.workerFactory });
+    service = new RenderService({ sampleRate: options.sampleRate, workerFactory: options.workerFactory, catalogs: { cascade: CASCADE_SFX } });
     const svc = service;
     svc.trace = options.trace ?? null;
     const coreSfx = CASCADE_SFX.filter(s => s.core).map(s => s.id), extSfx = CASCADE_SFX.filter(s => !s.core && !s.late).map(s => s.id);

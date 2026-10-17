@@ -16,7 +16,7 @@
 import { createVoicePolicy, type VoiceLevel, type VoicePolicyOptions } from './voice-policy';
 import { SlotAudioEngine, type VoiceHandle } from './engine';
 import { createFallbackVoice, type FallbackVoice } from './fallback';
-import { isCancelled, type RenderedAsset, type SfxClip } from './render';
+import { isCancelled, type RenderedAsset, type SfxClip } from './render-shared';
 import { RenderService, type WorkerFactory } from './render-service';
 import { EBRU_SCORES, type EbruScoreId } from './scores/ebru';
 import { EBRU_SFX } from './sfx/ebru';
@@ -29,7 +29,7 @@ import {
 import type { LoadProgress } from './cascade-sound';
 
 export type { LoadProgress } from './cascade-sound';
-export { loadMixSettings, saveMixSettings } from './cascade-sound';
+export { loadMixSettings, saveMixSettings } from './mix-settings';
 export type { EbruVoiceLine, CombPlan } from './ebru-tiers';
 export type { WinTier } from './win-tiers';
 
@@ -362,7 +362,7 @@ export function createEbruSound(options: { sampleRate?: number; workerFactory?: 
     if (loading) return loading;
     const Offline = (globalThis as unknown as { OfflineAudioContext?: unknown }).OfflineAudioContext;
     if (!Offline || !SlotAudioEngine.supported()) { loading = Promise.resolve(); extended = loading; return loading; }
-    service = options.service ? options.service() : new RenderService({ sampleRate: options.sampleRate, workerFactory: options.workerFactory });
+    service = options.service ? options.service() : new RenderService({ sampleRate: options.sampleRate, workerFactory: options.workerFactory, catalogs: { ebru: EBRU_SFX } });
     const svc = service;
     svc.trace = options.trace ?? null;
     const coreSfx = EBRU_SFX.filter(s => s.core).map(s => s.id), extSfx = EBRU_SFX.filter(s => !s.core && !s.late).map(s => s.id);

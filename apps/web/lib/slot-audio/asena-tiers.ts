@@ -7,6 +7,7 @@
  * Presentation only: nothing here reads or changes a result; it only maps already-resolved steps
  * (packages/protocol/src/asena.ts) and the art layer's stroke plan (components/asena/geometry.ts) to sound parameters.
  */
+import { versionedVoiceUrl } from './voice-version';
 import { MULTIPLIER_CLASSES, multiplierClass, multiplierRank, type MultiplierClass, type WinTier } from './win-tiers';
 
 /** Tonic (MIDI) of the Asena base key: E (E Hüseyni). Celebration tiers climb from here by TIER_KEY (E → F# → G# → B → C#). */
@@ -236,7 +237,7 @@ export function asenaVoiceDecision(current: { line: AsenaVoiceLine; until: numbe
 export function asenaVoiceBankUrls(spec: string | Partial<Record<AsenaVoiceLine, string | null>>, ext = 'mp3'): Record<AsenaVoiceLine, string | null> {
   const out = {} as Record<AsenaVoiceLine, string | null>;
   for (const line of ASENA_VOICE_LINES) {
-    if (typeof spec === 'string') out[line] = spec.trim() ? `${spec.trim().replace(/\/+$/, '')}/${line}.${ext}` : null;
+    if (typeof spec === 'string') out[line] = spec.trim() ? versionedVoiceUrl(`${spec.trim().replace(/\/+$/, '')}/${line}.${ext}`) : null;
     else { const u = spec[line]; out[line] = typeof u === 'string' && u.trim() ? u : null; }
   }
   return out;
