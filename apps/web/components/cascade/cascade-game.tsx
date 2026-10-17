@@ -13,8 +13,9 @@ import {
   CASCADE_AUTOPLAY_GAP, CASCADE_BET_LADDER, CASCADE_COST_MODES, CASCADE_DEFAULT_BET_CENTS, CASCADE_MAX_BET_CENTS, CASCADE_MIN_BET_CENTS,
   autoplayAfterRound, autoplayBeforeSpin, buyBlockReason, cascadeCost, cascadeLedgerLimits, cascadeTimelineOptions, formatRtp, shortRoundId,
 } from '@/lib/cascade-controls';
-import { localRoundSource, markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
-import { useRoundSource } from '@/lib/use-round-source';
+import { markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
+import { CASCADE_ENGINE } from '@/lib/slot-engines/cascade';
+import { localSourceFor, useRoundSource } from '@/lib/use-round-source';
 import { useProduct, type DemoRecord } from '../providers';
 import { DemoNotice, GameHeading, Rules, type Mode } from '../game-common';
 import { Icon } from '../icons';
@@ -67,6 +68,8 @@ const CALLOUT_TAGS: Record<WinTier, string> = { 0: 'Çarpan', 1: 'Büyük çarpa
 const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hızlı', turbo: 'Turbo' };
 const ZERO: Meter = { spin: 0, total: 0 };
 const BET_KEY = 'sollish:cascade:bet';
+/** The local DEMO source over cascade's engine only (lib/slot-engines/cascade.ts); the other games' engines are not in this route. */
+const localRoundSource = localSourceFor(CASCADE_ENGINE);
 /** The loading screen shows once per page load; returning through client navigation goes straight in. */
 let bootedOnce = false;
 
@@ -180,7 +183,7 @@ export function CascadeGame() {
   const [replaying, setReplaying] = useState<{ recordId: string; seed: string } | null>(null);
   const [boot, setBoot] = useState<Boot>(() => ({ phase: bootedOnce ? 'done' : 'loading', progress: 0 }));
   const reducedMotion = usePrefersReducedMotion();
-  const sourceView = useRoundSource('cascade');
+  const sourceView = useRoundSource(CASCADE_ENGINE);
   const remote: RemoteRoundSource | null = sourceView.status === 'remote' ? sourceView.source : null;
   const sourcePending = sourceView.status === 'pending';
   /** Server balance in remote mode (display only; the server's response is the truth). */

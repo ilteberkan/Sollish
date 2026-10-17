@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { createHash, createHmac } from "node:crypto";
 import {
   ASENA_SLOT, CASCADE_SLOT, CEZERI_SLOT, EBRU_SLOT, playAsenaRound, playCezeriRound, SLOT_GAMES, TARHUN_SLOT, deriveSeedHex, playEbruRound, isClientSeed, playCascade2Round, playStormRound, slotBytesToHex, slotGame, slotHexToBytes,
+  SLOT_GAME_IDS, SLOT_GAME_META, slotGameMeta,
   slotNonceMessage, slotReceiptMessage, slotReplayMessage, slotServerSeedHash, verifySlotRound,
 } from "../src/index";
 
@@ -38,6 +39,18 @@ test("inputs are strict: seed length, client seed alphabet, nonce range, hex cas
   for (const bad of [-1, 1.5, Number.NaN, 1_000_000_001]) assert.throws(() => slotNonceMessage("a", bad), RangeError);
   assert.equal(slotNonceMessage("seed_A-1", 12), "seed_A-1:12");
   assert.throws(() => slotHexToBytes("abc"), RangeError);
+});
+
+test("engine-free meta registry equals the server registry field for field (the web client reads the meta, the RGS reads SLOT_GAMES)", () => {
+  assert.deepEqual([...SLOT_GAME_IDS].sort(), Object.keys(SLOT_GAMES).sort());
+  assert.deepEqual(Object.keys(SLOT_GAME_META).sort(), Object.keys(SLOT_GAMES).sort());
+  for (const [id, game] of Object.entries(SLOT_GAMES)) {
+    const meta = SLOT_GAME_META[id as keyof typeof SLOT_GAME_META];
+    assert.deepEqual({ id: meta.id, engineId: meta.engineId, modes: [...meta.modes], betLevels: [...meta.betLevels], maxMultiplier: meta.maxMultiplier },
+      { id: game.id, engineId: game.engineId, modes: [...game.modes], betLevels: [...game.betLevels], maxMultiplier: game.maxMultiplier }, `${id} meta drifted from the registry`);
+  }
+  for (const id of ["__proto__", "constructor", "toString", "Cascade", "", "cascade/x", 1, null]) assert.equal(slotGameMeta(id), null);
+  assert.equal(slotGameMeta("asena"), SLOT_GAME_META.asena);
 });
 
 test("registry: own ids only, engines and costs are the protocol functions", () => {

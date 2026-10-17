@@ -16,8 +16,9 @@ import {
   EBRU_AUTOPLAY_GAP, EBRU_BET_LADDER, EBRU_COST_MODES, EBRU_DEFAULT_BET_CENTS, EBRU_MAX_BET_CENTS, EBRU_MIN_BET_CENTS,
   ebruAutoplayAfterRound, ebruAutoplayBeforeSpin, ebruBuyBlockReason, ebruCost, ebruLedgerLimits, ebruRoundId, ebruRtp, ebruTimelineOptions,
 } from '@/lib/ebru-controls';
-import { localRoundSource, markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
-import { useRoundSource } from '@/lib/use-round-source';
+import { markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
+import { EBRU_ENGINE } from '@/lib/slot-engines/ebru';
+import { localSourceFor, useRoundSource } from '@/lib/use-round-source';
 import { useEbruSound } from '@/lib/slot-audio/use-ebru-sound';
 import { useProduct, type DemoRecord } from '../providers';
 import { DemoNotice, GameHeading, Rules, type Mode } from '../game-common';
@@ -72,6 +73,8 @@ const CALLOUT_TAGS: Record<EbruCalloutTier, string> = { 0: 'Leke çarpanı', 1: 
 const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hızlı', turbo: 'Turbo' };
 const ZERO: EbruMeter = { spin: 0, total: 0 };
 const BET_KEY = 'sollish:ebru:bet';
+/** The local DEMO source over ebru's engine only (lib/slot-engines/ebru.ts); the other games' engines are not in this route. */
+const localRoundSource = localSourceFor(EBRU_ENGINE);
 /** Largest clock step per frame. The water shear and the sliding rows run on the wall clock (WAAPI / EbruWater), so on
  * a slow device the timeline must keep near wall-clock pace or the comb sweep, its sound and the next step drift apart;
  * a hidden tab gets no frames at all, and the first frame after it is still capped. Presentation only. */
@@ -203,7 +206,7 @@ export function EbruGame() {
   const [boot, setBoot] = useState<Boot>(() => ({ phase: bootedOnce ? 'done' : 'loading', progress: 0 }));
   const [mood, setMood] = useState<EbruMood>('base');
   const reducedMotion = usePrefersReducedMotion();
-  const sourceView = useRoundSource('ebru');
+  const sourceView = useRoundSource(EBRU_ENGINE);
   const remote: RemoteRoundSource | null = sourceView.status === 'remote' ? sourceView.source : null;
   const sourcePending = sourceView.status === 'pending';
   const [remoteBalance, setRemoteBalance] = useState<number | null>(null);

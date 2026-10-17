@@ -11,15 +11,36 @@
  * id as this build. The bearer token lives in sessionStorage and only ever travels in the Authorization header.
  */
 import {
-  SLOT_FAIR_VERSION, SLOT_GAMES, SLOT_HEX64_PATTERN, SLOT_ROUND_ID_PATTERN, SLOT_SEED_HEX_PATTERN, asenaSeedFromEntropy, cascadeSeedFromEntropy, cezeriSeedFromEntropy, ebruSeedFromEntropy, isClientSeed, isSlotNonce,
-  playAsenaRound, playCascade2Round, playCezeriRound, playEbruRound, playStormRound, slotBytesToHex, stormSeedFromEntropy, type AsenaRound, type Cascade2Round, type CascadeMode, type CezeriRound, type EbruRound, type SlotRoundSummary, type StormRound,
+  SLOT_FAIR_VERSION, SLOT_GAME_META, SLOT_HEX64_PATTERN, SLOT_ROUND_ID_PATTERN, SLOT_SEED_HEX_PATTERN, isClientSeed, isSlotNonce, slotBytesToHex, slotGameMeta,
+  type AsenaRound, type Cascade2Round, type CascadeMode, type CezeriRound, type EbruRound, type SlotGameId as ProtocolSlotGameId, type SlotRoundSummary, type StormRound,
 } from '@sollish/protocol';
 import { configuredApi } from './chat';
 
-export type SlotGameId = 'cascade' | 'tarhun' | 'ebru' | 'cezeri' | 'asena';
+/* Bundle rule (docs/architecture/scale.md 6.2): this module must not import a slot ENGINE. Every slot route used to ship all
+ * five engines because it did. It reads the engine-free `SLOT_GAME_META` and takes the engine of the game it serves as an
+ * argument (`SlotEngine`, built in lib/slot-engines/<game>.ts); only /verify and /replay load lib/slot-engines/all.ts. */
+export type SlotGameId = ProtocolSlotGameId;
 export type SlotMode = CascadeMode;
 export type RoundOf<G extends SlotGameId> = G extends 'cascade' ? Cascade2Round : G extends 'ebru' ? EbruRound : G extends 'cezeri' ? CezeriRound : G extends 'asena' ? AsenaRound : StormRound;
 export const SOURCE_LABELS = Object.freeze({ local: 'Yerel demo', remote: 'Sunucu doğrulamalı' } as const);
+
+/* ---------------------------------------------------------------- engines (injected, one per game) */
+/** One game's protocol engine: the only engine code a slot route loads. */
+export interface SlotEngine<G extends SlotGameId = SlotGameId> {
+  readonly game: G;
+  /** CSPRNG words -> seed hex (local DEMO only). */
+  seedFromEntropy(words: Uint32Array): string;
+  /** Pure and deterministic in (seedHex, betCents, mode); throws RangeError for an unknown bet level or mode. */
+  play(seedHex: string, betCents: number, mode: string): RoundOf<G>;
+}
+export type SlotEngines = { readonly [G in SlotGameId]?: SlotEngine<G> };
+export function defineSlotEngine<G extends SlotGameId>(engine: SlotEngine<G>): SlotEngine<G> { return Object.freeze(engine); }
+export function slotEnginesOf(...engines: readonly SlotEngine[]): SlotEngines { return Object.freeze(Object.fromEntries(engines.map(e => [e.game, e]))) as SlotEngines; }
+function engineOf<G extends SlotGameId>(engines: SlotEngines, game: G): SlotEngine<G> {
+  const engine = Object.hasOwn(engines, game) ? engines[game] : undefined;
+  if (!engine) throw new RgsError('ENGINE_MISSING');
+  return engine as unknown as SlotEngine<G>;
+}
 
 /* ---------------------------------------------------------------- local (unchanged behaviour) */
 export interface LocalRoundSource {
@@ -27,21 +48,18 @@ export interface LocalRoundSource {
   /** Synchronous like before: entropy -> engine. Throws when secure randomness is unavailable. */
   resolve<G extends SlotGameId>(game: G, betCents: number, mode: SlotMode): RoundOf<G>;
 }
-export function createLocalSource(entropy: (words: Uint32Array) => void = words => { crypto.getRandomValues(words); }): LocalRoundSource {
+/** Local DEMO source over the engines it is given (a game passes only its own). */
+export function createLocalSource(engines: SlotEngines, entropy: (words: Uint32Array) => void = words => { crypto.getRandomValues(words); }): LocalRoundSource {
   return Object.freeze({
     kind: 'local' as const, label: SOURCE_LABELS.local,
     resolve<G extends SlotGameId>(game: G, betCents: number, mode: SlotMode): RoundOf<G> {
+      const engine = engineOf(engines, game);
       const words = new Uint32Array(4);
       entropy(words);
-      if (game === 'cascade') return playCascade2Round(cascadeSeedFromEntropy(words), betCents, mode) as RoundOf<G>;
-      if (game === 'ebru') return playEbruRound(ebruSeedFromEntropy(words), betCents, mode) as RoundOf<G>;
-      if (game === 'cezeri') return playCezeriRound(cezeriSeedFromEntropy(words), betCents, mode) as RoundOf<G>;
-      if (game === 'asena') return playAsenaRound(asenaSeedFromEntropy(words), betCents, mode) as RoundOf<G>;
-      return playStormRound(stormSeedFromEntropy(words), betCents, mode) as RoundOf<G>;
+      return engine.play(engine.seedFromEntropy(words), betCents, mode);
     },
   });
 }
-export const localRoundSource: LocalRoundSource = createLocalSource();
 
 /* ---------------------------------------------------------------- remote wire types */
 export interface RemoteFair { version: typeof SLOT_FAIR_VERSION; serverSeedHash: string; clientSeed: string; nonce: number; seedHex: string }
@@ -86,7 +104,7 @@ export function rgsErrorMessage(error: unknown): string {
 
 /* ---------------------------------------------------------------- validation of what the server sends */
 const int = (n: unknown): n is number => typeof n === 'number' && Number.isSafeInteger(n) && n >= 0;
-const isGameId = (g: unknown): g is SlotGameId => g === 'cascade' || g === 'tarhun' || g === 'ebru' || g === 'cezeri' || g === 'asena';
+const isGameId = (g: unknown): g is SlotGameId => slotGameMeta(g) !== null;
 function parseSignature(s: unknown): RemoteSignature {
   const v = s as Record<string, unknown> | null;
   if (!v || v.alg !== 'HMAC-SHA256' || (v.key !== 'worker' && v.key !== 'dev') || typeof v.value !== 'string' || !SLOT_HEX64_PATTERN.test(v.value)) throw new RgsError('ROUND_MISMATCH');
@@ -97,7 +115,7 @@ export function parseReceipt(value: unknown, expectGame?: SlotGameId): RemoteRec
   const r = value as Record<string, unknown> | null;
   const f = (r?.fair ?? null) as Record<string, unknown> | null;
   if (!r || !f || r.v !== 1 || typeof r.roundId !== 'string' || !SLOT_ROUND_ID_PATTERN.test(r.roundId) || !isGameId(r.game) || (expectGame && r.game !== expectGame)
-    || r.engineId !== SLOT_GAMES[r.game]!.engineId || typeof r.mode !== 'string' || !SLOT_GAMES[r.game]!.modes.includes(r.mode)
+    || r.engineId !== SLOT_GAME_META[r.game].engineId || typeof r.mode !== 'string' || !SLOT_GAME_META[r.game].modes.includes(r.mode)
     || !int(r.betCents) || !int(r.costCents) || !int(r.payoutCents) || !int(r.totalHundredths) || !int(r.balanceCents) || !int(r.at)
     || f.version !== SLOT_FAIR_VERSION || typeof f.serverSeedHash !== 'string' || !SLOT_HEX64_PATTERN.test(f.serverSeedHash) || !isClientSeed(f.clientSeed) || !isSlotNonce(f.nonce)
     || typeof f.seedHex !== 'string' || !SLOT_SEED_HEX_PATTERN.test(f.seedHex)) throw new RgsError('ROUND_MISMATCH');
@@ -109,11 +127,11 @@ export function parseReceipt(value: unknown, expectGame?: SlotGameId): RemoteRec
   };
 }
 /** Re-runs the engine on the server's seedHex; the server's step list must be identical, byte for byte. */
-export function verifyServerRound<G extends SlotGameId>(game: G, fields: { engineId: string; seedHex: string; betCents: number; mode: string; costCents: number; payoutCents: number; totalHundredths: number }, serverRound: unknown): RoundOf<G> {
-  const definition = SLOT_GAMES[game]!;
-  if (fields.engineId !== definition.engineId) throw new RgsError('ROUND_MISMATCH');
+export function verifyServerRound<G extends SlotGameId>(game: G, fields: { engineId: string; seedHex: string; betCents: number; mode: string; costCents: number; payoutCents: number; totalHundredths: number }, serverRound: unknown, engines: SlotEngines): RoundOf<G> {
+  if (fields.engineId !== SLOT_GAME_META[game].engineId) throw new RgsError('ROUND_MISMATCH');
+  const engine = engineOf(engines, game);
   let local: SlotRoundSummary;
-  try { local = definition.play(fields.seedHex, fields.betCents, fields.mode); } catch { throw new RgsError('ROUND_MISMATCH'); }
+  try { local = engine.play(fields.seedHex, fields.betCents, fields.mode); } catch { throw new RgsError('ROUND_MISMATCH'); }
   if (local.payoutCents !== fields.payoutCents || local.totalHundredths !== fields.totalHundredths || local.costCents !== fields.costCents || JSON.stringify(local) !== JSON.stringify(serverRound)) throw new RgsError('ROUND_MISMATCH');
   return local as RoundOf<G>;
 }
@@ -122,6 +140,8 @@ export function verifyServerRound<G extends SlotGameId>(game: G, fields: { engin
 export type KeyValueStore = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 export interface RgsClientOptions {
   baseUrl: string;
+  /** Engines this client may re-run to verify a server round (`play`, `last`); a game passes only its own. */
+  engines?: SlotEngines;
   fetch?: typeof fetch;
   storage?: KeyValueStore | null;
   /** Hex of n random bytes (idempotency keys and client seeds). */
@@ -143,6 +163,7 @@ export class RgsClient {
   private readonly randomHex: (bytes: number) => string;
   private readonly sleep: (ms: number) => Promise<void>;
   private readonly timeoutMs: number;
+  private readonly engines: SlotEngines;
   private token: string | null = null;
 
   constructor(options: RgsClientOptions) {
@@ -154,6 +175,7 @@ export class RgsClient {
     this.randomHex = options.randomHex ?? defaultRandomHex;
     this.sleep = options.sleep ?? defaultSleep;
     this.timeoutMs = options.timeoutMs ?? 8000;
+    this.engines = options.engines ?? {};
     try {
       const saved = this.storage?.getItem(TOKEN_KEY);
       const parsed = saved ? JSON.parse(saved) as { base?: unknown; token?: unknown } : null;
@@ -211,13 +233,14 @@ export class RgsClient {
   /** One round. Network errors, 5xx, SESSION_BUSY and RATE_LIMITED are retried with the SAME idempotency key, so a
    * round the server already committed comes back unchanged instead of being played twice. */
   async play<G extends SlotGameId>(game: G, betCents: number, mode: SlotMode): Promise<RemotePlay<RoundOf<G>>> {
+    engineOf(this.engines, game); // refuse BEFORE the server debits a round this page could not verify
     const body = { betCents, mode, clientSeed: this.randomHex(16), idempotencyKey: this.randomHex(16) };
     for (let attempt = 0; ; attempt++) {
       try {
         const { json, headers } = await this.request('POST', `/v1/slots/${game}/rounds`, body);
         const receipt = parseReceipt(json, game);
         if (receipt.betCents !== betCents || receipt.mode !== mode || receipt.fair.clientSeed !== body.clientSeed) throw new RgsError('ROUND_MISMATCH');
-        const round = verifyServerRound(game, { ...receipt, seedHex: receipt.fair.seedHex }, json.round);
+        const round = verifyServerRound(game, { ...receipt, seedHex: receipt.fair.seedHex }, json.round, this.engines);
         return { receipt, round, replayed: headers.get('Idempotent-Replayed') === 'true' };
       } catch (error) {
         const retryable = error instanceof RgsError && (error.code === 'NETWORK' || error.code === 'SESSION_BUSY' || error.code === 'RATE_LIMITED' || error.status >= 500);
@@ -229,12 +252,13 @@ export class RgsClient {
   }
   /** Last round of `game` (page reload recovery) and the session's current balance. */
   async last<G extends SlotGameId>(game: G): Promise<{ last: RemotePlay<RoundOf<G>> | null; balanceCents: number }> {
+    engineOf(this.engines, game);
     const { json } = await this.request('GET', `/v1/slots/${game}/rounds/last`);
     if (!int(json.balanceCents)) throw new RgsError('SERVICE_UNAVAILABLE');
     if (json.last === null) return { last: null, balanceCents: json.balanceCents };
     const raw = json.last as Record<string, unknown>;
     const receipt = parseReceipt(raw, game);
-    return { last: { receipt, round: verifyServerRound(game, { ...receipt, seedHex: receipt.fair.seedHex }, raw.round), replayed: true }, balanceCents: json.balanceCents };
+    return { last: { receipt, round: verifyServerRound(game, { ...receipt, seedHex: receipt.fair.seedHex }, raw.round, this.engines), replayed: true }, balanceCents: json.balanceCents };
   }
   async history(): Promise<{ rounds: RemoteHistoryRow[]; balanceCents: number; serverSeedHash: string; nonce: number }> {
     const { json } = await this.request('GET', '/v1/slots/history');
@@ -264,8 +288,8 @@ export class RgsClient {
 /* ---------------------------------------------------------------- public replay */
 export function parseReplay(value: unknown): RemoteReplay {
   const r = value as Record<string, unknown> | null, f = (r?.fair ?? null) as Record<string, unknown> | null;
-  if (!r || !f || r.v !== 1 || typeof r.roundId !== 'string' || !SLOT_ROUND_ID_PATTERN.test(r.roundId) || !isGameId(r.game) || r.engineId !== SLOT_GAMES[r.game]!.engineId
-    || typeof r.mode !== 'string' || !SLOT_GAMES[r.game]!.modes.includes(r.mode) || !int(r.betCents) || !int(r.costCents) || !int(r.payoutCents) || !int(r.totalHundredths)
+  if (!r || !f || r.v !== 1 || typeof r.roundId !== 'string' || !SLOT_ROUND_ID_PATTERN.test(r.roundId) || !isGameId(r.game) || r.engineId !== SLOT_GAME_META[r.game].engineId
+    || typeof r.mode !== 'string' || !SLOT_GAME_META[r.game].modes.includes(r.mode) || !int(r.betCents) || !int(r.costCents) || !int(r.payoutCents) || !int(r.totalHundredths)
     || typeof f.seedHex !== 'string' || !SLOT_SEED_HEX_PATTERN.test(f.seedHex) || typeof f.serverSeedHash !== 'string' || !SLOT_HEX64_PATTERN.test(f.serverSeedHash) || !isSlotNonce(f.nonce)
     || !(f.serverSeed === null || (typeof f.serverSeed === 'string' && SLOT_HEX64_PATTERN.test(f.serverSeed))) || !(f.clientSeed === null || isClientSeed(f.clientSeed))) throw new RgsError('ROUND_MISMATCH');
   return {
@@ -275,7 +299,7 @@ export function parseReplay(value: unknown): RemoteReplay {
   };
 }
 /** Public, ledger-free: the signed record plus the locally recomputed round (must equal the server's). */
-export async function fetchReplay(baseUrl: string, id: string, fetcher: typeof fetch = (i, n) => fetch(i, n)): Promise<{ replay: RemoteReplay; round: SlotRoundSummary }> {
+export async function fetchReplay(baseUrl: string, id: string, engines: SlotEngines, fetcher: typeof fetch = (i, n) => fetch(i, n)): Promise<{ replay: RemoteReplay; round: SlotRoundSummary }> {
   const base = configuredApi(baseUrl);
   if (!base) throw new RgsError('NOT_CONFIGURED');
   if (!SLOT_ROUND_ID_PATTERN.test(id)) throw new RgsError('NOT_FOUND', 404);
@@ -286,7 +310,7 @@ export async function fetchReplay(baseUrl: string, id: string, fetcher: typeof f
   if (!response.ok) throw new RgsError(typeof json.code === 'string' ? json.code : 'SERVICE_UNAVAILABLE', response.status);
   const replay = parseReplay(json.replay);
   if (replay.roundId !== id) throw new RgsError('ROUND_MISMATCH');
-  return { replay, round: verifyServerRound(replay.game, { ...replay, seedHex: replay.fair.seedHex }, json.round) };
+  return { replay, round: verifyServerRound(replay.game, { ...replay, seedHex: replay.fair.seedHex }, json.round, engines) };
 }
 
 /* ---------------------------------------------------------------- selection */
@@ -296,15 +320,15 @@ export type SelectedSource =
 export interface RemoteRoundSource { readonly kind: 'remote'; readonly label: typeof SOURCE_LABELS.remote; readonly client: RgsClient }
 export type RoundSource = LocalRoundSource | RemoteRoundSource;
 
-export async function selectRoundSource(game: SlotGameId, options: { apiUrl?: string; fetch?: typeof fetch; storage?: KeyValueStore | null; local?: LocalRoundSource; healthTimeoutMs?: number } = {}): Promise<SelectedSource> {
-  const local = options.local ?? localRoundSource;
+export async function selectRoundSource(game: SlotGameId, options: { apiUrl?: string; engines: SlotEngines; local: LocalRoundSource; fetch?: typeof fetch; storage?: KeyValueStore | null; healthTimeoutMs?: number }): Promise<SelectedSource> {
+  const local = options.local;
   const base = configuredApi(options.apiUrl);
   if (!base) return { kind: 'local', source: local, reason: 'unconfigured' };
   const client = new RgsClient({ baseUrl: base, fetch: options.fetch, storage: options.storage ?? null, timeoutMs: options.healthTimeoutMs ?? 2500 });
   let health: RemoteHealth;
   try { health = await client.health(); } catch (error) { return { kind: 'local', source: local, reason: error instanceof RgsError && error.code === 'SERVICE_UNAVAILABLE' ? 'disabled' : 'unreachable' }; }
-  if (!health.games.some(g => g.id === game && g.engineId === SLOT_GAMES[game]!.engineId)) return { kind: 'local', source: local, reason: 'engine-mismatch' };
-  const playing = new RgsClient({ baseUrl: base, fetch: options.fetch, storage: options.storage ?? null });
+  if (!health.games.some(g => g.id === game && g.engineId === SLOT_GAME_META[game].engineId)) return { kind: 'local', source: local, reason: 'engine-mismatch' };
+  const playing = new RgsClient({ baseUrl: base, engines: options.engines, fetch: options.fetch, storage: options.storage ?? null });
   try {
     const state = await playing.ensureSession();
     return { kind: 'remote', source: Object.freeze({ kind: 'remote' as const, label: SOURCE_LABELS.remote, client: playing }), balanceCents: state.balanceCents };

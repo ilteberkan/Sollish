@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { configuredApi } from '@/lib/chat';
 import { fetchReplay, rgsErrorMessage, RgsError, type RemoteReplay } from '@/lib/rgs-client';
+import { ALL_SLOT_ENGINES } from '@/lib/slot-engines/all';
 import { replayFrames, verifyReplay, type ReplayCell, type RowStatus } from '@/lib/slot-verify';
 import { SymbolArt, type CascadeArtSymbol } from './cascade/symbols';
 import { StormSymbolArt, type StormSymbol } from './storm/symbols';
@@ -46,7 +47,7 @@ export function ReplayView({ id }: { id: string }) {
   useEffect(() => {
     let cancelled = false;
     if (!api) { setState({ phase: 'error', message: 'replay.noServer' }); return; }
-    fetchReplay(api, id).then(async ({ replay, round }) => {
+    fetchReplay(api, id, ALL_SLOT_ENGINES).then(async ({ replay, round }) => {
       const verified = (await verifyReplay(replay)).status;
       if (!cancelled) setState({ phase: 'ready', replay, frames: replayFrames(round), verified });
     }, (error: unknown) => {

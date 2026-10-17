@@ -16,8 +16,9 @@ import {
   ASENA_AUTOPLAY_GAP, ASENA_BET_LADDER, ASENA_COST_MODES, ASENA_DEFAULT_BET_CENTS, ASENA_MAX_BET_CENTS, ASENA_MIN_BET_CENTS,
   asenaAutoplayAfterRound, asenaAutoplayBeforeSpin, asenaBuyBlockReason, asenaCost, asenaLedgerLimits, asenaRoundId, asenaRtp, asenaTimelineOptions,
 } from '@/lib/asena-controls';
-import { localRoundSource, markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
-import { useRoundSource } from '@/lib/use-round-source';
+import { markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
+import { ASENA_ENGINE } from '@/lib/slot-engines/asena';
+import { localSourceFor, useRoundSource } from '@/lib/use-round-source';
 import { useAsenaSound } from '@/lib/slot-audio/use-asena-sound';
 import { useProduct, type DemoRecord } from '../providers';
 import { DemoNotice, GameHeading, Rules, type Mode } from '../game-common';
@@ -76,6 +77,8 @@ const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hız
 const ZERO: AsenaMeter = { spin: 0, total: 0 };
 const NO_PIECES = [0, 0, 0, 0, 0, 0];
 const BET_KEY = 'sollish:asena:bet';
+/** The local DEMO source over asena's engine only (lib/slot-engines/asena.ts); the other games' engines are not in this route. */
+const localRoundSource = localSourceFor(ASENA_ENGINE);
 /** Sky map as a row: phones / portrait, and mid-width desktops where the map sits above the board. */
 const NARROW_QUERY = '(max-width: 1240px), (max-aspect-ratio: 4 / 5)';
 const PHONE_QUERY = '(max-width: 760px), (max-aspect-ratio: 4 / 5)';
@@ -210,7 +213,7 @@ export function AsenaGame() {
   const reducedMotion = usePrefersReducedMotion();
   const narrow = useMedia(NARROW_QUERY);
   const phone = useMedia(PHONE_QUERY);
-  const sourceView = useRoundSource('asena');
+  const sourceView = useRoundSource(ASENA_ENGINE);
   const remote: RemoteRoundSource | null = sourceView.status === 'remote' ? sourceView.source : null;
   const sourcePending = sourceView.status === 'pending';
   const [remoteBalance, setRemoteBalance] = useState<number | null>(null);

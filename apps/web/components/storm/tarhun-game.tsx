@@ -16,8 +16,9 @@ import {
   STORM_AUTOPLAY_GAP, STORM_BET_LADDER, STORM_COST_MODES, STORM_DEFAULT_BET_CENTS, STORM_MAX_BET_CENTS, STORM_MIN_BET_CENTS,
   stormAutoplayAfterRound, stormAutoplayBeforeSpin, stormBuyBlockReason, stormCost, stormLedgerLimits, stormRoundId, stormRtp, stormTimelineOptions,
 } from '@/lib/storm-controls';
-import { localRoundSource, markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
-import { useRoundSource } from '@/lib/use-round-source';
+import { markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
+import { TARHUN_ENGINE } from '@/lib/slot-engines/tarhun';
+import { localSourceFor, useRoundSource } from '@/lib/use-round-source';
 import { useProduct, type DemoRecord } from '../providers';
 import { DemoNotice, GameHeading, Rules, type Mode } from '../game-common';
 import { Icon } from '../icons';
@@ -73,6 +74,8 @@ const CALLOUT_TAGS: Record<StormCalloutTier, string> = { 0: 'Çarpan', 1: 'Güç
 const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hızlı', turbo: 'Turbo' };
 const ZERO: StormMeter = { spin: 0, total: 0 };
 const BET_KEY = 'sollish:tarhun:bet';
+/** The local DEMO source over tarhun's engine only (lib/slot-engines/tarhun.ts); the other games' engines are not in this route. */
+const localRoundSource = localSourceFor(TARHUN_ENGINE);
 let bootedOnce = false;
 
 function usePrefersReducedMotion() {
@@ -186,7 +189,7 @@ export function TarhunGame() {
   const [heroPose, setHeroPose] = useState<StormPose>('idle');
   const [mood, setMood] = useState<StormMood>('base');
   const reducedMotion = usePrefersReducedMotion();
-  const sourceView = useRoundSource('tarhun');
+  const sourceView = useRoundSource(TARHUN_ENGINE);
   const remote: RemoteRoundSource | null = sourceView.status === 'remote' ? sourceView.source : null;
   const sourcePending = sourceView.status === 'pending';
   /** Server balance in remote mode (display only; the server's response is the truth). */

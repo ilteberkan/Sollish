@@ -16,8 +16,9 @@ import {
   CEZERI_AUTOPLAY_GAP, CEZERI_BET_LADDER, CEZERI_COST_MODES, CEZERI_DEFAULT_BET_CENTS, CEZERI_MAX_BET_CENTS, CEZERI_MIN_BET_CENTS,
   cezeriAutoplayAfterRound, cezeriAutoplayBeforeSpin, cezeriBuyBlockReason, cezeriCost, cezeriLedgerLimits, cezeriRoundId, cezeriRtp, cezeriTimelineOptions,
 } from '@/lib/cezeri-controls';
-import { localRoundSource, markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
-import { useRoundSource } from '@/lib/use-round-source';
+import { markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
+import { CEZERI_ENGINE } from '@/lib/slot-engines/cezeri';
+import { localSourceFor, useRoundSource } from '@/lib/use-round-source';
 import { useCezeriSound } from '@/lib/slot-audio/use-cezeri-sound';
 import { useProduct, type DemoRecord } from '../providers';
 import { DemoNotice, GameHeading, Rules, type Mode } from '../game-common';
@@ -74,6 +75,8 @@ const CALLOUT_TAGS: Record<WinTier, string> = { 0: 'Göbek', 1: 'Güçlü göbek
 const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hızlı', turbo: 'Turbo' };
 const ZERO: CezeriMeter = { spin: 0, total: 0 };
 const BET_KEY = 'sollish:cezeri:bet';
+/** The local DEMO source over cezeri's engine only (lib/slot-engines/cezeri.ts); the other games' engines are not in this route. */
+const localRoundSource = localSourceFor(CEZERI_ENGINE);
 /** Largest clock step per frame: the rings turn on the wall clock (WAAPI), so the timeline keeps near wall-clock pace. */
 const CEZERI_PLAYER_MAX_STEP_MS = 250;
 /** The board shown before the first round: the final board of a fixed no-win engine round (not a result). */
@@ -200,7 +203,7 @@ export function CezeriGame() {
   const [boot, setBoot] = useState<Boot>(() => ({ phase: bootedOnce ? 'done' : 'loading', progress: 0 }));
   const [mood, setMood] = useState<CezeriMood>('base');
   const reducedMotion = usePrefersReducedMotion();
-  const sourceView = useRoundSource('cezeri');
+  const sourceView = useRoundSource(CEZERI_ENGINE);
   const remote: RemoteRoundSource | null = sourceView.status === 'remote' ? sourceView.source : null;
   const sourcePending = sourceView.status === 'pending';
   const [remoteBalance, setRemoteBalance] = useState<number | null>(null);

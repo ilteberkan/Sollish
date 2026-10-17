@@ -21,6 +21,7 @@ export * from "./cascade-2";
 export * from "./storm-throne";
 export * from "./slot-fair";
 export * from "./slot-games";
+export * from "./slot-game-meta";
 export * from "./asena";
 export * from "./cezeri";
 export * from "./ebru";
