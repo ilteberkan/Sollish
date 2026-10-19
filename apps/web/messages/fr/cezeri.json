@@ -1,0 +1,373 @@
+{
+  "meta": {
+    "title": "Cezeri : Roues du Temps",
+    "description": "Cezeri : Roues du Temps — un jeu de roues DEMO original. Les secteurs gagnants se verrouillent, quatre roues de laiton tournent à nouveau et le multiplicateur du moyeu gagne +1 à chaque tour ; dans l’Horloge à Éléphant, le moyeu est conservé et le faucon automate lâche des engrenages joker."
+  },
+  "title": "Cezeri : Roues du Temps",
+  "subtitle": "Les secteurs gagnants se verrouillent, les roues repartent et le moyeu gagne +1 à chaque tour.",
+  "table": "Table de jeu Cezeri",
+  "logo": {
+    "subtitle": "ROUES DU TEMPS",
+    "label": "Cezeri : Roues du Temps"
+  },
+  "symbols": {
+    "h1": "Horloge à Éléphant",
+    "h2": "Tambour Automate",
+    "h3": "Citadelle de l’Horloge à Eau",
+    "h4": "Fontaine du Paon",
+    "l1": "Astrolabe",
+    "l2": "Étoile de Faïence",
+    "l3": "Louche de Cuivre",
+    "l4": "Poulie",
+    "gear": "Engrenage Doré (joker)",
+    "vessel": "Aiguière"
+  },
+  "board": {
+    "label": "Roues de Cezeri : moyeu et 4 anneaux, 12 secteurs",
+    "labelFree": "Roues de l’Horloge à Éléphant : moyeu et 4 anneaux, 12 secteurs",
+    "ring": "Anneau {n}",
+    "cell": "{symbol}{state, select, pinned {, joker permanent} held {, verrouillé} other {}}"
+  },
+  "reservoir": {
+    "label": "HORLOGE À ÉLÉPHANT"
+  },
+  "deck": {
+    "group": "Commandes du jeu",
+    "balance": "Solde",
+    "refill": "Recharger le solde",
+    "win": "Gain",
+    "winReplay": "Replay",
+    "winReplayLast": "Gain du replay",
+    "winLast": "Dernier gain",
+    "cost": "Coût",
+    "spin": "Lancer",
+    "spinLocked": "Tour en cours ; verrouillé jusqu’à la fin de toutes les relances et de tous les tours gratuits.",
+    "spinCost": "Coût {cost}",
+    "auto": "Auto",
+    "info": "Infos",
+    "infoAria": "Infos du jeu",
+    "on": "Activé",
+    "off": "Désactivé",
+    "anteDesc": "Chances d’Horloge à Éléphant ≈2×",
+    "buy": "Acheter le bonus",
+    "buyDesc": "{spins, plural, one {# tour gratuit} other {# tours gratuits}} · {rtp}",
+    "speedAria": "Vitesse des tours : {speed}",
+    "sound": "Son",
+    "soundLoading": "Chargement du son {percent} %",
+    "outOfCredit": "Votre solde DEMO est épuisé.",
+    "lastWin": "Dernier tour <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Dernier tour sans gain.",
+    "hintSpace": "Vous pouvez aussi lancer avec la barre d’espace.",
+    "hintFixed": "Le résultat est déterminé avant le tour."
+  },
+  "hud": {
+    "freeAria": "Tour gratuit {number}, {left} restants",
+    "freeSpin": "Tour {n}",
+    "freeTitle": "Horloge à Éléphant",
+    "left": "Restants",
+    "chainAria": "Verrou d’Engrenages : relance {round}, jusqu’à {max}",
+    "chain": "Verrou d’Engrenages",
+    "hubAria": "Multiplicateur du moyeu ×{hub}{kept, select, yes {, conservé} other {}}",
+    "hub": "Moyeu",
+    "hubKept": "Moyeu · conservé"
+  },
+  "meter": {
+    "idleA": "<b>3–4</b> secteurs identiques sur un rayon paient",
+    "idleB": "Verrouiller, tourner, moyeu <b>+1</b>",
+    "total": "Gain total",
+    "win": "Gain"
+  },
+  "replay": {
+    "ribbon": "Replay — solde inchangé · tour {id}"
+  },
+  "auto": {
+    "ribbon": "Auto · {spins, plural, one {# tour restant} other {# tours restants}}"
+  },
+  "toast": {
+    "close": "Fermer la notification",
+    "autoplayStopped": "Jeu automatique arrêté : {reason}. {spins, plural, one {# tour} other {# tours}}, net {net}.",
+    "autoplayStoppedShort": "Jeu automatique arrêté : {reason}.",
+    "autoplayStarted": "Jeu automatique : {spins, plural, one {# tour} other {# tours}}, limite de perte {limit}.",
+    "refilled": "Solde rechargé : {amount} DEMO.",
+    "shareCopied": "Lien de partage copié : {url}",
+    "shareLink": "Lien de partage : {url}",
+    "shareFailed": "Partage impossible : {error}",
+    "replayFailed": "Ce tour n’a pas pu être rejoué.",
+    "replayMismatch": "Replay non vérifiable : l’enregistrement ne correspond pas au moteur."
+  },
+  "callout": {
+    "tier0": "Moyeu",
+    "tier1": "Moyeu puissant",
+    "tier2": "Moyeu déchaîné",
+    "tier3": "Moyeu puissant",
+    "tier4": "Moyeu légendaire",
+    "free": "Horloge à Éléphant · {tag}"
+  },
+  "banner": {
+    "fullChain": "Chaîne complète · {respins} tours · moyeu ×{hub}",
+    "respins": "{respins} relances · moyeu ×{hub}",
+    "extraSpins": "+{awarded} tours gratuits",
+    "scatterPay": "{count} Aiguières · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "Tour lancé, {amount} DEMO.",
+    "bonusBought": "Bonus acheté, {amount} DEMO. L’Horloge à Éléphant commence.",
+    "sentToServer": "Tour envoyé au serveur, {amount} DEMO.",
+    "recovered": "Le tour interrompu a été récupéré depuis le serveur ; il y a déjà été payé ({amount} DEMO).",
+    "replaying": "Replay en cours : tour {id}. Le solde ne change pas.",
+    "replayDone": "Replay terminé : {amount} DEMO, {times}×. Solde inchangé.",
+    "roundEnd": "Tour terminé. Gain total {amount} DEMO, {times}×.",
+    "roundEndNone": "Tour terminé. Aucun gain.",
+    "hubRespin": "Moyeu +1 : ×{value}. Tous les anneaux repartent (relance {round}).",
+    "hubCarried": "Moyeu ×{value} (×{carried} conservé du tour précédent).",
+    "hub": "Moyeu ×{value}.",
+    "win": "Rayon {spoke} : {length} {name}{extended, select, yes { (allongé)} other {}}, moyeu ×{hub}, gain de {times}×",
+    "lock": "Verrou d’Engrenages : {count} secteurs verrouillés, {total} au total.{respin, select, yes { Les anneaux vont repartir.} other {}}",
+    "noSpokeWin": "Aucun gain de rayon sur ce tour.",
+    "vesselsRetrigger": "{count} Aiguières : {awarded} tours gratuits ajoutés.",
+    "vesselsTrigger": "{count} Aiguières : Horloge à Éléphant gagnée.",
+    "freeIntro": "L’Horloge à Éléphant commence : vous avez gagné {awarded} tours gratuits.",
+    "reservoirFull": "Réservoir d’eau plein.",
+    "falcon": "Le faucon automate est arrivé : anneau {ring}, {count} Engrenages Dorés.",
+    "freeSpinWin": "Le tour gratuit a rapporté {times}×. Total {total}×, moyeu ×{hub}.",
+    "freeSpinNone": "Aucun gain sur ce tour gratuit. Le moyeu ×{hub} est conservé.",
+    "noWin": "Aucun gain.",
+    "totalWin": "Gain total {amount} DEMO, {times}×.",
+    "freeOutro": "Horloge à Éléphant terminée. Total : {amount} DEMO, {spins} tours, moyeu maximal ×{topHub}.",
+    "speed": "Vitesse des tours : {speed}.",
+    "anteOn": "Chance ×2 activée : chances de tours gratuits ≈2×, coût {cost}.",
+    "anteOff": "Chance ×2 désactivée : coût {cost}.",
+    "refilled": "Solde DEMO rechargé à {amount} DEMO.",
+    "refilledRemote": "Solde DEMO du serveur rechargé à {amount} DEMO."
+  },
+  "autoplay": {
+    "serverFailed": "Le serveur n’a pas pu lancer le tour",
+    "spinFailed": "Le tour n’a pas pu être lancé",
+    "quit": "Vous avez quitté la session",
+    "title": "Jeu automatique",
+    "note": "{cost} par tour{ante, select, yes { (Chance ×2)} other {}} · n’achète jamais le bonus · s’arrête quand l’onglet est masqué."
+  },
+  "errors": {
+    "entropy": "Le hasard local sécurisé est indisponible. La démo n’a pas démarré.",
+    "insufficient": "Solde insuffisant : {kind, select, buy {cet achat coûte} other {ce tour coûte}} {cost}. Baissez la mise ou rechargez le solde.",
+    "noCredit": "Vous n’avez pas assez de crédit démo, ou une démo est déjà en cours."
+  },
+  "buy": {
+    "block": {
+      "gated": "Achat possible uniquement avec le crédit DEMO",
+      "autoplay": "Achat impossible pendant le jeu automatique",
+      "busy": "Achat impossible avant la fin du tour",
+      "ante": "Achat impossible avec Chance ×2 activée",
+      "balance": "Solde insuffisant (prix {price})"
+    },
+    "feature": "Horloge à Éléphant · 10 tours gratuits · mise {bet}",
+    "rtp": "RTP d’achat {buy} · standard {standard} (simulation, non certifiée)",
+    "text": "<b>100×</b> votre mise. À la fin du tour de base, le plateau contient au moins 3 Aiguières et 10 tours gratuits sont garantis ; le multiplicateur du moyeu est conservé d’un tour à l’autre et le faucon automate lâche des jokers Engrenage Doré permanents. Les gains sont payés sur une mise de {bet}, maximum {max}."
+  },
+  "gated": {
+    "title": "Pas de Cezeri on-chain.",
+    "text": "Ce jeu se joue uniquement avec du crédit DEMO ; les mises réelles ne sont pas acceptées.",
+    "back": "Retour à la démo locale"
+  },
+  "splash": {
+    "gearLock": {
+      "title": "Verrou d’Engrenages",
+      "text": "Les secteurs gagnants se verrouillent, les quatre roues repartent, le moyeu gagne +1"
+    },
+    "elephant": {
+      "title": "Horloge à Éléphant",
+      "text": "3 Aiguières déclenchent 10 tours gratuits ; le moyeu est conservé et le faucon lâche des jokers"
+    },
+    "max": {
+      "title": "{max}× maximum",
+      "text": "Le joker Engrenage Doré remplace tous les symboles"
+    },
+    "loading": "Chargement du jeu",
+    "play": "Jouer",
+    "skip": "Ne plus afficher l’écran d’accueil",
+    "note": "Le crédit DEMO n’a aucune valeur · Le résultat est déterminé avant le tour · Simulation non certifiée, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Son prêt : la musique, les effets et l’ambiance sont préparés sur cet appareil.",
+    "soundLoading": "Chargement du son {percent} % (le jeu reste muet ou utilise des effets simples en attendant).",
+    "soundIdle": "Le son se charge au premier toucher.",
+    "demoTitle": "Solde DEMO",
+    "demoText": "Solde {balance}{remote, select, yes { (serveur)} other {}}. Recharger fixe le solde à {start} DEMO et ajoute une ligne « Solde rechargé » à l’historique ; impossible pendant un tour ou le jeu automatique."
+  },
+  "info": {
+    "title": "Cezeri · Infos du jeu",
+    "tab": {
+      "how": "Comment jouer",
+      "pay": "Table des gains",
+      "features": "Fonctionnalités",
+      "rtp": "RTP",
+      "limits": "Limites de mise et de gain",
+      "keys": "Touches",
+      "fault": "Clause de dysfonctionnement"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Choisissez votre mise.</b> Les boutons − et + modifient la mise d’un cran ; touchez le montant pour ouvrir tous les paliers. « Mise max » choisit le palier le plus élevé que votre solde permet.",
+        "spin": "<b>Lancer.</b> Appuyez sur le bouton de la manivelle ou utilisez la barre d’espace. Le coût du tour ({factor} fois la mise avec Chance ×2 activée) est déduit du solde une seule fois.",
+        "wheels": "<b>Les roues.</b> Le plateau est un moyeu entouré de 4 anneaux concentriques ; chaque anneau compte 12 secteurs et tourne sur sa propre piste. 12 rayons partent du moyeu vers l’extérieur.",
+        "spokes": "<b>Gains de rayons.</b> 3 ou 4 secteurs consécutifs du même symbole sur un rayon paient s’ils commencent à l’anneau 1 ou à l’anneau 2. Les 12 rayons paient séparément. Le gain est multiplié par le multiplicateur du moyeu de ce tour.",
+        "lock": "<b>Verrou d’Engrenages.</b> S’il y a un nouveau gain, les secteurs gagnants se verrouillent, les quatre anneaux repartent en dessous et le moyeu gagne <b>+1</b>. Cela continue tant qu’aucun nouveau paiement n’arrive (jusqu’à {max} relances).",
+        "result": "<b>Le résultat.</b> Tout le tour est déterminé par le moteur avant le début du tour ; l’animation ne fait que le rejouer. Le bouton de lancement reste verrouillé jusqu’à la fin du tour (toutes les relances et tous les tours gratuits) ; utilisez le réglage Rapide/Turbo pour accélérer. Le réglage de vitesse, un toucher sur le compteur de célébration, un onglet masqué ou le fait de quitter la page ne modifient pas le gain ; le tour se clôt toujours une seule fois, avec le gain du moteur."
+      },
+      "note": "Le crédit DEMO n’a aucune valeur ; il ne rapporte ni SOL, ni jetons, ni récompenses. Le jeu fonctionne dans le navigateur avec un hasard local ; il n’y a pas de preuve VRF."
+    },
+    "pay": {
+      "lead": "Sur un <b>rayon</b>, <b>3 ou 4 secteurs consécutifs</b> du même symbole, de l’intérieur vers l’extérieur, paient. Le grand chiffre est le montant DEMO brut par rayon pour une mise de <b>{bet}</b> (moyeu ×1) ; le multiplicateur dessous est un multiple de la mise. Le multiplicateur du moyeu multiplie ce montant.",
+      "runsAria": "Séries valides",
+      "run14": "Anneau 1–4 · 4 secteurs",
+      "run13": "Anneau 1–3 · 3 secteurs",
+      "run24": "Anneau 2–4 · 3 secteurs",
+      "gridAria": "Gains des symboles",
+      "slices4": "4 secteurs",
+      "slices3": "3 secteurs",
+      "gears4": "4 engrenages",
+      "gears3": "3 engrenages",
+      "gearText": "Remplace tous les symboles sauf l’Aiguière. Une série composée uniquement d’engrenages paie selon sa propre table ; c’est la lecture qui paie le plus qui compte.",
+      "scatterTitle": "{name} · gain scatter",
+      "vessels5": "5+ aiguières",
+      "vessels4": "4 aiguières",
+      "vessels3": "3 aiguières",
+      "scatterText": "Comptées n’importe où sur les anneaux du plateau final du tour ; non multipliées par le moyeu. Dans le jeu de base, {vessels}+ aiguières déclenchent <b>{spins} tours gratuits</b>.",
+      "maxTitle": "Gain maximum {max}×",
+      "maxText": "Avec cette mise : <b>{amount}</b>. Si le total du tour atteint ce plafond, le tour s’arrête immédiatement ; les tours gratuits restants ne sont pas joués."
+    },
+    "features": {
+      "hub": {
+        "title": "Multiplicateur du moyeu",
+        "text": "Chaque tour commence par le tirage du moyeu ; le moyeu multiplie tous les gains de rayons de ce tour. Probabilités de tirage dans le jeu de base :",
+        "aria": "Tirage du moyeu"
+      },
+      "lock": {
+        "title": "Verrou d’Engrenages (chaîne de relances)",
+        "text": "Si un tour comporte un <b>nouveau</b> paiement, les secteurs des séries gagnantes se verrouillent ; ils gardent leurs symboles et ne bougent plus. Ensuite, <b>les quatre anneaux</b> repartent sous les secteurs verrouillés, et le moyeu gagne <b>+1</b> à chaque relance. Si une série verrouillée s’allonge (3 → 4 secteurs), seule la différence est payée. La chaîne s’arrête au premier tour sans nouveau paiement, quand les 48 secteurs sont verrouillés, ou après {max} relances (le dernier tour est quand même payé). Dans le jeu de base, les relances tournent sur des bandes contenant un Engrenage Doré par anneau."
+      },
+      "elephant": {
+        "title": "Horloge à Éléphant ({spins} tours gratuits)",
+        "text": "Dans le jeu de base, {trigger} Aiguières ou plus déclenchent {spins} tours gratuits. Le multiplicateur du moyeu <b>n’est pas réinitialisé</b> entre les tours gratuits : chaque tour part du moyeu où le précédent s’est arrêté ou du plus grand de son propre tirage, et les relances ajoutent +1 ; le moyeu ne fait que monter. Pendant un tour gratuit, {retriggerVessels}+ aiguières ajoutent {retrigger} tours de plus (sans paiement). Un tour accorde au plus {max} tours gratuits."
+      },
+      "falcon": {
+        "title": "Réservoir d’eau et faucon automate",
+        "text": "Après chaque tour gratuit, le réservoir se remplit d’un niveau. Au niveau {levels}, il se vide et, s’il reste des tours, le faucon automate dépose {counts} secteurs joker Engrenage Doré sur un anneau. Ces jokers restent en place jusqu’à la fin de la fonction et peuvent compléter des gains à chaque tour suivant."
+      },
+      "tiers": {
+        "title": "Paliers de gain et annonces de multiplicateur",
+        "text": "Si le total du tour atteint <b>10 fois</b> la mise de base ou plus, un écran de célébration s’ouvre et le compteur grimpe à travers les paliers : {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100× ; un tour qui atteint le plafond se termine par {max}. Quand le moyeu franchit les seuils ×10, ×25, ×50 et ×100, il est annoncé en grandes lettres avec son propre son. Un tour de tours gratuits se termine toujours par l’écran « Horloge à Éléphant — Total ». Toucher l’écran amène le compteur directement au résultat ; cela ne modifie pas le gain."
+      },
+      "ante": {
+        "title": "Chance ×2 · coût {cost}",
+        "text": "Lorsqu’elle est activée, chaque tour coûte <b>{factor} fois la mise</b> et les Aiguières apparaissent plus souvent dans le jeu de base : les chances de tours gratuits sont environ doublées ({ante} / {standard}). Les gains sont toujours payés sur la mise de base. Tant qu’elle est activée, le bonus ne peut pas être acheté."
+      },
+      "buy": {
+        "title": "Acheter le bonus · prix {price}",
+        "text": "Pour <b>100 fois la mise</b>, à la fin du tour de base le plateau contient au moins {vessels} Aiguières (s’il en manque, des secteurs hors gain se transforment en aiguières) ; {spins} tours gratuits sont garantis. L’achat passe par une fenêtre de confirmation, fonctionne avec un RTP distinct ({rtp}) et ne peut pas être utilisé avec le jeu automatique."
+      }
+    },
+    "rtp": {
+      "title": "Taux de retour théorique (RTP)",
+      "caption": "Taux de retour théorique par mode",
+      "colMode": "Mode",
+      "colCost": "Coût",
+      "colCi": "IC à 95 %",
+      "colFeature": "Fonction",
+      "everyRound": "chaque tour",
+      "oneIn": "1 / {n}",
+      "text": "Une simulation distincte de {millions} millions de tours pour chaque mode (moteur <code>cezeri-gears-1</code>). Le RTP est calculé sur le coût payé. Fréquence de gain (tour de base) : standard {hitStandard}, Chance ×2 {hitAnte}. Volatilité (écart type en unités de coût) : standard {sdStandard}, achat {sdBuy}.",
+      "note": "La simulation est une estimation et <b>n’est pas certifiée</b> ; en raison de la queue de distribution épaisse, l’intervalle de confiance peut être optimiste. Le résultat d’une courte session peut s’écarter fortement du RTP. Le crédit DEMO est <b>sans valeur</b>."
+    },
+    "limits": {
+      "title": "Limites de mise et de gain",
+      "range": "Plage de mise",
+      "steps": "Paliers",
+      "current": "Mise actuelle",
+      "currentValue": "{bet} · Chance ×2 {ante} · Achat {buy}",
+      "max": "Gain maximum",
+      "maxValue": "{multiplier} fois la mise · {amount} avec cette mise",
+      "text1": "Un tour qui atteint le gain maximum s’arrête immédiatement ; les tours gratuits restants ne sont pas joués. Le gain est toujours calculé sur la mise de base, et tout ce qui est inférieur au centime est arrondi à l’inférieur.",
+      "text2": "Les paliers et modes que votre solde ne couvre pas ne peuvent pas être sélectionnés. Un tour correspond à une seule réservation et un seul paiement ; un seul tour est joué à la fois."
+    },
+    "keys": {
+      "heading": "Clavier",
+      "space": "Espace",
+      "spaceText": "Lance le tour (Paramètres → « {option} »). Pendant un tour, elle ne saute pas le tour ; elle accélère seulement les écrans de tours gratuits et le compteur de célébration.",
+      "enterText": "Active le bouton ayant le focus.",
+      "escText": "Ferme la fenêtre ouverte (sauf le rappel de session).",
+      "tabText": "Navigue entre les commandes ; le focus est toujours visible.",
+      "arrowsText": "Change de page dans cette fenêtre d’infos ; change l’option dans les choix des paramètres.",
+      "note": "Le lecteur d’écran annonce chaque étape (« Rayon 4 : 3 Horloge à Éléphant, moyeu ×3 », verrous, multiplicateur du moyeu, résultat du tour) ; le plateau est lu comme 4 anneaux × 12 secteurs. Les symboles se distinguent par leur forme en plus de la couleur. La préférence de réduction des animations place les anneaux instantanément et désactive les particules et les secousses."
+    },
+    "fault": {
+      "title": "Clause de dysfonctionnement",
+      "p1": "<b>Un dysfonctionnement annule tous les jeux et paiements concernés.</b> En cas de panne logicielle, de navigateur ou d’appareil, c’est l’enregistrement du tour qui fait foi ; un montant affiché à l’écran qui ne correspond pas à l’enregistrement du moteur n’est pas valable.",
+      "p2": "Ce jeu se joue uniquement avec du crédit DEMO. Le DEMO n’a aucune valeur et ne peut être converti ni en argent ni en jetons ; en cas de dysfonctionnement, le solde DEMO et l’historique de session peuvent être corrigés ou réinitialisés.",
+      "p3": "Comme le résultat est déterminé avant le tour, une animation interrompue, un onglet masqué ou le fait de quitter la page ne le modifient pas ; le tour se clôt quand même une seule fois, avec le gain du moteur."
+    }
+  },
+  "history": {
+    "title": "Votre historique de jeu",
+    "scope": "Cette session · les replays ne modifient jamais le solde",
+    "time": "Heure",
+    "mode": "Mode",
+    "bet": "Mise",
+    "cost": "Coût",
+    "win": "Gain",
+    "result": "Résultat",
+    "roundId": "ID du tour",
+    "replayColumn": "Rejouer",
+    "latest": "Dernier tour",
+    "replay": "Rejouer",
+    "replayAria": "Rejouer : tour {id}, solde inchangé",
+    "share": "Partager mon gain",
+    "shareAria": "Partager mon gain : tour {id}",
+    "emptyTitle": "Votre premier tour apparaîtra ici.",
+    "emptyText": "Le mode, la mise, le coût, le gain et l’ID de chaque tour sont enregistrés ; vous pouvez revoir n’importe quel tour.",
+    "reset": "Solde rechargé",
+    "resetRemote": "Solde rechargé (serveur)",
+    "detail": {
+      "capped": "Gain maximum · {times}×",
+      "free": "Horloge à Éléphant ×{spins} · moyeu ×{hub} · {times}×",
+      "none": "Aucun gain",
+      "base": "{respins, plural, =0 {} one {# relance · } other {# relances · }}moyeu ×{hub} · {times}×"
+    }
+  },
+  "celebration": {
+    "aria": "{title} : {money} DEMO",
+    "times": "{times}× la mise",
+    "capNote": "Le tour a atteint le plafond · les tours restants ne sont pas joués",
+    "speedUp": "Touchez pour accélérer",
+    "continue": "Continuer"
+  },
+  "intro": {
+    "word": "HORLOGE À ÉLÉPHANT",
+    "srTitle": "L’Horloge à Éléphant commence",
+    "freeSpins": "tours\ngratuits",
+    "text": "Le multiplicateur du moyeu <b>n’est pas réinitialisé</b> ; il ne fait que monter d’un tour à l’autre. Le réservoir d’eau se remplit tous les 3 tours et le faucon automate lâche des jokers <b>Engrenage Doré</b> permanents. 2 Aiguières ajoutent +4 tours.",
+    "start": "Commencer"
+  },
+  "total": {
+    "titleA": "Horloge à Éléphant",
+    "titleB": "Total",
+    "word": "TOTAL",
+    "sub": "TOURS GRATUITS",
+    "spins": "Tours",
+    "spinsValue": "{spins, plural, one {# tour} other {# tours}}",
+    "topHub": "Moyeu maximal",
+    "falcon": "Faucon",
+    "falconVisits": "{n, plural, one {# visite} other {# visites}}",
+    "falconNone": "Absent",
+    "wilds": "{n, plural, one {# Engrenage Doré} other {# Engrenages Dorés}}",
+    "wildsNone": "aucun joker",
+    "ofBet": "De la mise",
+    "capNote": "Gain maximum atteint · les tours restants ne sont pas joués",
+    "toCelebration": "Passer à la célébration"
+  },
+  "rules": {
+    "board": "Le plateau est un moyeu central entouré de 4 anneaux concentriques de 12 secteurs. Sur chacun des 12 rayons qui partent du moyeu vers l’extérieur, 3 ou 4 secteurs consécutifs du même symbole, de l’intérieur vers l’extérieur (à partir de l’anneau 1 ou de l’anneau 2), paient ; le joker Engrenage Doré remplace tous les symboles. Le multiplicateur du moyeu (×1–×10) multiplie tous les gains de rayons de ce tour.",
+    "features": "Verrou d’Engrenages : s’il y a un nouveau gain, les secteurs gagnants se verrouillent, les quatre anneaux repartent en dessous et le moyeu gagne +1 à chaque relance ; jusqu’à 10 relances, tant qu’aucun nouveau paiement n’arrive. 3 Aiguières ou plus déclenchent 10 tours gratuits (Horloge à Éléphant) : le multiplicateur du moyeu est conservé d’un tour à l’autre et ne fait que monter, et tous les 3 tours le faucon automate lâche des jokers Engrenage Doré permanents. Le gain maximum est de 10 000 fois la mise.",
+    "fixed": "Le résultat est déterminé localement dans votre navigateur, avec un hasard local, avant le début du tour ; l’animation ne fait que le rejouer. Même si vous quittez la page, le tour se clôt avec le gain déterminé. Il n’y a pas de preuve VRF."
+  }
+}

@@ -19,6 +19,8 @@ import {
   CEZERI_MAX_RESPINS, CEZERI_MAX_WIN_MULTIPLIER, CEZERI_RESERVOIR_LEVELS, CEZERI_RINGS, CEZERI_SLICES,
   type CezeriBoard, type CezeriPaySymbol, type CezeriPos, type CezeriRingSpin, type CezeriRound, type CezeriSymbol,
 } from '@sollish/protocol';
+import { fixed2 } from './slot-format';
+import type { Locale } from './i18n/config';
 import { cezeriFalconPlan, cezeriRotateTiming, type CzRotateKind } from '../components/cezeri/geometry';
 import { countUpSchedule, multiplierCalloutTier, roundCelebration, type CelebrationLevel, type CountUpSchedule, type WinTier } from './slot-kit/win-tiers';
 
@@ -294,24 +296,36 @@ export function cezeriFinalBoard(round: CezeriRound): { board: CezeriBoard; hub:
 }
 
 /* ------------------------------------------------------------------ formatting */
-let twoDecimals: Intl.NumberFormat | null = null;
-const fixed2 = () => (twoDecimals ??= new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-/** Fixed two-decimal amount: 3510 -> "35,10". */
-export function cezeriMoney(cents: number): string { return fixed2().format(cents / 100); }
+/** Fixed two-decimal amount: 3510 -> "35,10" (tr, the default) / "35.10" (en). Pass the active locale for display. */
+export function cezeriMoney(cents: number, locale: Locale = 'tr'): string { return fixed2(cents / 100, locale); }
 /** Hundredths of the bet as a multiple: 1240 -> "12,40". */
-export function cezeriTimes(hundredths: number): string { return fixed2().format(hundredths / 100); }
+export function cezeriTimes(hundredths: number, locale: Locale = 'tr'): string { return fixed2(hundredths / 100, locale); }
 
-/** History row text: "2 yeniden dönüş · göbek ×5 · 3,40×", "Fil Saati ×12 · göbek ×14 · 183,50×", "Kazanç yok". */
-export function cezeriHistoryDetail(round: CezeriRound): string {
-  const total = `${cezeriTimes(round.totalHundredths)}×`;
-  if (round.capped) return `Azami kazanç · ${total}`;
-  if (round.freeSpinsTriggered) {
-    const top = Math.max(...round.spins.map(s => s.hubEnd));
-    return `Fil Saati ×${round.spins.length - 1} · göbek ×${top} · ${total}`;
-  }
-  if (round.totalHundredths === 0) return 'Kazanç yok';
+/** What a history row says, as data: the screens turn it into text in the active language (`cezeri.history.detail.*`). */
+export type CezeriHistorySummary =
+  | { kind: 'capped'; total: number }
+  | { kind: 'free'; spins: number; hub: number; total: number }
+  | { kind: 'none'; total: number }
+  | { kind: 'base'; respins: number; hub: number; total: number };
+export function cezeriHistorySummary(round: CezeriRound): CezeriHistorySummary {
+  const total = round.totalHundredths;
+  if (round.capped) return { kind: 'capped', total };
+  if (round.freeSpinsTriggered) return { kind: 'free', spins: round.spins.length - 1, hub: Math.max(...round.spins.map(s => s.hubEnd)), total };
+  if (total === 0) return { kind: 'none', total };
   const base = round.spins[0]!;
-  return `${base.respins > 0 ? `${base.respins} yeniden dönüş · ` : ''}göbek ×${base.hubEnd} · ${total}`;
+  return { kind: 'base', respins: base.respins, hub: base.hubEnd, total };
+}
+
+/** History row text (stored with the record, Turkish): "2 yeniden dönüş · göbek ×5 · 3,40×", "Fil Saati ×12 · göbek ×14 · 183,50×", "Kazanç yok". */
+export function cezeriHistoryDetail(round: CezeriRound): string {
+  const s = cezeriHistorySummary(round);
+  const total = `${cezeriTimes(s.total)}×`;
+  switch (s.kind) {
+    case 'capped': return `Azami kazanç · ${total}`;
+    case 'free': return `Fil Saati ×${s.spins} · göbek ×${s.hub} · ${total}`;
+    case 'none': return 'Kazanç yok';
+    case 'base': return `${s.respins > 0 ? `${s.respins} yeniden dönüş · ` : ''}göbek ×${s.hub} · ${total}`;
+  }
 }
 
 /** Screen-reader line for one spoke win: "Işın 4: 3 Fil Saati, göbek ×3, 0,69× kazanç". */

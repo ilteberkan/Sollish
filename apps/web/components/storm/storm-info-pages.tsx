@@ -5,19 +5,31 @@ import {
   STORM_ORB_WEIGHTS, STORM_PAYTABLE, STORM_RTP, STORM_SCATTER_PAY, type StormMode, type StormPaySymbol,
 } from '@sollish/protocol';
 import type { GameInfoPage } from '../slot-kit';
-import { formatAmount, formatDemo } from '@/lib/slot-kit/bet';
-import { STORM_MODE_LABELS, stormCost, stormRtp, stormRtpRange } from '@/lib/storm-controls';
-import { stormCents, stormMoney, stormTimes } from '@/lib/storm-timeline';
-import { STORM_SYMBOL_LABELS, StormSymbolArt } from './symbols';
+import type { Formatter } from '@/lib/i18n/format';
+import type { Translator } from '@/lib/i18n/translator';
+import { percentOf, percentRange } from '@/lib/slot-kit/percent';
+import { STORM_COST_MODES, stormCost } from '@/lib/storm-controls';
+import { stormCents } from '@/lib/storm-timeline';
+import { StormSymbolArt } from './symbols';
 import styles from './storm-info.module.css';
+
+/** Everything the info pages need to speak the current language (they are plain data, built outside React). */
+export interface StormInfoContext {
+  t: Translator<'tarhun'>;
+  tc: Translator<'common'>;
+  tk: Translator<'slotKit'>;
+  format: Formatter;
+  /** Translated symbol name. */
+  symbol: (symbol: StormPaySymbol | 'scatter' | 'orb') => string;
+}
 
 const MODES: StormMode[] = ['standard', 'ante', 'buy'];
 const ORDER: StormPaySymbol[] = ['h1', 'h2', 'h3', 'h4', 'l1', 'l2', 'l3', 'l4', 'l5'];
 const HIGH = new Set<StormPaySymbol>(['h1', 'h2', 'h3', 'h4']);
 const TIERS = ['12+', '10–11', '8–9'] as const;
-const pct = (ratio: number, digits = 1) => `%${(ratio * 100).toFixed(digits).replace('.', ',')}`;
-const int = (n: number) => new Intl.NumberFormat('tr-TR').format(n);
 const ORB_TOTAL = STORM_ORB_WEIGHTS.reduce((sum, [, w]) => sum + w, 0);
+const bold = (chunk: string) => <strong>{chunk}</strong>;
+const code = (chunk: string) => <code>{chunk}</code>;
 
 function Feature({ art, title, children }: { art?: ReactNode; title: string; children: ReactNode }) {
   return (
@@ -28,23 +40,25 @@ function Feature({ art, title, children }: { art?: ReactNode; title: string; chi
   );
 }
 
-function Paytable({ betCents }: { betCents: number }) {
-  const amount = (h: number) => stormMoney(stormCents(betCents, h));
+function Paytable({ betCents, cx }: { betCents: number; cx: StormInfoContext }) {
+  const { t, format } = cx;
+  const amount = (h: number) => format.amount(stormCents(betCents, h));
+  const times = (h: number) => format.amount(h);
   return (
     <div className={styles.page}>
-      <h3>Ödeme tablosu</h3>
-      <p className={styles.lead}>Aynı sembolden ızgarada <strong>her yerde 8 veya daha fazla</strong> varsa kazanırsın. Büyük rakam <strong>{formatDemo(betCents)}</strong> bahiste brüt DEMO tutarıdır; altındaki çarpan bahsin katıdır.</p>
-      <ul className={styles.payGrid} aria-label="Sembol ödemeleri">
+      <h3>{t('info.pay.title')}</h3>
+      <p className={styles.lead}>{t.rich('info.pay.lead', { b: bold }, { bet: format.demo(betCents) })}</p>
+      <ul className={styles.payGrid} aria-label={t('info.pay.symbolsAria')}>
         {ORDER.map(symbol => {
           const [t8, t10, t12] = STORM_PAYTABLE[symbol];
           return (
             <li key={symbol} className={`${styles.payCard} ${HIGH.has(symbol) ? styles.payHigh : ''}`}>
               <span className={styles.payArt} aria-hidden="true"><StormSymbolArt symbol={symbol} size="100%" /></span>
               <div className={styles.payBody}>
-                <h4 className={styles.payName}>{STORM_SYMBOL_LABELS[symbol]}</h4>
+                <h4 className={styles.payName}>{cx.symbol(symbol)}</h4>
                 <dl className={styles.payRows}>
                   {[t12, t10, t8].map((h, i) => (
-                    <div key={TIERS[i]}><dt>{TIERS[i]}</dt><dd><strong>{amount(h)}</strong><small>{stormTimes(h)}×</small></dd></div>
+                    <div key={TIERS[i]}><dt>{TIERS[i]}</dt><dd><strong>{amount(h)}</strong><small>{times(h)}×</small></dd></div>
                   ))}
                 </dl>
               </div>
@@ -56,26 +70,26 @@ function Paytable({ betCents }: { betCents: number }) {
         <section className={styles.special}>
           <span className={styles.specialArt} aria-hidden="true"><StormSymbolArt symbol="scatter" size="100%" /></span>
           <div>
-            <h4>{STORM_SYMBOL_LABELS.scatter} · dağınık ödeme</h4>
+            <h4>{t('info.pay.scatterTitle', { name: cx.symbol('scatter') })}</h4>
             <dl className={styles.scatterRows}>
-              <div><dt>6+ mühür</dt><dd><strong>{amount(STORM_SCATTER_PAY[6])}</strong> <small>{stormTimes(STORM_SCATTER_PAY[6])}×</small></dd></div>
-              <div><dt>5 mühür</dt><dd><strong>{amount(STORM_SCATTER_PAY[5])}</strong> <small>{stormTimes(STORM_SCATTER_PAY[5])}×</small></dd></div>
-              <div><dt>4 mühür</dt><dd><strong>{amount(STORM_SCATTER_PAY[4])}</strong> <small>{stormTimes(STORM_SCATTER_PAY[4])}×</small></dd></div>
+              <div><dt>{t('info.pay.seals6')}</dt><dd><strong>{amount(STORM_SCATTER_PAY[6])}</strong> <small>{times(STORM_SCATTER_PAY[6])}×</small></dd></div>
+              <div><dt>{t('info.pay.seals5')}</dt><dd><strong>{amount(STORM_SCATTER_PAY[5])}</strong> <small>{times(STORM_SCATTER_PAY[5])}×</small></dd></div>
+              <div><dt>{t('info.pay.seals4')}</dt><dd><strong>{amount(STORM_SCATTER_PAY[4])}</strong> <small>{times(STORM_SCATTER_PAY[4])}×</small></dd></div>
             </dl>
-            <p>Temel dönüş bitince ızgarada 4 veya daha fazla mühür varsa öder ve <strong>{STORM_FREE_SPINS_TRIGGER} bedava dönüş</strong> açar. Mühürler patlamaz.</p>
+            <p>{t.rich('info.pay.scatterText', { b: bold }, { spins: STORM_FREE_SPINS_TRIGGER })}</p>
           </div>
         </section>
         <section className={styles.special}>
           <span className={styles.specialArt} aria-hidden="true"><StormSymbolArt symbol="orb" multiplier={25} size="100%" /></span>
           <div>
-            <h4>{STORM_SYMBOL_LABELS.orb} · çarpan küresi</h4>
-            <p>×2 ile ×500 arası değer taşır, hem temel oyunda hem bedava dönüşte düşer. Patlamaz, düşmelerde yerinde kalıp kayar. Ayrıntı "Özellikler" sayfasında.</p>
+            <h4>{t('info.pay.orbTitle', { name: cx.symbol('orb') })}</h4>
+            <p>{t('info.pay.orbText', { features: t('info.features.title') })}</p>
           </div>
         </section>
         <section className={`${styles.special} ${styles.specialMax}`}>
           <div>
-            <h4>Azami kazanç {int(STORM_MAX_WIN_MULTIPLIER)}×</h4>
-            <p>Bu bahiste <strong>{formatDemo(betCents * STORM_MAX_WIN_MULTIPLIER)}</strong>. Tur toplamı bu tavana ulaşırsa tur hemen biter; kalan bedava dönüşler oynanmaz.</p>
+            <h4>{t('info.pay.maxTitle', { n: format.number(STORM_MAX_WIN_MULTIPLIER, 0) })}</h4>
+            <p>{t.rich('info.pay.maxText', { b: bold }, { amount: format.demo(betCents * STORM_MAX_WIN_MULTIPLIER) })}</p>
           </div>
         </section>
       </div>
@@ -84,135 +98,145 @@ function Paytable({ betCents }: { betCents: number }) {
 }
 
 /** Multi-page game information (game-standards §3 "Bilgi"). Amounts follow the current bet. */
-export function stormInfoPages(betCents: number): GameInfoPage[] {
+export function stormInfoPages(betCents: number, cx: StormInfoContext): GameInfoPage[] {
+  const { t, tc, tk, format } = cx;
   const minBet = STORM_BET_LEVELS_CENTS[0]!, maxBet = STORM_BET_LEVELS_CENTS[STORM_BET_LEVELS_CENTS.length - 1]!;
+  const intl = format.intl;
+  const pct = (ratio: number, digits = 1) => percentOf(intl, ratio, digits);
+  const fixed1 = (n: number) => new Intl.NumberFormat(intl, { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(n);
+  const anteFactor = STORM_COST_MODES.ante;
+  const modeLabel = (mode: StormMode) => tc(`modes.${mode}`);
   return [
     {
-      id: 'how', title: 'Nasıl oynanır',
+      id: 'how', title: t('info.how.title'),
       content: (
         <div className={styles.page}>
-          <h3>Nasıl oynanır</h3>
+          <h3>{t('info.how.title')}</h3>
           <ol className={styles.steps}>
-            <li><strong>Bahsini seç.</strong> − ve + düğmeleri bahsi bir basamak değiştirir; bahis tutarına dokununca bütün basamaklar açılır. "Azami bahis" bakiyenin yettiği en yüksek basamağı seçer.</li>
-            <li><strong>Çevir.</strong> Fırtına düğmesine bas veya Boşluk tuşunu kullan. Tur maliyeti (Şans ×2 açıksa bahsin 1,25 katı) bakiyeden bir kez düşer.</li>
-            <li><strong>Eşleştir.</strong> 6 sütun × 5 satırlık ızgarada aynı sembolden <strong>her yerde 8 veya daha fazla</strong> varsa kazanırsın; sayı arttıkça ödeme kademesi yükselir.</li>
-            <li><strong>Zincir.</strong> Kazanan taşlar parçalanır, üsttekiler düşer, boşluklar yeni taşla dolar. Yeni kazanç kalmayana kadar sürer.</li>
-            <li><strong>Yıldırım.</strong> Zincir kazançla bitince Tarhun ızgaradaki her Fırtına Taşına yıldırım atar; taşların değerleri toplanır ve kazanç bu toplamla çarpılır.</li>
-            <li><strong>Sonuç.</strong> Turun tamamı dönüş başlamadan önce motorla belirlenir; animasyon yalnızca bu sonucu oynatır. Çevir düğmesi tur (bütün düşmeler ve bedava dönüşler) bitene kadar kilitlidir; hızlandırmak için Hızlı/Turbo ayarını kullan. Hız ayarı, kutlama sayacına dokunmak, gizli sekme veya sayfadan ayrılmak ödemeyi değiştirmez; tur her durumda bir kez, motorun ödemesiyle kapanır.</li>
+            <li>{t.rich('info.how.s1', { b: bold }, { max: tk('bet.max') })}</li>
+            <li>{t.rich('info.how.s2', { b: bold }, { multiple: format.number(anteFactor.num / anteFactor.den, 2) })}</li>
+            <li>{t.rich('info.how.s3', { b: bold })}</li>
+            <li>{t.rich('info.how.s4', { b: bold })}</li>
+            <li>{t.rich('info.how.s5', { b: bold })}</li>
+            <li>{t.rich('info.how.s6', { b: bold }, { quick: tk('settings.speedQuick'), turbo: tk('settings.speedTurbo') })}</li>
           </ol>
-          <p className={styles.note}>DEMO kredisi değersizdir; SOL, token veya ödül kazandırmaz. Oyun tarayıcıda yerel rastgelelikle çalışır, VRF kanıtı yoktur.</p>
+          <p className={styles.note}>{t('info.how.note')}</p>
         </div>
       ),
     },
-    { id: 'pay', title: 'Ödeme tablosu', content: <Paytable betCents={betCents} /> },
+    { id: 'pay', title: t('info.pay.title'), content: <Paytable betCents={betCents} cx={cx} /> },
     {
-      id: 'features', title: 'Özellikler',
+      id: 'features', title: t('info.features.title'),
       content: (
         <div className={styles.page}>
-          <h3>Özellikler</h3>
-          <Feature title="Düşen taşlar (tumble)" art={<StormSymbolArt symbol="l1" size="100%" />}>
-            <p>Her kazançtan sonra kazanan taşlar parçalanır, kalanlar aşağı kayar ve boşluklar üstten dolar. Kazanç göstergesi tur boyunca sıfırlanmaz: düşmeler, çarpanlar ve bütün bedava dönüşler aynı toplamda birikir.</p>
+          <h3>{t('info.features.title')}</h3>
+          <Feature title={t('info.features.tumbleTitle')} art={<StormSymbolArt symbol="l1" size="100%" />}>
+            <p>{t('info.features.tumbleText')}</p>
           </Feature>
-          <Feature title="Fırtına Taşı (çarpan küresi)" art={<StormSymbolArt symbol="orb" multiplier={100} size="100%" />}>
-            <p>Temel oyunda ve bedava dönüşte düşebilir; değeri ×2 ile ×500 arasıdır. Temel oyunda dönüşün düşme zinciri kazançla biterse ızgaradaki taşların değerleri <strong>toplanır</strong> ve o dönüşün kazancı bu toplamla çarpılır (mühür ödemesi çarpılmaz). Kazanç yoksa taşlar etkisiz kalır.</p>
-            <ul className={styles.orbRow} aria-label="Fırtına Taşı değerleri ve olasılıkları">
+          <Feature title={t('info.features.orbTitle')} art={<StormSymbolArt symbol="orb" multiplier={100} size="100%" />}>
+            <p>{t.rich('info.features.orbText', { b: bold })}</p>
+            <ul className={styles.orbRow} aria-label={t('info.features.orbListAria')}>
               {STORM_ORB_WEIGHTS.map(([value, weight]) => (
                 <li key={value}><span aria-hidden="true"><StormSymbolArt symbol="orb" multiplier={value} size="100%" /></span><strong>×{value}</strong><small>{pct(weight / ORB_TOTAL, weight / ORB_TOTAL < 0.001 ? 3 : 1)}</small></li>
               ))}
             </ul>
           </Feature>
-          <Feature title="Toplam çarpan (bedava dönüş)" art={<StormSymbolArt symbol="orb" multiplier={250} size="100%" />}>
-            <p>Bedava dönüşler <strong>×0 toplam çarpanla</strong> başlar. Kazanan her dönüşte ızgaradaki Fırtına Taşlarının değerleri toplam çarpana <strong>eklenir</strong>, sonra o dönüşün kazancı yeni toplamla çarpılır (toplam henüz 0 ise ×1). Kazançsız dönüşte taşlar eklenmez. Toplam çarpan bedava dönüşler boyunca, ek dönüşler dahil, korunur.</p>
+          <Feature title={t('info.features.totalTitle')} art={<StormSymbolArt symbol="orb" multiplier={250} size="100%" />}>
+            <p>{t.rich('info.features.totalText', { b: bold })}</p>
           </Feature>
-          <Feature title="Şimşek Mührü (scatter)" art={<StormSymbolArt symbol="scatter" size="100%" />}>
-            <p>Temel dönüş bitince 4 veya daha fazla mühür ödeme yapar ve {STORM_FREE_SPINS_TRIGGER} bedava dönüş açar. Bedava dönüşte 3 veya daha fazla mühür {STORM_FREE_SPINS_RETRIGGER} dönüş daha ekler (ödemesiz). Bir turda en çok {STORM_MAX_FREE_SPINS} bedava dönüş verilir.</p>
+          <Feature title={t('info.features.sealTitle')} art={<StormSymbolArt symbol="scatter" size="100%" />}>
+            <p>{t('info.features.sealText', { trigger: STORM_FREE_SPINS_TRIGGER, retrigger: STORM_FREE_SPINS_RETRIGGER, max: STORM_MAX_FREE_SPINS })}</p>
           </Feature>
-          <Feature title="Bedava dönüş">
-            <p>Bedava dönüşler aynı bahisle, aynı tur içinde oynanır; ek ücret alınmaz. Her zaman "Fırtına Dindi — Toplam" ekranıyla biter: oynanan dönüş, son toplam çarpan ve toplam kazanç.</p>
+          <Feature title={t('info.features.freeTitle')}>
+            <p>{t('info.features.freeText', { screen: `${t('total.titleA')} — ${t('total.titleB')}` })}</p>
           </Feature>
-          <Feature title="Kazanç kademeleri ve çarpan anonsu">
-            <p>Tur toplamı taban bahsin <strong>10 katı</strong> veya üstüyse kutlama ekranı açılır ve sayaç kademeler arasında tırmanır: Büyük Kazanç ≥10×, Mega Kazanç ≥25×, Süper Kazanç ≥50×, Efsane Kazanç ≥100×; tavana ulaşan tur Azami Kazanç ile biter. Uygulanan her çarpan ızgaranın üstünde büyük yazıyla duyurulur; ×10, ×25, ×50, ×100, ×250 ve ×500 eşiklerinde yazı ve ses büyür. Ekrana dokunmak sayacı hemen sonuca getirir; ödemeyi değiştirmez.</p>
+          <Feature title={t('info.features.tiersTitle')}>
+            <p>{t.rich('info.features.tiersText', { b: bold }, { big: tk('winTier.big.title'), mega: tk('winTier.mega.title'), super: tk('winTier.super.title'), epic: tk('winTier.epic.title'), max: tk('winTier.max.title') })}</p>
           </Feature>
-          <Feature title={`Şans ×2 · maliyet ${formatDemo(stormCost(betCents, 'ante'))}`}>
-            <p>Açıkken her dönüş bahsin <strong>1,25 katına</strong> mal olur ve temel oyunda mühür çıkma olasılığı artar: bedava dönüş şansı yaklaşık 2 katıdır ({pct(STORM_RTP.ante.featureRate, 2)} / {pct(STORM_RTP.standard.featureRate, 2)}). Kazançlar yine taban bahse göre ödenir. Açıkken bonus satın alınamaz.</p>
+          <Feature title={t('info.features.anteTitle', { cost: format.demo(stormCost(betCents, 'ante')) })}>
+            <p>{t.rich('info.features.anteText', { b: bold }, { multiple: format.number(anteFactor.num / anteFactor.den, 2), ante: pct(STORM_RTP.ante.featureRate, 2), standard: pct(STORM_RTP.standard.featureRate, 2) })}</p>
           </Feature>
-          <Feature title={`Bonus satın al · fiyat ${formatDemo(stormCost(betCents, 'buy'))}`}>
-            <p>Bahsin <strong>100 katı</strong> karşılığında tur en az 4 mühürle başlar; {STORM_FREE_SPINS_TRIGGER} bedava dönüş garantilidir. Satın alma onay penceresiyle yapılır, ayrı bir RTP ile çalışır ({stormRtp(STORM_RTP.buy.rtp)}) ve otomatik oyunla kullanılamaz.</p>
+          <Feature title={t('info.features.buyTitle', { price: format.demo(stormCost(betCents, 'buy')) })}>
+            <p>{t.rich('info.features.buyText', { b: bold }, { spins: STORM_FREE_SPINS_TRIGGER, rtp: pct(STORM_RTP.buy.rtp) })}</p>
           </Feature>
         </div>
       ),
     },
     {
-      id: 'rtp', title: 'RTP',
+      id: 'rtp', title: t('info.rtp.title'),
       content: (
         <div className={styles.page}>
-          <h3>Teorik dönüş (RTP)</h3>
+          <h3>{t('info.rtp.heading')}</h3>
           <div className={styles.tableWrap}>
             <table>
-              <caption className="sr-only">Mod başına teorik dönüş</caption>
-              <thead><tr><th scope="col">Mod</th><th scope="col">Maliyet</th><th scope="col">RTP</th><th scope="col">%95 GA</th><th scope="col">Özellik</th></tr></thead>
+              <caption className="sr-only">{t('info.rtp.caption')}</caption>
+              <thead><tr><th scope="col">{t('info.rtp.mode')}</th><th scope="col">{t('info.rtp.cost')}</th><th scope="col">{t('info.rtp.title')}</th><th scope="col">{t('info.rtp.ci')}</th><th scope="col">{t('info.rtp.feature')}</th></tr></thead>
               <tbody>
                 {MODES.map(mode => {
                   const r = STORM_RTP[mode];
+                  const cost = STORM_COST_MODES[mode];
                   return (
                     <tr key={mode}>
-                      <th scope="row">{STORM_MODE_LABELS[mode]}</th>
-                      <td>{mode === 'standard' ? '×1' : mode === 'ante' ? '×1,25' : '×100'}</td>
-                      <td><strong>{stormRtp(r.rtp)}</strong></td>
-                      <td>{stormRtpRange(r.ciLow, r.ciHigh)}</td>
-                      <td>{r.featureRate >= 1 ? 'her tur' : `1 / ${int(Math.round(1 / r.featureRate))}`}</td>
+                      <th scope="row">{modeLabel(mode)}</th>
+                      <td>{format.factor(cost.num, cost.den)}</td>
+                      <td><strong>{pct(r.rtp)}</strong></td>
+                      <td>{percentRange(intl, r.ciLow, r.ciHigh)}</td>
+                      <td>{r.featureRate >= 1 ? t('info.rtp.everyRound') : `1 / ${format.number(Math.round(1 / r.featureRate), 0)}`}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
-          <p>Her mod için ayrı {int(STORM_RTP.standard.rounds / 1_000_000)} milyon tur simülasyonu (motor <code>storm-throne-1</code>). RTP ödenen maliyete göre hesaplanır. Kazanç sıklığı (taban dönüş): standart {pct(STORM_RTP.standard.hitRate)}, Şans ×2 {pct(STORM_RTP.ante.hitRate)}. Oynaklık (maliyet biriminde standart sapma): standart {STORM_RTP.standard.stdDev.toFixed(1).replace('.', ',')}, satın alma {STORM_RTP.buy.stdDev.toFixed(1).replace('.', ',')}.</p>
-          <p className={styles.note}>Simülasyon tahminidir, <strong>sertifikasızdır</strong>; ağır kuyruk nedeniyle güven aralığı iyimser olabilir. Kısa oturumdaki sonuç RTP'den çok farklı olabilir. DEMO kredisi <strong>değersizdir</strong>.</p>
+          <p>{t.rich('info.rtp.method', { code }, {
+            millions: format.number(STORM_RTP.standard.rounds / 1_000_000, 0), hit: pct(STORM_RTP.standard.hitRate), hitAnte: pct(STORM_RTP.ante.hitRate),
+            sdStandard: fixed1(STORM_RTP.standard.stdDev), sdBuy: fixed1(STORM_RTP.buy.stdDev),
+          })}</p>
+          <p className={styles.note}>{t.rich('info.rtp.note', { b: bold })}</p>
         </div>
       ),
     },
     {
-      id: 'limits', title: 'Bahis ve kazanç sınırları',
+      id: 'limits', title: t('info.limits.title'),
       content: (
         <div className={styles.page}>
-          <h3>Bahis ve kazanç sınırları</h3>
+          <h3>{t('info.limits.title')}</h3>
           <dl className={styles.facts}>
-            <div><dt>Bahis aralığı</dt><dd>{formatDemo(minBet, { trimZeros: true })} – {formatDemo(maxBet, { trimZeros: true })}</dd></div>
-            <div><dt>Basamaklar</dt><dd>{STORM_BET_LEVELS_CENTS.map(cents => formatAmount(cents, { trimZeros: true })).join(' · ')}</dd></div>
-            <div><dt>Şu anki bahis</dt><dd>{formatDemo(betCents)} · Şans ×2 {formatDemo(stormCost(betCents, 'ante'))} · Satın alma {formatDemo(stormCost(betCents, 'buy'))}</dd></div>
-            <div><dt>Azami kazanç</dt><dd>Bahsin {int(STORM_MAX_WIN_MULTIPLIER)} katı · bu bahiste {formatDemo(betCents * STORM_MAX_WIN_MULTIPLIER)}</dd></div>
+            <div><dt>{t('info.limits.range')}</dt><dd>{format.demo(minBet, { trimZeros: true })} – {format.demo(maxBet, { trimZeros: true })}</dd></div>
+            <div><dt>{t('info.limits.levels')}</dt><dd>{STORM_BET_LEVELS_CENTS.map(cents => format.amount(cents, { trimZeros: true })).join(' · ')}</dd></div>
+            <div><dt>{t('info.limits.current')}</dt><dd>{t('info.limits.currentValue', { bet: format.demo(betCents), ante: format.demo(stormCost(betCents, 'ante')), buy: format.demo(stormCost(betCents, 'buy')) })}</dd></div>
+            <div><dt>{t('info.limits.max')}</dt><dd>{t('info.limits.maxValue', { n: format.number(STORM_MAX_WIN_MULTIPLIER, 0), amount: format.demo(betCents * STORM_MAX_WIN_MULTIPLIER) })}</dd></div>
           </dl>
-          <p>Azami kazanca ulaşan tur hemen biter; kalan bedava dönüşler oynanmaz. Ödeme her zaman taban bahse göre hesaplanır, kuruşun altı aşağı yuvarlanır.</p>
-          <p>Bakiyenin yetmediği basamaklar ve modlar seçilemez. Bir tur tek rezervasyon ve tek ödemedir; aynı anda yalnız bir tur oynanır.</p>
+          <p>{t('info.limits.p1')}</p>
+          <p>{t('info.limits.p2')}</p>
         </div>
       ),
     },
     {
-      id: 'keys', title: 'Tuşlar',
+      id: 'keys', title: t('info.keys.title'),
       content: (
         <div className={styles.page}>
-          <h3>Klavye</h3>
+          <h3>{t('info.keys.heading')}</h3>
           <dl className={styles.keys}>
-            <div><dt><kbd>Boşluk</kbd></dt><dd>Dönüşü başlatır (Ayarlar → "Boşluk tuşuyla döndür"). Tur sürerken dönüşü atlamaz; yalnız bedava dönüş ekranlarını ve kutlama sayacını hızlandırır.</dd></div>
-            <div><dt><kbd>Enter</kbd></dt><dd>Odaktaki düğmeye basar.</dd></div>
-            <div><dt><kbd>Esc</kbd></dt><dd>Açık pencereyi kapatır (oturum hatırlatması hariç).</dd></div>
-            <div><dt><kbd>Tab</kbd></dt><dd>Kontroller arasında gezinir; odak her zaman görünür.</dd></div>
-            <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Bu bilgi penceresinde sayfa değiştirir; ayar seçimlerinde seçeneği değiştirir.</dd></div>
-            <div><dt><kbd>PageUp</kbd> <kbd>PageDown</kbd></dt><dd>Bilgi sayfaları arasında gezinir.</dd></div>
+            <div><dt><kbd>{t('info.keys.space')}</kbd></dt><dd>{t('info.keys.spaceText', { settings: tk('settings.title'), option: tk('settings.spaceToSpin') })}</dd></div>
+            <div><dt><kbd>Enter</kbd></dt><dd>{t('info.keys.enterText')}</dd></div>
+            <div><dt><kbd>Esc</kbd></dt><dd>{t('info.keys.escText')}</dd></div>
+            <div><dt><kbd>Tab</kbd></dt><dd>{t('info.keys.tabText')}</dd></div>
+            <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>{t('info.keys.arrowsText')}</dd></div>
+            <div><dt><kbd>PageUp</kbd> <kbd>PageDown</kbd></dt><dd>{t('info.keys.pageText')}</dd></div>
           </dl>
-          <p className={styles.note}>Ekran okuyucu her adımı ("8 altın boğa ritonu, 9,60× kazanç", çarpanlar, tur sonucu) duyurur; ızgara 6×5 tablo olarak okunur. Semboller renk yanında biçim ve işaretle de ayrılır. Hareketi azalt tercihi parçacık, şimşek ve sarsıntıyı kapatır.</p>
+          <p className={styles.note}>{t('info.keys.note', { example: t('announce.cluster', { count: 8, name: cx.symbol('h1').toLocaleLowerCase(t.locale === 'tr' ? 'tr-TR' : t.locale), times: format.amount(960) }) })}</p>
         </div>
       ),
     },
     {
-      id: 'fault', title: 'Arıza hükmü',
+      id: 'fault', title: t('info.fault.title'),
       content: (
         <div className={styles.page}>
-          <h3>Arıza hükmü</h3>
-          <p><strong>Arıza, etkilenen bütün oyunları ve ödemeleri geçersiz kılar.</strong> Yazılım, tarayıcı veya cihaz arızasında tur kaydı esas alınır; ekranda görünen ama motor kaydıyla uyuşmayan bir tutar geçerli değildir.</p>
-          <p>Bu oyun yalnız DEMO kredisiyle oynanır. DEMO değersizdir, paraya veya tokene çevrilemez; arıza halinde DEMO bakiyesi ve oturum geçmişi düzeltilebilir veya sıfırlanabilir.</p>
-          <p>Sonuç dönüşten önce belirlendiği için animasyonun yarıda kalması, sekmenin gizlenmesi veya sayfadan ayrılmak sonucu değiştirmez; tur yine motorun ödemesiyle bir kez kapanır.</p>
+          <h3>{t('info.fault.title')}</h3>
+          <p>{t.rich('info.fault.p1', { b: bold })}</p>
+          <p>{t('info.fault.p2')}</p>
+          <p>{t('info.fault.p3')}</p>
         </div>
       ),
     },

@@ -1,0 +1,373 @@
+{
+  "meta": {
+    "title": "Cezeri: Räder der Zeit",
+    "description": "Cezeri: Räder der Zeit — ein eigenständiges DEMO-Radspiel. Gewinnsegmente rasten ein, vier Messingräder drehen sich erneut, und der Nabenmultiplikator steigt mit jeder Drehung um 1; in der Elefantenuhr bleibt die Nabe erhalten und der Automaten-Falke wirft Wild-Zahnräder ab."
+  },
+  "title": "Cezeri: Räder der Zeit",
+  "subtitle": "Gewinnsegmente rasten ein, die Räder drehen sich erneut, und die Nabe steigt in jeder Runde um +1.",
+  "table": "Cezeri-Spieltisch",
+  "logo": {
+    "subtitle": "RÄDER DER ZEIT",
+    "label": "Cezeri: Räder der Zeit"
+  },
+  "symbols": {
+    "h1": "Elefantenuhr",
+    "h2": "Automaten-Trommler",
+    "h3": "Wasseruhr-Zitadelle",
+    "h4": "Pfauenbrunnen",
+    "l1": "Astrolabium",
+    "l2": "Fliesenstern",
+    "l3": "Kupferkelle",
+    "l4": "Flaschenzug",
+    "gear": "Goldzahnrad (Wild)",
+    "vessel": "Wassergefäß"
+  },
+  "board": {
+    "label": "Cezeri-Räder: Nabe und 4 Ringe, 12 Segmente",
+    "labelFree": "Cezeri-Räder der Elefantenuhr: Nabe und 4 Ringe, 12 Segmente",
+    "ring": "Ring {n}",
+    "cell": "{symbol}{state, select, pinned {, dauerhaftes Wild} held {, gesperrt} other {}}"
+  },
+  "reservoir": {
+    "label": "ELEFANTENUHR"
+  },
+  "deck": {
+    "group": "Spielsteuerung",
+    "balance": "Guthaben",
+    "refill": "Guthaben auffüllen",
+    "win": "Gewinn",
+    "winReplay": "Wiederholung",
+    "winReplayLast": "Gewinn der Wiederholung",
+    "winLast": "Letzter Gewinn",
+    "cost": "Kosten",
+    "spin": "Drehen",
+    "spinLocked": "Runde läuft; gesperrt, bis alle Respins und Freispiele gespielt sind.",
+    "spinCost": "Kosten {cost}",
+    "auto": "Autoplay",
+    "info": "Info",
+    "infoAria": "Spielinfo",
+    "on": "An",
+    "off": "Aus",
+    "anteDesc": "Chance auf die Elefantenuhr ≈2×",
+    "buy": "Bonus kaufen",
+    "buyDesc": "{spins, plural, one {# Freispiel} other {# Freispiele}} · {rtp}",
+    "speedAria": "Spin-Tempo: {speed}",
+    "sound": "Ton",
+    "soundLoading": "Ton wird geladen {percent} %",
+    "outOfCredit": "Dein DEMO-Guthaben ist aufgebraucht.",
+    "lastWin": "Letzte Runde <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Letzte Runde ohne Gewinn.",
+    "hintSpace": "Du kannst auch mit der Leertaste drehen.",
+    "hintFixed": "Das Ergebnis steht vor der Drehung fest."
+  },
+  "hud": {
+    "freeAria": "Freispiel {number}, noch {left}",
+    "freeSpin": "Spin {n}",
+    "freeTitle": "Elefantenuhr",
+    "left": "Übrig",
+    "chainAria": "Zahnradsperre: Respin {round}, höchstens {max}",
+    "chain": "Zahnradsperre",
+    "hubAria": "Nabenmultiplikator ×{hub}{kept, select, yes {, bleibt erhalten} other {}}",
+    "hub": "Nabe",
+    "hubKept": "Nabe · bleibt"
+  },
+  "meter": {
+    "idleA": "<b>3–4</b> gleiche Segmente auf einer Speiche zahlen",
+    "idleB": "Sperren, drehen, Nabe <b>+1</b>",
+    "total": "Gesamtgewinn",
+    "win": "Gewinn"
+  },
+  "replay": {
+    "ribbon": "Wiederholung — Guthaben unverändert · Runde {id}"
+  },
+  "auto": {
+    "ribbon": "Autoplay · noch {spins, plural, one {# Spin} other {# Spins}}"
+  },
+  "toast": {
+    "close": "Hinweis schließen",
+    "autoplayStopped": "Autoplay gestoppt: {reason}. {spins, plural, one {# Spin} other {# Spins}}, netto {net}.",
+    "autoplayStoppedShort": "Autoplay gestoppt: {reason}.",
+    "autoplayStarted": "Autoplay: {spins, plural, one {# Spin} other {# Spins}}, Verlustlimit {limit}.",
+    "refilled": "Guthaben aufgefüllt: {amount} DEMO.",
+    "shareCopied": "Link zum Teilen kopiert: {url}",
+    "shareLink": "Link zum Teilen: {url}",
+    "shareFailed": "Teilen nicht möglich: {error}",
+    "replayFailed": "Diese Runde konnte nicht wiederholt werden.",
+    "replayMismatch": "Wiederholung nicht verifizierbar: Der Eintrag stimmt nicht mit der Engine überein."
+  },
+  "callout": {
+    "tier0": "Nabe",
+    "tier1": "Starke Nabe",
+    "tier2": "Wilde Nabe",
+    "tier3": "Mächtige Nabe",
+    "tier4": "Legendäre Nabe",
+    "free": "Elefantenuhr · {tag}"
+  },
+  "banner": {
+    "fullChain": "Volle Kette · {respins} Drehungen · Nabe ×{hub}",
+    "respins": "{respins} Respins · Nabe ×{hub}",
+    "extraSpins": "+{awarded} Freispiele",
+    "scatterPay": "{count} Wassergefäße · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "Drehung gestartet, {amount} DEMO.",
+    "bonusBought": "Bonus gekauft, {amount} DEMO. Die Elefantenuhr beginnt.",
+    "sentToServer": "Drehung an den Server gesendet, {amount} DEMO.",
+    "recovered": "Die unterbrochene Runde wurde vom Server wiederhergestellt; sie wurde dort bereits ausgezahlt ({amount} DEMO).",
+    "replaying": "Wiederholung läuft: Runde {id}. Das Guthaben ändert sich nicht.",
+    "replayDone": "Wiederholung beendet: {amount} DEMO, {times}×. Guthaben unverändert.",
+    "roundEnd": "Runde beendet. Gesamtgewinn {amount} DEMO, {times}×.",
+    "roundEndNone": "Runde beendet. Kein Gewinn.",
+    "hubRespin": "Nabe +1: ×{value}. Alle Ringe drehen sich erneut (Respin {round}).",
+    "hubCarried": "Nabe ×{value} (×{carried} aus der vorigen Drehung übernommen).",
+    "hub": "Nabe ×{value}.",
+    "win": "Speiche {spoke}: {length} {name}{extended, select, yes { (verlängert)} other {}}, Nabe ×{hub}, {times}× Gewinn",
+    "lock": "Zahnradsperre: {count} Segmente gesperrt, insgesamt {total}.{respin, select, yes { Die Ringe drehen sich erneut.} other {}}",
+    "noSpokeWin": "Kein Speichengewinn in dieser Drehung.",
+    "vesselsRetrigger": "{count} Wassergefäße: {awarded} Freispiele hinzugefügt.",
+    "vesselsTrigger": "{count} Wassergefäße: Elefantenuhr gewonnen.",
+    "freeIntro": "Die Elefantenuhr beginnt: Du hast {awarded} Freispiele gewonnen.",
+    "reservoirFull": "Wasserspeicher gefüllt.",
+    "falcon": "Der Automaten-Falke ist gelandet: Ring {ring}, {count} Goldzahnräder.",
+    "freeSpinWin": "Das Freispiel brachte {times}×. Gesamt {total}×, Nabe ×{hub}.",
+    "freeSpinNone": "Kein Gewinn im Freispiel. Nabe ×{hub} bleibt erhalten.",
+    "noWin": "Kein Gewinn.",
+    "totalWin": "Gesamtgewinn {amount} DEMO, {times}×.",
+    "freeOutro": "Elefantenuhr beendet. Gesamt: {amount} DEMO, {spins} Drehungen, höchste Nabe ×{topHub}.",
+    "speed": "Spin-Tempo: {speed}.",
+    "anteOn": "Chance ×2 an: Freispiel-Chance ≈2×, Kosten {cost}.",
+    "anteOff": "Chance ×2 aus: Kosten {cost}.",
+    "refilled": "DEMO-Guthaben auf {amount} DEMO aufgefüllt.",
+    "refilledRemote": "Server-DEMO-Guthaben auf {amount} DEMO aufgefüllt."
+  },
+  "autoplay": {
+    "serverFailed": "Der Server konnte die Runde nicht starten",
+    "spinFailed": "Die Drehung konnte nicht gestartet werden",
+    "quit": "Du hast die Sitzung verlassen",
+    "title": "Autoplay",
+    "note": "{cost} pro Spin{ante, select, yes { (Chance ×2)} other {}} · kauft nie den Bonus · stoppt, sobald der Tab ausgeblendet wird."
+  },
+  "errors": {
+    "entropy": "Sichere lokale Zufallszahlen sind nicht verfügbar. Die Demo wurde nicht gestartet.",
+    "insufficient": "Guthaben reicht nicht: {kind, select, buy {Dieser Kauf kostet} other {Diese Drehung kostet}} {cost}. Senke den Einsatz oder fülle das Guthaben auf.",
+    "noCredit": "Du hast nicht genug Demo-Guthaben, oder es läuft bereits eine Demo."
+  },
+  "buy": {
+    "block": {
+      "gated": "Nur mit DEMO-Guthaben kaufbar",
+      "autoplay": "Während Autoplay nicht kaufbar",
+      "busy": "Erst nach Rundenende kaufbar",
+      "ante": "Bei aktivem Chance ×2 nicht kaufbar",
+      "balance": "Guthaben nicht ausreichend (Preis {price})"
+    },
+    "feature": "Elefantenuhr · 10 Freispiele · Einsatz {bet}",
+    "rtp": "Kauf-RTP {buy} · Standard {standard} (Simulation, nicht zertifiziert)",
+    "text": "<b>100×</b> deines Einsatzes. Am Ende der Basisdrehung liegen mindestens 3 Wassergefäße auf dem Brett und 10 Freispiele sind garantiert; der Nabenmultiplikator bleibt über die Drehungen erhalten und der Automaten-Falke lässt dauerhafte Goldzahnrad-Wilds fallen. Gewinne werden auf einen Einsatz von {bet} gezahlt, maximal {max}."
+  },
+  "gated": {
+    "title": "Kein On-Chain-Cezeri.",
+    "text": "Dieses Spiel wird nur mit DEMO-Guthaben gespielt; echte Einsätze werden nicht angenommen.",
+    "back": "Zurück zur lokalen Demo"
+  },
+  "splash": {
+    "gearLock": {
+      "title": "Zahnradsperre",
+      "text": "Gewinnsegmente rasten ein, die vier Räder drehen sich erneut, die Nabe steigt um +1"
+    },
+    "elephant": {
+      "title": "Elefantenuhr",
+      "text": "3 Wassergefäße lösen 10 Freispiele aus; die Nabe bleibt, der Falke wirft Wilds ab"
+    },
+    "max": {
+      "title": "{max}× Maximum",
+      "text": "Das Wild Goldzahnrad ersetzt jedes Symbol"
+    },
+    "loading": "Spiel wird geladen",
+    "play": "Spielen",
+    "skip": "Startbildschirm nicht mehr anzeigen",
+    "note": "DEMO-Guthaben hat keinen Wert · Das Ergebnis steht vor der Drehung fest · Nicht zertifizierte Simulation, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Ton bereit: Musik, Effekte und Umgebungsgeräusche sind auf diesem Gerät vorbereitet.",
+    "soundLoading": "Ton wird geladen {percent} % (das Spiel läuft währenddessen stumm oder mit einfachen Effekten).",
+    "soundIdle": "Der Ton wird beim ersten Tippen geladen.",
+    "demoTitle": "DEMO-Guthaben",
+    "demoText": "Guthaben {balance}{remote, select, yes { (Server)} other {}}. Das Auffüllen setzt das Guthaben auf {start} DEMO und fügt dem Verlauf eine Zeile „Guthaben aufgefüllt“ hinzu; während einer Runde oder bei laufendem Autoplay ist es nicht möglich."
+  },
+  "info": {
+    "title": "Cezeri · Spielinfo",
+    "tab": {
+      "how": "So wird gespielt",
+      "pay": "Gewinntabelle",
+      "features": "Features",
+      "rtp": "RTP",
+      "limits": "Einsatz- und Gewinnlimits",
+      "keys": "Tasten",
+      "fault": "Störungsklausel"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Wähle deinen Einsatz.</b> Die Tasten − und + ändern den Einsatz um eine Stufe; tippe auf den Einsatzbetrag, um alle Stufen zu öffnen. „Max. Einsatz“ wählt die höchste Stufe, die dein Guthaben zulässt.",
+        "spin": "<b>Drehen.</b> Drücke die Aufzugskurbel-Taste oder nutze die Leertaste. Die Rundenkosten (das {factor}-Fache des Einsatzes bei aktivem Chance ×2) werden einmal vom Guthaben abgezogen.",
+        "wheels": "<b>Die Räder.</b> Das Brett besteht aus einer Nabe und 4 konzentrischen Ringen darum; jeder Ring hat 12 Segmente und dreht sich auf seiner eigenen Bahn. Von der Nabe verlaufen 12 Speichen nach außen.",
+        "spokes": "<b>Speichengewinne.</b> 3 oder 4 aufeinanderfolgende gleiche Segmente auf einer Speiche zahlen, wenn sie bei Ring 1 oder Ring 2 beginnen. Die 12 Speichen zahlen getrennt. Der Gewinn wird mit dem Nabenmultiplikator dieser Drehung multipliziert.",
+        "lock": "<b>Zahnradsperre.</b> Gibt es einen neuen Gewinn, rasten die Gewinnsegmente ein, die vier Ringe drehen sich darunter erneut und die Nabe steigt um <b>+1</b>. Das geht so weiter, bis keine neue Auszahlung mehr kommt (bis zu {max} Respins).",
+        "result": "<b>Das Ergebnis.</b> Die gesamte Runde wird vor dem Start der Drehung von der Engine festgelegt; die Animation spielt nur dieses Ergebnis ab. Die Dreh-Taste bleibt gesperrt, bis die Runde (alle Respins und Freispiele) beendet ist; nutze die Einstellung Schnell/Turbo zum Beschleunigen. Die Tempo-Einstellung, ein Tippen auf den Feier-Zähler, ein ausgeblendeter Tab oder das Verlassen der Seite ändern die Auszahlung nicht; die Runde wird immer genau einmal mit der Auszahlung der Engine abgeschlossen."
+      },
+      "note": "DEMO-Guthaben hat keinen Wert; es bringt weder SOL, Token noch Belohnungen. Das Spiel läuft im Browser mit lokalem Zufall; es gibt keinen VRF-Nachweis."
+    },
+    "pay": {
+      "lead": "Auf einer <b>Speiche</b> zahlen <b>3 oder 4 aufeinanderfolgende Segmente</b> desselben Symbols von innen nach außen. Die große Zahl ist der Brutto-DEMO-Betrag pro Speiche bei einem Einsatz von <b>{bet}</b> (Nabe ×1); der Multiplikator darunter ist ein Vielfaches des Einsatzes. Der Nabenmultiplikator multipliziert diesen Betrag.",
+      "runsAria": "Gültige Reihen",
+      "run14": "Ring 1–4 · 4 Segmente",
+      "run13": "Ring 1–3 · 3 Segmente",
+      "run24": "Ring 2–4 · 3 Segmente",
+      "gridAria": "Symbolauszahlungen",
+      "slices4": "4 Segmente",
+      "slices3": "3 Segmente",
+      "gears4": "4 Zahnräder",
+      "gears3": "3 Zahnräder",
+      "gearText": "Ersetzt jedes Symbol außer dem Wassergefäß. Eine Reihe nur aus Zahnrädern zahlt nach ihrer eigenen Tabelle; es zählt die höher zahlende Lesart der Reihe.",
+      "scatterTitle": "{name} · Scatter-Gewinn",
+      "vessels5": "5+ Gefäße",
+      "vessels4": "4 Gefäße",
+      "vessels3": "3 Gefäße",
+      "scatterText": "Zählt überall auf den Ringen des Endbretts der Drehung; wird nicht mit der Nabe multipliziert. Im Basisspiel lösen {vessels}+ Gefäße <b>{spins} Freispiele</b> aus.",
+      "maxTitle": "Maximalgewinn {max}×",
+      "maxText": "Bei diesem Einsatz: <b>{amount}</b>. Erreicht die Rundensumme dieses Limit, endet die Runde sofort; die übrigen Freispiele werden nicht gespielt."
+    },
+    "features": {
+      "hub": {
+        "title": "Nabenmultiplikator",
+        "text": "Jede Drehung beginnt mit der Ziehung der Nabe; die Nabe multipliziert alle Speichengewinne dieser Drehung. Ziehungswahrscheinlichkeiten im Basisspiel:",
+        "aria": "Nabenziehung"
+      },
+      "lock": {
+        "title": "Zahnradsperre (Respin-Kette)",
+        "text": "Gibt es in einer Drehung eine <b>neue</b> Auszahlung, rasten die Segmente der Gewinnreihen ein; sie behalten ihre Symbole und bewegen sich nicht. Dann drehen sich <b>alle vier Ringe</b> unter den gesperrten Segmenten erneut, und die Nabe steigt mit jedem Respin um <b>+1</b>. Wächst eine gesperrte Reihe (3 → 4 Segmente), wird nur die Differenz gezahlt. Die Kette endet bei der ersten Drehung ohne neue Auszahlung, wenn alle 48 Segmente gesperrt sind oder nach {max} Respins (die letzte Drehung wird trotzdem gezahlt). Im Basisspiel drehen die Respins auf Streifen mit je einem Goldzahnrad pro Ring."
+      },
+      "elephant": {
+        "title": "Elefantenuhr ({spins} Freispiele)",
+        "text": "Im Basisspiel lösen {trigger} oder mehr Wassergefäße {spins} Freispiele aus. Der Nabenmultiplikator wird zwischen den Freispielen <b>nicht zurückgesetzt</b>: Jede Drehung startet mit der Nabe, bei der die vorige endete, oder mit der größeren ihrer eigenen Ziehung, und Respins addieren +1; die Nabe steigt nur. In einem Freispiel geben {retriggerVessels}+ Gefäße {retrigger} weitere Drehungen (ohne Auszahlung). In einer Runde werden höchstens {max} Freispiele vergeben."
+      },
+      "falcon": {
+        "title": "Wasserspeicher und Automaten-Falke",
+        "text": "Nach jedem Freispiel füllt sich der Speicher um eine Stufe. Auf Stufe {levels} leert er sich und, falls noch Drehungen übrig sind, wirft der Automaten-Falke {counts} Wild-Segmente Goldzahnrad auf einen Ring. Diese Wilds bleiben bis zum Ende des Features an ihrem Platz und können in jeder folgenden Drehung Gewinne vervollständigen."
+      },
+      "tiers": {
+        "title": "Gewinnstufen und Multiplikator-Ansagen",
+        "text": "Beträgt die Rundensumme das <b>10-Fache</b> des Basiseinsatzes oder mehr, öffnet sich ein Feierbildschirm, und der Zähler steigt durch die Stufen: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; eine Runde, die das Limit erreicht, endet mit {max}. Überschreitet die Nabe die Schwellen ×10, ×25, ×50 und ×100, wird sie mit großer Schrift und eigenem Sound angesagt. Eine Freispielrunde endet immer mit dem Bildschirm „Elefantenuhr — Gesamt“. Ein Tippen auf den Bildschirm bringt den Zähler sofort zum Ergebnis; die Auszahlung ändert sich dadurch nicht."
+      },
+      "ante": {
+        "title": "Chance ×2 · Kosten {cost}",
+        "text": "Wenn aktiv, kostet jede Drehung das <b>{factor}-Fache des Einsatzes</b> und Wassergefäße erscheinen im Basisspiel häufiger: Die Freispiel-Chance ist etwa doppelt so hoch ({ante} / {standard}). Gewinne werden weiterhin auf den Basiseinsatz gezahlt. Solange sie aktiv ist, kann der Bonus nicht gekauft werden."
+      },
+      "buy": {
+        "title": "Bonus kaufen · Preis {price}",
+        "text": "Für das <b>100-Fache des Einsatzes</b> liegen am Ende der Basisdrehung mindestens {vessels} Wassergefäße auf dem Brett (fehlende werden aus Segmenten ohne Gewinn zu Gefäßen); {spins} Freispiele sind garantiert. Der Kauf läuft über ein Bestätigungsfenster, hat einen eigenen RTP ({rtp}) und ist mit Autoplay nicht nutzbar."
+      }
+    },
+    "rtp": {
+      "title": "Theoretische Rückzahlung (RTP)",
+      "caption": "Theoretische Rückzahlung pro Modus",
+      "colMode": "Modus",
+      "colCost": "Kosten",
+      "colCi": "95-%-KI",
+      "colFeature": "Feature",
+      "everyRound": "jede Runde",
+      "oneIn": "1 / {n}",
+      "text": "Pro Modus eine eigene Simulation mit {millions} Millionen Runden (Engine <code>cezeri-gears-1</code>). Der RTP wird auf die gezahlten Kosten berechnet. Gewinnhäufigkeit (Basisdrehung): Standard {hitStandard}, Chance ×2 {hitAnte}. Volatilität (Standardabweichung in Kosteneinheiten): Standard {sdStandard}, Kauf {sdBuy}.",
+      "note": "Die Simulation ist eine Schätzung und <b>nicht zertifiziert</b>; wegen der schweren Verteilungsenden kann das Konfidenzintervall zu optimistisch sein. Ergebnisse in einer kurzen Sitzung können stark vom RTP abweichen. DEMO-Guthaben ist <b>wertlos</b>."
+    },
+    "limits": {
+      "title": "Einsatz- und Gewinnlimits",
+      "range": "Einsatzbereich",
+      "steps": "Stufen",
+      "current": "Aktueller Einsatz",
+      "currentValue": "{bet} · Chance ×2 {ante} · Kauf {buy}",
+      "max": "Maximalgewinn",
+      "maxValue": "Das {multiplier}-Fache des Einsatzes · bei diesem Einsatz {amount}",
+      "text1": "Eine Runde, die den Maximalgewinn erreicht, endet sofort; die übrigen Freispiele werden nicht gespielt. Die Auszahlung wird immer auf den Basiseinsatz berechnet, Beträge unter einem Cent werden abgerundet.",
+      "text2": "Stufen und Modi, die dein Guthaben nicht deckt, können nicht gewählt werden. Eine Runde ist eine einzige Reservierung und eine einzige Auszahlung; es wird immer nur eine Runde gleichzeitig gespielt."
+    },
+    "keys": {
+      "heading": "Tastatur",
+      "space": "Leertaste",
+      "spaceText": "Startet die Drehung (Einstellungen → „{option}“). Während einer Runde überspringt sie die Drehung nicht; sie beschleunigt nur die Freispiel-Bildschirme und den Feier-Zähler.",
+      "enterText": "Betätigt die fokussierte Schaltfläche.",
+      "escText": "Schließt das geöffnete Fenster (außer der Sitzungserinnerung).",
+      "tabText": "Wechselt zwischen den Bedienelementen; der Fokus ist immer sichtbar.",
+      "arrowsText": "Wechselt in diesem Infofenster die Seite; bei Einstellungsauswahlen ändert sie die Option.",
+      "note": "Der Screenreader sagt jeden Schritt an („Speiche 4: 3 Elefantenuhr, Nabe ×3“, Sperren, den Nabenmultiplikator, das Rundenergebnis); das Brett wird als 4 Ringe × 12 Segmente vorgelesen. Symbole unterscheiden sich neben der Farbe auch durch ihre Form. Die Einstellung „Bewegung reduzieren“ setzt die drehenden Ringe sofort und schaltet Partikel und Wackeln aus."
+    },
+    "fault": {
+      "title": "Störungsklausel",
+      "p1": "<b>Eine Störung macht alle betroffenen Spiele und Auszahlungen ungültig.</b> Bei einem Software-, Browser- oder Geräteausfall gilt die Rundenaufzeichnung; ein auf dem Bildschirm angezeigter Betrag, der nicht mit der Engine-Aufzeichnung übereinstimmt, ist ungültig.",
+      "p2": "Dieses Spiel wird nur mit DEMO-Guthaben gespielt. DEMO ist wertlos und kann nicht in Geld oder Token umgewandelt werden; bei einer Störung können das DEMO-Guthaben und der Sitzungsverlauf korrigiert oder zurückgesetzt werden.",
+      "p3": "Da das Ergebnis vor der Drehung feststeht, ändern eine abgebrochene Animation, ein ausgeblendeter Tab oder das Verlassen der Seite nichts daran; die Runde wird weiterhin einmal mit der Auszahlung der Engine abgeschlossen."
+    }
+  },
+  "history": {
+    "title": "Dein Spielverlauf",
+    "scope": "Diese Sitzung · Wiederholungen ändern das Guthaben nie",
+    "time": "Zeit",
+    "mode": "Modus",
+    "bet": "Einsatz",
+    "cost": "Kosten",
+    "win": "Gewinn",
+    "result": "Ergebnis",
+    "roundId": "Runden-ID",
+    "replayColumn": "Wiederholen",
+    "latest": "Letzte Runde",
+    "replay": "Wiederholen",
+    "replayAria": "Wiederholen: Runde {id}, Guthaben unverändert",
+    "share": "Gewinn teilen",
+    "shareAria": "Gewinn teilen: Runde {id}",
+    "emptyTitle": "Deine erste Runde erscheint hier.",
+    "emptyText": "Modus, Einsatz, Kosten, Gewinn und Runden-ID jeder Runde werden gespeichert; du kannst jede Runde erneut ansehen.",
+    "reset": "Guthaben aufgefüllt",
+    "resetRemote": "Guthaben aufgefüllt (Server)",
+    "detail": {
+      "capped": "Maximalgewinn · {times}×",
+      "free": "Elefantenuhr ×{spins} · Nabe ×{hub} · {times}×",
+      "none": "Kein Gewinn",
+      "base": "{respins, plural, =0 {} one {# Respin · } other {# Respins · }}Nabe ×{hub} · {times}×"
+    }
+  },
+  "celebration": {
+    "aria": "{title}: {money} DEMO",
+    "times": "{times}× Einsatz",
+    "capNote": "Die Runde hat das Limit erreicht · übrige Drehungen werden nicht gespielt",
+    "speedUp": "Zum Beschleunigen tippen",
+    "continue": "Weiter"
+  },
+  "intro": {
+    "word": "ELEFANTENUHR",
+    "srTitle": "Die Elefantenuhr beginnt",
+    "freeSpins": "Frei-\nspiele",
+    "text": "Der Nabenmultiplikator <b>wird nicht zurückgesetzt</b>, er steigt nur von Drehung zu Drehung. Der Wasserspeicher füllt sich alle 3 Drehungen und der Automaten-Falke wirft dauerhafte <b>Goldzahnrad</b>-Wilds ab. 2 Wassergefäße geben +4 Drehungen.",
+    "start": "Start"
+  },
+  "total": {
+    "titleA": "Elefantenuhr",
+    "titleB": "Gesamt",
+    "word": "GESAMT",
+    "sub": "FREISPIELE",
+    "spins": "Drehungen",
+    "spinsValue": "{spins, plural, one {# Drehung} other {# Drehungen}}",
+    "topHub": "Höchste Nabe",
+    "falcon": "Falke",
+    "falconVisits": "{n, plural, one {# Besuch} other {# Besuche}}",
+    "falconNone": "Nicht erschienen",
+    "wilds": "{n, plural, one {# Goldzahnrad} other {# Goldzahnräder}}",
+    "wildsNone": "keine Wilds",
+    "ofBet": "Vom Einsatz",
+    "capNote": "Maximalgewinn erreicht · übrige Drehungen werden nicht gespielt",
+    "toCelebration": "Weiter zur Feier"
+  },
+  "rules": {
+    "board": "Das Brett besteht aus einer Nabe in der Mitte und 4 konzentrischen Ringen mit je 12 Segmenten. Auf jeder der 12 Speichen, die von der Nabe nach außen verlaufen, zahlen 3 oder 4 aufeinanderfolgende gleiche Symbole von innen nach außen (beginnend bei Ring 1 oder Ring 2); das Wild Goldzahnrad ersetzt jedes Symbol. Der Nabenmultiplikator (×1–×10) multipliziert alle Speichengewinne dieser Drehung.",
+    "features": "Zahnradsperre: Gibt es einen neuen Gewinn, rasten die Gewinnsegmente ein, die vier Ringe drehen sich darunter erneut und die Nabe steigt mit jedem Respin um +1; bis zu 10 Respins, bis keine neue Auszahlung mehr kommt. 3 oder mehr Wassergefäße lösen 10 Freispiele (Elefantenuhr) aus: Der Nabenmultiplikator bleibt zwischen den Drehungen erhalten und steigt nur, und alle 3 Drehungen wirft der Automaten-Falke dauerhafte Goldzahnrad-Wilds ab. Der Maximalgewinn beträgt das 10.000-Fache des Einsatzes.",
+    "fixed": "Das Ergebnis wird vor Beginn der Drehung lokal in deinem Browser mit lokalem Zufall bestimmt; die Animation spielt nur dieses Ergebnis ab. Auch wenn du die Seite verlässt, wird die Runde mit der festgelegten Auszahlung abgeschlossen. Es gibt keinen VRF-Nachweis."
+  }
+}

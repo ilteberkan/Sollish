@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import { useT } from '@/lib/i18n/client';
 import styles from './symbols.module.css';
 
 /* TARHUN logotype. The capitals are drawn as paths (no font dependency): chiselled slab letters with
@@ -25,7 +26,13 @@ const CRACKS = [
   'M296 4L306 15L301 22L314 30L311 37M306 15L313 12',
 ];
 
-export function StormLogo({ size = 420, variant = 'full', className, title = 'Tarhun: Fırtına Tahtı' }: { size?: number | string; variant?: 'full' | 'compact'; className?: string; title?: string }) {
+export function StormLogo({ size = 420, variant = 'full', className, title }: { size?: number | string; variant?: 'full' | 'compact'; className?: string; title?: string }) {
+  const tc = useT('common');
+  const t = useT('tarhun');
+  const name = title ?? tc('games.tarhun');
+  const ribbon = t('logo.subtitle');
+  /* Long translations are squeezed to the ribbon instead of overflowing it. */
+  const fit = ribbon.length > 14 ? { textLength: 236, lengthAdjust: 'spacingAndGlyphs' as const } : {};
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const k = (n: string) => `stl${uid}${n}`;
   const u = (n: string) => `url(#${k(n)})`;
@@ -48,8 +55,8 @@ export function StormLogo({ size = 420, variant = 'full', className, title = 'Ta
   const hornL = `M${px0 + 8} ${py0 + 30}C${px0 - 16} ${py0 + 28} ${px0 - 30} ${py0 + 4} ${px0 - 24} ${py0 - 30}C${px0 - 18} ${py0 - 6} ${px0 - 6} ${py0 + 8} ${px0 + 14} ${py0 + 12}Z`;
   const hornR = `M${px1 - 8} ${py0 + 30}C${px1 + 16} ${py0 + 28} ${px1 + 30} ${py0 + 4} ${px1 + 24} ${py0 - 30}C${px1 + 18} ${py0 - 6} ${px1 + 6} ${py0 + 8} ${px1 - 14} ${py0 + 12}Z`;
   return (
-    <svg viewBox={`-10 -14 ${VW + 20} ${VH + 14}`} width={dim} className={`${styles.logo} ${className ?? ''}`} role="img" aria-label={title} style={{ height: 'auto', overflow: 'visible' }}>
-      <title>{title}</title>
+    <svg viewBox={`-10 -14 ${VW + 20} ${VH + 14}`} width={dim} className={`${styles.logo} ${className ?? ''}`} role="img" aria-label={name} style={{ height: 'auto', overflow: 'visible' }}>
+      <title>{name}</title>
       <defs>
         <radialGradient id={k('glow')} cx="0.5" cy="0.5" r="0.5">
           <stop offset="0" stopColor="#5fd8ff" stopOpacity=".55" />
@@ -151,9 +158,9 @@ export function StormLogo({ size = 420, variant = 'full', className, title = 'Ta
           <path d={`M130 ${py1 - 5}H390`} stroke="#9cc0ff" strokeWidth="1.2" opacity=".5" />
           {[[116, py1 + 13], [404, py1 + 13]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="3" fill={u('bronze')} stroke="#1a0e04" strokeWidth=".8" />)}
           <text x={VW / 2} y={py1 + 14} textAnchor="middle" dominantBaseline="central" fontSize="19.5" fontWeight={600} letterSpacing="5.4"
-            fontFamily="var(--font-barlow), 'Arial Narrow', system-ui, sans-serif" fill="#06123e" transform="translate(0 1.4)">FIRTINA TAHTI</text>
+            fontFamily="var(--font-barlow), 'Arial Narrow', system-ui, sans-serif" fill="#06123e" transform="translate(0 1.4)" {...fit}>{ribbon}</text>
           <text x={VW / 2} y={py1 + 14} textAnchor="middle" dominantBaseline="central" fontSize="19.5" fontWeight={600} letterSpacing="5.4"
-            fontFamily="var(--font-barlow), 'Arial Narrow', system-ui, sans-serif" fill="#ffe7a0">FIRTINA TAHTI</text>
+            fontFamily="var(--font-barlow), 'Arial Narrow', system-ui, sans-serif" fill="#ffe7a0" {...fit}>{ribbon}</text>
         </g>
       )}
     </svg>

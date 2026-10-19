@@ -1,4 +1,6 @@
+'use client';
 import { memo, useId } from 'react';
+import { useT } from '@/lib/i18n/client';
 import { CZ_PALETTE as P } from './symbols';
 import styles from './art.module.css';
 
@@ -51,7 +53,7 @@ export const CezeriLogo = memo(function CezeriLogo({ className, subtitle = true 
   );
   const h = subtitle ? 262 : 196;
   return (
-    <svg className={`${styles.logo} ${className ?? ''}`} viewBox={`0 0 640 ${h}`} role="img" aria-label="Cezeri: Zamanın Çarkları" focusable="false">
+    <svg className={`${styles.logo} ${className ?? ''}`} viewBox={`0 0 640 ${h}`} role="img" aria-label={t('logo.label')} focusable="false">
       <defs>
         <linearGradient id={k('brass')} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor={P.brass.hi} /><stop offset=".32" stopColor={P.brass.light} /><stop offset=".62" stopColor={P.brass.base} /><stop offset="1" stopColor={P.brass.dark} /></linearGradient>
         <linearGradient id={k('enamel')} x1="0" y1="40" x2="0" y2="160" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor={P.turq.hi} /><stop offset=".3" stopColor={P.turq.light} /><stop offset=".65" stopColor={P.turq.base} /><stop offset="1" stopColor={P.turq.deep} /></linearGradient>
@@ -87,8 +89,8 @@ export const CezeriLogo = memo(function CezeriLogo({ className, subtitle = true 
           <path d="M150 222L170 204H470L490 222L470 240H170Z" fill="none" stroke="#1a0d05" strokeWidth="1" transform="translate(320 222) scale(.97 .8) translate(-320 -222)" opacity=".6" />
           <g className={styles.logoGear2}><path d={gearD(130, 222, 8, 11, 16)} fill={u('brass')} stroke="#1a0d05" strokeWidth="1.8" /><circle cx="130" cy="222" r="4.6" fill="#1a0d05" /></g>
           <g className={styles.logoGear}><path d={gearD(510, 222, 8, 11, 16)} fill={u('brass')} stroke="#1a0d05" strokeWidth="1.8" /><circle cx="510" cy="222" r="4.6" fill="#1a0d05" /></g>
-          <text x="320" y="223" textAnchor="middle" dominantBaseline="central" fontFamily="var(--font-barlow), system-ui, sans-serif" fontWeight={600} fontSize="25" letterSpacing="4"
-            fill={u('brass')} stroke="#1a0d05" strokeWidth="3.4" strokeLinejoin="round" style={{ paintOrder: 'stroke fill' }}>ZAMANIN ÇARKLARI</text>
+          <text x="320" y="223" textAnchor="middle" dominantBaseline="central" fontFamily="var(--font-barlow), system-ui, sans-serif" fontWeight={600} fontSize={fit} letterSpacing="4"
+            fill={u('brass')} stroke="#1a0d05" strokeWidth="3.4" strokeLinejoin="round" style={{ paintOrder: 'stroke fill' }}>{sub}</text>
         </g>
       )}
     </svg>

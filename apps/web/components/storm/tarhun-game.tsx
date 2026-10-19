@@ -1,20 +1,21 @@
 'use client';
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { useRouter } from 'next/navigation';
-import { STORM_RTP, playStormRound, type StormMode, type StormRound } from '@sollish/protocol';
-import { demoNumber } from '@/lib/demo';
+import { STORM_FREE_SPINS_TRIGGER, STORM_MAX_WIN_MULTIPLIER, STORM_RTP, playStormRound, type StormMode, type StormRound } from '@sollish/protocol';
+import { DEMO_START_CENTS } from '@/lib/demo';
+import { useFormat, useT } from '@/lib/i18n/client';
+import { percentOf } from '@/lib/slot-kit/percent';
 import {
-  STORM_FULL_WINDUP_MS, buildStormTimeline, stormCalloutTier, stormCents, stormHistoryDetail, stormMoney, stormTimes, stormWinAnnouncement,
+  STORM_FULL_WINDUP_MS, buildStormTimeline, stormCalloutTier, stormCents, stormHistoryDetail,
   type StormCalloutTier, type StormEvent, type StormHeroPose, type StormMeter, type StormTimeline,
 } from '@/lib/storm-timeline';
 import { WIN_TIER_INFO, countUpSchedule, type CelebrationLevel, type CountUpSchedule } from '@/lib/slot-kit/win-tiers';
 import { TimelinePlayer } from '@/lib/slot-kit/timeline-player';
-import { AUTOPLAY_STOP_REASONS, autoplayNetLossCents, createAutoplay, type AutoplayConfig, type AutoplayState } from '@/lib/slot-kit/autoplay';
-import { formatAmount, formatDemo, formatSignedDemo } from '@/lib/slot-kit/bet';
+import { autoplayNetLossCents, createAutoplay, type AutoplayConfig, type AutoplayState, type AutoplayStopCode } from '@/lib/slot-kit/autoplay';
 import { SPIN_SPEEDS, type SpinSpeed } from '@/lib/slot-kit/settings';
 import {
   STORM_AUTOPLAY_GAP, STORM_BET_LADDER, STORM_COST_MODES, STORM_DEFAULT_BET_CENTS, STORM_MAX_BET_CENTS, STORM_MIN_BET_CENTS,
-  stormAutoplayAfterRound, stormAutoplayBeforeSpin, stormBuyBlockReason, stormCost, stormLedgerLimits, stormRoundId, stormRtp, stormTimelineOptions,
+  stormAutoplayAfterRound, stormAutoplayBeforeSpin, stormBuyBlock, stormCost, stormLedgerLimits, stormRoundId, stormTimelineOptions,
 } from '@/lib/storm-controls';
 import { markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
 import { TARHUN_ENGINE } from '@/lib/slot-engines/tarhun';
@@ -35,7 +36,8 @@ import { StormCelebration, StormFeatureTotal, StormFreeIntro } from './storm-cel
 import { StormFx, STORM_SYMBOL_COLORS } from './storm-fx';
 import { StormHistory } from './storm-history';
 import { stormInfoPages } from './storm-info-pages';
-import { STORM_SYMBOL_LABELS, StormSymbolArt, StormSymbolSprites, orbTier } from './symbols';
+import { StormSymbolArt, StormSymbolSprites, orbTier } from './symbols';
+import { useStormSymbolNames } from './use-symbol-names';
 import { useStormSound } from './use-storm-sound';
 import styles from './tarhun-game.module.css';
 
@@ -68,10 +70,10 @@ type Toast = { key: number; text: string; tone: 'info' | 'warn' };
 type MultMeter = { mode: 'base' | 'free'; parts: number[]; value: number; settled: boolean } | null;
 type ModalId = 'settings' | 'info' | 'autoplay' | 'buy' | null;
 type Boot = { phase: 'loading' | 'ready' | 'done'; progress: number };
+/** Why autoplay stopped: a slot-kit code, or one of this game's own. The text is translated where it is shown. */
+type StopCode = AutoplayStopCode | 'server-failed' | 'spin-failed' | 'quit';
 
-const ENTROPY_ERROR = 'Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.';
-const CALLOUT_TAGS: Record<StormCalloutTier, string> = { 0: 'Çarpan', 1: 'Güçlü çarpan', 2: 'Gürleyen çarpan', 3: 'Yıkıcı çarpan', 4: 'Efsane çarpan', 5: 'Gök gürültüsü', 6: 'Tanrısal çarpan' };
-const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hızlı', turbo: 'Turbo' };
+const SPEED_KEYS = { normal: 'settings.speedNormal', quick: 'settings.speedQuick', turbo: 'settings.speedTurbo' } as const satisfies Record<SpinSpeed, string>;
 const ZERO: StormMeter = { spin: 0, total: 0 };
 const BET_KEY = 'sollish:tarhun:bet';
 /** The local DEMO source over tarhun's engine only (lib/slot-engines/tarhun.ts); the other games' engines are not in this route. */
@@ -95,24 +97,24 @@ function realityIntervalOverride(): number | undefined {
 }
 
 /** Count-up number that writes its own text node (no React re-render per frame). */
-function CountUp({ cents, duration }: { cents: number; duration: number }) {
+function CountUp({ cents, duration, format }: { cents: number; duration: number; format: (cents: number) => string }) {
   const node = useRef<HTMLSpanElement>(null);
   const shown = useRef(cents);
-  const [initial] = useState(() => stormMoney(cents));
+  const [initial] = useState(() => format(cents));
   useEffect(() => {
     const el = node.current; if (!el) return;
     const from = shown.current, to = cents;
-    if (duration <= 0 || from === to || typeof requestAnimationFrame === 'undefined') { shown.current = to; el.textContent = stormMoney(to); return; }
+    if (duration <= 0 || from === to || typeof requestAnimationFrame === 'undefined') { shown.current = to; el.textContent = format(to); return; }
     const start = performance.now(); let frame = 0;
     const step = (now: number) => {
       const p = Math.min(1, Math.max(0, (now - start) / duration));
       shown.current = Math.round(from + (to - from) * (1 - (1 - p) ** 3));
-      el.textContent = stormMoney(shown.current);
+      el.textContent = format(shown.current);
       if (p < 1) frame = requestAnimationFrame(step);
     };
     frame = requestAnimationFrame(step);
-    return () => { cancelAnimationFrame(frame); shown.current = to; el.textContent = stormMoney(to); };
-  }, [cents, duration]);
+    return () => { cancelAnimationFrame(frame); shown.current = to; el.textContent = format(to); };
+  }, [cents, duration, format]);
   return <span ref={node}>{initial}</span>;
 }
 
@@ -157,6 +159,13 @@ const MemoFrame = memo(StormFrame);
 export function TarhunGame() {
   const { reserveDemo, settleDemo, recordRemote, setActiveDemo, demoBalance, resetDemoBalance } = useProduct();
   const router = useRouter();
+  const t = useT('tarhun');
+  const tc = useT('common');
+  const tk = useT('slotKit');
+  const format = useFormat();
+  const names = useStormSymbolNames();
+  const money = format.amount;
+  const gameTitle = tc('games.tarhun');
   const { settings, update: updateSettings, reset: resetSettings } = useSlotSettings('tarhun');
   const [realityMs] = useState(realityIntervalOverride);
   const session = useSession(realityMs ? { realityIntervalMs: realityMs } : {});
@@ -306,16 +315,17 @@ export function TarhunGame() {
     if (current && !current.settled) settleRef.current(current);
   }, []);
 
-  const stopAutoplay = useCallback((reason: string, tone: Toast['tone'] = 'warn') => {
+  const stopAutoplay = useCallback((code: StopCode, tone: Toast['tone'] = 'warn') => {
     const state = autoRef.current;
     if (!state) return;
     autoRef.current = null;
     setAuto(null);
     sound.autoplay(false);
     const net = -autoplayNetLossCents(state);
-    showToast(`Otomatik oyun durdu: ${reason}. ${state.spinsDone} tur, net ${formatSignedDemo(net)}.`, tone);
-    setAnnounce(`Otomatik oyun durdu: ${reason}.`);
-  }, [showToast, sound]);
+    const reason = code === 'server-failed' ? t('autoplay.serverFailed') : code === 'spin-failed' ? t('autoplay.spinFailed') : code === 'quit' ? t('autoplay.quit') : tk(`autoplay.reasons.${code}`);
+    showToast(t('autoplay.stopped', { reason, spins: state.spinsDone, net: format.signedDemo(net) }), tone);
+    setAnnounce(t('autoplay.stoppedShort', { reason }));
+  }, [showToast, sound, t, tk, format]);
 
   const finishRound = useCallback((current: LiveRound) => {
     settle(current);
@@ -328,7 +338,7 @@ export function TarhunGame() {
     sound.scene('base');
     if (current.id === null) {
       setReplaying(null);
-      setAnnounce(`Tekrar bitti: ${demoNumber(round.payoutCents)} DEMO, ${stormTimes(round.totalHundredths)}×. Bakiye değişmedi.`);
+      setAnnounce(t('announce.replayDone', { amount: format.demo(round.payoutCents), times: money(round.totalHundredths) }));
       return;
     }
     const state = autoRef.current;
@@ -337,8 +347,8 @@ export function TarhunGame() {
       autoRef.current = next;
       setAuto(next);
     }
-    setAnnounce(round.payoutCents > 0 ? `Tur bitti. Toplam kazanç ${demoNumber(round.payoutCents)} DEMO, ${stormTimes(round.totalHundredths)}×.` : 'Tur bitti. Kazanç yok.');
-  }, [settle, sound]);
+    setAnnounce(round.payoutCents > 0 ? t('announce.roundEnd', { amount: format.demo(round.payoutCents), times: money(round.totalHundredths) }) : t('announce.roundEndNoWin'));
+  }, [settle, sound, t, format, money]);
 
   /* ---------------------------------------------------------------- presentation helpers */
   /** Board centre / cell size relative to the stage. */
@@ -387,8 +397,8 @@ export function TarhunGame() {
     setCard({ kind: 'big', schedule, bet: betCents, at, dur });
     setMood('bigwin');
     sound.scene('bigwin');
-    setAnnounce(`${WIN_TIER_INFO[schedule.finalLevel].title}: ${demoNumber(stormCents(betCents, schedule.totalHundredths))} DEMO, ${stormTimes(schedule.totalHundredths)}×.`);
-  }, [sound]);
+    setAnnounce(t('announce.bigWin', { tier: tk(`winTier.${WIN_TIER_INFO[schedule.finalLevel].id}.title`), amount: format.demo(stormCents(betCents, schedule.totalHundredths)), times: money(schedule.totalHundredths) }));
+  }, [sound, t, tk, format, money]);
   const onCelebrationLevel = useCallback((level: CelebrationLevel, first: boolean, remainingMs: number) => {
     const { reduced, lite } = celebrateFx.current, f = fx.current;
     if (level === 5) sound.maxWin(); else sound.bigWin(level);
@@ -425,7 +435,7 @@ export function TarhunGame() {
       case 'highlight':
         b?.highlight(event.wins.flatMap(w => w.ids), event.dur, reduced);
         sound.winHighlight(event.stepHundredths / 100);
-        setAnnounce(event.wins.map(w => stormWinAnnouncement(w, STORM_SYMBOL_LABELS)).join('; '));
+        setAnnounce(event.wins.map(w => t('announce.cluster', { count: w.count, name: names.inline(w.symbol), times: money(w.payHundredths) })).join('; '));
         break;
       case 'shatter': {
         const ids = event.wins.flatMap(w => w.ids);
@@ -437,7 +447,7 @@ export function TarhunGame() {
         b?.shatter(ids, event.dur, reduced);
         if (f) for (const win of event.wins) {
           const c = cellPoint(win.centroid.x, win.centroid.y);
-          f.label(c.x, c.y, `+${stormMoney(stormCents(betCents, win.payHundredths))}`, styles.floatLabel, reduced ? 700 : 1200);
+          f.label(c.x, c.y, `+${money(stormCents(betCents, win.payHundredths))}`, styles.floatLabel, reduced ? 700 : 1200);
         }
         setMeterDur(Math.min(520, event.dur + 160)); setMeter(event.meter);
         sound.shatter(ids.length, Math.max(...event.wins.map(w => (w.count >= 12 ? 2 : w.count >= 10 ? 1 : 0))));
@@ -448,7 +458,7 @@ export function TarhunGame() {
         b?.charge(event.ids);
         setMult(prev => (event.kind === 'free' ? { mode: 'free', parts: [], value: prev?.value ?? 0, settled: false } : { mode: 'base', parts: [], value: 0, settled: false }));
         sound.orbCollect();
-        setAnnounce(event.kind === 'free' ? 'Tarhun Fırtına Taşlarına yıldırım atıyor: değerler toplam çarpana eklenecek.' : 'Tarhun Fırtına Taşlarına yıldırım atıyor.');
+        setAnnounce(event.kind === 'free' ? t('announce.orbChargeFree') : t('announce.orbCharge'));
         break;
       case 'orb-strike': {
         const el = b?.symbolOf(event.id), h = hero.current;
@@ -484,7 +494,7 @@ export function TarhunGame() {
         if (event.kind === 'free') sound.totalMultiplier(event.multiplier);
         const target = multRef.current;
         if (f && target && !lite) { const p = f.point(target); f.glints(p.x, p.y, p.w * 0.35, 7); f.ring(p.x, p.y, p.h * 0.8, '#bff3ff', 0.45); }
-        setAnnounce(event.kind === 'free' ? `Fırtına Taşı ×${event.value}: toplam çarpan ×${event.multiplier}.` : `Fırtına Taşı ×${event.value}: çarpan ×${event.multiplier}.`);
+        setAnnounce(t(event.kind === 'free' ? 'announce.orbArriveFree' : 'announce.orbArrive', { value: String(event.value), multiplier: String(event.multiplier) }));
         break;
       }
       case 'orb-fizzle': b?.fizzle(event.ids); break;
@@ -495,12 +505,12 @@ export function TarhunGame() {
         if (!reduced) m?.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.16)', offset: 0.25 }, { transform: 'scale(.97)', offset: 0.6 }, { transform: 'scale(1)' }], { duration: 560, easing: 'ease-out' });
         if (f && m && !lite) { const p = f.point(m); f.glints(p.x, p.y, p.w * 0.35, 12); }
         showCallout(event.multiplier, event.kind === 'free', reduced, lite, Math.max(1000, Math.min(2300, Math.round(event.dur * 1.5))));
-        setAnnounce(`Çarpan ×${event.multiplier}: ${stormTimes(event.baseHundredths)}× kazanç ${event.multiplier} ile çarpıldı.`);
+        setAnnounce(t('announce.multiply', { multiplier: String(event.multiplier), base: money(event.baseHundredths) }));
         break;
       }
       case 'scatter-pay':
         setMeterDur(500); setMeter(event.meter);
-        setBanner({ key: ++bannerKey.current, text: `${event.count} Şimşek Mührü · +${stormMoney(stormCents(betCents, event.hundredths))} DEMO`, tone: 'gold' });
+        setBanner({ key: ++bannerKey.current, text: t('banner.scatterPay', { count: event.count, amount: money(stormCents(betCents, event.hundredths)) }), tone: 'gold' });
         break;
       case 'scatter-trigger': {
         b?.dim(true); b?.flare(event.ids, event.dur, reduced);
@@ -509,11 +519,11 @@ export function TarhunGame() {
         if (event.retrigger) {
           sound.retrigger();
           setFreeInfo(prev => (prev ? { ...prev, left: event.freeSpinsLeft } : prev));
-          setBanner({ key: ++bannerKey.current, text: `+${event.awarded} bedava dönüş`, tone: 'storm' });
-          setAnnounce(`${event.count} Şimşek Mührü: ${event.awarded} bedava dönüş eklendi.`);
+          setBanner({ key: ++bannerKey.current, text: t('banner.retrigger', { n: event.awarded }), tone: 'storm' });
+          setAnnounce(t('announce.retrigger', { count: event.count, awarded: event.awarded }));
         } else {
           sound.featureTrigger();
-          setAnnounce(`${event.count} Şimşek Mührü: bedava dönüş kazanıldı.`);
+          setAnnounce(t('announce.trigger', { count: event.count }));
         }
         break;
       }
@@ -521,7 +531,7 @@ export function TarhunGame() {
         setCard({ kind: 'intro', awarded: event.awarded, at: event.at, dur: event.dur });
         sound.freeSpinsIntro();
         setMood('feature');
-        setAnnounce(`Fırtına başlıyor: ${event.awarded} bedava dönüş kazandın.`);
+        setAnnounce(t('announce.freeIntro', { awarded: event.awarded }));
         break;
       case 'free-mode':
         setCard(null); b?.dim(false); setFree(event.on); setFreeInfo({ number: 0, left: event.freeSpinsLeft });
@@ -534,10 +544,10 @@ export function TarhunGame() {
         setMeterDur(300); setMeter(event.meter);
         if (event.kind === 'free') {
           const m = meterRef.current;
-          if (f && m && event.winHundredths > 0) { const p = f.point(m); f.label(p.x, p.y - p.h * 1.05, `+${stormMoney(stormCents(betCents, event.winHundredths))}`, styles.floatSpin, reduced ? 900 : 1400); }
-          setAnnounce(event.winHundredths > 0 ? `Bedava dönüş ${stormTimes(event.winHundredths)}× kazandırdı. Toplam ${stormTimes(event.meter.total)}×, toplam çarpan ×${event.totalMultiplier}.` : 'Bedava dönüşte kazanç yok.');
+          if (f && m && event.winHundredths > 0) { const p = f.point(m); f.label(p.x, p.y - p.h * 1.05, `+${money(stormCents(betCents, event.winHundredths))}`, styles.floatSpin, reduced ? 900 : 1400); }
+          setAnnounce(event.winHundredths > 0 ? t('announce.freeSpinWin', { win: money(event.winHundredths), total: money(event.meter.total), multiplier: String(event.totalMultiplier) }) : t('announce.freeSpinNoWin'));
         } else {
-          if (event.winHundredths === 0) setAnnounce('Kazanç yok.');
+          if (event.winHundredths === 0) setAnnounce(t('announce.noWin'));
           else if (event.winHundredths >= 300 && event.winHundredths < 1000) sound.nice();
         }
         break;
@@ -548,7 +558,7 @@ export function TarhunGame() {
         const m = meterRef.current;
         if (!reduced) m?.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.1)', offset: 0.3 }, { transform: 'scale(.98)', offset: 0.65 }, { transform: 'scale(1)' }], { duration: 620, easing: 'ease-out' });
         if (f && m && !lite) { const p = f.point(m); f.glints(p.x, p.y, p.w * 0.5, 14); f.ring(p.x, p.y, p.h * 1.3, '#ffe09a', 0.55); }
-        setAnnounce(`Toplam kazanç ${demoNumber(stormCents(betCents, event.totalHundredths))} DEMO, ${stormTimes(event.totalHundredths)}×.`);
+        setAnnounce(t('announce.totalWin', { amount: format.demo(stormCents(betCents, event.totalHundredths)), times: money(event.totalHundredths) }));
         break;
       }
       case 'free-outro':
@@ -556,7 +566,7 @@ export function TarhunGame() {
         sound.featureOutro();
         setMood('base');
         if (!lite) scene.current?.celebrate(0.8);
-        setAnnounce(`Fırtına dindi. Toplam: ${demoNumber(stormCents(betCents, event.totalHundredths))} DEMO, ${event.spins} dönüş, toplam çarpan ×${event.totalMultiplier}.`);
+        setAnnounce(t('announce.freeOutro', { amount: format.demo(stormCents(betCents, event.totalHundredths)), spins: event.spins, multiplier: String(event.totalMultiplier) }));
         break;
       case 'big-win':
         openCelebration(event.schedule, betCents, event.at, event.dur, reduced, lite);
@@ -569,7 +579,7 @@ export function TarhunGame() {
         finishRound(current);
         break;
     }
-  }, [cellPoint, finishRound, openCelebration, showCallout, sound]);
+  }, [cellPoint, finishRound, openCelebration, showCallout, sound, t, format, money, names]);
 
   /* ---------------------------------------------------------------- starting rounds */
   const begin = useCallback((current: LiveRound, text: string) => {
@@ -596,7 +606,7 @@ export function TarhunGame() {
     pendingRemote.current = true;
     setError(''); setPhase('playing'); setActiveDemo(true); setReplaying(null);
     setRemoteBalance(balanceBefore - cost);
-    setAnnounce(`Dönüş sunucuya gönderildi, ${demoNumber(cost)} DEMO.`);
+    setAnnounce(t('announce.sent', { amount: format.demo(cost) }));
     source.client.play('tarhun', betCents, roundMode).then(play => {
       pendingRemote.current = false;
       const s = settingsRef.current;
@@ -606,16 +616,16 @@ export function TarhunGame() {
         settled: false, remote: { receipt: play.receipt, balanceAfter: play.receipt.balanceCents },
       };
       if (!mounted.current) { settleRef.current(current); return; }
-      begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Bedava dönüşler başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+      begin(current, t(roundMode === 'buy' ? 'announce.buyStarted' : 'announce.spinStarted', { amount: format.demo(cost) }));
     }, (failure: unknown) => {
       pendingRemote.current = false;
       setActiveDemo(false);
       if (!mounted.current) return;
       setPhase('idle'); setError(rgsErrorMessage(failure)); sound.denied();
-      if (autoRef.current) stopAutoplay('Sunucu turu başlatılamadı');
+      if (autoRef.current) stopAutoplay('server-failed');
       source.client.state().then(state => { if (mounted.current) setRemoteBalance(state.balanceCents); }, () => undefined);
     });
-  }, [bet, begin, reducedMotion, setActiveDemo, sound, stopAutoplay]);
+  }, [bet, begin, reducedMotion, setActiveDemo, sound, stopAutoplay, t, format]);
 
   const startRound = useCallback((kind: 'spin' | 'buy'): boolean => {
     if ((live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
@@ -624,7 +634,7 @@ export function TarhunGame() {
     const cost = stormCost(bet, roundMode);
     const balanceBefore = balanceRef.current;
     if (cost > balanceBefore) {
-      setError(`Bakiye yetersiz: bu ${roundMode === 'buy' ? 'satın alma' : 'dönüş'} ${formatDemo(cost)}. Bahsi düşür veya bakiyeyi yenile.`);
+      setError(t(roundMode === 'buy' ? 'error.insufficientBuy' : 'error.insufficientSpin', { cost: format.demo(cost) }));
       sound.denied();
       return false;
     }
@@ -632,18 +642,18 @@ export function TarhunGame() {
     let round: StormRound;
     try {
       round = localRoundSource.resolve('tarhun', bet, roundMode);
-    } catch { setError(ENTROPY_ERROR); return false; }
+    } catch { setError(t('error.entropy')); return false; }
     let id: string | null;
-    try { id = reserveDemo(cost, stormLedgerLimits(bet, roundMode)); } catch { setError(ENTROPY_ERROR); return false; }
-    if (!id) { setError('Yeterli demo kredin yok veya devam eden bir demo var.'); sound.denied(); return false; }
+    try { id = reserveDemo(cost, stormLedgerLimits(bet, roundMode)); } catch { setError(t('error.entropy')); return false; }
+    if (!id) { setError(t('error.noCredit')); sound.denied(); return false; }
     setActiveDemo(true);
     const s = settingsRef.current;
     const timeline = buildStormTimeline(round, stormTimelineOptions(s, reducedMotion));
     const current: LiveRound = { id, replayOf: null, bet, cost, mode: roundMode, balanceBefore, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects, settled: false, remote: null };
     setReplaying(null);
-    begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Bedava dönüşler başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+    begin(current, t(roundMode === 'buy' ? 'announce.buyStarted' : 'announce.spinStarted', { amount: format.demo(cost) }));
     return true;
-  }, [ante, bet, begin, booting, gated, reducedMotion, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote]);
+  }, [ante, bet, begin, booting, gated, reducedMotion, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote, t, format]);
 
   // Reload recovery (remote): the last server round of this game that this tab did not finish showing is shown again,
   // exactly as resolved. Nothing is debited or credited here; the server settled it when it was accepted.
@@ -660,8 +670,8 @@ export function TarhunGame() {
     };
     setActiveDemo(true);
     setRemoteBalance(current.balanceBefore - current.cost);
-    begin(current, `Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı (${demoNumber(receipt.payoutCents)} DEMO).`);
-  }, [sourceView, booting, begin, reducedMotion, setActiveDemo]);
+    begin(current, t('announce.recovered', { amount: format.demo(receipt.payoutCents) }));
+  }, [sourceView, booting, begin, reducedMotion, setActiveDemo, t, format]);
 
   /** Remote only: publish the signed replay of a server round and hand out its link. */
   const shareRound = useCallback((record: DemoRecord) => {
@@ -671,24 +681,24 @@ export function TarhunGame() {
       const url = `${window.location.origin}${path}`;
       let copied = false;
       try { await navigator.clipboard.writeText(url); copied = true; } catch { /* clipboard blocked: show the link */ }
-      showToast(copied ? `Paylaşım bağlantısı kopyalandı: ${url}` : `Paylaşım bağlantısı: ${url}`);
-    }, (failure: unknown) => showToast(`Paylaşılamadı: ${rgsErrorMessage(failure)}`, 'warn'));
-  }, [remote, showToast]);
+      showToast(t(copied ? 'toast.shareCopied' : 'toast.shareLink', { url }));
+    }, (failure: unknown) => showToast(t('toast.shareFailed', { reason: rgsErrorMessage(failure) }), 'warn'));
+  }, [remote, showToast, t]);
   const startRef = useRef(startRound); startRef.current = startRound;
 
   const replay = useCallback((record: DemoRecord) => {
     const meta = record.storm;
     if (!meta || (live.current && !live.current.settled) || autoRef.current || booting) return;
     let round: StormRound;
-    try { round = playStormRound(meta.seedHex, meta.betCents, meta.mode); } catch { showToast('Bu tur tekrar oynatılamadı.', 'warn'); return; }
-    if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast('Tekrar doğrulanamadı: kayıt motorla uyuşmuyor.', 'warn'); return; }
+    try { round = playStormRound(meta.seedHex, meta.betCents, meta.mode); } catch { showToast(t('toast.replayFailed'), 'warn'); return; }
+    if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast(t('toast.replayMismatch'), 'warn'); return; }
     const s = settingsRef.current;
     const timeline = buildStormTimeline(round, stormTimelineOptions(s, reducedMotion));
     const current: LiveRound = { id: null, replayOf: record.id, bet: meta.betCents, cost: meta.costCents, mode: meta.mode, balanceBefore: balanceRef.current, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects, settled: false, remote: null };
     setReplaying({ recordId: record.id, seed: meta.seedHex });
     stageRef.current?.scrollIntoView({ block: 'start' });
-    begin(current, `Tekrar oynatılıyor: tur ${stormRoundId(meta.seedHex)}. Bakiye değişmez.`);
-  }, [begin, booting, reducedMotion, showToast]);
+    begin(current, t('announce.replaying', { id: stormRoundId(meta.seedHex) }));
+  }, [begin, booting, reducedMotion, showToast, t]);
 
   /** Tap on a hold screen: the first tap on a celebration finishes the count-up, the next closes. Never touches a result. */
   const advanceHold = useCallback(() => {
@@ -752,8 +762,8 @@ export function TarhunGame() {
     setAuto(state);
     setModal(null);
     sound.unlock(); sound.autoplay(true);
-    showToast(`Otomatik oyun: ${config.spins} tur, kayıp limiti ${formatDemo(config.lossLimitCents)}.`);
-  }, [busy, gated, showToast, sound]);
+    showToast(t('toast.autoplay', { spins: config.spins, limit: format.demo(config.lossLimitCents) }));
+  }, [busy, gated, showToast, sound, t, format]);
 
   const realityDue = session.realityDue;
   useEffect(() => {
@@ -762,14 +772,14 @@ export function TarhunGame() {
     const timer = window.setTimeout(() => {
       const state = autoRef.current; if (!state) return;
       const decision = stormAutoplayBeforeSpin(state, { balanceCents: balanceRef.current, betCents: bet, ante, tabHidden: document.hidden });
-      if (!decision.continue) { stopAutoplay(decision.reason, decision.code === 'completed' ? 'info' : 'warn'); return; }
-      if (!startRef.current('spin')) stopAutoplay('Dönüş başlatılamadı');
+      if (!decision.continue) { stopAutoplay(decision.code, decision.code === 'completed' ? 'info' : 'warn'); return; }
+      if (!startRef.current('spin')) stopAutoplay('spin-failed');
     }, phase === 'idle' ? 0 : gap);
     return () => window.clearTimeout(timer);
   }, [auto, phase, modal, realityDue, booting, gated, bet, ante, stopAutoplay]);
 
   useEffect(() => {
-    const onVisibility = () => { if (document.hidden && autoRef.current) stopAutoplay(AUTOPLAY_STOP_REASONS['tab-hidden']); };
+    const onVisibility = () => { if (document.hidden && autoRef.current) stopAutoplay('tab-hidden'); };
     document.addEventListener('visibilitychange', onVisibility);
     return () => document.removeEventListener('visibilitychange', onVisibility);
   }, [stopAutoplay]);
@@ -796,17 +806,20 @@ export function TarhunGame() {
   const roundMode: StormMode = ante ? 'ante' : 'standard';
   const spinCost = stormCost(bet, roundMode);
   const buyPrice = stormCost(bet, 'buy');
-  const buyReason = stormBuyBlockReason({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const buyBlock = stormBuyBlock({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const buyReason = buyBlock ? (buyBlock.code === 'balance' ? t('buyBlock.balance', { price: format.demo(buyBlock.priceCents) }) : t(`buyBlock.${buyBlock.code}`)) : null;
+  const rtpOf = (ratio: number) => percentOf(format.intl, ratio);
+  const freeSpinsLabel = t('free.tag');
   const locked = busy || auto !== null || gated || booting || sourcePending;
   const amountCents = (h: number) => (roundBet === null ? 0 : stormCents(roundBet, h));
-  const boardLabel = free ? 'Tarhun bedava dönüş ızgarası, 6 sütun, 5 satır' : 'Tarhun ızgarası, 6 sütun, 5 satır';
+  const boardLabel = t(free ? 'board.labelFree' : 'board.label');
   const boardElement = useMemo(() => <MemoFrame mood={free ? 'feature' : 'base'}><StormBoard ref={board} label={boardLabel} /></MemoFrame>, [boardLabel, free]);
   const celebrating = card?.kind === 'big' || card?.kind === 'outro' || card?.kind === 'intro';
-  const infoPages = useMemo(() => stormInfoPages(bet), [bet]);
+  const infoPages = useMemo(() => stormInfoPages(bet, { t, tc, tk, format, symbol: names.label }), [bet, t, tc, tk, format, names]);
   const outOfCredit = !busy && balance < STORM_MIN_BET_CENTS;
   const deckWin = busy ? amountCents(meter.total) : (lastWin?.payout ?? 0);
   const speedIndex = SPIN_SPEEDS.indexOf(settings.spinSpeed);
-  const replayInfo = replaying ? `Tekrar — bakiye değişmez · tur ${stormRoundId(replaying.seed)}` : null;
+  const replayInfo = replaying ? t('replay.ribbon', { id: stormRoundId(replaying.seed) }) : null;
   const multVisible = free || (mult !== null && mult.mode === 'base');
 
   const openInfo = (page = 'how') => { setInfoPage(page); setModal('info'); sound.click(); };
@@ -818,25 +831,26 @@ export function TarhunGame() {
         setRemoteBalance(cents);
         const at = Date.now();
         recordRemote({ id: `remote-reset:${at}`, game: 'Tarhun', stake: 0, payout: 0, detail: 'Bakiye yenilendi (sunucu)', at, kind: 'reset' });
-        showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('Sunucu DEMO bakiyesi 1.000 DEMO olarak yenilendi.');
+        const amount = format.demo(DEMO_START_CENTS, { trimZeros: true });
+        showToast(t('toast.refilled', { amount })); setError(''); setAnnounce(t('announce.refilledRemote', { amount }));
       }, (failure: unknown) => showToast(rgsErrorMessage(failure), 'warn'));
       return;
     }
-    if (resetDemoBalance('Tarhun')) { showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('DEMO bakiyesi 1.000 DEMO olarak yenilendi.'); }
+    if (resetDemoBalance('Tarhun')) { const amount = format.demo(DEMO_START_CENTS, { trimZeros: true }); showToast(t('toast.refilled', { amount })); setError(''); setAnnounce(t('announce.refilled', { amount })); }
   };
   const toggleSound = () => { const muted = !settings.muted; updateSettings({ muted }); if (!muted) sound.unlock(); };
   const cycleSpeed = () => {
     const next = SPIN_SPEEDS[(speedIndex + 1) % SPIN_SPEEDS.length]!;
     updateSettings({ spinSpeed: next });
     sound.click();
-    setAnnounce(`Dönüş hızı: ${SPEED_LABELS[next]}.`);
+    setAnnounce(t('announce.speed', { speed: tk(SPEED_KEYS[next]) }));
   };
   const toggleAnte = () => {
     if (locked) return;
     const next = !ante;
     setAnte(next);
     sound.click();
-    setAnnounce(next ? `Şans ×2 açık: bedava dönüş şansı ≈2 kat, maliyet ${formatDemo(stormCost(bet, 'ante'))}.` : `Şans ×2 kapalı: maliyet ${formatDemo(bet)}.`);
+    setAnnounce(next ? t('announce.anteOn', { cost: format.demo(stormCost(bet, 'ante')) }) : t('announce.anteOff', { cost: format.demo(bet) }));
   };
   const onSpinClick = () => { if (busy) return; startRound('spin'); };
   const confirmBuy = () => { if (buyReason) return; setModal(null); startRound('buy'); };
@@ -849,72 +863,72 @@ export function TarhunGame() {
       balanceCents={balance}
       maxBetCents={STORM_MAX_BET_CENTS}
       costMode={STORM_COST_MODES[roundMode]}
-      modeLabel={ante ? 'Şans ×2' : undefined}
+      modeLabel={ante ? tc('modes.ante') : undefined}
       disabled={locked}
       classNames={{ minus: styles.stepBtn, plus: styles.stepBtn, value: styles.betValue, max: styles.maxChip }}
       render={parts => (
-        <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label="Oyun kontrolleri">
+        <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label={t('deck.aria')}>
           <div className={styles.cellBalance}>
-            <span className={styles.cellLabel}>Bakiye</span>
-            <strong className={styles.cellValue} data-testid="tarhun-balance">{formatAmount(balance)}<small> DEMO</small></strong>
-            <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated} aria-label="Bakiyeyi yenile"><RefillIcon /><span aria-hidden="true">Bakiyeyi yenile</span></button>
+            <span className={styles.cellLabel}>{t('deck.balance')}</span>
+            <strong className={styles.cellValue} data-testid="tarhun-balance">{money(balance)}<small> DEMO</small></strong>
+            <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated} aria-label={t('deck.refill')}><RefillIcon /><span aria-hidden="true">{t('deck.refill')}</span></button>
           </div>
           <div className={styles.cellWin}>
-            <span className={styles.cellLabel}>{busy ? (replaying ? 'Tekrar' : 'Kazanç') : lastWin?.replay ? 'Tekrar kazancı' : 'Son kazanç'}</span>
-            <strong className={`${styles.cellValue} ${deckWin > 0 ? styles.cellWinOn : ''}`}>{formatAmount(deckWin)}<small> DEMO</small></strong>
+            <span className={styles.cellLabel}>{busy ? (replaying ? t('deck.replay') : t('deck.win')) : lastWin?.replay ? t('deck.replayWin') : t('deck.lastWin')}</span>
+            <strong className={`${styles.cellValue} ${deckWin > 0 ? styles.cellWinOn : ''}`}>{money(deckWin)}<small> DEMO</small></strong>
           </div>
           <div className={styles.cellBet}>
             {parts.label}
             {parts.value}
-            <span className={styles.costLine} data-testid="tarhun-cost">Maliyet <strong>{formatAmount(spinCost)} DEMO</strong>{ante && <em> · ×1,25</em>}</span>
+            <span className={styles.costLine} data-testid="tarhun-cost">{tk('bet.cost')} <strong>{money(spinCost)} DEMO</strong>{ante && <em> · {format.factor(STORM_COST_MODES.ante.num, STORM_COST_MODES.ante.den)}</em>}</span>
           </div>
           <div className={styles.areaMinus}>{parts.minus}</div>
           <div className={styles.areaPlus}>{parts.plus}</div>
           <div className={styles.areaMax}>{parts.max}</div>
           <div className={styles.areaSpin}>
             {auto ? (
-              <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay(AUTOPLAY_STOP_REASONS.cancelled, 'info')} />
+              <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay('cancelled', 'info')} />
             ) : (
               <button type="button" className={`${styles.spin} ${busy ? styles.spinning : ''}`} onClick={onSpinClick} disabled={busy || gated || booting || sourcePending}
-                aria-label="Çevir" aria-describedby="tz-spin-cost" data-locked={busy || undefined} data-testid="tarhun-spin">
+                aria-label={t('deck.spin')} aria-describedby="tz-spin-cost" data-locked={busy || undefined} data-testid="tarhun-spin">
                 <span className={styles.spinFace}><SpinSigil /></span>
                 {busy && <span className={styles.spinLock} aria-hidden="true"><LockIcon /></span>}
               </button>
             )}
-            <span id="tz-spin-cost" className="sr-only">{busy ? 'Tur sürüyor; bütün düşmeler, yıldırımlar ve bedava dönüşler bitene kadar kilitli.' : `Maliyet ${formatDemo(spinCost)}`}</span>
+            <span id="tz-spin-cost" className="sr-only">{busy ? t('deck.spinLocked') : `${tk('bet.cost')} ${format.demo(spinCost)}`}</span>
           </div>
           <button type="button" className={`${styles.tool} ${styles.areaAuto}`} onClick={() => { sound.click(); setModal('autoplay'); }} disabled={locked} aria-haspopup="dialog">
-            <LoopIcon /><span>Otomatik</span>
+            <LoopIcon /><span>{t('deck.auto')}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaInfo}`} onClick={() => openInfo()} aria-haspopup="dialog" aria-label="Oyun bilgisi">
-            <InfoIcon /><span>Bilgi</span>
+          <button type="button" className={`${styles.tool} ${styles.areaInfo}`} onClick={() => openInfo()} aria-haspopup="dialog" aria-label={tk('info.title')}>
+            <InfoIcon /><span>{t('deck.info')}</span>
           </button>
           <button type="button" role="switch" aria-checked={ante} className={`${styles.feature} ${styles.areaAnte} ${ante ? styles.featureOn : ''}`} onClick={toggleAnte} disabled={locked}
-            aria-label="Şans ×2" aria-describedby="tz-ante-desc">
-            <span className={styles.featureTitle}>Şans ×2</span>
-            <span className={styles.featureState}>{ante ? 'Açık' : 'Kapalı'}<span className={styles.featureFactor}> · ×1,25</span></span>
-            <span id="tz-ante-desc" className={styles.featureDesc}>Bedava dönüş şansı ≈2 kat</span>
+            aria-label={tc('modes.ante')} aria-describedby="tz-ante-desc">
+            <span className={styles.featureTitle}>{tc('modes.ante')}</span>
+            <span className={styles.featureState}>{ante ? t('deck.on') : t('deck.off')}<span className={styles.featureFactor}> · {format.factor(STORM_COST_MODES.ante.num, STORM_COST_MODES.ante.den)}</span></span>
+            <span id="tz-ante-desc" className={styles.featureDesc}>{t('deck.anteDesc')}</span>
           </button>
           <button type="button" className={`${styles.feature} ${styles.featureBuy} ${styles.areaBuy}`} aria-disabled={buyReason ? true : undefined}
             onClick={() => { if (buyReason) sound.denied(); else sound.click(); setModal('buy'); }} aria-haspopup="dialog" aria-describedby="tz-buy-desc">
-            <span className={styles.featureTitle}>Bonus satın al</span>
-            <span className={styles.featureState}>{formatAmount(buyPrice, { trimZeros: true })} DEMO</span>
-            <span id="tz-buy-desc" className={styles.featureDesc}>{buyReason ?? `15 bedava dönüş · ${stormRtp(STORM_RTP.buy.rtp)}`}</span>
+            <span className={styles.featureTitle}>{tk('buy.title')}</span>
+            <span className={styles.featureState}>{format.amount(buyPrice, { trimZeros: true })} DEMO</span>
+            <span id="tz-buy-desc" className={styles.featureDesc}>{buyReason ?? t('deck.buyDesc', { spins: STORM_FREE_SPINS_TRIGGER, rtp: rtpOf(STORM_RTP.buy.rtp) })}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSet}`} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label="Ayarlar">
-            <GearIcon /><span>Ayarlar</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSet}`} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label={tk('settings.title')}>
+            <GearIcon /><span>{tk('settings.title')}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSpeed} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed} aria-label={`Dönüş hızı: ${SPEED_LABELS[settings.spinSpeed]}`}>
-            <BoltIcons count={speedIndex + 1} /><span>{SPEED_LABELS[settings.spinSpeed]}</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSpeed} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed} aria-label={t('deck.speed', { speed: tk(SPEED_KEYS[settings.spinSpeed]) })}>
+            <BoltIcons count={speedIndex + 1} /><span>{tk(SPEED_KEYS[settings.spinSpeed])}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSound} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label="Ses">
-            <SoundIcon on={!settings.muted} /><span>Ses</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSound} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label={tk('settings.sound')}>
+            <SoundIcon on={!settings.muted} /><span>{tk('settings.sound')}</span>
           </button>
           <div className={styles.areaMsg}>
-            {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">Ses yükleniyor %{soundLoad.percent}</p>}
+            {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">{t('deck.soundLoading', { percent: format.percent(soundLoad.percent / 100) })}</p>}
             {error ? <p className={styles.msgError} role="alert">{error}</p>
-              : outOfCredit ? <p className={styles.msgHint}>DEMO bakiyen bitti. <button type="button" className={styles.inlineLink} onClick={refill}>Bakiyeyi yenile</button></p>
-              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? <>Son tur <strong>+{stormMoney(lastWin.payout)} DEMO</strong> · {stormTimes(lastWin.total)}×</> : <>Son tur kazançsız.</>) : settings.spaceToSpin ? <>Boşluk tuşu ile de çevirebilirsin.</> : <>Sonuç dönüşten önce belirlenir.</>}</p>}
+              : outOfCredit ? <p className={styles.msgHint}>{t('msg.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
+              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? t.rich('msg.lastRound', { b: chunk => <strong>{chunk}</strong> }, { amount: money(lastWin.payout), times: money(lastWin.total) }) : t('msg.lastRoundNoWin')) : settings.spaceToSpin ? t('msg.spaceHint') : t('msg.fixedBefore')}</p>}
           </div>
         </div>
       )}
@@ -927,9 +941,9 @@ export function TarhunGame() {
   return (
     <div className={`game-page ${styles.page}`}>
       <StormSymbolSprites />
-      <GameHeading title="Tarhun: Fırtına Tahtı" subtitle="Fırtına tanrısı taşlara yıldırım atar; çarpanlar bedava dönüşte birikir." mode={mode} setMode={setMode} active={busy || auto !== null}
-        badge={remote ? remote.label : sourcePending ? 'Sunucu kontrol ediliyor' : localRoundSource.label} />
-      <section className={`game-table ${styles.table}`} aria-label="Tarhun oyun masası" data-free={free || undefined}>
+      <GameHeading title={gameTitle} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
+        badge={remote ? remote.label : sourcePending ? t('badge.checking') : localRoundSource.label} />
+      <section className={`game-table ${styles.table}`} aria-label={t('table.aria')} data-free={free || undefined}>
         <StormScene ref={scene} mood={sceneMood} className={styles.scene}>
           <div className={styles.layout}>
             <div ref={stageRef} className={styles.stage} data-phase={phase} data-celebrate={celebrating || undefined}>
@@ -938,18 +952,18 @@ export function TarhunGame() {
               </div>
               <div ref={shakeRef} className={styles.column}>
                 <div className={styles.top}>
-                  <div className={styles.logo}><StormLogo size="100%" variant="compact" title="Tarhun: Fırtına Tahtı" /></div>
+                  <div className={styles.logo}><StormLogo size="100%" variant="compact" title={gameTitle} /></div>
                 </div>
                 <div className={styles.hud}>
                   {freeInfo ? (
-                    <div className={styles.freeCounter} aria-label={`Bedava dönüş ${freeInfo.number}, kalan dönüş ${freeInfo.left}`} data-testid="tarhun-free-counter">
-                      <span className={styles.freeTag}>{freeInfo.number > 0 ? `${freeInfo.number}. dönüş` : 'Bedava dönüş'}</span>
-                      <span className={styles.freeLeft}><small>Kalan</small><strong key={freeInfo.left}>{freeInfo.left}</strong></span>
+                    <div className={styles.freeCounter} aria-label={t('free.counterAria', { number: freeInfo.number, left: freeInfo.left })} data-testid="tarhun-free-counter">
+                      <span className={styles.freeTag}>{freeInfo.number > 0 ? t('free.spinNumber', { n: freeInfo.number }) : freeSpinsLabel}</span>
+                      <span className={styles.freeLeft}><small>{t('free.left')}</small><strong key={freeInfo.left}>{freeInfo.left}</strong></span>
                     </div>
                   ) : <span className={styles.hudSpacer} />}
                   <div ref={multRef} className={`${styles.mult} ${multVisible ? styles.multOn : ''} ${free ? styles.multFree : ''}`} data-tier={mult ? Math.min(6, stormCalloutTier(mult.value)) : 0}
                     aria-hidden={multVisible ? undefined : true} data-testid="tarhun-multiplier">
-                    <small>{free ? 'Toplam çarpan' : 'Çarpan'}</small>
+                    <small>{free ? t('mult.total') : t('mult.label')}</small>
                     <strong key={multPunch} className={styles.multValue}>{multText}</strong>
                   </div>
                 </div>
@@ -957,11 +971,11 @@ export function TarhunGame() {
                 {/* One cumulative meter: never resets inside a round (tumbles, orbs, every free spin add up). */}
                 <div ref={meterRef} className={`${styles.meter} ${free ? styles.meterFree : ''}`} data-testid="tarhun-meter">
                   {phase === 'idle' ? (
-                    <div className={styles.meterIdle}><span>Her yerde <strong>8+</strong> aynı sembol öder</span><span aria-hidden="true">·</span><span><strong>×500</strong>’e kadar Fırtına Taşı</span></div>
+                    <div className={styles.meterIdle}><span>{t.rich('meter.idleA', { b: chunk => <strong>{chunk}</strong> })}</span><span aria-hidden="true">·</span><span>{t.rich('meter.idleB', { b: chunk => <strong>{chunk}</strong> })}</span></div>
                   ) : (
                     <div className={styles.meterPart}>
-                      <small>{free || phase === 'done' ? 'Toplam kazanç' : 'Kazanç'}</small>
-                      <strong data-testid="tarhun-meter-total"><CountUp cents={amountCents(meter.total)} duration={meterDur} /><em> DEMO</em></strong>
+                      <small>{free || phase === 'done' ? t('meter.totalWin') : t('meter.win')}</small>
+                      <strong data-testid="tarhun-meter-total"><CountUp cents={amountCents(meter.total)} duration={meterDur} format={money} /><em> DEMO</em></strong>
                     </div>
                   )}
                   {flourish > 0 && phase !== 'idle' && <span key={flourish} className={styles.meterShine} aria-hidden="true" />}
@@ -970,18 +984,18 @@ export function TarhunGame() {
               <canvas ref={canvasRef} className={styles.fxCanvas} aria-hidden="true" />
               <div ref={layerRef} className={styles.fxLayer} aria-hidden="true" />
               {replayInfo && <div className={styles.replayRibbon} data-testid="tarhun-replay"><Icon name="history" size={15} /><span>{replayInfo}</span></div>}
-              {auto && !replayInfo && <div className={styles.autoRibbon} aria-hidden="true"><LoopIcon /><span>Otomatik · {auto.spinsRemaining} tur kaldı</span></div>}
+              {auto && !replayInfo && <div className={styles.autoRibbon} aria-hidden="true"><LoopIcon /><span>{t('auto.ribbon', { n: auto.spinsRemaining })}</span></div>}
               {toast && (
                 <div key={`toast-${toast.key}`} className={`${styles.toast} ${toast.tone === 'warn' ? styles.toastWarn : ''}`} data-testid="tarhun-toast">
                   <span>{toast.text}</span>
-                  <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label="Bildirimi kapat"><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
+                  <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label={t('toast.close')}><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
                 </div>
               )}
               {banner && <div key={`banner-${banner.key}`} className={`${styles.banner} ${banner.tone === 'storm' ? styles.bannerStorm : ''}`} data-testid="tarhun-banner" aria-hidden="true">{banner.text}</div>}
               {callout && (
                 <div key={`callout-${callout.key}`} className={styles.callout} data-tier={callout.tier} style={{ left: `${callout.x}px`, top: `${callout.y}px`, animationDuration: `${callout.life}ms` }} aria-hidden="true" data-testid="tarhun-callout" data-key={callout.key}>
                   <span className={styles.calloutGlow} />
-                  {callout.tier >= 1 && <span className={styles.calloutTag}>{callout.free ? `Toplam · ${CALLOUT_TAGS[callout.tier]}` : CALLOUT_TAGS[callout.tier]}</span>}
+                  {callout.tier >= 1 && <span className={styles.calloutTag}>{callout.free ? t('callout.total', { tag: t(`callout.tags.${callout.tier}`) }) : t(`callout.tags.${callout.tier}`)}</span>}
                   <span className={styles.calloutText} data-text={`×${callout.value}`}><span className={styles.calloutFill}>×{callout.value}</span></span>
                 </div>
               )}
@@ -998,9 +1012,9 @@ export function TarhunGame() {
                 <div className={styles.gated}>
                   <div className={styles.gatedCard}>
                     <Icon name="lock" size={26} />
-                    <h2>Zincir üstü Tarhun yok.</h2>
-                    <p>Bu oyun yalnız DEMO kredisiyle oynanır; gerçek bahis kabul edilmez.</p>
-                    <button className="text-button" onClick={() => setMode('demo')}>Yerel demoya dön<Icon name="arrow" size={17} /></button>
+                    <h2>{t('gated.title')}</h2>
+                    <p>{t('gated.text')}</p>
+                    <button className="text-button" onClick={() => setMode('demo')}>{t('gated.back')}<Icon name="arrow" size={17} /></button>
                   </div>
                 </div>
               )}
@@ -1011,23 +1025,23 @@ export function TarhunGame() {
         {boot.phase !== 'done' && (
           <div className={styles.splash} data-testid="tarhun-splash">
             <div className={styles.splashCard}>
-              <div className={styles.splashLogo}><StormLogo size="100%" title="Tarhun: Fırtına Tahtı" /></div>
+              <div className={styles.splashLogo}><StormLogo size="100%" title={gameTitle} /></div>
               <ul className={styles.splashFeatures}>
-                <li><span aria-hidden="true"><StormSymbolArt symbol="h1" size="100%" /></span><strong>8+ her yerde</strong><small>Aynı sembolden 8 tane, ızgaranın her yerinde öder</small></li>
-                <li><span aria-hidden="true"><StormSymbolArt symbol="orb" multiplier={500} size="100%" /></span><strong>×500 Fırtına Taşı</strong><small>Yıldırımla toplanır; bedava dönüşte çarpan birikir</small></li>
-                <li><span aria-hidden="true"><StormSymbolArt symbol="scatter" size="100%" /></span><strong>5.000× azami</strong><small>4 Şimşek Mührü 15 bedava dönüş açar</small></li>
+                <li><span aria-hidden="true"><StormSymbolArt symbol="h1" size="100%" /></span><strong>{t('splash.f1Title')}</strong><small>{t('splash.f1Text')}</small></li>
+                <li><span aria-hidden="true"><StormSymbolArt symbol="orb" multiplier={500} size="100%" /></span><strong>{t('splash.f2Title')}</strong><small>{t('splash.f2Text')}</small></li>
+                <li><span aria-hidden="true"><StormSymbolArt symbol="scatter" size="100%" /></span><strong>{t('splash.f3Title', { max: format.number(STORM_MAX_WIN_MULTIPLIER, 0) })}</strong><small>{t('splash.f3Text', { spins: STORM_FREE_SPINS_TRIGGER })}</small></li>
               </ul>
               {boot.phase === 'loading' ? (
-                <div className={styles.loadBar} role="progressbar" aria-label="Oyun yükleniyor" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(boot.progress * 100)}>
+                <div className={styles.loadBar} role="progressbar" aria-label={t('splash.loading')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(boot.progress * 100)}>
                   <span style={{ transform: `scaleX(${boot.progress})` } as CSSProperties} />
                 </div>
               ) : (
                 <div className={styles.splashActions}>
-                  <button type="button" className={styles.playButton} autoFocus onClick={() => { sound.unlock(); sound.click(); setBoot(b => ({ ...b, phase: 'done' })); }}>Oyna</button>
-                  <button type="button" className={styles.splashSkip} onClick={() => { updateSettings({ introScreen: false }); setBoot(b => ({ ...b, phase: 'done' })); }}>Açılış ekranını bir daha gösterme</button>
+                  <button type="button" className={styles.playButton} autoFocus onClick={() => { sound.unlock(); sound.click(); setBoot(b => ({ ...b, phase: 'done' })); }}>{t('splash.play')}</button>
+                  <button type="button" className={styles.splashSkip} onClick={() => { updateSettings({ introScreen: false }); setBoot(b => ({ ...b, phase: 'done' })); }}>{t('splash.skip')}</button>
                 </div>
               )}
-              <p className={styles.splashNote}>DEMO kredisi değersizdir · Sonuç dönüşten önce belirlenir · Sertifikasız simülasyon RTP ≈ {stormRtp(STORM_RTP.standard.rtp)}</p>
+              <p className={styles.splashNote}>{t('splash.note', { rtp: rtpOf(STORM_RTP.standard.rtp) })}</p>
             </div>
           </div>
         )}
@@ -1037,29 +1051,29 @@ export function TarhunGame() {
       <StormHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <StaticFooter remote={remote !== null} />
 
-      <Modal open={modal === 'settings'} onClose={() => setModal(null)} title="Ayarlar" size="md">
+      <Modal open={modal === 'settings'} onClose={() => setModal(null)} title={tk('settings.title')} size="md">
         <SettingsPanel settings={settings} onChange={updateSettings} onReset={resetSettings} />
-        <p className={styles.modalNote} role="status">{soundLoad.ready ? 'Ses hazır: müzik, efektler ve seslendirme bu cihazda hazırlandı.' : soundLoad.started ? `Ses yükleniyor %${soundLoad.percent} (bu sırada oyun sessiz veya basit efektlerle sürer).` : 'Ses ilk dokunuşta yüklenir.'}</p>
+        <p className={styles.modalNote} role="status">{soundLoad.ready ? t('settings.soundReady') : soundLoad.started ? t('settings.soundLoading', { percent: format.percent(soundLoad.percent / 100) }) : t('settings.soundOnTouch')}</p>
         <section className={styles.demoBox} aria-labelledby="tz-demo-title">
-          <h3 id="tz-demo-title">DEMO bakiyesi</h3>
-          <p>Bakiye {formatDemo(balance)}{remote ? ' (sunucu)' : ''}. Yenilemek bakiyeyi 1.000 DEMO yapar ve geçmişe "Bakiye yenilendi" satırı ekler; tur veya otomatik oyun sürerken yapılamaz.</p>
-          <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>Bakiyeyi yenile</button>
+          <h3 id="tz-demo-title">{t('settings.demoTitle')}</h3>
+          <p>{t('settings.demoText', { balance: format.demo(balance), server: remote ? 'yes' : 'no', amount: format.demo(DEMO_START_CENTS, { trimZeros: true }), label: t('history.refilled') })}</p>
+          <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>{t('deck.refill')}</button>
         </section>
       </Modal>
-      <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title="Tarhun · Oyun bilgisi" initialPageId={infoPage} />
-      <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title="Otomatik oyun" size="md">
+      <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title={t('info.windowTitle')} initialPageId={infoPage} />
+      <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title={t('autoplay.title')} size="md">
         <AutoplayPanel onStart={startAutoplay} spinCostCents={spinCost} balanceCents={balance} disabled={busy || gated} />
-        <p className={styles.modalNote}>Tur başı {formatDemo(spinCost)}{ante ? ' (Şans ×2)' : ''} · bonus satın almaz · sekme gizlenince durur.</p>
+        <p className={styles.modalNote}>{t('autoplay.note', { cost: format.demo(spinCost), ante: ante ? 'yes' : 'no' })}</p>
       </Modal>
       <BuyFeatureDialog
         open={modal === 'buy'}
         onClose={() => setModal(null)}
         onConfirm={confirmBuy}
-        featureName={`15 bedava dönüş · bahis ${formatDemo(bet)}`}
+        featureName={t('buy.feature', { spins: STORM_FREE_SPINS_TRIGGER, bet: format.demo(bet) })}
         priceCents={buyPrice}
         balanceCents={balance}
-        rtpText={`Satın alma RTP ${stormRtp(STORM_RTP.buy.rtp)} · standart ${stormRtp(STORM_RTP.standard.rtp)} (simülasyon, sertifikasız)`}
-        description={<>Bahsin <strong>100 katı</strong>. Tur en az 4 Şimşek Mührüyle başlar ve 15 bedava dönüş garantilidir; toplam çarpan ×0’dan başlayıp kazanan her dönüşte büyür. Kazançlar {formatDemo(bet)} bahse göre ödenir, azami {formatDemo(bet * 5000)}.</>}
+        rtpText={t('buy.rtp', { buy: rtpOf(STORM_RTP.buy.rtp), standard: rtpOf(STORM_RTP.standard.rtp) })}
+        description={<>{t.rich('buy.description', { b: chunk => <strong>{chunk}</strong> }, { spins: STORM_FREE_SPINS_TRIGGER, bet: format.demo(bet), max: format.demo(bet * STORM_MAX_WIN_MULTIPLIER) })}</>}
         disabledReason={buyReason ?? undefined}
       />
       <RealityCheckDialog
@@ -1067,7 +1081,7 @@ export function TarhunGame() {
         elapsedMs={session.elapsedMs}
         netCents={session.netCents}
         onContinue={() => session.acknowledge()}
-        onQuit={() => { stopAutoplay('Oturumdan çıkıldı', 'info'); session.acknowledge(); router.push('/games'); }}
+        onQuit={() => { stopAutoplay('quit', 'info'); session.acknowledge(); router.push('/games'); }}
       />
     </div>
   );

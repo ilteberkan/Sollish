@@ -9,7 +9,8 @@ import {
   annulusPath, cellStyle, czPct, cezeriSpinPlan, dividerPath, gearTeethPath, polar, ringBand, ringDirection, ringTeeth,
   sliceAngle, slicePath, symbolBox, wedgeStyle, type CzRingTiming,
 } from './geometry';
-import { CEZERI_SYMBOL_LABELS, CZ_PALETTE as P, CezeriSymbolUse } from './symbols';
+import { useT } from '@/lib/i18n/client';
+import { CZ_PALETTE as P, CezeriSymbolUse, useCezeriSymbolLabels } from './symbols';
 import styles from './board.module.css';
 
 /* Cezeri board: hub + 4 concentric rings × 12 slices, drawn as composited HTML layers.
@@ -354,15 +355,17 @@ const RingLayer = memo(function RingLayer({ ring, uid, slices, spin, under, pin,
   ring: number; uid: string; slices: readonly CezeriSymbol[]; spin: boolean; under: string; pin: string; win: string; vessel: string;
   ringRefs: React.RefObject<Array<HTMLDivElement | null>>; cellRefs: React.RefObject<Array<HTMLDivElement | null>>;
 }) {
+  const t = useT('cezeri');
+  const labels = useCezeriSymbolLabels();
   return (
-    <div ref={(el) => { ringRefs.current[ring] = el; }} className={styles.ring} data-ring={ring} data-spin={spin ? '' : undefined} role="row" aria-label={`Halka ${ring + 1}`}>
+    <div ref={(el) => { ringRefs.current[ring] = el; }} className={styles.ring} data-ring={ring} data-spin={spin ? '' : undefined} role="row" aria-label={t('board.ring', { n: ring + 1 })}>
       <RingArt ring={ring} uid={uid} />
       {slices.map((sym, s) => {
         const k = key(ring, s);
         const u = under[s] === '1';
         return (
           <div key={s} ref={(el) => { cellRefs.current[k] = el; }} className={styles.cell} style={cellStyle(ring, s)}
-            role="gridcell" aria-label={`${CEZERI_SYMBOL_LABELS[pin[s] === '1' ? 'gear' : sym]}${pin[s] === '1' ? ', kalıcı joker' : u ? ', kilitli' : ''}`}
+            role="gridcell" aria-label={t('board.cell', { symbol: labels[pin[s] === '1' ? 'gear' : sym], state: pin[s] === '1' ? 'pinned' : u ? 'held' : 'none' })}
             data-under={u ? '' : undefined} data-win={win[s] === '1' ? '' : undefined} data-vessel={vessel[s] === '1' ? '' : undefined}>
             <div className={styles.cellArt}><CezeriSymbolUse symbol={sym} /></div>
           </div>
@@ -375,7 +378,8 @@ const RingLayer = memo(function RingLayer({ ring, uid, slices, spin, under, pin,
 /* ------------------------------------------------------------------ board */
 function toSlices(b: EngineBoard | CezeriBoardSlices): CezeriBoardSlices { return b.map((r) => r.slice()); }
 
-export function CezeriBoard({ initial, hubValue = 1, mood = 'base', className, style, ref, label = 'Cezeri çarkları' }: CezeriBoardProps) {
+export function CezeriBoard({ initial, hubValue = 1, mood = 'base', className, style, ref, label }: CezeriBoardProps) {
+  const t = useT('cezeri');
   const uid = 'czb';
   const rootRef = useRef<HTMLDivElement>(null);
   const ringRefs = useRef<Array<HTMLDivElement | null>>([]);
@@ -485,7 +489,7 @@ export function CezeriBoard({ initial, hubValue = 1, mood = 'base', className, s
 
   const pinnedList = useMemo(() => [...pinned], [pinned]);
   return (
-    <div ref={rootRef} className={`${styles.board} ${className ?? ''}`} style={style} data-mood={mood} role="grid" aria-label={label}>
+    <div ref={rootRef} className={`${styles.board} ${className ?? ''}`} style={style} data-mood={mood} role="grid" aria-label={label ?? t('board.label')}>
       <BackArt uid={uid} />
       {Array.from({ length: CZ_RINGS }, (_, ring) => {
         const mask = (set: Set<number>, also?: Set<number>) => { let m = ''; for (let s = 0; s < CZ_SLICES; s++) { const k = key(ring, s); m += set.has(k) || also?.has(k) ? '1' : '0'; } return m; };

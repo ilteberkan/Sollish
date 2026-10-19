@@ -1,0 +1,373 @@
+{
+  "meta": {
+    "title": "Cezeri: Ruote del Tempo",
+    "description": "Cezeri: Ruote del Tempo — un gioco di ruote DEMO originale. Gli spicchi vincenti si bloccano, quattro ruote d’ottone girano di nuovo e il moltiplicatore del mozzo sale di 1 a ogni giro; nell’Orologio dell’Elefante il mozzo viene mantenuto e il falco automa lascia ingranaggi wild."
+  },
+  "title": "Cezeri: Ruote del Tempo",
+  "subtitle": "Gli spicchi vincenti si bloccano, le ruote girano di nuovo e il mozzo sale di +1 a ogni round.",
+  "table": "Tavolo di gioco Cezeri",
+  "logo": {
+    "subtitle": "RUOTE DEL TEMPO",
+    "label": "Cezeri: Ruote del Tempo"
+  },
+  "symbols": {
+    "h1": "Orologio dell’Elefante",
+    "h2": "Tamburino Automa",
+    "h3": "Cittadella dell’Orologio ad Acqua",
+    "h4": "Fontana del Pavone",
+    "l1": "Astrolabio",
+    "l2": "Stella di Maiolica",
+    "l3": "Mestolo di Rame",
+    "l4": "Puleggia",
+    "gear": "Ingranaggio d’Oro (wild)",
+    "vessel": "Brocca d’Acqua"
+  },
+  "board": {
+    "label": "Ruote di Cezeri: mozzo e 4 anelli, 12 spicchi",
+    "labelFree": "Ruote dell’Orologio dell’Elefante: mozzo e 4 anelli, 12 spicchi",
+    "ring": "Anello {n}",
+    "cell": "{symbol}{state, select, pinned {, wild permanente} held {, bloccato} other {}}"
+  },
+  "reservoir": {
+    "label": "OROLOGIO DELL’ELEFANTE"
+  },
+  "deck": {
+    "group": "Comandi di gioco",
+    "balance": "Saldo",
+    "refill": "Ricarica il saldo",
+    "win": "Vincita",
+    "winReplay": "Replay",
+    "winReplayLast": "Vincita del replay",
+    "winLast": "Ultima vincita",
+    "cost": "Costo",
+    "spin": "Gira",
+    "spinLocked": "Round in corso; bloccato finché tutti i respin e i giri gratis non sono terminati.",
+    "spinCost": "Costo {cost}",
+    "auto": "Auto",
+    "info": "Info",
+    "infoAria": "Info sul gioco",
+    "on": "Attivo",
+    "off": "Disattivo",
+    "anteDesc": "Probabilità dell’Orologio dell’Elefante ≈2×",
+    "buy": "Acquista bonus",
+    "buyDesc": "{spins, plural, one {# giro gratis} other {# giri gratis}} · {rtp}",
+    "speedAria": "Velocità di giro: {speed}",
+    "sound": "Audio",
+    "soundLoading": "Caricamento audio {percent}%",
+    "outOfCredit": "Il tuo saldo DEMO è esaurito.",
+    "lastWin": "Ultimo round <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Ultimo round senza vincita.",
+    "hintSpace": "Puoi girare anche con la barra spaziatrice.",
+    "hintFixed": "Il risultato è stabilito prima del giro."
+  },
+  "hud": {
+    "freeAria": "Giro gratis {number}, ne restano {left}",
+    "freeSpin": "Giro {n}",
+    "freeTitle": "Orologio dell’Elefante",
+    "left": "Rimasti",
+    "chainAria": "Blocco Ingranaggi: respin {round}, fino a {max}",
+    "chain": "Blocco Ingranaggi",
+    "hubAria": "Moltiplicatore del mozzo ×{hub}{kept, select, yes {, mantenuto} other {}}",
+    "hub": "Mozzo",
+    "hubKept": "Mozzo · mantenuto"
+  },
+  "meter": {
+    "idleA": "<b>3–4</b> spicchi uguali su un raggio pagano",
+    "idleB": "Blocca, gira, mozzo <b>+1</b>",
+    "total": "Vincita totale",
+    "win": "Vincita"
+  },
+  "replay": {
+    "ribbon": "Replay — saldo invariato · round {id}"
+  },
+  "auto": {
+    "ribbon": "Auto · {spins, plural, one {manca # giro} other {mancano # giri}}"
+  },
+  "toast": {
+    "close": "Chiudi la notifica",
+    "autoplayStopped": "Gioco automatico fermato: {reason}. {spins, plural, one {# giro} other {# giri}}, netto {net}.",
+    "autoplayStoppedShort": "Gioco automatico fermato: {reason}.",
+    "autoplayStarted": "Gioco automatico: {spins, plural, one {# giro} other {# giri}}, limite di perdita {limit}.",
+    "refilled": "Saldo ricaricato: {amount} DEMO.",
+    "shareCopied": "Link di condivisione copiato: {url}",
+    "shareLink": "Link di condivisione: {url}",
+    "shareFailed": "Impossibile condividere: {error}",
+    "replayFailed": "Non è stato possibile riprodurre questo round.",
+    "replayMismatch": "Replay non verificabile: il record non corrisponde al motore."
+  },
+  "callout": {
+    "tier0": "Mozzo",
+    "tier1": "Mozzo potente",
+    "tier2": "Mozzo travolgente",
+    "tier3": "Mozzo possente",
+    "tier4": "Mozzo leggendario",
+    "free": "Orologio dell’Elefante · {tag}"
+  },
+  "banner": {
+    "fullChain": "Catena completa · {respins} giri · mozzo ×{hub}",
+    "respins": "{respins} respin · mozzo ×{hub}",
+    "extraSpins": "+{awarded} giri gratis",
+    "scatterPay": "{count} Brocche d’Acqua · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "Giro avviato, {amount} DEMO.",
+    "bonusBought": "Bonus acquistato, {amount} DEMO. L’Orologio dell’Elefante ha inizio.",
+    "sentToServer": "Giro inviato al server, {amount} DEMO.",
+    "recovered": "Il round interrotto è stato recuperato dal server; il pagamento è già avvenuto lì ({amount} DEMO).",
+    "replaying": "Replay in corso: round {id}. Il saldo non cambia.",
+    "replayDone": "Replay terminato: {amount} DEMO, {times}×. Saldo invariato.",
+    "roundEnd": "Round terminato. Vincita totale {amount} DEMO, {times}×.",
+    "roundEndNone": "Round terminato. Nessuna vincita.",
+    "hubRespin": "Mozzo +1: ×{value}. Tutti gli anelli girano di nuovo (respin {round}).",
+    "hubCarried": "Mozzo ×{value} (×{carried} mantenuto dal giro precedente).",
+    "hub": "Mozzo ×{value}.",
+    "win": "Raggio {spoke}: {length} {name}{extended, select, yes { (esteso)} other {}}, mozzo ×{hub}, vincita di {times}×",
+    "lock": "Blocco Ingranaggi: {count} spicchi bloccati, {total} in totale.{respin, select, yes { Gli anelli gireranno di nuovo.} other {}}",
+    "noSpokeWin": "Nessuna vincita sui raggi in questo giro.",
+    "vesselsRetrigger": "{count} Brocche d’Acqua: aggiunti {awarded} giri gratis.",
+    "vesselsTrigger": "{count} Brocche d’Acqua: Orologio dell’Elefante vinto.",
+    "freeIntro": "L’Orologio dell’Elefante ha inizio: hai vinto {awarded} giri gratis.",
+    "reservoirFull": "Serbatoio dell’acqua pieno.",
+    "falcon": "Il falco automa è arrivato: anello {ring}, {count} Ingranaggi d’Oro.",
+    "freeSpinWin": "Il giro gratis ha pagato {times}×. Totale {total}×, mozzo ×{hub}.",
+    "freeSpinNone": "Nessuna vincita in questo giro gratis. Il mozzo ×{hub} viene mantenuto.",
+    "noWin": "Nessuna vincita.",
+    "totalWin": "Vincita totale {amount} DEMO, {times}×.",
+    "freeOutro": "Orologio dell’Elefante terminato. Totale: {amount} DEMO, {spins} giri, mozzo massimo ×{topHub}.",
+    "speed": "Velocità di giro: {speed}.",
+    "anteOn": "Chance ×2 attiva: probabilità di giri gratis ≈2×, costo {cost}.",
+    "anteOff": "Chance ×2 disattiva: costo {cost}.",
+    "refilled": "Saldo DEMO ricaricato a {amount} DEMO.",
+    "refilledRemote": "Saldo DEMO del server ricaricato a {amount} DEMO."
+  },
+  "autoplay": {
+    "serverFailed": "Il server non ha potuto avviare il round",
+    "spinFailed": "Non è stato possibile avviare il giro",
+    "quit": "Hai lasciato la sessione",
+    "title": "Gioco automatico",
+    "note": "{cost} a giro{ante, select, yes { (Chance ×2)} other {}} · non acquista mai il bonus · si ferma quando la scheda è nascosta."
+  },
+  "errors": {
+    "entropy": "La casualità locale sicura non è disponibile. La demo non è stata avviata.",
+    "insufficient": "Saldo insufficiente: {kind, select, buy {questo acquisto costa} other {questo giro costa}} {cost}. Abbassa la puntata o ricarica il saldo.",
+    "noCredit": "Non hai abbastanza credito demo, oppure una demo è già in corso."
+  },
+  "buy": {
+    "block": {
+      "gated": "Acquistabile solo con credito DEMO",
+      "autoplay": "Non acquistabile durante il gioco automatico",
+      "busy": "Non acquistabile prima della fine del round",
+      "ante": "Non acquistabile con Chance ×2 attiva",
+      "balance": "Saldo insufficiente (prezzo {price})"
+    },
+    "feature": "Orologio dell’Elefante · 10 giri gratis · puntata {bet}",
+    "rtp": "RTP d’acquisto {buy} · standard {standard} (simulazione, non certificata)",
+    "text": "<b>100×</b> la tua puntata. Alla fine del giro base la plancia contiene almeno 3 Brocche d’Acqua e 10 giri gratis sono garantiti; il moltiplicatore del mozzo si mantiene tra i giri e il falco automa lascia wild Ingranaggio d’Oro permanenti. Le vincite sono pagate su una puntata di {bet}, massimo {max}."
+  },
+  "gated": {
+    "title": "Nessun Cezeri on-chain.",
+    "text": "Questo gioco si gioca solo con credito DEMO; non si accettano puntate reali.",
+    "back": "Torna alla demo locale"
+  },
+  "splash": {
+    "gearLock": {
+      "title": "Blocco Ingranaggi",
+      "text": "Gli spicchi vincenti si bloccano, le quattro ruote girano di nuovo, il mozzo sale di +1"
+    },
+    "elephant": {
+      "title": "Orologio dell’Elefante",
+      "text": "3 Brocche d’Acqua attivano 10 giri gratis; il mozzo resta e il falco lascia dei wild"
+    },
+    "max": {
+      "title": "{max}× massimo",
+      "text": "Il wild Ingranaggio d’Oro sostituisce ogni simbolo"
+    },
+    "loading": "Caricamento del gioco",
+    "play": "Gioca",
+    "skip": "Non mostrare più la schermata iniziale",
+    "note": "Il credito DEMO non ha valore · Il risultato è stabilito prima del giro · Simulazione non certificata, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Audio pronto: musica, effetti e ambiente sono stati preparati su questo dispositivo.",
+    "soundLoading": "Caricamento audio {percent}% (nel frattempo il gioco resta muto o usa effetti semplici).",
+    "soundIdle": "L’audio si carica al primo tocco.",
+    "demoTitle": "Saldo DEMO",
+    "demoText": "Saldo {balance}{remote, select, yes { (server)} other {}}. La ricarica porta il saldo a {start} DEMO e aggiunge una riga «Saldo ricaricato» alla cronologia; non è possibile durante un round o il gioco automatico."
+  },
+  "info": {
+    "title": "Cezeri · Info sul gioco",
+    "tab": {
+      "how": "Come si gioca",
+      "pay": "Tabella dei pagamenti",
+      "features": "Funzioni",
+      "rtp": "RTP",
+      "limits": "Limiti di puntata e vincita",
+      "keys": "Tasti",
+      "fault": "Clausola di malfunzionamento"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Scegli la puntata.</b> I pulsanti − e + cambiano la puntata di un livello; tocca l’importo per aprire tutti i livelli. «Puntata max» sceglie il livello più alto consentito dal tuo saldo.",
+        "spin": "<b>Gira.</b> Premi il pulsante della manovella o usa la barra spaziatrice. Il costo del round ({factor} volte la puntata con Chance ×2 attiva) viene detratto dal saldo una sola volta.",
+        "wheels": "<b>Le ruote.</b> La plancia è un mozzo con 4 anelli concentrici attorno; ogni anello ha 12 spicchi e gira sulla propria pista. Dal mozzo partono 12 raggi verso l’esterno.",
+        "spokes": "<b>Vincite sui raggi.</b> 3 o 4 spicchi consecutivi dello stesso simbolo su un raggio pagano se partono dall’anello 1 o dall’anello 2. I 12 raggi pagano separatamente. La vincita viene moltiplicata per il moltiplicatore del mozzo di quel giro.",
+        "lock": "<b>Blocco Ingranaggi.</b> Se c’è una nuova vincita, gli spicchi vincenti si bloccano, i quattro anelli girano di nuovo sotto di essi e il mozzo sale di <b>+1</b>. Si prosegue finché non arriva alcun nuovo pagamento (fino a {max} respin).",
+        "result": "<b>Il risultato.</b> L’intero round è stabilito dal motore prima che il giro inizi; l’animazione si limita a riprodurlo. Il pulsante di giro resta bloccato finché il round (tutti i respin e i giri gratis) non è terminato; usa l’impostazione Rapido/Turbo per velocizzare. L’impostazione della velocità, un tocco sul contatore della celebrazione, una scheda nascosta o l’uscita dalla pagina non cambiano il pagamento; il round si chiude sempre una sola volta, con il pagamento del motore."
+      },
+      "note": "Il credito DEMO non ha valore; non fa guadagnare SOL, token o ricompense. Il gioco gira nel browser con casualità locale; non c’è alcuna prova VRF."
+    },
+    "pay": {
+      "lead": "Su un <b>raggio</b>, <b>3 o 4 spicchi consecutivi</b> dello stesso simbolo, dall’interno verso l’esterno, pagano. Il numero grande è l’importo DEMO lordo per raggio con una puntata di <b>{bet}</b> (mozzo ×1); il moltiplicatore sotto è un multiplo della puntata. Il moltiplicatore del mozzo moltiplica questo importo.",
+      "runsAria": "Serie valide",
+      "run14": "Anello 1–4 · 4 spicchi",
+      "run13": "Anello 1–3 · 3 spicchi",
+      "run24": "Anello 2–4 · 3 spicchi",
+      "gridAria": "Pagamenti dei simboli",
+      "slices4": "4 spicchi",
+      "slices3": "3 spicchi",
+      "gears4": "4 ingranaggi",
+      "gears3": "3 ingranaggi",
+      "gearText": "Sostituisce ogni simbolo tranne la Brocca d’Acqua. Una serie formata solo da ingranaggi paga secondo la propria tabella; conta la lettura che paga di più.",
+      "scatterTitle": "{name} · pagamento scatter",
+      "vessels5": "5+ brocche",
+      "vessels4": "4 brocche",
+      "vessels3": "3 brocche",
+      "scatterText": "Contate ovunque sugli anelli della plancia finale del giro; non vengono moltiplicate dal mozzo. Nel gioco base {vessels}+ brocche attivano <b>{spins} giri gratis</b>.",
+      "maxTitle": "Vincita massima {max}×",
+      "maxText": "Con questa puntata: <b>{amount}</b>. Se il totale del round raggiunge questo tetto, il round termina subito; i giri gratis rimanenti non vengono giocati."
+    },
+    "features": {
+      "hub": {
+        "title": "Moltiplicatore del mozzo",
+        "text": "Ogni giro inizia con l’estrazione del mozzo; il mozzo moltiplica tutte le vincite sui raggi di quel giro. Probabilità di estrazione nel gioco base:",
+        "aria": "Estrazione del mozzo"
+      },
+      "lock": {
+        "title": "Blocco Ingranaggi (catena di respin)",
+        "text": "Se un giro ha un pagamento <b>nuovo</b>, gli spicchi delle serie vincenti si bloccano; mantengono i loro simboli e non si muovono. Poi <b>tutti e quattro gli anelli</b> girano di nuovo sotto gli spicchi bloccati, e il mozzo sale di <b>+1</b> a ogni respin. Se una serie bloccata si allunga (3 → 4 spicchi), viene pagata solo la differenza. La catena termina al primo giro senza nuovo pagamento, quando tutti i 48 spicchi sono bloccati o dopo {max} respin (l’ultimo giro viene comunque pagato). Nel gioco base i respin girano su nastri con un Ingranaggio d’Oro per anello."
+      },
+      "elephant": {
+        "title": "Orologio dell’Elefante ({spins} giri gratis)",
+        "text": "Nel gioco base, {trigger} o più Brocche d’Acqua attivano {spins} giri gratis. Il moltiplicatore del mozzo <b>non si azzera</b> tra i giri gratis: ogni giro parte dal mozzo in cui è terminato il precedente o dal maggiore tra questo e la propria estrazione, e i respin aggiungono +1; il mozzo può solo salire. In un giro gratis, {retriggerVessels}+ brocche aggiungono altri {retrigger} giri (senza pagamento). In un round vengono assegnati al massimo {max} giri gratis."
+      },
+      "falcon": {
+        "title": "Serbatoio dell’acqua e falco automa",
+        "text": "Dopo ogni giro gratis il serbatoio si riempie di un livello. Al livello {levels} si svuota e, se restano giri, il falco automa lascia {counts} spicchi wild Ingranaggio d’Oro su un anello. Questi wild restano al loro posto fino alla fine della funzione e possono completare vincite a ogni giro successivo."
+      },
+      "tiers": {
+        "title": "Livelli di vincita e annunci del moltiplicatore",
+        "text": "Se il totale del round è pari a <b>10 volte</b> la puntata base o più, si apre una schermata di celebrazione e il contatore sale attraverso i livelli: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; un round che raggiunge il tetto termina con {max}. Quando il mozzo supera le soglie ×10, ×25, ×50 e ×100, viene annunciato a caratteri grandi e con un suono dedicato. Un round di giri gratis termina sempre con la schermata «Orologio dell’Elefante — Totale». Toccare lo schermo porta il contatore direttamente al risultato; il pagamento non cambia."
+      },
+      "ante": {
+        "title": "Chance ×2 · costo {cost}",
+        "text": "Quando è attiva, ogni giro costa <b>{factor} volte la puntata</b> e le Brocche d’Acqua compaiono più spesso nel gioco base: la probabilità di giri gratis è circa doppia ({ante} / {standard}). Le vincite sono comunque pagate sulla puntata base. Finché è attiva, il bonus non può essere acquistato."
+      },
+      "buy": {
+        "title": "Acquista bonus · prezzo {price}",
+        "text": "Per <b>100 volte la puntata</b>, alla fine del giro base la plancia contiene almeno {vessels} Brocche d’Acqua (se ne mancano, gli spicchi che non fanno parte di una vincita si trasformano in brocche); {spins} giri gratis sono garantiti. Si effettua tramite una finestra di conferma, funziona con un RTP separato ({rtp}) e non può essere usato con il gioco automatico."
+      }
+    },
+    "rtp": {
+      "title": "Ritorno teorico (RTP)",
+      "caption": "Ritorno teorico per modalità",
+      "colMode": "Modalità",
+      "colCost": "Costo",
+      "colCi": "IC al 95%",
+      "colFeature": "Funzione",
+      "everyRound": "ogni round",
+      "oneIn": "1 / {n}",
+      "text": "Una simulazione separata di {millions} milioni di round per ogni modalità (motore <code>cezeri-gears-1</code>). L’RTP è calcolato sul costo pagato. Frequenza di vincita (giro base): standard {hitStandard}, Chance ×2 {hitAnte}. Volatilità (deviazione standard in unità di costo): standard {sdStandard}, acquisto {sdBuy}.",
+      "note": "La simulazione è una stima ed è <b>priva di certificazione</b>; a causa della coda pesante, l’intervallo di confidenza può essere ottimistico. Il risultato di una sessione breve può discostarsi molto dall’RTP. Il credito DEMO <b>non ha valore</b>."
+    },
+    "limits": {
+      "title": "Limiti di puntata e vincita",
+      "range": "Intervallo di puntata",
+      "steps": "Livelli",
+      "current": "Puntata attuale",
+      "currentValue": "{bet} · Chance ×2 {ante} · Acquisto {buy}",
+      "max": "Vincita massima",
+      "maxValue": "{multiplier} volte la puntata · {amount} con questa puntata",
+      "text1": "Un round che raggiunge la vincita massima termina subito; i giri gratis rimanenti non vengono giocati. Il pagamento è sempre calcolato sulla puntata base e ciò che è inferiore al centesimo viene arrotondato per difetto.",
+      "text2": "I livelli e le modalità che il tuo saldo non copre non possono essere selezionati. Un round è una singola prenotazione e un singolo pagamento; si gioca un solo round alla volta."
+    },
+    "keys": {
+      "heading": "Tastiera",
+      "space": "Spazio",
+      "spaceText": "Avvia il giro (Impostazioni → «{option}»). Durante un round non salta il giro; accelera solo le schermate dei giri gratis e il contatore della celebrazione.",
+      "enterText": "Preme il pulsante a fuoco.",
+      "escText": "Chiude la finestra aperta (tranne il promemoria di sessione).",
+      "tabText": "Si sposta tra i controlli; il focus è sempre visibile.",
+      "arrowsText": "Cambia pagina in questa finestra info; cambia l’opzione nelle scelte delle impostazioni.",
+      "note": "Lo screen reader annuncia ogni passaggio («Raggio 4: 3 Orologio dell’Elefante, mozzo ×3», blocchi, moltiplicatore del mozzo, risultato del round); la plancia viene letta come 4 anelli × 12 spicchi. I simboli si distinguono anche per la forma, oltre che per il colore. La preferenza di riduzione del movimento posiziona subito gli anelli rotanti e disattiva particelle e scosse."
+    },
+    "fault": {
+      "title": "Clausola di malfunzionamento",
+      "p1": "<b>Un malfunzionamento invalida tutti i giochi e i pagamenti interessati.</b> In caso di guasto del software, del browser o del dispositivo fa fede il registro del round; un importo mostrato a schermo che non corrisponde al registro del motore non è valido.",
+      "p2": "Questo gioco si gioca solo con credito DEMO. Il DEMO non ha valore e non può essere convertito in denaro o token; in caso di malfunzionamento il saldo DEMO e la cronologia della sessione possono essere corretti o azzerati.",
+      "p3": "Poiché il risultato è stabilito prima del giro, un’animazione interrotta, una scheda nascosta o l’uscita dalla pagina non lo modificano; il round si chiude comunque una sola volta, con il pagamento del motore."
+    }
+  },
+  "history": {
+    "title": "La tua cronologia di gioco",
+    "scope": "Questa sessione · i replay non modificano mai il saldo",
+    "time": "Ora",
+    "mode": "Modalità",
+    "bet": "Puntata",
+    "cost": "Costo",
+    "win": "Vincita",
+    "result": "Risultato",
+    "roundId": "ID del round",
+    "replayColumn": "Riproduci",
+    "latest": "Ultimo round",
+    "replay": "Riproduci",
+    "replayAria": "Riproduci: round {id}, saldo invariato",
+    "share": "Condividi la vincita",
+    "shareAria": "Condividi la vincita: round {id}",
+    "emptyTitle": "Il tuo primo round apparirà qui.",
+    "emptyText": "Modalità, puntata, costo, vincita e ID di ogni round vengono registrati; puoi rivedere qualsiasi round.",
+    "reset": "Saldo ricaricato",
+    "resetRemote": "Saldo ricaricato (server)",
+    "detail": {
+      "capped": "Vincita massima · {times}×",
+      "free": "Orologio dell’Elefante ×{spins} · mozzo ×{hub} · {times}×",
+      "none": "Nessuna vincita",
+      "base": "{respins, plural, =0 {} one {# respin · } other {# respin · }}mozzo ×{hub} · {times}×"
+    }
+  },
+  "celebration": {
+    "aria": "{title}: {money} DEMO",
+    "times": "{times}× la puntata",
+    "capNote": "Il round ha raggiunto il tetto · i giri rimanenti non vengono giocati",
+    "speedUp": "Tocca per accelerare",
+    "continue": "Continua"
+  },
+  "intro": {
+    "word": "OROLOGIO DELL’ELEFANTE",
+    "srTitle": "L’Orologio dell’Elefante ha inizio",
+    "freeSpins": "giri\ngratis",
+    "text": "Il moltiplicatore del mozzo <b>non si azzera</b>: sale solo di giro in giro. Il serbatoio dell’acqua si riempie ogni 3 giri e il falco automa lascia wild <b>Ingranaggio d’Oro</b> permanenti. 2 Brocche d’Acqua aggiungono +4 giri.",
+    "start": "Inizia"
+  },
+  "total": {
+    "titleA": "Orologio dell’Elefante",
+    "titleB": "Totale",
+    "word": "TOTALE",
+    "sub": "GIRI GRATIS",
+    "spins": "Giri",
+    "spinsValue": "{spins, plural, one {# giro} other {# giri}}",
+    "topHub": "Mozzo massimo",
+    "falcon": "Falco",
+    "falconVisits": "{n, plural, one {# visita} other {# visite}}",
+    "falconNone": "Non è arrivato",
+    "wilds": "{n, plural, one {# Ingranaggio d’Oro} other {# Ingranaggi d’Oro}}",
+    "wildsNone": "nessun wild",
+    "ofBet": "Della puntata",
+    "capNote": "Vincita massima raggiunta · i giri rimanenti non vengono giocati",
+    "toCelebration": "Vai alla celebrazione"
+  },
+  "rules": {
+    "board": "La plancia è un mozzo centrale circondato da 4 anelli concentrici di 12 spicchi. Su ciascuno dei 12 raggi che vanno dal mozzo verso l’esterno, 3 o 4 spicchi consecutivi dello stesso simbolo, dall’interno verso l’esterno (partendo dall’anello 1 o dall’anello 2), pagano; il wild Ingranaggio d’Oro sostituisce ogni simbolo. Il moltiplicatore del mozzo (×1–×10) moltiplica tutte le vincite sui raggi di quel giro.",
+    "features": "Blocco Ingranaggi: se c’è una nuova vincita, gli spicchi vincenti si bloccano, i quattro anelli girano di nuovo sotto di essi e il mozzo sale di +1 a ogni respin; fino a 10 respin, finché non arriva alcun nuovo pagamento. 3 o più Brocche d’Acqua attivano 10 giri gratis (Orologio dell’Elefante): il moltiplicatore del mozzo si mantiene tra i giri e può solo salire, e ogni 3 giri il falco automa lascia wild Ingranaggio d’Oro permanenti. La vincita massima è 10.000 volte la puntata.",
+    "fixed": "Il risultato viene stabilito localmente nel tuo browser, con casualità locale, prima che il giro inizi; l’animazione si limita a riprodurlo. Anche se lasci la pagina, il round si chiude con il pagamento stabilito. Non c’è alcuna prova VRF."
+  }
+}

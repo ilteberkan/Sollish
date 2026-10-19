@@ -12,7 +12,8 @@
  */
 import { useEffect, useRef, useState, type CSSProperties, type Ref } from 'react';
 import { WIN_TIER_INFO, countUpValueAt, levelAt, type CelebrationLevel, type CountUpSchedule } from '@/lib/slot-kit/win-tiers';
-import { stormCents, stormMoney, stormTimes } from '@/lib/storm-timeline';
+import { useFormat, useT } from '@/lib/i18n/client';
+import { stormCents } from '@/lib/storm-timeline';
 import { StormSymbolUse } from './symbols';
 import c from './storm-celebration.module.css';
 
@@ -96,6 +97,10 @@ export interface StormCelebrationProps {
 }
 
 export function StormCelebration({ schedule, betCents, elapsed, reducedMotion, onLevel, onCountDone, onTap }: StormCelebrationProps) {
+  const t = useT('tarhun');
+  const tk = useT('slotKit');
+  const format = useFormat();
+  const money = format.amount;
   const [level, setLevel] = useState<CelebrationLevel>(() => levelAt(schedule, Math.max(0, elapsed())));
   const [done, setDone] = useState(false);
   const [flash, setFlash] = useState(0);
@@ -104,6 +109,8 @@ export function StormCelebration({ schedule, betCents, elapsed, reducedMotion, o
   const plaqueRef = useRef<HTMLDivElement>(null);
   const callbacks = useRef({ onLevel, onCountDone });
   callbacks.current = { onLevel, onCountDone };
+  const xBet = useRef((times: string) => t('celebration.xBet', { times }));
+  xBet.current = (times: string) => t('celebration.xBet', { times });
 
   useEffect(() => {
     let frame = 0, shownLevel: CelebrationLevel | 0 = 0, finished = false, lastText = '';
@@ -111,11 +118,11 @@ export function StormCelebration({ schedule, betCents, elapsed, reducedMotion, o
     const step = () => {
       const e = Math.max(0, elapsed());
       const value = countUpValueAt(schedule, e);
-      const text = stormMoney(stormCents(betCents, value));
+      const text = money(stormCents(betCents, value));
       if (text !== lastText) {
         lastText = text;
         writeAmount(amountRef.current, text);
-        if (multRef.current) multRef.current.textContent = `${stormTimes(value)}× bahis`;
+        if (multRef.current) multRef.current.textContent = xBet.current(money(value));
       }
       const now = levelAt(schedule, e);
       if (now !== shownLevel) {
@@ -139,7 +146,7 @@ export function StormCelebration({ schedule, betCents, elapsed, reducedMotion, o
     };
     step();
     return () => cancelAnimationFrame(frame);
-  }, [schedule, betCents, elapsed, reducedMotion]);
+  }, [schedule, betCents, elapsed, reducedMotion, money]);
 
   const info = WIN_TIER_INFO[level];
   const initial = countUpValueAt(schedule, Math.max(0, elapsed()));
@@ -155,24 +162,24 @@ export function StormCelebration({ schedule, betCents, elapsed, reducedMotion, o
       </div>
       <div className={c.front} data-level={level} data-done={done || undefined} data-reduced={reducedMotion || undefined}
         data-testid="tarhun-celebration" role="dialog" aria-modal="false"
-        aria-label={`${info.title}: ${stormMoney(stormCents(betCents, schedule.totalHundredths))} DEMO`} onClick={onTap}>
+        aria-label={`${tk(`winTier.${info.id}.title`)}: ${money(stormCents(betCents, schedule.totalHundredths))} DEMO`} onClick={onTap}>
         <div className={c.column}>
           <ol className={c.pips} aria-hidden="true">
             {PIPS.map(pip => <li key={pip.level} data-on={level >= pip.level || undefined}><span>{pip.x}</span></li>)}
           </ol>
           <div key={level} className={c.lockup} data-shake>
             <Tablet />
-            <DisplayWord text={info.word} className={c.tierWord} />
-            <span className={c.sub} aria-hidden="true">KAZANÇ</span>
+            <DisplayWord text={tk(`winTier.${info.id}.word`)} className={c.tierWord} />
+            <span className={c.sub} aria-hidden="true">{tk('winWord')}</span>
           </div>
           <div ref={plaqueRef} className={c.plaque}>
-            <Amount ref={amountRef} text={stormMoney(stormCents(betCents, initial))} testId="tarhun-celebration-amount" />
+            <Amount ref={amountRef} text={money(stormCents(betCents, initial))} testId="tarhun-celebration-amount" />
             <small className={c.unit}>DEMO</small>
           </div>
-          <span ref={multRef} className={c.mult}>{stormTimes(initial)}× bahis</span>
-          {level === 5 && <p className={c.capNote}>Tur tavana ulaştı · kalan dönüşler oynanmaz</p>}
+          <span ref={multRef} className={c.mult}>{t('celebration.xBet', { times: money(initial) })}</span>
+          {level === 5 && <p className={c.capNote}>{t('celebration.capNote')}</p>}
           <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>
-            {done ? 'Devam' : 'Hızlandırmak için dokun'}
+            {done ? t('celebration.continue') : t('celebration.tapToSpeed')}
           </button>
         </div>
       </div>
@@ -181,6 +188,7 @@ export function StormCelebration({ schedule, betCents, elapsed, reducedMotion, o
 }
 
 export function StormFreeIntro({ awarded, dur, reducedMotion, onTap }: { awarded: number; dur: number; reducedMotion: boolean; onTap: () => void }) {
+  const t = useT('tarhun');
   return (
     <>
       <div className={c.back} data-level="intro" data-reduced={reducedMotion || undefined} aria-hidden="true">
@@ -193,13 +201,13 @@ export function StormFreeIntro({ awarded, dur, reducedMotion, onTap }: { awarded
           <div className={c.seals} aria-hidden="true">
             {[0, 1, 2, 3].map(i => <span key={i} className={c.seal} style={{ '--i': i } as CSSProperties}><StormSymbolUse symbol="scatter" /></span>)}
           </div>
-          <h2 id="tz-intro-title" className={c.introTitle}><DisplayWord text="FIRTINA BAŞLIYOR" className={c.introWord} /><span className="sr-only">Fırtına Başlıyor</span></h2>
+          <h2 id="tz-intro-title" className={c.introTitle}><DisplayWord text={t('intro.titleCaps')} className={c.introWord} /><span className="sr-only">{t('intro.title')}</span></h2>
           <div className={c.introCount}>
             <strong>{awarded}</strong>
-            <span>bedava<br />dönüş</span>
+            <span>{t('intro.freeA')}<br />{t('intro.freeB')}</span>
           </div>
-          <p className={c.introText}>Kazanan her dönüşte Fırtına Taşları <strong>toplam çarpana</strong> eklenir; toplam çarpan bedava dönüşler boyunca korunur. 3 Şimşek Mührü +5 dönüş verir.</p>
-          <button type="button" className={c.go} onClick={event => { event.stopPropagation(); onTap(); }}>Başla</button>
+          <p className={c.introText}>{t.rich('intro.text', { b: chunk => <strong>{chunk}</strong> })}</p>
+          <button type="button" className={c.go} onClick={event => { event.stopPropagation(); onTap(); }}>{t('intro.start')}</button>
           <span className={c.timer} style={{ '--hold': `${dur}ms` } as CSSProperties} aria-hidden="true" />
         </div>
       </div>
@@ -213,6 +221,8 @@ export interface StormFeatureTotalProps {
 }
 /** "Fırtına Dindi — Toplam": always ends a free-spin round, whatever the total. */
 export function StormFeatureTotal({ spins, totalHundredths, totalMultiplier, strikes, betCents, celebration, capped, dur, elapsed, reducedMotion, onTap }: StormFeatureTotalProps) {
+  const t = useT('tarhun');
+  const money = useFormat().amount;
   const amountRef = useRef<HTMLSpanElement>(null);
   const countMs = Math.max(1, Math.min(1500, Math.round(dur * 0.5)));
   useEffect(() => {
@@ -221,12 +231,12 @@ export function StormFeatureTotal({ spins, totalHundredths, totalMultiplier, str
       const e = Math.max(0, elapsed());
       const p = reducedMotion ? 1 : Math.min(1, e / countMs);
       const value = p >= 1 ? totalHundredths : Math.floor(totalHundredths * (1 - (1 - p) ** 3));
-      writeAmount(amountRef.current, stormMoney(stormCents(betCents, value)));
+      writeAmount(amountRef.current, money(stormCents(betCents, value)));
       if (p < 1) frame = requestAnimationFrame(step);
     };
     step();
     return () => cancelAnimationFrame(frame);
-  }, [elapsed, countMs, totalHundredths, betCents, reducedMotion]);
+  }, [elapsed, countMs, totalHundredths, betCents, reducedMotion, money]);
   return (
     <>
       <div className={c.back} data-level="feature" data-reduced={reducedMotion || undefined} aria-hidden="true">
@@ -236,23 +246,23 @@ export function StormFeatureTotal({ spins, totalHundredths, totalMultiplier, str
       </div>
       <div className={c.front} data-level="feature" data-reduced={reducedMotion || undefined} role="dialog" aria-modal="false" aria-labelledby="tz-ft-title" data-testid="tarhun-feature-total" onClick={onTap}>
         <div className={`${c.column} ${c.featureColumn}`}>
-          <h2 id="tz-ft-title" className={c.ftTitle}>Fırtına Dindi <span aria-hidden="true">—</span> Toplam</h2>
+          <h2 id="tz-ft-title" className={c.ftTitle}>{t('total.titleA')} <span aria-hidden="true">—</span> {t('total.titleB')}</h2>
           <div className={c.lockup}>
             <Tablet />
-            <DisplayWord text="TOPLAM" className={c.tierWord} />
-            <span className={c.sub} aria-hidden="true">BEDAVA DÖNÜŞ</span>
+            <DisplayWord text={t('total.word')} className={c.tierWord} />
+            <span className={c.sub} aria-hidden="true">{t('total.sub')}</span>
           </div>
           <div className={c.plaque}>
-            <Amount ref={amountRef} text={stormMoney(0)} testId="tarhun-feature-amount" />
+            <Amount ref={amountRef} text={money(0)} testId="tarhun-feature-amount" />
             <small className={c.unit}>DEMO</small>
           </div>
           <dl className={c.stats}>
-            <div><dt>Dönüş</dt><dd>{spins} dönüş</dd></div>
-            <div><dt>Toplam çarpan</dt><dd>{totalMultiplier > 0 ? `×${totalMultiplier}` : 'Yok'}<small>{strikes > 0 ? `${strikes} yıldırım` : 'küre yok'}</small></dd></div>
-            <div><dt>Bahsin</dt><dd>{stormTimes(totalHundredths)}×</dd></div>
+            <div><dt>{t('total.spins')}</dt><dd>{t('total.spinsValue', { n: spins })}</dd></div>
+            <div><dt>{t('mult.total')}</dt><dd>{totalMultiplier > 0 ? `×${totalMultiplier}` : t('total.none')}<small>{strikes > 0 ? t('total.strikes', { n: strikes }) : t('total.noOrbs')}</small></dd></div>
+            <div><dt>{t('total.betMultiple')}</dt><dd>{money(totalHundredths)}×</dd></div>
           </dl>
-          {capped && <p className={c.capNote}>Azami kazanca ulaşıldı · kalan dönüşler oynanmaz</p>}
-          <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>{celebration ? 'Kutlamaya geç' : 'Devam'}</button>
+          {capped && <p className={c.capNote}>{t('total.capNote')}</p>}
+          <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>{celebration ? t('total.toCelebration') : t('celebration.continue')}</button>
         </div>
       </div>
     </>

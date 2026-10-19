@@ -1,0 +1,373 @@
+{
+  "meta": {
+    "title": "Cezeri: Zamanın Çarkları",
+    "description": "Cezeri: Zamanın Çarkları — özgün DEMO çark oyunu. Kazanan dilimler kenetlenir, dört pirinç çark yeniden döner, göbek çarpanı her turda +1 atar; Fil Saati’nde göbek korunur ve otomat şahin joker bırakır."
+  },
+  "title": "Cezeri: Zamanın Çarkları",
+  "subtitle": "Kazanan dilimler kenetlenir, çarklar yeniden döner, göbek her turda +1 atar.",
+  "table": "Cezeri oyun masası",
+  "logo": {
+    "subtitle": "ZAMANIN ÇARKLARI",
+    "label": "Cezeri: Zamanın Çarkları"
+  },
+  "symbols": {
+    "h1": "Fil Saati",
+    "h2": "Otomat Davulcu",
+    "h3": "Su Saati Kalesi",
+    "h4": "Tavus Çeşmesi",
+    "l1": "Usturlap",
+    "l2": "Çini Yıldızı",
+    "l3": "Bakır Kepçe",
+    "l4": "Makara",
+    "gear": "Altın Dişli (joker)",
+    "vessel": "Su Kabı"
+  },
+  "board": {
+    "label": "Cezeri çarkları: göbek ve 4 halka, 12 dilim",
+    "labelFree": "Cezeri Fil Saati çarkları: göbek ve 4 halka, 12 dilim",
+    "ring": "Halka {n}",
+    "cell": "{symbol}{state, select, pinned {, kalıcı joker} held {, kilitli} other {}}"
+  },
+  "reservoir": {
+    "label": "FİL SAATİ"
+  },
+  "deck": {
+    "group": "Oyun kontrolleri",
+    "balance": "Bakiye",
+    "refill": "Bakiyeyi yenile",
+    "win": "Kazanç",
+    "winReplay": "Tekrar",
+    "winReplayLast": "Tekrar kazancı",
+    "winLast": "Son kazanç",
+    "cost": "Maliyet",
+    "spin": "Çevir",
+    "spinLocked": "Tur sürüyor; bütün yeniden dönüşler ve bedava dönüşler bitene kadar kilitli.",
+    "spinCost": "Maliyet {cost}",
+    "auto": "Otomatik",
+    "info": "Bilgi",
+    "infoAria": "Oyun bilgisi",
+    "on": "Açık",
+    "off": "Kapalı",
+    "anteDesc": "Fil Saati şansı ≈2 kat",
+    "buy": "Bonus satın al",
+    "buyDesc": "{spins, plural, other {# bedava dönüş}} · {rtp}",
+    "speedAria": "Dönüş hızı: {speed}",
+    "sound": "Ses",
+    "soundLoading": "Ses yükleniyor %{percent}",
+    "outOfCredit": "DEMO bakiyen bitti.",
+    "lastWin": "Son tur <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Son tur kazançsız.",
+    "hintSpace": "Boşluk tuşu ile de çevirebilirsin.",
+    "hintFixed": "Sonuç dönüşten önce belirlenir."
+  },
+  "hud": {
+    "freeAria": "Bedava dönüş {number}, kalan dönüş {left}",
+    "freeSpin": "{n}. dönüş",
+    "freeTitle": "Fil Saati",
+    "left": "Kalan",
+    "chainAria": "Dişli Kilidi: {round}. yeniden dönüş, en çok {max}",
+    "chain": "Dişli Kilidi",
+    "hubAria": "Göbek çarpanı ×{hub}{kept, select, yes {, korunur} other {}}",
+    "hub": "Göbek",
+    "hubKept": "Göbek · korunur"
+  },
+  "meter": {
+    "idleA": "Işında <b>3–4</b> aynı dilim öder",
+    "idleB": "Kilitle, döndür, göbek <b>+1</b>",
+    "total": "Toplam kazanç",
+    "win": "Kazanç"
+  },
+  "replay": {
+    "ribbon": "Tekrar — bakiye değişmez · tur {id}"
+  },
+  "auto": {
+    "ribbon": "Otomatik · {spins, plural, other {# tur}} kaldı"
+  },
+  "toast": {
+    "close": "Bildirimi kapat",
+    "autoplayStopped": "Otomatik oyun durdu: {reason}. {spins, plural, other {# tur}}, net {net}.",
+    "autoplayStoppedShort": "Otomatik oyun durdu: {reason}.",
+    "autoplayStarted": "Otomatik oyun: {spins, plural, other {# tur}}, kayıp limiti {limit}.",
+    "refilled": "Bakiye yenilendi: {amount} DEMO.",
+    "shareCopied": "Paylaşım bağlantısı kopyalandı: {url}",
+    "shareLink": "Paylaşım bağlantısı: {url}",
+    "shareFailed": "Paylaşılamadı: {error}",
+    "replayFailed": "Bu tur tekrar oynatılamadı.",
+    "replayMismatch": "Tekrar doğrulanamadı: kayıt motorla uyuşmuyor."
+  },
+  "callout": {
+    "tier0": "Göbek",
+    "tier1": "Güçlü göbek",
+    "tier2": "Coşkun göbek",
+    "tier3": "Kudretli göbek",
+    "tier4": "Efsane göbek",
+    "free": "Fil Saati · {tag}"
+  },
+  "banner": {
+    "fullChain": "Tam zincir · {respins} dönüş · göbek ×{hub}",
+    "respins": "{respins} yeniden dönüş · göbek ×{hub}",
+    "extraSpins": "+{awarded} bedava dönüş",
+    "scatterPay": "{count} Su Kabı · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "Dönüş başladı, {amount} DEMO.",
+    "bonusBought": "Bonus satın alındı, {amount} DEMO. Fil Saati başlıyor.",
+    "sentToServer": "Dönüş sunucuya gönderildi, {amount} DEMO.",
+    "recovered": "Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı ({amount} DEMO).",
+    "replaying": "Tekrar oynatılıyor: tur {id}. Bakiye değişmez.",
+    "replayDone": "Tekrar bitti: {amount} DEMO, {times}×. Bakiye değişmedi.",
+    "roundEnd": "Tur bitti. Toplam kazanç {amount} DEMO, {times}×.",
+    "roundEndNone": "Tur bitti. Kazanç yok.",
+    "hubRespin": "Göbek +1: ×{value}. Bütün halkalar yeniden dönüyor ({round}. yeniden dönüş).",
+    "hubCarried": "Göbek ×{value} (önceki dönüşten ×{carried} korundu).",
+    "hub": "Göbek ×{value}.",
+    "win": "Işın {spoke}: {length} {name}{extended, select, yes { (uzadı)} other {}}, göbek ×{hub}, {times}× kazanç",
+    "lock": "Dişli Kilidi: {count} dilim kilitlendi, toplam {total}.{respin, select, yes { Halkalar yeniden dönecek.} other {}}",
+    "noSpokeWin": "Bu dönüşte ışın kazancı yok.",
+    "vesselsRetrigger": "{count} Su Kabı: {awarded} bedava dönüş eklendi.",
+    "vesselsTrigger": "{count} Su Kabı: Fil Saati kazanıldı.",
+    "freeIntro": "Fil Saati başlıyor: {awarded} bedava dönüş kazandın.",
+    "reservoirFull": "Su haznesi doldu.",
+    "falcon": "Otomat şahin geldi: halka {ring}, {count} Altın Dişli.",
+    "freeSpinWin": "Bedava dönüş {times}× kazandırdı. Toplam {total}×, göbek ×{hub}.",
+    "freeSpinNone": "Bedava dönüşte kazanç yok. Göbek ×{hub} korunuyor.",
+    "noWin": "Kazanç yok.",
+    "totalWin": "Toplam kazanç {amount} DEMO, {times}×.",
+    "freeOutro": "Fil Saati bitti. Toplam: {amount} DEMO, {spins} dönüş, en yüksek göbek ×{topHub}.",
+    "speed": "Dönüş hızı: {speed}.",
+    "anteOn": "Şans ×2 açık: bedava dönüş şansı ≈2 kat, maliyet {cost}.",
+    "anteOff": "Şans ×2 kapalı: maliyet {cost}.",
+    "refilled": "DEMO bakiyesi {amount} DEMO olarak yenilendi.",
+    "refilledRemote": "Sunucu DEMO bakiyesi {amount} DEMO olarak yenilendi."
+  },
+  "autoplay": {
+    "serverFailed": "Sunucu turu başlatılamadı",
+    "spinFailed": "Dönüş başlatılamadı",
+    "quit": "Oturumdan çıkıldı",
+    "title": "Otomatik oyun",
+    "note": "Tur başı {cost}{ante, select, yes { (Şans ×2)} other {}} · bonus satın almaz · sekme gizlenince durur."
+  },
+  "errors": {
+    "entropy": "Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.",
+    "insufficient": "Bakiye yetersiz: bu {kind, select, buy {satın alma} other {dönüş}} {cost}. Bahsi düşür veya bakiyeyi yenile.",
+    "noCredit": "Yeterli demo kredin yok veya devam eden bir demo var."
+  },
+  "buy": {
+    "block": {
+      "gated": "Yalnız DEMO kredisiyle satın alınır",
+      "autoplay": "Otomatik oyun sürerken satın alınamaz",
+      "busy": "Tur bitmeden satın alınamaz",
+      "ante": "Şans ×2 açıkken satın alınamaz",
+      "balance": "Bakiye yetersiz (fiyat {price})"
+    },
+    "feature": "Fil Saati · 10 bedava dönüş · bahis {bet}",
+    "rtp": "Satın alma RTP {buy} · standart {standard} (simülasyon, sertifikasız)",
+    "text": "Bahsin <b>100 katı</b>. Temel dönüşün sonunda tahtada en az 3 Su Kabı olur ve 10 bedava dönüş garantilidir; göbek çarpanı dönüşler boyunca korunur ve otomat şahin kalıcı Altın Dişli jokerleri bırakır. Kazançlar {bet} bahse göre ödenir, azami {max}."
+  },
+  "gated": {
+    "title": "Zincir üstü Cezeri yok.",
+    "text": "Bu oyun yalnız DEMO kredisiyle oynanır; gerçek bahis kabul edilmez.",
+    "back": "Yerel demoya dön"
+  },
+  "splash": {
+    "gearLock": {
+      "title": "Dişli Kilidi",
+      "text": "Kazanan dilimler kenetlenir, dört çark yeniden döner, göbek +1"
+    },
+    "elephant": {
+      "title": "Fil Saati",
+      "text": "3 Su Kabı 10 bedava dönüş açar; göbek korunur, şahin joker bırakır"
+    },
+    "max": {
+      "title": "{max}× azami",
+      "text": "Altın Dişli joker her sembolün yerine geçer"
+    },
+    "loading": "Oyun yükleniyor",
+    "play": "Oyna",
+    "skip": "Açılış ekranını bir daha gösterme",
+    "note": "DEMO kredisi değersizdir · Sonuç dönüşten önce belirlenir · Sertifikasız simülasyon RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Ses hazır: müzik, efektler ve ortam sesi bu cihazda hazırlandı.",
+    "soundLoading": "Ses yükleniyor %{percent} (bu sırada oyun sessiz veya basit efektlerle sürer).",
+    "soundIdle": "Ses ilk dokunuşta yüklenir.",
+    "demoTitle": "DEMO bakiyesi",
+    "demoText": "Bakiye {balance}{remote, select, yes { (sunucu)} other {}}. Yenilemek bakiyeyi {start} DEMO yapar ve geçmişe \"Bakiye yenilendi\" satırı ekler; tur veya otomatik oyun sürerken yapılamaz."
+  },
+  "info": {
+    "title": "Cezeri · Oyun bilgisi",
+    "tab": {
+      "how": "Nasıl oynanır",
+      "pay": "Ödeme tablosu",
+      "features": "Özellikler",
+      "rtp": "RTP",
+      "limits": "Bahis ve kazanç sınırları",
+      "keys": "Tuşlar",
+      "fault": "Arıza hükmü"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Bahsini seç.</b> − ve + düğmeleri bahsi bir basamak değiştirir; bahis tutarına dokununca bütün basamaklar açılır. \"Azami bahis\" bakiyenin yettiği en yüksek basamağı seçer.",
+        "spin": "<b>Çevir.</b> Kurma kolu düğmesine bas veya Boşluk tuşunu kullan. Tur maliyeti (Şans ×2 açıksa bahsin {factor} katı) bakiyeden bir kez düşer.",
+        "wheels": "<b>Çarklar.</b> Tahta bir göbek ve çevresinde 4 eşmerkezli halkadır; her halka 12 dilimlidir ve kendi şeridinde döner. Göbekten dışa 12 ışın uzanır.",
+        "spokes": "<b>Işın kazancı.</b> Bir ışın üzerinde aynı sembolden ardışık 3 veya 4 dilim halka 1’den ya da halka 2’den başlarsa öder. 12 ışın ayrı ayrı öder. Kazanç o dönüşün göbek çarpanıyla çarpılır.",
+        "lock": "<b>Dişli Kilidi.</b> Yeni kazanç varsa kazanan dilimler kenetlenir, dört halka altlarında yeniden döner ve göbek <b>+1</b> artar. Yeni ödeme gelmeyene kadar sürer (en çok {max} yeniden dönüş).",
+        "result": "<b>Sonuç.</b> Turun tamamı dönüş başlamadan önce motorla belirlenir; animasyon yalnızca bu sonucu oynatır. Çevir düğmesi tur (bütün yeniden dönüşler ve bedava dönüşler) bitene kadar kilitlidir; hızlandırmak için Hızlı/Turbo ayarını kullan. Hız ayarı, kutlama sayacına dokunmak, gizli sekme veya sayfadan ayrılmak ödemeyi değiştirmez; tur her durumda bir kez, motorun ödemesiyle kapanır."
+      },
+      "note": "DEMO kredisi değersizdir; SOL, token veya ödül kazandırmaz. Oyun tarayıcıda yerel rastgelelikle çalışır, VRF kanıtı yoktur."
+    },
+    "pay": {
+      "lead": "Bir <b>ışın</b> boyunca içten dışa aynı sembolden <b>3 veya 4 ardışık dilim</b> öder. Büyük rakam <b>{bet}</b> bahiste ışın başına brüt DEMO tutarıdır (göbek ×1); altındaki çarpan bahsin katıdır. Göbek çarpanı bu tutarı çarpar.",
+      "runsAria": "Geçerli seriler",
+      "run14": "Halka 1–4 · 4 dilim",
+      "run13": "Halka 1–3 · 3 dilim",
+      "run24": "Halka 2–4 · 3 dilim",
+      "gridAria": "Sembol ödemeleri",
+      "slices4": "4 dilim",
+      "slices3": "3 dilim",
+      "gears4": "4 dişli",
+      "gears3": "3 dişli",
+      "gearText": "Su Kabı dışındaki her sembolün yerine geçer. Yalnız dişlilerden oluşan seri kendi tablosuyla öder; serinin daha çok ödeyen okunuşu sayılır.",
+      "scatterTitle": "{name} · dağınık ödeme",
+      "vessels5": "5+ kap",
+      "vessels4": "4 kap",
+      "vessels3": "3 kap",
+      "scatterText": "Dönüşün son tahtasında, halkaların herhangi bir yerinde sayılır; göbekle çarpılmaz. Temel oyunda {vessels}+ kap <b>{spins} bedava dönüş</b> açar.",
+      "maxTitle": "Azami kazanç {max}×",
+      "maxText": "Bu bahiste <b>{amount}</b>. Tur toplamı bu tavana ulaşırsa tur hemen biter; kalan bedava dönüşler oynanmaz."
+    },
+    "features": {
+      "hub": {
+        "title": "Göbek çarpanı",
+        "text": "Her dönüş göbeğin çekilmesiyle başlar; göbek o dönüşün bütün ışın kazançlarını çarpar. Temel oyunda çekiliş olasılıkları:",
+        "aria": "Göbek çekilişi"
+      },
+      "lock": {
+        "title": "Dişli Kilidi (yeniden dönüş zinciri)",
+        "text": "Bir dönüşte <b>yeni</b> ödeme varsa kazanan serilerin dilimleri kilitlenir; simgelerini korur, kıpırdamaz. Sonra <b>dört halkanın hepsi</b> kilitli dilimlerin altında yeniden döner ve göbek her yeniden dönüşte <b>+1</b> artar. Kilitli bir seri uzarsa (3 → 4 dilim) yalnız aradaki fark ödenir. Zincir yeni ödemesiz ilk dönüşte, 48 dilimin hepsi kilitlenince ya da {max} yeniden dönüşte biter (son dönüş yine ödenir). Taban oyunda yeniden dönüşler halka başına bir Altın Dişli içeren şeritlerde döner."
+      },
+      "elephant": {
+        "title": "Fil Saati ({spins} bedava dönüş)",
+        "text": "Temel oyunda {trigger} veya daha fazla Su Kabı {spins} bedava dönüş açar. Göbek çarpanı bedava dönüşler arasında <b>sıfırlanmaz</b>: her dönüş, önceki dönüşün bittiği göbekle kendi çekilişinin büyüğünden başlar ve yeniden dönüşler +1 ekler; göbek yalnız artar. Bedava dönüşte {retriggerVessels}+ kap {retrigger} dönüş daha ekler (ödemesiz). Bir turda en çok {max} bedava dönüş verilir."
+      },
+      "falcon": {
+        "title": "Su haznesi ve otomat şahin",
+        "text": "Her bedava dönüşten sonra hazne bir kademe dolar. {levels}. kademede boşalır ve dönüş kaldıysa otomat şahin bir halkaya {counts} Altın Dişli joker dilimi bırakır. Bu jokerler özellik bitene kadar yerinde kalır ve sonraki her dönüşte kazanç tamamlayabilir."
+      },
+      "tiers": {
+        "title": "Kazanç kademeleri ve çarpan anonsu",
+        "text": "Tur toplamı taban bahsin <b>10 katı</b> veya üstüyse kutlama ekranı açılır ve sayaç kademeler arasında tırmanır: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; tavana ulaşan tur {max} ile biter. Göbek ×10, ×25, ×50 ve ×100 eşiklerini geçtiğinde büyük yazıyla ve kendi sesiyle duyurulur. Bedava dönüş turu her zaman \"Fil Saati — Toplam\" ekranıyla biter. Ekrana dokunmak sayacı hemen sonuca getirir; ödemeyi değiştirmez."
+      },
+      "ante": {
+        "title": "Şans ×2 · maliyet {cost}",
+        "text": "Açıkken her dönüş bahsin <b>{factor} katına</b> mal olur ve temel oyunda Su Kabı daha sık gelir: bedava dönüş şansı yaklaşık 2 katıdır ({ante} / {standard}). Kazançlar yine taban bahse göre ödenir. Açıkken bonus satın alınamaz."
+      },
+      "buy": {
+        "title": "Bonus satın al · fiyat {price}",
+        "text": "Bahsin <b>100 katı</b> karşılığında temel dönüş bitince tahtada en az {vessels} Su Kabı olur (eksikse kazanç dışındaki dilimler kaba dönüşür); {spins} bedava dönüş garantilidir. Onay penceresiyle yapılır, ayrı bir RTP ile çalışır ({rtp}) ve otomatik oyunla kullanılamaz."
+      }
+    },
+    "rtp": {
+      "title": "Teorik dönüş (RTP)",
+      "caption": "Mod başına teorik dönüş",
+      "colMode": "Mod",
+      "colCost": "Maliyet",
+      "colCi": "%95 GA",
+      "colFeature": "Özellik",
+      "everyRound": "her tur",
+      "oneIn": "1 / {n}",
+      "text": "Her mod için ayrı {millions} milyon tur simülasyonu (motor <code>cezeri-gears-1</code>). RTP ödenen maliyete göre hesaplanır. Kazanç sıklığı (taban dönüş): standart {hitStandard}, Şans ×2 {hitAnte}. Oynaklık (maliyet biriminde standart sapma): standart {sdStandard}, satın alma {sdBuy}.",
+      "note": "Simülasyon tahminidir, <b>sertifikasızdır</b>; ağır kuyruk nedeniyle güven aralığı iyimser olabilir. Kısa oturumdaki sonuç RTP'den çok farklı olabilir. DEMO kredisi <b>değersizdir</b>."
+    },
+    "limits": {
+      "title": "Bahis ve kazanç sınırları",
+      "range": "Bahis aralığı",
+      "steps": "Basamaklar",
+      "current": "Şu anki bahis",
+      "currentValue": "{bet} · Şans ×2 {ante} · Satın alma {buy}",
+      "max": "Azami kazanç",
+      "maxValue": "Bahsin {multiplier} katı · bu bahiste {amount}",
+      "text1": "Azami kazanca ulaşan tur hemen biter; kalan bedava dönüşler oynanmaz. Ödeme her zaman taban bahse göre hesaplanır, kuruşun altı aşağı yuvarlanır.",
+      "text2": "Bakiyenin yetmediği basamaklar ve modlar seçilemez. Bir tur tek rezervasyon ve tek ödemedir; aynı anda yalnız bir tur oynanır."
+    },
+    "keys": {
+      "heading": "Klavye",
+      "space": "Boşluk",
+      "spaceText": "Dönüşü başlatır (Ayarlar → \"{option}\"). Tur sürerken dönüşü atlamaz; yalnız bedava dönüş ekranlarını ve kutlama sayacını hızlandırır.",
+      "enterText": "Odaktaki düğmeye basar.",
+      "escText": "Açık pencereyi kapatır (oturum hatırlatması hariç).",
+      "tabText": "Kontroller arasında gezinir; odak her zaman görünür.",
+      "arrowsText": "Bu bilgi penceresinde sayfa değiştirir; ayar seçimlerinde seçeneği değiştirir.",
+      "note": "Ekran okuyucu her adımı (\"Işın 4: 3 Fil Saati, göbek ×3\", kilitler, göbek çarpanı, tur sonucu) duyurur; tahta 4 halka × 12 dilim olarak okunur. Semboller renk yanında biçimle de ayrılır. Hareketi azalt tercihi dönen halkaları anında yerleştirir, parçacık ve sarsıntıyı kapatır."
+    },
+    "fault": {
+      "title": "Arıza hükmü",
+      "p1": "<b>Arıza, etkilenen bütün oyunları ve ödemeleri geçersiz kılar.</b> Yazılım, tarayıcı veya cihaz arızasında tur kaydı esas alınır; ekranda görünen ama motor kaydıyla uyuşmayan bir tutar geçerli değildir.",
+      "p2": "Bu oyun yalnız DEMO kredisiyle oynanır. DEMO değersizdir, paraya veya tokene çevrilemez; arıza halinde DEMO bakiyesi ve oturum geçmişi düzeltilebilir veya sıfırlanabilir.",
+      "p3": "Sonuç dönüşten önce belirlendiği için animasyonun yarıda kalması, sekmenin gizlenmesi veya sayfadan ayrılmak sonucu değiştirmez; tur yine motorun ödemesiyle bir kez kapanır."
+    }
+  },
+  "history": {
+    "title": "Oyun geçmişin",
+    "scope": "Bu oturum · tekrar bakiyeyi değiştirmez",
+    "time": "Zaman",
+    "mode": "Mod",
+    "bet": "Bahis",
+    "cost": "Maliyet",
+    "win": "Kazanç",
+    "result": "Sonuç",
+    "roundId": "Tur kimliği",
+    "replayColumn": "Tekrar oynat",
+    "latest": "Son tur",
+    "replay": "Tekrar oynat",
+    "replayAria": "Tekrar oynat: tur {id}, bakiye değişmez",
+    "share": "Kazancını paylaş",
+    "shareAria": "Kazancını paylaş: tur {id}",
+    "emptyTitle": "İlk turun burada görünecek.",
+    "emptyText": "Her turun modu, bahsi, maliyeti, kazancı ve tur kimliği kaydedilir; istediğin turu tekrar izleyebilirsin.",
+    "reset": "Bakiye yenilendi",
+    "resetRemote": "Bakiye yenilendi (sunucu)",
+    "detail": {
+      "capped": "Azami kazanç · {times}×",
+      "free": "Fil Saati ×{spins} · göbek ×{hub} · {times}×",
+      "none": "Kazanç yok",
+      "base": "{respins, plural, =0 {} other {# yeniden dönüş · }}göbek ×{hub} · {times}×"
+    }
+  },
+  "celebration": {
+    "aria": "{title}: {money} DEMO",
+    "times": "{times}× bahis",
+    "capNote": "Tur tavana ulaştı · kalan dönüşler oynanmaz",
+    "speedUp": "Hızlandırmak için dokun",
+    "continue": "Devam"
+  },
+  "intro": {
+    "word": "FİL SAATİ",
+    "srTitle": "Fil Saati Başlıyor",
+    "freeSpins": "bedava\ndönüş",
+    "text": "Göbek çarpanı <b>sıfırlanmaz</b>, dönüşten dönüşe yalnız artar. Su haznesi her 3 dönüşte dolar ve otomat şahin kalıcı <b>Altın Dişli</b> jokerleri bırakır. 2 Su Kabı +4 dönüş verir.",
+    "start": "Başla"
+  },
+  "total": {
+    "titleA": "Fil Saati",
+    "titleB": "Toplam",
+    "word": "TOPLAM",
+    "sub": "BEDAVA DÖNÜŞ",
+    "spins": "Dönüş",
+    "spinsValue": "{spins, plural, other {# dönüş}}",
+    "topHub": "En yüksek göbek",
+    "falcon": "Şahin",
+    "falconVisits": "{n, plural, other {# ziyaret}}",
+    "falconNone": "Gelmedi",
+    "wilds": "{n, plural, other {# Altın Dişli}}",
+    "wildsNone": "joker yok",
+    "ofBet": "Bahsin",
+    "capNote": "Azami kazanca ulaşıldı · kalan dönüşler oynanmaz",
+    "toCelebration": "Kutlamaya geç"
+  },
+  "rules": {
+    "board": "Tahta, merkezde bir göbek ve çevresinde 12 dilimli 4 eşmerkezli halkadır. Göbekten dışa uzanan 12 ışının her birinde aynı sembolden içten dışa ardışık 3 veya 4 dilim (halka 1’den ya da halka 2’den başlayarak) öder; Altın Dişli joker her sembolün yerine geçer. Göbek çarpanı (×1–×10) o dönüşün bütün ışın kazançlarını çarpar.",
+    "features": "Dişli Kilidi: yeni kazanç varsa kazanan dilimler kilitlenir, dört halka altlarında yeniden döner ve göbek her yeniden dönüşte +1 artar; yeni ödeme gelmeyene kadar, en çok 10 yeniden dönüş. 3 veya daha fazla Su Kabı 10 bedava dönüş (Fil Saati) açar: göbek çarpanı dönüşler arasında korunur ve yalnız artar, her 3 dönüşte otomat şahin kalıcı Altın Dişli jokerleri bırakır. Azami kazanç bahsin 10.000 katıdır.",
+    "fixed": "Sonuç, dönüş başlamadan önce tarayıcında yerel rastgelelikle belirlenir; animasyon yalnızca bu sonucu oynatır. Sayfadan ayrılsan bile tur belirlenen ödemeyle kapanır. VRF kanıtı yoktur."
+  }
+}

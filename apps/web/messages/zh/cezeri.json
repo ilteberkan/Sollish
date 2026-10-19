@@ -1,0 +1,373 @@
+{
+  "meta": {
+    "title": "Cezeri：时间之轮",
+    "description": "Cezeri：时间之轮——原创 DEMO 转轮游戏。中奖扇区会锁定，四个黄铜转轮再次转动，轮毂倍数每转加 1；在象钟中轮毂倍数会保留，自动机械隼会留下百搭齿轮。"
+  },
+  "title": "Cezeri：时间之轮",
+  "subtitle": "中奖扇区锁定，转轮再次转动，轮毂每轮 +1。",
+  "table": "Cezeri 游戏桌",
+  "logo": {
+    "subtitle": "时间之轮",
+    "label": "Cezeri：时间之轮"
+  },
+  "symbols": {
+    "h1": "象钟",
+    "h2": "自动机械鼓手",
+    "h3": "水钟城堡",
+    "h4": "孔雀喷泉",
+    "l1": "星盘",
+    "l2": "瓷砖星",
+    "l3": "铜勺",
+    "l4": "滑轮",
+    "gear": "金齿轮（百搭）",
+    "vessel": "水壶"
+  },
+  "board": {
+    "label": "Cezeri 转轮：轮毂和 4 个圆环，每环 12 个扇区",
+    "labelFree": "Cezeri 象钟转轮：轮毂和 4 个圆环，每环 12 个扇区",
+    "ring": "第 {n} 环",
+    "cell": "{symbol}{state, select, pinned {，永久百搭} held {，已锁定} other {}}"
+  },
+  "reservoir": {
+    "label": "象钟"
+  },
+  "deck": {
+    "group": "游戏控制",
+    "balance": "余额",
+    "refill": "补充余额",
+    "win": "赢取",
+    "winReplay": "回放",
+    "winReplayLast": "回放奖金",
+    "winLast": "上次赢取",
+    "cost": "费用",
+    "spin": "旋转",
+    "spinLocked": "本轮进行中；所有重转和免费旋转结束前已锁定。",
+    "spinCost": "费用 {cost}",
+    "auto": "自动",
+    "info": "信息",
+    "infoAria": "游戏信息",
+    "on": "开",
+    "off": "关",
+    "anteDesc": "象钟几率 ≈2 倍",
+    "buy": "购买奖励",
+    "buyDesc": "{spins, plural, other {# 次免费旋转}} · {rtp}",
+    "speedAria": "旋转速度：{speed}",
+    "sound": "声音",
+    "soundLoading": "正在加载声音 {percent}%",
+    "outOfCredit": "你的 DEMO 余额已用完。",
+    "lastWin": "上一轮 <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "上一轮未中奖。",
+    "hintSpace": "也可以按空格键旋转。",
+    "hintFixed": "结果在旋转前就已确定。"
+  },
+  "hud": {
+    "freeAria": "免费旋转第 {number} 次，剩余 {left} 次",
+    "freeSpin": "第 {n} 转",
+    "freeTitle": "象钟",
+    "left": "剩余",
+    "chainAria": "齿轮锁定：第 {round} 次重转，最多 {max} 次",
+    "chain": "齿轮锁定",
+    "hubAria": "轮毂倍数 ×{hub}{kept, select, yes {，已保留} other {}}",
+    "hub": "轮毂",
+    "hubKept": "轮毂 · 保留"
+  },
+  "meter": {
+    "idleA": "一条辐条上 <b>3–4</b> 个相同扇区即中奖",
+    "idleB": "锁定、旋转、轮毂 <b>+1</b>",
+    "total": "总赢取",
+    "win": "赢取"
+  },
+  "replay": {
+    "ribbon": "回放 — 余额不变 · 第 {id} 轮"
+  },
+  "auto": {
+    "ribbon": "自动 · 剩余 {spins, plural, other {# 次}}"
+  },
+  "toast": {
+    "close": "关闭通知",
+    "autoplayStopped": "自动游戏已停止：{reason}。{spins, plural, other {# 次}}旋转，净额 {net}。",
+    "autoplayStoppedShort": "自动游戏已停止：{reason}。",
+    "autoplayStarted": "自动游戏：{spins, plural, other {# 次}}旋转，亏损上限 {limit}。",
+    "refilled": "余额已补充：{amount} DEMO。",
+    "shareCopied": "分享链接已复制：{url}",
+    "shareLink": "分享链接：{url}",
+    "shareFailed": "无法分享：{error}",
+    "replayFailed": "无法回放这一轮。",
+    "replayMismatch": "无法验证回放：记录与引擎不一致。"
+  },
+  "callout": {
+    "tier0": "轮毂",
+    "tier1": "强力轮毂",
+    "tier2": "狂热轮毂",
+    "tier3": "威猛轮毂",
+    "tier4": "传奇轮毂",
+    "free": "象钟 · {tag}"
+  },
+  "banner": {
+    "fullChain": "满链 · {respins} 转 · 轮毂 ×{hub}",
+    "respins": "{respins} 次重转 · 轮毂 ×{hub}",
+    "extraSpins": "+{awarded} 次免费旋转",
+    "scatterPay": "{count} 个水壶 · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "旋转已开始，{amount} DEMO。",
+    "bonusBought": "已购买奖励，{amount} DEMO。象钟开始。",
+    "sentToServer": "旋转已发送至服务器，{amount} DEMO。",
+    "recovered": "已从服务器恢复未完成的一轮；奖金已在服务器结算（{amount} DEMO）。",
+    "replaying": "正在回放：第 {id} 轮。余额不变。",
+    "replayDone": "回放结束：{amount} DEMO，{times}×。余额未变。",
+    "roundEnd": "本轮结束。总赢取 {amount} DEMO，{times}×。",
+    "roundEndNone": "本轮结束。未中奖。",
+    "hubRespin": "轮毂 +1：×{value}。所有圆环再次转动（第 {round} 次重转）。",
+    "hubCarried": "轮毂 ×{value}（保留上一转的 ×{carried}）。",
+    "hub": "轮毂 ×{value}。",
+    "win": "辐条 {spoke}：{length} 个{name}{extended, select, yes {（已延长）} other {}}，轮毂 ×{hub}，赢取 {times}×",
+    "lock": "齿轮锁定：锁定了 {count} 个扇区，共 {total} 个。{respin, select, yes {圆环将再次转动。} other {}}",
+    "noSpokeWin": "本转没有辐条奖金。",
+    "vesselsRetrigger": "{count} 个水壶：增加 {awarded} 次免费旋转。",
+    "vesselsTrigger": "{count} 个水壶：赢得象钟。",
+    "freeIntro": "象钟开始：你赢得了 {awarded} 次免费旋转。",
+    "reservoirFull": "水箱已满。",
+    "falcon": "自动机械隼到达：第 {ring} 环，{count} 个金齿轮。",
+    "freeSpinWin": "本次免费旋转赢取 {times}×。累计 {total}×，轮毂 ×{hub}。",
+    "freeSpinNone": "本次免费旋转未中奖。轮毂 ×{hub} 保留。",
+    "noWin": "未中奖。",
+    "totalWin": "总赢取 {amount} DEMO，{times}×。",
+    "freeOutro": "象钟结束。总计：{amount} DEMO，{spins} 转，最高轮毂 ×{topHub}。",
+    "speed": "旋转速度：{speed}。",
+    "anteOn": "机会 ×2 已开启：免费旋转几率约 2 倍，费用 {cost}。",
+    "anteOff": "机会 ×2 已关闭：费用 {cost}。",
+    "refilled": "DEMO 余额已补充至 {amount} DEMO。",
+    "refilledRemote": "服务器 DEMO 余额已补充至 {amount} DEMO。"
+  },
+  "autoplay": {
+    "serverFailed": "服务器无法开始本轮",
+    "spinFailed": "无法开始旋转",
+    "quit": "已退出会话",
+    "title": "自动游戏",
+    "note": "每次旋转 {cost}{ante, select, yes {（机会 ×2）} other {}} · 不会购买奖励 · 标签页隐藏时停止。"
+  },
+  "errors": {
+    "entropy": "无法使用安全的本地随机数。演示未启动。",
+    "insufficient": "余额不足：本次{kind, select, buy {购买} other {旋转}}需要 {cost}。请降低投注额或补充余额。",
+    "noCredit": "演示额度不足，或已有演示正在进行。"
+  },
+  "buy": {
+    "block": {
+      "gated": "仅可使用 DEMO 额度购买",
+      "autoplay": "自动游戏进行时无法购买",
+      "busy": "本轮结束前无法购买",
+      "ante": "机会 ×2 开启时无法购买",
+      "balance": "余额不足（价格 {price}）"
+    },
+    "feature": "象钟 · 10 次免费旋转 · 投注 {bet}",
+    "rtp": "购买 RTP {buy} · 标准 {standard}（模拟，未经认证）",
+    "text": "<b>100 倍</b>投注额。基础旋转结束时，棋盘上至少有 3 个水壶，并保证获得 10 次免费旋转；轮毂倍数在各次旋转之间保留，自动机械隼会留下永久的金齿轮百搭。奖金按 {bet} 的投注额支付，最高 {max}。"
+  },
+  "gated": {
+    "title": "没有链上版 Cezeri。",
+    "text": "本游戏仅使用 DEMO 额度进行；不接受真实投注。",
+    "back": "返回本地演示"
+  },
+  "splash": {
+    "gearLock": {
+      "title": "齿轮锁定",
+      "text": "中奖扇区锁定，四个转轮再次转动，轮毂 +1"
+    },
+    "elephant": {
+      "title": "象钟",
+      "text": "3 个水壶触发 10 次免费旋转；轮毂保留，隼会留下百搭"
+    },
+    "max": {
+      "title": "最高 {max}×",
+      "text": "金齿轮百搭可替代任何符号"
+    },
+    "loading": "游戏加载中",
+    "play": "开始游戏",
+    "skip": "不再显示开场画面",
+    "note": "DEMO 额度没有价值 · 结果在旋转前确定 · 未经认证的模拟 RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "声音已就绪：音乐、音效和环境音已在此设备上准备完毕。",
+    "soundLoading": "正在加载声音 {percent}%（加载期间游戏静音或仅播放简单音效）。",
+    "soundIdle": "声音将在首次点击时加载。",
+    "demoTitle": "DEMO 余额",
+    "demoText": "余额 {balance}{remote, select, yes {（服务器）} other {}}。补充会将余额重置为 {start} DEMO，并在记录中添加一行“余额已补充”；本轮或自动游戏进行时无法操作。"
+  },
+  "info": {
+    "title": "Cezeri · 游戏信息",
+    "tab": {
+      "how": "玩法说明",
+      "pay": "赔付表",
+      "features": "特色功能",
+      "rtp": "RTP",
+      "limits": "投注与奖金限额",
+      "keys": "按键",
+      "fault": "故障条款"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>选择投注额。</b>点击 − 和 + 按钮可按档位调整投注额；点按投注金额可展开所有档位。“最大投注”会选择余额允许的最高档位。",
+        "spin": "<b>旋转。</b>点击上弦曲柄按钮或按空格键。每轮费用（开启机会 ×2 时为投注额的 {factor} 倍）只会从余额中扣除一次。",
+        "wheels": "<b>转轮。</b>棋盘由轮毂和围绕它的 4 个同心圆环组成；每个圆环有 12 个扇区，在各自的轨道上转动。12 条辐条从轮毂向外延伸。",
+        "spokes": "<b>辐条奖金。</b>一条辐条上连续 3 个或 4 个相同符号，若从第 1 环或第 2 环开始即可中奖。12 条辐条分别赔付。奖金会乘以该次旋转的轮毂倍数。",
+        "lock": "<b>齿轮锁定。</b>出现新的奖金时，中奖扇区会锁定，四个圆环在其下方再次转动，轮毂 <b>+1</b>。如此持续，直到没有新的奖金为止（最多 {max} 次重转）。",
+        "result": "<b>结果。</b>整轮结果在旋转开始前就由引擎确定；动画只是播放该结果。在本轮（包括所有重转和免费旋转）结束前，旋转按钮保持锁定；可使用“快速/极速”设置加快节奏。速度设置、点击庆祝计数器、隐藏标签页或离开页面都不会改变奖金；本轮始终只会按引擎的奖金结算一次。"
+      },
+      "note": "DEMO 额度没有价值；不会带来 SOL、代币或奖励。游戏在浏览器中使用本地随机数运行，没有 VRF 证明。"
+    },
+    "pay": {
+      "lead": "一条<b>辐条</b>上，由内向外连续 <b>3 个或 4 个扇区</b>为相同符号即可中奖。大号数字是投注额为 <b>{bet}</b> 时每条辐条的 DEMO 总额（轮毂 ×1）；其下方的倍数是投注额的倍数。轮毂倍数会乘以该金额。",
+      "runsAria": "有效连线",
+      "run14": "第 1–4 环 · 4 个扇区",
+      "run13": "第 1–3 环 · 3 个扇区",
+      "run24": "第 2–4 环 · 3 个扇区",
+      "gridAria": "符号赔付",
+      "slices4": "4 个扇区",
+      "slices3": "3 个扇区",
+      "gears4": "4 个齿轮",
+      "gears3": "3 个齿轮",
+      "gearText": "可替代除水壶以外的所有符号。仅由齿轮组成的连线按其自身的赔付表计算；以赔付更高的读法为准。",
+      "scatterTitle": "{name} · 分散符号赔付",
+      "vessels5": "5 个以上水壶",
+      "vessels4": "4 个水壶",
+      "vessels3": "3 个水壶",
+      "scatterText": "统计旋转最终棋盘上圆环的任意位置；不乘以轮毂倍数。在基础游戏中，{vessels} 个以上水壶触发 <b>{spins} 次免费旋转</b>。",
+      "maxTitle": "最高奖 {max}×",
+      "maxText": "在此投注额下为 <b>{amount}</b>。若本轮总额达到该上限，本轮立即结束；剩余免费旋转不再进行。"
+    },
+    "features": {
+      "hub": {
+        "title": "轮毂倍数",
+        "text": "每次旋转都从抽取轮毂开始；轮毂会乘以该次旋转的所有辐条奖金。基础游戏中的抽取概率：",
+        "aria": "轮毂抽取"
+      },
+      "lock": {
+        "title": "齿轮锁定（重转链）",
+        "text": "若某次旋转出现<b>新的</b>奖金，中奖连线上的扇区会锁定；它们保持符号不变，也不会移动。随后<b>四个圆环</b>在锁定扇区下方再次转动，每次重转轮毂 <b>+1</b>。已锁定的连线若变长（3 → 4 个扇区），只支付增加的差额。链条会在首次没有新奖金的旋转时、全部 48 个扇区都被锁定时，或达到 {max} 次重转后结束（最后一转仍会赔付）。在基础游戏中，重转使用每环含一个金齿轮的转带。"
+      },
+      "elephant": {
+        "title": "象钟（{spins} 次免费旋转）",
+        "text": "在基础游戏中，{trigger} 个或更多水壶触发 {spins} 次免费旋转。轮毂倍数在免费旋转之间<b>不会重置</b>：每次旋转从上一转结束时的轮毂或自己抽取到的较大值开始，重转再 +1；轮毂只升不降。在免费旋转中，{retriggerVessels} 个以上水壶再增加 {retrigger} 次旋转（无赔付）。一轮最多授予 {max} 次免费旋转。"
+      },
+      "falcon": {
+        "title": "水箱与自动机械隼",
+        "text": "每次免费旋转后，水箱会充满一格。到第 {levels} 格时水箱排空，若还有剩余旋转，自动机械隼会在某个圆环上留下 {counts} 个金齿轮百搭扇区。这些百搭会一直保留到特色功能结束，并可在之后每一转中补全奖金。"
+      },
+      "tiers": {
+        "title": "奖金档位与倍数提示",
+        "text": "当本轮总额达到基础投注额的 <b>10 倍</b>或以上时，会弹出庆祝画面，计数器会逐档攀升：{big} ≥10×、{mega} ≥25×、{super} ≥50×、{epic} ≥100×；达到上限的一轮以“{max}”收尾。轮毂超过 ×10、×25、×50 和 ×100 的门槛时，会以大号文字和专属音效播报。免费旋转轮始终以“象钟 — 总计”画面结束。点击屏幕会让计数器直接跳到结果；不会改变奖金。"
+      },
+      "ante": {
+        "title": "机会 ×2 · 费用 {cost}",
+        "text": "开启后，每次旋转的费用为投注额的 <b>{factor} 倍</b>，基础游戏中水壶出现得更频繁：免费旋转几率约为原来的 2 倍（{ante} / {standard}）。奖金仍按基础投注额支付。开启时无法购买奖励。"
+      },
+      "buy": {
+        "title": "购买奖励 · 价格 {price}",
+        "text": "花费<b>投注额的 100 倍</b>，基础旋转结束时棋盘上至少有 {vessels} 个水壶（不足时，未参与中奖的扇区会变成水壶）；保证获得 {spins} 次免费旋转。需通过确认窗口完成，使用独立的 RTP（{rtp}），且不能与自动游戏同时使用。"
+      }
+    },
+    "rtp": {
+      "title": "理论回报率 (RTP)",
+      "caption": "各模式的理论回报率",
+      "colMode": "模式",
+      "colCost": "费用",
+      "colCi": "95% 置信区间",
+      "colFeature": "特色功能",
+      "everyRound": "每轮",
+      "oneIn": "1 / {n}",
+      "text": "每种模式单独进行 {millions} 百万轮模拟（引擎 <code>cezeri-gears-1</code>）。RTP 按已支付的费用计算。中奖频率（基础旋转）：标准 {hitStandard}，机会 ×2 {hitAnte}。波动性（以费用为单位的标准差）：标准 {sdStandard}，购买 {sdBuy}。",
+      "note": "该模拟仅为估算，<b>未经认证</b>；由于长尾分布，置信区间可能偏乐观。短时间会话的结果可能与 RTP 相差很大。DEMO 额度<b>没有价值</b>。"
+    },
+    "limits": {
+      "title": "投注与奖金限额",
+      "range": "投注范围",
+      "steps": "档位",
+      "current": "当前投注额",
+      "currentValue": "{bet} · 机会 ×2 {ante} · 购买 {buy}",
+      "max": "最高奖",
+      "maxValue": "投注额的 {multiplier} 倍 · 当前投注额下为 {amount}",
+      "text1": "达到最高奖的一轮会立即结束；剩余免费旋转不再进行。奖金始终按基础投注额计算，不足一分的部分向下取整。",
+      "text2": "余额不足的档位和模式无法选择。每一轮对应一次预留和一次结算；同一时间只能进行一轮。"
+    },
+    "keys": {
+      "heading": "键盘",
+      "space": "空格",
+      "spaceText": "开始旋转（设置 →“{option}”）。本轮进行中不会跳过旋转；只会加快免费旋转画面和庆祝计数器。",
+      "enterText": "按下当前聚焦的按钮。",
+      "escText": "关闭已打开的窗口（会话提醒除外）。",
+      "tabText": "在各控件之间切换；焦点始终可见。",
+      "arrowsText": "在此信息窗口中切换页面；在设置选项中切换选项。",
+      "note": "屏幕阅读器会播报每一步（“辐条 4：3 个象钟，轮毂 ×3”、锁定、轮毂倍数、本轮结果）；棋盘会按 4 个圆环 × 12 个扇区朗读。符号除颜色外还以形状区分。开启“减少动态效果”后，转动的圆环会立即就位，并关闭粒子和震动效果。"
+    },
+    "fault": {
+      "title": "故障条款",
+      "p1": "<b>故障会使所有受影响的游戏和赔付无效。</b>发生软件、浏览器或设备故障时，以轮次记录为准；屏幕上显示但与引擎记录不符的金额无效。",
+      "p2": "本游戏仅使用 DEMO 额度进行。DEMO 没有价值，不能兑换为金钱或代币；发生故障时，DEMO 余额和会话记录可能会被更正或重置。",
+      "p3": "由于结果在旋转前就已确定，动画中断、标签页隐藏或离开页面都不会改变结果；本轮仍会按引擎的奖金结算一次。"
+    }
+  },
+  "history": {
+    "title": "你的游戏记录",
+    "scope": "本次会话 · 回放不会改变余额",
+    "time": "时间",
+    "mode": "模式",
+    "bet": "投注",
+    "cost": "费用",
+    "win": "赢取",
+    "result": "结果",
+    "roundId": "轮次编号",
+    "replayColumn": "回放",
+    "latest": "最近一轮",
+    "replay": "回放",
+    "replayAria": "回放：第 {id} 轮，余额不变",
+    "share": "分享我的奖金",
+    "shareAria": "分享我的奖金：第 {id} 轮",
+    "emptyTitle": "你的第一轮将显示在这里。",
+    "emptyText": "每一轮的模式、投注、费用、奖金和轮次编号都会被记录；你可以重新观看任意一轮。",
+    "reset": "余额已补充",
+    "resetRemote": "余额已补充（服务器）",
+    "detail": {
+      "capped": "最高奖 · {times}×",
+      "free": "象钟 ×{spins} · 轮毂 ×{hub} · {times}×",
+      "none": "未中奖",
+      "base": "{respins, plural, =0 {} other {# 次重转 · }}轮毂 ×{hub} · {times}×"
+    }
+  },
+  "celebration": {
+    "aria": "{title}：{money} DEMO",
+    "times": "{times}× 投注额",
+    "capNote": "本轮已达上限 · 剩余旋转不再进行",
+    "speedUp": "点击加速",
+    "continue": "继续"
+  },
+  "intro": {
+    "word": "象钟",
+    "srTitle": "象钟开始",
+    "freeSpins": "次免费\n旋转",
+    "text": "轮毂倍数<b>不会重置</b>，只会在各次旋转之间不断上升。水箱每 3 转充满一次，自动机械隼会留下永久的<b>金齿轮</b>百搭。2 个水壶增加 4 次旋转。",
+    "start": "开始"
+  },
+  "total": {
+    "titleA": "象钟",
+    "titleB": "总计",
+    "word": "总计",
+    "sub": "免费旋转",
+    "spins": "旋转",
+    "spinsValue": "{spins, plural, other {# 转}}",
+    "topHub": "最高轮毂",
+    "falcon": "隼",
+    "falconVisits": "{n, plural, other {# 次到访}}",
+    "falconNone": "未出现",
+    "wilds": "{n, plural, other {# 个金齿轮}}",
+    "wildsNone": "无百搭",
+    "ofBet": "占投注额",
+    "capNote": "已达到最高奖 · 剩余旋转不再进行",
+    "toCelebration": "进入庆祝画面"
+  },
+  "rules": {
+    "board": "棋盘由中心的轮毂和围绕它的 4 个同心圆环组成，每环 12 个扇区。从轮毂向外延伸的 12 条辐条上，从内向外（自第 1 环或第 2 环起）连续 3 个或 4 个相同符号即可中奖；金齿轮百搭可替代任何符号。轮毂倍数（×1–×10）会乘以该次旋转的所有辐条奖金。",
+    "features": "齿轮锁定：出现新的奖金时，中奖扇区会锁定，四个圆环在其下方再次转动，每次重转轮毂 +1；最多 10 次重转，直到没有新的奖金为止。3 个或更多水壶触发 10 次免费旋转（象钟）：轮毂倍数在各次旋转之间保留且只会上升，每 3 转自动机械隼会留下永久的金齿轮百搭。最高奖金为投注额的 10,000 倍。",
+    "fixed": "结果在旋转开始前由浏览器使用本地随机数确定；动画只是播放该结果。即使你离开页面，本轮也会按已确定的奖金结算。没有 VRF 证明。"
+  }
+}

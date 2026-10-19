@@ -2,7 +2,8 @@
 import { memo, useCallback, useImperativeHandle, useLayoutEffect, useRef, useState, type Ref } from 'react';
 import type { StormSymbol } from '@sollish/protocol';
 import type { StormPlacedCell } from '@/lib/storm-timeline';
-import { StormSymbolUse, stormCellLabel } from './symbols';
+import { StormSymbolUse } from './symbols';
+import { useStormSymbolNames } from './use-symbol-names';
 import styles from './storm-board.module.css';
 
 /* The 6×5 Tarhun board, drawn inside <StormFrame>. Cells are absolutely positioned by an outer transform
@@ -76,6 +77,7 @@ function fallFrames(dy: number, reduced: boolean, fresh: boolean): Keyframe[] {
 }
 
 export function StormBoard({ ref, label }: { ref?: Ref<StormBoardHandle>; label: string }) {
+  const names = useStormSymbolNames();
   const [cells, setCells] = useState<StormCellView[]>(STORM_IDLE_CELLS);
   const els = useRef(new Map<string, CellEls>());
   const pending = useRef<Array<() => void>>([]);
@@ -199,7 +201,7 @@ export function StormBoard({ ref, label }: { ref?: Ref<StormBoardHandle>; label:
       <div role="grid" aria-label={label} aria-rowcount={5} aria-colcount={6} className="sr-only">
         {rows.map((cellsInRow, row) => (
           <div key={row} role="row" aria-rowindex={row + 1}>
-            {cellsInRow.map(c => <span key={c.key} role="gridcell" aria-colindex={c.col + 1}>{stormCellLabel(c)}</span>)}
+            {cellsInRow.map(c => <span key={c.key} role="gridcell" aria-colindex={c.col + 1}>{names.cell(c)}</span>)}
           </div>
         ))}
       </div>

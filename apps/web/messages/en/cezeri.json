@@ -1,0 +1,373 @@
+{
+  "meta": {
+    "title": "Cezeri: Wheels of Time",
+    "description": "Cezeri: Wheels of Time — an original DEMO wheel game. Winning slices clamp in place, four brass wheels turn again, and the hub multiplier rises by 1 every spin; in the Elephant Clock the hub is kept and the automaton falcon drops wild gears."
+  },
+  "title": "Cezeri: Wheels of Time",
+  "subtitle": "Winning slices clamp in place, the wheels turn again, and the hub adds +1 every round.",
+  "table": "Cezeri game table",
+  "logo": {
+    "subtitle": "WHEELS OF TIME",
+    "label": "Cezeri: Wheels of Time"
+  },
+  "symbols": {
+    "h1": "Elephant Clock",
+    "h2": "Automaton Drummer",
+    "h3": "Water-Clock Citadel",
+    "h4": "Peacock Fountain",
+    "l1": "Astrolabe",
+    "l2": "Tile Star",
+    "l3": "Copper Ladle",
+    "l4": "Pulley",
+    "gear": "Golden Gear (wild)",
+    "vessel": "Water Vessel"
+  },
+  "board": {
+    "label": "Cezeri wheels: hub and 4 rings, 12 slices",
+    "labelFree": "Cezeri Elephant Clock wheels: hub and 4 rings, 12 slices",
+    "ring": "Ring {n}",
+    "cell": "{symbol}{state, select, pinned {, permanent wild} held {, locked} other {}}"
+  },
+  "reservoir": {
+    "label": "ELEPHANT CLOCK"
+  },
+  "deck": {
+    "group": "Game controls",
+    "balance": "Balance",
+    "refill": "Refill balance",
+    "win": "Win",
+    "winReplay": "Replay",
+    "winReplayLast": "Replay win",
+    "winLast": "Last win",
+    "cost": "Cost",
+    "spin": "Spin",
+    "spinLocked": "Round in progress; locked until every respin and free spin has played.",
+    "spinCost": "Cost {cost}",
+    "auto": "Autoplay",
+    "info": "Info",
+    "infoAria": "Game info",
+    "on": "On",
+    "off": "Off",
+    "anteDesc": "Elephant Clock chance ≈2×",
+    "buy": "Buy bonus",
+    "buyDesc": "{spins, plural, one {# free spin} other {# free spins}} · {rtp}",
+    "speedAria": "Spin speed: {speed}",
+    "sound": "Sound",
+    "soundLoading": "Loading sound {percent}%",
+    "outOfCredit": "Your DEMO balance has run out.",
+    "lastWin": "Last round <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Last round: no win.",
+    "hintSpace": "You can also spin with the space bar.",
+    "hintFixed": "The result is fixed before the spin."
+  },
+  "hud": {
+    "freeAria": "Free spin {number}, {left} left",
+    "freeSpin": "Spin {n}",
+    "freeTitle": "Elephant Clock",
+    "left": "Left",
+    "chainAria": "Gear Lock: respin {round}, up to {max}",
+    "chain": "Gear Lock",
+    "hubAria": "Hub multiplier ×{hub}{kept, select, yes {, kept} other {}}",
+    "hub": "Hub",
+    "hubKept": "Hub · kept"
+  },
+  "meter": {
+    "idleA": "<b>3–4</b> matching slices on a spoke pay",
+    "idleB": "Lock, spin, hub <b>+1</b>",
+    "total": "Total win",
+    "win": "Win"
+  },
+  "replay": {
+    "ribbon": "Replay — balance unchanged · round {id}"
+  },
+  "auto": {
+    "ribbon": "Autoplay · {spins, plural, one {# spin} other {# spins}} left"
+  },
+  "toast": {
+    "close": "Dismiss notification",
+    "autoplayStopped": "Autoplay stopped: {reason}. {spins, plural, one {# spin} other {# spins}}, net {net}.",
+    "autoplayStoppedShort": "Autoplay stopped: {reason}.",
+    "autoplayStarted": "Autoplay: {spins, plural, one {# spin} other {# spins}}, loss limit {limit}.",
+    "refilled": "Balance refilled: {amount} DEMO.",
+    "shareCopied": "Share link copied: {url}",
+    "shareLink": "Share link: {url}",
+    "shareFailed": "Could not share: {error}",
+    "replayFailed": "This round could not be replayed.",
+    "replayMismatch": "Replay could not be verified: the record does not match the engine."
+  },
+  "callout": {
+    "tier0": "Hub",
+    "tier1": "Strong hub",
+    "tier2": "Fierce hub",
+    "tier3": "Mighty hub",
+    "tier4": "Legendary hub",
+    "free": "Elephant Clock · {tag}"
+  },
+  "banner": {
+    "fullChain": "Full chain · {respins} spins · hub ×{hub}",
+    "respins": "{respins} respins · hub ×{hub}",
+    "extraSpins": "+{awarded} free spins",
+    "scatterPay": "{count} Water Vessels · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "Spin started, {amount} DEMO.",
+    "bonusBought": "Bonus bought, {amount} DEMO. The Elephant Clock begins.",
+    "sentToServer": "Spin sent to the server, {amount} DEMO.",
+    "recovered": "The unfinished round was recovered from the server; it was already paid there ({amount} DEMO).",
+    "replaying": "Replaying: round {id}. Balance does not change.",
+    "replayDone": "Replay finished: {amount} DEMO, {times}×. Balance unchanged.",
+    "roundEnd": "Round over. Total win {amount} DEMO, {times}×.",
+    "roundEndNone": "Round over. No win.",
+    "hubRespin": "Hub +1: ×{value}. All rings spin again (respin {round}).",
+    "hubCarried": "Hub ×{value} (×{carried} kept from the previous spin).",
+    "hub": "Hub ×{value}.",
+    "win": "Spoke {spoke}: {length} {name}{extended, select, yes { (extended)} other {}}, hub ×{hub}, {times}× win",
+    "lock": "Gear Lock: {count} slices locked, {total} in total.{respin, select, yes { The rings will spin again.} other {}}",
+    "noSpokeWin": "No spoke win in this spin.",
+    "vesselsRetrigger": "{count} Water Vessels: {awarded} free spins added.",
+    "vesselsTrigger": "{count} Water Vessels: Elephant Clock won.",
+    "freeIntro": "The Elephant Clock begins: you won {awarded} free spins.",
+    "reservoirFull": "Water reservoir full.",
+    "falcon": "Automaton falcon arrived: ring {ring}, {count} Golden Gears.",
+    "freeSpinWin": "Free spin paid {times}×. Total {total}×, hub ×{hub}.",
+    "freeSpinNone": "No win on this free spin. Hub ×{hub} is kept.",
+    "noWin": "No win.",
+    "totalWin": "Total win {amount} DEMO, {times}×.",
+    "freeOutro": "Elephant Clock ended. Total: {amount} DEMO, {spins} spins, highest hub ×{topHub}.",
+    "speed": "Spin speed: {speed}.",
+    "anteOn": "Chance ×2 on: free-spin chance ≈2×, cost {cost}.",
+    "anteOff": "Chance ×2 off: cost {cost}.",
+    "refilled": "DEMO balance refilled to {amount} DEMO.",
+    "refilledRemote": "Server DEMO balance refilled to {amount} DEMO."
+  },
+  "autoplay": {
+    "serverFailed": "The server could not start the round",
+    "spinFailed": "The spin could not be started",
+    "quit": "You left the session",
+    "title": "Autoplay",
+    "note": "{cost} per spin{ante, select, yes { (Chance ×2)} other {}} · never buys the bonus · stops when the tab is hidden."
+  },
+  "errors": {
+    "entropy": "Secure local randomness is unavailable. The demo did not start.",
+    "insufficient": "Insufficient balance: this {kind, select, buy {purchase} other {spin}} costs {cost}. Lower the bet or refill the balance.",
+    "noCredit": "You don't have enough demo credit, or a demo is already running."
+  },
+  "buy": {
+    "block": {
+      "gated": "Only bought with DEMO credit",
+      "autoplay": "Cannot be bought while autoplay is running",
+      "busy": "Cannot be bought before the round ends",
+      "ante": "Cannot be bought while Chance ×2 is on",
+      "balance": "Insufficient balance (price {price})"
+    },
+    "feature": "Elephant Clock · 10 free spins · bet {bet}",
+    "rtp": "Purchase RTP {buy} · standard {standard} (simulation, uncertified)",
+    "text": "<b>100×</b> your bet. At the end of the base spin the board holds at least 3 Water Vessels and 10 free spins are guaranteed; the hub multiplier is kept across spins and the automaton falcon drops permanent Golden Gear wilds. Wins are paid on a bet of {bet}, maximum {max}."
+  },
+  "gated": {
+    "title": "No on-chain Cezeri.",
+    "text": "This game is played with DEMO credit only; real bets are not accepted.",
+    "back": "Back to the local demo"
+  },
+  "splash": {
+    "gearLock": {
+      "title": "Gear Lock",
+      "text": "Winning slices clamp in place, the four wheels turn again, the hub adds +1"
+    },
+    "elephant": {
+      "title": "Elephant Clock",
+      "text": "3 Water Vessels trigger 10 free spins; the hub is kept and the falcon drops wilds"
+    },
+    "max": {
+      "title": "{max}× max",
+      "text": "The Golden Gear wild stands in for every symbol"
+    },
+    "loading": "Loading game",
+    "play": "Play",
+    "skip": "Don't show the intro screen again",
+    "note": "DEMO credit has no value · The result is fixed before the spin · Uncertified simulation RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Sound ready: music, effects and ambience are prepared on this device.",
+    "soundLoading": "Loading sound {percent}% (the game stays silent or plays simple effects meanwhile).",
+    "soundIdle": "Sound loads on the first tap.",
+    "demoTitle": "DEMO balance",
+    "demoText": "Balance {balance}{remote, select, yes { (server)} other {}}. Refilling sets the balance to {start} DEMO and adds a “Balance refilled” row to the history; it is not possible while a round or autoplay is running."
+  },
+  "info": {
+    "title": "Cezeri · Game info",
+    "tab": {
+      "how": "How to play",
+      "pay": "Paytable",
+      "features": "Features",
+      "rtp": "RTP",
+      "limits": "Bet and win limits",
+      "keys": "Keys",
+      "fault": "Malfunction clause"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Choose your bet.</b> The − and + buttons change the bet by one step; tap the bet amount to open every step. “Max bet” picks the highest step your balance allows.",
+        "spin": "<b>Spin.</b> Press the winding-crank button or use the space bar. The round cost ({factor} times the bet when Chance ×2 is on) is deducted from the balance once.",
+        "wheels": "<b>The wheels.</b> The board is a hub with 4 concentric rings around it; each ring has 12 slices and turns on its own track. 12 spokes run outward from the hub.",
+        "spokes": "<b>Spoke wins.</b> 3 or 4 consecutive slices of the same symbol on a spoke pay if they start at ring 1 or ring 2. The 12 spokes pay separately. The win is multiplied by the hub multiplier of that spin.",
+        "lock": "<b>Gear Lock.</b> If there is a new win, the winning slices clamp in place, the four rings spin again beneath them, and the hub rises by <b>+1</b>. This goes on until no new pay arrives (up to {max} respins).",
+        "result": "<b>The result.</b> The whole round is determined by the engine before the spin starts; the animation only plays that result. The spin button stays locked until the round (every respin and free spin) has finished; use the Quick/Turbo setting to speed it up. The speed setting, tapping the celebration counter, a hidden tab or leaving the page does not change the payout; the round always closes once, with the engine's payout."
+      },
+      "note": "DEMO credit has no value; it does not earn SOL, tokens or rewards. The game runs in the browser with local randomness; there is no VRF proof."
+    },
+    "pay": {
+      "lead": "On a <b>spoke</b>, <b>3 or 4 consecutive slices</b> of the same symbol, from the inside out, pay. The large figure is the gross DEMO amount per spoke at a bet of <b>{bet}</b> (hub ×1); the multiplier beneath it is a multiple of the bet. The hub multiplier multiplies this amount.",
+      "runsAria": "Valid runs",
+      "run14": "Ring 1–4 · 4 slices",
+      "run13": "Ring 1–3 · 3 slices",
+      "run24": "Ring 2–4 · 3 slices",
+      "gridAria": "Symbol payouts",
+      "slices4": "4 slices",
+      "slices3": "3 slices",
+      "gears4": "4 gears",
+      "gears3": "3 gears",
+      "gearText": "Stands in for every symbol except the Water Vessel. A run made only of gears pays from its own table; the higher-paying reading of the run counts.",
+      "scatterTitle": "{name} · scatter pay",
+      "vessels5": "5+ vessels",
+      "vessels4": "4 vessels",
+      "vessels3": "3 vessels",
+      "scatterText": "Counted anywhere on the rings of the spin's final board; not multiplied by the hub. In the base game {vessels}+ vessels trigger <b>{spins} free spins</b>.",
+      "maxTitle": "Maximum win {max}×",
+      "maxText": "At this bet: <b>{amount}</b>. If the round total reaches this cap, the round ends immediately; the remaining free spins are not played."
+    },
+    "features": {
+      "hub": {
+        "title": "Hub multiplier",
+        "text": "Every spin begins with the hub being drawn; the hub multiplies all spoke wins of that spin. Draw probabilities in the base game:",
+        "aria": "Hub draw"
+      },
+      "lock": {
+        "title": "Gear Lock (respin chain)",
+        "text": "If a spin has a <b>new</b> pay, the slices of the winning runs lock; they keep their symbols and do not move. Then <b>all four rings</b> spin again beneath the locked slices, and the hub rises by <b>+1</b> with every respin. If a locked run grows (3 → 4 slices), only the difference is paid. The chain ends on the first spin without a new pay, when all 48 slices are locked, or after {max} respins (the last spin is still paid). In the base game the respins spin on strips with one Golden Gear per ring."
+      },
+      "elephant": {
+        "title": "Elephant Clock ({spins} free spins)",
+        "text": "In the base game {trigger} or more Water Vessels trigger {spins} free spins. The hub multiplier is <b>not reset</b> between free spins: each spin starts from the hub where the previous spin ended or the larger of its own draw, and respins add +1; the hub only rises. In a free spin, {retriggerVessels}+ vessels add {retrigger} more spins (no pay). At most {max} free spins are awarded in a round."
+      },
+      "falcon": {
+        "title": "Water reservoir and automaton falcon",
+        "text": "After every free spin the reservoir fills one step. At step {levels} it drains and, if spins remain, the automaton falcon drops {counts} Golden Gear wild slices onto one ring. These wilds stay in place until the feature ends and can complete wins on every following spin."
+      },
+      "tiers": {
+        "title": "Win tiers and multiplier callouts",
+        "text": "If the round total is <b>10 times</b> the base bet or more, a celebration screen opens and the counter climbs through the tiers: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; a round that reaches the cap ends with {max}. When the hub passes the ×10, ×25, ×50 and ×100 thresholds it is announced with large lettering and its own sound. A free-spin round always ends with the “Elephant Clock — Total” screen. Tapping the screen brings the counter straight to the result; it does not change the payout."
+      },
+      "ante": {
+        "title": "Chance ×2 · cost {cost}",
+        "text": "When on, every spin costs <b>{factor} times the bet</b> and Water Vessels appear more often in the base game: the free-spin chance is about double ({ante} / {standard}). Wins are still paid on the base bet. The bonus cannot be bought while it is on."
+      },
+      "buy": {
+        "title": "Buy bonus · price {price}",
+        "text": "For <b>100 times the bet</b>, at the end of the base spin the board holds at least {vessels} Water Vessels (if some are missing, slices that are not part of a win turn into vessels); {spins} free spins are guaranteed. It is done through a confirmation window, runs at a separate RTP ({rtp}) and cannot be used with autoplay."
+      }
+    },
+    "rtp": {
+      "title": "Theoretical return (RTP)",
+      "caption": "Theoretical return per mode",
+      "colMode": "Mode",
+      "colCost": "Cost",
+      "colCi": "95% CI",
+      "colFeature": "Feature",
+      "everyRound": "every round",
+      "oneIn": "1 / {n}",
+      "text": "A separate {millions}-million-round simulation for each mode (engine <code>cezeri-gears-1</code>). RTP is computed on the cost paid. Win frequency (base spin): standard {hitStandard}, Chance ×2 {hitAnte}. Volatility (standard deviation in units of cost): standard {sdStandard}, purchase {sdBuy}.",
+      "note": "The simulation is an estimate and is <b>uncertified</b>; because of the heavy tail the confidence interval may be optimistic. Results in a short session can differ greatly from the RTP. DEMO credit is <b>worthless</b>."
+    },
+    "limits": {
+      "title": "Bet and win limits",
+      "range": "Bet range",
+      "steps": "Steps",
+      "current": "Current bet",
+      "currentValue": "{bet} · Chance ×2 {ante} · Purchase {buy}",
+      "max": "Maximum win",
+      "maxValue": "{multiplier} times the bet · {amount} at this bet",
+      "text1": "A round that reaches the maximum win ends immediately; the remaining free spins are not played. The payout is always computed on the base bet and anything below a cent is rounded down.",
+      "text2": "Steps and modes your balance cannot cover cannot be selected. A round is a single reservation and a single payout; only one round is played at a time."
+    },
+    "keys": {
+      "heading": "Keyboard",
+      "space": "Space",
+      "spaceText": "Starts the spin (Settings → “{option}”). It does not skip the spin during a round; it only speeds up the free-spin screens and the celebration counter.",
+      "enterText": "Presses the focused button.",
+      "escText": "Closes the open window (except the session reminder).",
+      "tabText": "Moves between the controls; focus is always visible.",
+      "arrowsText": "Changes the page in this info window; changes the option in settings choices.",
+      "note": "The screen reader announces every step (“Spoke 4: 3 Elephant Clock, hub ×3”, locks, the hub multiplier, the round result); the board is read as 4 rings × 12 slices. Symbols are told apart by shape as well as colour. The reduce-motion preference places the turning rings instantly and turns off particles and shake."
+    },
+    "fault": {
+      "title": "Malfunction clause",
+      "p1": "<b>A malfunction voids all affected games and payouts.</b> In case of a software, browser or device failure the round record prevails; an amount shown on screen that does not match the engine record is not valid.",
+      "p2": "This game is played with DEMO credit only. DEMO is worthless and cannot be converted into money or tokens; in the event of a malfunction the DEMO balance and session history may be corrected or reset.",
+      "p3": "Because the result is determined before the spin, an animation cut short, a hidden tab or leaving the page does not change it; the round still closes once with the engine's payout."
+    }
+  },
+  "history": {
+    "title": "Your game history",
+    "scope": "This session · replays never change the balance",
+    "time": "Time",
+    "mode": "Mode",
+    "bet": "Bet",
+    "cost": "Cost",
+    "win": "Win",
+    "result": "Result",
+    "roundId": "Round ID",
+    "replayColumn": "Replay",
+    "latest": "Latest round",
+    "replay": "Replay",
+    "replayAria": "Replay: round {id}, balance unchanged",
+    "share": "Share my win",
+    "shareAria": "Share my win: round {id}",
+    "emptyTitle": "Your first round will appear here.",
+    "emptyText": "The mode, bet, cost, win and round ID of every round are recorded; you can watch any round again.",
+    "reset": "Balance refilled",
+    "resetRemote": "Balance refilled (server)",
+    "detail": {
+      "capped": "Max win · {times}×",
+      "free": "Elephant Clock ×{spins} · hub ×{hub} · {times}×",
+      "none": "No win",
+      "base": "{respins, plural, =0 {} other {# respins · }}hub ×{hub} · {times}×"
+    }
+  },
+  "celebration": {
+    "aria": "{title}: {money} DEMO",
+    "times": "{times}× bet",
+    "capNote": "The round hit the cap · remaining spins are not played",
+    "speedUp": "Tap to speed up",
+    "continue": "Continue"
+  },
+  "intro": {
+    "word": "ELEPHANT CLOCK",
+    "srTitle": "The Elephant Clock begins",
+    "freeSpins": "free\nspins",
+    "text": "The hub multiplier <b>is not reset</b>; it only rises from spin to spin. The water reservoir fills every 3 spins and the automaton falcon drops permanent <b>Golden Gear</b> wilds. 2 Water Vessels add +4 spins.",
+    "start": "Start"
+  },
+  "total": {
+    "titleA": "Elephant Clock",
+    "titleB": "Total",
+    "word": "TOTAL",
+    "sub": "FREE SPINS",
+    "spins": "Spins",
+    "spinsValue": "{spins, plural, one {# spin} other {# spins}}",
+    "topHub": "Highest hub",
+    "falcon": "Falcon",
+    "falconVisits": "{n, plural, one {# visit} other {# visits}}",
+    "falconNone": "Did not come",
+    "wilds": "{n, plural, one {# Golden Gear} other {# Golden Gears}}",
+    "wildsNone": "no wilds",
+    "ofBet": "Of the bet",
+    "capNote": "Maximum win reached · remaining spins are not played",
+    "toCelebration": "On to the celebration"
+  },
+  "rules": {
+    "board": "The board is a hub with 4 concentric rings of 12 slices around it. On each of the 12 spokes running from the hub outward, 3 or 4 consecutive slices of the same symbol, from the inside out (starting at ring 1 or ring 2), pay; the Golden Gear wild stands in for every symbol. The hub multiplier (×1–×10) multiplies all spoke wins of that spin.",
+    "features": "Gear Lock: if there is a new win, the winning slices lock, the four rings spin again beneath them, and the hub rises by +1 with every respin; up to 10 respins, until no new pay arrives. 3 or more Water Vessels trigger 10 free spins (Elephant Clock): the hub multiplier is kept between spins and only rises, and every 3 spins the automaton falcon drops permanent Golden Gear wilds. The maximum win is 10,000 times the bet.",
+    "fixed": "The result is determined locally in your browser with local randomness before the spin starts; the animation only plays that result. Even if you leave the page, the round closes with the determined payout. There is no VRF proof."
+  }
+}

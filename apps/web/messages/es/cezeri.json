@@ -1,0 +1,373 @@
+{
+  "meta": {
+    "title": "Cezeri: Ruedas del Tiempo",
+    "description": "Cezeri: Ruedas del Tiempo — un juego de ruedas DEMO original. Los sectores ganadores se bloquean, cuatro ruedas de latón vuelven a girar y el multiplicador del cubo sube 1 en cada giro; en el Reloj del Elefante el cubo se conserva y el halcón autómata deja engranajes comodín."
+  },
+  "title": "Cezeri: Ruedas del Tiempo",
+  "subtitle": "Los sectores ganadores se bloquean, las ruedas vuelven a girar y el cubo sube +1 en cada ronda.",
+  "table": "Mesa de juego Cezeri",
+  "logo": {
+    "subtitle": "RUEDAS DEL TIEMPO",
+    "label": "Cezeri: Ruedas del Tiempo"
+  },
+  "symbols": {
+    "h1": "Reloj del Elefante",
+    "h2": "Tamborilero Autómata",
+    "h3": "Ciudadela del Reloj de Agua",
+    "h4": "Fuente del Pavo Real",
+    "l1": "Astrolabio",
+    "l2": "Estrella de Azulejo",
+    "l3": "Cucharón de Cobre",
+    "l4": "Polea",
+    "gear": "Engranaje Dorado (comodín)",
+    "vessel": "Vasija de Agua"
+  },
+  "board": {
+    "label": "Ruedas de Cezeri: cubo y 4 anillos, 12 sectores",
+    "labelFree": "Ruedas del Reloj del Elefante: cubo y 4 anillos, 12 sectores",
+    "ring": "Anillo {n}",
+    "cell": "{symbol}{state, select, pinned {, comodín permanente} held {, bloqueado} other {}}"
+  },
+  "reservoir": {
+    "label": "RELOJ DEL ELEFANTE"
+  },
+  "deck": {
+    "group": "Controles del juego",
+    "balance": "Saldo",
+    "refill": "Recargar saldo",
+    "win": "Premio",
+    "winReplay": "Repetición",
+    "winReplayLast": "Premio de la repetición",
+    "winLast": "Último premio",
+    "cost": "Coste",
+    "spin": "Girar",
+    "spinLocked": "Ronda en curso; bloqueado hasta que terminen todos los respins y giros gratis.",
+    "spinCost": "Coste {cost}",
+    "auto": "Auto",
+    "info": "Info",
+    "infoAria": "Información del juego",
+    "on": "Activado",
+    "off": "Desactivado",
+    "anteDesc": "Probabilidad del Reloj del Elefante ≈2×",
+    "buy": "Comprar bono",
+    "buyDesc": "{spins, plural, one {# giro gratis} other {# giros gratis}} · {rtp}",
+    "speedAria": "Velocidad de giro: {speed}",
+    "sound": "Sonido",
+    "soundLoading": "Cargando el sonido {percent} %",
+    "outOfCredit": "Tu saldo DEMO se ha agotado.",
+    "lastWin": "Última ronda <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Última ronda sin premio.",
+    "hintSpace": "También puedes girar con la barra espaciadora.",
+    "hintFixed": "El resultado se determina antes del giro."
+  },
+  "hud": {
+    "freeAria": "Giro gratis {number}, quedan {left}",
+    "freeSpin": "Giro {n}",
+    "freeTitle": "Reloj del Elefante",
+    "left": "Quedan",
+    "chainAria": "Bloqueo de Engranajes: respin {round}, hasta {max}",
+    "chain": "Bloqueo de Engranajes",
+    "hubAria": "Multiplicador del cubo ×{hub}{kept, select, yes {, se conserva} other {}}",
+    "hub": "Cubo",
+    "hubKept": "Cubo · se conserva"
+  },
+  "meter": {
+    "idleA": "<b>3–4</b> sectores iguales en un radio pagan",
+    "idleB": "Bloquear, girar, cubo <b>+1</b>",
+    "total": "Premio total",
+    "win": "Premio"
+  },
+  "replay": {
+    "ribbon": "Repetición — saldo sin cambios · ronda {id}"
+  },
+  "auto": {
+    "ribbon": "Auto · {spins, plural, one {queda # giro} other {quedan # giros}}"
+  },
+  "toast": {
+    "close": "Cerrar aviso",
+    "autoplayStopped": "Juego automático detenido: {reason}. {spins, plural, one {# giro} other {# giros}}, neto {net}.",
+    "autoplayStoppedShort": "Juego automático detenido: {reason}.",
+    "autoplayStarted": "Juego automático: {spins, plural, one {# giro} other {# giros}}, límite de pérdida {limit}.",
+    "refilled": "Saldo recargado: {amount} DEMO.",
+    "shareCopied": "Enlace para compartir copiado: {url}",
+    "shareLink": "Enlace para compartir: {url}",
+    "shareFailed": "No se pudo compartir: {error}",
+    "replayFailed": "No se pudo reproducir esta ronda.",
+    "replayMismatch": "No se pudo verificar la repetición: el registro no coincide con el motor."
+  },
+  "callout": {
+    "tier0": "Cubo",
+    "tier1": "Cubo fuerte",
+    "tier2": "Cubo desatado",
+    "tier3": "Cubo poderoso",
+    "tier4": "Cubo legendario",
+    "free": "Reloj del Elefante · {tag}"
+  },
+  "banner": {
+    "fullChain": "Cadena completa · {respins} giros · cubo ×{hub}",
+    "respins": "{respins} respins · cubo ×{hub}",
+    "extraSpins": "+{awarded} giros gratis",
+    "scatterPay": "{count} Vasijas de Agua · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "Giro iniciado, {amount} DEMO.",
+    "bonusBought": "Bono comprado, {amount} DEMO. Comienza el Reloj del Elefante.",
+    "sentToServer": "Giro enviado al servidor, {amount} DEMO.",
+    "recovered": "La ronda interrumpida se recuperó del servidor; el pago ya se hizo allí ({amount} DEMO).",
+    "replaying": "Reproduciendo: ronda {id}. El saldo no cambia.",
+    "replayDone": "Repetición terminada: {amount} DEMO, {times}×. Saldo sin cambios.",
+    "roundEnd": "Ronda terminada. Premio total {amount} DEMO, {times}×.",
+    "roundEndNone": "Ronda terminada. Sin premio.",
+    "hubRespin": "Cubo +1: ×{value}. Todos los anillos vuelven a girar (respin {round}).",
+    "hubCarried": "Cubo ×{value} (×{carried} conservado del giro anterior).",
+    "hub": "Cubo ×{value}.",
+    "win": "Radio {spoke}: {length} {name}{extended, select, yes { (ampliado)} other {}}, cubo ×{hub}, premio de {times}×",
+    "lock": "Bloqueo de Engranajes: {count} sectores bloqueados, {total} en total.{respin, select, yes { Los anillos volverán a girar.} other {}}",
+    "noSpokeWin": "Sin premio en los radios en este giro.",
+    "vesselsRetrigger": "{count} Vasijas de Agua: se añaden {awarded} giros gratis.",
+    "vesselsTrigger": "{count} Vasijas de Agua: Reloj del Elefante conseguido.",
+    "freeIntro": "Comienza el Reloj del Elefante: has ganado {awarded} giros gratis.",
+    "reservoirFull": "Depósito de agua lleno.",
+    "falcon": "Llegó el halcón autómata: anillo {ring}, {count} Engranajes Dorados.",
+    "freeSpinWin": "El giro gratis pagó {times}×. Total {total}×, cubo ×{hub}.",
+    "freeSpinNone": "Sin premio en este giro gratis. Se conserva el cubo ×{hub}.",
+    "noWin": "Sin premio.",
+    "totalWin": "Premio total {amount} DEMO, {times}×.",
+    "freeOutro": "Reloj del Elefante terminado. Total: {amount} DEMO, {spins} giros, cubo máximo ×{topHub}.",
+    "speed": "Velocidad de giro: {speed}.",
+    "anteOn": "Chance ×2 activada: probabilidad de giros gratis ≈2×, coste {cost}.",
+    "anteOff": "Chance ×2 desactivada: coste {cost}.",
+    "refilled": "Saldo DEMO recargado a {amount} DEMO.",
+    "refilledRemote": "Saldo DEMO del servidor recargado a {amount} DEMO."
+  },
+  "autoplay": {
+    "serverFailed": "El servidor no pudo iniciar la ronda",
+    "spinFailed": "No se pudo iniciar el giro",
+    "quit": "Has salido de la sesión",
+    "title": "Juego automático",
+    "note": "{cost} por giro{ante, select, yes { (Chance ×2)} other {}} · nunca compra el bono · se detiene cuando la pestaña se oculta."
+  },
+  "errors": {
+    "entropy": "La aleatoriedad local segura no está disponible. La demo no se inició.",
+    "insufficient": "Saldo insuficiente: {kind, select, buy {esta compra cuesta} other {este giro cuesta}} {cost}. Baja la apuesta o recarga el saldo.",
+    "noCredit": "No tienes suficiente crédito demo o ya hay una demo en curso."
+  },
+  "buy": {
+    "block": {
+      "gated": "Solo se compra con crédito DEMO",
+      "autoplay": "No se puede comprar durante el juego automático",
+      "busy": "No se puede comprar antes de que termine la ronda",
+      "ante": "No se puede comprar con Chance ×2 activada",
+      "balance": "Saldo insuficiente (precio {price})"
+    },
+    "feature": "Reloj del Elefante · 10 giros gratis · apuesta {bet}",
+    "rtp": "RTP de compra {buy} · estándar {standard} (simulación, sin certificar)",
+    "text": "<b>100×</b> tu apuesta. Al final del giro base el tablero tiene al menos 3 Vasijas de Agua y se garantizan 10 giros gratis; el multiplicador del cubo se conserva entre giros y el halcón autómata deja comodines Engranaje Dorado permanentes. Los premios se pagan sobre una apuesta de {bet}, máximo {max}."
+  },
+  "gated": {
+    "title": "No hay Cezeri on-chain.",
+    "text": "Este juego se juega solo con crédito DEMO; no se aceptan apuestas reales.",
+    "back": "Volver a la demo local"
+  },
+  "splash": {
+    "gearLock": {
+      "title": "Bloqueo de Engranajes",
+      "text": "Los sectores ganadores se bloquean, las cuatro ruedas vuelven a girar, el cubo sube +1"
+    },
+    "elephant": {
+      "title": "Reloj del Elefante",
+      "text": "3 Vasijas de Agua activan 10 giros gratis; el cubo se conserva y el halcón deja comodines"
+    },
+    "max": {
+      "title": "{max}× máximo",
+      "text": "El comodín Engranaje Dorado sustituye a cualquier símbolo"
+    },
+    "loading": "Cargando el juego",
+    "play": "Jugar",
+    "skip": "No volver a mostrar la pantalla de inicio",
+    "note": "El crédito DEMO no tiene valor · El resultado se determina antes del giro · Simulación sin certificar, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Sonido listo: la música, los efectos y el ambiente se han preparado en este dispositivo.",
+    "soundLoading": "Cargando el sonido {percent} % (mientras tanto el juego sigue en silencio o con efectos sencillos).",
+    "soundIdle": "El sonido se carga con el primer toque.",
+    "demoTitle": "Saldo DEMO",
+    "demoText": "Saldo {balance}{remote, select, yes { (servidor)} other {}}. Recargar fija el saldo en {start} DEMO y añade una fila «Saldo recargado» al historial; no se puede hacer durante una ronda o el juego automático."
+  },
+  "info": {
+    "title": "Cezeri · Información del juego",
+    "tab": {
+      "how": "Cómo jugar",
+      "pay": "Tabla de pagos",
+      "features": "Funciones",
+      "rtp": "RTP",
+      "limits": "Límites de apuesta y premio",
+      "keys": "Teclas",
+      "fault": "Cláusula de fallos"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Elige tu apuesta.</b> Los botones − y + cambian la apuesta un nivel; toca el importe para abrir todos los niveles. «Apuesta máx.» elige el nivel más alto que permite tu saldo.",
+        "spin": "<b>Gira.</b> Pulsa el botón de la manivela o usa la barra espaciadora. El coste de la ronda ({factor} veces la apuesta con Chance ×2 activada) se descuenta del saldo una sola vez.",
+        "wheels": "<b>Las ruedas.</b> El tablero es un cubo con 4 anillos concéntricos alrededor; cada anillo tiene 12 sectores y gira en su propia pista. Del cubo salen 12 radios hacia fuera.",
+        "spokes": "<b>Premios en radios.</b> 3 o 4 sectores consecutivos del mismo símbolo en un radio pagan si empiezan en el anillo 1 o en el anillo 2. Los 12 radios pagan por separado. El premio se multiplica por el multiplicador del cubo de ese giro.",
+        "lock": "<b>Bloqueo de Engranajes.</b> Si hay un premio nuevo, los sectores ganadores se bloquean, los cuatro anillos vuelven a girar debajo de ellos y el cubo sube <b>+1</b>. Continúa hasta que no llegue un pago nuevo (hasta {max} respins).",
+        "result": "<b>El resultado.</b> Toda la ronda la determina el motor antes de que empiece el giro; la animación solo reproduce ese resultado. El botón de girar permanece bloqueado hasta que termina la ronda (todos los respins y giros gratis); usa el ajuste Rápido/Turbo para acelerar. El ajuste de velocidad, tocar el contador de la celebración, una pestaña oculta o salir de la página no cambian el pago; la ronda siempre se cierra una sola vez, con el pago del motor."
+      },
+      "note": "El crédito DEMO no tiene valor; no da SOL, tokens ni recompensas. El juego funciona en el navegador con aleatoriedad local; no hay prueba VRF."
+    },
+    "pay": {
+      "lead": "En un <b>radio</b>, pagan <b>3 o 4 sectores consecutivos</b> del mismo símbolo, de dentro hacia fuera. La cifra grande es el importe DEMO bruto por radio con una apuesta de <b>{bet}</b> (cubo ×1); el multiplicador de debajo es un múltiplo de la apuesta. El multiplicador del cubo multiplica este importe.",
+      "runsAria": "Series válidas",
+      "run14": "Anillo 1–4 · 4 sectores",
+      "run13": "Anillo 1–3 · 3 sectores",
+      "run24": "Anillo 2–4 · 3 sectores",
+      "gridAria": "Pagos de los símbolos",
+      "slices4": "4 sectores",
+      "slices3": "3 sectores",
+      "gears4": "4 engranajes",
+      "gears3": "3 engranajes",
+      "gearText": "Sustituye a cualquier símbolo salvo la Vasija de Agua. Una serie formada solo por engranajes paga según su propia tabla; cuenta la lectura que más paga.",
+      "scatterTitle": "{name} · pago scatter",
+      "vessels5": "5+ vasijas",
+      "vessels4": "4 vasijas",
+      "vessels3": "3 vasijas",
+      "scatterText": "Se cuentan en cualquier lugar de los anillos del tablero final del giro; no se multiplican por el cubo. En el juego base, {vessels}+ vasijas activan <b>{spins} giros gratis</b>.",
+      "maxTitle": "Premio máximo {max}×",
+      "maxText": "Con esta apuesta: <b>{amount}</b>. Si el total de la ronda alcanza este tope, la ronda termina de inmediato; los giros gratis restantes no se juegan."
+    },
+    "features": {
+      "hub": {
+        "title": "Multiplicador del cubo",
+        "text": "Cada giro empieza con el sorteo del cubo; el cubo multiplica todos los premios de radios de ese giro. Probabilidades de sorteo en el juego base:",
+        "aria": "Sorteo del cubo"
+      },
+      "lock": {
+        "title": "Bloqueo de Engranajes (cadena de respins)",
+        "text": "Si un giro tiene un pago <b>nuevo</b>, los sectores de las series ganadoras se bloquean; conservan sus símbolos y no se mueven. Después <b>los cuatro anillos</b> vuelven a girar debajo de los sectores bloqueados, y el cubo sube <b>+1</b> con cada respin. Si una serie bloqueada se alarga (3 → 4 sectores), solo se paga la diferencia. La cadena termina en el primer giro sin pago nuevo, cuando los 48 sectores están bloqueados o tras {max} respins (el último giro se paga igualmente). En el juego base, los respins giran en bandas con un Engranaje Dorado por anillo."
+      },
+      "elephant": {
+        "title": "Reloj del Elefante ({spins} giros gratis)",
+        "text": "En el juego base, {trigger} o más Vasijas de Agua activan {spins} giros gratis. El multiplicador del cubo <b>no se reinicia</b> entre los giros gratis: cada giro empieza con el cubo en el que terminó el anterior o con el mayor entre ese y su propio sorteo, y los respins suman +1; el cubo solo sube. En un giro gratis, {retriggerVessels}+ vasijas añaden {retrigger} giros más (sin pago). En una ronda se conceden como máximo {max} giros gratis."
+      },
+      "falcon": {
+        "title": "Depósito de agua y halcón autómata",
+        "text": "Tras cada giro gratis, el depósito se llena un nivel. En el nivel {levels} se vacía y, si quedan giros, el halcón autómata deja {counts} sectores comodín Engranaje Dorado en un anillo. Estos comodines permanecen en su sitio hasta que termina la función y pueden completar premios en cada giro siguiente."
+      },
+      "tiers": {
+        "title": "Niveles de premio y anuncios del multiplicador",
+        "text": "Si el total de la ronda es <b>10 veces</b> la apuesta base o más, se abre una pantalla de celebración y el contador sube por los niveles: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; una ronda que alcanza el tope termina con {max}. Cuando el cubo supera los umbrales ×10, ×25, ×50 y ×100, se anuncia con letras grandes y su propio sonido. Una ronda de giros gratis siempre termina con la pantalla «Reloj del Elefante — Total». Tocar la pantalla lleva el contador directamente al resultado; no cambia el pago."
+      },
+      "ante": {
+        "title": "Chance ×2 · coste {cost}",
+        "text": "Cuando está activada, cada giro cuesta <b>{factor} veces la apuesta</b> y las Vasijas de Agua aparecen con más frecuencia en el juego base: la probabilidad de giros gratis es aproximadamente el doble ({ante} / {standard}). Los premios se siguen pagando sobre la apuesta base. Mientras está activada, no se puede comprar el bono."
+      },
+      "buy": {
+        "title": "Comprar bono · precio {price}",
+        "text": "Por <b>100 veces la apuesta</b>, al final del giro base el tablero tiene al menos {vessels} Vasijas de Agua (si faltan, los sectores que no forman parte de un premio se convierten en vasijas); se garantizan {spins} giros gratis. Se hace mediante una ventana de confirmación, funciona con un RTP distinto ({rtp}) y no se puede usar con el juego automático."
+      }
+    },
+    "rtp": {
+      "title": "Retorno teórico (RTP)",
+      "caption": "Retorno teórico por modo",
+      "colMode": "Modo",
+      "colCost": "Coste",
+      "colCi": "IC del 95 %",
+      "colFeature": "Función",
+      "everyRound": "cada ronda",
+      "oneIn": "1 / {n}",
+      "text": "Una simulación distinta de {millions} millones de rondas para cada modo (motor <code>cezeri-gears-1</code>). El RTP se calcula sobre el coste pagado. Frecuencia de premio (giro base): estándar {hitStandard}, Chance ×2 {hitAnte}. Volatilidad (desviación típica en unidades de coste): estándar {sdStandard}, compra {sdBuy}.",
+      "note": "La simulación es una estimación y <b>no está certificada</b>; debido a la cola pesada, el intervalo de confianza puede ser optimista. El resultado de una sesión corta puede diferir mucho del RTP. El crédito DEMO <b>no tiene valor</b>."
+    },
+    "limits": {
+      "title": "Límites de apuesta y premio",
+      "range": "Rango de apuesta",
+      "steps": "Niveles",
+      "current": "Apuesta actual",
+      "currentValue": "{bet} · Chance ×2 {ante} · Compra {buy}",
+      "max": "Premio máximo",
+      "maxValue": "{multiplier} veces la apuesta · {amount} con esta apuesta",
+      "text1": "Una ronda que alcanza el premio máximo termina de inmediato; los giros gratis restantes no se juegan. El pago siempre se calcula sobre la apuesta base y lo que queda por debajo de un céntimo se redondea hacia abajo.",
+      "text2": "Los niveles y modos que tu saldo no cubre no se pueden seleccionar. Una ronda es una sola reserva y un solo pago; solo se juega una ronda a la vez."
+    },
+    "keys": {
+      "heading": "Teclado",
+      "space": "Espacio",
+      "spaceText": "Inicia el giro (Ajustes → «{option}»). Durante una ronda no salta el giro; solo acelera las pantallas de giros gratis y el contador de la celebración.",
+      "enterText": "Pulsa el botón enfocado.",
+      "escText": "Cierra la ventana abierta (salvo el recordatorio de sesión).",
+      "tabText": "Se mueve entre los controles; el foco siempre es visible.",
+      "arrowsText": "Cambia de página en esta ventana de información; cambia la opción en las selecciones de ajustes.",
+      "note": "El lector de pantalla anuncia cada paso («Radio 4: 3 Reloj del Elefante, cubo ×3», bloqueos, el multiplicador del cubo, el resultado de la ronda); el tablero se lee como 4 anillos × 12 sectores. Los símbolos se distinguen por la forma además del color. La preferencia de reducir el movimiento coloca los anillos giratorios al instante y desactiva partículas y sacudidas."
+    },
+    "fault": {
+      "title": "Cláusula de fallos",
+      "p1": "<b>Un fallo anula todos los juegos y pagos afectados.</b> En caso de fallo del software, del navegador o del dispositivo, prevalece el registro de la ronda; un importe mostrado en pantalla que no coincida con el registro del motor no es válido.",
+      "p2": "Este juego se juega solo con crédito DEMO. El DEMO no tiene valor y no se puede convertir en dinero ni en tokens; en caso de fallo, el saldo DEMO y el historial de la sesión pueden corregirse o restablecerse.",
+      "p3": "Como el resultado se determina antes del giro, una animación interrumpida, una pestaña oculta o salir de la página no lo cambian; la ronda se cierra igualmente una sola vez, con el pago del motor."
+    }
+  },
+  "history": {
+    "title": "Tu historial de juego",
+    "scope": "Esta sesión · las repeticiones nunca cambian el saldo",
+    "time": "Hora",
+    "mode": "Modo",
+    "bet": "Apuesta",
+    "cost": "Coste",
+    "win": "Premio",
+    "result": "Resultado",
+    "roundId": "ID de la ronda",
+    "replayColumn": "Reproducir",
+    "latest": "Última ronda",
+    "replay": "Reproducir",
+    "replayAria": "Reproducir: ronda {id}, saldo sin cambios",
+    "share": "Compartir mi premio",
+    "shareAria": "Compartir mi premio: ronda {id}",
+    "emptyTitle": "Tu primera ronda aparecerá aquí.",
+    "emptyText": "Se registran el modo, la apuesta, el coste, el premio y el ID de cada ronda; puedes volver a ver cualquiera.",
+    "reset": "Saldo recargado",
+    "resetRemote": "Saldo recargado (servidor)",
+    "detail": {
+      "capped": "Premio máximo · {times}×",
+      "free": "Reloj del Elefante ×{spins} · cubo ×{hub} · {times}×",
+      "none": "Sin premio",
+      "base": "{respins, plural, =0 {} one {# respin · } other {# respins · }}cubo ×{hub} · {times}×"
+    }
+  },
+  "celebration": {
+    "aria": "{title}: {money} DEMO",
+    "times": "{times}× la apuesta",
+    "capNote": "La ronda alcanzó el tope · los giros restantes no se juegan",
+    "speedUp": "Toca para acelerar",
+    "continue": "Continuar"
+  },
+  "intro": {
+    "word": "RELOJ DEL ELEFANTE",
+    "srTitle": "Comienza el Reloj del Elefante",
+    "freeSpins": "giros\ngratis",
+    "text": "El multiplicador del cubo <b>no se reinicia</b>; solo sube de giro en giro. El depósito de agua se llena cada 3 giros y el halcón autómata deja comodines <b>Engranaje Dorado</b> permanentes. 2 Vasijas de Agua añaden +4 giros.",
+    "start": "Empezar"
+  },
+  "total": {
+    "titleA": "Reloj del Elefante",
+    "titleB": "Total",
+    "word": "TOTAL",
+    "sub": "GIROS GRATIS",
+    "spins": "Giros",
+    "spinsValue": "{spins, plural, one {# giro} other {# giros}}",
+    "topHub": "Cubo máximo",
+    "falcon": "Halcón",
+    "falconVisits": "{n, plural, one {# visita} other {# visitas}}",
+    "falconNone": "No vino",
+    "wilds": "{n, plural, one {# Engranaje Dorado} other {# Engranajes Dorados}}",
+    "wildsNone": "sin comodines",
+    "ofBet": "De la apuesta",
+    "capNote": "Premio máximo alcanzado · los giros restantes no se juegan",
+    "toCelebration": "Pasar a la celebración"
+  },
+  "rules": {
+    "board": "El tablero es un cubo central rodeado de 4 anillos concéntricos de 12 sectores. En cada uno de los 12 radios que van del cubo hacia fuera, pagan 3 o 4 sectores consecutivos del mismo símbolo, de dentro hacia fuera (empezando en el anillo 1 o en el anillo 2); el comodín Engranaje Dorado sustituye a cualquier símbolo. El multiplicador del cubo (×1–×10) multiplica todos los premios de radios de ese giro.",
+    "features": "Bloqueo de Engranajes: si hay un premio nuevo, los sectores ganadores se bloquean, los cuatro anillos vuelven a girar debajo de ellos y el cubo sube +1 con cada respin; hasta 10 respins, mientras no llegue un pago nuevo. 3 o más Vasijas de Agua activan 10 giros gratis (Reloj del Elefante): el multiplicador del cubo se conserva entre giros y solo sube, y cada 3 giros el halcón autómata deja comodines Engranaje Dorado permanentes. El premio máximo es 10.000 veces la apuesta.",
+    "fixed": "El resultado se determina localmente en tu navegador, con aleatoriedad local, antes de que empiece el giro; la animación solo reproduce ese resultado. Aunque salgas de la página, la ronda se cierra con el pago determinado. No hay prueba VRF."
+  }
+}

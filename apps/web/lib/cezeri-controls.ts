@@ -7,6 +7,8 @@ import { CEZERI_BET_LEVELS_CENTS, CEZERI_COST_FRACTION, CEZERI_MAX_WIN_MULTIPLIE
 import { nextDecision, recordRound, type AutoplayDecision, type AutoplayState } from './slot-kit/autoplay';
 import { createBetLadder, formatDemo, type CostMode } from './slot-kit/bet';
 import type { SlotSettings } from './slot-kit/settings';
+import { rtpPercent, rtpRange } from './slot-format';
+import type { Locale } from './i18n/config';
 import { DEMO_CEILING_MULTIPLIER, DEMO_STAKE_CEILING_CENTS } from './demo';
 import type { CezeriSpeed, CezeriTimelineOptions } from './cezeri-timeline';
 
@@ -38,29 +40,37 @@ export function cezeriLedgerLimits(betCents: number, mode: CezeriMode): { maxMul
 }
 
 /** 0.955 -> "%95,5". */
-export function cezeriRtp(ratio: number): string {
-  if (!Number.isFinite(ratio)) return '—';
-  return `%${(Math.round(ratio * 1000) / 10).toFixed(1).replace('.', ',')}`;
-}
-/** "%95,0–96,1" */
-export function cezeriRtpRange(low: number, high: number): string {
-  return `${cezeriRtp(low)}–${cezeriRtp(high).slice(1)}`;
-}
+export function cezeriRtp(ratio: number, locale: Locale = 'tr'): string { return rtpPercent(ratio, locale); }
+/** "%95,0–96,1" (tr) */
+export function cezeriRtpRange(low: number, high: number, locale: Locale = 'tr'): string { return rtpRange(low, high, locale); }
 export function cezeriRtpText(mode: CezeriMode): string {
   const r = CEZERI_RTP[mode];
   return `${cezeriRtp(r.rtp)} (GA ${cezeriRtpRange(r.ciLow, r.ciHigh)})`;
 }
 
 export interface CezeriBuyState { betCents: number; balanceCents: number; ante: boolean; autoplay: boolean; busy: boolean; gated?: boolean }
-/** Why "Bonus satın al" cannot be used right now, or null when it can. First matching reason wins. */
-export function cezeriBuyBlockReason(state: CezeriBuyState): string | null {
-  if (state.gated) return 'Yalnız DEMO kredisiyle satın alınır';
-  if (state.autoplay) return 'Otomatik oyun sürerken satın alınamaz';
-  if (state.busy) return 'Tur bitmeden satın alınamaz';
-  if (state.ante) return 'Şans ×2 açıkken satın alınamaz';
+export type CezeriBuyBlock = { code: 'gated' | 'autoplay' | 'busy' | 'ante' } | { code: 'balance'; priceCents: number };
+/** Why the bonus buy cannot be used right now, as a code (the screen translates it: `cezeri.buy.block.<code>`), or null when it can. First matching reason wins. */
+export function cezeriBuyBlock(state: CezeriBuyState): CezeriBuyBlock | null {
+  if (state.gated) return { code: 'gated' };
+  if (state.autoplay) return { code: 'autoplay' };
+  if (state.busy) return { code: 'busy' };
+  if (state.ante) return { code: 'ante' };
   const price = cezeriCost(state.betCents, 'buy');
-  if (price > state.balanceCents) return `Bakiye yetersiz (fiyat ${formatDemo(price)})`;
+  if (price > state.balanceCents) return { code: 'balance', priceCents: price };
   return null;
+}
+/** Why "Bonus satın al" cannot be used right now, in Turkish (tests, legacy callers), or null when it can. */
+export function cezeriBuyBlockReason(state: CezeriBuyState): string | null {
+  const block = cezeriBuyBlock(state);
+  if (!block) return null;
+  switch (block.code) {
+    case 'gated': return 'Yalnız DEMO kredisiyle satın alınır';
+    case 'autoplay': return 'Otomatik oyun sürerken satın alınamaz';
+    case 'busy': return 'Tur bitmeden satın alınamaz';
+    case 'ante': return 'Şans ×2 açıkken satın alınamaz';
+    case 'balance': return `Bakiye yetersiz (fiyat ${formatDemo(block.priceCents)})`;
+  }
 }
 
 /** Spin-speed setting -> timeline options (presentation only; the result is already fixed). */

@@ -56,15 +56,28 @@ export function stormRtpText(mode: StormMode): string {
 }
 
 export interface StormBuyState { betCents: number; balanceCents: number; ante: boolean; autoplay: boolean; busy: boolean; gated?: boolean }
-/** Why "Bonus satın al" cannot be used right now, or null when it can. First matching reason wins. */
-export function stormBuyBlockReason(state: StormBuyState): string | null {
-  if (state.gated) return 'Yalnız DEMO kredisiyle satın alınır';
-  if (state.autoplay) return 'Otomatik oyun sürerken satın alınamaz';
-  if (state.busy) return 'Tur bitmeden satın alınamaz';
-  if (state.ante) return 'Şans ×2 açıkken satın alınamaz';
+export type StormBuyBlock = { code: 'gated' | 'autoplay' | 'busy' | 'ante' } | { code: 'balance'; priceCents: number };
+/** Why "Bonus satın al" cannot be used right now (a code the UI translates), or null when it can. First matching reason wins. */
+export function stormBuyBlock(state: StormBuyState): StormBuyBlock | null {
+  if (state.gated) return { code: 'gated' };
+  if (state.autoplay) return { code: 'autoplay' };
+  if (state.busy) return { code: 'busy' };
+  if (state.ante) return { code: 'ante' };
   const price = stormCost(state.betCents, 'buy');
-  if (price > state.balanceCents) return `Bakiye yetersiz (fiyat ${formatDemo(price)})`;
+  if (price > state.balanceCents) return { code: 'balance', priceCents: price };
   return null;
+}
+/** Turkish text of `stormBuyBlock` (legacy; the translated UI uses the code and `tarhun.buyBlock.<code>`). */
+export function stormBuyBlockReason(state: StormBuyState): string | null {
+  const block = stormBuyBlock(state);
+  if (!block) return null;
+  switch (block.code) {
+    case 'gated': return 'Yalnız DEMO kredisiyle satın alınır';
+    case 'autoplay': return 'Otomatik oyun sürerken satın alınamaz';
+    case 'busy': return 'Tur bitmeden satın alınamaz';
+    case 'ante': return 'Şans ×2 açıkken satın alınamaz';
+    case 'balance': return `Bakiye yetersiz (fiyat ${formatDemo(block.priceCents)})`;
+  }
 }
 
 /** Spin-speed setting -> timeline options (presentation only; the result is already fixed). */

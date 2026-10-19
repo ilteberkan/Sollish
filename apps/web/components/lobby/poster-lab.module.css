@@ -1,0 +1,15 @@
+/* Development-only composition page for lobby posters (see poster-lab.tsx). */
+.lab { padding: 24px; display: flex; flex-direction: column; gap: 28px; }
+.lab h1 { font-size: 22px; }
+.lab h2 { font-size: 15px; color: var(--muted); margin-bottom: 10px; text-transform: none; }
+.row { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+.poster { position: relative; overflow: hidden; isolation: isolate; flex: none; background: #090b10; contain: paint; }
+.scene { position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; z-index: 0; }
+.fill { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; display: block; }
+.at { position: absolute; }
+.at > * { display: block; width: 100% !important; height: auto; max-width: none; }
+.fade { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.fade[data-variant='tile'] { background: linear-gradient(180deg, rgba(6, 8, 12, 0) 52%, rgba(6, 8, 12, 0.72) 100%); }
+.fade[data-variant='wide'] { background: linear-gradient(90deg, rgba(8, 10, 14, 0.96) 0%, rgba(8, 10, 14, 0.86) 26%, rgba(8, 10, 14, 0.35) 46%, rgba(8, 10, 14, 0) 60%); }
+.fade[data-variant='narrow'] { background: linear-gradient(180deg, rgba(6, 8, 12, 0) 60%, rgba(6, 8, 12, 0.55) 100%); }
+.fade[data-variant='land'] { background: linear-gradient(90deg, rgba(6, 8, 12, 0.55) 0%, rgba(6, 8, 12, 0) 55%); }

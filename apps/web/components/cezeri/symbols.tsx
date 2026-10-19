@@ -1,6 +1,7 @@
-import { memo, useId } from 'react';
+import { memo, useId, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import type { CezeriSymbol } from '@sollish/protocol';
+import { useT } from '@/lib/i18n/client';
 
 /* Cezeri: Zamanın Çarkları symbol art. Ten pieces from a 12th-century automaton workshop, drawn as original
    code-drawn "engineering manuscript" plates: flat miniature colours (lapis, turquoise, vermilion, ivory) on
@@ -34,6 +35,14 @@ export const CEZERI_SYMBOL_LABELS: Record<CezeriSymbol, string> = {
   gear: 'Altın Dişli (joker)',
   vessel: 'Su Kabı',
 };
+/** Symbol names in the active language (`cezeri.symbols.*`). The constant above stays the Turkish source for tests and the art lab. */
+export function useCezeriSymbolLabels(): Record<CezeriSymbol, string> {
+  const t = useT('cezeri');
+  return useMemo(() => ({
+    h1: t('symbols.h1'), h2: t('symbols.h2'), h3: t('symbols.h3'), h4: t('symbols.h4'), l1: t('symbols.l1'), l2: t('symbols.l2'), l3: t('symbols.l3'), l4: t('symbols.l4'),
+    gear: t('symbols.gear'), vessel: t('symbols.vessel'),
+  }), [t]);
+}
 export const CEZERI_SYMBOLS: readonly CezeriSymbol[] = ['h1', 'h2', 'h3', 'h4', 'l1', 'l2', 'l3', 'l4', 'gear', 'vessel'];
 
 /** Shared palette (also used by the board, the frame and the FX canvas). */

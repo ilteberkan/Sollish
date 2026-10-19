@@ -1,6 +1,7 @@
 'use client';
 
 import { memo, useEffect, useId, useRef } from 'react';
+import { useT } from '@/lib/i18n/client';
 import { CZ_PALETTE as P } from './symbols';
 import styles from './art.module.css';
 
@@ -43,7 +44,9 @@ const Cage = memo(function Cage({ levels }: { levels: number }) {
   );
 });
 
-export function CezeriReservoir({ level, levels = 3, className, label = 'FİL SAATİ' }: CezeriReservoirProps) {
+export function CezeriReservoir({ level, levels = 3, className, label: labelProp }: CezeriReservoirProps) {
+  const t = useT('cezeri');
+  const label = labelProp ?? t('reservoir.label');
   const fillRef = useRef<HTMLDivElement>(null);
   const waveRef = useRef<HTMLDivElement>(null);
   const prev = useRef(level);

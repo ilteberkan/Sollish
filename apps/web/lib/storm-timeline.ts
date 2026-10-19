@@ -374,16 +374,31 @@ export function stormMoney(cents: number): string { return fixed2().format(cents
 /** Hundredths of the bet as a multiple: 1240 -> "12,40". */
 export function stormTimes(hundredths: number): string { return fixed2().format(hundredths / 100); }
 
-/** History row text: "3 düşme · ×12 · 24,00×", "Bedava dönüş ×15 · toplam ×37 · 183,50×", "Kazanç yok". */
-export function stormHistoryDetail(round: StormRound): string {
-  const total = `${stormTimes(round.totalHundredths)}×`;
-  if (round.capped) return `Azami kazanç · ${total}`;
+/** What a history row says about a round, without wording (the translated UI builds the text from this). */
+export type StormHistoryParts =
+  | { kind: 'capped'; totalHundredths: number }
+  | { kind: 'free'; spins: number; totalMultiplier: number; totalHundredths: number }
+  | { kind: 'none' }
+  | { kind: 'tumbles'; tumbles: number; multiplier: number; totalHundredths: number };
+export function stormHistoryParts(round: StormRound): StormHistoryParts {
+  if (round.capped) return { kind: 'capped', totalHundredths: round.totalHundredths };
   const last = round.spins[round.spins.length - 1]!;
-  if (round.freeSpinsTriggered) return `Bedava dönüş ×${round.spins.length - 1}${last.totalMultiplierAfter > 0 ? ` · toplam ×${last.totalMultiplierAfter}` : ''} · ${total}`;
-  if (round.totalHundredths === 0) return 'Kazanç yok';
+  if (round.freeSpinsTriggered) return { kind: 'free', spins: round.spins.length - 1, totalMultiplier: last.totalMultiplierAfter, totalHundredths: round.totalHundredths };
+  if (round.totalHundredths === 0) return { kind: 'none' };
   const base = round.spins[0]!;
   const tumbles = base.steps.filter(step => step.wins.length > 0).length;
-  return `${tumbles} düşme${base.appliedMultiplier > 1 && base.tumbleHundredths > 0 ? ` · ×${base.appliedMultiplier}` : ''} · ${total}`;
+  return { kind: 'tumbles', tumbles, multiplier: base.appliedMultiplier > 1 && base.tumbleHundredths > 0 ? base.appliedMultiplier : 0, totalHundredths: round.totalHundredths };
+}
+
+/** History row text (Turkish, stored with the record): "3 düşme · ×12 · 24,00×", "Bedava dönüş ×15 · toplam ×37 · 183,50×", "Kazanç yok". */
+export function stormHistoryDetail(round: StormRound): string {
+  const parts = stormHistoryParts(round);
+  switch (parts.kind) {
+    case 'capped': return `Azami kazanç · ${stormTimes(parts.totalHundredths)}×`;
+    case 'free': return `Bedava dönüş ×${parts.spins}${parts.totalMultiplier > 0 ? ` · toplam ×${parts.totalMultiplier}` : ''} · ${stormTimes(parts.totalHundredths)}×`;
+    case 'none': return 'Kazanç yok';
+    case 'tumbles': return `${parts.tumbles} düşme${parts.multiplier > 0 ? ` · ×${parts.multiplier}` : ''} · ${stormTimes(parts.totalHundredths)}×`;
+  }
 }
 
 /** Screen-reader line for one cluster: "8 altın boğa ritonu, 9,60× kazanç". */
