@@ -43,6 +43,10 @@ const arcTeeth = (cx: number, cy: number, r0: number, r1: number, a0: number, a1
 };
 
 export const CezeriLogo = memo(function CezeriLogo({ className, subtitle = true }: { className?: string; subtitle?: boolean }) {
+  const t = useT('cezeri');
+  const sub = t('logo.subtitle');
+  /* The cartouche fits ~280 units: longer translations shrink the type instead of overflowing the lapis plate. */
+  const fit = Math.round(Math.min(25, (25 * 16) / Math.max(1, [...sub].length)) * 10) / 10;
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const k = (n: string) => `czl${uid}${n}`;
   const u = (n: string) => `url(#${k(n)})`;
