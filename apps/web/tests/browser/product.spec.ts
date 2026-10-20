@@ -3,6 +3,8 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import AxeBuilder from '@axe-core/playwright';
 
+if (process.env.PW_CHROMIUM_PATH) test.use({ launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } });
+
 const screenshots = path.resolve(process.cwd(), '../../.tooling/web-screenshots');
 test('Crash local cashout updates only demo credits and cannot start a real bet', async ({ page }) => {
   await page.addInitScript(() => { Object.defineProperty(crypto, 'getRandomValues', { value: (array: Uint32Array) => { array.fill(3_221_225_472); return array; } }); });

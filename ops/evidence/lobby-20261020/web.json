@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-20",
+  "scope": "New casino lobby (/ and /games): components/lobby/*, lib/lobby/*, shell sidebar/rail/tab bar. Local dev runtime only (next dev :3031); no build:cloudflare, no hosted or mainnet evidence.",
+  "tree": "HEAD 2e3e29d plus uncommitted work of other agents (asena/common translations) present during the runs",
+  "codeChanges": [
+    "apps/web/tests/browser/product.spec.ts: added the PW_CHROMIUM_PATH launchOptions guard used by the other specs (test-only)"
+  ],
+  "lobbyCodeState": "lobby.tsx (chips, rows, results grid), lobby-hero, lobby-tile, shell nav were already complete at b3c814a; verified unchanged, no lobby source edits were needed",
+  "setup": "bash scripts/use-node.sh pnpm install --frozen-lockfile (node_modules was missing)",
+  "checks": [
+    { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck", "result": "pass (exit 0)" },
+    { "command": "bash scripts/use-node.sh pnpm --filter @sollish/web test", "result": "363 tests, 363 pass, 0 fail (includes tests/lobby.test.ts and tests/i18n.test.ts key parity)" },
+    { "command": "next dev --hostname 127.0.0.1 --port 3031 (apps/web)", "result": "GET / 200, GET /games 200" },
+    { "command": "PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3031 bash scripts/use-node.sh pnpm --filter @sollish/web test:browser tests/browser/lobby.spec.ts --workers=1 --output=<scratchpad>", "result": "15 passed. A first run with the default outputDir had 2 failures from ENOENT on trace files (shared .tooling/web-browser-results wiped by a concurrent Playwright run of another agent), not assertions; isolated --output rerun all green" },
+    { "command": "same env, tests/browser/product.spec.ts --workers=1", "result": "14 passed (first attempt without PW_CHROMIUM_PATH failed to launch: Playwright expects chromium_headless_shell-1243, only 1194 is installed)" }
+  ],
+  "screenshots": {
+    "lobby-1440.png": "1440x900 viewport: full sidebar 236 px, hero, chips, Originals row, chat column; no horizontal scroll",
+    "lobby-1440-full.png": "full page 1440",
+    "lobby-900.png": "900x1100: icon rail 72 px, narrow hero, no tab bar",
+    "lobby-900-full.png": "full page 900",
+    "lobby-390.png": "390x844: bottom tab bar, no sidebar, no horizontal scroll",
+    "lobby-390-full.png": "full page 390 (artifact: fixed tab bar is drawn mid-page and the content-visibility:auto provably-fair panel is blank in the stitched capture)",
+    "lobby-390-fair.png": "390 viewport scrolled to the provably-fair panel: renders correctly"
+  },
+  "runtimeProbe": "No page errors; one console 404 at 1440 is /favicon.ico (no app icon exists, pre-existing, not lobby). All rendered posters decoded (0 broken images).",
+  "limits": [
+    "Local dev runtime only; preview:cloudflare/hosted not run",
+    "Screenshots are not the owner's visual acceptance",
+    "RTP/volatility are simulated DEMO estimates from engine evidence constants, not certified",
+    "SLOT_GAME_META is imported from the @sollish/protocol barrel (sideEffects:false), same as lib/rgs-client.ts; engine exclusion from the lobby chunk relies on tree-shaking and was not measured in a production build here"
+  ]
+}
