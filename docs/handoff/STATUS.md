@@ -1,6 +1,6 @@
 # Sollish durum
 
-Son güncelleme: 16 Ekim 2026. Bu dosyayı yalnız güncel durumla tut. Oturum bitmeden veya context dolmadan güncelle; eskiyen kaydı [history.md](history.md)'nin başına taşı.
+Son güncelleme: 20 Ekim 2026. **Yeni oturum önce [NEXT-SESSION.md](NEXT-SESSION.md) dosyasını okur.** Bu dosyayı yalnız güncel durumla tut. Oturum bitmeden veya context dolmadan güncelle; eskiyen kaydı [history.md](history.md)'nin başına taşı.
 
 ## Yayında olan (Cloudflare devnet)
 - Web: `sollish-web-devnet`, version `93645ad3-1955-4f7d-b947-c495d6b604f6`, build `yTTEY4MG5gmewPMEL9MsM` (Combat Club `sparring-1`). Kök: https://sollish-web-devnet.sollish-web.workers.dev
