@@ -906,7 +906,7 @@ export function CascadeGame() {
   return (
     <div className={`game-page ${styles.page}`}>
       <GameHeading title={gameTitle} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
-        badge={remote ? remote.label : sourcePending ? t('badge.checking') : localRoundSource.label} />
+        badge={remote ? tk('rgs.source.remote') : sourcePending ? t('badge.checking') : tk('rgs.source.local')} />
       <section className={`game-table ${styles.table}`} aria-label={t('table.aria')}>
         <div ref={stageRef} className={stageClass} data-phase={phase} data-celebrate={celebrating || undefined}>
           <StaticBackdrop />

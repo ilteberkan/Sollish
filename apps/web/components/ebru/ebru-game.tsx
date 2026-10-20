@@ -923,7 +923,7 @@ export function EbruGame() {
     <div className={`game-page ${styles.page}`}>
       <EbruSymbolSprites />
       <GameHeading title={gameTitle} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
-        badge={remote ? remote.label : sourcePending ? t('badge.checking') : localRoundSource.label} />
+        badge={remote ? tk('rgs.source.remote') : sourcePending ? t('badge.checking') : tk('rgs.source.local')} />
       <section className={`game-table ${styles.table}`} aria-label={t('table.aria')} data-free={free || undefined}>
         <EbruScene ref={scene} mood={mood} className={styles.scene}>
           <div className={styles.layout}>

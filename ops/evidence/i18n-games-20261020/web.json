@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-20",
+  "scope": "i18n translation of Candy Cascade, Tarhun, Ebru, Cezeri, Asena + game-common Rules + lib messages",
+  "environment": "next dev on :3032, chromium-1194 (PW_CHROMIUM_PATH), --workers=1, Playwright forces locale tr",
+  "unit": {
+    "typecheck": "pass (bash scripts/use-node.sh pnpm --filter @sollish/web typecheck, before and after fix)",
+    "test": "363 pass / 0 fail (pnpm --filter @sollish/web test, before and after fix)"
+  },
+  "browser_command": "PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3032 PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome bash scripts/use-node.sh pnpm --filter @sollish/web test:browser <spec> --workers=1 --output=<own dir>",
+  "specs": {
+    "cascade": {"pass": 23, "fail": 0, "skip": 0, "rerun_after_fix": "23 pass"},
+    "tarhun": {"pass": 17, "fail": 0, "skip": 0, "rerun_after_fix": "17 pass"},
+    "ebru": {"pass": 16, "fail": 0, "skip": 0, "rerun_after_fix": "16 pass"},
+    "cezeri": {"pass": 17, "fail": 0, "skip": 0},
+    "asena": {"pass": 17, "fail": 0, "skip": 0},
+    "i18n": {"pass": 3, "fail": 0, "skip": 0},
+    "product": {"pass": 14, "fail": 0, "skip": 0},
+    "lobby": {"pass": 15, "fail": 0, "skip": 0},
+    "rgs-remote": {"pass": 0, "fail": 0, "skip": 2, "note": "skips without a remote RGS server (expected)"},
+    "solo-lifecycle": {"pass": 5, "fail": 0, "skip": 0, "note": "first run failed only because the default config resolves a missing chromium_headless_shell-1243; rerun with a temporary config pointing launchOptions.executablePath at chromium-1194 passed (temp config deleted)"},
+    "demo-entropy": {"pass": 4, "fail": 0, "skip": 0, "note": "same environment-only launch failure, same rerun, passed"}
+  },
+  "fix": "Heading source badge in cascade-game.tsx, tarhun-game.tsx, ebru-game.tsx showed the hard-coded Turkish rgs-client label (Yerel demo) in English. Now tk('rgs.source.local'/'remote') from slotKit (tr text identical). Cezeri and Asena already used the catalog.",
+  "screenshots": ["cascade-en.png", "tarhun-en.png", "ebru-en.png", "cezeri-en.png", "asena-en.png", "verify-en.png"],
+  "screenshots_note": "cookie sollish_locale=en, 1280x800, splash screen state for the games; /verify full page. Taken after the badge fix.",
+  "limits": ["next dev only: no production build, no Cloudflare preview, no hosted run", "no GitHub CI", "no native-speaker review", "screenshots are evidence, not the owner's visual acceptance", "only the English screenshots were inspected visually (tarhun, ebru, verify)", "no remote RGS server, so rgs-remote skipped"]
+}
