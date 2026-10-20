@@ -1,0 +1,59 @@
+{
+  "subtitle": "Beobachte den Anstieg. Steige in deinem Moment aus.",
+  "tableLabel": "Crash-Spieltisch",
+  "status": {
+    "live": "Live-Zugang geschlossen",
+    "active": "Lokale Runde läuft",
+    "ready": "Tisch bereit"
+  },
+  "caption": {
+    "ready": "Der Moment gehört dir.",
+    "countdown": "Gleich geht es los",
+    "running": "Wähle deinen Auszahlungszeitpunkt",
+    "won": "Du hast die Demo ausgezahlt",
+    "lost": "Die Runde ist beendet"
+  },
+  "gate": {
+    "title": "Live-Crash ist noch nicht geöffnet.",
+    "text": "Echte Einsätze werden erst angenommen, wenn manuelle Auszahlung und verdecktes Rundenergebnis verifiziert sind.",
+    "tryDemo": "Lokale Demo ausprobieren"
+  },
+  "readout": {
+    "ready": "Wähle deinen Betrag und starte deine erste Runde.",
+    "running": "{seconds} s",
+    "won": "{amount} DEMO Brutto-Rückgabe",
+    "lost": "{amount} DEMO verloren",
+    "countdown": "Mach dich bereit für die manuelle Auszahlung"
+  },
+  "bottom": {
+    "local": "Lokale Simulation",
+    "manual": "Manuelle Auszahlung"
+  },
+  "preview": {
+    "won": "Brutto-Demo-Rückgabe",
+    "cashout": "Brutto-Rückgabe bei Auszahlung",
+    "net": "Nettoergebnis: +{amount} DEMO",
+    "fee": "Demo-Transaktionsgebühr: 0"
+  },
+  "action": {
+    "cashout": "Auszahlen",
+    "starting": "Runde startet…",
+    "liveClosed": "Live-Wetten geschlossen",
+    "start": "Demo starten"
+  },
+  "hint": {
+    "running": "Die Auszahlung wird in dem Moment berechnet, in dem du klickst.",
+    "live": "Die Live-Crash-Verifizierung steht noch aus.",
+    "default": "Kein Wallet und kein echtes Geld nötig."
+  },
+  "sr": {
+    "running": "Die Runde hat begonnen. Du kannst auszahlen.",
+    "won": "Demo-Auszahlung abgeschlossen. {amount} DEMO Brutto-Rückgabe.",
+    "lost": "Die Runde endete bei einem Multiplikator von {multiplier}. Der Demo-Betrag ging verloren.",
+    "countdown": "Die Runde beginnt gleich."
+  },
+  "chart": {
+    "zero": "0 s",
+    "time": "Zeit"
+  }
+}

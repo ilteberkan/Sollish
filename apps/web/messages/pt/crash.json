@@ -1,0 +1,59 @@
+{
+  "subtitle": "Acompanhe a subida. Saque no seu momento.",
+  "tableLabel": "Mesa do jogo Crash",
+  "status": {
+    "live": "Acesso ao vivo fechado",
+    "active": "Rodada local em andamento",
+    "ready": "Mesa pronta"
+  },
+  "caption": {
+    "ready": "O momento é seu.",
+    "countdown": "Começando em instantes",
+    "running": "Escolha a hora de sacar",
+    "won": "Você sacou da demonstração",
+    "lost": "A rodada terminou"
+  },
+  "gate": {
+    "title": "O Crash ao vivo ainda não está aberto.",
+    "text": "Apostas reais não são aceitas até que o saque manual e o resultado oculto da rodada sejam verificados.",
+    "tryDemo": "Experimentar a demo local"
+  },
+  "readout": {
+    "ready": "Escolha o valor e comece sua primeira rodada.",
+    "running": "{seconds} s",
+    "won": "{amount} DEMO de retorno bruto",
+    "lost": "{amount} DEMO perdidos",
+    "countdown": "Prepare-se para o saque manual"
+  },
+  "bottom": {
+    "local": "Simulação local",
+    "manual": "Saque manual"
+  },
+  "preview": {
+    "won": "Retorno bruto da demo",
+    "cashout": "Retorno bruto no saque",
+    "net": "Resultado líquido: +{amount} DEMO",
+    "fee": "Taxa de transação da demo: 0"
+  },
+  "action": {
+    "cashout": "Sacar",
+    "starting": "Rodada começando…",
+    "liveClosed": "Apostas ao vivo fechadas",
+    "start": "Iniciar a demo"
+  },
+  "hint": {
+    "running": "O saque é calculado no instante em que você clica.",
+    "live": "Aguardando a verificação do Crash ao vivo.",
+    "default": "Não precisa de carteira nem de dinheiro real."
+  },
+  "sr": {
+    "running": "A rodada começou. Você pode sacar.",
+    "won": "Saque da demo concluído. {amount} DEMO de retorno bruto.",
+    "lost": "A rodada terminou no multiplicador {multiplier}. O valor da demo foi perdido.",
+    "countdown": "A rodada está prestes a começar."
+  },
+  "chart": {
+    "zero": "0 s",
+    "time": "tempo"
+  }
+}

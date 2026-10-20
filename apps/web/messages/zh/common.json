@@ -162,7 +162,19 @@
     "rulesAccess": "真实游戏需另行验证合约与网络配置。",
     "sideLegend": "选择一面",
     "heads": "正面",
-    "tails": "反面"
+    "tails": "反面",
+    "errors": {
+      "amountRange": "请输入 1–500 DEMO 之间的金额，小数最多两位。",
+      "noRandomness": "无法使用安全的本地随机数。演示未启动。",
+      "noCredit": "演示额度不足，或已有演示正在进行。"
+    },
+    "historyDetail": {
+      "cashout": "{multiplier} 提现",
+      "roundEnd": "{multiplier} 回合结束",
+      "cancelled": "演示已取消",
+      "coinWon": "{side} · 获胜",
+      "coinLost": "{side} · 失败"
+    }
   },
   "games": {
     "ringside": "Ringside",
@@ -206,5 +218,18 @@
       "play": "选择正面或反面，输入演示金额后抛硬币。猜对时，总返还为你金额的 1.96 倍；猜错时，该轮的演示金额将损失。",
       "local": "在本地示例中，获胜概率为 50%，理论抽成为 2%。这不是正在运行的链上游戏，也不是经过验证的 VRF 结果。"
     }
+  },
+  "liveError": {
+    "WALLET_CHANGED": "钱包连接已变化。请使用当前钱包重新检查该交易。",
+    "VIEW_CLOSED": "交易界面已关闭。未发起钱包调用。",
+    "TRACKING_STORAGE_FAILED": "浏览器无法保存交易跟踪信息。未发起钱包调用。你可以为本站启用会话存储后重试。",
+    "HOUSE_PAUSED": "游戏金库目前已暂停，暂不接受投注。",
+    "INSUFFICIENT_HOUSE_RESERVE": "游戏金库的储备不足以覆盖该金额。",
+    "BET_LIMIT_EXCEEDED": "金额超出了该游戏桌的限额。",
+    "DEVNET_WALLET_UNSUPPORTED": "你的钱包需要支持 Solana devnet 交易。",
+    "TRANSACTION_SIMULATION_FAILED": "交易预检失败。投注未发送。",
+    "DEPLOYMENT_ACCOUNT_MISSING": "游戏合约或所需账户尚未就绪。",
+    "GENESIS_MISMATCH": "网络连接与预期的 Solana devnet 不一致。",
+    "TRANSACTION_FAILED": "链上交易失败。投注未被接受；可能已收取网络费用。"
   }
 }

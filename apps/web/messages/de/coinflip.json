@@ -1,0 +1,101 @@
+{
+  "subtitle": "Zwei Seiten. Eine Entscheidung.",
+  "tableLabel": "Coinflip-Spieltisch",
+  "status": {
+    "live": "Live-Zugang geschlossen",
+    "flipping": "Münze wird geworfen",
+    "ready": "Tisch bereit"
+  },
+  "gate": {
+    "title": "Live-Coinflip ist noch nicht geöffnet.",
+    "text": "Von deinem Wallet wird kein Einsatz genommen, bis Devnet-Vertrag und Reserve verifiziert sind.",
+    "tryDemo": "Lokale Demo ausprobieren"
+  },
+  "caption": {
+    "ready": "Wähle deine Seite. Versuch dein Glück.",
+    "flipping": "Ergebnis wird ermittelt…",
+    "won": "Richtig getippt.",
+    "lost": "Die andere Seite ist gefallen."
+  },
+  "result": {
+    "either": "Kopf / Zahl",
+    "won": "{amount} DEMO Brutto-Rückgabe",
+    "lost": "Der Demo-Betrag dieser Runde ging verloren.",
+    "active": "Lokale Demo-Runde",
+    "idle": "Bei richtigem Tipp {factor} Brutto-Rückgabe"
+  },
+  "bottom": {
+    "local": "Lokale Simulation",
+    "odds": "Demo-Wahrscheinlichkeit 50 % / 50 %"
+  },
+  "odds": {
+    "label": "Brutto-Multiplikator",
+    "note": "Theoretischer Demo-Hausvorteil: 2 %"
+  },
+  "preview": {
+    "win": "Brutto-Rückgabe bei Gewinn",
+    "fee": "Demo-Transaktionsgebühr: 0"
+  },
+  "action": {
+    "liveClosed": "Live-Wetten geschlossen",
+    "flipping": "Münze wird geworfen…",
+    "flip": "In der Demo werfen"
+  },
+  "hint": "Kein Wallet und kein echtes Geld nötig.",
+  "live": {
+    "network": "Solana Devnet",
+    "testSol": "Test-SOL",
+    "note": "Nur das Solana-Devnet-Testnetz. Wird die Zufallsanfrage nicht erfüllt, kann der Einsatz gesperrt bleiben; es gibt keine automatische Rückerstattung und keine neue Ziehung.",
+    "reward": {
+      "label": "Am Spiel-Belohnungsprogramm teilnehmen",
+      "hint": "Es kann zusätzliche Konto-Miete anfallen. Token werden separat beansprucht."
+    },
+    "rows": {
+      "stake": "Einsatz",
+      "gross": "Brutto-Auszahlung bei Gewinn",
+      "fees": "Netzwerkgebühr und Konto-Miete",
+      "feesValue": "Wird bei der Wallet-Bestätigung separat angezeigt",
+      "reward": "Erwarteter Spiel-Belohnungsanspruch",
+      "epoch": "Teilnahmezeitraum"
+    },
+    "sol": "{amount} Test-SOL",
+    "token": "{amount} Token",
+    "button": {
+      "connect": "Wallet verbinden",
+      "reviewing": "Vertrag wird geprüft…",
+      "signing": "Warten auf Signatur und Transaktionsbestätigung…",
+      "confirm": "Devnet-Einsatz im Wallet bestätigen",
+      "review": "Einsatz prüfen"
+    },
+    "track": {
+      "settled": "Ergebnis steht fest",
+      "confirmed": "Einsatz angenommen",
+      "signing": "Warten auf Transaktionsbestätigung",
+      "unknown": "Transaktionsstatus unklar",
+      "awaiting": "Warten auf Zufallswert.",
+      "ready": "Das Ergebnis liegt vor; die Auszahlungstransaktion muss noch final werden.",
+      "paid": "Brutto-Auszahlung von {amount} Test-SOL ist final.",
+      "default": "Eine Sendebestätigung bedeutet nicht, dass Spielergebnis oder Auszahlung abgeschlossen sind."
+    },
+    "account": "Einsatzkonto: {address}",
+    "tx": "On-Chain-Transaktion ansehen",
+    "refresh": "Ergebnis desselben Einsatzes prüfen",
+    "refreshing": "Ergebnis wird geprüft…",
+    "next": "Neuer Devnet-Einsatz",
+    "notice": "Der Zugang zu Crash und Coinflip wird getrennt verifiziert. Das Verbinden eines Wallets allein startet keinen Einsatz und keine Auszahlung. Das Senden ins echte Netzwerk ist in dieser App deaktiviert.",
+    "errors": {
+      "trackingUnverified": "Die gespeicherte Einsatzverfolgung konnte nicht verifiziert werden. Es wurde kein neuer Einsatz eröffnet; prüfe deinen Wallet-Verlauf.",
+      "storageRequired": "Für die Transaktionsverfolgung wird der Sitzungsspeicher des Browsers benötigt. Es wurde kein neuer Einsatz eröffnet.",
+      "storageKeep": "Die Verfolgungsdaten bleiben in diesem Tab erhalten; lade die Seite nicht neu, da der Speicher deaktiviert ist.",
+      "amountSol": "Gib den SOL-Betrag mit höchstens 9 Nachkommastellen ein.",
+      "reviewFailed": "Die Vorprüfung des Einsatzes konnte nicht abgeschlossen werden. Es wurde noch keine Transaktion signiert.",
+      "unknownOutcome": "Das Ergebnis der Transaktion ist noch nicht bekannt. Derselbe Einsatz wird verfolgt; es wird kein neuer Einsatz gesendet.",
+      "sendUnverified": "Der Sendestatus konnte nicht verifiziert werden. Prüfe dasselbe Konto, ohne einen neuen Einsatz zu senden.",
+      "preflight": "Die Vorprüfung wurde nicht abgeschlossen. Die Wallet-Transaktion wurde nicht gestartet.",
+      "notFound": "Für diesen Einsatz wurde kein finalisiertes Konto gefunden. Das bedeutet weder Verlust noch Gewinn noch ein sicheres erneutes Senden.",
+      "readFailed": "Das finalisierte Ergebnis konnte nicht gelesen werden. Derselbe Einsatz kann erneut abgefragt werden.",
+      "clearFailed": "Der Eintrag des abgeschlossenen Einsatzes konnte nicht gelöscht werden. Es wurde kein neuer Einsatz eröffnet."
+    },
+    "invalidEpoch": "Ungültiger Zeitraum"
+  }
+}

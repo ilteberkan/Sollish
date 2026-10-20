@@ -162,7 +162,19 @@
     "rulesAccess": "L’accès au jeu réel exige une vérification distincte du contrat et de la configuration réseau.",
     "sideLegend": "Choisissez votre côté",
     "heads": "Face",
-    "tails": "Pile"
+    "tails": "Pile",
+    "errors": {
+      "amountRange": "Saisissez un montant entre 1 et 500 DEMO avec au plus deux décimales.",
+      "noRandomness": "L’aléa local sécurisé est indisponible. La démo n’a pas été lancée.",
+      "noCredit": "Vous n’avez pas assez de crédit démo, ou une démo est déjà en cours."
+    },
+    "historyDetail": {
+      "cashout": "Encaissement à {multiplier}",
+      "roundEnd": "Fin de manche à {multiplier}",
+      "cancelled": "Démo annulée",
+      "coinWon": "{side} · Gagné",
+      "coinLost": "{side} · Perdu"
+    }
   },
   "games": {
     "ringside": "Ringside",
@@ -206,5 +218,18 @@
       "play": "Choisissez pile ou face, saisissez le montant démo et lancez. En cas de bonne réponse, le retour brut est de 1,96 fois votre montant ; en cas de mauvaise réponse, le montant démo de cette manche est perdu.",
       "local": "Dans l’exemple local, la probabilité de gain est de 50 % et l’avantage théorique de la maison de 2 %. Il ne s’agit ni d’un jeu on-chain en service ni d’un résultat VRF vérifié."
     }
+  },
+  "liveError": {
+    "WALLET_CHANGED": "La connexion du portefeuille a changé. Examinez de nouveau la transaction avec votre portefeuille actuel.",
+    "VIEW_CLOSED": "L’écran de la transaction a été fermé. Aucun appel au portefeuille n’a été lancé.",
+    "TRACKING_STORAGE_FAILED": "Le navigateur n’a pas pu enregistrer le suivi de la transaction. Aucun appel au portefeuille n’a été fait. Vous pouvez activer le stockage de session pour ce site et réessayer.",
+    "HOUSE_PAUSED": "La caisse du jeu est actuellement en pause. Les mises ne sont pas acceptées.",
+    "INSUFFICIENT_HOUSE_RESERVE": "La caisse du jeu n’a pas assez de réserve pour couvrir ce montant.",
+    "BET_LIMIT_EXCEEDED": "Le montant dépasse la limite de cette table de jeu.",
+    "DEVNET_WALLET_UNSUPPORTED": "Votre portefeuille doit prendre en charge les transactions Solana devnet.",
+    "TRANSACTION_SIMULATION_FAILED": "La vérification préalable de la transaction a échoué. La mise n’a pas été envoyée.",
+    "DEPLOYMENT_ACCOUNT_MISSING": "Le contrat du jeu ou les comptes nécessaires ne sont pas encore prêts.",
+    "GENESIS_MISMATCH": "La connexion réseau ne correspond pas au Solana devnet attendu.",
+    "TRANSACTION_FAILED": "La transaction on-chain a échoué. La mise n’a pas été acceptée ; des frais de réseau ont pu être prélevés."
   }
 }

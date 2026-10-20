@@ -162,7 +162,19 @@
     "rulesAccess": "실제 게임 이용을 위해서는 계약과 네트워크 구성을 별도로 검증해야 합니다.",
     "sideLegend": "면을 선택하세요",
     "heads": "앞면",
-    "tails": "뒷면"
+    "tails": "뒷면",
+    "errors": {
+      "amountRange": "1–500 DEMO 사이의 금액을 소수점 아래 최대 두 자리로 입력하세요.",
+      "noRandomness": "안전한 로컬 난수를 사용할 수 없습니다. 데모를 시작하지 않았습니다.",
+      "noCredit": "데모 크레딧이 부족하거나 이미 진행 중인 데모가 있습니다."
+    },
+    "historyDetail": {
+      "cashout": "{multiplier} 출금",
+      "roundEnd": "{multiplier}에서 라운드 종료",
+      "cancelled": "데모 취소됨",
+      "coinWon": "{side} · 승리",
+      "coinLost": "{side} · 패배"
+    }
   },
   "games": {
     "ringside": "Ringside",
@@ -206,5 +218,18 @@
       "play": "앞면 또는 뒷면을 고르고 데모 금액을 입력한 뒤 던지세요. 맞히면 총 반환액은 금액의 1.96배이고, 틀리면 그 라운드의 데모 금액을 잃습니다.",
       "local": "로컬 예시에서 당첨 확률은 50%, 이론상 하우스 엣지는 2%입니다. 이는 운영 중인 온체인 게임이나 검증된 VRF 결과가 아닙니다."
     }
+  },
+  "liveError": {
+    "WALLET_CHANGED": "지갑 연결이 바뀌었습니다. 현재 지갑으로 거래를 다시 검토하세요.",
+    "VIEW_CLOSED": "거래 화면이 닫혔습니다. 지갑 호출은 시작되지 않았습니다.",
+    "TRACKING_STORAGE_FAILED": "브라우저가 거래 추적 정보를 저장하지 못했습니다. 지갑 호출은 이루어지지 않았습니다. 이 사이트의 세션 저장소를 켠 뒤 다시 시도할 수 있습니다.",
+    "HOUSE_PAUSED": "게임 금고가 현재 일시 중지되어 있습니다. 베팅을 받지 않습니다.",
+    "INSUFFICIENT_HOUSE_RESERVE": "게임 금고에 이 금액을 감당할 준비금이 부족합니다.",
+    "BET_LIMIT_EXCEEDED": "금액이 이 게임 테이블의 한도를 초과합니다.",
+    "DEVNET_WALLET_UNSUPPORTED": "지갑이 Solana devnet 거래를 지원해야 합니다.",
+    "TRANSACTION_SIMULATION_FAILED": "거래 사전 확인에 실패했습니다. 베팅이 전송되지 않았습니다.",
+    "DEPLOYMENT_ACCOUNT_MISSING": "게임 컨트랙트 또는 필요한 계정이 아직 준비되지 않았습니다.",
+    "GENESIS_MISMATCH": "네트워크 연결이 예상한 Solana devnet과 일치하지 않습니다.",
+    "TRANSACTION_FAILED": "온체인 거래가 실패했습니다. 베팅이 접수되지 않았으며 네트워크 수수료가 부과되었을 수 있습니다."
   }
 }

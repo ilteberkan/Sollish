@@ -1,0 +1,101 @@
+{
+  "subtitle": "İki taraf. Tek karar.",
+  "tableLabel": "Coinflip oyun masası",
+  "status": {
+    "live": "Canlı erişim kapalı",
+    "flipping": "Para çevriliyor",
+    "ready": "Masa hazır"
+  },
+  "gate": {
+    "title": "Canlı Coinflip henüz açık değil.",
+    "text": "Devnet sözleşmesi ve rezerv doğrulanmadan cüzdanından bahis alınmaz.",
+    "tryDemo": "Yerel demoyu dene"
+  },
+  "caption": {
+    "ready": "Tarafını seç. Şansını dene.",
+    "flipping": "Sonuç belirleniyor…",
+    "won": "Doğru tahmin.",
+    "lost": "Diğer taraf geldi."
+  },
+  "result": {
+    "either": "Yazı / Tura",
+    "won": "{amount} DEMO brüt dönüş",
+    "lost": "Bu turdaki demo miktarı kaybedildi.",
+    "active": "Yerel demo turu",
+    "idle": "Doğru tahminde {factor} brüt dönüş"
+  },
+  "bottom": {
+    "local": "Yerel simülasyon",
+    "odds": "Demo olasılığı %50 / %50"
+  },
+  "odds": {
+    "label": "Brüt çarpan",
+    "note": "Demo teorik kesinti: %2"
+  },
+  "preview": {
+    "win": "Kazanırsan brüt dönüş",
+    "fee": "Demo işlem ücreti: 0"
+  },
+  "action": {
+    "liveClosed": "Canlı bahis kapalı",
+    "flipping": "Para çevriliyor…",
+    "flip": "Demoda çevir"
+  },
+  "hint": "Cüzdan veya gerçek para gerekmez.",
+  "live": {
+    "network": "Solana devnet",
+    "testSol": "Test SOL",
+    "note": "Yalnız Solana devnet test ağı. Rastgelelik isteği sonuçlanmazsa bahis kilitli kalabilir; otomatik iade veya yeniden çekiliş yoktur.",
+    "reward": {
+      "label": "Oyun ödül programına katıl",
+      "hint": "Ek hesap kirası olabilir. Tokenlar ayrıca talep edilir."
+    },
+    "rows": {
+      "stake": "Bahis miktarı",
+      "gross": "Kazanırsan brüt ödeme",
+      "fees": "Ağ ücreti ve hesap kirası",
+      "feesValue": "Cüzdan onayında ayrıca",
+      "reward": "Beklenen oyun ödül hakkı",
+      "epoch": "Katılım dönemi"
+    },
+    "sol": "{amount} test SOL",
+    "token": "{amount} token",
+    "button": {
+      "connect": "Cüzdan bağla",
+      "reviewing": "Sözleşme kontrol ediliyor…",
+      "signing": "İmza ve işlem onayı bekleniyor…",
+      "confirm": "Devnet bahsini cüzdanda onayla",
+      "review": "Bahsi incele"
+    },
+    "track": {
+      "settled": "Sonuç kesinleşti",
+      "confirmed": "Bahis kabul edildi",
+      "signing": "İşlem onayı bekleniyor",
+      "unknown": "İşlem durumu belirsiz",
+      "awaiting": "Rastgelelik bekleniyor.",
+      "ready": "Sonuç hazır, ödeme işleminin kesinleşmesi bekleniyor.",
+      "paid": "{amount} test SOL brüt ödeme kesinleşti.",
+      "default": "Gönderim onayı, oyun sonucunun veya ödemenin tamamlandığı anlamına gelmez."
+    },
+    "account": "Bahis hesabı: {address}",
+    "tx": "Zincir işlemini görüntüle",
+    "refresh": "Aynı bahsin sonucunu kontrol et",
+    "refreshing": "Sonuç kontrol ediliyor…",
+    "next": "Yeni devnet bahsi",
+    "notice": "Crash ve Coinflip erişimleri ayrı doğrulanır. Cüzdan bağlantısı tek başına bahis veya ödeme başlatmaz. Gerçek ağa gönderim bu uygulamada kapalıdır.",
+    "errors": {
+      "trackingUnverified": "Kaydedilmiş bahis takibi doğrulanamadı. Yeni bahis açılmadı; cüzdan geçmişini kontrol et.",
+      "storageRequired": "İşlem takibi için tarayıcı oturum depolaması gerekiyor. Yeni bahis açılmadı.",
+      "storageKeep": "Takip bilgisi bu sekmede korunuyor; depolama kapalı olduğu için sayfayı yenileme.",
+      "amountSol": "SOL miktarını en çok 9 ondalıkla gir.",
+      "reviewFailed": "Bahis ön kontrolü tamamlanamadı. Henüz işlem imzalanmadı.",
+      "unknownOutcome": "İşlemin sonucu henüz bilinmiyor. Aynı bahis izleniyor; yeni bahis gönderilmez.",
+      "sendUnverified": "Gönderim durumu doğrulanamadı. Yeni bahis göndermeden aynı hesabı kontrol et.",
+      "preflight": "Ön kontrol tamamlanmadı. Cüzdan işlemi başlatılmadı.",
+      "notFound": "Bu bahis için kesinleşmiş hesap bulunamadı. Bu, kayıp, kazanç veya güvenli yeniden gönderim anlamına gelmez.",
+      "readFailed": "Kesinleşmiş sonuç okunamadı. Aynı bahis tekrar sorgulanabilir.",
+      "clearFailed": "Tamamlanan bahis kaydı temizlenemedi. Yeni bahis açılmadı."
+    },
+    "invalidEpoch": "Geçersiz dönem"
+  }
+}

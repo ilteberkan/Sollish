@@ -1,0 +1,101 @@
+{
+  "subtitle": "两面，一个决定。",
+  "tableLabel": "Coinflip 游戏桌",
+  "status": {
+    "live": "实时入口已关闭",
+    "flipping": "硬币翻转中",
+    "ready": "牌桌就绪"
+  },
+  "gate": {
+    "title": "实时 Coinflip 尚未开放。",
+    "text": "在 devnet 合约和储备通过验证之前，不会从你的钱包接受投注。",
+    "tryDemo": "试玩本地演示"
+  },
+  "caption": {
+    "ready": "选择一面，试试运气。",
+    "flipping": "正在确定结果…",
+    "won": "猜对了。",
+    "lost": "出现了另一面。"
+  },
+  "result": {
+    "either": "正面 / 反面",
+    "won": "{amount} DEMO 税前回报",
+    "lost": "本回合的演示金额已损失。",
+    "active": "本地演示回合",
+    "idle": "猜对时税前回报 {factor}"
+  },
+  "bottom": {
+    "local": "本地模拟",
+    "odds": "演示概率 50% / 50%"
+  },
+  "odds": {
+    "label": "税前倍数",
+    "note": "演示理论抽成：2%"
+  },
+  "preview": {
+    "win": "获胜时的税前回报",
+    "fee": "演示交易费：0"
+  },
+  "action": {
+    "liveClosed": "实时投注已关闭",
+    "flipping": "硬币翻转中…",
+    "flip": "在演示中翻转"
+  },
+  "hint": "无需钱包或真实资金。",
+  "live": {
+    "network": "Solana devnet",
+    "testSol": "测试 SOL",
+    "note": "仅限 Solana devnet 测试网络。若随机数请求未完成，投注可能保持锁定；没有自动退款或重新抽取。",
+    "reward": {
+      "label": "加入游戏奖励计划",
+      "hint": "可能产生额外的账户租金。代币需另行领取。"
+    },
+    "rows": {
+      "stake": "投注金额",
+      "gross": "获胜时的税前派彩",
+      "fees": "网络费用和账户租金",
+      "feesValue": "在钱包确认时另行显示",
+      "reward": "预期游戏奖励额度",
+      "epoch": "参与周期"
+    },
+    "sol": "{amount} 测试 SOL",
+    "token": "{amount} 代币",
+    "button": {
+      "connect": "连接钱包",
+      "reviewing": "正在检查合约…",
+      "signing": "正在等待签名和交易确认…",
+      "confirm": "在钱包中确认 devnet 投注",
+      "review": "检查投注"
+    },
+    "track": {
+      "settled": "结果已最终确定",
+      "confirmed": "投注已接受",
+      "signing": "正在等待交易确认",
+      "unknown": "交易状态不明",
+      "awaiting": "正在等待随机数。",
+      "ready": "结果已就绪，正在等待派彩交易最终确认。",
+      "paid": "{amount} 测试 SOL 税前派彩已最终确认。",
+      "default": "提交确认并不代表游戏结果或派彩已经完成。"
+    },
+    "account": "投注账户：{address}",
+    "tx": "查看链上交易",
+    "refresh": "检查同一投注的结果",
+    "refreshing": "正在检查结果…",
+    "next": "新的 devnet 投注",
+    "notice": "Crash 和 Coinflip 的访问分别验证。仅连接钱包不会发起投注或派彩。本应用已关闭向真实网络的提交。",
+    "errors": {
+      "trackingUnverified": "无法验证已保存的投注跟踪记录。未创建新投注；请检查钱包历史记录。",
+      "storageRequired": "交易跟踪需要浏览器会话存储。未创建新投注。",
+      "storageKeep": "跟踪信息保存在此标签页中；由于存储已关闭，请勿刷新页面。",
+      "amountSol": "请输入 SOL 金额，小数最多 9 位。",
+      "reviewFailed": "无法完成投注预检。尚未签署任何交易。",
+      "unknownOutcome": "交易结果尚不明确。正在跟踪同一笔投注；不会发送新投注。",
+      "sendUnverified": "无法验证提交状态。请在不发送新投注的情况下检查同一账户。",
+      "preflight": "预检未完成。未启动钱包交易。",
+      "notFound": "未找到该投注的最终确认账户。这并不代表输、赢或可以安全重新提交。",
+      "readFailed": "无法读取最终确认的结果。可以再次查询同一笔投注。",
+      "clearFailed": "无法清除已完成投注的记录。未创建新投注。"
+    },
+    "invalidEpoch": "无效周期"
+  }
+}

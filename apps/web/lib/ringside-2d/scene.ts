@@ -11,6 +11,7 @@
  */
 import { V5_STRIKES, contactGuardPose, isV5Kick, isV5Strike, simulateContactCombatV5, type FighterId, type V5Fighter, type SparringEvent } from '@sollish/protocol';
 import type { BroadcastProps } from '../ringside-25d/scene';
+import { DEFAULT_BROADCAST_LABELS } from '../ringside-labels';
 import { fallbackPlate, loadPlate, hash, type Canvas } from '../ringside-25d/arena';
 import { loadRingsideAudio, type RingsideAudio } from '../ringside-audio';
 import { TICK_MS, clamp, fighterPose, type Outcome, type Replay } from './animations';
@@ -21,8 +22,6 @@ import { drawBackdrop, drawRingBack, drawRingFront, drawShadow, drawStage, loadT
 
 export type Broadcast2DProps = BroadcastProps;
 const TEAM = { kor: { color: '#ff5a1f', rgb: '255,120,70', name: 'KOR' }, ayaz: { color: '#4cc9f0', rgb: '110,210,245', name: 'AYAZ' } } as const;
-const PART_LABEL: Record<string, string> = { head: 'KAFA', body: 'GÖVDE', guard: 'GARD', leg: 'BACAK' };
-const KICK_LABEL: Record<string, string> = { teep: 'TEEP', lowKick: 'ALÇAK TEKME', bodyKick: 'GÖVDE TEKMESİ', headKick: 'KAFA TEKMESİ', knee: 'DİZ' };
 const fighterAt = (id: FighterId, x: number, yaw: number): V5Fighter => ({ id, x, z: 0, yawMilliRad: yaw, health: 1000, stamina: 1000, stun: 0, action: 'guard', actionAt: 0, until: 0, phase: 'idle', combo: 0, hits: 0, knockdowns: 0, pose: contactGuardPose({ x, z: 0, yawMilliRad: yaw }) });
 /** Before a seed is revealed: the engine's documented start marks, no seed or result implied. */
 const WARMUP: Replay = { frames: [{ tick: 0, kor: fighterAt('kor', -1300, 1571), ayaz: fighterAt('ayaz', 1300, -1571), referee: { x: 0, z: -1600, yawMilliRad: 0, mode: 'watch', count: 0 } }], events: [] };
@@ -47,6 +46,7 @@ const mkView = (): View => ({ pan: 0, visible: 5200, init: false, key: '', sim: 
 
 /** Mounts the 2D broadcast on `host` (a positioned element) and returns the cleanup. `props` is read on every frame. */
 export function mountBroadcast2D(host: HTMLElement, props: () => Broadcast2DProps): () => void {
+  let TXT = DEFAULT_BROADCAST_LABELS;
   const canvas = document.createElement('canvas');
   canvas.setAttribute('aria-hidden', 'true');
   // pan-y: vertical swipes keep scrolling the page; the only input is a tap.
@@ -164,7 +164,7 @@ export function mountBroadcast2D(host: HTMLElement, props: () => Broadcast2DProp
     imps.forEach(({ e, ageMs }, n) => {
       const tb = where[e.target], ab = where[e.actor]; if (!tb || !ab) return;
       if (e.type !== 'hit' && e.type !== 'block') {
-        if (e.type === 'dodge' && shown.has(n) && ageMs < 500) { const fade = 1 - ageMs / 500; ctx.font = `900 ${Math.round(17 * dpr)}px ui-sans-serif, system-ui, sans-serif`; ctx.fillStyle = `rgba(233,228,218,${fade * .9})`; ctx.fillText('KAÇTI', tb.x, tb.y - tb.h * 1.05 - (ageMs / 500) * 24 * dpr); }
+        if (e.type === 'dodge' && shown.has(n) && ageMs < 500) { const fade = 1 - ageMs / 500; ctx.font = `900 ${Math.round(17 * dpr)}px ui-sans-serif, system-ui, sans-serif`; ctx.fillStyle = `rgba(233,228,218,${fade * .9})`; ctx.fillText(TXT.dodge, tb.x, tb.y - tb.h * 1.05 - (ageMs / 500) * 24 * dpr); }
         return;
       }
       // The flash sits where the blow met the target: on his hurtbox edge facing the attacker (head box for head blows, torso box otherwise,
@@ -179,8 +179,8 @@ export function mountBroadcast2D(host: HTMLElement, props: () => Broadcast2DProp
       if (t < .45) { ctx.strokeStyle = `rgba(${rgb},${(1 - t / .45) * .9})`; ctx.lineWidth = Math.max(1.5, (1 - t / .45) * 36 * s); ctx.beginPath(); ctx.arc(cx, cy, Math.max(1, r), 0, Math.PI * 2); ctx.stroke(); }
       if (e.type === 'hit' && t < .2) { ctx.strokeStyle = `rgba(255,246,228,${1 - t / .2})`; ctx.lineWidth = Math.max(1, 14 * s); for (let i = 0; i < 10; i++) { const ang = hash(e.tick * 31 + i) * Math.PI * 2, r0 = r * 1.1, r1 = r * (1.7 + hash(e.tick + i)); ctx.beginPath(); ctx.moveTo(cx + Math.cos(ang) * r0, cy + Math.sin(ang) * r0); ctx.lineTo(cx + Math.cos(ang) * r1, cy + Math.sin(ang) * r1); ctx.stroke(); } }
       let label = '';
-      if (e.type === 'hit') label = e.counter ? 'KONTRA' : (e.combo ?? 0) >= 1 ? `${(e.combo ?? 0) + 1}'Lİ SERİ` : (isV5Kick(e.technique) ? KICK_LABEL[e.technique] : PART_LABEL[part]) ?? '';
-      else label = 'GARD';
+      if (e.type === 'hit') label = e.counter ? TXT.counter : (e.combo ?? 0) >= 1 ? TXT.combo((e.combo ?? 0) + 1) : (isV5Kick(e.technique) ? (TXT.kicks as Record<string, string>)[e.technique] : (TXT.parts as Record<string, string>)[part]) ?? '';
+      else label = TXT.parts.guard;
       if (imps.some(o => o.e.type === 'knockdown' && Math.abs(o.ageMs - ageMs) <= TICK_MS) && e.type === 'hit') label = '';
       const a = ageMs / 1100;
       if (!label || a > .55 || !shown.has(n)) return;
@@ -266,7 +266,7 @@ export function mountBroadcast2D(host: HTMLElement, props: () => Broadcast2DProp
   const render = (now: number, force = false) => {
     if (!force) raf = requestAnimationFrame(t => render(t));
     if (disposed || (!force && (!visible || document.hidden))) return;
-    const state = props(), reduced = state.reducedMotion;
+    const state = props(), reduced = state.reducedMotion; TXT = state.labels ?? DEFAULT_BROADCAST_LABELS;
     if (!force && now - last < (reduced ? 1000 / 30 : 1000 / 60) - 2) return;
     const dt = clamp((now - (lastNow || now)) / 1000, 0, .1); lastNow = now; last = now;
     try {
@@ -289,12 +289,12 @@ export function mountBroadcast2D(host: HTMLElement, props: () => Broadcast2DProp
         const kd = replay.events.find(e => e.type === 'knockdown' && realMs >= e.tick * TICK_MS + 1300);
         if (kd) {
           const t1 = kd.tick * TICK_MS, rise = replay.events.find(e => e.tick > kd.tick && (e.type === 'rise' || e.type === 'finish')), stop = Math.min(t1 + 1300 + 3000, rise ? rise.tick * TICK_MS - 400 : Infinity), from = t1 - 1000;
-          if (realMs < stop) replayWindow = { from, at: from + (realMs - t1 - 1300) * .5, label: 'TEKRAR', progress: (realMs - t1 - 1300) / (stop - t1 - 1300) };
+          if (realMs < stop) replayWindow = { from, at: from + (realMs - t1 - 1300) * .5, label: TXT.replay, progress: (realMs - t1 - 1300) / (stop - t1 - 1300) };
         }
       }
       if (!reduced && phase === 'finished' && state.startedAt !== null && state.playbackPositionMs === undefined) {
         const since = now - state.startedAt - state.durationMs, best = moment(replay.events);
-        if (best !== null && since > 1600 && since < 1600 + 4750) { const t1 = best * TICK_MS, from = t1 - 1200; replayWindow = { from, at: from + (since - 1600) * .4, label: 'RAUNDUN ANI', progress: (since - 1600) / 4750 }; }
+        if (best !== null && since > 1600 && since < 1600 + 4750) { const t1 = best * TICK_MS, from = t1 - 1200; replayWindow = { from, at: from + (since - 1600) * .4, label: TXT.highlight, progress: (since - 1600) / 4750 }; }
       }
       if (replayWindow) {
         const wkey = `${state.fightId}:${replayWindow.from}`;
@@ -312,14 +312,14 @@ export function mountBroadcast2D(host: HTMLElement, props: () => Broadcast2DProp
       if (phase === 'idle' && state.selection) pickOverlay(state.selection, now, reduced);
       if (phase === 'fighting' && kd) {
         const refCount = replay.frames[Math.min(replay.frames.length - 1, Math.floor(tickF))]!.referee.count, countEvt = replay.events.filter(e => e.type === 'count' && e.tick * TICK_MS <= display).at(-1);
-        if (kdAge < 1300) banner('NAKAVT', `${TEAM[kd.fighter === 'kor' ? 'ayaz' : 'kor'].name} yere gönderdi`, TEAM[kd.fighter === 'kor' ? 'ayaz' : 'kor'].color, clamp(1 - Math.max(0, kdAge - 900) / 400));
-        else if (refCount > 0 && countEvt) { const age = display - countEvt.tick * TICK_MS; banner(String(refCount), 'HAKEM SAYIYOR', '#e9e4da', clamp(1 - age / 900), .3); }
+        if (kdAge < 1300) banner(TXT.knockdown, TXT.knockdownSub(TEAM[kd.fighter === 'kor' ? 'ayaz' : 'kor'].name), TEAM[kd.fighter === 'kor' ? 'ayaz' : 'kor'].color, clamp(1 - Math.max(0, kdAge - 900) / 400));
+        else if (refCount > 0 && countEvt) { const age = display - countEvt.tick * TICK_MS; banner(String(refCount), TXT.count, '#e9e4da', clamp(1 - age / 900), .3); }
       }
       const fin = replay.events.find(e => e.type === 'finish' && e.tick * TICK_MS <= display);
-      if (phase === 'fighting' && fin) banner('DURDURMA', `${TEAM[fin.actor].name} kazandı`, TEAM[fin.actor].color, clamp((display - fin.tick * TICK_MS) / 300));
+      if (phase === 'fighting' && fin) banner(TXT.stoppage, TXT.stoppageSub(TEAM[fin.actor].name), TEAM[fin.actor].color, clamp((display - fin.tick * TICK_MS) / 300));
       const rise = replay.events.filter(e => e.type === 'rise' && e.tick * TICK_MS <= display).at(-1);
       const up = rise ? display - rise.tick * TICK_MS - 650 : -1;
-      if (phase === 'fighting' && rise && up >= 0 && up < 1300) banner('AYAĞA KALKTI', 'Dövüş devam ediyor', '#e9e4da', clamp(1 - up / 1300), .3);
+      if (phase === 'fighting' && rise && up >= 0 && up < 1300) banner(TXT.rise, TXT.riseSub, '#e9e4da', clamp(1 - up / 1300), .3);
       finish(state);
     } catch (error) {
       console.error('Ringside 2D broadcast failed', error);

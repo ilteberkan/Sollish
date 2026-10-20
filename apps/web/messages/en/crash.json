@@ -1,0 +1,59 @@
+{
+  "subtitle": "Watch the climb. Cash out at your own moment.",
+  "tableLabel": "Crash game table",
+  "status": {
+    "live": "Live access closed",
+    "active": "Local round in progress",
+    "ready": "Table ready"
+  },
+  "caption": {
+    "ready": "The moment is yours.",
+    "countdown": "Starting shortly",
+    "running": "Pick your own cash-out time",
+    "won": "You cashed out of the demo",
+    "lost": "The round has ended"
+  },
+  "gate": {
+    "title": "Live Crash is not open yet.",
+    "text": "No real bets are accepted until manual cash-out and the hidden round result are verified.",
+    "tryDemo": "Try the local demo"
+  },
+  "readout": {
+    "ready": "Choose your amount and start your first round.",
+    "running": "{seconds} s",
+    "won": "{amount} DEMO gross return",
+    "lost": "{amount} DEMO lost",
+    "countdown": "Get ready to cash out manually"
+  },
+  "bottom": {
+    "local": "Local simulation",
+    "manual": "Manual cash-out"
+  },
+  "preview": {
+    "won": "Gross demo return",
+    "cashout": "Gross return on cash-out",
+    "net": "Net result: +{amount} DEMO",
+    "fee": "Demo transaction fee: 0"
+  },
+  "action": {
+    "cashout": "Cash out",
+    "starting": "Round starting…",
+    "liveClosed": "Live betting closed",
+    "start": "Start the demo"
+  },
+  "hint": {
+    "running": "The cash-out is calculated the moment you click.",
+    "live": "Waiting for live Crash verification.",
+    "default": "No wallet or real money needed."
+  },
+  "sr": {
+    "running": "The round has started. You can cash out.",
+    "won": "Demo cash-out complete. {amount} DEMO gross return.",
+    "lost": "The round ended at a multiplier of {multiplier}. The demo amount was lost.",
+    "countdown": "The round is about to start."
+  },
+  "chart": {
+    "zero": "0 s",
+    "time": "time"
+  }
+}

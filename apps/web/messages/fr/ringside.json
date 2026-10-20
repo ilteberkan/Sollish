@@ -1,0 +1,239 @@
+{
+  "meta": {
+    "title": "Ringside · En direct",
+    "description": "Deux combattants qui apprennent pendant le combat et les plans de coin de Jev en direct ; des pools démo distincts à chaque combat et un registre de tickets en direct."
+  },
+  "action": {
+    "guard": "Garde", "advance": "Pression", "retreat": "Pas en arrière", "circle": "Changement d’angle", "slip": "Esquive", "roll": "Roulade",
+    "jab": "Jab", "cross": "Direct", "hook": "Crochet", "leadHook": "Crochet avant", "rearHook": "Crochet arrière", "uppercut": "Uppercut",
+    "bodyHook": "Crochet au corps", "teep": "Coup de pied frontal (teep)", "lowKick": "Low kick", "bodyKick": "Coup de pied au corps", "headKick": "Coup de pied à la tête",
+    "knee": "Genou", "clinch": "Clinch", "stagger": "Sonné", "down": "À terre", "rise": "Se relève", "neutral": "Coin neutre"
+  },
+  "draw": "Match nul",
+  "hint": {
+    "match-winner": "Qui gagne le combat ? Par arrêt ou aux rounds gagnés après trois rounds.",
+    "match-method": "Le vainqueur et la manière ensemble. Plus difficile ; le pool est divisé en cinq.",
+    "match-knockdowns": "Combien de knockdowns y a-t-il sur les trois rounds ?"
+  },
+  "style": { "kor": "Coin rouge · pression", "ayaz": "Coin bleu · distance" },
+  "trait": { "reach": "Allonge", "short": "courte", "long": "longue", "power": "Puissance", "chin": "Menton", "guard": "Garde" },
+  "market": {
+    "match-winner": { "label": "Vainqueur", "outcomes": { "kor": "KOR gagne", "draw": "Match nul", "ayaz": "AYAZ gagne" } },
+    "match-method": { "label": "Résultat exact", "outcomes": { "kor-stop": "KOR par arrêt", "kor-points": "KOR aux points", "draw": "Match nul", "ayaz-points": "AYAZ aux points", "ayaz-stop": "AYAZ par arrêt" } },
+    "match-knockdowns": { "label": "Knockdowns", "outcomes": { "0-1": "0–1 knockdown", "2": "2 knockdowns", "3-plus": "3+ knockdowns" } }
+  },
+  "track": {
+    "won": "Gagné · +{amount}",
+    "lost": "Perdu",
+    "refunded": "Remboursement · {amount}",
+    "notStarted": "Le combat n’a pas commencé",
+    "kdLost": "Raté · {n, plural, one {# knockdown} other {# knockdowns}}",
+    "kdHolding": "Tient pour l’instant · {n}",
+    "kdNow": "Pour l’instant {n, plural, one {# knockdown} other {# knockdowns}}",
+    "ahead": "Devant en ce moment",
+    "even": "À égalité",
+    "behind": "Derrière en ce moment"
+  },
+  "flow": { "aria": "Déroulement du combat", "bet": "Pari", "round": "R{n}", "result": "Résultat", "winnerKo": "{name} · KO" },
+  "cta": {
+    "hasTicket": "Vous avez déjà un ticket sur ce marché",
+    "sending": "Envoi…",
+    "closed": "Paris fermés",
+    "pick": "{outcome} · {amount} DEMO",
+    "enterAmount": "Saisir un montant"
+  },
+  "handle": {
+    "coupon": "Votre coupon · {n, plural, one {# ticket} other {# tickets}}",
+    "estimate": "{outcome} · estimé {amount}",
+    "choose": "{outcome} · choisir et confirmer",
+    "status": "Votre coupon · {status}",
+    "title": "Coupon du combat"
+  },
+  "top": { "match": "Combat", "matchNo": "Combat n° {id}", "rounds": "3 rounds", "demo": "DEMO · pas d’argent réel" },
+  "loading": { "failed": "L’image n’a pas pu s’ouvrir. Les tickets et les données en direct continuent de fonctionner.", "preparing": "Préparation de la retransmission" },
+  "status": {
+    "live": "EN DIRECT",
+    "connecting": "CONNEXION",
+    "verifyHint": "Votre navigateur rejoue le round avec la seed et le journal des coins, puis le vérifie",
+    "verified": "Rediffusion vérifiée ✓",
+    "committed": "Seed engagée"
+  },
+  "bug": {
+    "ready": "Prêt",
+    "stats": "{hits, plural, one {# coup} other {# coups}} · {stamina} % d’endurance",
+    "round": "ROUND {n}",
+    "starting": "R{n} COMMENCE",
+    "break": "PAUSE",
+    "over": "COMBAT TERMINÉ",
+    "score": "Rounds"
+  },
+  "prompt": {
+    "pick": "Qui gagne ? Touchez un combattant.",
+    "pickSub": "Un seul ticket pour tout le combat · les paris ferment dans {time}",
+    "connecting": "Connexion à l’arène",
+    "waiting": "En attente du serveur de combat en direct."
+  },
+  "toast": { "knockdown": "KNOCKDOWN", "counter": "CONTRE", "hit": "TOUCHÉ", "damage": "{damage} de dégâts" },
+  "card": {
+    "close": "Fermer le résultat",
+    "reopen": "Afficher le résultat",
+    "breakTitle": "ROUND {n} TERMINÉ",
+    "won": "{name} l’emporte",
+    "points": "{kor} – {ayaz} points",
+    "knockdownsTotal": "{n, plural, one {# knockdown} other {# knockdowns}} au total",
+    "next": "R{n} dans <b>{time}</b>",
+    "finalTitle": "RÉSULTAT DU COMBAT N° {id}",
+    "finalDraw": "MATCH NUL",
+    "coupon": "Votre coupon : {amount} DEMO",
+    "nextOpens": "Les paris du prochain combat ouvrent dans <b>{time}</b>"
+  },
+  "controls": {
+    "camera": "Caméra de visionnage",
+    "broadcast": "Retransmission",
+    "overhead": "Tactique",
+    "sound": "Son",
+    "soundOn": "Son activé",
+    "fullscreen": "Plein écran",
+    "exitFullscreen": "Quitter le plein écran",
+    "shrink": "Réduire",
+    "fullscreenFailed": "Le plein écran n’a pas pu s’ouvrir dans ce navigateur."
+  },
+  "cards": {
+    "crowd": "CE QUE DIT LE PUBLIC",
+    "drawShort": "Nul",
+    "fighterAria": "Choisir {name} comme vainqueur",
+    "fighterWins": "{name} gagne",
+    "firstTicket": "premier ticket",
+    "pct": "{n} %"
+  },
+  "corner": { "title": "Radio du coin", "sub": "Jev · toutes les 9 s · chaîne de hachages" },
+  "summary": {
+    "title": "Résumé du combat",
+    "knockdowns": "{n, plural, one {# knockdown} other {# knockdowns}}",
+    "stoppage": "arrêt",
+    "going": "En cours",
+    "starting": "Commence",
+    "notPlayed": "Non disputé",
+    "waiting": "En attente"
+  },
+  "slip": {
+    "aria": "Coupon du combat",
+    "titleOpen": "Coupon du combat",
+    "titleClosed": "Votre coupon",
+    "open": "Ouvert · {time}",
+    "settled": "Réglé",
+    "closed": "Fermé",
+    "balance": "Votre solde démo",
+    "market": "Marché",
+    "hasTicket": "Vous avez un ticket",
+    "amount": "Montant",
+    "amountRange": "1–500 DEMO",
+    "max": "Max",
+    "yourPick": "Votre choix",
+    "estReturn": "Gain estimé",
+    "refund": "Sera remboursé",
+    "waitingOpponent": "En attente d’un ticket adverse",
+    "fine": "L’estimation change pendant que le pool se remplit et devient définitive à la fermeture des paris. Frais de 2 % inclus. Sans ticket adverse, remboursement.",
+    "rulesTitle": "Règles",
+    "rulesBody": "Les paris ne sont ouverts qu’avant le début du R1, pendant {seconds} secondes ; ils sont fermés entre les rounds. Chaque marché paie depuis son propre pool et est réglé une seule fois à la fin du combat. Un pool d’un seul côté, ou sans gagnant, est remboursé sans frais. Même avec le bon choix, le gain peut être inférieur à la mise. Un seul ticket par marché et par combat. Une connexion coupée n’annule pas un ticket. Les coups de poing et de pied décident du résultat selon les mêmes règles.",
+    "ifWins": "en cas de gain {amount}",
+    "refundNow": "condition de remboursement pour l’instant",
+    "emptyOpen": "Aucun ticket pour l’instant. Faites un choix et confirmez.",
+    "emptyClosed": "Vous n’avez pas de ticket sur ce combat. Les paris sont ouverts {seconds} s avant le R1 de chaque combat.",
+    "indicatorNote": "« Devant / derrière » n’est qu’un indicateur. Le résultat est définitif à la fin du combat."
+  },
+  "steps": {
+    "pick": { "title": "Choisir", "body": "Choisissez le vainqueur, la manière ou le nombre de knockdowns. Vous avez {seconds} secondes." },
+    "watch": { "title": "Regarder", "body": "Votre coupon est suivi en direct pendant trois rounds : devant ou derrière." },
+    "result": { "title": "Résultat", "body": "À la fin du combat, chaque pool est versé à ses gagnants. Votre navigateur rejoue le combat et le vérifie." }
+  },
+  "pools": {
+    "aria": "Pools et derniers tickets",
+    "title": "Pools",
+    "total": "{count, plural, one {# ticket} other {# tickets}} · {amount} DEMO · {online} en ligne",
+    "all": "Tous les enregistrements ↗",
+    "poolLine": "{amount} DEMO · {status}",
+    "status": { "open": "ouvert", "locked": "verrouillé", "paid": "payé", "refunded": "remboursé" },
+    "tapeEmpty": "Aucun ticket pour l’instant. Le premier ticket apparaît ici."
+  },
+  "technical": {
+    "summary": "Règles, modèle et vérification",
+    "p1": "Un combat compte au plus trois rounds : 30 secondes de paris, 45 secondes par round, une courte pause entre eux. Un combattant qui encaisse plusieurs coups de poing ou de pied propres à la tête tombe ; l’arbitre compte. Un combattant dont la santé est épuisée, ou qui tombe pour la troisième fois dans le même round, est arrêté et le combat se termine. Sans arrêt, un round se gagne aux dégâts infligés plus 120 points par knockdown ; le combattant qui gagne le plus de rounds remporte le combat, et l’égalité donne un match nul. Santé +250 et endurance +350 passent au round suivant. Techniques : jab, direct, crochet, uppercut, crochet au corps ; coup de pied frontal (teep), low kick, coup de pied au corps et à la tête ; genou et clinch.",
+    "p2": "Les seeds des trois rounds sont tirées avant le début du combat ; leurs hachages sont publiés avant l’ouverture des paris, et chaque seed est révélée au début de son round. Votre navigateur rejoue aussi les rounds précédents à partir du journal publié et vérifie le résultat du combat. Ce n’est ni une VRF ni une preuve de résultat indépendante de l’opérateur.",
+    "p3": "Chaque combattant a son propre cerveau indépendant. Il choisit lui-même chaque action et ne regarde que les données du combat visibles par tous : le round, le temps, la santé et l’endurance des deux côtés, et ce que l’adversaire a fait jusqu’ici. Le combattant garde ce qu’il apprend de round en round pendant le combat ; la règle et les poids initiaux sont figés au début du combat, et la même seed avec le même journal reproduit le même combat. Son utilité est testée séparément et le résultat mesuré est affiché sur la page. Effet mesuré (test préenregistré, 200 combats) : sur tout le combat, le combattant qui apprend devance en moyenne de +38 points sa copie qui n’apprend pas face à des adversaires qui apprennent (intervalle à 95 % −2…+74) et de +20 face à des adversaires de style fixe (−5…+45). Les intervalles contenant zéro, le bénéfice n’est pas considéré comme prouvé. L’effet de l’entraînement lui-même est net (+284). La supériorité de la structure du connectome de la mouche sur un réseau mélangé n’a pas pu être démontrée.",
+    "p4": "Toutes les 9 secondes, l’entraîneur de coin Jev (un repli déterministe en cas de dépassement du délai) propose une intention, une cible et une menace ; le combattant ne les lit que comme une entrée. Les plans arrivant après la fermeture des paris, ce jeu est uniquement DEMO. L’image est dessinée par le code (squelette, IK, planificateur de pas) ; la caméra, les FPS et le son n’influencent pas le résultat. Les données MaleCNS v1.0 sont sous CC BY 4.0 : FlyEM / HHMI Janelia.",
+    "engine": "Moteur",
+    "ledger": "Registre",
+    "commitment": "Engagement du round",
+    "seedHashes": "Hachages des seeds",
+    "seed": "Seed",
+    "seedHidden": "Révélée au début du round."
+  },
+  "audit": {
+    "aria": "Enregistrements du combat",
+    "title": "Enregistrements du combat n° {id}",
+    "close": "Fermer les enregistrements",
+    "summary": "{count, plural, one {# ticket} other {# tickets}} · {amount} DEMO",
+    "download": "Télécharger le JSON ↓",
+    "requesting": "Demande des enregistrements. Rouvrez si le combat a changé."
+  },
+  "board": {
+    "aria": "Plans de coin et décisions des combattants",
+    "jev": "Plan de Jev",
+    "fallback": "plan de secours",
+    "thinking": "{side} évalue en ce moment",
+    "wait": "En attente du prochain plan de l’entraîneur…",
+    "percent": "{n} %",
+    "intent": { "pressure": "Pression", "counter": "Contreur", "cautious": "Prudent", "outboxer": "Combattant de distance", "body": "Travail au corps", "finisher": "Finisseur" },
+    "target": { "head": "tête", "body": "corps" },
+    "threat": { "straight": "attention aux directs", "hook": "attention aux crochets", "upper": "attention à l’uppercut", "body": "attention au corps" },
+    "move": {
+      "jab": "jab", "cross": "direct", "leadHook": "crochet avant", "rearHook": "crochet arrière", "uppercut": "uppercut", "bodyHook": "crochet au corps",
+      "teep": "coup de pied frontal", "lowKick": "low kick", "bodyKick": "coup de pied au corps", "headKick": "coup de pied à la tête", "knee": "genou",
+      "advance": "avancer", "retreat": "reculer", "circleLeft": "tourner à gauche", "circleRight": "tourner à droite", "guard": "garde", "slip": "esquiver", "roll": "rouler", "clinch": "clinch"
+    }
+  },
+  "scene": {
+    "head": "TÊTE", "body": "CORPS", "guard": "GARDE", "leg": "JAMBE",
+    "teep": "TEEP", "lowKick": "LOW KICK", "bodyKick": "COUP AU CORPS", "headKick": "COUP À LA TÊTE", "knee": "GENOU",
+    "counter": "CONTRE",
+    "combo": "SÉRIE DE {n}",
+    "dodge": "ESQUIVÉ",
+    "knockdown": "KNOCKDOWN",
+    "knockdownSub": "{name} l’envoie au sol",
+    "stoppage": "ARRÊT",
+    "stoppageSub": "{name} l’emporte",
+    "rise": "DE NOUVEAU DEBOUT",
+    "riseSub": "Le combat continue",
+    "count": "L’ARBITRE COMPTE",
+    "replay": "RALENTI",
+    "highlight": "TEMPS FORT DU ROUND",
+    "down": "À TERRE",
+    "floor": "RINGSIDE · EN DIRECT"
+  },
+  "error": {
+    "NOT_CONFIGURED": "Le service en direct n’est pas configuré.",
+    "SERVER_DATA": "Les données du serveur n’ont pas pu être vérifiées.",
+    "ENGINE_MISMATCH": "La version du moteur de l’arène ne correspond pas.",
+    "RESULT_CHANGED": "Un résultat de combat déjà réglé a changé.",
+    "LOCKED_CHANGED": "Des données verrouillées du combat ont changé.",
+    "HISTORY_MISMATCH": "L’historique du combat ne correspond pas à la rediffusion.",
+    "COMMITMENT_MISMATCH": "L’engagement de seed du combat ne correspond pas.",
+    "PLAN_LOG_MISMATCH": "Le journal des plans de l’entraîneur ne correspond pas à la rediffusion.",
+    "RESULT_MISMATCH": "Le résultat ne correspond pas à la rediffusion déterministe.",
+    "MATCH_RESULT_MISMATCH": "Le résultat du combat ne correspond pas à la rediffusion.",
+    "VERIFY_FAILED": "La vérification n’a pas pu se terminer. Reconnexion en cours.",
+    "NO_TICKET_ID": "Un identifiant de ticket sécurisé n’a pas pu être créé.",
+    "AMOUNT_RANGE": "Le montant doit être compris entre 1 et 500 DEMO.",
+    "RECOVERY_FAILED": "L’enregistrement de récupération du ticket n’a pas pu être sauvegardé. La demande n’a pas été envoyée.",
+    "TICKET_RECHECK": "L’état du ticket est revérifié avec le même identifiant.",
+    "ROUND_CLOSED": "Les paris sont fermés. Attendez le prochain combat.",
+    "WRONG_ROUND": "Le combat a changé.",
+    "ALREADY_BET": "Vous avez déjà un ticket pour ce combat sur ce marché.",
+    "INVALID_MESSAGE": "Ce marché n’existe pas dans cette arène.",
+    "INSUFFICIENT_CREDITS": "Vous n’avez pas assez de crédit démo.",
+    "CAPACITY": "La capacité de la démo est atteinte.",
+    "SESSION_EXPIRED": "Votre session démo est terminée.",
+    "SESSION_INVALID": "La session démo est en cours de renouvellement."
+  }
+}

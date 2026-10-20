@@ -1,0 +1,101 @@
+{
+  "subtitle": "Deux côtés. Une décision.",
+  "tableLabel": "Table de jeu Coinflip",
+  "status": {
+    "live": "Accès en direct fermé",
+    "flipping": "La pièce tourne",
+    "ready": "Table prête"
+  },
+  "gate": {
+    "title": "Le Coinflip en direct n’est pas encore ouvert.",
+    "text": "Aucune mise n’est prélevée sur votre portefeuille tant que le contrat devnet et la réserve ne sont pas vérifiés.",
+    "tryDemo": "Essayer la démo locale"
+  },
+  "caption": {
+    "ready": "Choisissez votre côté. Tentez votre chance.",
+    "flipping": "Détermination du résultat…",
+    "won": "Bien deviné.",
+    "lost": "L’autre côté est sorti."
+  },
+  "result": {
+    "either": "Face / Pile",
+    "won": "{amount} DEMO de retour brut",
+    "lost": "Le montant de la démo de cette manche est perdu.",
+    "active": "Manche démo locale",
+    "idle": "Retour brut de {factor} en cas de bon pronostic"
+  },
+  "bottom": {
+    "local": "Simulation locale",
+    "odds": "Probabilité de la démo : 50 % / 50 %"
+  },
+  "odds": {
+    "label": "Multiplicateur brut",
+    "note": "Avantage théorique de la maison (démo) : 2 %"
+  },
+  "preview": {
+    "win": "Retour brut si vous gagnez",
+    "fee": "Frais de transaction de la démo : 0"
+  },
+  "action": {
+    "liveClosed": "Paris en direct fermés",
+    "flipping": "La pièce tourne…",
+    "flip": "Lancer dans la démo"
+  },
+  "hint": "Aucun portefeuille ni argent réel requis.",
+  "live": {
+    "network": "Solana devnet",
+    "testSol": "SOL de test",
+    "note": "Réseau de test Solana devnet uniquement. Si la demande d’aléa n’aboutit pas, la mise peut rester bloquée ; il n’y a ni remboursement automatique ni nouveau tirage.",
+    "reward": {
+      "label": "Rejoindre le programme de récompenses du jeu",
+      "hint": "Un loyer de compte supplémentaire peut s’appliquer. Les tokens se réclament séparément."
+    },
+    "rows": {
+      "stake": "Montant de la mise",
+      "gross": "Gain brut si vous gagnez",
+      "fees": "Frais réseau et loyer de compte",
+      "feesValue": "Affichés séparément lors de la validation dans le portefeuille",
+      "reward": "Droit de récompense de jeu attendu",
+      "epoch": "Période de participation"
+    },
+    "sol": "{amount} SOL de test",
+    "token": "{amount} token",
+    "button": {
+      "connect": "Connecter le portefeuille",
+      "reviewing": "Vérification du contrat…",
+      "signing": "En attente de la signature et de la confirmation de la transaction…",
+      "confirm": "Valider la mise devnet dans le portefeuille",
+      "review": "Examiner la mise"
+    },
+    "track": {
+      "settled": "Résultat finalisé",
+      "confirmed": "Mise acceptée",
+      "signing": "En attente de la confirmation de la transaction",
+      "unknown": "État de la transaction incertain",
+      "awaiting": "En attente de l’aléa.",
+      "ready": "Le résultat est prêt ; en attente de la finalisation de la transaction de paiement.",
+      "paid": "Gain brut de {amount} SOL de test finalisé.",
+      "default": "Une confirmation d’envoi ne signifie pas que le résultat du jeu ou le paiement est terminé."
+    },
+    "account": "Compte de la mise : {address}",
+    "tx": "Voir la transaction on-chain",
+    "refresh": "Vérifier le résultat de la même mise",
+    "refreshing": "Vérification du résultat…",
+    "next": "Nouvelle mise devnet",
+    "notice": "L’accès à Crash et à Coinflip est vérifié séparément. La simple connexion d’un portefeuille ne déclenche ni mise ni paiement. L’envoi vers le réseau réel est désactivé dans cette application.",
+    "errors": {
+      "trackingUnverified": "Le suivi de mise enregistré n’a pas pu être vérifié. Aucune nouvelle mise n’a été ouverte ; consultez l’historique de votre portefeuille.",
+      "storageRequired": "Le stockage de session du navigateur est nécessaire au suivi de la transaction. Aucune nouvelle mise n’a été ouverte.",
+      "storageKeep": "Les informations de suivi sont conservées dans cet onglet ; ne rechargez pas la page, car le stockage est désactivé.",
+      "amountSol": "Saisissez le montant en SOL avec 9 décimales au maximum.",
+      "reviewFailed": "La vérification préalable de la mise n’a pas pu aboutir. Aucune transaction n’a encore été signée.",
+      "unknownOutcome": "Le résultat de la transaction n’est pas encore connu. La même mise est suivie ; aucune nouvelle mise ne sera envoyée.",
+      "sendUnverified": "L’état de l’envoi n’a pas pu être vérifié. Consultez le même compte sans envoyer de nouvelle mise.",
+      "preflight": "La vérification préalable n’a pas abouti. La transaction du portefeuille n’a pas été lancée.",
+      "notFound": "Aucun compte finalisé n’a été trouvé pour cette mise. Cela ne signifie ni perte, ni gain, ni renvoi sûr.",
+      "readFailed": "Le résultat finalisé n’a pas pu être lu. La même mise peut être interrogée à nouveau.",
+      "clearFailed": "L’enregistrement de la mise terminée n’a pas pu être effacé. Aucune nouvelle mise n’a été ouverte."
+    },
+    "invalidEpoch": "Période invalide"
+  }
+}

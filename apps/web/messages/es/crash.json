@@ -1,0 +1,59 @@
+{
+  "subtitle": "Observa la subida. Retira en tu momento.",
+  "tableLabel": "Mesa del juego Crash",
+  "status": {
+    "live": "Acceso en vivo cerrado",
+    "active": "Ronda local en curso",
+    "ready": "Mesa lista"
+  },
+  "caption": {
+    "ready": "El momento es tuyo.",
+    "countdown": "Empieza en breve",
+    "running": "Elige tú cuándo retirar",
+    "won": "Has retirado de la demo",
+    "lost": "La ronda ha terminado"
+  },
+  "gate": {
+    "title": "El Crash en vivo aún no está abierto.",
+    "text": "No se aceptan apuestas reales hasta que se verifiquen la retirada manual y el resultado oculto de la ronda.",
+    "tryDemo": "Probar la demo local"
+  },
+  "readout": {
+    "ready": "Elige tu importe e inicia tu primera ronda.",
+    "running": "{seconds} s",
+    "won": "{amount} DEMO de retorno bruto",
+    "lost": "{amount} DEMO perdidos",
+    "countdown": "Prepárate para la retirada manual"
+  },
+  "bottom": {
+    "local": "Simulación local",
+    "manual": "Retirada manual"
+  },
+  "preview": {
+    "won": "Retorno bruto de la demo",
+    "cashout": "Retorno bruto al retirar",
+    "net": "Resultado neto: +{amount} DEMO",
+    "fee": "Comisión de transacción de la demo: 0"
+  },
+  "action": {
+    "cashout": "Retirar",
+    "starting": "La ronda empieza…",
+    "liveClosed": "Apuestas en vivo cerradas",
+    "start": "Iniciar la demo"
+  },
+  "hint": {
+    "running": "La retirada se calcula en el instante en que haces clic.",
+    "live": "Esperando la verificación del Crash en vivo.",
+    "default": "No hace falta monedero ni dinero real."
+  },
+  "sr": {
+    "running": "La ronda ha empezado. Puedes retirar.",
+    "won": "Retirada de la demo completada. {amount} DEMO de retorno bruto.",
+    "lost": "La ronda terminó en el multiplicador {multiplier}. Se perdió el importe de la demo.",
+    "countdown": "La ronda está a punto de empezar."
+  },
+  "chart": {
+    "zero": "0 s",
+    "time": "tiempo"
+  }
+}

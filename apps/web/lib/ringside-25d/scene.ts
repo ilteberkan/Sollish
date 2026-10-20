@@ -15,6 +15,9 @@ import { CameraRig, PRESETS, type CamPreset } from './camera';
 import { crowdTier, fallbackPlate, glow, hash, ledStrip, loadPlate, LED_TILE_M, type Canvas } from './arena';
 import { loadSprites, drawPart, drawCap, boneLength, partMatrix, apply, type SpriteSet, type CharacterId, type Matrix } from './sprites';
 import { loadRingsideAudio, type RingsideAudio } from '../ringside-audio';
+import { DEFAULT_BROADCAST_LABELS, type BroadcastLabels } from '../ringside-labels';
+
+export type { BroadcastLabels };
 
 export type BroadcastProps = {
   phase: 'idle' | 'fighting' | 'finished';
@@ -35,6 +38,8 @@ export type BroadcastProps = {
   resetViewKey?: number;
   /** Called with true when the viewer takes control of the camera and false when control is given back. */
   onManualView?: (manual: boolean) => void;
+  /** Translated canvas text (presentation only). Omitted: the English defaults. */
+  labels?: BroadcastLabels;
   onReady?: () => void;
   onError?: () => void;
 };
@@ -54,8 +59,6 @@ const LOOKS: Record<FighterId | 'ref', Look> = {
   ayaz: { skin: '#e2b18c', skinDark: '#93664a', glove: '#4cc9f0', gloveDark: '#1f7895', cuff: '#f1ece2', trunks: '#143247', trunksDark: '#06141d', belt: '#4cc9f0', boot: '#ebe6dc', bootDark: '#9f998d', sock: '#ebe6dc', hair: '#33221a', rim: 'rgba(90,205,245,.95)' },
   ref: { skin: '#b98564', skinDark: '#7d573f', glove: '#b98564', gloveDark: '#7d573f', cuff: '#e9e4da', trunks: '#23272e', trunksDark: '#121418', belt: '#0a0b0d', boot: '#0b0c0e', bootDark: '#000', sock: '#23272e', hair: '#bdb6aa', rim: 'rgba(233,228,218,.4)', shirt: '#eee9df', shirtDark: '#a49e92', trousers: '#262a31' },
 };
-const PART_LABEL: Record<string, string> = { head: 'KAFA', body: 'GÖVDE', guard: 'GARD', leg: 'BACAK' };
-const KICK_LABEL: Record<string, string> = { teep: 'TEEP', lowKick: 'ALÇAK TEKME', bodyKick: 'GÖVDE TEKMESİ', headKick: 'KAFA TEKMESİ', knee: 'DİZ' };
 const fighterAt = (id: FighterId, x: number, yaw: number): V5Fighter => ({ id, x, z: 0, yawMilliRad: yaw, health: 1000, stamina: 1000, stun: 0, action: 'guard', actionAt: 0, until: 0, phase: 'idle', combo: 0, hits: 0, knockdowns: 0, pose: contactGuardPose({ x, z: 0, yawMilliRad: yaw }) });
 /** Before a seed is revealed: the engine's documented start marks, no seed or result implied. */
 const WARMUP: RingReplay = { frames: [{ tick: 0, kor: fighterAt('kor', -1300, 1571), ayaz: fighterAt('ayaz', 1300, -1571), referee: { x: 0, z: -1600, yawMilliRad: 0, mode: 'watch', count: 0 } }], events: [] };
@@ -98,6 +101,7 @@ function hull(points: { x: number; y: number }[]) {
 
 /** Mounts the broadcast on `host` (a positioned element) and returns the cleanup. `props` is read on every frame. */
 export function mountBroadcast(host: HTMLElement, props: () => BroadcastProps): () => void {
+  let TXT = DEFAULT_BROADCAST_LABELS;
   const canvas = document.createElement('canvas');
   canvas.setAttribute('aria-hidden', 'true');
   // pan-y: vertical swipes keep scrolling the page; horizontal drags orbit (see the rules in the file header).
@@ -701,7 +705,7 @@ export function mountBroadcast(host: HTMLElement, props: () => BroadcastProps): 
         ctx.strokeStyle = 'rgba(233,228,218,.16)'; ctx.lineWidth = 3;
         ctx.beginPath(); ctx.arc(0, 0, 150, 0, Math.PI * 2); ctx.stroke(); ctx.beginPath(); ctx.arc(0, 0, 118, 0, Math.PI * 2); ctx.stroke();
         ctx.fillStyle = 'rgba(233,228,218,.2)'; ctx.font = '900 62px ui-sans-serif, system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText('SOLLISH', 0, -6);
-        ctx.fillStyle = 'rgba(233,228,218,.12)'; ctx.font = '700 17px ui-sans-serif, system-ui, sans-serif'; ctx.fillText('RINGSIDE · CANLI', 0, 40);
+        ctx.fillStyle = 'rgba(233,228,218,.12)'; ctx.font = '700 17px ui-sans-serif, system-ui, sans-serif'; ctx.fillText(TXT.floor, 0, 40);
       }
       ctx.restore();
     }
@@ -802,7 +806,7 @@ export function mountBroadcast(host: HTMLElement, props: () => BroadcastProps): 
       ctx.beginPath(); ctx.moveTo(q.x, q.y); ctx.lineTo(q.x + Math.sin(yaw) * .46 * s, q.y + Math.cos(yaw) * .46 * s); ctx.stroke();
       for (const g of [n[id].j.lG, n[id].j.rG, n[id].j.lA, n[id].j.rA]) { const gq = Q(g.x * 1000, g.z * 1000); ctx.fillStyle = TEAM[id].color; ctx.beginPath(); ctx.arc(gq.x, gq.y, (g.y > .3 ? .09 : .06) * s, 0, Math.PI * 2); ctx.fill(); }
       ctx.fillStyle = '#e9e4da'; ctx.font = `600 ${Math.round(12 * dpr)}px ui-sans-serif, system-ui, sans-serif`; ctx.textAlign = 'center';
-      ctx.fillText(TEAM[id].name + (n[id].down ? ' · YERDE' : ''), q.x, q.y - .52 * s);
+      ctx.fillText(TEAM[id].name + (n[id].down ? ` · ${TXT.down}` : ''), q.x, q.y - .52 * s);
       boxes.push({ id, x0: (q.x - .45 * s) / dpr, x1: (q.x + .45 * s) / dpr, y0: (q.y - .6 * s) / dpr, y1: (q.y + .45 * s) / dpr });
     }
   };
@@ -899,9 +903,9 @@ export function mountBroadcast(host: HTMLElement, props: () => BroadcastProps): 
         }
       }
       let label = '';
-      if (im.type === 'hit') label = im.counter ? 'KONTRA' : im.combo >= 1 ? `${im.combo + 1}'Lİ SERİ` : (isV5Kick(im.technique) ? KICK_LABEL[im.technique] : PART_LABEL[im.part ?? 'head']) ?? '';
-      else if (im.type === 'block') label = 'GARD';
-      else if (im.type === 'dodge') label = 'KAÇTI';
+      if (im.type === 'hit') label = im.counter ? TXT.counter : im.combo >= 1 ? TXT.combo(im.combo + 1) : (isV5Kick(im.technique) ? (TXT.kicks as Record<string, string>)[im.technique] : (TXT.parts as Record<string, string>)[im.part ?? 'head']) ?? '';
+      else if (im.type === 'block') label = TXT.parts.guard;
+      else if (im.type === 'dodge') label = TXT.dodge;
       if (n.impacts.some(o => o.type === 'knockdown' && Math.abs(o.ageMs - im.ageMs) <= TICK_MS) && im.type !== 'knockdown') label = '';
       if (!label || a > .55 || !shown.has(idx)) continue;
       const fade = 1 - a / .55, size = Math.round(19 * dpr * (im.counter || im.combo >= 2 ? 1.25 : 1)), ly = p.y - (.4 + a * .3) * s;
@@ -986,7 +990,7 @@ export function mountBroadcast(host: HTMLElement, props: () => BroadcastProps): 
   const render = (now: number, force = false) => {
     if (!force) raf = requestAnimationFrame(t => render(t));
     if (disposed || (!force && (!visible || document.hidden))) return;
-    const state = props(), reduced = state.reducedMotion;
+    const state = props(), reduced = state.reducedMotion; TXT = state.labels ?? DEFAULT_BROADCAST_LABELS;
     if (!force && now - last < (reduced ? 1000 / 30 : 1000 / 60) - 2) return;
     const dt = clamp((now - (lastNow || now)) / 1000, 0, .1); lastNow = now; last = now;
     const t0 = typeof performance !== 'undefined' ? performance.now() : 0;
@@ -1017,12 +1021,12 @@ export function mountBroadcast(host: HTMLElement, props: () => BroadcastProps): 
         if (kd) {
           // 1.5 s of the fight around the blow at half speed (3 s), then back to the live count.
           const t1 = kd.tick * TICK_MS, rise = replay.events.find(e => e.tick > kd.tick && (e.type === 'rise' || e.type === 'finish')), stop = Math.min(t1 + 1300 + 3000, rise ? rise.tick * TICK_MS - 400 : Infinity), from = t1 - 1000;
-          if (realMs < stop) replayWindow = { from, at: from + (realMs - t1 - 1300) * .5, label: 'TEKRAR', progress: (realMs - t1 - 1300) / (stop - t1 - 1300) };
+          if (realMs < stop) replayWindow = { from, at: from + (realMs - t1 - 1300) * .5, label: TXT.replay, progress: (realMs - t1 - 1300) / (stop - t1 - 1300) };
         }
       }
       if (!reduced && phase === 'finished' && state.startedAt !== null && state.playbackPositionMs === undefined) {
         const since = now - state.startedAt - state.durationMs, best = moment(replay.events);
-        if (best !== null && since > 1600 && since < 1600 + 4750) { const t1 = best * TICK_MS, from = t1 - 1200; replayWindow = { from, at: from + (since - 1600) * .4, label: 'RAUNDUN ANI', progress: (since - 1600) / 4750 }; }
+        if (best !== null && since > 1600 && since < 1600 + 4750) { const t1 = best * TICK_MS, from = t1 - 1200; replayWindow = { from, at: from + (since - 1600) * .4, label: TXT.highlight, progress: (since - 1600) / 4750 }; }
       }
       if (replayWindow) {
         if (replayView.key !== `${state.fightId}:${replayWindow.from}`) { replayView.key = `${state.fightId}:${replayWindow.from}`; replayView.rig.snap(); replayView.raw = null; }
@@ -1038,14 +1042,14 @@ export function mountBroadcast(host: HTMLElement, props: () => BroadcastProps): 
       if (phase === 'idle' && state.selection) pickOverlay(state.selection, now, reduced);
       if (phase === 'fighting' && kd) {
         const countEvt = replay.events.filter(e => e.type === 'count' && e.tick * TICK_MS <= display).at(-1);
-        if (kd.ageMs < 1300) banner('NAKAVT', `${TEAM[kd.fighter === 'kor' ? 'ayaz' : 'kor'].name} yere gönderdi`, TEAM[kd.fighter === 'kor' ? 'ayaz' : 'kor'].color, clamp(1 - Math.max(0, kd.ageMs - 900) / 400));
-        else if (n.refCount > 0 && countEvt) { const age = display - countEvt.tick * TICK_MS; banner(String(n.refCount), 'HAKEM SAYIYOR', '#e9e4da', clamp(1 - age / 900), .3); }
+        if (kd.ageMs < 1300) banner(TXT.knockdown, TXT.knockdownSub(TEAM[kd.fighter === 'kor' ? 'ayaz' : 'kor'].name), TEAM[kd.fighter === 'kor' ? 'ayaz' : 'kor'].color, clamp(1 - Math.max(0, kd.ageMs - 900) / 400));
+        else if (n.refCount > 0 && countEvt) { const age = display - countEvt.tick * TICK_MS; banner(String(n.refCount), TXT.count, '#e9e4da', clamp(1 - age / 900), .3); }
       }
       const fin = replay.events.find(e => e.type === 'finish' && e.tick * TICK_MS <= display);
-      if (phase === 'fighting' && fin) banner('DURDURMA', `${TEAM[fin.actor].name} kazandı`, TEAM[fin.actor].color, clamp((display - fin.tick * TICK_MS) / 300));
+      if (phase === 'fighting' && fin) banner(TXT.stoppage, TXT.stoppageSub(TEAM[fin.actor].name), TEAM[fin.actor].color, clamp((display - fin.tick * TICK_MS) / 300));
       const rise = replay.events.filter(e => e.type === 'rise' && e.tick * TICK_MS <= display).at(-1);
       const up = rise ? display - rise.tick * TICK_MS - 650 : -1;
-      if (phase === 'fighting' && rise && up >= 0 && up < 1300) banner('AYAĞA KALKTI', 'Dövüş devam ediyor', '#e9e4da', clamp(1 - up / 1300), .3);
+      if (phase === 'fighting' && rise && up >= 0 && up < 1300) banner(TXT.rise, TXT.riseSub, '#e9e4da', clamp(1 - up / 1300), .3);
       finish(state); adapt(t0);
     } catch (error) {
       console.error('Ringside broadcast failed', error);

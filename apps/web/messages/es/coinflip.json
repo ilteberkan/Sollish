@@ -1,0 +1,101 @@
+{
+  "subtitle": "Dos lados. Una decisión.",
+  "tableLabel": "Mesa del juego Coinflip",
+  "status": {
+    "live": "Acceso en vivo cerrado",
+    "flipping": "La moneda está girando",
+    "ready": "Mesa lista"
+  },
+  "gate": {
+    "title": "El Coinflip en vivo aún no está abierto.",
+    "text": "No se toma ninguna apuesta de tu monedero hasta que se verifiquen el contrato devnet y la reserva.",
+    "tryDemo": "Probar la demo local"
+  },
+  "caption": {
+    "ready": "Elige tu lado. Prueba tu suerte.",
+    "flipping": "Determinando el resultado…",
+    "won": "Acertaste.",
+    "lost": "Salió el otro lado."
+  },
+  "result": {
+    "either": "Cara / Cruz",
+    "won": "{amount} DEMO de retorno bruto",
+    "lost": "Se perdió el importe de la demo de esta ronda.",
+    "active": "Ronda demo local",
+    "idle": "Retorno bruto de {factor} si aciertas"
+  },
+  "bottom": {
+    "local": "Simulación local",
+    "odds": "Probabilidad de la demo 50 % / 50 %"
+  },
+  "odds": {
+    "label": "Multiplicador bruto",
+    "note": "Ventaja teórica de la casa en la demo: 2 %"
+  },
+  "preview": {
+    "win": "Retorno bruto si ganas",
+    "fee": "Comisión de transacción de la demo: 0"
+  },
+  "action": {
+    "liveClosed": "Apuestas en vivo cerradas",
+    "flipping": "La moneda está girando…",
+    "flip": "Lanzar en la demo"
+  },
+  "hint": "No hace falta monedero ni dinero real.",
+  "live": {
+    "network": "Solana devnet",
+    "testSol": "SOL de prueba",
+    "note": "Solo la red de pruebas Solana devnet. Si la solicitud de aleatoriedad no se resuelve, la apuesta puede quedar bloqueada; no hay reembolso automático ni nuevo sorteo.",
+    "reward": {
+      "label": "Unirse al programa de recompensas del juego",
+      "hint": "Puede aplicarse un alquiler de cuenta adicional. Los tokens se reclaman por separado."
+    },
+    "rows": {
+      "stake": "Importe de la apuesta",
+      "gross": "Pago bruto si ganas",
+      "fees": "Comisión de red y alquiler de cuenta",
+      "feesValue": "Se muestran aparte al aprobar en el monedero",
+      "reward": "Derecho de recompensa de juego esperado",
+      "epoch": "Periodo de participación"
+    },
+    "sol": "{amount} SOL de prueba",
+    "token": "{amount} token",
+    "button": {
+      "connect": "Conectar monedero",
+      "reviewing": "Comprobando el contrato…",
+      "signing": "Esperando la firma y la confirmación de la transacción…",
+      "confirm": "Aprobar la apuesta devnet en el monedero",
+      "review": "Revisar la apuesta"
+    },
+    "track": {
+      "settled": "Resultado finalizado",
+      "confirmed": "Apuesta aceptada",
+      "signing": "Esperando la confirmación de la transacción",
+      "unknown": "Estado de la transacción incierto",
+      "awaiting": "Esperando la aleatoriedad.",
+      "ready": "El resultado está listo; esperando a que se finalice la transacción de pago.",
+      "paid": "Pago bruto de {amount} SOL de prueba finalizado.",
+      "default": "La confirmación de envío no significa que el resultado del juego o el pago estén completados."
+    },
+    "account": "Cuenta de la apuesta: {address}",
+    "tx": "Ver la transacción on-chain",
+    "refresh": "Comprobar el resultado de la misma apuesta",
+    "refreshing": "Comprobando el resultado…",
+    "next": "Nueva apuesta devnet",
+    "notice": "El acceso a Crash y a Coinflip se verifica por separado. Conectar un monedero por sí solo no inicia apuestas ni pagos. El envío a la red real está desactivado en esta aplicación.",
+    "errors": {
+      "trackingUnverified": "No se pudo verificar el seguimiento guardado de la apuesta. No se abrió ninguna apuesta nueva; revisa el historial de tu monedero.",
+      "storageRequired": "Se necesita el almacenamiento de sesión del navegador para el seguimiento de la transacción. No se abrió ninguna apuesta nueva.",
+      "storageKeep": "La información de seguimiento se conserva en esta pestaña; no recargues la página, porque el almacenamiento está desactivado.",
+      "amountSol": "Introduce el importe en SOL con 9 decimales como máximo.",
+      "reviewFailed": "No se pudo completar la comprobación previa de la apuesta. Todavía no se ha firmado ninguna transacción.",
+      "unknownOutcome": "El resultado de la transacción aún no se conoce. Se está siguiendo la misma apuesta; no se enviará una apuesta nueva.",
+      "sendUnverified": "No se pudo verificar el estado del envío. Revisa la misma cuenta sin enviar una apuesta nueva.",
+      "preflight": "No se completó la comprobación previa. No se inició la transacción del monedero.",
+      "notFound": "No se encontró ninguna cuenta finalizada para esta apuesta. Esto no significa pérdida, ganancia ni un reenvío seguro.",
+      "readFailed": "No se pudo leer el resultado finalizado. Se puede volver a consultar la misma apuesta.",
+      "clearFailed": "No se pudo borrar el registro de la apuesta completada. No se abrió ninguna apuesta nueva."
+    },
+    "invalidEpoch": "Periodo no válido"
+  }
+}

@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { COMBAT_V5_VERSION, COMBAT_V5_DURATION_MS, V5_PLAN_LEAD_MS, PLAN_COUNT, CONTACT_ENGINES, contactCommitmentInputV5, replayContactV5, planEntry, cornerObsHash, fallbackPlans, CONTACT_INITIAL, RINGSIDE_RESULT_MS, RINGSIDE_FEE_BPS, MATCH_LEDGER, MATCH_MARKETS, MATCH_OPEN_MS, carryInitial, matchComplete, matchResults, matchSeedHash, roundOutcome, parseRingClient, parseRingServer, combatResults, settlePariMutuelPool, type ContactBout, type PlanEntry, type RingClient, type RingServer, type RingRound, type RingSnapshot, type RingTicket, type RingTapeEntry, type RoundOutcome, type V5Replay, type V5Carry } from '@sollish/protocol';
+if (process.env.PW_CHROMIUM_PATH) test.use({ launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } });
 
 // Transport/ledger FIXTURE for the actual hook and DOM. WebGL is deliberately
 // unavailable: these are NOT GPU, hosted-server, SQLite or real-money tests.

@@ -1,0 +1,59 @@
+{
+  "subtitle": "Yükselişi izle. Kendi anında çık.",
+  "tableLabel": "Crash oyun masası",
+  "status": {
+    "live": "Canlı erişim kapalı",
+    "active": "Yerel tur sürüyor",
+    "ready": "Masa hazır"
+  },
+  "caption": {
+    "ready": "Karar anı senin.",
+    "countdown": "Birazdan başlıyor",
+    "running": "Çıkış zamanını sen seç",
+    "won": "Demodan çıkış yaptın",
+    "lost": "Tur sona erdi"
+  },
+  "gate": {
+    "title": "Canlı Crash henüz açık değil.",
+    "text": "Manuel çıkış ve gizli tur sonucu doğrulanmadan gerçek bahis kabul edilmez.",
+    "tryDemo": "Yerel demoyu dene"
+  },
+  "readout": {
+    "ready": "Miktarını seç, ilk turunu başlat.",
+    "running": "{seconds} sn",
+    "won": "{amount} DEMO brüt dönüş",
+    "lost": "{amount} DEMO kayıp",
+    "countdown": "Manuel çıkışa hazır ol"
+  },
+  "bottom": {
+    "local": "Yerel simülasyon",
+    "manual": "Manuel çıkış"
+  },
+  "preview": {
+    "won": "Brüt demo dönüşü",
+    "cashout": "Çıkışta brüt dönüş",
+    "net": "Net sonuç: +{amount} DEMO",
+    "fee": "Demo işlem ücreti: 0"
+  },
+  "action": {
+    "cashout": "Çıkış yap",
+    "starting": "Tur başlıyor…",
+    "liveClosed": "Canlı bahis kapalı",
+    "start": "Demoyu başlat"
+  },
+  "hint": {
+    "running": "Çıkış, tıkladığın anda hesaplanır.",
+    "live": "Canlı Crash doğrulaması bekleniyor.",
+    "default": "Cüzdan veya gerçek para gerekmez."
+  },
+  "sr": {
+    "running": "Tur başladı. Çıkış yapabilirsiniz.",
+    "won": "Demo çıkışı tamamlandı. {amount} DEMO brüt dönüş.",
+    "lost": "Tur {multiplier} çarpanında sona erdi. Demo miktarı kaybedildi.",
+    "countdown": "Tur başlamak üzere."
+  },
+  "chart": {
+    "zero": "0 s",
+    "time": "süre"
+  }
+}

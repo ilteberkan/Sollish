@@ -162,7 +162,19 @@
     "rulesAccess": "El acceso al juego real requiere verificar por separado el contrato y la configuración de red.",
     "sideLegend": "Elige tu lado",
     "heads": "Cara",
-    "tails": "Cruz"
+    "tails": "Cruz",
+    "errors": {
+      "amountRange": "Introduce un importe entre 1 y 500 DEMO con dos decimales como máximo.",
+      "noRandomness": "La aleatoriedad local segura no está disponible. No se inició la demo.",
+      "noCredit": "No tienes crédito demo suficiente o ya hay una demo en curso."
+    },
+    "historyDetail": {
+      "cashout": "Retirada a {multiplier}",
+      "roundEnd": "Fin de ronda a {multiplier}",
+      "cancelled": "Demo cancelada",
+      "coinWon": "{side} · Ganaste",
+      "coinLost": "{side} · Perdiste"
+    }
   },
   "games": {
     "ringside": "Ringside",
@@ -206,5 +218,18 @@
       "play": "Elige cara o cruz, introduce el importe demo y lanza. Si aciertas, el retorno bruto es 1,96 veces tu importe; si fallas, se pierde el importe demo de esa ronda.",
       "local": "En el ejemplo local la probabilidad de ganar es del 50 % y la ventaja teórica de la casa es del 2 %. No es un juego on-chain en funcionamiento ni un resultado VRF verificado."
     }
+  },
+  "liveError": {
+    "WALLET_CHANGED": "La conexión del monedero ha cambiado. Revisa de nuevo la transacción con tu monedero actual.",
+    "VIEW_CLOSED": "Se cerró la pantalla de la transacción. No se inició ninguna llamada al monedero.",
+    "TRACKING_STORAGE_FAILED": "El navegador no pudo guardar el seguimiento de la transacción. No se hizo ninguna llamada al monedero. Puedes activar el almacenamiento de sesión para este sitio e intentarlo de nuevo.",
+    "HOUSE_PAUSED": "La caja del juego está en pausa ahora mismo. No se aceptan apuestas.",
+    "INSUFFICIENT_HOUSE_RESERVE": "La caja del juego no tiene reserva suficiente para cubrir este importe.",
+    "BET_LIMIT_EXCEEDED": "El importe supera el límite de esta mesa de juego.",
+    "DEVNET_WALLET_UNSUPPORTED": "Tu monedero debe admitir transacciones en Solana devnet.",
+    "TRANSACTION_SIMULATION_FAILED": "Falló la comprobación previa de la transacción. La apuesta no se envió.",
+    "DEPLOYMENT_ACCOUNT_MISSING": "El contrato del juego o las cuentas necesarias aún no están listos.",
+    "GENESIS_MISMATCH": "La conexión de red no coincide con la Solana devnet esperada.",
+    "TRANSACTION_FAILED": "La transacción on-chain falló. La apuesta no fue aceptada; es posible que se haya cobrado una comisión de red."
   }
 }

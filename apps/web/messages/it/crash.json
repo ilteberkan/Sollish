@@ -1,0 +1,59 @@
+{
+  "subtitle": "Osserva la salita. Incassa nel tuo momento.",
+  "tableLabel": "Tavolo del gioco Crash",
+  "status": {
+    "live": "Accesso live chiuso",
+    "active": "Round locale in corso",
+    "ready": "Tavolo pronto"
+  },
+  "caption": {
+    "ready": "Il momento è tuo.",
+    "countdown": "Si parte a breve",
+    "running": "Scegli tu quando incassare",
+    "won": "Hai incassato la demo",
+    "lost": "Il round è terminato"
+  },
+  "gate": {
+    "title": "Il Crash live non è ancora aperto.",
+    "text": "Non si accettano puntate reali finché l’incasso manuale e il risultato nascosto del round non sono verificati.",
+    "tryDemo": "Prova la demo locale"
+  },
+  "readout": {
+    "ready": "Scegli l’importo e avvia il tuo primo round.",
+    "running": "{seconds} s",
+    "won": "{amount} DEMO di rendimento lordo",
+    "lost": "{amount} DEMO persi",
+    "countdown": "Preparati all’incasso manuale"
+  },
+  "bottom": {
+    "local": "Simulazione locale",
+    "manual": "Incasso manuale"
+  },
+  "preview": {
+    "won": "Rendimento lordo della demo",
+    "cashout": "Rendimento lordo all’incasso",
+    "net": "Risultato netto: +{amount} DEMO",
+    "fee": "Commissione di transazione demo: 0"
+  },
+  "action": {
+    "cashout": "Incassa",
+    "starting": "Il round sta per iniziare…",
+    "liveClosed": "Puntate live chiuse",
+    "start": "Avvia la demo"
+  },
+  "hint": {
+    "running": "L’incasso viene calcolato nell’istante in cui clicchi.",
+    "live": "In attesa della verifica del Crash live.",
+    "default": "Non servono portafoglio né denaro reale."
+  },
+  "sr": {
+    "running": "Il round è iniziato. Puoi incassare.",
+    "won": "Incasso della demo completato. {amount} DEMO di rendimento lordo.",
+    "lost": "Il round è terminato al moltiplicatore {multiplier}. L’importo della demo è andato perso.",
+    "countdown": "Il round sta per iniziare."
+  },
+  "chart": {
+    "zero": "0 s",
+    "time": "tempo"
+  }
+}

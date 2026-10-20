@@ -162,7 +162,19 @@
     "rulesAccess": "Real play access requires the contract and network configuration to be verified separately.",
     "sideLegend": "Pick your side",
     "heads": "Heads",
-    "tails": "Tails"
+    "tails": "Tails",
+    "errors": {
+      "amountRange": "Enter an amount between 1–500 DEMO with at most two decimals.",
+      "noRandomness": "Secure local randomness is unavailable. The demo was not started.",
+      "noCredit": "You do not have enough demo credit, or a demo is already in progress."
+    },
+    "historyDetail": {
+      "cashout": "{multiplier} cash-out",
+      "roundEnd": "{multiplier} round end",
+      "cancelled": "Demo cancelled",
+      "coinWon": "{side} · Won",
+      "coinLost": "{side} · Lost"
+    }
   },
   "games": {
     "ringside": "Ringside",
@@ -206,5 +218,18 @@
       "play": "Choose heads or tails, enter the demo amount and flip. On a correct guess the gross return is 1.96 times your amount; on a wrong guess the demo amount of that round is lost.",
       "local": "In the local sample the win probability is 50% and the theoretical house edge is 2%. This is not a running on-chain game or a verified VRF result."
     }
+  },
+  "liveError": {
+    "WALLET_CHANGED": "The wallet connection changed. Review the transaction again with your current wallet.",
+    "VIEW_CLOSED": "The transaction screen was closed. No wallet call was started.",
+    "TRACKING_STORAGE_FAILED": "The browser could not store transaction tracking. No wallet call was made. You can enable session storage for this site and try again.",
+    "HOUSE_PAUSED": "The game vault is paused right now. Bets are not being accepted.",
+    "INSUFFICIENT_HOUSE_RESERVE": "The game vault does not have enough reserve to cover this amount.",
+    "BET_LIMIT_EXCEEDED": "The amount exceeds this game table’s limit.",
+    "DEVNET_WALLET_UNSUPPORTED": "Your wallet needs to support Solana devnet transactions.",
+    "TRANSACTION_SIMULATION_FAILED": "The transaction pre-check failed. The bet was not sent.",
+    "DEPLOYMENT_ACCOUNT_MISSING": "The game contract or the required accounts are not ready yet.",
+    "GENESIS_MISMATCH": "The network connection does not match the expected Solana devnet.",
+    "TRANSACTION_FAILED": "The on-chain transaction failed. The bet was not accepted; a network fee may have been charged."
   }
 }

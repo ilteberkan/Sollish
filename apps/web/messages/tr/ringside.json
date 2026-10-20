@@ -1,0 +1,239 @@
+{
+  "meta": {
+    "title": "Ringside · Canlı",
+    "description": "Maç içinde öğrenen iki dövüşçü ve canlı Jev köşe planları; her rauntta ayrı demo havuzları ve canlı işlem defteri."
+  },
+  "action": {
+    "guard": "Gard", "advance": "Baskı", "retreat": "Geri adım", "circle": "Açı değişimi", "slip": "Sıyrılma", "roll": "Eğilme",
+    "jab": "Jab", "cross": "Düz", "hook": "Kroşe", "leadHook": "Ön kroşe", "rearHook": "Arka kroşe", "uppercut": "Aparkat",
+    "bodyHook": "Gövde kroşesi", "teep": "Ön tekme (teep)", "lowKick": "Alçak tekme", "bodyKick": "Gövde tekmesi", "headKick": "Kafa tekmesi",
+    "knee": "Diz", "clinch": "Klinç", "stagger": "Sarsıldı", "down": "Yerde", "rise": "Kalkıyor", "neutral": "Nötr köşe"
+  },
+  "draw": "Berabere",
+  "hint": {
+    "match-winner": "Maçı kim kazanır? Durdurma ya da üç raunt sonunda kazanılan rauntlar.",
+    "match-method": "Kazanan ve biçim birlikte. Daha zor; havuz beşe bölünür.",
+    "match-knockdowns": "Üç raunt boyunca kaç kez yere düşme olur?"
+  },
+  "style": { "kor": "Kırmızı köşe · baskıcı", "ayaz": "Mavi köşe · mesafeci" },
+  "trait": { "reach": "Erişim", "short": "kısa", "long": "uzun", "power": "Güç", "chin": "Çene", "guard": "Gard" },
+  "market": {
+    "match-winner": { "label": "Kazanan", "outcomes": { "kor": "KOR kazanır", "draw": "Berabere", "ayaz": "AYAZ kazanır" } },
+    "match-method": { "label": "Tam sonuç", "outcomes": { "kor-stop": "KOR durdurmayla", "kor-points": "KOR puanla", "draw": "Berabere", "ayaz-points": "AYAZ puanla", "ayaz-stop": "AYAZ durdurmayla" } },
+    "match-knockdowns": { "label": "Yere düşme", "outcomes": { "0-1": "0–1 yere düşme", "2": "2 yere düşme", "3-plus": "3+ yere düşme" } }
+  },
+  "track": {
+    "won": "Kazandı · +{amount}",
+    "lost": "Kaybetti",
+    "refunded": "İade · {amount}",
+    "notStarted": "Maç başlamadı",
+    "kdLost": "Tutmadı · {n} yere düşme",
+    "kdHolding": "Şimdilik tutuyor · {n}",
+    "kdNow": "Şu an {n} yere düşme",
+    "ahead": "Şu an önde",
+    "even": "Başa baş",
+    "behind": "Şu an geride"
+  },
+  "flow": { "aria": "Maç akışı", "bet": "Bahis", "round": "R{n}", "result": "Sonuç", "winnerKo": "{name} · KO" },
+  "cta": {
+    "hasTicket": "Bu pazarda biletin var",
+    "sending": "Gönderiliyor…",
+    "closed": "Bahisler kapalı",
+    "pick": "{outcome} · {amount} DEMO",
+    "enterAmount": "Miktar gir"
+  },
+  "handle": {
+    "coupon": "Kuponun · {n} bilet",
+    "estimate": "{outcome} · tahmini {amount}",
+    "choose": "{outcome} · seç ve onayla",
+    "status": "Kuponun · {status}",
+    "title": "Maç kuponu"
+  },
+  "top": { "match": "Maç", "matchNo": "Maç #{id}", "rounds": "3 raunt", "demo": "DEMO · gerçek para yok" },
+  "loading": { "failed": "Görüntü açılamadı. Biletler ve canlı veriler çalışmaya devam ediyor.", "preparing": "Yayın hazırlanıyor" },
+  "status": {
+    "live": "CANLI",
+    "connecting": "BAĞLANIYOR",
+    "verifyHint": "Tarayıcın raundu seed ve koç kaydıyla yeniden oynatıp kontrol eder",
+    "verified": "Tekrar doğrulandı ✓",
+    "committed": "Seed taahhüt edildi"
+  },
+  "bug": {
+    "ready": "Hazır",
+    "stats": "{hits} isabet · %{stamina} kondisyon",
+    "round": "RAUNT {n}",
+    "starting": "R{n} BAŞLIYOR",
+    "break": "ARA",
+    "over": "MAÇ BİTTİ",
+    "score": "Raunt"
+  },
+  "prompt": {
+    "pick": "Kim kazanır? Dövüşçüye dokun.",
+    "pickSub": "Tek bilet bütün maç için · bahis {time} sonra kapanır",
+    "connecting": "Arenaya bağlanılıyor",
+    "waiting": "Canlı maç sunucusu bekleniyor."
+  },
+  "toast": { "knockdown": "YERE GÖNDERDİ", "counter": "KONTRA", "hit": "İSABET", "damage": "{damage} hasar" },
+  "card": {
+    "close": "Sonucu kapat",
+    "reopen": "Sonucu göster",
+    "breakTitle": "RAUNT {n} BİTTİ",
+    "won": "{name} aldı",
+    "points": "{kor} – {ayaz} puan",
+    "knockdownsTotal": "{n} yere düşme toplam",
+    "next": "R{n} <b>{time}</b> sonra",
+    "finalTitle": "MAÇ #{id} SONUCU",
+    "finalDraw": "BERABERE",
+    "coupon": "Kuponun: {amount} DEMO",
+    "nextOpens": "Sonraki maç bahsi <b>{time}</b> sonra açılır"
+  },
+  "controls": {
+    "camera": "İzleme kamerası",
+    "broadcast": "Yayın",
+    "overhead": "Taktik",
+    "sound": "Ses",
+    "soundOn": "Ses açık",
+    "fullscreen": "Tam ekran",
+    "exitFullscreen": "Tam ekrandan çık",
+    "shrink": "Küçült",
+    "fullscreenFailed": "Tam ekran bu tarayıcıda açılamadı."
+  },
+  "cards": {
+    "crowd": "KALABALIK NE DİYOR",
+    "drawShort": "Ber.",
+    "fighterAria": "{name} kazanır seçimi",
+    "fighterWins": "{name} kazanır",
+    "firstTicket": "ilk bilet",
+    "pct": "%{n}"
+  },
+  "corner": { "title": "Köşe telsizi", "sub": "Jev · her 9 sn · hash zinciri" },
+  "summary": {
+    "title": "Maç özeti",
+    "knockdowns": "{n} yere düşme",
+    "stoppage": "durdurma",
+    "going": "Sürüyor",
+    "starting": "Başlıyor",
+    "notPlayed": "Oynanmadı",
+    "waiting": "Bekliyor"
+  },
+  "slip": {
+    "aria": "Maç kuponu",
+    "titleOpen": "Maç kuponu",
+    "titleClosed": "Kuponun",
+    "open": "Açık · {time}",
+    "settled": "Sonuçlandı",
+    "closed": "Kapalı",
+    "balance": "Demo bakiyen",
+    "market": "Pazar",
+    "hasTicket": "Biletin var",
+    "amount": "Miktar",
+    "amountRange": "1–500 DEMO",
+    "max": "Max",
+    "yourPick": "Seçimin",
+    "estReturn": "Tahmini dönüş",
+    "refund": "İade olur",
+    "waitingOpponent": "Rakip bilet bekleniyor",
+    "fine": "Tahmin havuz dolarken değişir, bahis kapanınca kesinleşir. %2 kesinti dahil. Rakip bilet yoksa iade.",
+    "rulesTitle": "Kurallar",
+    "rulesBody": "Bahis yalnız R1 başlamadan, {seconds} saniye açıktır; raunt aralarında kapalıdır. Her pazar kendi havuzundan öder ve maç bitince bir kez sonuçlanır. Tek taraflı ya da kazananı olmayan havuz kesintisiz iade edilir. Doğru seçimde bile dönüş yatırdığından az olabilir. Her pazarda maç başına tek bilet. Bağlantı kesilmesi bileti iptal etmez. Yumruk ve tekme sonucu aynı kurallarla belirler.",
+    "ifWins": "kazanırsa {amount}",
+    "refundNow": "şimdilik iade koşulu",
+    "emptyOpen": "Henüz bilet yok. Bir seçim yap ve onayla.",
+    "emptyClosed": "Bu maça bilet almadın. Bahis her maçta R1 başlamadan {seconds} sn açık.",
+    "indicatorNote": "“Önde / geride” yalnız bir göstergedir. Sonuç maç bitince kesinleşir."
+  },
+  "steps": {
+    "pick": { "title": "Seç", "body": "Kazananı, biçimi ya da yere düşme sayısını seç. {seconds} saniyen var." },
+    "watch": { "title": "İzle", "body": "Üç raunt boyunca kuponun canlı izlenir: önde mi, geride mi." },
+    "result": { "title": "Sonuç", "body": "Maç bitince her havuz kazananlara dağıtılır. Tarayıcın maçı yeniden oynatıp doğrular." }
+  },
+  "pools": {
+    "aria": "Havuzlar ve son biletler",
+    "title": "Havuzlar",
+    "total": "{count} bilet · {amount} DEMO · {online} çevrim içi",
+    "all": "Tüm kayıtlar ↗",
+    "poolLine": "{amount} DEMO · {status}",
+    "status": { "open": "açık", "locked": "kilitli", "paid": "ödendi", "refunded": "iade" },
+    "tapeEmpty": "Henüz bilet yok. İlk bilet burada görünür."
+  },
+  "technical": {
+    "summary": "Kurallar, model ve doğrulama",
+    "p1": "Maç en fazla üç rauntur: 30 saniye bahis, her raunt 45 saniye, aralarda kısa mola. Kafaya üst üste temiz yumruk ya da tekme alan dövüşçü yere düşer; hakem sayar. Sağlığı biten ya da aynı rauntta üçüncü kez düşen dövüşçü durdurulur ve maç biter. Durdurma yoksa raunt, uygulanan hasar ve her yere düşürme için 120 puanla kazanılır; maçı daha çok raunt kazanan alır, eşitlik beraberliktir. Sağlık +250, kondisyon +350 sonraki raunta taşınır. Teknikler: jab, düz, kroşe, aparkat, gövde kroşesi; ön tekme (teep), alçak, gövde ve kafa tekmesi; diz ve klinç.",
+    "p2": "Üç raundun seed’i maç başlamadan çekilir; hash’leri bahis açılmadan yayımlanır, her seed rauntu başlayınca açıklanır. Tarayıcın önceki rauntları da yayımlanan kayıttan yeniden oynatır ve maç sonucunu kontrol eder. Bu bir VRF veya operatörden bağımsız sonuç kanıtı değildir.",
+    "p3": "Her dövüşçünün kendi bağımsız beyni var. Her hamleyi kendisi seçer ve yalnız herkesin gördüğü maç verisine bakar: raunt, süre, iki tarafın sağlığı ve kondisyonu, rakibin şimdiye kadar yaptıkları. Dövüşçü raunttan raunta, maç boyunca öğrendiğini saklar; kural ve başlangıç ağırlıkları maç başında dondurulur, aynı seed ve kayıt aynı maçı yeniden üretir. Bunun fayda sağlayıp sağlamadığı ayrıca test edilir ve ölçülen sonuç sayfada gösterilir. Ölçülen etki (önceden kaydedilmiş test, 200 maç): bütün maç boyunca öğrenen dövüşçü, öğrenmeyen kopyasından öğrenen rakiplere karşı ortalama +38 puan önde (%95 aralık −2…+74), sabit tarzlı rakiplere karşı +20 (−5…+45). Aralıklar sıfırı içerdiği için fayda kanıtlanmış sayılmaz. Eğitimin etkisi ise net (+284). Sinek bağlantı yapısının karıştırılmış ağa üstünlüğü gösterilemedi.",
+    "p4": "Her 9 saniyede köşe antrenörü Jev (süre aşımında deterministik yedek) niyet, hedef ve tehdit önerir; dövüşçü bunu yalnız girdi olarak okur. Planlar bahis kapandıktan sonra geldiği için bu oyun yalnız DEMO içindir. Görüntü kodla çizilir (iskelet, IK, adım planlayıcı); kamera, FPS ve ses sonucu etkilemez. MaleCNS v1.0 verisi CC BY 4.0: FlyEM / HHMI Janelia.",
+    "engine": "Motor",
+    "ledger": "Defter",
+    "commitment": "Raunt taahhüdü",
+    "seedHashes": "Seed hash’leri",
+    "seed": "Seed",
+    "seedHidden": "Raunt başlayınca açıklanır."
+  },
+  "audit": {
+    "aria": "Maç kayıtları",
+    "title": "Maç #{id} kayıtları",
+    "close": "Kaydı kapat",
+    "summary": "{count} bilet · {amount} DEMO",
+    "download": "JSON indir ↓",
+    "requesting": "Kayıt isteniyor. Maç değiştiyse yeniden aç."
+  },
+  "board": {
+    "aria": "Köşe planları ve dövüşçü kararları",
+    "jev": "Jev planı",
+    "fallback": "yedek plan",
+    "thinking": "{side} şu an tartıyor",
+    "wait": "Sıradaki koç planı bekleniyor…",
+    "percent": "{n}%",
+    "intent": { "pressure": "Baskıcı", "counter": "Kontracı", "cautious": "Temkinli", "outboxer": "Mesafeci", "body": "Gövdeci", "finisher": "Bitirici" },
+    "target": { "head": "kafa", "body": "gövde" },
+    "threat": { "straight": "düzlere dikkat", "hook": "kroşelere dikkat", "upper": "aparkata dikkat", "body": "gövdeye dikkat" },
+    "move": {
+      "jab": "jab", "cross": "düz", "leadHook": "ön kroşe", "rearHook": "arka kroşe", "uppercut": "aparkat", "bodyHook": "gövde kroşesi",
+      "teep": "ön tekme", "lowKick": "alçak tekme", "bodyKick": "gövde tekmesi", "headKick": "kafa tekmesi", "knee": "diz",
+      "advance": "ileri", "retreat": "geri", "circleLeft": "sola dön", "circleRight": "sağa dön", "guard": "gard", "slip": "sıyrıl", "roll": "eğil", "clinch": "klinç"
+    }
+  },
+  "scene": {
+    "head": "KAFA", "body": "GÖVDE", "guard": "GARD", "leg": "BACAK",
+    "teep": "TEEP", "lowKick": "ALÇAK TEKME", "bodyKick": "GÖVDE TEKMESİ", "headKick": "KAFA TEKMESİ", "knee": "DİZ",
+    "counter": "KONTRA",
+    "combo": "{n}'Lİ SERİ",
+    "dodge": "KAÇTI",
+    "knockdown": "NAKAVT",
+    "knockdownSub": "{name} yere gönderdi",
+    "stoppage": "DURDURMA",
+    "stoppageSub": "{name} kazandı",
+    "rise": "AYAĞA KALKTI",
+    "riseSub": "Dövüş devam ediyor",
+    "count": "HAKEM SAYIYOR",
+    "replay": "TEKRAR",
+    "highlight": "RAUNDUN ANI",
+    "down": "YERDE",
+    "floor": "RINGSIDE · CANLI"
+  },
+  "error": {
+    "NOT_CONFIGURED": "Canlı servis yapılandırılmamış.",
+    "SERVER_DATA": "Sunucu verisi doğrulanamadı.",
+    "ENGINE_MISMATCH": "Arena motor sürümü uyuşmuyor.",
+    "RESULT_CHANGED": "Kesinleşmiş maç sonucu değişti.",
+    "LOCKED_CHANGED": "Kilitli maç verisi değişti.",
+    "HISTORY_MISMATCH": "Maç geçmişi tekrar ile uyuşmuyor.",
+    "COMMITMENT_MISMATCH": "Maç seed taahhüdü uyuşmuyor.",
+    "PLAN_LOG_MISMATCH": "Koç planı kaydı tekrar ile uyuşmuyor.",
+    "RESULT_MISMATCH": "Sonuç deterministik tekrar ile uyuşmuyor.",
+    "MATCH_RESULT_MISMATCH": "Maç sonucu tekrar ile uyuşmuyor.",
+    "VERIFY_FAILED": "Doğrulama tamamlanamadı. Bağlantı yenileniyor.",
+    "NO_TICKET_ID": "Güvenli bilet kimliği oluşturulamadı.",
+    "AMOUNT_RANGE": "Miktar 1–500 DEMO arasında olmalı.",
+    "RECOVERY_FAILED": "Bilet kurtarma kaydı saklanamadı. İstek gönderilmedi.",
+    "TICKET_RECHECK": "Bilet durumu aynı kimlikle yeniden kontrol ediliyor.",
+    "ROUND_CLOSED": "Bahisler kapandı. Sonraki maçı bekle.",
+    "WRONG_ROUND": "Maç değişti.",
+    "ALREADY_BET": "Bu pazarda bu maç için zaten biletin var.",
+    "INVALID_MESSAGE": "Bu pazar bu arenada yok.",
+    "INSUFFICIENT_CREDITS": "Yeterli demo kredin yok.",
+    "CAPACITY": "Demo kapasitesine ulaşıldı.",
+    "SESSION_EXPIRED": "Demo oturumun sona erdi.",
+    "SESSION_INVALID": "Demo oturumu yenileniyor."
+  }
+}

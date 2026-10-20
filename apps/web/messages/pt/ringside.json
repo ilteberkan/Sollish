@@ -1,0 +1,239 @@
+{
+  "meta": {
+    "title": "Ringside · Ao vivo",
+    "description": "Dois lutadores que aprendem durante a luta e planos de córner do Jev ao vivo; pools demo separados a cada luta e um livro de bilhetes ao vivo."
+  },
+  "action": {
+    "guard": "Guarda", "advance": "Pressão", "retreat": "Passo atrás", "circle": "Mudança de ângulo", "slip": "Esquiva", "roll": "Rolamento",
+    "jab": "Jab", "cross": "Direto", "hook": "Gancho", "leadHook": "Gancho da frente", "rearHook": "Gancho de trás", "uppercut": "Uppercut",
+    "bodyHook": "Gancho ao corpo", "teep": "Chute frontal (teep)", "lowKick": "Low kick", "bodyKick": "Chute ao corpo", "headKick": "Chute à cabeça",
+    "knee": "Joelhada", "clinch": "Clinch", "stagger": "Cambaleou", "down": "Caído", "rise": "Levantando", "neutral": "Córner neutro"
+  },
+  "draw": "Empate",
+  "hint": {
+    "match-winner": "Quem vence a luta? Por interrupção ou pelos rounds vencidos após três rounds.",
+    "match-method": "O vencedor e a forma juntos. Mais difícil; o pool é dividido em cinco.",
+    "match-knockdowns": "Quantos knockdowns acontecem nos três rounds?"
+  },
+  "style": { "kor": "Córner vermelho · pressão", "ayaz": "Córner azul · distância" },
+  "trait": { "reach": "Alcance", "short": "curto", "long": "longo", "power": "Força", "chin": "Queixo", "guard": "Guarda" },
+  "market": {
+    "match-winner": { "label": "Vencedor", "outcomes": { "kor": "KOR vence", "draw": "Empate", "ayaz": "AYAZ vence" } },
+    "match-method": { "label": "Resultado exato", "outcomes": { "kor-stop": "KOR por interrupção", "kor-points": "KOR por pontos", "draw": "Empate", "ayaz-points": "AYAZ por pontos", "ayaz-stop": "AYAZ por interrupção" } },
+    "match-knockdowns": { "label": "Knockdowns", "outcomes": { "0-1": "0–1 knockdowns", "2": "2 knockdowns", "3-plus": "3+ knockdowns" } }
+  },
+  "track": {
+    "won": "Ganhou · +{amount}",
+    "lost": "Perdeu",
+    "refunded": "Reembolso · {amount}",
+    "notStarted": "A luta não começou",
+    "kdLost": "Não deu · {n, plural, one {# knockdown} other {# knockdowns}}",
+    "kdHolding": "Por enquanto vale · {n}",
+    "kdNow": "Agora {n, plural, one {# knockdown} other {# knockdowns}}",
+    "ahead": "À frente agora",
+    "even": "Empatado",
+    "behind": "Atrás agora"
+  },
+  "flow": { "aria": "Andamento da luta", "bet": "Aposta", "round": "R{n}", "result": "Resultado", "winnerKo": "{name} · KO" },
+  "cta": {
+    "hasTicket": "Você já tem um bilhete neste mercado",
+    "sending": "Enviando…",
+    "closed": "Apostas encerradas",
+    "pick": "{outcome} · {amount} DEMO",
+    "enterAmount": "Informe um valor"
+  },
+  "handle": {
+    "coupon": "Seu cupom · {n, plural, one {# bilhete} other {# bilhetes}}",
+    "estimate": "{outcome} · estimado {amount}",
+    "choose": "{outcome} · escolha e confirme",
+    "status": "Seu cupom · {status}",
+    "title": "Cupom da luta"
+  },
+  "top": { "match": "Luta", "matchNo": "Luta #{id}", "rounds": "3 rounds", "demo": "DEMO · sem dinheiro real" },
+  "loading": { "failed": "Não foi possível abrir a imagem. Bilhetes e dados ao vivo continuam funcionando.", "preparing": "Preparando a transmissão" },
+  "status": {
+    "live": "AO VIVO",
+    "connecting": "CONECTANDO",
+    "verifyHint": "Seu navegador reproduz o round com a seed e o registro do córner e o confere",
+    "verified": "Reprodução verificada ✓",
+    "committed": "Seed comprometida"
+  },
+  "bug": {
+    "ready": "Pronto",
+    "stats": "{hits, plural, one {# golpe} other {# golpes}} · {stamina}% de condicionamento",
+    "round": "ROUND {n}",
+    "starting": "R{n} COMEÇANDO",
+    "break": "INTERVALO",
+    "over": "LUTA ENCERRADA",
+    "score": "Rounds"
+  },
+  "prompt": {
+    "pick": "Quem vence? Toque em um lutador.",
+    "pickSub": "Um bilhete para a luta toda · apostas fecham em {time}",
+    "connecting": "Conectando à arena",
+    "waiting": "Aguardando o servidor da luta ao vivo."
+  },
+  "toast": { "knockdown": "KNOCKDOWN", "counter": "CONTRA-ATAQUE", "hit": "GOLPE", "damage": "{damage} de dano" },
+  "card": {
+    "close": "Fechar resultado",
+    "reopen": "Mostrar resultado",
+    "breakTitle": "ROUND {n} ENCERRADO",
+    "won": "{name} venceu",
+    "points": "{kor} – {ayaz} pontos",
+    "knockdownsTotal": "{n, plural, one {# knockdown} other {# knockdowns}} no total",
+    "next": "R{n} em <b>{time}</b>",
+    "finalTitle": "RESULTADO DA LUTA #{id}",
+    "finalDraw": "EMPATE",
+    "coupon": "Seu cupom: {amount} DEMO",
+    "nextOpens": "As apostas da próxima luta abrem em <b>{time}</b>"
+  },
+  "controls": {
+    "camera": "Câmera de visualização",
+    "broadcast": "Transmissão",
+    "overhead": "Tático",
+    "sound": "Som",
+    "soundOn": "Som ligado",
+    "fullscreen": "Tela cheia",
+    "exitFullscreen": "Sair da tela cheia",
+    "shrink": "Reduzir",
+    "fullscreenFailed": "Não foi possível abrir a tela cheia neste navegador."
+  },
+  "cards": {
+    "crowd": "O QUE A TORCIDA DIZ",
+    "drawShort": "Emp.",
+    "fighterAria": "Escolher {name} como vencedor",
+    "fighterWins": "{name} vence",
+    "firstTicket": "primeiro bilhete",
+    "pct": "{n}%"
+  },
+  "corner": { "title": "Rádio do córner", "sub": "Jev · a cada 9 s · cadeia de hash" },
+  "summary": {
+    "title": "Resumo da luta",
+    "knockdowns": "{n, plural, one {# knockdown} other {# knockdowns}}",
+    "stoppage": "interrupção",
+    "going": "Em andamento",
+    "starting": "Começando",
+    "notPlayed": "Não disputado",
+    "waiting": "Aguardando"
+  },
+  "slip": {
+    "aria": "Cupom da luta",
+    "titleOpen": "Cupom da luta",
+    "titleClosed": "Seu cupom",
+    "open": "Aberto · {time}",
+    "settled": "Liquidado",
+    "closed": "Fechado",
+    "balance": "Seu saldo demo",
+    "market": "Mercado",
+    "hasTicket": "Você tem um bilhete",
+    "amount": "Valor",
+    "amountRange": "1–500 DEMO",
+    "max": "Máx.",
+    "yourPick": "Sua escolha",
+    "estReturn": "Retorno estimado",
+    "refund": "Será reembolsado",
+    "waitingOpponent": "Aguardando um bilhete oposto",
+    "fine": "A estimativa muda enquanto o pool enche e fica definitiva quando as apostas fecham. Taxa de 2% incluída. Sem bilhete oposto, há reembolso.",
+    "rulesTitle": "Regras",
+    "rulesBody": "As apostas ficam abertas apenas antes do início do R1, por {seconds} segundos; entre os rounds ficam fechadas. Cada mercado paga do seu próprio pool e é liquidado uma vez ao fim da luta. Um pool de um só lado, ou sem vencedor, é reembolsado sem taxa. Mesmo com a escolha certa, o retorno pode ser menor que o valor apostado. Um bilhete por mercado por luta. Uma conexão interrompida não cancela o bilhete. Socos e chutes decidem o resultado pelas mesmas regras.",
+    "ifWins": "se ganhar {amount}",
+    "refundNow": "condição de reembolso por enquanto",
+    "emptyOpen": "Ainda não há bilhetes. Faça uma escolha e confirme.",
+    "emptyClosed": "Você não tem bilhete nesta luta. As apostas ficam abertas por {seconds} s antes do R1 de cada luta.",
+    "indicatorNote": "“À frente / atrás” é apenas um indicador. O resultado é definitivo quando a luta termina."
+  },
+  "steps": {
+    "pick": { "title": "Escolha", "body": "Escolha o vencedor, a forma ou o número de knockdowns. Você tem {seconds} segundos." },
+    "watch": { "title": "Assista", "body": "Seu cupom é acompanhado ao vivo durante os três rounds: à frente ou atrás." },
+    "result": { "title": "Resultado", "body": "Quando a luta termina, cada pool é pago aos vencedores. Seu navegador reproduz a luta e a verifica." }
+  },
+  "pools": {
+    "aria": "Pools e últimos bilhetes",
+    "title": "Pools",
+    "total": "{count, plural, one {# bilhete} other {# bilhetes}} · {amount} DEMO · {online} online",
+    "all": "Todos os registros ↗",
+    "poolLine": "{amount} DEMO · {status}",
+    "status": { "open": "aberto", "locked": "bloqueado", "paid": "pago", "refunded": "reembolsado" },
+    "tapeEmpty": "Ainda não há bilhetes. O primeiro bilhete aparece aqui."
+  },
+  "technical": {
+    "summary": "Regras, modelo e verificação",
+    "p1": "Uma luta tem no máximo três rounds: 30 segundos de apostas, 45 segundos por round e um intervalo curto entre eles. O lutador que leva socos ou chutes limpos seguidos na cabeça cai; o árbitro conta. O lutador cuja saúde acaba, ou que cai pela terceira vez no mesmo round, é interrompido e a luta termina. Sem interrupção, o round é vencido pelo dano causado mais 120 pontos por knockdown; quem vence mais rounds leva a luta, e igualdade é empate. Saúde +250 e condicionamento +350 passam para o round seguinte. Técnicas: jab, direto, gancho, uppercut, gancho ao corpo; chute frontal (teep), chute baixo, ao corpo e à cabeça; joelhada e clinch.",
+    "p2": "As seeds dos três rounds são sorteadas antes de a luta começar; seus hashes são publicados antes de as apostas abrirem, e cada seed é revelada quando seu round começa. Seu navegador também reproduz os rounds anteriores a partir do registro publicado e confere o resultado da luta. Isto não é uma VRF nem uma prova de resultado independente do operador.",
+    "p3": "Cada lutador tem seu próprio cérebro independente. Ele escolhe cada movimento sozinho e olha apenas os dados da luta que todos veem: o round, o tempo, a saúde e o condicionamento dos dois lados e o que o adversário fez até agora. O lutador guarda o que aprende de round em round ao longo da luta; a regra e os pesos iniciais são congelados no início da luta, e a mesma seed com o mesmo registro reproduz a mesma luta. Se isso traz algum benefício é testado à parte, e o resultado medido aparece na página. Efeito medido (teste pré-registrado, 200 lutas): ao longo de toda a luta, o lutador que aprende fica em média +38 pontos à frente da sua cópia que não aprende contra adversários que aprendem (intervalo de 95% −2…+74) e +20 contra adversários de estilo fixo (−5…+45). Como os intervalos incluem zero, o benefício não é considerado comprovado. O efeito do treinamento em si é claro (+284). Não foi possível mostrar que a estrutura do conectoma da mosca supera uma rede embaralhada.",
+    "p4": "A cada 9 segundos, o treinador de córner Jev (um substituto determinístico em caso de tempo esgotado) sugere intenção, alvo e ameaça; o lutador lê isso apenas como entrada. Como os planos chegam depois do fechamento das apostas, este jogo é somente DEMO. A imagem é desenhada em código (esqueleto, IK, planejador de passos); câmera, FPS e som não afetam o resultado. Os dados MaleCNS v1.0 são CC BY 4.0: FlyEM / HHMI Janelia.",
+    "engine": "Motor",
+    "ledger": "Livro",
+    "commitment": "Compromisso do round",
+    "seedHashes": "Hashes das seeds",
+    "seed": "Seed",
+    "seedHidden": "Revelada quando o round começa."
+  },
+  "audit": {
+    "aria": "Registros da luta",
+    "title": "Registros da luta #{id}",
+    "close": "Fechar registros",
+    "summary": "{count, plural, one {# bilhete} other {# bilhetes}} · {amount} DEMO",
+    "download": "Baixar JSON ↓",
+    "requesting": "Solicitando os registros. Abra de novo se a luta mudou."
+  },
+  "board": {
+    "aria": "Planos de córner e decisões dos lutadores",
+    "jev": "Plano do Jev",
+    "fallback": "plano reserva",
+    "thinking": "{side} está avaliando agora",
+    "wait": "Aguardando o próximo plano do treinador…",
+    "percent": "{n}%",
+    "intent": { "pressure": "Pressão", "counter": "Contra-atacador", "cautious": "Cauteloso", "outboxer": "Lutador de distância", "body": "Trabalho ao corpo", "finisher": "Finalizador" },
+    "target": { "head": "cabeça", "body": "corpo" },
+    "threat": { "straight": "atenção aos diretos", "hook": "atenção aos ganchos", "upper": "atenção ao uppercut", "body": "atenção ao corpo" },
+    "move": {
+      "jab": "jab", "cross": "direto", "leadHook": "gancho da frente", "rearHook": "gancho de trás", "uppercut": "uppercut", "bodyHook": "gancho ao corpo",
+      "teep": "chute frontal", "lowKick": "chute baixo", "bodyKick": "chute ao corpo", "headKick": "chute à cabeça", "knee": "joelhada",
+      "advance": "avançar", "retreat": "recuar", "circleLeft": "girar à esquerda", "circleRight": "girar à direita", "guard": "guarda", "slip": "esquivar", "roll": "rolar", "clinch": "clinch"
+    }
+  },
+  "scene": {
+    "head": "CABEÇA", "body": "CORPO", "guard": "GUARDA", "leg": "PERNA",
+    "teep": "TEEP", "lowKick": "CHUTE BAIXO", "bodyKick": "CHUTE AO CORPO", "headKick": "CHUTE À CABEÇA", "knee": "JOELHADA",
+    "counter": "CONTRA-ATAQUE",
+    "combo": "COMBO DE {n}",
+    "dodge": "ESQUIVOU",
+    "knockdown": "KNOCKDOWN",
+    "knockdownSub": "{name} derrubou",
+    "stoppage": "INTERRUPÇÃO",
+    "stoppageSub": "{name} venceu",
+    "rise": "DE PÉ",
+    "riseSub": "A luta continua",
+    "count": "ÁRBITRO CONTANDO",
+    "replay": "REPETIÇÃO",
+    "highlight": "MOMENTO DO ROUND",
+    "down": "CAÍDO",
+    "floor": "RINGSIDE · AO VIVO"
+  },
+  "error": {
+    "NOT_CONFIGURED": "O serviço ao vivo não está configurado.",
+    "SERVER_DATA": "Não foi possível verificar os dados do servidor.",
+    "ENGINE_MISMATCH": "A versão do motor da arena não confere.",
+    "RESULT_CHANGED": "Um resultado de luta já definido mudou.",
+    "LOCKED_CHANGED": "Dados bloqueados da luta mudaram.",
+    "HISTORY_MISMATCH": "O histórico da luta não confere com a reprodução.",
+    "COMMITMENT_MISMATCH": "O compromisso da seed da luta não confere.",
+    "PLAN_LOG_MISMATCH": "O registro de planos do treinador não confere com a reprodução.",
+    "RESULT_MISMATCH": "O resultado não confere com a reprodução determinística.",
+    "MATCH_RESULT_MISMATCH": "O resultado da luta não confere com a reprodução.",
+    "VERIFY_FAILED": "Não foi possível concluir a verificação. Reconectando.",
+    "NO_TICKET_ID": "Não foi possível criar um identificador seguro de bilhete.",
+    "AMOUNT_RANGE": "O valor deve estar entre 1 e 500 DEMO.",
+    "RECOVERY_FAILED": "Não foi possível guardar o registro de recuperação do bilhete. A solicitação não foi enviada.",
+    "TICKET_RECHECK": "O estado do bilhete está sendo verificado de novo com o mesmo identificador.",
+    "ROUND_CLOSED": "As apostas foram encerradas. Aguarde a próxima luta.",
+    "WRONG_ROUND": "A luta mudou.",
+    "ALREADY_BET": "Você já tem um bilhete para esta luta neste mercado.",
+    "INVALID_MESSAGE": "Este mercado não existe nesta arena.",
+    "INSUFFICIENT_CREDITS": "Você não tem crédito demo suficiente.",
+    "CAPACITY": "A capacidade demo foi atingida.",
+    "SESSION_EXPIRED": "Sua sessão demo terminou.",
+    "SESSION_INVALID": "A sessão demo está sendo renovada."
+  }
+}

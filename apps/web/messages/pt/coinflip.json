@@ -1,0 +1,101 @@
+{
+  "subtitle": "Dois lados. Uma decisão.",
+  "tableLabel": "Mesa do jogo Coinflip",
+  "status": {
+    "live": "Acesso ao vivo fechado",
+    "flipping": "A moeda está girando",
+    "ready": "Mesa pronta"
+  },
+  "gate": {
+    "title": "O Coinflip ao vivo ainda não está aberto.",
+    "text": "Nenhuma aposta é aceita da sua carteira até que o contrato devnet e a reserva sejam verificados.",
+    "tryDemo": "Experimentar a demo local"
+  },
+  "caption": {
+    "ready": "Escolha seu lado. Tente a sorte.",
+    "flipping": "Definindo o resultado…",
+    "won": "Palpite certo.",
+    "lost": "Saiu o outro lado."
+  },
+  "result": {
+    "either": "Cara / Coroa",
+    "won": "{amount} DEMO de retorno bruto",
+    "lost": "O valor da demo desta rodada foi perdido.",
+    "active": "Rodada demo local",
+    "idle": "Retorno bruto de {factor} se acertar"
+  },
+  "bottom": {
+    "local": "Simulação local",
+    "odds": "Probabilidade da demo: 50% / 50%"
+  },
+  "odds": {
+    "label": "Multiplicador bruto",
+    "note": "Margem teórica da casa na demo: 2%"
+  },
+  "preview": {
+    "win": "Retorno bruto se você ganhar",
+    "fee": "Taxa de transação da demo: 0"
+  },
+  "action": {
+    "liveClosed": "Apostas ao vivo fechadas",
+    "flipping": "A moeda está girando…",
+    "flip": "Girar na demo"
+  },
+  "hint": "Não precisa de carteira nem de dinheiro real.",
+  "live": {
+    "network": "Solana devnet",
+    "testSol": "SOL de teste",
+    "note": "Somente a rede de testes Solana devnet. Se a solicitação de aleatoriedade não for concluída, a aposta pode ficar bloqueada; não há reembolso automático nem novo sorteio.",
+    "reward": {
+      "label": "Participar do programa de recompensas do jogo",
+      "hint": "Pode haver aluguel extra de conta. Os tokens são resgatados separadamente."
+    },
+    "rows": {
+      "stake": "Valor da aposta",
+      "gross": "Pagamento bruto se você ganhar",
+      "fees": "Taxa de rede e aluguel de conta",
+      "feesValue": "Exibido à parte na aprovação da carteira",
+      "reward": "Direito esperado à recompensa do jogo",
+      "epoch": "Período de participação"
+    },
+    "sol": "{amount} SOL de teste",
+    "token": "{amount} token",
+    "button": {
+      "connect": "Conectar carteira",
+      "reviewing": "Verificando o contrato…",
+      "signing": "Aguardando assinatura e confirmação da transação…",
+      "confirm": "Aprovar a aposta devnet na carteira",
+      "review": "Revisar a aposta"
+    },
+    "track": {
+      "settled": "Resultado finalizado",
+      "confirmed": "Aposta aceita",
+      "signing": "Aguardando confirmação da transação",
+      "unknown": "Status da transação incerto",
+      "awaiting": "Aguardando a aleatoriedade.",
+      "ready": "O resultado está pronto; aguardando a finalização da transação de pagamento.",
+      "paid": "Pagamento bruto de {amount} SOL de teste finalizado.",
+      "default": "A confirmação de envio não significa que o resultado do jogo ou o pagamento estejam concluídos."
+    },
+    "account": "Conta da aposta: {address}",
+    "tx": "Ver a transação na blockchain",
+    "refresh": "Verificar o resultado da mesma aposta",
+    "refreshing": "Verificando o resultado…",
+    "next": "Nova aposta devnet",
+    "notice": "O acesso ao Crash e ao Coinflip é verificado separadamente. Conectar uma carteira, por si só, não inicia aposta nem pagamento. O envio à rede real está desativado neste app.",
+    "errors": {
+      "trackingUnverified": "Não foi possível verificar o acompanhamento salvo da aposta. Nenhuma nova aposta foi aberta; confira o histórico da carteira.",
+      "storageRequired": "O armazenamento de sessão do navegador é necessário para acompanhar a transação. Nenhuma nova aposta foi aberta.",
+      "storageKeep": "As informações de acompanhamento ficam nesta aba; não recarregue a página, pois o armazenamento está desativado.",
+      "amountSol": "Informe o valor em SOL com no máximo 9 casas decimais.",
+      "reviewFailed": "Não foi possível concluir a verificação prévia da aposta. Nenhuma transação foi assinada ainda.",
+      "unknownOutcome": "O resultado da transação ainda não é conhecido. A mesma aposta está sendo acompanhada; nenhuma nova aposta será enviada.",
+      "sendUnverified": "Não foi possível verificar o status do envio. Confira a mesma conta sem enviar uma nova aposta.",
+      "preflight": "A verificação prévia não foi concluída. A transação da carteira não foi iniciada.",
+      "notFound": "Nenhuma conta finalizada foi encontrada para esta aposta. Isso não significa perda, ganho nem reenvio seguro.",
+      "readFailed": "Não foi possível ler o resultado finalizado. A mesma aposta pode ser consultada novamente.",
+      "clearFailed": "Não foi possível limpar o registro da aposta concluída. Nenhuma nova aposta foi aberta."
+    },
+    "invalidEpoch": "Período inválido"
+  }
+}

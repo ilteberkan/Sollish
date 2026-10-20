@@ -162,7 +162,19 @@
     "rulesAccess": "L’accesso al gioco reale richiede una verifica separata del contratto e della configurazione di rete.",
     "sideLegend": "Scegli il tuo lato",
     "heads": "Testa",
-    "tails": "Croce"
+    "tails": "Croce",
+    "errors": {
+      "amountRange": "Inserisci un importo tra 1 e 500 DEMO con al massimo due decimali.",
+      "noRandomness": "La casualità locale sicura non è disponibile. La demo non è stata avviata.",
+      "noCredit": "Non hai credito demo sufficiente oppure è già in corso una demo."
+    },
+    "historyDetail": {
+      "cashout": "Incasso a {multiplier}",
+      "roundEnd": "Fine round a {multiplier}",
+      "cancelled": "Demo annullata",
+      "coinWon": "{side} · Vinto",
+      "coinLost": "{side} · Perso"
+    }
   },
   "games": {
     "ringside": "Ringside",
@@ -206,5 +218,18 @@
       "play": "Scegli testa o croce, inserisci l’importo demo e lancia. Se indovini, il ritorno lordo è 1,96 volte il tuo importo; se sbagli, l’importo demo di quel round è perso.",
       "local": "Nell’esempio locale la probabilità di vincita è del 50% e il vantaggio teorico del banco è del 2%. Non è un gioco on-chain in funzione né un risultato VRF verificato."
     }
+  },
+  "liveError": {
+    "WALLET_CHANGED": "La connessione del wallet è cambiata. Rivedi di nuovo la transazione con il wallet attuale.",
+    "VIEW_CLOSED": "La schermata della transazione è stata chiusa. Nessuna chiamata al wallet è stata avviata.",
+    "TRACKING_STORAGE_FAILED": "Il browser non è riuscito a salvare il tracciamento della transazione. Nessuna chiamata al wallet è stata effettuata. Puoi attivare l’archiviazione di sessione per questo sito e riprovare.",
+    "HOUSE_PAUSED": "La cassa del gioco è attualmente in pausa. Le puntate non vengono accettate.",
+    "INSUFFICIENT_HOUSE_RESERVE": "La cassa del gioco non ha riserva sufficiente per coprire questo importo.",
+    "BET_LIMIT_EXCEEDED": "L’importo supera il limite di questo tavolo di gioco.",
+    "DEVNET_WALLET_UNSUPPORTED": "Il tuo wallet deve supportare le transazioni Solana devnet.",
+    "TRANSACTION_SIMULATION_FAILED": "Il controllo preliminare della transazione non è riuscito. La puntata non è stata inviata.",
+    "DEPLOYMENT_ACCOUNT_MISSING": "Il contratto di gioco o gli account necessari non sono ancora pronti.",
+    "GENESIS_MISMATCH": "La connessione di rete non corrisponde alla Solana devnet prevista.",
+    "TRANSACTION_FAILED": "La transazione on-chain non è riuscita. La puntata non è stata accettata; potrebbe essere stata addebitata una commissione di rete."
   }
 }

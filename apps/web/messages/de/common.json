@@ -162,7 +162,19 @@
     "rulesAccess": "Echter Spielzugang setzt voraus, dass Vertrag und Netzwerkkonfiguration gesondert geprüft werden.",
     "sideLegend": "Wähle deine Seite",
     "heads": "Kopf",
-    "tails": "Zahl"
+    "tails": "Zahl",
+    "errors": {
+      "amountRange": "Gib einen Betrag zwischen 1 und 500 DEMO mit höchstens zwei Nachkommastellen ein.",
+      "noRandomness": "Sichere lokale Zufallszahlen sind nicht verfügbar. Die Demo wurde nicht gestartet.",
+      "noCredit": "Du hast nicht genug Demo-Guthaben oder es läuft bereits eine Demo."
+    },
+    "historyDetail": {
+      "cashout": "{multiplier} Auszahlung",
+      "roundEnd": "{multiplier} Rundenende",
+      "cancelled": "Demo abgebrochen",
+      "coinWon": "{side} · Gewonnen",
+      "coinLost": "{side} · Verloren"
+    }
   },
   "games": {
     "ringside": "Ringside",
@@ -206,5 +218,18 @@
       "play": "Wähle Kopf oder Zahl, gib den Demo-Betrag ein und wirf. Bei richtigem Tipp beträgt die Brutto-Rückzahlung das 1,96-Fache deines Betrags; bei falschem Tipp ist der Demo-Betrag dieser Runde verloren.",
       "local": "Im lokalen Beispiel beträgt die Gewinnwahrscheinlichkeit 50 % und der theoretische Hausvorteil 2 %. Das ist kein laufendes On-Chain-Spiel und kein verifiziertes VRF-Ergebnis."
     }
+  },
+  "liveError": {
+    "WALLET_CHANGED": "Die Wallet-Verbindung hat sich geändert. Prüfe die Transaktion erneut mit deinem aktuellen Wallet.",
+    "VIEW_CLOSED": "Der Transaktionsbildschirm wurde geschlossen. Es wurde kein Wallet-Aufruf gestartet.",
+    "TRACKING_STORAGE_FAILED": "Der Browser konnte die Transaktionsverfolgung nicht speichern. Es wurde kein Wallet-Aufruf gemacht. Du kannst den Sitzungsspeicher für diese Seite aktivieren und es erneut versuchen.",
+    "HOUSE_PAUSED": "Der Spieltresor ist derzeit pausiert. Einsätze werden nicht angenommen.",
+    "INSUFFICIENT_HOUSE_RESERVE": "Der Spieltresor hat nicht genug Reserve, um diesen Betrag abzudecken.",
+    "BET_LIMIT_EXCEEDED": "Der Betrag überschreitet das Limit dieses Spieltischs.",
+    "DEVNET_WALLET_UNSUPPORTED": "Dein Wallet muss Solana-Devnet-Transaktionen unterstützen.",
+    "TRANSACTION_SIMULATION_FAILED": "Die Vorprüfung der Transaktion ist fehlgeschlagen. Der Einsatz wurde nicht gesendet.",
+    "DEPLOYMENT_ACCOUNT_MISSING": "Der Spielvertrag oder die nötigen Konten sind noch nicht bereit.",
+    "GENESIS_MISMATCH": "Die Netzwerkverbindung entspricht nicht dem erwarteten Solana Devnet.",
+    "TRANSACTION_FAILED": "Die On-Chain-Transaktion ist fehlgeschlagen. Der Einsatz wurde nicht angenommen; möglicherweise wurde eine Netzwerkgebühr erhoben."
   }
 }

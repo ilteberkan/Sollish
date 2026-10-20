@@ -1,0 +1,101 @@
+{
+  "subtitle": "Two sides. One decision.",
+  "tableLabel": "Coinflip game table",
+  "status": {
+    "live": "Live access closed",
+    "flipping": "Coin is flipping",
+    "ready": "Table ready"
+  },
+  "gate": {
+    "title": "Live Coinflip is not open yet.",
+    "text": "No bets are taken from your wallet until the devnet contract and reserve are verified.",
+    "tryDemo": "Try the local demo"
+  },
+  "caption": {
+    "ready": "Pick your side. Try your luck.",
+    "flipping": "Deciding the result…",
+    "won": "Correct guess.",
+    "lost": "The other side came up."
+  },
+  "result": {
+    "either": "Heads / Tails",
+    "won": "{amount} DEMO gross return",
+    "lost": "The demo amount of this round was lost.",
+    "active": "Local demo round",
+    "idle": "Gross return of {factor} on a correct guess"
+  },
+  "bottom": {
+    "local": "Local simulation",
+    "odds": "Demo probability 50% / 50%"
+  },
+  "odds": {
+    "label": "Gross multiplier",
+    "note": "Demo theoretical house edge: 2%"
+  },
+  "preview": {
+    "win": "Gross return if you win",
+    "fee": "Demo transaction fee: 0"
+  },
+  "action": {
+    "liveClosed": "Live betting closed",
+    "flipping": "Coin is flipping…",
+    "flip": "Flip in the demo"
+  },
+  "hint": "No wallet or real money needed.",
+  "live": {
+    "network": "Solana devnet",
+    "testSol": "Test SOL",
+    "note": "Solana devnet test network only. If the randomness request is not fulfilled, the bet can stay locked; there is no automatic refund or redraw.",
+    "reward": {
+      "label": "Join the game rewards program",
+      "hint": "Extra account rent may apply. Tokens are claimed separately."
+    },
+    "rows": {
+      "stake": "Bet amount",
+      "gross": "Gross payout if you win",
+      "fees": "Network fee and account rent",
+      "feesValue": "Shown separately at wallet approval",
+      "reward": "Expected game reward entitlement",
+      "epoch": "Participation period"
+    },
+    "sol": "{amount} test SOL",
+    "token": "{amount} token",
+    "button": {
+      "connect": "Connect wallet",
+      "reviewing": "Checking the contract…",
+      "signing": "Waiting for signature and transaction confirmation…",
+      "confirm": "Approve the devnet bet in your wallet",
+      "review": "Review the bet"
+    },
+    "track": {
+      "settled": "Result finalized",
+      "confirmed": "Bet accepted",
+      "signing": "Waiting for transaction confirmation",
+      "unknown": "Transaction status unclear",
+      "awaiting": "Waiting for randomness.",
+      "ready": "The result is ready; waiting for the payout transaction to finalize.",
+      "paid": "{amount} test SOL gross payout finalized.",
+      "default": "A submission confirmation does not mean the game result or the payout is complete."
+    },
+    "account": "Bet account: {address}",
+    "tx": "View the on-chain transaction",
+    "refresh": "Check the result of the same bet",
+    "refreshing": "Checking the result…",
+    "next": "New devnet bet",
+    "notice": "Crash and Coinflip access are verified separately. Connecting a wallet alone does not start a bet or a payout. Submitting to the real network is disabled in this app.",
+    "errors": {
+      "trackingUnverified": "The saved bet tracking could not be verified. No new bet was opened; check your wallet history.",
+      "storageRequired": "Browser session storage is required for transaction tracking. No new bet was opened.",
+      "storageKeep": "Tracking information is kept in this tab; do not reload the page, because storage is disabled.",
+      "amountSol": "Enter the SOL amount with at most 9 decimals.",
+      "reviewFailed": "The bet pre-check could not be completed. No transaction was signed yet.",
+      "unknownOutcome": "The outcome of the transaction is not known yet. The same bet is being tracked; no new bet will be sent.",
+      "sendUnverified": "The submission status could not be verified. Check the same account without sending a new bet.",
+      "preflight": "The pre-check was not completed. The wallet transaction was not started.",
+      "notFound": "No finalized account was found for this bet. This does not mean a loss, a win or a safe resubmission.",
+      "readFailed": "The finalized result could not be read. The same bet can be queried again.",
+      "clearFailed": "The record of the completed bet could not be cleared. No new bet was opened."
+    },
+    "invalidEpoch": "Invalid period"
+  }
+}

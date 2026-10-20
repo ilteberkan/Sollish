@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-20",
+  "scope": "Ringside UI i18n (presentation only): components/ringside-arena.tsx, ringside-corner-board.tsx, lib/use-ringside.ts, lib/ringside-2d/scene.ts, lib/ringside-25d/scene.ts, lib/ringside-labels.ts (new), app/live/ringside/page.tsx, messages/<9 locales>/ringside.json (new, 277 keys each), lib/i18n/catalog.ts (additive registration)",
+  "commands": {
+    "typecheck": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck -> pass",
+    "unit": "bash scripts/use-node.sh pnpm --filter @sollish/web test -> 363 pass, 0 fail (includes tests/i18n.test.ts key/argument/tag parity for ringside in 9 locales)",
+    "browser": "next dev :3035 with NEXT_PUBLIC_API_URL=http://127.0.0.1:8787; PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3035 PW_CHROMIUM_PATH=... test:browser ringside-contact --workers=1 -> 7/7 pass (Turkish forced by config); ringside-film -> 1/1 pass",
+    "screenshots": "temporary fixture spec (deleted) reused the ringside-contact WebSocket fixture with cookie sollish_locale=en|zh|de; files in this directory"
+  },
+  "turkish_parity": "messages/tr/ringside.json copied from the original source strings; the unchanged Turkish browser specs assert them and pass",
+  "protocol_untouched": "no change to packages/protocol, realtime, simulation, policy, pools, admission/settlement, decision logs or LIVE protocol; error codes and labels are display-only; locale never enters a replay, hash or result",
+  "limits": [
+    "Dev server only: no production build (build:cloudflare), no hosted, no CI, no mainnet evidence",
+    "Fixture WebSocket (no real LIVE server); WebGL disabled in these specs, canvas 2D only",
+    "Translations written by hand, not reviewed by native speakers",
+    "Screenshots are not the owner's visual acceptance; zh/de screenshots only spot-checked for leftover Turkish via page text",
+    "ringside-contact and ringside-film specs rewrite their own fixed outputs under .tooling/contact-ui",
+    "lib/live.ts liveError/solLabel left to the Coinflip/Rewards owner (only their components use them)"
+  ],
+  "screenshots": ["ringside-en-betting.png", "ringside-en-fighting.png", "ringside-zh-betting.png", "ringside-zh-fighting.png", "ringside-de-betting.png", "ringside-de-fighting.png"]
+}

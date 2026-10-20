@@ -1,0 +1,101 @@
+{
+  "subtitle": "Due lati. Una decisione.",
+  "tableLabel": "Tavolo del gioco Coinflip",
+  "status": {
+    "live": "Accesso live chiuso",
+    "flipping": "La moneta sta girando",
+    "ready": "Tavolo pronto"
+  },
+  "gate": {
+    "title": "Il Coinflip live non è ancora aperto.",
+    "text": "Non viene prelevata alcuna puntata dal tuo wallet finché il contratto devnet e la riserva non sono verificati.",
+    "tryDemo": "Prova la demo locale"
+  },
+  "caption": {
+    "ready": "Scegli il tuo lato. Tenta la fortuna.",
+    "flipping": "Il risultato è in definizione…",
+    "won": "Previsione corretta.",
+    "lost": "È uscito l’altro lato."
+  },
+  "result": {
+    "either": "Testa / Croce",
+    "won": "{amount} DEMO di rendimento lordo",
+    "lost": "L’importo demo di questo round è andato perso.",
+    "active": "Round demo locale",
+    "idle": "Rendimento lordo di {factor} se indovini"
+  },
+  "bottom": {
+    "local": "Simulazione locale",
+    "odds": "Probabilità demo 50% / 50%"
+  },
+  "odds": {
+    "label": "Moltiplicatore lordo",
+    "note": "Margine teorico del banco nella demo: 2%"
+  },
+  "preview": {
+    "win": "Rendimento lordo se vinci",
+    "fee": "Commissione di transazione demo: 0"
+  },
+  "action": {
+    "liveClosed": "Puntate live chiuse",
+    "flipping": "La moneta sta girando…",
+    "flip": "Lancia nella demo"
+  },
+  "hint": "Non servono portafoglio né denaro reale.",
+  "live": {
+    "network": "Solana devnet",
+    "testSol": "SOL di test",
+    "note": "Solo rete di test Solana devnet. Se la richiesta di casualità non va a buon fine, la puntata può restare bloccata; non ci sono rimborso automatico né nuova estrazione.",
+    "reward": {
+      "label": "Partecipa al programma ricompense del gioco",
+      "hint": "Può essere previsto un affitto aggiuntivo dell’account. I token si richiedono separatamente."
+    },
+    "rows": {
+      "stake": "Importo della puntata",
+      "gross": "Pagamento lordo se vinci",
+      "fees": "Commissione di rete e affitto dell’account",
+      "feesValue": "Mostrati a parte nell’approvazione del wallet",
+      "reward": "Diritto atteso alla ricompensa di gioco",
+      "epoch": "Periodo di partecipazione"
+    },
+    "sol": "{amount} SOL di test",
+    "token": "{amount} token",
+    "button": {
+      "connect": "Collega wallet",
+      "reviewing": "Verifica del contratto…",
+      "signing": "In attesa di firma e conferma della transazione…",
+      "confirm": "Approva la puntata devnet nel wallet",
+      "review": "Rivedi la puntata"
+    },
+    "track": {
+      "settled": "Risultato finalizzato",
+      "confirmed": "Puntata accettata",
+      "signing": "In attesa della conferma della transazione",
+      "unknown": "Stato della transazione incerto",
+      "awaiting": "In attesa della casualità.",
+      "ready": "Il risultato è pronto; si attende la finalizzazione della transazione di pagamento.",
+      "paid": "Pagamento lordo di {amount} SOL di test finalizzato.",
+      "default": "La conferma di invio non significa che il risultato del gioco o il pagamento siano completati."
+    },
+    "account": "Account della puntata: {address}",
+    "tx": "Visualizza la transazione on-chain",
+    "refresh": "Controlla il risultato della stessa puntata",
+    "refreshing": "Controllo del risultato…",
+    "next": "Nuova puntata devnet",
+    "notice": "L’accesso a Crash e Coinflip viene verificato separatamente. Collegare un wallet da solo non avvia puntate né pagamenti. L’invio alla rete reale è disattivato in questa app.",
+    "errors": {
+      "trackingUnverified": "Impossibile verificare il tracciamento salvato della puntata. Nessuna nuova puntata è stata aperta; controlla la cronologia del wallet.",
+      "storageRequired": "Per il tracciamento della transazione serve l’archiviazione di sessione del browser. Nessuna nuova puntata è stata aperta.",
+      "storageKeep": "Le informazioni di tracciamento restano in questa scheda; non ricaricare la pagina, perché l’archiviazione è disattivata.",
+      "amountSol": "Inserisci l’importo in SOL con al massimo 9 decimali.",
+      "reviewFailed": "Non è stato possibile completare il controllo preliminare della puntata. Nessuna transazione è stata ancora firmata.",
+      "unknownOutcome": "L’esito della transazione non è ancora noto. La stessa puntata è sotto monitoraggio; non verrà inviata una nuova puntata.",
+      "sendUnverified": "Impossibile verificare lo stato dell’invio. Controlla lo stesso account senza inviare una nuova puntata.",
+      "preflight": "Il controllo preliminare non è stato completato. La transazione del wallet non è stata avviata.",
+      "notFound": "Per questa puntata non è stato trovato alcun account finalizzato. Ciò non significa perdita, vincita né un nuovo invio sicuro.",
+      "readFailed": "Impossibile leggere il risultato finalizzato. La stessa puntata può essere interrogata di nuovo.",
+      "clearFailed": "Impossibile cancellare il record della puntata completata. Nessuna nuova puntata è stata aperta."
+    },
+    "invalidEpoch": "Periodo non valido"
+  }
+}

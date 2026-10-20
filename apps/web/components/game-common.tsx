@@ -1,8 +1,10 @@
 'use client';
-import type { Side } from '@/lib/demo';
+import { multiplierLabel, type Side } from '@/lib/demo';
 import { Icon } from './icons';
 import { useProduct } from './providers';
-import { useFormat, useT } from '@/lib/i18n/client';
+import { useFormat, useLocale, useT } from '@/lib/i18n/client';
+import type { Translator } from '@/lib/i18n/translator';
+import type { Locale } from '@/lib/i18n/config';
 import { AsenaRules } from './asena/asena-rules';
 import { CezeriRules } from './cezeri/cezeri-rules';
 export type Mode = 'demo' | 'live';
@@ -17,13 +19,28 @@ export function AmountControl({ amount, setAmount, disabled, error, unit = 'DEMO
 }
 export function DemoBalance() { const { demoBalance } = useProduct(); const t = useT('common'); const format = useFormat(); return <span className="demo-balance"><span>{t('game.balance')}</span><strong>{format.number(demoBalance / 100)} <small>DEMO</small></strong></span>; }
 export function DemoNotice({ remote = false }: { remote?: boolean } = {}) { const t = useT('common'); return <div className="demo-notice"><Icon name="info" size={16}/><p>{remote ? t.rich('game.noticeRemote', { link: chunk => <a key="verify" href="/verify">{chunk}</a> }) : t('game.noticeLocal')}</p></div>; }
+/* The ledger stores Crash/Coinflip result lines in Turkish (`settleDemo` detail). The row is rebuilt from that stored
+   line in the active language; an unknown line is shown as stored. */
+function historyDetail(record: { game: string; detail: string }, t: Translator<'common'>, locale: Locale): string {
+  if (record.game === 'Crash') {
+    const round = /^(\d+,\d{2})× (çıkış|tur sonu)$/.exec(record.detail);
+    if (round) return t(round[2] === 'çıkış' ? 'game.historyDetail.cashout' : 'game.historyDetail.roundEnd', { multiplier: multiplierLabel(Number(round[1]!.replace(',', '.')), locale) });
+  }
+  if (record.detail === 'Demo iptal edildi') return t('game.historyDetail.cancelled');
+  if (record.game === 'Coinflip') {
+    const flip = /^(Yazı|Tura) · (Kazandın|Kaybettin)$/.exec(record.detail);
+    if (flip) return t(flip[2] === 'Kazandın' ? 'game.historyDetail.coinWon' : 'game.historyDetail.coinLost', { side: t(flip[1] === 'Yazı' ? 'game.heads' : 'game.tails') });
+  }
+  return record.detail;
+}
 const GAME_KEY = { Crash: 'games.crash', Coinflip: 'games.coinflip', Cascade: 'games.cascade', Tarhun: 'games.tarhun', Ebru: 'games.ebru', Cezeri: 'games.cezeri', Asena: 'games.asena' } as const;
 export function GameHistory({ game }: { game: 'Crash' | 'Coinflip' | 'Cascade' | 'Tarhun' | 'Ebru' | 'Cezeri' | 'Asena' }) {
   const { records } = useProduct();
   const relevant = records.filter(record => record.game === game);
   const t = useT('common');
   const format = useFormat();
-  return <section className="history-section" aria-labelledby="history-heading"><div className="section-heading"><h2 id="history-heading">{t('game.historyTitle')}</h2><span className="small muted">{t('game.historyScope')}</span></div>{relevant.length ? <div className="table-scroll"><table className="history-table"><thead><tr><th>{t('game.historyRound')}</th><th>{t('game.historyAmount')}</th><th>{t('game.historyResult')}</th><th className="text-right">{t('game.historyGross')}</th></tr></thead><tbody>{relevant.map((record, index) => <tr key={record.id}><td><span className="history-game">{t(GAME_KEY[game])}</span><small>{format.clock(record.at)}</small></td><td>{format.number(record.stake / 100)} <span className="muted">DEMO</span></td><td className={record.payout > record.stake ? 'positive' : ''}>{record.kind === 'reset' ? t('game.balanceReset') : record.detail}</td><td className="text-right">{format.number(record.payout / 100)} <span className="muted">DEMO</span>{index === 0 && <span className="sr-only">{t('game.historyLatest')}</span>}</td></tr>)}</tbody></table></div> : <div className="empty-history"><Icon name="history" size={24}/><div><strong>{t('game.historyEmptyTitle')}</strong><p>{t('game.historyEmptyText')}</p></div></div>}</section>;
+  const { locale } = useLocale();
+  return <section className="history-section" aria-labelledby="history-heading"><div className="section-heading"><h2 id="history-heading">{t('game.historyTitle')}</h2><span className="small muted">{t('game.historyScope')}</span></div>{relevant.length ? <div className="table-scroll"><table className="history-table"><thead><tr><th>{t('game.historyRound')}</th><th>{t('game.historyAmount')}</th><th>{t('game.historyResult')}</th><th className="text-right">{t('game.historyGross')}</th></tr></thead><tbody>{relevant.map((record, index) => <tr key={record.id}><td><span className="history-game">{t(GAME_KEY[game])}</span><small>{format.clock(record.at)}</small></td><td>{format.number(record.stake / 100)} <span className="muted">DEMO</span></td><td className={record.payout > record.stake ? 'positive' : ''}>{record.kind === 'reset' ? t('game.balanceReset') : historyDetail(record, t, locale)}</td><td className="text-right">{format.number(record.payout / 100)} <span className="muted">DEMO</span>{index === 0 && <span className="sr-only">{t('game.historyLatest')}</span>}</td></tr>)}</tbody></table></div> : <div className="empty-history"><Icon name="history" size={24}/><div><strong>{t('game.historyEmptyTitle')}</strong><p>{t('game.historyEmptyText')}</p></div></div>}</section>;
 }
 export function Rules({ game }: { game: 'Crash' | 'Coinflip' | 'Cascade' | 'Tarhun' | 'Ebru' | 'Cezeri' | 'Asena' }) {
   const t = useT('common');

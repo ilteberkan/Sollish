@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { simulateContactCombatV5, V5_STRIKES, isV5Kick } from '@sollish/protocol';
+if (process.env.PW_CHROMIUM_PATH) test.use({ launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } });
 
 // FILMSTRIPS of the 2D broadcast: three contact sheets of consecutive frames (80 ms steps) of a real engine round, saved to
 // .tooling/contact-ui/film-*.png so motion and contact can be reviewed without watching video:

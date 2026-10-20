@@ -1,0 +1,239 @@
+{
+  "meta": {
+    "title": "Ringside · Live",
+    "description": "Two fighters that learn within the match and live Jev corner plans; separate demo pools for every match and a live ticket ledger."
+  },
+  "action": {
+    "guard": "Guard", "advance": "Pressure", "retreat": "Step back", "circle": "Angle change", "slip": "Slip", "roll": "Roll",
+    "jab": "Jab", "cross": "Cross", "hook": "Hook", "leadHook": "Lead hook", "rearHook": "Rear hook", "uppercut": "Uppercut",
+    "bodyHook": "Body hook", "teep": "Front kick (teep)", "lowKick": "Low kick", "bodyKick": "Body kick", "headKick": "Head kick",
+    "knee": "Knee", "clinch": "Clinch", "stagger": "Staggered", "down": "Down", "rise": "Getting up", "neutral": "Neutral corner"
+  },
+  "draw": "Draw",
+  "hint": {
+    "match-winner": "Who wins the match? By stoppage, or by rounds won after three rounds.",
+    "match-method": "The winner and the way it ends together. Harder; the pool is split five ways.",
+    "match-knockdowns": "How many knockdowns happen over the three rounds?"
+  },
+  "style": { "kor": "Red corner · pressure", "ayaz": "Blue corner · distance" },
+  "trait": { "reach": "Reach", "short": "short", "long": "long", "power": "Power", "chin": "Chin", "guard": "Guard" },
+  "market": {
+    "match-winner": { "label": "Winner", "outcomes": { "kor": "KOR wins", "draw": "Draw", "ayaz": "AYAZ wins" } },
+    "match-method": { "label": "Exact result", "outcomes": { "kor-stop": "KOR by stoppage", "kor-points": "KOR on points", "draw": "Draw", "ayaz-points": "AYAZ on points", "ayaz-stop": "AYAZ by stoppage" } },
+    "match-knockdowns": { "label": "Knockdowns", "outcomes": { "0-1": "0–1 knockdowns", "2": "2 knockdowns", "3-plus": "3+ knockdowns" } }
+  },
+  "track": {
+    "won": "Won · +{amount}",
+    "lost": "Lost",
+    "refunded": "Refund · {amount}",
+    "notStarted": "Match not started",
+    "kdLost": "Missed · {n, plural, one {# knockdown} other {# knockdowns}}",
+    "kdHolding": "Holding for now · {n}",
+    "kdNow": "Right now {n, plural, one {# knockdown} other {# knockdowns}}",
+    "ahead": "Ahead right now",
+    "even": "Even",
+    "behind": "Behind right now"
+  },
+  "flow": { "aria": "Match flow", "bet": "Betting", "round": "R{n}", "result": "Result", "winnerKo": "{name} · KO" },
+  "cta": {
+    "hasTicket": "You have a ticket in this market",
+    "sending": "Sending…",
+    "closed": "Betting closed",
+    "pick": "{outcome} · {amount} DEMO",
+    "enterAmount": "Enter an amount"
+  },
+  "handle": {
+    "coupon": "Your slip · {n, plural, one {# ticket} other {# tickets}}",
+    "estimate": "{outcome} · estimated {amount}",
+    "choose": "{outcome} · pick and confirm",
+    "status": "Your slip · {status}",
+    "title": "Match slip"
+  },
+  "top": { "match": "Match", "matchNo": "Match #{id}", "rounds": "3 rounds", "demo": "DEMO · no real money" },
+  "loading": { "failed": "The picture could not be opened. Tickets and live data keep working.", "preparing": "Preparing the broadcast" },
+  "status": {
+    "live": "LIVE",
+    "connecting": "CONNECTING",
+    "verifyHint": "Your browser replays the round from the seed and the corner log and checks it",
+    "verified": "Replay verified ✓",
+    "committed": "Seed committed"
+  },
+  "bug": {
+    "ready": "Ready",
+    "stats": "{hits, plural, one {# hit} other {# hits}} · {stamina}% stamina",
+    "round": "ROUND {n}",
+    "starting": "R{n} STARTING",
+    "break": "BREAK",
+    "over": "MATCH OVER",
+    "score": "Rounds"
+  },
+  "prompt": {
+    "pick": "Who wins? Tap a fighter.",
+    "pickSub": "One ticket for the whole match · betting closes in {time}",
+    "connecting": "Connecting to the arena",
+    "waiting": "Waiting for the live match server."
+  },
+  "toast": { "knockdown": "KNOCKDOWN", "counter": "COUNTER", "hit": "HIT", "damage": "{damage} damage" },
+  "card": {
+    "close": "Close result",
+    "reopen": "Show result",
+    "breakTitle": "ROUND {n} OVER",
+    "won": "{name} won",
+    "points": "{kor} – {ayaz} points",
+    "knockdownsTotal": "{n, plural, one {# knockdown} other {# knockdowns}} in total",
+    "next": "R{n} in <b>{time}</b>",
+    "finalTitle": "MATCH #{id} RESULT",
+    "finalDraw": "DRAW",
+    "coupon": "Your slip: {amount} DEMO",
+    "nextOpens": "Betting on the next match opens in <b>{time}</b>"
+  },
+  "controls": {
+    "camera": "Viewing camera",
+    "broadcast": "Broadcast",
+    "overhead": "Tactical",
+    "sound": "Sound",
+    "soundOn": "Sound on",
+    "fullscreen": "Full screen",
+    "exitFullscreen": "Exit full screen",
+    "shrink": "Shrink",
+    "fullscreenFailed": "Full screen could not be opened in this browser."
+  },
+  "cards": {
+    "crowd": "WHAT THE CROWD SAYS",
+    "drawShort": "Draw",
+    "fighterAria": "Pick {name} to win",
+    "fighterWins": "{name} wins",
+    "firstTicket": "first ticket",
+    "pct": "{n}%"
+  },
+  "corner": { "title": "Corner radio", "sub": "Jev · every 9 s · hash chain" },
+  "summary": {
+    "title": "Match summary",
+    "knockdowns": "{n, plural, one {# knockdown} other {# knockdowns}}",
+    "stoppage": "stoppage",
+    "going": "In progress",
+    "starting": "Starting",
+    "notPlayed": "Not played",
+    "waiting": "Waiting"
+  },
+  "slip": {
+    "aria": "Match slip",
+    "titleOpen": "Match slip",
+    "titleClosed": "Your slip",
+    "open": "Open · {time}",
+    "settled": "Settled",
+    "closed": "Closed",
+    "balance": "Your demo balance",
+    "market": "Market",
+    "hasTicket": "You have a ticket",
+    "amount": "Amount",
+    "amountRange": "1–500 DEMO",
+    "max": "Max",
+    "yourPick": "Your pick",
+    "estReturn": "Estimated return",
+    "refund": "Refunded",
+    "waitingOpponent": "Waiting for an opposing ticket",
+    "fine": "The estimate changes as the pool fills and is final when betting closes. 2% fee included. Refund if there is no opposing ticket.",
+    "rulesTitle": "Rules",
+    "rulesBody": "Betting is open only before R1 starts, for {seconds} seconds; it is closed between rounds. Each market pays from its own pool and settles once when the match ends. A one-sided pool, or one without a winner, is refunded without a fee. Even with a correct pick the return can be less than your stake. One ticket per market per match. A dropped connection does not cancel a ticket. Punches and kicks decide the result under the same rules.",
+    "ifWins": "if it wins {amount}",
+    "refundNow": "refund condition for now",
+    "emptyOpen": "No tickets yet. Make a pick and confirm.",
+    "emptyClosed": "You have no ticket on this match. Betting is open for {seconds} s before R1 of every match.",
+    "indicatorNote": "“Ahead / behind” is only an indicator. The result is final when the match ends."
+  },
+  "steps": {
+    "pick": { "title": "Pick", "body": "Choose the winner, the method or the number of knockdowns. You have {seconds} seconds." },
+    "watch": { "title": "Watch", "body": "Your slip is tracked live over three rounds: ahead or behind." },
+    "result": { "title": "Result", "body": "When the match ends, every pool is paid out to its winners. Your browser replays the match and verifies it." }
+  },
+  "pools": {
+    "aria": "Pools and latest tickets",
+    "title": "Pools",
+    "total": "{count, plural, one {# ticket} other {# tickets}} · {amount} DEMO · {online} online",
+    "all": "All records ↗",
+    "poolLine": "{amount} DEMO · {status}",
+    "status": { "open": "open", "locked": "locked", "paid": "paid", "refunded": "refunded" },
+    "tapeEmpty": "No tickets yet. The first ticket appears here."
+  },
+  "technical": {
+    "summary": "Rules, model and verification",
+    "p1": "A match is at most three rounds: 30 seconds of betting, 45 seconds per round, a short break between them. A fighter who takes clean punches or kicks to the head in a row goes down; the referee counts. A fighter whose health runs out, or who goes down a third time in one round, is stopped and the match ends. Without a stoppage a round is won on the damage dealt plus 120 points for every knockdown; the fighter who wins more rounds takes the match, and a tie is a draw. Health +250 and stamina +350 carry into the next round. Techniques: jab, cross, hook, uppercut, body hook; front kick (teep), low, body and head kick; knee and clinch.",
+    "p2": "The seeds of all three rounds are drawn before the match starts; their hashes are published before betting opens, and each seed is revealed when its round starts. Your browser also replays the earlier rounds from the published log and checks the match result. This is not a VRF or an operator-independent proof of the result.",
+    "p3": "Each fighter has its own independent brain. It chooses every move itself and looks only at the match data everyone can see: the round, the time, both fighters' health and stamina, and what the opponent has done so far. A fighter keeps what it learns from round to round across the match; the rule and the initial weights are frozen when the match starts, and the same seed and log reproduce the same match. Whether this helps is tested separately and the measured result is shown on the page. Measured effect (pre-registered test, 200 matches): over a whole match, the fighter that learns is on average +38 points ahead of its non-learning copy against learning opponents (95% interval −2…+74) and +20 against fixed-style opponents (−5…+45). Because the intervals include zero, the benefit is not considered proven. The effect of training itself is clear (+284). The fly connectome structure could not be shown to beat a shuffled network.",
+    "p4": "Every 9 seconds the corner coach Jev (a deterministic fallback on timeout) suggests an intent, a target and a threat; the fighter reads it only as an input. Because the plans arrive after betting has closed, this game is DEMO-only. The picture is drawn in code (skeleton, IK, step planner); camera, FPS and sound do not affect the result. MaleCNS v1.0 data is CC BY 4.0: FlyEM / HHMI Janelia.",
+    "engine": "Engine",
+    "ledger": "Ledger",
+    "commitment": "Round commitment",
+    "seedHashes": "Seed hashes",
+    "seed": "Seed",
+    "seedHidden": "Revealed when the round starts."
+  },
+  "audit": {
+    "aria": "Match records",
+    "title": "Match #{id} records",
+    "close": "Close records",
+    "summary": "{count, plural, one {# ticket} other {# tickets}} · {amount} DEMO",
+    "download": "Download JSON ↓",
+    "requesting": "Requesting the records. Reopen if the match changed."
+  },
+  "board": {
+    "aria": "Corner plans and fighter decisions",
+    "jev": "Jev plan",
+    "fallback": "fallback plan",
+    "thinking": "{side} is weighing now",
+    "wait": "Waiting for the next coach plan…",
+    "percent": "{n}%",
+    "intent": { "pressure": "Pressure", "counter": "Counter", "cautious": "Cautious", "outboxer": "Outboxer", "body": "Body work", "finisher": "Finisher" },
+    "target": { "head": "head", "body": "body" },
+    "threat": { "straight": "watch the straights", "hook": "watch the hooks", "upper": "watch the uppercut", "body": "watch the body" },
+    "move": {
+      "jab": "jab", "cross": "cross", "leadHook": "lead hook", "rearHook": "rear hook", "uppercut": "uppercut", "bodyHook": "body hook",
+      "teep": "front kick", "lowKick": "low kick", "bodyKick": "body kick", "headKick": "head kick", "knee": "knee",
+      "advance": "forward", "retreat": "back", "circleLeft": "circle left", "circleRight": "circle right", "guard": "guard", "slip": "slip", "roll": "roll", "clinch": "clinch"
+    }
+  },
+  "scene": {
+    "head": "HEAD", "body": "BODY", "guard": "GUARD", "leg": "LEG",
+    "teep": "TEEP", "lowKick": "LOW KICK", "bodyKick": "BODY KICK", "headKick": "HEAD KICK", "knee": "KNEE",
+    "counter": "COUNTER",
+    "combo": "{n}-HIT COMBO",
+    "dodge": "DODGED",
+    "knockdown": "KNOCKDOWN",
+    "knockdownSub": "{name} put them down",
+    "stoppage": "STOPPAGE",
+    "stoppageSub": "{name} wins",
+    "rise": "BACK UP",
+    "riseSub": "The fight goes on",
+    "count": "REFEREE COUNT",
+    "replay": "REPLAY",
+    "highlight": "MOMENT OF THE ROUND",
+    "down": "DOWN",
+    "floor": "RINGSIDE · LIVE"
+  },
+  "error": {
+    "NOT_CONFIGURED": "The live service is not configured.",
+    "SERVER_DATA": "The server data could not be verified.",
+    "ENGINE_MISMATCH": "The arena engine version does not match.",
+    "RESULT_CHANGED": "A settled match result changed.",
+    "LOCKED_CHANGED": "Locked match data changed.",
+    "HISTORY_MISMATCH": "The match history does not match the replay.",
+    "COMMITMENT_MISMATCH": "The match seed commitment does not match.",
+    "PLAN_LOG_MISMATCH": "The coach plan log does not match the replay.",
+    "RESULT_MISMATCH": "The result does not match the deterministic replay.",
+    "MATCH_RESULT_MISMATCH": "The match result does not match the replay.",
+    "VERIFY_FAILED": "Verification could not finish. Reconnecting.",
+    "NO_TICKET_ID": "A secure ticket id could not be created.",
+    "AMOUNT_RANGE": "The amount must be between 1 and 500 DEMO.",
+    "RECOVERY_FAILED": "The ticket recovery record could not be stored. The request was not sent.",
+    "TICKET_RECHECK": "The ticket status is being checked again under the same id.",
+    "ROUND_CLOSED": "Betting has closed. Wait for the next match.",
+    "WRONG_ROUND": "The match changed.",
+    "ALREADY_BET": "You already have a ticket for this match in this market.",
+    "INVALID_MESSAGE": "This market does not exist in this arena.",
+    "INSUFFICIENT_CREDITS": "You do not have enough demo credit.",
+    "CAPACITY": "Demo capacity has been reached.",
+    "SESSION_EXPIRED": "Your demo session has ended.",
+    "SESSION_INVALID": "The demo session is being renewed."
+  }
+}

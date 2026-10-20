@@ -1,0 +1,59 @@
+{
+  "subtitle": "상승을 지켜보다가 원하는 순간에 출금하세요.",
+  "tableLabel": "Crash 게임 테이블",
+  "status": {
+    "live": "라이브 이용 불가",
+    "active": "로컬 라운드 진행 중",
+    "ready": "테이블 준비됨"
+  },
+  "caption": {
+    "ready": "타이밍은 당신의 몫입니다.",
+    "countdown": "곧 시작합니다",
+    "running": "출금 시점을 직접 고르세요",
+    "won": "데모에서 출금했습니다",
+    "lost": "라운드가 끝났습니다"
+  },
+  "gate": {
+    "title": "라이브 Crash는 아직 열리지 않았습니다.",
+    "text": "수동 출금과 비공개 라운드 결과가 검증되기 전에는 실제 베팅을 받지 않습니다.",
+    "tryDemo": "로컬 데모 체험하기"
+  },
+  "readout": {
+    "ready": "금액을 고르고 첫 라운드를 시작하세요.",
+    "running": "{seconds}초",
+    "won": "총 환급 {amount} DEMO",
+    "lost": "{amount} DEMO 손실",
+    "countdown": "수동 출금을 준비하세요"
+  },
+  "bottom": {
+    "local": "로컬 시뮬레이션",
+    "manual": "수동 출금"
+  },
+  "preview": {
+    "won": "데모 총 환급",
+    "cashout": "출금 시 총 환급",
+    "net": "순결과: +{amount} DEMO",
+    "fee": "데모 거래 수수료: 0"
+  },
+  "action": {
+    "cashout": "출금하기",
+    "starting": "라운드 시작 중…",
+    "liveClosed": "라이브 베팅 마감",
+    "start": "데모 시작"
+  },
+  "hint": {
+    "running": "출금은 클릭한 순간을 기준으로 계산됩니다.",
+    "live": "라이브 Crash 검증을 기다리는 중입니다.",
+    "default": "지갑이나 실제 돈이 필요 없습니다."
+  },
+  "sr": {
+    "running": "라운드가 시작되었습니다. 출금할 수 있습니다.",
+    "won": "데모 출금이 완료되었습니다. 총 환급 {amount} DEMO.",
+    "lost": "라운드가 배수 {multiplier}에서 끝났습니다. 데모 금액을 잃었습니다.",
+    "countdown": "라운드가 곧 시작됩니다."
+  },
+  "chart": {
+    "zero": "0초",
+    "time": "시간"
+  }
+}

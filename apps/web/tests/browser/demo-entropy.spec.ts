@@ -1,5 +1,7 @@
 import { test, expect } from '@playwright/test';
 
+if (process.env.PW_CHROMIUM_PATH) test.use({ launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } });
+
 for (const game of [
   { route: '/game/crash', title: 'Crash', start: 'Demoyu başlat', finishedBalance: '990' },
   { route: '/game/coinflip', title: 'Coinflip', start: 'Demoda çevir', finishedBalance: '1.009,6' },

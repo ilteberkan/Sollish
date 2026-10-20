@@ -162,7 +162,19 @@
     "rulesAccess": "Gerçek oyun erişimi, sözleşme ve ağ yapılandırmasının ayrıca doğrulanmasını gerektirir.",
     "sideLegend": "Tarafını seç",
     "heads": "Yazı",
-    "tails": "Tura"
+    "tails": "Tura",
+    "errors": {
+      "amountRange": "1–500 DEMO arasında, en çok iki ondalıklı miktar gir.",
+      "noRandomness": "Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.",
+      "noCredit": "Yeterli demo kredin yok veya devam eden bir demo var."
+    },
+    "historyDetail": {
+      "cashout": "{multiplier} çıkış",
+      "roundEnd": "{multiplier} tur sonu",
+      "cancelled": "Demo iptal edildi",
+      "coinWon": "{side} · Kazandın",
+      "coinLost": "{side} · Kaybettin"
+    }
   },
   "games": {
     "ringside": "Ringside",
@@ -206,5 +218,18 @@
       "play": "Yazı veya tura seç, demo miktarını gir ve çevir. Doğru tahminde brüt dönüş miktarın 1,96 katıdır; yanlış tahminde o turdaki demo miktarı kaybedilir.",
       "local": "Yerel örnekte kazanma olasılığı %50, teorik kesinti %2’dir. Bu, çalışan bir zincir üstü oyun veya doğrulanmış VRF sonucu değildir."
     }
+  },
+  "liveError": {
+    "WALLET_CHANGED": "Cüzdan bağlantısı değişti. İşlemi mevcut cüzdanınla yeniden incele.",
+    "VIEW_CLOSED": "İşlem ekranı kapandı. Cüzdan çağrısı başlatılmadı.",
+    "TRACKING_STORAGE_FAILED": "Tarayıcı işlem takibini saklayamadı. Cüzdan çağrısı yapılmadı. Bu site için oturum depolamasını açıp tekrar deneyebilirsin.",
+    "HOUSE_PAUSED": "Oyun kasası şu an duraklatılmış. Bahis kabul edilmiyor.",
+    "INSUFFICIENT_HOUSE_RESERVE": "Oyun kasasında bu miktarı karşılayacak rezerv yok.",
+    "BET_LIMIT_EXCEEDED": "Miktar, bu oyun masasının sınırını aşıyor.",
+    "DEVNET_WALLET_UNSUPPORTED": "Cüzdanının Solana devnet işlem desteği gerekiyor.",
+    "TRANSACTION_SIMULATION_FAILED": "İşlem ön kontrolü başarısız. Bahis gönderilmedi.",
+    "DEPLOYMENT_ACCOUNT_MISSING": "Oyun sözleşmesi veya gerekli hesaplar henüz hazır değil.",
+    "GENESIS_MISMATCH": "Ağ bağlantısı beklenen Solana devnet ağıyla eşleşmiyor.",
+    "TRANSACTION_FAILED": "Zincir işlemi başarısız oldu. Bahis kabul edilmedi; ağ ücreti alınmış olabilir."
   }
 }

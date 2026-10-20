@@ -1,0 +1,239 @@
+{
+  "meta": {
+    "title": "Ringside · 直播",
+    "description": "两名在比赛中学习的拳手与 Jev 的实时角落计划；每场比赛独立的演示奖池和实时票据账本。"
+  },
+  "action": {
+    "guard": "防守", "advance": "压迫", "retreat": "后退", "circle": "变换角度", "slip": "闪避", "roll": "滚动闪躲",
+    "jab": "刺拳", "cross": "直拳", "hook": "勾拳", "leadHook": "前手勾拳", "rearHook": "后手勾拳", "uppercut": "上勾拳",
+    "bodyHook": "击腹勾拳", "teep": "前蹬（泰拳 teep）", "lowKick": "低扫腿", "bodyKick": "中段踢", "headKick": "高踢",
+    "knee": "膝击", "clinch": "缠抱", "stagger": "踉跄", "down": "倒地", "rise": "起身", "neutral": "中立角"
+  },
+  "draw": "平局",
+  "hint": {
+    "match-winner": "谁赢得比赛？通过终止比赛，或三回合后以赢下的回合数决定。",
+    "match-method": "胜者与方式一起猜。难度更高；奖池分为五份。",
+    "match-knockdowns": "三个回合中会出现多少次击倒？"
+  },
+  "style": { "kor": "红角 · 压迫型", "ayaz": "蓝角 · 控距型" },
+  "trait": { "reach": "臂展", "short": "短", "long": "长", "power": "力量", "chin": "抗击打", "guard": "防守" },
+  "market": {
+    "match-winner": { "label": "胜者", "outcomes": { "kor": "KOR 获胜", "draw": "平局", "ayaz": "AYAZ 获胜" } },
+    "match-method": { "label": "精确结果", "outcomes": { "kor-stop": "KOR 终止比赛获胜", "kor-points": "KOR 点数获胜", "draw": "平局", "ayaz-points": "AYAZ 点数获胜", "ayaz-stop": "AYAZ 终止比赛获胜" } },
+    "match-knockdowns": { "label": "击倒", "outcomes": { "0-1": "0–1 次击倒", "2": "2 次击倒", "3-plus": "3 次以上击倒" } }
+  },
+  "track": {
+    "won": "获胜 · +{amount}",
+    "lost": "未中",
+    "refunded": "退款 · {amount}",
+    "notStarted": "比赛尚未开始",
+    "kdLost": "未中 · {n} 次击倒",
+    "kdHolding": "暂时成立 · {n}",
+    "kdNow": "目前 {n} 次击倒",
+    "ahead": "目前领先",
+    "even": "势均力敌",
+    "behind": "目前落后"
+  },
+  "flow": { "aria": "比赛流程", "bet": "投注", "round": "R{n}", "result": "结果", "winnerKo": "{name} · KO" },
+  "cta": {
+    "hasTicket": "你在此盘口已有票据",
+    "sending": "发送中…",
+    "closed": "投注已关闭",
+    "pick": "{outcome} · {amount} DEMO",
+    "enterAmount": "输入金额"
+  },
+  "handle": {
+    "coupon": "你的投注单 · {n} 张票据",
+    "estimate": "{outcome} · 预估 {amount}",
+    "choose": "{outcome} · 选择并确认",
+    "status": "你的投注单 · {status}",
+    "title": "比赛投注单"
+  },
+  "top": { "match": "比赛", "matchNo": "第 {id} 场比赛", "rounds": "3 回合", "demo": "DEMO · 非真实货币" },
+  "loading": { "failed": "无法打开画面。票据和实时数据仍在正常运行。", "preparing": "正在准备直播" },
+  "status": {
+    "live": "直播中",
+    "connecting": "连接中",
+    "verifyHint": "你的浏览器会用种子和角落记录重放该回合并进行校验",
+    "verified": "重放已验证 ✓",
+    "committed": "种子已承诺"
+  },
+  "bug": {
+    "ready": "就绪",
+    "stats": "{hits} 次命中 · 体能 {stamina}%",
+    "round": "第 {n} 回合",
+    "starting": "R{n} 即将开始",
+    "break": "休息",
+    "over": "比赛结束",
+    "score": "回合"
+  },
+  "prompt": {
+    "pick": "谁会获胜？点击一名拳手。",
+    "pickSub": "整场比赛只需一张票据 · 投注将在 {time} 后关闭",
+    "connecting": "正在连接竞技场",
+    "waiting": "正在等待实时比赛服务器。"
+  },
+  "toast": { "knockdown": "击倒", "counter": "反击", "hit": "命中", "damage": "伤害 {damage}" },
+  "card": {
+    "close": "关闭结果",
+    "reopen": "显示结果",
+    "breakTitle": "第 {n} 回合结束",
+    "won": "{name} 获胜",
+    "points": "{kor} – {ayaz} 分",
+    "knockdownsTotal": "共 {n} 次击倒",
+    "next": "R{n} 将在 <b>{time}</b> 后开始",
+    "finalTitle": "第 {id} 场比赛结果",
+    "finalDraw": "平局",
+    "coupon": "你的投注单：{amount} DEMO",
+    "nextOpens": "下一场比赛的投注将在 <b>{time}</b> 后开放"
+  },
+  "controls": {
+    "camera": "观看镜头",
+    "broadcast": "直播",
+    "overhead": "战术",
+    "sound": "声音",
+    "soundOn": "声音已开",
+    "fullscreen": "全屏",
+    "exitFullscreen": "退出全屏",
+    "shrink": "缩小",
+    "fullscreenFailed": "此浏览器无法打开全屏。"
+  },
+  "cards": {
+    "crowd": "观众怎么看",
+    "drawShort": "平",
+    "fighterAria": "选择 {name} 获胜",
+    "fighterWins": "{name} 获胜",
+    "firstTicket": "首张票据",
+    "pct": "{n}%"
+  },
+  "corner": { "title": "角落通话", "sub": "Jev · 每 9 秒 · 哈希链" },
+  "summary": {
+    "title": "比赛摘要",
+    "knockdowns": "{n} 次击倒",
+    "stoppage": "终止比赛",
+    "going": "进行中",
+    "starting": "即将开始",
+    "notPlayed": "未进行",
+    "waiting": "等待中"
+  },
+  "slip": {
+    "aria": "比赛投注单",
+    "titleOpen": "比赛投注单",
+    "titleClosed": "你的投注单",
+    "open": "开放 · {time}",
+    "settled": "已结算",
+    "closed": "已关闭",
+    "balance": "你的演示余额",
+    "market": "盘口",
+    "hasTicket": "你已有票据",
+    "amount": "金额",
+    "amountRange": "1–500 DEMO",
+    "max": "最大",
+    "yourPick": "你的选择",
+    "estReturn": "预估回报",
+    "refund": "将退款",
+    "waitingOpponent": "等待对方票据",
+    "fine": "预估会随奖池增加而变化，投注关闭后最终确定。已含 2% 手续费。没有对方票据则退款。",
+    "rulesTitle": "规则",
+    "rulesBody": "投注仅在 R1 开始前开放，共 {seconds} 秒；回合之间关闭。每个盘口从自己的奖池支付，比赛结束时结算一次。只有一方下注、或没有赢家的奖池会不收手续费全额退款。即使选对，回报也可能低于投入。每场比赛每个盘口只能有一张票据。连接中断不会取消票据。拳击和踢击按相同规则决定结果。",
+    "ifWins": "获胜可得 {amount}",
+    "refundNow": "目前符合退款条件",
+    "emptyOpen": "还没有票据。请选择并确认。",
+    "emptyClosed": "你没有这场比赛的票据。每场比赛在 R1 开始前开放投注 {seconds} 秒。",
+    "indicatorNote": "“领先 / 落后”只是指示。结果在比赛结束时最终确定。"
+  },
+  "steps": {
+    "pick": { "title": "选择", "body": "选择胜者、方式或击倒次数。你有 {seconds} 秒。" },
+    "watch": { "title": "观看", "body": "三个回合中会实时跟踪你的投注单：领先还是落后。" },
+    "result": { "title": "结果", "body": "比赛结束后，每个奖池分配给获胜者。你的浏览器会重放比赛并进行验证。" }
+  },
+  "pools": {
+    "aria": "奖池与最新票据",
+    "title": "奖池",
+    "total": "{count} 张票据 · {amount} DEMO · {online} 人在线",
+    "all": "全部记录 ↗",
+    "poolLine": "{amount} DEMO · {status}",
+    "status": { "open": "开放", "locked": "锁定", "paid": "已支付", "refunded": "已退款" },
+    "tapeEmpty": "还没有票据。第一张票据会显示在这里。"
+  },
+  "technical": {
+    "summary": "规则、模型与验证",
+    "p1": "一场比赛最多三个回合：投注 30 秒，每回合 45 秒，回合之间短暂休息。连续被击中头部的干净拳或踢的拳手会倒地，裁判读秒。生命值耗尽、或在同一回合第三次倒地的拳手会被终止比赛，比赛结束。没有终止时，回合按造成的伤害加每次击倒 120 分来决定胜负；赢下更多回合者获得比赛，相同则为平局。生命值 +250 和体能 +350 会带入下一回合。技术：刺拳、直拳、勾拳、上勾拳、击腹勾拳；前蹬（teep）、低扫腿、中段踢和高踢；膝击和缠抱。",
+    "p2": "三个回合的种子在比赛开始前抽取；其哈希在投注开放前公布，每个种子在其回合开始时揭晓。你的浏览器还会根据已公布的记录重放之前的回合，并校验比赛结果。这不是 VRF，也不是独立于运营方的结果证明。",
+    "p3": "每名拳手都有自己独立的大脑。它自己选择每一个动作，只看所有人都能看到的比赛数据：回合、时间、双方的生命值和体能，以及对手到目前为止的动作。拳手在整场比赛中逐回合保留所学内容；规则和初始权重在比赛开始时冻结，相同的种子和记录会重现同一场比赛。这是否有益另行测试，测得的结果显示在页面上。测得的效果（预先登记的测试，200 场比赛）：在整场比赛中，会学习的拳手平均比不学习的副本领先 +38 分（对手同样会学习，95% 区间 −2…+74），对固定风格的对手领先 +20（−5…+45）。由于区间包含零，不能认为其益处已得到证明。训练本身的效果则很明确（+284）。未能证明果蝇连接组结构优于打乱的网络。",
+    "p4": "每 9 秒，角落教练 Jev（超时则使用确定性的备用方案）会提出意图、目标和威胁；拳手仅将其作为输入读取。由于计划在投注关闭后才到达，这款游戏仅限 DEMO。画面由代码绘制（骨架、IK、步伐规划器）；镜头、帧率和声音不影响结果。MaleCNS v1.0 数据为 CC BY 4.0：FlyEM / HHMI Janelia。",
+    "engine": "引擎",
+    "ledger": "账本",
+    "commitment": "回合承诺",
+    "seedHashes": "种子哈希",
+    "seed": "种子",
+    "seedHidden": "回合开始时揭晓。"
+  },
+  "audit": {
+    "aria": "比赛记录",
+    "title": "第 {id} 场比赛记录",
+    "close": "关闭记录",
+    "summary": "{count} 张票据 · {amount} DEMO",
+    "download": "下载 JSON ↓",
+    "requesting": "正在请求记录。如果比赛已更换，请重新打开。"
+  },
+  "board": {
+    "aria": "角落计划与拳手决策",
+    "jev": "Jev 的计划",
+    "fallback": "备用计划",
+    "thinking": "{side} 正在权衡",
+    "wait": "正在等待下一个教练计划…",
+    "percent": "{n}%",
+    "intent": { "pressure": "压迫型", "counter": "反击型", "cautious": "谨慎型", "outboxer": "控距型", "body": "击腹型", "finisher": "终结型" },
+    "target": { "head": "头部", "body": "身体" },
+    "threat": { "straight": "留意直拳", "hook": "留意勾拳", "upper": "留意上勾拳", "body": "留意身体" },
+    "move": {
+      "jab": "刺拳", "cross": "直拳", "leadHook": "前手勾拳", "rearHook": "后手勾拳", "uppercut": "上勾拳", "bodyHook": "击腹勾拳",
+      "teep": "前蹬", "lowKick": "低扫腿", "bodyKick": "中段踢", "headKick": "高踢", "knee": "膝击",
+      "advance": "前进", "retreat": "后退", "circleLeft": "向左绕", "circleRight": "向右绕", "guard": "防守", "slip": "闪避", "roll": "滚动", "clinch": "缠抱"
+    }
+  },
+  "scene": {
+    "head": "头部", "body": "身体", "guard": "防守", "leg": "腿部",
+    "teep": "前蹬", "lowKick": "低扫腿", "bodyKick": "中段踢", "headKick": "高踢", "knee": "膝击",
+    "counter": "反击",
+    "combo": "{n} 连击",
+    "dodge": "闪开",
+    "knockdown": "击倒",
+    "knockdownSub": "{name} 将对手击倒",
+    "stoppage": "终止比赛",
+    "stoppageSub": "{name} 获胜",
+    "rise": "重新站起",
+    "riseSub": "比赛继续",
+    "count": "裁判读秒",
+    "replay": "回放",
+    "highlight": "本回合精彩瞬间",
+    "down": "倒地",
+    "floor": "RINGSIDE · 直播"
+  },
+  "error": {
+    "NOT_CONFIGURED": "实时服务尚未配置。",
+    "SERVER_DATA": "无法验证服务器数据。",
+    "ENGINE_MISMATCH": "竞技场引擎版本不匹配。",
+    "RESULT_CHANGED": "已确定的比赛结果发生了变化。",
+    "LOCKED_CHANGED": "已锁定的比赛数据发生了变化。",
+    "HISTORY_MISMATCH": "比赛历史与重放不一致。",
+    "COMMITMENT_MISMATCH": "比赛种子承诺不匹配。",
+    "PLAN_LOG_MISMATCH": "教练计划记录与重放不一致。",
+    "RESULT_MISMATCH": "结果与确定性重放不一致。",
+    "MATCH_RESULT_MISMATCH": "比赛结果与重放不一致。",
+    "VERIFY_FAILED": "验证未能完成。正在重新连接。",
+    "NO_TICKET_ID": "无法创建安全的票据标识。",
+    "AMOUNT_RANGE": "金额必须在 1 到 500 DEMO 之间。",
+    "RECOVERY_FAILED": "无法保存票据恢复记录。请求未发送。",
+    "TICKET_RECHECK": "正在用同一标识重新检查票据状态。",
+    "ROUND_CLOSED": "投注已关闭。请等待下一场比赛。",
+    "WRONG_ROUND": "比赛已更换。",
+    "ALREADY_BET": "你在此盘口已有这场比赛的票据。",
+    "INVALID_MESSAGE": "此竞技场没有这个盘口。",
+    "INSUFFICIENT_CREDITS": "你的演示额度不足。",
+    "CAPACITY": "已达到演示容量上限。",
+    "SESSION_EXPIRED": "你的演示会话已结束。",
+    "SESSION_INVALID": "正在更新演示会话。"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "subtitle": "看着倍数攀升，在你选择的时刻提现。",
+  "tableLabel": "Crash 游戏桌",
+  "status": {
+    "live": "实时入口已关闭",
+    "active": "本地回合进行中",
+    "ready": "牌桌就绪"
+  },
+  "caption": {
+    "ready": "时机由你决定。",
+    "countdown": "即将开始",
+    "running": "自己选择提现时机",
+    "won": "你已从演示中提现",
+    "lost": "本回合已结束"
+  },
+  "gate": {
+    "title": "实时 Crash 尚未开放。",
+    "text": "在手动提现和隐藏的回合结果通过验证之前，不接受真实投注。",
+    "tryDemo": "试玩本地演示"
+  },
+  "readout": {
+    "ready": "选择金额，开始你的第一回合。",
+    "running": "{seconds} 秒",
+    "won": "{amount} DEMO 税前回报",
+    "lost": "损失 {amount} DEMO",
+    "countdown": "准备手动提现"
+  },
+  "bottom": {
+    "local": "本地模拟",
+    "manual": "手动提现"
+  },
+  "preview": {
+    "won": "演示税前回报",
+    "cashout": "提现时的税前回报",
+    "net": "净结果：+{amount} DEMO",
+    "fee": "演示交易费：0"
+  },
+  "action": {
+    "cashout": "提现",
+    "starting": "回合即将开始…",
+    "liveClosed": "实时投注已关闭",
+    "start": "开始演示"
+  },
+  "hint": {
+    "running": "提现按你点击的那一刻计算。",
+    "live": "正在等待实时 Crash 验证。",
+    "default": "无需钱包或真实资金。"
+  },
+  "sr": {
+    "running": "回合已开始，你可以提现。",
+    "won": "演示提现完成。{amount} DEMO 税前回报。",
+    "lost": "回合在 {multiplier} 倍数处结束。演示金额已损失。",
+    "countdown": "回合即将开始。"
+  },
+  "chart": {
+    "zero": "0 秒",
+    "time": "时间"
+  }
+}

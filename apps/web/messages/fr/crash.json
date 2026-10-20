@@ -1,0 +1,59 @@
+{
+  "subtitle": "Regardez la montée. Encaissez au moment de votre choix.",
+  "tableLabel": "Table de jeu Crash",
+  "status": {
+    "live": "Accès en direct fermé",
+    "active": "Manche locale en cours",
+    "ready": "Table prête"
+  },
+  "caption": {
+    "ready": "Le moment vous appartient.",
+    "countdown": "Début imminent",
+    "running": "Choisissez votre moment d’encaissement",
+    "won": "Vous avez encaissé la démo",
+    "lost": "La manche est terminée"
+  },
+  "gate": {
+    "title": "Le Crash en direct n’est pas encore ouvert.",
+    "text": "Aucune mise réelle n’est acceptée tant que l’encaissement manuel et le résultat masqué de la manche ne sont pas vérifiés.",
+    "tryDemo": "Essayer la démo locale"
+  },
+  "readout": {
+    "ready": "Choisissez votre montant et lancez votre première manche.",
+    "running": "{seconds} s",
+    "won": "{amount} DEMO de retour brut",
+    "lost": "{amount} DEMO perdus",
+    "countdown": "Préparez-vous à encaisser manuellement"
+  },
+  "bottom": {
+    "local": "Simulation locale",
+    "manual": "Encaissement manuel"
+  },
+  "preview": {
+    "won": "Retour brut de la démo",
+    "cashout": "Retour brut à l’encaissement",
+    "net": "Résultat net : +{amount} DEMO",
+    "fee": "Frais de transaction de la démo : 0"
+  },
+  "action": {
+    "cashout": "Encaisser",
+    "starting": "La manche démarre…",
+    "liveClosed": "Paris en direct fermés",
+    "start": "Lancer la démo"
+  },
+  "hint": {
+    "running": "L’encaissement est calculé à l’instant du clic.",
+    "live": "En attente de la vérification du Crash en direct.",
+    "default": "Aucun portefeuille ni argent réel requis."
+  },
+  "sr": {
+    "running": "La manche a commencé. Vous pouvez encaisser.",
+    "won": "Encaissement de la démo terminé. {amount} DEMO de retour brut.",
+    "lost": "La manche s’est terminée au multiplicateur {multiplier}. Le montant de la démo est perdu.",
+    "countdown": "La manche va commencer."
+  },
+  "chart": {
+    "zero": "0 s",
+    "time": "temps"
+  }
+}

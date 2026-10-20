@@ -1,5 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 
+if (process.env.PW_CHROMIUM_PATH) test.use({ launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } });
+
 async function prepare(page: Page, game: 'Crash' | 'Coinflip', entropy: number) {
   await page.addInitScript(entropy => { Object.defineProperty(crypto, 'getRandomValues', { configurable: true, value: (array: Uint32Array) => { array.fill(entropy); return array; } }); }, entropy);
   await page.clock.install();

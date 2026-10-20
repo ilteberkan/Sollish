@@ -1,0 +1,239 @@
+{
+  "meta": {
+    "title": "Ringside · Live",
+    "description": "Zwei Kämpfer, die im Kampf lernen, und Jevs Eckenpläne live; getrennte Demo-Pools pro Kampf und ein Live-Ticketbuch."
+  },
+  "action": {
+    "guard": "Deckung", "advance": "Druck", "retreat": "Schritt zurück", "circle": "Winkelwechsel", "slip": "Wegducken", "roll": "Abrollen",
+    "jab": "Jab", "cross": "Gerade", "hook": "Haken", "leadHook": "Führhaken", "rearHook": "Schlaghaken", "uppercut": "Aufwärtshaken",
+    "bodyHook": "Körperhaken", "teep": "Frontkick (Teep)", "lowKick": "Low Kick", "bodyKick": "Körperkick", "headKick": "Kopfkick",
+    "knee": "Knie", "clinch": "Clinch", "stagger": "Angeschlagen", "down": "Am Boden", "rise": "Steht auf", "neutral": "Neutrale Ecke"
+  },
+  "draw": "Unentschieden",
+  "hint": {
+    "match-winner": "Wer gewinnt den Kampf? Durch Abbruch oder nach drei Runden über die gewonnenen Runden.",
+    "match-method": "Sieger und Art zusammen. Schwieriger; der Pool wird in fünf geteilt.",
+    "match-knockdowns": "Wie viele Niederschläge gibt es in den drei Runden?"
+  },
+  "style": { "kor": "Rote Ecke · Druck", "ayaz": "Blaue Ecke · Distanz" },
+  "trait": { "reach": "Reichweite", "short": "kurz", "long": "lang", "power": "Kraft", "chin": "Kinn", "guard": "Deckung" },
+  "market": {
+    "match-winner": { "label": "Sieger", "outcomes": { "kor": "KOR gewinnt", "draw": "Unentschieden", "ayaz": "AYAZ gewinnt" } },
+    "match-method": { "label": "Genaues Ergebnis", "outcomes": { "kor-stop": "KOR durch Abbruch", "kor-points": "KOR nach Punkten", "draw": "Unentschieden", "ayaz-points": "AYAZ nach Punkten", "ayaz-stop": "AYAZ durch Abbruch" } },
+    "match-knockdowns": { "label": "Niederschläge", "outcomes": { "0-1": "0–1 Niederschläge", "2": "2 Niederschläge", "3-plus": "3+ Niederschläge" } }
+  },
+  "track": {
+    "won": "Gewonnen · +{amount}",
+    "lost": "Verloren",
+    "refunded": "Rückerstattung · {amount}",
+    "notStarted": "Kampf noch nicht gestartet",
+    "kdLost": "Verfehlt · {n, plural, one {# Niederschlag} other {# Niederschläge}}",
+    "kdHolding": "Hält vorerst · {n}",
+    "kdNow": "Aktuell {n, plural, one {# Niederschlag} other {# Niederschläge}}",
+    "ahead": "Aktuell vorn",
+    "even": "Gleichstand",
+    "behind": "Aktuell hinten"
+  },
+  "flow": { "aria": "Kampfablauf", "bet": "Wette", "round": "R{n}", "result": "Ergebnis", "winnerKo": "{name} · KO" },
+  "cta": {
+    "hasTicket": "Du hast ein Ticket in diesem Markt",
+    "sending": "Wird gesendet…",
+    "closed": "Wetten geschlossen",
+    "pick": "{outcome} · {amount} DEMO",
+    "enterAmount": "Betrag eingeben"
+  },
+  "handle": {
+    "coupon": "Dein Schein · {n, plural, one {# Ticket} other {# Tickets}}",
+    "estimate": "{outcome} · geschätzt {amount}",
+    "choose": "{outcome} · wählen und bestätigen",
+    "status": "Dein Schein · {status}",
+    "title": "Kampfschein"
+  },
+  "top": { "match": "Kampf", "matchNo": "Kampf #{id}", "rounds": "3 Runden", "demo": "DEMO · kein echtes Geld" },
+  "loading": { "failed": "Das Bild konnte nicht geöffnet werden. Tickets und Live-Daten funktionieren weiter.", "preparing": "Übertragung wird vorbereitet" },
+  "status": {
+    "live": "LIVE",
+    "connecting": "VERBINDE",
+    "verifyHint": "Dein Browser spielt die Runde mit Seed und Eckenprotokoll erneut ab und prüft sie",
+    "verified": "Wiedergabe bestätigt ✓",
+    "committed": "Seed festgelegt"
+  },
+  "bug": {
+    "ready": "Bereit",
+    "stats": "{hits, plural, one {# Treffer} other {# Treffer}} · {stamina} % Kondition",
+    "round": "RUNDE {n}",
+    "starting": "R{n} STARTET",
+    "break": "PAUSE",
+    "over": "KAMPF VORBEI",
+    "score": "Runden"
+  },
+  "prompt": {
+    "pick": "Wer gewinnt? Tippe auf einen Kämpfer.",
+    "pickSub": "Ein Ticket für den ganzen Kampf · Wetten schließen in {time}",
+    "connecting": "Verbindung zur Arena",
+    "waiting": "Warte auf den Live-Kampfserver."
+  },
+  "toast": { "knockdown": "NIEDERSCHLAG", "counter": "KONTER", "hit": "TREFFER", "damage": "{damage} Schaden" },
+  "card": {
+    "close": "Ergebnis schließen",
+    "reopen": "Ergebnis zeigen",
+    "breakTitle": "RUNDE {n} VORBEI",
+    "won": "{name} gewinnt",
+    "points": "{kor} – {ayaz} Punkte",
+    "knockdownsTotal": "insgesamt {n, plural, one {# Niederschlag} other {# Niederschläge}}",
+    "next": "R{n} in <b>{time}</b>",
+    "finalTitle": "ERGEBNIS KAMPF #{id}",
+    "finalDraw": "UNENTSCHIEDEN",
+    "coupon": "Dein Schein: {amount} DEMO",
+    "nextOpens": "Wetten auf den nächsten Kampf öffnen in <b>{time}</b>"
+  },
+  "controls": {
+    "camera": "Zuschauerkamera",
+    "broadcast": "Übertragung",
+    "overhead": "Taktik",
+    "sound": "Ton",
+    "soundOn": "Ton an",
+    "fullscreen": "Vollbild",
+    "exitFullscreen": "Vollbild beenden",
+    "shrink": "Verkleinern",
+    "fullscreenFailed": "Vollbild konnte in diesem Browser nicht geöffnet werden."
+  },
+  "cards": {
+    "crowd": "WAS DAS PUBLIKUM SAGT",
+    "drawShort": "Unent.",
+    "fighterAria": "{name} als Sieger wählen",
+    "fighterWins": "{name} gewinnt",
+    "firstTicket": "erstes Ticket",
+    "pct": "{n} %"
+  },
+  "corner": { "title": "Eckenfunk", "sub": "Jev · alle 9 s · Hash-Kette" },
+  "summary": {
+    "title": "Kampfübersicht",
+    "knockdowns": "{n, plural, one {# Niederschlag} other {# Niederschläge}}",
+    "stoppage": "Abbruch",
+    "going": "Läuft",
+    "starting": "Startet",
+    "notPlayed": "Nicht gekämpft",
+    "waiting": "Wartet"
+  },
+  "slip": {
+    "aria": "Kampfschein",
+    "titleOpen": "Kampfschein",
+    "titleClosed": "Dein Schein",
+    "open": "Offen · {time}",
+    "settled": "Abgerechnet",
+    "closed": "Geschlossen",
+    "balance": "Dein Demo-Guthaben",
+    "market": "Markt",
+    "hasTicket": "Du hast ein Ticket",
+    "amount": "Betrag",
+    "amountRange": "1–500 DEMO",
+    "max": "Max",
+    "yourPick": "Deine Wahl",
+    "estReturn": "Geschätzte Auszahlung",
+    "refund": "Wird erstattet",
+    "waitingOpponent": "Warte auf ein Gegenticket",
+    "fine": "Die Schätzung ändert sich, während sich der Pool füllt, und steht fest, wenn die Wetten schließen. 2 % Gebühr inklusive. Ohne Gegenticket gibt es eine Rückerstattung.",
+    "rulesTitle": "Regeln",
+    "rulesBody": "Wetten sind nur vor dem Start von R1 für {seconds} Sekunden offen; zwischen den Runden sind sie geschlossen. Jeder Markt zahlt aus seinem eigenen Pool und wird am Kampfende einmal abgerechnet. Ein einseitiger Pool oder einer ohne Gewinner wird ohne Gebühr erstattet. Auch bei richtiger Wahl kann die Auszahlung unter dem Einsatz liegen. Pro Markt und Kampf ein Ticket. Ein Verbindungsabbruch storniert kein Ticket. Schläge und Tritte entscheiden das Ergebnis nach denselben Regeln.",
+    "ifWins": "bei Gewinn {amount}",
+    "refundNow": "vorerst Erstattungsfall",
+    "emptyOpen": "Noch keine Tickets. Triff eine Wahl und bestätige.",
+    "emptyClosed": "Du hast kein Ticket auf diesen Kampf. Wetten sind bei jedem Kampf {seconds} s vor R1 offen.",
+    "indicatorNote": "„Vorn / hinten“ ist nur ein Hinweis. Das Ergebnis steht fest, wenn der Kampf endet."
+  },
+  "steps": {
+    "pick": { "title": "Wählen", "body": "Wähle den Sieger, die Art oder die Zahl der Niederschläge. Du hast {seconds} Sekunden." },
+    "watch": { "title": "Zusehen", "body": "Dein Schein wird über drei Runden live verfolgt: vorn oder hinten." },
+    "result": { "title": "Ergebnis", "body": "Nach dem Kampf wird jeder Pool an die Gewinner ausgezahlt. Dein Browser spielt den Kampf erneut ab und prüft ihn." }
+  },
+  "pools": {
+    "aria": "Pools und letzte Tickets",
+    "title": "Pools",
+    "total": "{count, plural, one {# Ticket} other {# Tickets}} · {amount} DEMO · {online} online",
+    "all": "Alle Einträge ↗",
+    "poolLine": "{amount} DEMO · {status}",
+    "status": { "open": "offen", "locked": "gesperrt", "paid": "ausgezahlt", "refunded": "erstattet" },
+    "tapeEmpty": "Noch keine Tickets. Das erste Ticket erscheint hier."
+  },
+  "technical": {
+    "summary": "Regeln, Modell und Prüfung",
+    "p1": "Ein Kampf hat höchstens drei Runden: 30 Sekunden Wettfenster, 45 Sekunden pro Runde, dazwischen eine kurze Pause. Ein Kämpfer, der mehrfach hintereinander saubere Schläge oder Tritte an den Kopf bekommt, geht zu Boden; der Ringrichter zählt. Ein Kämpfer, dessen Gesundheit aufgebraucht ist oder der in einer Runde zum dritten Mal zu Boden geht, wird abgebrochen und der Kampf endet. Ohne Abbruch gewinnt man eine Runde über den angerichteten Schaden plus 120 Punkte pro Niederschlag; den Kampf gewinnt, wer mehr Runden holt, bei Gleichstand ist es ein Unentschieden. Gesundheit +250 und Kondition +350 gehen in die nächste Runde über. Techniken: Jab, Gerade, Haken, Aufwärtshaken, Körperhaken; Frontkick (Teep), Low Kick, Körperkick und Kopfkick; Knie und Clinch.",
+    "p2": "Die Seeds aller drei Runden werden vor dem Kampfstart gezogen; ihre Hashes werden vor Öffnung der Wetten veröffentlicht, jeder Seed wird mit dem Start seiner Runde offengelegt. Dein Browser spielt auch die früheren Runden aus dem veröffentlichten Protokoll erneut ab und prüft das Kampfergebnis. Das ist kein VRF und kein vom Betreiber unabhängiger Ergebnisbeweis.",
+    "p3": "Jeder Kämpfer hat sein eigenes, unabhängiges Gehirn. Er wählt jede Aktion selbst und sieht nur die Kampfdaten, die alle sehen: Runde, Zeit, Gesundheit und Kondition beider Seiten und was der Gegner bisher getan hat. Der Kämpfer behält, was er von Runde zu Runde im Kampf lernt; Regel und Anfangsgewichte werden zu Kampfbeginn eingefroren, und derselbe Seed samt Protokoll erzeugt denselben Kampf. Ob das etwas bringt, wird gesondert getestet, und das gemessene Ergebnis steht auf der Seite. Gemessener Effekt (vorab registrierter Test, 200 Kämpfe): Über den ganzen Kampf liegt der lernende Kämpfer gegen lernende Gegner im Schnitt +38 Punkte vor seiner nicht lernenden Kopie (95-%-Intervall −2…+74) und +20 gegen Gegner mit festem Stil (−5…+45). Weil die Intervalle null enthalten, gilt der Nutzen nicht als bewiesen. Die Wirkung des Trainings selbst ist klar (+284). Eine Überlegenheit der Fliegen-Konnektom-Struktur gegenüber einem durchmischten Netz konnte nicht gezeigt werden.",
+    "p4": "Alle 9 Sekunden schlägt der Eckentrainer Jev (bei Zeitüberschreitung ein deterministischer Ersatz) Absicht, Ziel und Bedrohung vor; der Kämpfer liest das nur als Eingabe. Weil die Pläne nach Wettschluss eintreffen, ist dieses Spiel nur DEMO. Das Bild wird per Code gezeichnet (Skelett, IK, Schrittplaner); Kamera, FPS und Ton beeinflussen das Ergebnis nicht. MaleCNS-v1.0-Daten sind CC BY 4.0: FlyEM / HHMI Janelia.",
+    "engine": "Engine",
+    "ledger": "Buch",
+    "commitment": "Rundenfestlegung",
+    "seedHashes": "Seed-Hashes",
+    "seed": "Seed",
+    "seedHidden": "Wird mit Rundenstart offengelegt."
+  },
+  "audit": {
+    "aria": "Kampfprotokolle",
+    "title": "Protokolle Kampf #{id}",
+    "close": "Protokoll schließen",
+    "summary": "{count, plural, one {# Ticket} other {# Tickets}} · {amount} DEMO",
+    "download": "JSON herunterladen ↓",
+    "requesting": "Protokoll wird angefordert. Öffne es erneut, falls der Kampf gewechselt hat."
+  },
+  "board": {
+    "aria": "Eckenpläne und Kämpferentscheidungen",
+    "jev": "Jevs Plan",
+    "fallback": "Ersatzplan",
+    "thinking": "{side} wägt gerade ab",
+    "wait": "Warte auf den nächsten Trainerplan…",
+    "percent": "{n} %",
+    "intent": { "pressure": "Druckvoll", "counter": "Konterstark", "cautious": "Vorsichtig", "outboxer": "Distanzboxer", "body": "Körperarbeit", "finisher": "Vollstrecker" },
+    "target": { "head": "Kopf", "body": "Körper" },
+    "threat": { "straight": "auf die Geraden achten", "hook": "auf die Haken achten", "upper": "auf den Aufwärtshaken achten", "body": "auf den Körper achten" },
+    "move": {
+      "jab": "Jab", "cross": "Gerade", "leadHook": "Führhaken", "rearHook": "Schlaghaken", "uppercut": "Aufwärtshaken", "bodyHook": "Körperhaken",
+      "teep": "Frontkick", "lowKick": "Low Kick", "bodyKick": "Körperkick", "headKick": "Kopfkick", "knee": "Knie",
+      "advance": "vor", "retreat": "zurück", "circleLeft": "links kreisen", "circleRight": "rechts kreisen", "guard": "Deckung", "slip": "wegducken", "roll": "abrollen", "clinch": "Clinch"
+    }
+  },
+  "scene": {
+    "head": "KOPF", "body": "KÖRPER", "guard": "DECKUNG", "leg": "BEIN",
+    "teep": "TEEP", "lowKick": "LOW KICK", "bodyKick": "KÖRPERKICK", "headKick": "KOPFKICK", "knee": "KNIE",
+    "counter": "KONTER",
+    "combo": "{n}ER-SERIE",
+    "dodge": "AUSGEWICHEN",
+    "knockdown": "NIEDERSCHLAG",
+    "knockdownSub": "{name} schickt ihn zu Boden",
+    "stoppage": "ABBRUCH",
+    "stoppageSub": "{name} gewinnt",
+    "rise": "STEHT WIEDER",
+    "riseSub": "Der Kampf geht weiter",
+    "count": "RINGRICHTER ZÄHLT",
+    "replay": "WIEDERHOLUNG",
+    "highlight": "MOMENT DER RUNDE",
+    "down": "AM BODEN",
+    "floor": "RINGSIDE · LIVE"
+  },
+  "error": {
+    "NOT_CONFIGURED": "Der Live-Dienst ist nicht eingerichtet.",
+    "SERVER_DATA": "Die Serverdaten konnten nicht geprüft werden.",
+    "ENGINE_MISMATCH": "Die Engine-Version der Arena stimmt nicht überein.",
+    "RESULT_CHANGED": "Ein abgeschlossenes Kampfergebnis hat sich geändert.",
+    "LOCKED_CHANGED": "Gesperrte Kampfdaten haben sich geändert.",
+    "HISTORY_MISMATCH": "Der Kampfverlauf stimmt nicht mit der Wiedergabe überein.",
+    "COMMITMENT_MISMATCH": "Die Seed-Festlegung des Kampfs stimmt nicht überein.",
+    "PLAN_LOG_MISMATCH": "Das Trainerplan-Protokoll stimmt nicht mit der Wiedergabe überein.",
+    "RESULT_MISMATCH": "Das Ergebnis stimmt nicht mit der deterministischen Wiedergabe überein.",
+    "MATCH_RESULT_MISMATCH": "Das Kampfergebnis stimmt nicht mit der Wiedergabe überein.",
+    "VERIFY_FAILED": "Die Prüfung konnte nicht abgeschlossen werden. Verbindung wird erneuert.",
+    "NO_TICKET_ID": "Eine sichere Ticket-ID konnte nicht erzeugt werden.",
+    "AMOUNT_RANGE": "Der Betrag muss zwischen 1 und 500 DEMO liegen.",
+    "RECOVERY_FAILED": "Der Ticket-Wiederherstellungseintrag konnte nicht gespeichert werden. Die Anfrage wurde nicht gesendet.",
+    "TICKET_RECHECK": "Der Ticketstatus wird unter derselben ID erneut geprüft.",
+    "ROUND_CLOSED": "Die Wetten sind geschlossen. Warte auf den nächsten Kampf.",
+    "WRONG_ROUND": "Der Kampf hat gewechselt.",
+    "ALREADY_BET": "Du hast für diesen Kampf in diesem Markt bereits ein Ticket.",
+    "INVALID_MESSAGE": "Diesen Markt gibt es in dieser Arena nicht.",
+    "INSUFFICIENT_CREDITS": "Du hast nicht genug Demo-Guthaben.",
+    "CAPACITY": "Die Demo-Kapazität ist erreicht.",
+    "SESSION_EXPIRED": "Deine Demo-Sitzung ist beendet.",
+    "SESSION_INVALID": "Die Demo-Sitzung wird erneuert."
+  }
+}
