@@ -1,0 +1,214 @@
+{
+ "date": "2026-10-20",
+ "scope": "i18n of Crash, Coinflip, Rewards, Stake (9 locales: en de pt fr it es tr zh ko)",
+ "level": "unit + local runtime (next dev :3034, Chromium 1194). Not production build, not hosted, not CI, no native-speaker review.",
+ "namespaces": {
+  "crash": 37,
+  "coinflip": 71,
+  "incentives": 155,
+  "common_additions": "game.errors(3), game.historyDetail(5), liveError(11)"
+ },
+ "commands": [
+  "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck",
+  "bash scripts/use-node.sh pnpm --filter @sollish/web test",
+  "PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3034 PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome bash scripts/use-node.sh pnpm --filter @sollish/web test:browser <spec> --workers=1 --output=<scratch>"
+ ],
+ "results": {
+  "typecheck": "pass",
+  "unit": "363/363 (tests/i18n.test.ts key parity included)",
+  "browser_tr_forced": {
+   "product": "14/14",
+   "solo-lifecycle": "5/5",
+   "demo-entropy": "4/4",
+   "wallet-reconnect": "4/4",
+   "i18n": "3/3",
+   "lobby": "15/15 (one 430px test failed once on a cold first run, passed on rerun)"
+  },
+  "note": "the first product run had 3 failures from cold dev compile timeouts; the rerun passed 14/14"
+ },
+ "turkish_identity": "every tr string fragment of crash/coinflip/incentives/common additions was matched against the original source text; only 'Geçersiz dönem' (from lib/tokens.ts default) is new text, identical to that default",
+ "locale_scan": {
+  "method": "for 8 non-tr locales, /game/crash, /game/coinflip, /rewards, /stake: body innerText scanned for Turkish letters and for leaked message keys",
+  "leaked_keys": 0,
+  "turkish_letters": "only locale names (Turkce, Francais) in the language selector; de/pt legitimately use u/o/c with diacritics",
+  "per_locale": {
+   "en": {
+    "crash": {
+     "turkishChars": 3,
+     "leakedKeys": [],
+     "historyRow": "Crash11:03 PM\t10 DEMO\t1.15× cash-out\t11.5 DEMO\nLatest round"
+    },
+    "coinflip": {
+     "turkishChars": 3,
+     "leakedKeys": [],
+     "historyRow": "Coinflip11:04 PM\t10 DEMO\tTails · Lost\t0 DEMO\nLatest round"
+    },
+    "rewards": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    },
+    "stake": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    }
+   },
+   "de": {
+    "crash": {
+     "turkishChars": 15,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "coinflip": {
+     "turkishChars": 16,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "rewards": {
+     "turkishChars": 22,
+     "leakedKeys": []
+    },
+    "stake": {
+     "turkishChars": 17,
+     "leakedKeys": []
+    }
+   },
+   "pt": {
+    "crash": {
+     "turkishChars": 7,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "coinflip": {
+     "turkishChars": 7,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "rewards": {
+     "turkishChars": 16,
+     "leakedKeys": []
+    },
+    "stake": {
+     "turkishChars": 15,
+     "leakedKeys": []
+    }
+   },
+   "fr": {
+    "crash": {
+     "turkishChars": 4,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "coinflip": {
+     "turkishChars": 4,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "rewards": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    },
+    "stake": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    }
+   },
+   "it": {
+    "crash": {
+     "turkishChars": 3,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "coinflip": {
+     "turkishChars": 3,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "rewards": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    },
+    "stake": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    }
+   },
+   "es": {
+    "crash": {
+     "turkishChars": 3,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "coinflip": {
+     "turkishChars": 3,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "rewards": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    },
+    "stake": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    }
+   },
+   "zh": {
+    "crash": {
+     "turkishChars": 3,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "coinflip": {
+     "turkishChars": 3,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "rewards": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    },
+    "stake": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    }
+   },
+   "ko": {
+    "crash": {
+     "turkishChars": 3,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "coinflip": {
+     "turkishChars": 3,
+     "leakedKeys": [],
+     "historyRow": null
+    },
+    "rewards": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    },
+    "stake": {
+     "turkishChars": 3,
+     "leakedKeys": []
+    }
+   }
+  }
+ },
+ "history_row_en": "Crash row '1.15x cash-out', Coinflip row 'Tails · Lost' (ledger detail stays Turkish; GameHistory rebuilds it in the active language)",
+ "screenshots": [
+  "ops/evidence/i18n-pages-20261020/crash-en.png",
+  "ops/evidence/i18n-pages-20261020/coinflip-en.png",
+  "ops/evidence/i18n-pages-20261020/rewards-en.png",
+  "ops/evidence/i18n-pages-20261020/stake-en.png"
+ ],
+ "limits": [
+  "Live (devnet) branches of coinflip, stake and rewards need NEXT_PUBLIC_* deployment env; they were only typechecked and unit tested, not rendered.",
+  "Ledger result lines written by settleDemo stay Turkish (stored data, unchanged); history rows are re-derived from them. A line of unknown shape is shown as stored.",
+  "A screenshot is not the owner's visual acceptance."
+ ],
+ "spec_guards_added": [
+  "solo-lifecycle.spec.ts",
+  "demo-entropy.spec.ts",
+  "wallet-reconnect.spec.ts"
+ ]
+}

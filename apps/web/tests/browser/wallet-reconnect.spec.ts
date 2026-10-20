@@ -1,5 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 
+if (process.env.PW_CHROMIUM_PATH) test.use({ launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } });
+
 // Owned Wallet Standard fixture. The two fixture.* storage entries simulate extension
 // authorization/call observations; the application stores only its wallet preference.
 async function installWallet(page: Page, late = false) {
