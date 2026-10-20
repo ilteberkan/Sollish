@@ -183,5 +183,28 @@
     "seconds": "{s} Sek.",
     "minutes": "{m} Min.",
     "hoursMinutes": "{h} Std. {mm} Min."
+  },
+  "rules": {
+    "ebru": {
+      "grid": "Das Raster ist 7×7. 5 oder mehr horizontal oder vertikal benachbarte Tintentropfen derselben Farbe bilden einen Cluster und zahlen; je größer der Cluster, desto höher die Auszahlungsstufe. Gewinn-Cluster lösen sich im Wasser auf, die darüberliegenden fallen herab und die Lücken werden aufgefüllt.",
+      "comb": "Wenn die Kette endet (auch ohne Gewinn), streicht der Kamm über das Brett: Jede Reihe verschiebt sich kreisförmig entlang einer Sinuskurve, und es können neue Cluster entstehen; höchstens 3 Kammdurchgänge pro Drehung. Der Meistertropfen (Wild) färbt seine Nachbarn dort, wo er landet, in der häufigsten Farbe. 3 oder mehr Goldene Kämme lösen 8 Freispiele (Tulpen-Marmorierung) aus; dort lässt jede platzende Zelle einen Farbfleck-Multiplikator fallen (von ×2 bis ×256), die Flecken wandern mit dem Kamm mit, und die Auszahlung eines Clusters, der darüber liegt, wird mit der Summe der Flecken multipliziert. Der Höchstgewinn ist das 10.000-Fache des Einsatzes."
+    },
+    "tarhun": {
+      "grid": "Das Raster ist 6×5. Du gewinnst, wenn irgendwo im Raster 8 oder mehr gleiche Symbole liegen; je mehr es sind, desto höher die Auszahlungsstufe. Gewinnsteine zerspringen, die darüberliegenden fallen herab und die Lücken werden aufgefüllt; die Kette läuft, bis kein Gewinn mehr übrig ist.",
+      "stones": "Sturmsteine (×2–×500) fallen im Grundspiel und in den Freispielen. Endet die Kette im Grundspiel mit einem Gewinn, multipliziert die Summe der Steine den Gewinn dieser Drehung. 4 oder mehr Blitzsiegel lösen 15 Freispiele aus; in den Freispielen werden die Steine jeder gewinnenden Drehung zum behaltenen Gesamtmultiplikator addiert, und der Gewinn wird mit dieser Summe multipliziert. 3 Siegel geben 5 Drehungen dazu. Der Höchstgewinn ist das 5.000-Fache des Einsatzes."
+    },
+    "cascade": {
+      "grid": "Das Raster ist 6×5. Du gewinnst, wenn irgendwo im Raster 8 oder mehr gleiche Symbole liegen; je mehr es sind, desto höher die Auszahlungsstufe. Gewinnsymbole platzen, die darüberliegenden fallen herab und die Lücken werden mit neuen Symbolen gefüllt. Die Kette läuft, bis kein Gewinn mehr übrig ist.",
+      "free": "4 oder mehr Sterne im Raster lösen 10 Freispiele aus. In den Freispielen geben 3 oder mehr Sterne weitere 5 Drehungen. Multiplikator-Kristalle fallen nur in den Freispielen; am Ende der Drehung werden die Werte der Kristalle im Raster addiert und, wenn der Gewinn dieser Drehung größer als null ist, mit dieser Summe multipliziert. Der Höchstgewinn ist das 5.000-Fache des Einsatzes; wird er erreicht, endet die Runde sofort."
+    },
+    "slotLocal": "Das Ergebnis wird vor dem Start der Drehung in deinem Browser mit lokalem Zufall bestimmt; die Animation spielt nur dieses Ergebnis ab. Auch wenn du die Seite verlässt, wird die Runde mit der festgelegten Auszahlung abgeschlossen. Es gibt keinen VRF-Nachweis.",
+    "crash": {
+      "play": "Wähle deinen Betrag und starte die Demo. Zahle manuell aus, während der Multiplikator steigt. Endet die Runde vor dir, verlierst du den Demo-Betrag dieser Runde.",
+      "local": "Berechnet wird die lokale Zeit im Moment des Klicks auf Auszahlen; das letzte Bild auf dem Bildschirm entscheidet nicht über das Ergebnis. Verlässt du die Seite, wird eine unfertige lokale Demo abgebrochen."
+    },
+    "coinflip": {
+      "play": "Wähle Kopf oder Zahl, gib den Demo-Betrag ein und wirf. Bei richtigem Tipp beträgt die Brutto-Rückzahlung das 1,96-Fache deines Betrags; bei falschem Tipp ist der Demo-Betrag dieser Runde verloren.",
+      "local": "Im lokalen Beispiel beträgt die Gewinnwahrscheinlichkeit 50 % und der theoretische Hausvorteil 2 %. Das ist kein laufendes On-Chain-Spiel und kein verifiziertes VRF-Ergebnis."
+    }
   }
 }

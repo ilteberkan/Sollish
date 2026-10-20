@@ -102,7 +102,8 @@
     "freeIntro": "Ergenekon başlıyor: {awarded} bedava dönüş kazandın.",
     "freeSpinWin": "Bedava dönüş {times}× kazandırdı. Toplam {total}×.",
     "freeSpinNone": "Bedava dönüşte kazanç yok.",
-    "freeOutro": "Ergenekon bitti. Toplam: {amount} DEMO, {spins} dönüş, {constellations} takımyıldız, genel çarpan ×{multiplier}."
+    "freeOutro": "Ergenekon bitti. Toplam: {amount} DEMO, {spins} dönüş, {constellations} takımyıldız, genel çarpan ×{multiplier}.",
+    "preview": "Önizleme turu: bakiye değişmez."
   },
   "autoplay": {
     "serverFailed": "Sunucu turu başlatılamadı",

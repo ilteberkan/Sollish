@@ -183,5 +183,28 @@
     "seconds": "{s} s",
     "minutes": "{m} min",
     "hoursMinutes": "{h} h {mm} min"
+  },
+  "rules": {
+    "ebru": {
+      "grid": "La cuadrícula es de 7×7. 5 o más gotas de tinta del mismo color vecinas en horizontal o en vertical forman un grupo y pagan; cuanto mayor es el grupo, más alto es el nivel de pago. Los grupos ganadores se disuelven en el agua, los de arriba caen y los huecos se rellenan.",
+      "comb": "Cuando la cadena termina (incluso sin premio), el peine barre el tablero: cada fila se desplaza de forma circular siguiendo una curva sinusoidal y pueden formarse nuevos grupos; como máximo 3 pasadas de peine por giro. La Gota Maestra (comodín) pinta a sus vecinas, donde cae, del color más frecuente. 3 o más Peines Dorados activan 8 giros gratis (Marmoleado de Tulipanes); en ellos cada celda que estalla suelta un multiplicador de mancha (de ×2 a ×256), las manchas se desplazan con el peine y el pago de un grupo que pasa por encima se multiplica por la suma de las manchas. El premio máximo es 10.000 veces la apuesta."
+    },
+    "tarhun": {
+      "grid": "La cuadrícula es de 6×5. Ganas cuando hay 8 o más símbolos iguales en cualquier lugar de la cuadrícula; cuantos más haya, más alto es el nivel de pago. Las piedras ganadoras se rompen, las de arriba caen y los huecos se rellenan; la cadena continúa hasta que no queda ningún premio.",
+      "stones": "Las Piedras de la Tormenta (×2–×500) caen en el juego base y en los giros gratis. Si la cadena del juego base termina con premio, la suma de las piedras multiplica el premio de ese giro. 4 o más Sellos del Rayo activan 15 giros gratis; en los giros gratis, las piedras de cada giro ganador se suman al multiplicador total conservado y el premio se multiplica por ese total. 3 sellos añaden 5 giros. El premio máximo es 5.000 veces la apuesta."
+    },
+    "cascade": {
+      "grid": "La cuadrícula es de 6×5. Ganas cuando hay 8 o más símbolos iguales en cualquier lugar de la cuadrícula; cuantos más haya, más alto es el nivel de pago. Los símbolos ganadores estallan, los de arriba caen y los huecos se rellenan con símbolos nuevos. La cadena continúa hasta que no queda ningún premio.",
+      "free": "4 o más estrellas en la cuadrícula activan 10 giros gratis. En los giros gratis, 3 o más estrellas añaden 5 giros más. Los cristales multiplicadores solo caen en los giros gratis; al terminar el giro se suman los valores de los cristales de la cuadrícula y, si el premio de ese giro es mayor que cero, se multiplica por esa suma. El premio máximo es 5.000 veces la apuesta; si se alcanza, la ronda termina de inmediato."
+    },
+    "slotLocal": "El resultado se determina en tu navegador con aleatoriedad local antes de que empiece el giro; la animación solo lo reproduce. Aunque salgas de la página, la ronda se cierra con el pago determinado. No hay prueba VRF.",
+    "crash": {
+      "play": "Elige tu importe e inicia la demo. Retira manualmente mientras sube el multiplicador. Si la ronda termina antes que tú, pierdes el importe demo de esa ronda.",
+      "local": "Se calcula el tiempo local en el instante del clic en retirar; el último fotograma en pantalla no decide el resultado. Si sales de la página, una demo local sin terminar se cancela."
+    },
+    "coinflip": {
+      "play": "Elige cara o cruz, introduce el importe demo y lanza. Si aciertas, el retorno bruto es 1,96 veces tu importe; si fallas, se pierde el importe demo de esa ronda.",
+      "local": "En el ejemplo local la probabilidad de ganar es del 50 % y la ventaja teórica de la casa es del 2 %. No es un juego on-chain en funcionamiento ni un resultado VRF verificado."
+    }
   }
 }

@@ -183,5 +183,28 @@
     "seconds": "{s} s",
     "minutes": "{m} min",
     "hoursMinutes": "{h} h {mm} min"
+  },
+  "rules": {
+    "ebru": {
+      "grid": "A grade é 7×7. 5 ou mais gotas de tinta da mesma cor vizinhas na horizontal ou na vertical formam um cluster e pagam; quanto maior o cluster, mais alto o nível de pagamento. Os clusters vencedores se dissolvem na água, os de cima caem e os espaços são preenchidos.",
+      "comb": "Quando a cadeia termina (mesmo sem ganho), o pente varre o tabuleiro: cada linha desliza circularmente seguindo uma curva senoidal e novos clusters podem se formar; no máximo 3 passadas do pente por giro. A Gota Mestra (curinga) pinta os vizinhos, onde cair, com a cor mais frequente. 3 ou mais Pentes Dourados ativam 8 giros grátis (Marmorização das Tulipas); neles, cada célula que estoura solta um multiplicador de mancha de tinta (de ×2 a ×256), as manchas deslizam junto com o pente e o pagamento de um cluster que passa por cima delas é multiplicado pela soma das manchas. O ganho máximo é 10.000 vezes a aposta."
+    },
+    "tarhun": {
+      "grid": "A grade é 6×5. Você ganha quando há 8 ou mais do mesmo símbolo em qualquer lugar da grade; quanto mais símbolos, mais alto o nível de pagamento. As pedras vencedoras se quebram, as de cima caem e os espaços são preenchidos; a cadeia continua até não restar ganho.",
+      "stones": "As Pedras da Tempestade (×2–×500) caem no jogo base e nos giros grátis. Se a cadeia do jogo base terminar com ganho, a soma das pedras multiplica o ganho daquele giro. 4 ou mais Selos do Relâmpago ativam 15 giros grátis; nos giros grátis, as pedras de cada giro vencedor são somadas ao multiplicador total mantido e o ganho é multiplicado por esse total. 3 selos adicionam 5 giros. O ganho máximo é 5.000 vezes a aposta."
+    },
+    "cascade": {
+      "grid": "A grade é 6×5. Você ganha quando há 8 ou mais do mesmo símbolo em qualquer lugar da grade; quanto mais símbolos, mais alto o nível de pagamento. Os símbolos vencedores estouram, os de cima caem e os espaços são preenchidos com novos símbolos. A cadeia continua até não restar ganho.",
+      "free": "4 ou mais estrelas na grade ativam 10 giros grátis. Nos giros grátis, 3 ou mais estrelas adicionam mais 5 giros. Os cristais multiplicadores caem apenas nos giros grátis; quando o giro termina, os valores dos cristais na grade são somados e, se o ganho daquele giro for maior que zero, multiplicado por essa soma. O ganho máximo é 5.000 vezes a aposta; se for atingido, a rodada termina imediatamente."
+    },
+    "slotLocal": "O resultado é determinado no seu navegador, com aleatoriedade local, antes de o giro começar; a animação apenas reproduz esse resultado. Mesmo que você saia da página, a rodada é encerrada com o pagamento determinado. Não há prova VRF.",
+    "crash": {
+      "play": "Escolha seu valor e inicie a demo. Saque manualmente enquanto o multiplicador sobe. Se a rodada terminar antes de você, você perde o valor demo dessa rodada.",
+      "local": "Calcula-se o tempo local no instante do clique em sacar; o último quadro na tela não decide o resultado. Se você sair da página, uma demo local não concluída é cancelada."
+    },
+    "coinflip": {
+      "play": "Escolha cara ou coroa, informe o valor demo e lance a moeda. Se acertar, o retorno bruto é 1,96 vez o seu valor; se errar, o valor demo dessa rodada é perdido.",
+      "local": "No exemplo local, a probabilidade de ganhar é de 50% e a margem teórica da casa é de 2%. Isto não é um jogo on-chain em funcionamento nem um resultado VRF verificado."
+    }
   }
 }

@@ -183,5 +183,28 @@
     "seconds": "{s} sn",
     "minutes": "{m} dk",
     "hoursMinutes": "{h} sa {mm} dk"
+  },
+  "rules": {
+    "ebru": {
+      "grid": "Izgara 7×7’dir. Yatay veya dikey komşu 5 veya daha fazla aynı renk mürekkep damlası bir küme oluşturur ve öder; küme büyüdükçe ödeme kademesi yükselir. Kazanan kümeler suya dağılır, üstündekiler düşer ve boşluklar dolar.",
+      "comb": "Zincir bitince (kazanç olmasa bile) tarak tahtayı tarar: her satır sinüs eğrisine göre dairesel kayar ve yeni kümeler oluşabilir; dönüş başına en çok 3 tarak geçişi. Usta Damlası (joker) düştüğü yerde komşularını en sık renge boyar. 3 veya daha fazla Altın Tarak 8 bedava dönüş (Lale Ebrusu) açar; burada patlayan her hücreye boya lekesi çarpanı düşer (×2’den ×256’ya), lekeler tarakla birlikte kayar ve üstünden geçen kümenin ödemesini lekelerin toplamıyla çarpar. Azami kazanç bahsin 10.000 katıdır."
+    },
+    "tarhun": {
+      "grid": "Izgara 6×5’tir. Aynı sembolden ızgarada her yerde 8 veya daha fazla varsa kazanırsın; sayı arttıkça ödeme kademesi yükselir. Kazanan taşlar parçalanır, üstündekiler düşer ve boşluklar dolar; kazanç kalmayana kadar zincir sürer.",
+      "stones": "Fırtına Taşları (×2–×500) temel oyunda ve bedava dönüşte düşer. Temel oyunda zincir kazançla biterse taşların toplamı o dönüşün kazancını çarpar. 4 veya daha fazla Şimşek Mührü 15 bedava dönüş açar; bedava dönüşte kazanan her dönüşün taşları korunan toplam çarpana eklenir ve kazanç bu toplamla çarpılır. 3 mühür 5 dönüş ekler. Azami kazanç bahsin 5.000 katıdır."
+    },
+    "cascade": {
+      "grid": "Izgara 6×5’tir. Aynı sembolden ızgarada her yerde 8 veya daha fazla varsa kazanırsın; sayı arttıkça ödeme kademesi yükselir. Kazanan semboller patlar, üstündekiler düşer ve boşluklar yeni sembollerle dolar. Kazanç kalmayana kadar zincir sürer.",
+      "free": "Izgarada 4 veya daha fazla yıldız 10 bedava dönüş açar. Bedava dönüşte 3 veya daha fazla yıldız 5 dönüş daha ekler. Çarpan kristalleri yalnız bedava dönüşte düşer; dönüş bitince ızgaradaki kristallerin değerleri toplanır ve o dönüşün kazancı sıfırdan büyükse bu toplamla çarpılır. Azami kazanç bahsin 5.000 katıdır; ulaşılırsa tur hemen biter."
+    },
+    "slotLocal": "Sonuç, dönüş başlamadan önce tarayıcında yerel rastgelelikle belirlenir; animasyon yalnızca bu sonucu oynatır. Sayfadan ayrılsan bile tur belirlenen ödemeyle kapanır. VRF kanıtı yoktur.",
+    "crash": {
+      "play": "Miktarını seç ve demoyu başlat. Çarpan yükselirken manuel olarak çıkış yap. Tur senden önce biterse o turdaki demo miktarını kaybedersin.",
+      "local": "Çıkış tıklaması anındaki yerel süre hesaplanır; ekrandaki son kare sonucu belirlemez. Sayfadan ayrılırsan tamamlanmamış yerel demo iptal edilir."
+    },
+    "coinflip": {
+      "play": "Yazı veya tura seç, demo miktarını gir ve çevir. Doğru tahminde brüt dönüş miktarın 1,96 katıdır; yanlış tahminde o turdaki demo miktarı kaybedilir.",
+      "local": "Yerel örnekte kazanma olasılığı %50, teorik kesinti %2’dir. Bu, çalışan bir zincir üstü oyun veya doğrulanmış VRF sonucu değildir."
+    }
   }
 }

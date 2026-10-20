@@ -183,5 +183,28 @@
     "seconds": "{s} s",
     "minutes": "{m} min",
     "hoursMinutes": "{h} h {mm} min"
+  },
+  "rules": {
+    "ebru": {
+      "grid": "La grille est de 7×7. 5 gouttes d’encre ou plus de la même couleur, voisines à l’horizontale ou à la verticale, forment un groupe et paient ; plus le groupe est grand, plus le palier de gain est élevé. Les groupes gagnants se dissolvent dans l’eau, ceux du dessus tombent et les vides sont comblés.",
+      "comb": "Quand la chaîne se termine (même sans gain), le peigne balaie le plateau : chaque rangée se décale circulairement le long d’une sinusoïde et de nouveaux groupes peuvent se former ; 3 passages de peigne au plus par tour. La Goutte Maîtresse (joker) colore ses voisines de la couleur la plus fréquente là où elle tombe. 3 Peignes Dorés ou plus déclenchent 8 tours gratuits (Marbrure des Tulipes) ; pendant ceux-ci, chaque case qui éclate laisse tomber un multiplicateur de tache (de ×2 à ×256), les taches glissent avec le peigne et le gain d’un groupe qui passe dessus est multiplié par la somme des taches. Le gain maximal est de 10 000 fois la mise."
+    },
+    "tarhun": {
+      "grid": "La grille est de 6×5. Vous gagnez lorsqu’il y a 8 symboles identiques ou plus n’importe où sur la grille ; plus il y en a, plus le palier de gain est élevé. Les pierres gagnantes éclatent, celles du dessus tombent et les vides sont comblés ; la chaîne continue jusqu’à ce qu’il ne reste plus de gain.",
+      "stones": "Les Pierres de Tempête (×2–×500) tombent dans le jeu de base et pendant les tours gratuits. Si la chaîne du jeu de base se termine par un gain, la somme des pierres multiplie le gain de ce tour. 4 Sceaux de la Foudre ou plus déclenchent 15 tours gratuits ; pendant les tours gratuits, les pierres de chaque tour gagnant sont ajoutées au multiplicateur total conservé et le gain est multiplié par ce total. 3 sceaux ajoutent 5 tours. Le gain maximal est de 5 000 fois la mise."
+    },
+    "cascade": {
+      "grid": "La grille est de 6×5. Vous gagnez lorsqu’il y a 8 symboles identiques ou plus n’importe où sur la grille ; plus il y en a, plus le palier de gain est élevé. Les symboles gagnants éclatent, ceux du dessus tombent et les vides sont comblés par de nouveaux symboles. La chaîne continue jusqu’à ce qu’il ne reste plus de gain.",
+      "free": "4 étoiles ou plus sur la grille déclenchent 10 tours gratuits. Pendant les tours gratuits, 3 étoiles ou plus ajoutent 5 tours de plus. Les cristaux multiplicateurs ne tombent que pendant les tours gratuits ; à la fin du tour, les valeurs des cristaux présents sur la grille sont additionnées et, si le gain de ce tour est supérieur à zéro, multiplié par cette somme. Le gain maximal est de 5 000 fois la mise ; s’il est atteint, la manche se termine immédiatement."
+    },
+    "slotLocal": "Le résultat est déterminé dans votre navigateur, avec un aléa local, avant le début du tour ; l’animation ne fait que le rejouer. Même si vous quittez la page, la manche se termine avec le gain déterminé. Il n’y a pas de preuve VRF.",
+    "crash": {
+      "play": "Choisissez votre montant et lancez la démo. Encaissez manuellement pendant que le multiplicateur monte. Si la manche se termine avant vous, vous perdez le montant démo de cette manche.",
+      "local": "Le temps local est calculé à l’instant du clic sur Encaisser ; la dernière image à l’écran ne décide pas du résultat. Si vous quittez la page, une démo locale inachevée est annulée."
+    },
+    "coinflip": {
+      "play": "Choisissez pile ou face, saisissez le montant démo et lancez. En cas de bonne réponse, le retour brut est de 1,96 fois votre montant ; en cas de mauvaise réponse, le montant démo de cette manche est perdu.",
+      "local": "Dans l’exemple local, la probabilité de gain est de 50 % et l’avantage théorique de la maison de 2 %. Il ne s’agit ni d’un jeu on-chain en service ni d’un résultat VRF vérifié."
+    }
   }
 }

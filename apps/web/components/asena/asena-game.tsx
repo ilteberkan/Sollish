@@ -826,13 +826,13 @@ export function AsenaGame() {
       ergenekon: (level: 1 | 2 | 3) => { setBurst({ key: ++burstKey.current, level, multiplier: [1, 2, 3, 5][level]!, life: 1500 }); scene.current?.ergenekon(level); return true; },
       play: (seedHex: string, mode: AsenaMode = 'standard', betCents = 1000) => {
         if (!idle() || autoRef.current) return false;
-        presentReplay(playAsenaRound(seedHex, betCents, mode), null, 'Önizleme turu: bakiye değişmez.');
+        presentReplay(playAsenaRound(seedHex, betCents, mode), null, t('announce.preview'));
         return true;
       },
       time: () => player.current?.time ?? null,
     };
     return () => { delete win.__asenaPreview; };
-  }, [openCelebration, presentReplay, reducedMotion, showCallout, sound]);
+  }, [openCelebration, presentReplay, reducedMotion, showCallout, sound, t]);
 
   /* ---------------------------------------------------------------- autoplay */
   const startAutoplay = useCallback((config: AutoplayConfig) => {

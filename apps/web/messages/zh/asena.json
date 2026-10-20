@@ -102,7 +102,8 @@
     "freeIntro": "Ergenekon 开始：你赢得了 {awarded} 次免费旋转。",
     "freeSpinWin": "本次免费旋转赢取 {times}×。累计 {total}×。",
     "freeSpinNone": "本次免费旋转未中奖。",
-    "freeOutro": "Ergenekon 结束。总计：{amount} DEMO，{spins} 转，{constellations} 个星座，全局倍数 ×{multiplier}。"
+    "freeOutro": "Ergenekon 结束。总计：{amount} DEMO，{spins} 转，{constellations} 个星座，全局倍数 ×{multiplier}。",
+    "preview": "预览回合：余额不变。"
   },
   "autoplay": {
     "serverFailed": "服务器无法开始本轮",

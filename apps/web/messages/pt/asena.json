@@ -102,7 +102,8 @@
     "freeIntro": "Ergenekon começa: você ganhou {awarded} giros grátis.",
     "freeSpinWin": "O giro grátis pagou {times}×. Total {total}×.",
     "freeSpinNone": "Sem ganho neste giro grátis.",
-    "freeOutro": "Ergenekon encerrado. Total: {amount} DEMO, {spins} giros, {constellations} constelações, multiplicador global ×{multiplier}."
+    "freeOutro": "Ergenekon encerrado. Total: {amount} DEMO, {spins} giros, {constellations} constelações, multiplicador global ×{multiplier}.",
+    "preview": "Rodada de prévia: o saldo não muda."
   },
   "autoplay": {
     "serverFailed": "O servidor não conseguiu iniciar a rodada",

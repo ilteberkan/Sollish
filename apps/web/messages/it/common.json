@@ -183,5 +183,28 @@
     "seconds": "{s} s",
     "minutes": "{m} min",
     "hoursMinutes": "{h} h {mm} min"
+  },
+  "rules": {
+    "ebru": {
+      "grid": "La griglia è 7×7. 5 o più gocce d’inchiostro dello stesso colore adiacenti in orizzontale o in verticale formano un gruppo e pagano; più grande è il gruppo, più alto è il livello di pagamento. I gruppi vincenti si dissolvono nell’acqua, quelli sopra cadono e i vuoti vengono riempiti.",
+      "comb": "Quando la catena finisce (anche senza vincita) il pettine passa sulla tavola: ogni riga scorre in modo circolare lungo una curva sinusoidale e possono formarsi nuovi gruppi; al massimo 3 passaggi del pettine per giro. La Goccia Maestra (jolly) colora le vicine, dove cade, con il colore più frequente. 3 o più Pettini Dorati attivano 8 giri gratis (Marmorizzazione dei Tulipani); in questi ogni cella che scoppia lascia cadere un moltiplicatore di macchia (da ×2 a ×256), le macchie scorrono insieme al pettine e la vincita di un gruppo che passa sopra di esse viene moltiplicata per la somma delle macchie. La vincita massima è 10.000 volte la puntata."
+    },
+    "tarhun": {
+      "grid": "La griglia è 6×5. Vinci quando ci sono 8 o più simboli uguali in qualsiasi punto della griglia; più sono, più alto è il livello di pagamento. Le pietre vincenti si frantumano, quelle sopra cadono e i vuoti vengono riempiti; la catena continua finché non resta nessuna vincita.",
+      "stones": "Le Pietre della Tempesta (×2–×500) cadono nel gioco base e nei giri gratis. Se la catena nel gioco base termina con una vincita, la somma delle pietre moltiplica la vincita di quel giro. 4 o più Sigilli del Fulmine attivano 15 giri gratis; nei giri gratis le pietre di ogni giro vincente si sommano al moltiplicatore totale conservato e la vincita viene moltiplicata per quel totale. 3 sigilli aggiungono 5 giri. La vincita massima è 5.000 volte la puntata."
+    },
+    "cascade": {
+      "grid": "La griglia è 6×5. Vinci quando ci sono 8 o più simboli uguali in qualsiasi punto della griglia; più sono, più alto è il livello di pagamento. I simboli vincenti scoppiano, quelli sopra cadono e i vuoti vengono riempiti con nuovi simboli. La catena continua finché non resta nessuna vincita.",
+      "free": "4 o più stelle sulla griglia attivano 10 giri gratis. Nei giri gratis, 3 o più stelle aggiungono altri 5 giri. I cristalli moltiplicatori cadono solo nei giri gratis; quando il giro finisce, i valori dei cristalli sulla griglia vengono sommati e, se la vincita di quel giro è maggiore di zero, moltiplicata per questa somma. La vincita massima è 5.000 volte la puntata; se viene raggiunta, il round termina subito."
+    },
+    "slotLocal": "Il risultato viene determinato nel tuo browser con casualità locale prima che il giro inizi; l’animazione si limita a riprodurlo. Anche se lasci la pagina, il round si chiude con la vincita stabilita. Non c’è una prova VRF.",
+    "crash": {
+      "play": "Scegli l’importo e avvia la demo. Incassa manualmente mentre il moltiplicatore sale. Se il round finisce prima di te, perdi l’importo demo di quel round.",
+      "local": "Viene calcolato il tempo locale al momento del clic su Incassa; l’ultimo fotogramma sullo schermo non decide il risultato. Se lasci la pagina, una demo locale non conclusa viene annullata."
+    },
+    "coinflip": {
+      "play": "Scegli testa o croce, inserisci l’importo demo e lancia. Se indovini, il ritorno lordo è 1,96 volte il tuo importo; se sbagli, l’importo demo di quel round è perso.",
+      "local": "Nell’esempio locale la probabilità di vincita è del 50% e il vantaggio teorico del banco è del 2%. Non è un gioco on-chain in funzione né un risultato VRF verificato."
+    }
   }
 }

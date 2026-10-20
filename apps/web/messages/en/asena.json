@@ -102,7 +102,8 @@
     "freeIntro": "Ergenekon begins: you won {awarded} free spins.",
     "freeSpinWin": "Free spin paid {times}×. Total {total}×.",
     "freeSpinNone": "No win on this free spin.",
-    "freeOutro": "Ergenekon ended. Total: {amount} DEMO, {spins} spins, {constellations} constellations, global multiplier ×{multiplier}."
+    "freeOutro": "Ergenekon ended. Total: {amount} DEMO, {spins} spins, {constellations} constellations, global multiplier ×{multiplier}.",
+    "preview": "Preview round: the balance does not change."
   },
   "autoplay": {
     "serverFailed": "The server could not start the round",

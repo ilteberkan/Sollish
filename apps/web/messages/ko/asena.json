@@ -102,7 +102,8 @@
     "freeIntro": "Ergenekon이 시작됩니다. 프리 스핀 {awarded}회를 획득했습니다.",
     "freeSpinWin": "프리 스핀에서 {times}× 당첨. 합계 {total}×.",
     "freeSpinNone": "이번 프리 스핀은 당첨이 없습니다.",
-    "freeOutro": "Ergenekon 종료. 합계: {amount} DEMO, {spins}회, 별자리 {constellations}개, 전체 배수 ×{multiplier}."
+    "freeOutro": "Ergenekon 종료. 합계: {amount} DEMO, {spins}회, 별자리 {constellations}개, 전체 배수 ×{multiplier}.",
+    "preview": "미리보기 라운드: 잔액은 변하지 않습니다."
   },
   "autoplay": {
     "serverFailed": "서버가 라운드를 시작하지 못했습니다",
