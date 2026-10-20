@@ -384,20 +384,34 @@ export function ebruMoney(cents: number): string { return fixed2().format(cents 
 /** Hundredths of the bet as a multiple: 1240 -> "12,40". */
 export function ebruTimes(hundredths: number): string { return fixed2().format(hundredths / 100); }
 
-/** History row text: "4 küme · 1 tarak kazancı · 3,04×", "Lale Ebrusu ×8 · en büyük leke ×16 · 40,20×", "Kazanç yok". */
-export function ebruHistoryDetail(round: EbruRound): string {
-  const total = `${ebruTimes(round.totalHundredths)}×`;
-  if (round.capped) return `Azami kazanç · ${total}`;
-  if (round.freeSpinsTriggered) {
-    const maxStain = Math.max(0, ...round.spins.map(s => s.maxStain));
-    return `Lale Ebrusu ×${round.spins.length - 1}${maxStain > 0 ? ` · en büyük leke ×${maxStain}` : ''} · ${total}`;
-  }
-  if (round.totalHundredths === 0) return 'Kazanç yok';
+/** What a history row says about a round, without wording (the translated UI builds the text from this). */
+export type EbruHistoryParts =
+  | { kind: 'capped'; totalHundredths: number }
+  | { kind: 'free'; spins: number; maxStain: number; totalHundredths: number }
+  | { kind: 'none' }
+  | { kind: 'clusters'; clusters: number; combWins: number; combs: number; totalHundredths: number };
+export function ebruHistoryParts(round: EbruRound): EbruHistoryParts {
+  if (round.capped) return { kind: 'capped', totalHundredths: round.totalHundredths };
+  if (round.freeSpinsTriggered) return { kind: 'free', spins: round.spins.length - 1, maxStain: Math.max(0, ...round.spins.map(s => s.maxStain)), totalHundredths: round.totalHundredths };
+  if (round.totalHundredths === 0) return { kind: 'none' };
   const base = round.spins[0]!;
-  const parts = [`${base.clusterCount} küme`];
-  if (base.combWins > 0) parts.push(`${base.combWins} tarak kazancı`);
-  if (base.scatterHundredths > 0) parts.push(`${base.scatterCount} Altın Tarak`);
-  return `${parts.join(' · ')} · ${total}`;
+  return { kind: 'clusters', clusters: base.clusterCount, combWins: base.combWins, combs: base.scatterHundredths > 0 ? base.scatterCount : 0, totalHundredths: round.totalHundredths };
+}
+
+/** History row text (Turkish, stored with the record): "4 küme · 1 tarak kazancı · 3,04×", "Lale Ebrusu ×8 · en büyük leke ×16 · 40,20×", "Kazanç yok". */
+export function ebruHistoryDetail(round: EbruRound): string {
+  const parts = ebruHistoryParts(round);
+  switch (parts.kind) {
+    case 'capped': return `Azami kazanç · ${ebruTimes(parts.totalHundredths)}×`;
+    case 'free': return `Lale Ebrusu ×${parts.spins}${parts.maxStain > 0 ? ` · en büyük leke ×${parts.maxStain}` : ''} · ${ebruTimes(parts.totalHundredths)}×`;
+    case 'none': return 'Kazanç yok';
+    case 'clusters': {
+      const items = [`${parts.clusters} küme`];
+      if (parts.combWins > 0) items.push(`${parts.combWins} tarak kazancı`);
+      if (parts.combs > 0) items.push(`${parts.combs} Altın Tarak`);
+      return `${items.join(' · ')} · ${ebruTimes(parts.totalHundredths)}×`;
+    }
+  }
 }
 
 /** Screen-reader line for one cluster: "6 altın lale, leke ×4, 12,00× kazanç". */

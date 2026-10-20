@@ -1,17 +1,18 @@
 'use client';
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { useRouter } from 'next/navigation';
-import { CASCADE2_RTP, playCascade2Round, type Cascade2Round, type CascadeMode } from '@sollish/protocol';
-import { demoNumber } from '@/lib/demo';
-import { buildCascadeTimeline, cascadeHistoryDetail, centsFor, moneyText, multiplierText, winAnnouncement, type CascadeTimeline, type Meter, type TimelineEvent } from '@/lib/cascade-timeline';
+import { CASCADE2_MAX_WIN_MULTIPLIER, CASCADE2_RTP, CASCADE_FREE_SPINS_TRIGGER, playCascade2Round, type Cascade2Round, type CascadeMode } from '@sollish/protocol';
+import { DEMO_START_CENTS } from '@/lib/demo';
+import { useFormat, useT } from '@/lib/i18n/client';
+import { percentOf } from '@/lib/slot-kit/percent';
+import { buildCascadeTimeline, cascadeHistoryDetail, centsFor, type CascadeTimeline, type Meter, type TimelineEvent } from '@/lib/cascade-timeline';
 import { WIN_TIER_INFO, countUpSchedule, multiplierCalloutTier, type CelebrationLevel, type CountUpSchedule, type WinTier } from '@/lib/slot-kit/win-tiers';
 import { TimelinePlayer, type EventInfo } from '@/lib/cascade-player';
-import { AUTOPLAY_STOP_REASONS, autoplayNetLossCents, cancelAutoplay, createAutoplay, type AutoplayConfig, type AutoplayState } from '@/lib/slot-kit/autoplay';
-import { formatAmount, formatDemo, formatSignedDemo } from '@/lib/slot-kit/bet';
+import { autoplayNetLossCents, cancelAutoplay, createAutoplay, type AutoplayConfig, type AutoplayState, type AutoplayStopCode } from '@/lib/slot-kit/autoplay';
 import { SPIN_SPEEDS, type SpinSpeed } from '@/lib/slot-kit/settings';
 import {
   CASCADE_AUTOPLAY_GAP, CASCADE_BET_LADDER, CASCADE_COST_MODES, CASCADE_DEFAULT_BET_CENTS, CASCADE_MAX_BET_CENTS, CASCADE_MIN_BET_CENTS,
-  autoplayAfterRound, autoplayBeforeSpin, buyBlockReason, cascadeCost, cascadeLedgerLimits, cascadeTimelineOptions, formatRtp, shortRoundId,
+  autoplayAfterRound, autoplayBeforeSpin, buyBlock, cascadeCost, cascadeLedgerLimits, cascadeTimelineOptions, shortRoundId,
 } from '@/lib/cascade-controls';
 import { markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
 import { CASCADE_ENGINE } from '@/lib/slot-engines/cascade';
@@ -28,7 +29,8 @@ import { CascadeBoard, type BoardHandle } from './cascade-board';
 import { CascadeHistory } from './cascade-history';
 import { CascadeFx, SYMBOL_COLORS } from './fx';
 import { cascadeInfoPages } from './info-pages';
-import { SYMBOL_LABELS, SymbolArt } from './symbols';
+import { SymbolArt } from './symbols';
+import { useSymbolNames } from './use-symbol-names';
 import { useCascadeSound } from './use-cascade-sound';
 import { FeatureTotal, WinCelebration } from './win-celebration';
 import styles from './cascade-game.module.css';
@@ -63,9 +65,9 @@ type Toast = { key: number; text: string; tone: 'info' | 'warn' };
 type ModalId = 'settings' | 'info' | 'autoplay' | 'buy' | null;
 type Boot = { phase: 'loading' | 'ready' | 'done'; progress: number };
 
-const ENTROPY_ERROR = 'Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.';
-const CALLOUT_TAGS: Record<WinTier, string> = { 0: 'Çarpan', 1: 'Büyük çarpan', 2: 'Mega çarpan', 3: 'Süper çarpan', 4: 'Efsane çarpan' };
-const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hızlı', turbo: 'Turbo' };
+/** Why autoplay stopped: a slot-kit code, or one of this game's own. The text is translated where it is shown. */
+type StopCode = AutoplayStopCode | 'server-failed' | 'spin-failed' | 'quit';
+const SPEED_KEYS = { normal: 'settings.speedNormal', quick: 'settings.speedQuick', turbo: 'settings.speedTurbo' } as const satisfies Record<SpinSpeed, string>;
 const ZERO: Meter = { spin: 0, total: 0 };
 const BET_KEY = 'sollish:cascade:bet';
 /** The local DEMO source over cascade's engine only (lib/slot-engines/cascade.ts); the other games' engines are not in this route. */
@@ -92,26 +94,26 @@ function realityIntervalOverride(): number | undefined {
 }
 
 /** Count-up number that writes its own text node (no React re-render per frame). */
-function CountUp({ cents, duration, instant, className, from }: { cents: number; duration: number; instant?: boolean; className?: string; from?: number }) {
+function CountUp({ cents, duration, instant, className, from, format }: { cents: number; duration: number; instant?: boolean; className?: string; from?: number; format: (cents: number) => string }) {
   const node = useRef<HTMLSpanElement>(null);
   const shown = useRef(from ?? cents);
-  const [initial] = useState(() => moneyText(from ?? cents));
+  const [initial] = useState(() => format(from ?? cents));
   useEffect(() => {
     const el = node.current; if (!el) return;
     const from = shown.current, to = cents;
-    if (instant || duration <= 0 || from === to || typeof requestAnimationFrame === 'undefined') { shown.current = to; el.textContent = moneyText(to); return; }
+    if (instant || duration <= 0 || from === to || typeof requestAnimationFrame === 'undefined') { shown.current = to; el.textContent = format(to); return; }
     const start = performance.now(); let frame = 0;
     const step = (now: number) => {
       // rAF timestamps can precede `start` (frame start vs. effect time): clamp so the meter never dips below `from`.
       const p = Math.min(1, Math.max(0, (now - start) / duration));
       const eased = 1 - (1 - p) ** 3;
       shown.current = Math.round(from + (to - from) * eased);
-      el.textContent = moneyText(shown.current);
+      el.textContent = format(shown.current);
       if (p < 1) frame = requestAnimationFrame(step);
     };
     frame = requestAnimationFrame(step);
-    return () => { cancelAnimationFrame(frame); shown.current = to; el.textContent = moneyText(to); };
-  }, [cents, duration, instant]);
+    return () => { cancelAnimationFrame(frame); shown.current = to; el.textContent = format(to); };
+  }, [cents, duration, instant, format]);
   return <span ref={node} className={className}>{initial}</span>;
 }
 
@@ -154,6 +156,13 @@ const StaticFooter = memo(function StaticFooter({ remote }: { remote: boolean })
 export function CascadeGame() {
   const { reserveDemo, settleDemo, recordRemote, setActiveDemo, demoBalance, resetDemoBalance } = useProduct();
   const router = useRouter();
+  const t = useT('cascade');
+  const tc = useT('common');
+  const tk = useT('slotKit');
+  const format = useFormat();
+  const names = useSymbolNames();
+  const money = format.amount;
+  const gameTitle = tc('games.cascade');
   const { settings, update: updateSettings, reset: resetSettings } = useSlotSettings('cascade');
   const [realityMs] = useState(realityIntervalOverride);
   const session = useSession(realityMs ? { realityIntervalMs: realityMs } : {});
@@ -298,16 +307,17 @@ export function CascadeGame() {
     if (current && !current.settled) settleRef.current(current);
   }, []);
 
-  const stopAutoplay = useCallback((reason: string, tone: Toast['tone'] = 'warn') => {
+  const stopAutoplay = useCallback((code: StopCode, tone: Toast['tone'] = 'warn') => {
     const state = autoRef.current;
     if (!state) return;
     autoRef.current = null;
     setAuto(null);
     sound.autoplay(false);
     const net = -autoplayNetLossCents(state);
-    showToast(`Otomatik oyun durdu: ${reason}. ${state.spinsDone} tur, net ${formatSignedDemo(net)}.`, tone);
-    setAnnounce(`Otomatik oyun durdu: ${reason}.`);
-  }, [showToast, sound]);
+    const reason = code === 'server-failed' ? t('autoplay.serverFailed') : code === 'spin-failed' ? t('autoplay.spinFailed') : code === 'quit' ? t('autoplay.quit') : tk(`autoplay.reasons.${code}`);
+    showToast(t('autoplay.stopped', { reason, spins: state.spinsDone, net: format.signedDemo(net) }), tone);
+    setAnnounce(t('autoplay.stoppedShort', { reason }));
+  }, [showToast, sound, t, tk, format]);
 
   const finishRound = useCallback((current: LiveRound) => {
     settle(current);
@@ -318,7 +328,7 @@ export function CascadeGame() {
     setLastWin({ payout: round.payoutCents, total: round.totalHundredths, replay: current.id === null });
     if (current.id === null) {
       setReplaying(null);
-      setAnnounce(`Tekrar bitti: ${demoNumber(round.payoutCents)} DEMO, ${multiplierText(round.totalHundredths)}×. Bakiye değişmedi.`);
+      setAnnounce(t('announce.replayDone', { amount: format.demo(round.payoutCents), times: money(round.totalHundredths) }));
       sound.scene('base');
       return;
     }
@@ -329,9 +339,8 @@ export function CascadeGame() {
       setAuto(next);
     }
     sound.scene('base');
-    const total = demoNumber(round.payoutCents);
-    setAnnounce(round.payoutCents > 0 ? `Tur bitti. Toplam kazanç ${total} DEMO, ${multiplierText(round.totalHundredths)}×.` : 'Tur bitti. Kazanç yok.');
-  }, [settle, sound]);
+    setAnnounce(round.payoutCents > 0 ? t('announce.roundEnd', { amount: format.demo(round.payoutCents), times: money(round.totalHundredths) }) : t('announce.roundEndNoWin'));
+  }, [settle, sound, t, format, money]);
 
   /* ---------------------------------------------------------------- presentation events */
   const centre = useCallback((x: number, y: number) => {
@@ -372,8 +381,8 @@ export function CascadeGame() {
   const openCelebration = useCallback((schedule: CountUpSchedule, bet: number, at: number, dur: number, reduced: boolean, lite: boolean) => {
     celebrateFx.current = { reduced, lite };
     setCard({ kind: 'big', schedule, bet, at, dur });
-    setAnnounce(`${WIN_TIER_INFO[schedule.finalLevel].title}: ${demoNumber(centsFor(bet, schedule.totalHundredths))} DEMO, ${multiplierText(schedule.totalHundredths)}×.`);
-  }, []);
+    setAnnounce(t('announce.bigWin', { tier: tk(`winTier.${WIN_TIER_INFO[schedule.finalLevel].id}.title`), amount: format.demo(centsFor(bet, schedule.totalHundredths)), times: money(schedule.totalHundredths) }));
+  }, [t, tk, format, money]);
   const onCelebrationLevel = useCallback((level: CelebrationLevel, first: boolean, remainingMs: number) => {
     const { reduced, lite } = celebrateFx.current, f = fx.current;
     if (level === 5) sound.maxWin(); else sound.bigWin(level);
@@ -402,7 +411,7 @@ export function CascadeGame() {
       case 'scatter-tease': b?.tease(event.ids); sound.scatterTease(true); break;
       case 'highlight': {
         b?.highlight(event.wins.flatMap(w => w.ids), event.dur, reduced);
-        setAnnounce(event.wins.map(w => winAnnouncement(w, SYMBOL_LABELS)).join('; '));
+        setAnnounce(event.wins.map(w => t('announce.cluster', { count: w.count, name: names.inline(w.symbol), times: money(w.payHundredths) })).join('; '));
         break;
       }
       case 'pop': {
@@ -417,7 +426,7 @@ export function CascadeGame() {
         b?.pop(ids, event.dur, reduced);
         if (f) for (const win of event.wins) {
           const c = centre(win.centroid.x, win.centroid.y);
-          f.label(c.x, c.y, `+${moneyText(centsFor(betCents, win.payHundredths))}`, styles.floatLabel, reduced ? 700 : 1200);
+          f.label(c.x, c.y, `+${money(centsFor(betCents, win.payHundredths))}`, styles.floatLabel, reduced ? 700 : 1200);
         }
         setMeterDur(Math.min(520, event.dur + 160)); setMeter(event.meter);
         const tier = Math.max(...event.wins.map(w => (w.count >= 12 ? 2 : w.count >= 10 ? 1 : 0)));
@@ -437,7 +446,7 @@ export function CascadeGame() {
             f.fly(art, f.point(el), to, crystal.delay, crystal.fly, styles.flyCrystal);
           }
         }
-        setAnnounce(`Çarpan kristalleri toplanıyor: toplam ${event.sum}×.`);
+        setAnnounce(t('announce.crystals', { sum: String(event.sum) }));
         break;
       }
       case 'crystal-arrive': {
@@ -456,12 +465,12 @@ export function CascadeGame() {
         if (f && m && !lite) { const p = f.point(m); f.sparkle(p.x, p.y, p.w * 0.35, 14); }
         sound.multiplierApply(event.sum, event.meter.spin / 100);
         showCallout(event.sum, reduced, lite);
-        setAnnounce(`Çarpan ×${event.sum}: ${multiplierText(event.baseHundredths)}× kazanç ${event.sum} ile çarpıldı.`);
+        setAnnounce(t('announce.multiply', { sum: String(event.sum), base: money(event.baseHundredths) }));
         break;
       }
       case 'scatter-pay': {
         setMeterDur(500); setMeter(event.meter);
-        setBanner({ key: ++bannerKey.current, text: `${event.count} yıldız · +${moneyText(centsFor(betCents, event.hundredths))} DEMO`, tone: 'gold' });
+        setBanner({ key: ++bannerKey.current, text: t('banner.scatterPay', { count: event.count, amount: money(centsFor(betCents, event.hundredths)) }), tone: 'gold' });
         sound.scatter(event.count);
         break;
       }
@@ -471,15 +480,15 @@ export function CascadeGame() {
         if (f && !lite) for (const id of event.ids) { const el = b?.symbolOf(id); if (el) { const p = f.point(el); f.sparkle(p.x, p.y, p.w * 0.6, 10, '#ffe7a3'); f.ring(p.x, p.y, p.w * 0.7, '#ffd36b', 0.7); } }
         if (event.retrigger) {
           setFreeInfo(prev => (prev ? { ...prev, left: event.freeSpinsLeft } : prev));
-          setBanner({ key: ++bannerKey.current, text: `+${event.awarded} bedava dönüş`, tone: 'pink' });
-          setAnnounce(`${event.count} yıldız: ${event.awarded} bedava dönüş eklendi.`);
-        } else setAnnounce(`${event.count} yıldız: bedava dönüş kazanıldı.`);
+          setBanner({ key: ++bannerKey.current, text: t('banner.retrigger', { n: event.awarded }), tone: 'pink' });
+          setAnnounce(t('announce.retrigger', { count: event.count, awarded: event.awarded }));
+        } else setAnnounce(t('announce.trigger', { count: event.count }));
         break;
       }
       case 'free-intro':
         setCard({ kind: 'intro', awarded: event.awarded, at: event.at, dur: event.dur });
         sound.freeSpinsIntro(); sound.scene('feature');
-        setAnnounce(`${event.awarded} bedava dönüş kazandın.`);
+        setAnnounce(t('announce.freeIntro', { awarded: event.awarded }));
         break;
       case 'free-mode':
         setCard(null); b?.dim(false); setFree(event.on); setFreeInfo({ number: 0, left: 10 });
@@ -491,9 +500,9 @@ export function CascadeGame() {
         if (event.kind === 'free') {
           // Transient "+X" for this spin; the main meter keeps the cumulative total.
           const m = meterRef.current;
-          if (f && m && event.winHundredths > 0) { const p = f.point(m); f.label(p.x, p.y - p.h * 1.05, `+${moneyText(centsFor(betCents, event.winHundredths))}`, styles.floatSpin, reduced ? 900 : 1400); }
-          setAnnounce(event.winHundredths > 0 ? `Bedava dönüş ${multiplierText(event.winHundredths)}× kazandırdı. Toplam ${multiplierText(event.meter.total)}×.` : 'Bedava dönüşte kazanç yok.');
-        } else if (event.winHundredths === 0) setAnnounce('Kazanç yok.');
+          if (f && m && event.winHundredths > 0) { const p = f.point(m); f.label(p.x, p.y - p.h * 1.05, `+${money(centsFor(betCents, event.winHundredths))}`, styles.floatSpin, reduced ? 900 : 1400); }
+          setAnnounce(event.winHundredths > 0 ? t('announce.freeSpinWin', { win: money(event.winHundredths), total: money(event.meter.total) }) : t('announce.freeSpinNoWin'));
+        } else if (event.winHundredths === 0) setAnnounce(t('announce.noWin'));
         break;
       }
       case 'total-win': {
@@ -503,14 +512,14 @@ export function CascadeGame() {
         const m = meterRef.current;
         if (!reduced) m?.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.1)', offset: 0.3 }, { transform: 'scale(.98)', offset: 0.65 }, { transform: 'scale(1)' }], { duration: 620, easing: 'ease-out' });
         if (f && m && !lite) { const p = f.point(m); f.sparkle(p.x, p.y, p.w * 0.5, 14); f.ring(p.x, p.y, p.h * 1.3, '#ffe09a', 0.55); }
-        setAnnounce(`Toplam kazanç ${demoNumber(centsFor(betCents, event.totalHundredths))} DEMO, ${multiplierText(event.totalHundredths)}×.`);
+        setAnnounce(t('announce.totalWin', { amount: format.demo(centsFor(betCents, event.totalHundredths)), times: money(event.totalHundredths) }));
         break;
       }
       case 'free-outro':
         setCard({ kind: 'outro', spins: event.spins, total: event.totalHundredths, multipliers: event.multipliers, celebration: event.celebration, capped: event.capped, bet: betCents, at: event.at, dur: event.dur });
         sound.featureOutro(); sound.scene('base');
         if (f && !lite) f.confetti(1);
-        setAnnounce(`Bedava dönüş toplamı: ${demoNumber(centsFor(betCents, event.totalHundredths))} DEMO, ${event.spins} dönüş.`);
+        setAnnounce(t('announce.freeOutro', { amount: format.demo(centsFor(betCents, event.totalHundredths)), spins: event.spins }));
         break;
       case 'big-win':
         openCelebration(event.schedule, betCents, event.at, event.dur, reduced, lite);
@@ -522,7 +531,7 @@ export function CascadeGame() {
         finishRound(current);
         break;
     }
-  }, [centre, finishRound, openCelebration, showCallout, sound]);
+  }, [centre, finishRound, openCelebration, showCallout, sound, t, format, money, names]);
 
   /* ---------------------------------------------------------------- starting rounds */
   const begin = useCallback((current: LiveRound, text: string) => {
@@ -549,7 +558,7 @@ export function CascadeGame() {
     pendingRemote.current = true;
     setError(''); setPhase('playing'); setActiveDemo(true); setReplaying(null);
     setRemoteBalance(balanceBefore - cost);
-    setAnnounce(`Dönüş sunucuya gönderildi, ${demoNumber(cost)} DEMO.`);
+    setAnnounce(t('announce.sent', { amount: format.demo(cost) }));
     source.client.play('cascade', betCents, roundMode).then(play => {
       pendingRemote.current = false;
       const s = settingsRef.current;
@@ -559,16 +568,16 @@ export function CascadeGame() {
         settled: false, startedAt: performance.now(), remote: { receipt: play.receipt, balanceAfter: play.receipt.balanceCents },
       };
       if (!mounted.current) { settleRef.current(current); return; }
-      begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Bedava dönüşler başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+      begin(current, t(roundMode === 'buy' ? 'announce.buyStarted' : 'announce.spinStarted', { amount: format.demo(cost) }));
     }, (failure: unknown) => {
       pendingRemote.current = false;
       setActiveDemo(false);
       if (!mounted.current) return;
       setPhase('idle'); setError(rgsErrorMessage(failure)); sound.denied();
-      if (autoRef.current) stopAutoplay('Sunucu turu başlatılamadı');
+      if (autoRef.current) stopAutoplay('server-failed');
       source.client.state().then(state => { if (mounted.current) setRemoteBalance(state.balanceCents); }, () => undefined);
     });
-  }, [bet, begin, reducedMotion, setActiveDemo, sound, stopAutoplay]);
+  }, [bet, begin, reducedMotion, setActiveDemo, sound, stopAutoplay, t, format]);
 
   /** Real round (standard/ante spin or a confirmed buy). Returns false when nothing started. */
   const startRound = useCallback((kind: 'spin' | 'buy'): boolean => {
@@ -578,7 +587,7 @@ export function CascadeGame() {
     const cost = cascadeCost(bet, roundMode);
     const balanceBefore = balanceRef.current;
     if (cost > balanceBefore) {
-      setError(`Bakiye yetersiz: bu ${roundMode === 'buy' ? 'satın alma' : 'dönüş'} ${formatDemo(cost)}. Bahsi düşür veya bakiyeyi yenile.`);
+      setError(t(roundMode === 'buy' ? 'error.insufficientBuy' : 'error.insufficientSpin', { cost: format.demo(cost) }));
       sound.denied();
       return false;
     }
@@ -586,19 +595,19 @@ export function CascadeGame() {
     let round: Cascade2Round;
     try {
       round = localRoundSource.resolve('cascade', bet, roundMode);
-    } catch { setError(ENTROPY_ERROR); return false; }
+    } catch { setError(t('error.entropy')); return false; }
     let id: string | null;
-    try { id = reserveDemo(cost, cascadeLedgerLimits(bet, roundMode)); } catch { setError(ENTROPY_ERROR); return false; }
-    if (!id) { setError('Yeterli demo kredin yok veya devam eden bir demo var.'); sound.denied(); return false; }
+    try { id = reserveDemo(cost, cascadeLedgerLimits(bet, roundMode)); } catch { setError(t('error.entropy')); return false; }
+    if (!id) { setError(t('error.noCredit')); sound.denied(); return false; }
     setActiveDemo(true);
     const s = settingsRef.current;
     const lite = reducedMotion || s.reducedEffects;
     const timeline = buildCascadeTimeline(round, cascadeTimelineOptions(s, reducedMotion));
     const current: LiveRound = { id, replayOf: null, bet, cost, mode: roundMode, balanceBefore, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite, settled: false, startedAt: performance.now(), remote: null };
     setReplaying(null);
-    begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Bedava dönüşler başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+    begin(current, t(roundMode === 'buy' ? 'announce.buyStarted' : 'announce.spinStarted', { amount: format.demo(cost) }));
     return true;
-  }, [ante, bet, begin, booting, gated, reducedMotion, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote]);
+  }, [ante, bet, begin, booting, gated, reducedMotion, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote, t, format]);
 
   // Reload recovery (remote): the last server round of this game that this tab did not finish showing is shown again,
   // exactly as resolved. Nothing is debited or credited here; the server settled it when it was accepted.
@@ -615,8 +624,8 @@ export function CascadeGame() {
     };
     setActiveDemo(true);
     setRemoteBalance(current.balanceBefore - current.cost);
-    begin(current, `Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı (${demoNumber(receipt.payoutCents)} DEMO).`);
-  }, [sourceView, booting, begin, reducedMotion, setActiveDemo]);
+    begin(current, t('announce.recovered', { amount: format.demo(receipt.payoutCents) }));
+  }, [sourceView, booting, begin, reducedMotion, setActiveDemo, t, format]);
 
   /** Remote only: publish the signed replay of a server round and hand out its link. */
   const shareRound = useCallback((record: DemoRecord) => {
@@ -626,24 +635,24 @@ export function CascadeGame() {
       const url = `${window.location.origin}${path}`;
       let copied = false;
       try { await navigator.clipboard.writeText(url); copied = true; } catch { /* clipboard blocked: show the link */ }
-      showToast(copied ? `Paylaşım bağlantısı kopyalandı: ${url}` : `Paylaşım bağlantısı: ${url}`);
-    }, (failure: unknown) => showToast(`Paylaşılamadı: ${rgsErrorMessage(failure)}`, 'warn'));
-  }, [remote, showToast]);
+      showToast(t(copied ? 'toast.shareCopied' : 'toast.shareLink', { url }));
+    }, (failure: unknown) => showToast(t('toast.shareFailed', { reason: rgsErrorMessage(failure) }), 'warn'));
+  }, [remote, showToast, t]);
   const startRef = useRef(startRound); startRef.current = startRound;
 
   const replay = useCallback((record: DemoRecord) => {
     const meta = record.cascade;
     if (!meta || (live.current && !live.current.settled) || autoRef.current || booting) return;
     let round: Cascade2Round;
-    try { round = playCascade2Round(meta.seedHex, meta.betCents, meta.mode); } catch { showToast('Bu tur tekrar oynatılamadı.', 'warn'); return; }
-    if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast('Tekrar doğrulanamadı: kayıt motorla uyuşmuyor.', 'warn'); return; }
+    try { round = playCascade2Round(meta.seedHex, meta.betCents, meta.mode); } catch { showToast(t('toast.replayFailed'), 'warn'); return; }
+    if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast(t('toast.replayMismatch'), 'warn'); return; }
     const s = settingsRef.current;
     const timeline = buildCascadeTimeline(round, cascadeTimelineOptions(s, reducedMotion));
     const current: LiveRound = { id: null, replayOf: record.id, bet: meta.betCents, cost: meta.costCents, mode: meta.mode, balanceBefore: balanceRef.current, round, timeline, prefix: `r${++sequence.current}`, reduced: reducedMotion, lite: reducedMotion || s.reducedEffects, settled: false, startedAt: performance.now(), remote: null };
     setReplaying({ recordId: record.id, seed: meta.seedHex });
     stageRef.current?.scrollIntoView({ block: 'start' });
-    begin(current, `Tekrar oynatılıyor: tur ${shortRoundId(meta.seedHex)}. Bakiye değişmez.`);
-  }, [begin, booting, reducedMotion, showToast]);
+    begin(current, t('announce.replaying', { id: shortRoundId(meta.seedHex) }));
+  }, [begin, booting, reducedMotion, showToast, t]);
 
   /**
    * Tap on a hold screen (free-spin intro/total, celebration): the first tap on a celebration finishes the
@@ -708,8 +717,8 @@ export function CascadeGame() {
     setAuto(state);
     setModal(null);
     sound.unlock(); sound.autoplay(true);
-    showToast(`Otomatik oyun: ${config.spins} tur, kayıp limiti ${formatDemo(config.lossLimitCents)}.`);
-  }, [busy, gated, showToast, sound]);
+    showToast(t('toast.autoplay', { spins: config.spins, limit: format.demo(config.lossLimitCents) }));
+  }, [busy, gated, showToast, sound, t, format]);
 
   const realityDue = session.realityDue;
   useEffect(() => {
@@ -718,15 +727,15 @@ export function CascadeGame() {
     const timer = window.setTimeout(() => {
       const state = autoRef.current; if (!state) return;
       const decision = autoplayBeforeSpin(state, { balanceCents: balanceRef.current, betCents: bet, ante, tabHidden: document.hidden });
-      if (!decision.continue) { stopAutoplay(decision.reason, decision.code === 'completed' ? 'info' : 'warn'); return; }
-      if (!startRef.current('spin')) stopAutoplay('Dönüş başlatılamadı');
+      if (!decision.continue) { stopAutoplay(decision.code, decision.code === 'completed' ? 'info' : 'warn'); return; }
+      if (!startRef.current('spin')) stopAutoplay('spin-failed');
     }, phase === 'idle' ? 0 : gap);
     return () => window.clearTimeout(timer);
   }, [auto, phase, modal, realityDue, booting, gated, bet, ante, stopAutoplay]);
 
   // Autoplay never runs in a hidden tab.
   useEffect(() => {
-    const onVisibility = () => { if (document.hidden && autoRef.current) stopAutoplay(AUTOPLAY_STOP_REASONS['tab-hidden']); };
+    const onVisibility = () => { if (document.hidden && autoRef.current) stopAutoplay('tab-hidden'); };
     document.addEventListener('visibilitychange', onVisibility);
     return () => document.removeEventListener('visibilitychange', onVisibility);
   }, [stopAutoplay]);
@@ -753,18 +762,20 @@ export function CascadeGame() {
   const roundMode: CascadeMode = ante ? 'ante' : 'standard';
   const spinCost = cascadeCost(bet, roundMode);
   const buyPrice = cascadeCost(bet, 'buy');
-  const buyReason = buyBlockReason({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const block = buyBlock({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const buyReason = block ? (block.code === 'balance' ? t('buyBlock.balance', { price: format.demo(block.priceCents) }) : t(`buyBlock.${block.code}`)) : null;
+  const rtpOf = (ratio: number) => percentOf(format.intl, ratio);
   const locked = busy || auto !== null || gated || booting || sourcePending;
   const amountCents = (h: number) => (roundBet === null ? 0 : centsFor(roundBet, h));
-  const boardLabel = free ? 'Candy Cascade bedava dönüş ızgarası, 6 sütun, 5 satır' : 'Candy Cascade ızgarası, 6 sütun, 5 satır';
+  const boardLabel = t(free ? 'board.labelFree' : 'board.label');
   const boardElement = useMemo(() => <BoardFrame><CascadeBoard ref={board} label={boardLabel} free={free} /></BoardFrame>, [boardLabel, free]);
   const stageClass = [styles.stage, free ? styles.stageFree : '', card ? styles.stageCard : ''].join(' ');
   const celebrating = card?.kind === 'big' || card?.kind === 'outro';
-  const infoPages = useMemo(() => cascadeInfoPages(bet), [bet]);
+  const infoPages = useMemo(() => cascadeInfoPages(bet, { t, tc, tk, format, symbol: names.label }), [bet, t, tc, tk, format, names]);
   const outOfCredit = !busy && balance < CASCADE_MIN_BET_CENTS;
   const deckWin = busy ? amountCents(meter.total) : (lastWin?.payout ?? 0);
   const speedIndex = SPIN_SPEEDS.indexOf(settings.spinSpeed);
-  const replayInfo = replaying ? `Tekrar — bakiye değişmez · tur ${shortRoundId(replaying.seed)}` : null;
+  const replayInfo = replaying ? t('replay.ribbon', { id: shortRoundId(replaying.seed) }) : null;
 
   const openInfo = (page = 'how') => { setInfoPage(page); setModal('info'); sound.click(); };
   const refill = () => {
@@ -775,11 +786,12 @@ export function CascadeGame() {
         setRemoteBalance(cents);
         const at = Date.now();
         recordRemote({ id: `remote-reset:${at}`, game: 'Cascade', stake: 0, payout: 0, detail: 'Bakiye yenilendi (sunucu)', at, kind: 'reset' });
-        showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('Sunucu DEMO bakiyesi 1.000 DEMO olarak yenilendi.');
+        const amount = format.demo(DEMO_START_CENTS, { trimZeros: true });
+        showToast(t('toast.refilled', { amount })); setError(''); setAnnounce(t('announce.refilledRemote', { amount }));
       }, (failure: unknown) => showToast(rgsErrorMessage(failure), 'warn'));
       return;
     }
-    if (resetDemoBalance('Cascade')) { showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('DEMO bakiyesi 1.000 DEMO olarak yenilendi.'); }
+    if (resetDemoBalance('Cascade')) { const amount = format.demo(DEMO_START_CENTS, { trimZeros: true }); showToast(t('toast.refilled', { amount })); setError(''); setAnnounce(t('announce.refilled', { amount })); }
   };
   const toggleSound = () => {
     const muted = !settings.muted;
@@ -790,14 +802,14 @@ export function CascadeGame() {
     const next = SPIN_SPEEDS[(speedIndex + 1) % SPIN_SPEEDS.length]!;
     updateSettings({ spinSpeed: next });
     sound.click();
-    setAnnounce(`Dönüş hızı: ${SPEED_LABELS[next]}.`);
+    setAnnounce(t('announce.speed', { speed: tk(SPEED_KEYS[next]) }));
   };
   const toggleAnte = () => {
     if (locked) return;
     const next = !ante;
     setAnte(next);
     sound.click();
-    const text = next ? `Şans ×2 açık: bedava dönüş şansı ≈2 kat, maliyet ${formatDemo(cascadeCost(bet, 'ante'))}.` : `Şans ×2 kapalı: maliyet ${formatDemo(bet)}.`;
+    const text = next ? t('announce.anteOn', { cost: format.demo(cascadeCost(bet, 'ante')) }) : t('announce.anteOff', { cost: format.demo(bet) });
     setAnnounce(text);
   };
   const onSpinClick = () => {
@@ -818,73 +830,73 @@ export function CascadeGame() {
       balanceCents={balance}
       maxBetCents={CASCADE_MAX_BET_CENTS}
       costMode={CASCADE_COST_MODES[roundMode]}
-      modeLabel={ante ? 'Şans ×2' : undefined}
+      modeLabel={ante ? tc('modes.ante') : undefined}
       disabled={locked}
       classNames={{ minus: styles.stepBtn, plus: styles.stepBtn, value: styles.betValue, max: styles.maxChip }}
       render={parts => (
-        <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label="Oyun kontrolleri">
+        <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label={t('deck.aria')}>
           <div className={styles.cellBalance}>
-            <span className={styles.cellLabel}>Bakiye</span>
-            <strong className={styles.cellValue} data-testid="cascade-balance">{formatAmount(balance)}<small> DEMO</small></strong>
-            <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated}><RefillIcon /><span>Bakiyeyi yenile</span></button>
+            <span className={styles.cellLabel}>{t('deck.balance')}</span>
+            <strong className={styles.cellValue} data-testid="cascade-balance">{money(balance)}<small> DEMO</small></strong>
+            <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated}><RefillIcon /><span>{t('deck.refill')}</span></button>
           </div>
           <div className={styles.cellBet}>
             {parts.label}
             {parts.value}
-            <span className={styles.costLine} data-testid="cascade-cost">Maliyet <strong>{formatAmount(spinCost)} DEMO</strong>{ante && <em> · ×1,25</em>}</span>
+            <span className={styles.costLine} data-testid="cascade-cost">{tk('bet.cost')} <strong>{money(spinCost)} DEMO</strong>{ante && <em> · {format.factor(CASCADE_COST_MODES.ante.num, CASCADE_COST_MODES.ante.den)}</em>}</span>
           </div>
           <div className={styles.cellWin}>
-            <span className={styles.cellLabel}>{busy ? (replaying ? 'Tekrar' : 'Kazanç') : lastWin?.replay ? 'Tekrar kazancı' : 'Son kazanç'}</span>
-            <strong className={`${styles.cellValue} ${deckWin > 0 ? styles.cellWinOn : ''}`}>{formatAmount(deckWin)}<small> DEMO</small></strong>
+            <span className={styles.cellLabel}>{busy ? (replaying ? t('deck.replay') : t('deck.win')) : lastWin?.replay ? t('deck.replayWin') : t('deck.lastWin')}</span>
+            <strong className={`${styles.cellValue} ${deckWin > 0 ? styles.cellWinOn : ''}`}>{money(deckWin)}<small> DEMO</small></strong>
           </div>
           <div className={styles.areaMinus}>{parts.minus}</div>
           <div className={styles.areaPlus}>{parts.plus}</div>
           <div className={styles.areaMax}>{parts.max}</div>
           <div className={styles.areaSpin}>
             {auto ? (
-              <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay(AUTOPLAY_STOP_REASONS.cancelled, 'info')} />
+              <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay('cancelled', 'info')} />
             ) : (
               <button type="button" className={`${styles.spin} ${busy ? styles.spinning : ''}`} onClick={onSpinClick} disabled={busy || gated || booting || sourcePending}
-                aria-label="Çevir" aria-describedby="cc-spin-cost" data-locked={busy || undefined} data-testid="cascade-spin">
+                aria-label={t('deck.spin')} aria-describedby="cc-spin-cost" data-locked={busy || undefined} data-testid="cascade-spin">
                 <span className={styles.spinFace}><SwirlIcon /></span>
                 {busy && <span className={styles.spinLock} aria-hidden="true"><LockIcon /></span>}
               </button>
             )}
-            <span id="cc-spin-cost" className="sr-only">{busy ? 'Tur sürüyor; bütün düşmeler ve bedava dönüşler bitene kadar kilitli.' : `Maliyet ${formatDemo(spinCost)}`}</span>
+            <span id="cc-spin-cost" className="sr-only">{busy ? t('deck.spinLocked') : `${tk('bet.cost')} ${format.demo(spinCost)}`}</span>
           </div>
           <button type="button" className={`${styles.tool} ${styles.areaAuto}`} onClick={() => { sound.click(); setModal('autoplay'); }} disabled={locked} aria-haspopup="dialog">
-            <LoopIcon /><span>Otomatik</span>
+            <LoopIcon /><span>{t('deck.auto')}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaInfo}`} onClick={() => openInfo()} aria-haspopup="dialog" aria-label="Oyun bilgisi">
-            <InfoIcon /><span>Bilgi</span>
+          <button type="button" className={`${styles.tool} ${styles.areaInfo}`} onClick={() => openInfo()} aria-haspopup="dialog" aria-label={tk('info.title')}>
+            <InfoIcon /><span>{t('deck.info')}</span>
           </button>
           <button type="button" role="switch" aria-checked={ante} className={`${styles.feature} ${styles.areaAnte} ${ante ? styles.featureOn : ''}`} onClick={toggleAnte} disabled={locked}
-            aria-label="Şans ×2" aria-describedby="cc-ante-desc">
-            <span className={styles.featureTitle}>Şans ×2</span>
-            <span className={styles.featureState}>{ante ? 'Açık' : 'Kapalı'}<span className={styles.featureFactor}> · ×1,25</span></span>
-            <span id="cc-ante-desc" className={styles.featureDesc}>Bedava dönüş şansı ≈2 kat</span>
+            aria-label={tc('modes.ante')} aria-describedby="cc-ante-desc">
+            <span className={styles.featureTitle}>{tc('modes.ante')}</span>
+            <span className={styles.featureState}>{ante ? t('deck.on') : t('deck.off')}<span className={styles.featureFactor}> · {format.factor(CASCADE_COST_MODES.ante.num, CASCADE_COST_MODES.ante.den)}</span></span>
+            <span id="cc-ante-desc" className={styles.featureDesc}>{t('deck.anteDesc')}</span>
           </button>
           <button type="button" className={`${styles.feature} ${styles.featureBuy} ${styles.areaBuy}`} aria-disabled={buyReason ? true : undefined}
             onClick={() => { if (buyReason) sound.denied(); else sound.click(); setModal('buy'); }} aria-haspopup="dialog" aria-describedby="cc-buy-desc">
-            <span className={styles.featureTitle}>Bonus satın al</span>
-            <span className={styles.featureState}>{formatAmount(buyPrice, { trimZeros: true })} DEMO</span>
-            <span id="cc-buy-desc" className={styles.featureDesc}>{buyReason ?? `10 bedava dönüş · ${formatRtp(CASCADE2_RTP.buy.rtp)}`}</span>
+            <span className={styles.featureTitle}>{tk('buy.title')}</span>
+            <span className={styles.featureState}>{format.amount(buyPrice, { trimZeros: true })} DEMO</span>
+            <span id="cc-buy-desc" className={styles.featureDesc}>{buyReason ?? t('deck.buyDesc', { spins: CASCADE_FREE_SPINS_TRIGGER, rtp: rtpOf(CASCADE2_RTP.buy.rtp) })}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSet}`} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label="Ayarlar">
-            <GearIcon /><span>Ayarlar</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSet}`} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label={tk('settings.title')}>
+            <GearIcon /><span>{tk('settings.title')}</span>
           </button>
           <button type="button" className={`${styles.tool} ${styles.areaSpeed} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed}
-            aria-label={`Dönüş hızı: ${SPEED_LABELS[settings.spinSpeed]}`}>
-            <BoltIcons count={speedIndex + 1} /><span>{SPEED_LABELS[settings.spinSpeed]}</span>
+            aria-label={t('deck.speed', { speed: tk(SPEED_KEYS[settings.spinSpeed]) })}>
+            <BoltIcons count={speedIndex + 1} /><span>{tk(SPEED_KEYS[settings.spinSpeed])}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSound} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label="Ses">
-            <SoundIcon on={!settings.muted} /><span>Ses</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSound} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label={tk('settings.sound')}>
+            <SoundIcon on={!settings.muted} /><span>{tk('settings.sound')}</span>
           </button>
           <div className={styles.areaMsg}>
-            {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">Ses yükleniyor %{soundLoad.percent}</p>}
+            {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">{t('deck.soundLoading', { percent: format.percent(soundLoad.percent / 100) })}</p>}
             {error ? <p className={styles.msgError} role="alert">{error}</p>
-              : outOfCredit ? <p className={styles.msgHint}>DEMO bakiyen bitti. <button type="button" className={styles.inlineLink} onClick={refill}>Bakiyeyi yenile</button></p>
-              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? <>Son tur <strong>+{moneyText(lastWin.payout)} DEMO</strong> · {multiplierText(lastWin.total)}×</> : <>Son tur kazançsız.</>) : settings.spaceToSpin ? <>Boşluk tuşu ile de çevirebilirsin.</> : <>Sonuç dönüşten önce belirlenir.</>}</p>}
+              : outOfCredit ? <p className={styles.msgHint}>{t('msg.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
+              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? t.rich('msg.lastRound', { b: chunk => <strong key={chunk}>{chunk}</strong> }, { amount: money(lastWin.payout), times: money(lastWin.total) }) : t('msg.lastRoundNoWin')) : settings.spaceToSpin ? t('msg.spaceHint') : t('msg.fixedBefore')}</p>}
           </div>
         </div>
       )}
@@ -893,24 +905,24 @@ export function CascadeGame() {
 
   return (
     <div className={`game-page ${styles.page}`}>
-      <GameHeading title="Candy Cascade" subtitle="Sekiz eşleşmede patlat, düşen şekerlerle zincir kur." mode={mode} setMode={setMode} active={busy || auto !== null}
-        badge={remote ? remote.label : sourcePending ? 'Sunucu kontrol ediliyor' : localRoundSource.label} />
-      <section className={`game-table ${styles.table}`} aria-label="Candy Cascade oyun masası">
+      <GameHeading title={gameTitle} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
+        badge={remote ? remote.label : sourcePending ? t('badge.checking') : localRoundSource.label} />
+      <section className={`game-table ${styles.table}`} aria-label={t('table.aria')}>
         <div ref={stageRef} className={stageClass} data-phase={phase} data-celebrate={celebrating || undefined}>
           <StaticBackdrop />
           <div className={styles.freeTint} aria-hidden="true" />
           <div ref={shakeRef} className={styles.shake}>
             <div className={styles.hud}>
               {freeInfo ? (
-                <div className={styles.freeCounter} aria-label={`Bedava dönüş ${freeInfo.number}, kalan dönüş ${freeInfo.left}`}>
-                  <span className={styles.freeTag}><span className={styles.tagLong}>Bedava dönüş{freeInfo.number > 0 ? ` ${freeInfo.number}` : ''}</span><span className={styles.tagShort}>{freeInfo.number > 0 ? `${freeInfo.number}. dönüş` : 'Bedava'}</span></span>
-                  <span className={styles.freeLeft}><small>Kalan dönüş</small><strong key={freeInfo.left}>{freeInfo.left}</strong></span>
+                <div className={styles.freeCounter} aria-label={t('free.counterAria', { number: freeInfo.number, left: freeInfo.left })}>
+                  <span className={styles.freeTag}><span className={styles.tagLong}>{freeInfo.number > 0 ? t('free.longN', { n: freeInfo.number }) : t('free.long')}</span><span className={styles.tagShort}>{freeInfo.number > 0 ? t('free.shortN', { n: freeInfo.number }) : t('free.short')}</span></span>
+                  <span className={styles.freeLeft}><small>{t('free.left')}</small><strong key={freeInfo.left}>{freeInfo.left}</strong></span>
                 </div>
               ) : (
                 <div className={styles.logo} aria-hidden="true"><span>Candy</span><span>Cascade</span></div>
               )}
               <div ref={badgeRef} className={`${styles.badge} ${badge ? styles.badgeOn : ''} ${badge?.sum ? styles.badgeSum : ''}`} aria-hidden={badge ? undefined : true}>
-                <small>Çarpan</small>
+                <small>{t('mult.label')}</small>
                 <strong>{badge ? (badge.parts.length ? badge.parts.map(v => `×${v}`).join(' + ') : '×…') : '×'}{badge?.sum && badge.parts.length > 1 ? ` = ×${badge.sum}` : ''}</strong>
               </div>
             </div>
@@ -919,11 +931,11 @@ export function CascadeGame() {
                 and keeps the last round's total until the next spin starts. */}
             <div ref={meterRef} className={`${styles.meter} ${free ? styles.meterFree : ''}`} data-testid="cascade-meter">
               {phase === 'idle' ? (
-                <div className={styles.meterIdle}><span>Her yerde <strong>8+</strong> aynı şeker öder</span><span aria-hidden="true">·</span><span><strong>4</strong> yıldız = <strong>10</strong> bedava dönüş</span></div>
+                <div className={styles.meterIdle}><span>{t.rich('meter.idleA', { b: chunk => <strong key={chunk}>{chunk}</strong> })}</span><span aria-hidden="true">·</span><span>{t.rich('meter.idleB', { b: chunk => <strong key={chunk}>{chunk}</strong> })}</span></div>
               ) : (
                 <div className={`${styles.meterPart} ${free ? styles.meterTotal : ''}`}>
-                  <small>{free || phase === 'done' ? 'Toplam kazanç' : 'Kazanç'}</small>
-                  <strong data-testid="cascade-meter-total"><CountUp cents={amountCents(meter.total)} duration={meterDur} /><em> DEMO</em></strong>
+                  <small>{free || phase === 'done' ? t('meter.totalWin') : t('meter.win')}</small>
+                  <strong data-testid="cascade-meter-total"><CountUp cents={amountCents(meter.total)} duration={meterDur} format={money} /><em> DEMO</em></strong>
                 </div>
               )}
               {flourish > 0 && phase !== 'idle' && <span key={flourish} className={styles.meterShine} aria-hidden="true" />}
@@ -932,11 +944,11 @@ export function CascadeGame() {
           <canvas ref={canvasRef} className={styles.fxCanvas} aria-hidden="true" />
           <div ref={layerRef} className={styles.fxLayer} aria-hidden="true" />
           {replayInfo && <div className={styles.replayRibbon} data-testid="cascade-replay"><Icon name="history" size={15} /><span>{replayInfo}</span></div>}
-          {auto && !replayInfo && <div className={styles.autoRibbon} aria-hidden="true"><LoopIcon /><span>Otomatik · {auto.spinsRemaining} tur kaldı</span></div>}
+          {auto && !replayInfo && <div className={styles.autoRibbon} aria-hidden="true"><LoopIcon /><span>{t('auto.ribbon', { n: auto.spinsRemaining })}</span></div>}
           {toast && (
             <div key={`toast-${toast.key}`} className={`${styles.toast} ${toast.tone === 'warn' ? styles.toastWarn : ''}`} data-testid="cascade-toast">
               <span>{toast.text}</span>
-              <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label="Bildirimi kapat"><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
+              <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label={t('toast.close')}><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
             </div>
           )}
           {banner && <div key={`banner-${banner.key}`} className={`${styles.banner} ${banner.tone === 'pink' ? styles.bannerPink : ''}`} aria-hidden="true">{banner.text}</div>}
@@ -946,10 +958,10 @@ export function CascadeGame() {
                 <div className={styles.introStars} aria-hidden="true">
                   <SymbolArt symbol="star" size="100%" /><SymbolArt symbol="star" size="100%" /><SymbolArt symbol="star" size="100%" />
                 </div>
-                <h2 id="cc-intro-title" className={styles.introTitle}>Bedava dönüş</h2>
-                <p className={styles.introCount}><strong>{card.awarded}</strong><span>bedava dönüş</span></p>
-                <p className={styles.introText}>Çarpan kristalleri yalnız bu turda düşer ve dönüş sonunda toplanır.</p>
-                <button type="button" className={styles.introButton} onClick={event => { event.stopPropagation(); advanceHold(); }}>Başla</button>
+                <h2 id="cc-intro-title" className={styles.introTitle}>{t('intro.title')}</h2>
+                <p className={styles.introCount}><strong>{card.awarded}</strong><span>{t('intro.count')}</span></p>
+                <p className={styles.introText}>{t('intro.text')}</p>
+                <button type="button" className={styles.introButton} onClick={event => { event.stopPropagation(); advanceHold(); }}>{t('intro.start')}</button>
                 <span className={styles.introTimer} style={{ '--hold': `${card.dur}ms` } as CSSProperties} aria-hidden="true" />
               </div>
             </div>
@@ -957,7 +969,7 @@ export function CascadeGame() {
           {callout && (
             <div key={`callout-${callout.key}`} className={styles.callout} data-tier={callout.tier} style={{ left: `${callout.x}px`, top: `${callout.y}px` }} aria-hidden="true" data-testid="cascade-callout" data-key={callout.key}>
               <span className={styles.calloutGlow} />
-              {callout.tier >= 1 && <span className={styles.calloutTag}>{CALLOUT_TAGS[callout.tier]}</span>}
+              {callout.tier >= 1 && <span className={styles.calloutTag}>{t(`callout.tags.${callout.tier}`)}</span>}
               <span className={styles.calloutText} data-text={`×${callout.sum}`}><span className={styles.calloutFill}>×{callout.sum}</span></span>
             </div>
           )}
@@ -973,9 +985,9 @@ export function CascadeGame() {
             <div className={`${styles.overlay} ${styles.gated}`}>
               <div className={styles.gatedCard}>
                 <Icon name="lock" size={26} />
-                <h2>Zincir üstü Candy Cascade yok.</h2>
-                <p>Bu oyun yalnız DEMO kredisiyle oynanır; gerçek bahis kabul edilmez.</p>
-                <button className="text-button" onClick={() => setMode('demo')}>Yerel demoya dön<Icon name="arrow" size={17} /></button>
+                <h2>{t('gated.title')}</h2>
+                <p>{t('gated.text')}</p>
+                <button className="text-button" onClick={() => setMode('demo')}>{t('gated.back')}<Icon name="arrow" size={17} /></button>
               </div>
             </div>
           )}
@@ -986,21 +998,21 @@ export function CascadeGame() {
             <div className={styles.splashCard}>
               <div className={styles.splashLogo} aria-hidden="true"><span>Candy</span><span>Cascade</span></div>
               <ul className={styles.splashFeatures}>
-                <li><span aria-hidden="true"><SymbolArt symbol="crown" size="100%" /></span><strong>8+ her yerde</strong><small>Aynı şekerden 8 tane, ızgaranın her yerinde öder</small></li>
-                <li><span aria-hidden="true"><SymbolArt symbol="crystal" multiplier={100} size="100%" /></span><strong>100× kristal</strong><small>Bedava dönüşte çarpanlar toplanır</small></li>
-                <li><span aria-hidden="true"><SymbolArt symbol="star" size="100%" /></span><strong>5.000× azami</strong><small>4 yıldız 10 bedava dönüş açar</small></li>
+                <li><span aria-hidden="true"><SymbolArt symbol="crown" size="100%" /></span><strong>{t('splash.f1Title')}</strong><small>{t('splash.f1Text')}</small></li>
+                <li><span aria-hidden="true"><SymbolArt symbol="crystal" multiplier={100} size="100%" /></span><strong>{t('splash.f2Title')}</strong><small>{t('splash.f2Text')}</small></li>
+                <li><span aria-hidden="true"><SymbolArt symbol="star" size="100%" /></span><strong>{t('splash.f3Title', { max: format.number(CASCADE2_MAX_WIN_MULTIPLIER, 0) })}</strong><small>{t('splash.f3Text', { spins: CASCADE_FREE_SPINS_TRIGGER })}</small></li>
               </ul>
               {boot.phase === 'loading' ? (
-                <div className={styles.loadBar} role="progressbar" aria-label="Oyun yükleniyor" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(boot.progress * 100)}>
+                <div className={styles.loadBar} role="progressbar" aria-label={t('splash.loading')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(boot.progress * 100)}>
                   <span style={{ transform: `scaleX(${boot.progress})` }} />
                 </div>
               ) : (
                 <div className={styles.splashActions}>
-                  <button type="button" className={styles.introButton} autoFocus onClick={() => { sound.unlock(); sound.click(); setBoot(b => ({ ...b, phase: 'done' })); }}>Oyna</button>
-                  <button type="button" className={styles.splashSkip} onClick={() => { updateSettings({ introScreen: false }); setBoot(b => ({ ...b, phase: 'done' })); }}>Açılış ekranını bir daha gösterme</button>
+                  <button type="button" className={styles.introButton} autoFocus onClick={() => { sound.unlock(); sound.click(); setBoot(b => ({ ...b, phase: 'done' })); }}>{t('splash.play')}</button>
+                  <button type="button" className={styles.splashSkip} onClick={() => { updateSettings({ introScreen: false }); setBoot(b => ({ ...b, phase: 'done' })); }}>{t('splash.skip')}</button>
                 </div>
               )}
-              <p className={styles.splashNote}>DEMO kredisi değersizdir · Sonuç dönüşten önce belirlenir · Sertifikasız simülasyon RTP ≈ {formatRtp(CASCADE2_RTP.standard.rtp)}</p>
+              <p className={styles.splashNote}>{t('splash.note', { rtp: rtpOf(CASCADE2_RTP.standard.rtp) })}</p>
             </div>
           </div>
         )}
@@ -1010,29 +1022,29 @@ export function CascadeGame() {
       <CascadeHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <StaticFooter remote={remote !== null} />
 
-      <Modal open={modal === 'settings'} onClose={() => setModal(null)} title="Ayarlar" size="md">
+      <Modal open={modal === 'settings'} onClose={() => setModal(null)} title={tk('settings.title')} size="md">
         <SettingsPanel settings={settings} onChange={updateSettings} onReset={resetSettings} />
-        <p className={styles.modalNote} role="status">{soundLoad.ready ? 'Ses hazır: müzik ve efektler bu cihazda oluşturuldu.' : soundLoad.started ? `Ses yükleniyor %${soundLoad.percent} (bu sırada basit efektler çalar).` : 'Ses ilk dokunuşta yüklenir.'}</p>
+        <p className={styles.modalNote} role="status">{soundLoad.ready ? t('settings.soundReady') : soundLoad.started ? t('settings.soundLoading', { percent: format.percent(soundLoad.percent / 100) }) : t('settings.soundOnTouch')}</p>
         <section className={styles.demoBox} aria-labelledby="cc-demo-title">
-          <h3 id="cc-demo-title">DEMO bakiyesi</h3>
-          <p>Bakiye {formatDemo(balance)}{remote ? ' (sunucu)' : ''}. Yenilemek bakiyeyi 1.000 DEMO yapar ve geçmişe "Bakiye yenilendi" satırı ekler; tur veya otomatik oyun sürerken yapılamaz.</p>
-          <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>Bakiyeyi yenile</button>
+          <h3 id="cc-demo-title">{t('settings.demoTitle')}</h3>
+          <p>{t('settings.demoText', { balance: format.demo(balance), server: remote ? 'yes' : 'no', amount: format.demo(DEMO_START_CENTS, { trimZeros: true }), label: t('history.refilled') })}</p>
+          <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>{t('deck.refill')}</button>
         </section>
       </Modal>
-      <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title="Candy Cascade · Oyun bilgisi" initialPageId={infoPage} />
-      <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title="Otomatik oyun" size="md">
+      <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title={t('info.windowTitle')} initialPageId={infoPage} />
+      <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title={t('autoplay.title')} size="md">
         <AutoplayPanel onStart={startAutoplay} spinCostCents={spinCost} balanceCents={balance} disabled={busy || gated} />
-        <p className={styles.modalNote}>Tur başı {formatDemo(spinCost)}{ante ? ' (Şans ×2)' : ''} · bonus satın almaz · sekme gizlenince durur.</p>
+        <p className={styles.modalNote}>{t('autoplay.note', { cost: format.demo(spinCost), ante: ante ? 'yes' : 'no' })}</p>
       </Modal>
       <BuyFeatureDialog
         open={modal === 'buy'}
         onClose={() => setModal(null)}
         onConfirm={confirmBuy}
-        featureName={`10 bedava dönüş · bahis ${formatDemo(bet)}`}
+        featureName={t('buy.feature', { spins: CASCADE_FREE_SPINS_TRIGGER, bet: format.demo(bet) })}
         priceCents={buyPrice}
         balanceCents={balance}
-        rtpText={`Satın alma RTP ${formatRtp(CASCADE2_RTP.buy.rtp)} · standart ${formatRtp(CASCADE2_RTP.standard.rtp)} (simülasyon, sertifikasız)`}
-        description={<>Bahsin <strong>100 katı</strong>. Tur en az 4 yıldızla başlar ve 10 bedava dönüş garantilidir; kazançlar {formatDemo(bet)} bahse göre ödenir, azami {formatDemo(bet * 5000)}.</>}
+        rtpText={t('buy.rtp', { buy: rtpOf(CASCADE2_RTP.buy.rtp), standard: rtpOf(CASCADE2_RTP.standard.rtp) })}
+        description={<>{t.rich('buy.description', { b: chunk => <strong key={chunk}>{chunk}</strong> }, { spins: CASCADE_FREE_SPINS_TRIGGER, bet: format.demo(bet), max: format.demo(bet * CASCADE2_MAX_WIN_MULTIPLIER) })}</>}
         disabledReason={buyReason ?? undefined}
       />
       <RealityCheckDialog
@@ -1040,7 +1052,7 @@ export function CascadeGame() {
         elapsedMs={session.elapsedMs}
         netCents={session.netCents}
         onContinue={() => session.acknowledge()}
-        onQuit={() => { stopAutoplay('Oturumdan çıkıldı', 'info'); session.acknowledge(); router.push('/games'); }}
+        onQuit={() => { stopAutoplay('quit', 'info'); session.acknowledge(); router.push('/games'); }}
       />
     </div>
   );

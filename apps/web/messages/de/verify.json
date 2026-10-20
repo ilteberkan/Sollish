@@ -79,5 +79,27 @@
     "play": "Abspielen",
     "forward": "Vor",
     "noSteps": "Die Schritte dieser Runde können nicht angezeigt werden."
+  },
+  "outcome": {
+    "game": "Spiel nicht erkannt.",
+    "serverSeed": "Der Server-Seed muss aus 64 Hexadezimalzeichen bestehen (der offengelegte Seed).",
+    "serverSeedHash": "Der Seed-Hash muss aus 64 Hexadezimalzeichen bestehen.",
+    "clientSeed": "Der Spieler-Seed muss 1–64 Zeichen lang sein: Buchstaben, Ziffern, _ oder -.",
+    "nonce": "Der Nonce muss eine ganze Zahl ab 0 sein.",
+    "bet": "Der Einsatz muss eine der Einsatzstufen dieses Spiels sein.",
+    "mode": "Diesen Modus gibt es in diesem Spiel nicht.",
+    "expectedSeed": "Der erwartete Runden-Seed muss aus 32 Hexadezimalzeichen bestehen.",
+    "expectedPayout": "Die erwartete Auszahlung muss eine ganze Zahl sein (DEMO-Cent).",
+    "engineRejected": "Die Engine hat diese Kombination aus Einsatz und Modus nicht akzeptiert.",
+    "match": "Übereinstimmung: Das Ergebnis wurde aus diesen Seeds neu berechnet.",
+    "mismatch": "Abweichung: {failed}."
+  },
+  "checks": {
+    "hash": "Seed-Hash",
+    "engine": "Engine",
+    "seed": "Runden-Seed",
+    "payout": "Auszahlung",
+    "total": "Multiplikator",
+    "cost": "Kosten"
   }
 }

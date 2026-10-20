@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "description": "{title} — un juego de grupos DEMO original. El peine recorre el agua y la tinta se reordena; en el Marmoleado de Tulipanes, las manchas de pintura se deslizan con sus multiplicadores."
+  },
+  "subtitle": "El peine recorre el agua y la tinta se reordena ola tras ola; las manchas se deslizan con sus multiplicadores.",
+  "logo": {
+    "subtitle": "JARDÍN DE TINTA"
+  },
+  "table": {
+    "aria": "Mesa de juego Ebru"
+  },
+  "board": {
+    "label": "Cuadrícula de Ebru, 7 columnas, 7 filas",
+    "labelFree": "Cuadrícula de giros gratis de Ebru, 7 columnas, 7 filas"
+  },
+  "badge": {
+    "checking": "Comprobando el servidor"
+  },
+  "symbols": {
+    "c1": "Tulipán Dorado",
+    "c2": "Clavel Rubí",
+    "c3": "Flor Hatip Turquesa",
+    "c4": "Hoja Esmeralda",
+    "c5": "Ojo de Pavo Real Azul Marino",
+    "c6": "Margarita Azafrán",
+    "c7": "Ola Rosa",
+    "c8": "Gota de Hollín",
+    "drop": "Gota Maestra (comodín)",
+    "comb": "Peine Dorado",
+    "stained": "{name}, mancha ×{stain}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Multiplicador de mancha",
+      "1": "Mancha potente",
+      "2": "Mancha brillante",
+      "3": "Multiplicador de tulipán",
+      "4": "Mancha legendaria",
+      "5": "Pan de oro"
+    }
+  },
+  "error": {
+    "entropy": "No hay aleatoriedad local segura disponible. La demo no se ha iniciado.",
+    "noCredit": "No tienes suficiente crédito demo o ya hay una ronda demo en curso.",
+    "insufficientSpin": "Saldo insuficiente: este giro cuesta {cost}. Baja la apuesta o recarga el saldo.",
+    "insufficientBuy": "Saldo insuficiente: esta compra cuesta {cost}. Baja la apuesta o recarga el saldo."
+  },
+  "buyBlock": {
+    "gated": "Solo disponible con crédito DEMO",
+    "autoplay": "No se puede comprar durante el juego automático",
+    "busy": "No se puede comprar hasta que termine la ronda",
+    "ante": "No se puede comprar con Chance ×2 activa",
+    "balance": "Saldo insuficiente (precio {price})"
+  },
+  "autoplay": {
+    "title": "Juego automático",
+    "serverFailed": "El servidor no pudo iniciar la ronda",
+    "spinFailed": "No se pudo iniciar el giro",
+    "quit": "Has salido de la sesión",
+    "stopped": "Juego automático detenido: {reason}. {spins, plural, one {# giro} other {# giros}}, neto {net}.",
+    "stoppedShort": "Juego automático detenido: {reason}.",
+    "note": "{cost} por giro{ante, select, yes { (Chance ×2)} other {}} · nunca compra bonos · se detiene cuando la pestaña queda oculta."
+  },
+  "toast": {
+    "autoplay": "Juego automático: {spins, plural, one {# giro} other {# giros}}, límite de pérdida {limit}.",
+    "refilled": "Saldo recargado: {amount}.",
+    "shareCopied": "Enlace para compartir copiado: {url}",
+    "shareLink": "Enlace para compartir: {url}",
+    "shareFailed": "No se pudo compartir: {reason}",
+    "replayFailed": "No se pudo reproducir esta ronda.",
+    "replayMismatch": "No se pudo verificar la repetición: el registro no coincide con el motor.",
+    "close": "Cerrar aviso"
+  },
+  "announce": {
+    "replayDone": "Repetición terminada: {amount}, {times}×. Saldo sin cambios.",
+    "roundEnd": "Ronda terminada. Premio total {amount}, {times}×.",
+    "roundEndNoWin": "Ronda terminada. Sin premio.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{size} {name}, premio de {times}×",
+    "clusterStain": "{size} {name}, mancha ×{stain}, premio de {times}×",
+    "bleed": "La Gota Maestra extendió su tinta: {n, plural, one {# vecina se convirtió} other {# vecinas se convirtieron}} en {name}.",
+    "stainMultiplier": "Multiplicador de mancha ×{best}: el pago del grupo se multiplica por la suma de las manchas.",
+    "comb": "Pasada del peine {pass}: filas desplazadas {shifts}.",
+    "combCluster": "El peine formó un nuevo grupo.",
+    "retrigger": "{count} Peines Dorados: {awarded, plural, one {# giro gratis añadido} other {# giros gratis añadidos}}.",
+    "trigger": "{count} Peines Dorados: Marmoleado de Tulipanes ganado.",
+    "freeIntro": "Comienza el Marmoleado de Tulipanes: has ganado {awarded, plural, one {# giro gratis} other {# giros gratis}}.",
+    "freeSpinWin": "El giro gratis dio {win}×. Total {total}×.",
+    "freeSpinNoWin": "Sin premio en el giro gratis.",
+    "noWin": "Sin premio.",
+    "totalWin": "Premio total {amount}, {times}×.",
+    "freeOutro": "El Marmoleado de Tulipanes ha terminado. Total: {amount}, {spins, plural, one {# giro} other {# giros}}, mancha más grande ×{stain}.",
+    "sent": "Giro enviado al servidor, {amount}.",
+    "buyStarted": "Bono comprado, {amount}. Comienza el Marmoleado de Tulipanes.",
+    "spinStarted": "Giro iniciado, {amount}.",
+    "recovered": "Se recuperó del servidor una ronda sin terminar; el pago ya se hizo allí ({amount}).",
+    "replaying": "Reproduciendo: ronda {id}. El saldo no cambia.",
+    "refilled": "Saldo DEMO recargado a {amount}.",
+    "refilledRemote": "Saldo DEMO del servidor recargado a {amount}.",
+    "speed": "Velocidad de giro: {speed}.",
+    "anteOn": "Chance ×2 activada: aproximadamente el doble de probabilidad de giros gratis, coste {cost}.",
+    "anteOff": "Chance ×2 desactivada: coste {cost}."
+  },
+  "banner": {
+    "combCluster": "El peine formó un nuevo grupo",
+    "scatterPay": "{count} Peines Dorados · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# giro gratis} other {# giros gratis}}"
+  },
+  "deck": {
+    "aria": "Controles del juego",
+    "balance": "Saldo",
+    "refill": "Recargar saldo",
+    "replay": "Repetición",
+    "win": "Premio",
+    "replayWin": "Premio de la repetición",
+    "lastWin": "Último premio",
+    "spin": "Girar",
+    "spinLocked": "Ronda en curso; bloqueado hasta que terminen todas las caídas, rayos y giros gratis.",
+    "auto": "Auto",
+    "info": "Info",
+    "on": "Activado",
+    "off": "Desactivado",
+    "anteDesc": "Aproximadamente el doble de probabilidad de giros gratis",
+    "buyDesc": "{spins, plural, one {# giro gratis} other {# giros gratis}} · {rtp}",
+    "speed": "Velocidad de giro: {speed}",
+    "soundLoading": "Cargando sonido {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Tu saldo DEMO se ha agotado.",
+    "lastRound": "Última ronda <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "La última ronda no tuvo premio.",
+    "spaceHint": "También puedes girar con la barra espaciadora.",
+    "fixedBefore": "El resultado se fija antes del giro."
+  },
+  "replay": {
+    "ribbon": "Repetición — saldo sin cambios · ronda {id}"
+  },
+  "auto": {
+    "ribbon": "Juego automático · {n, plural, one {# giro restante} other {# giros restantes}}"
+  },
+  "free": {
+    "tag": "Marmoleado de Tulipanes",
+    "spinNumber": "Giro {n}",
+    "left": "Restantes",
+    "counterAria": "Giro gratis {number}, quedan {left}"
+  },
+  "comb": {
+    "label": "Peine",
+    "passAria": "Pasada del peine {pass} / 3",
+    "maxAria": "Como máximo 3 pasadas del peine por giro"
+  },
+  "stain": {
+    "aria": "Celdas con mancha {cells}, mancha más alta ×{max}",
+    "stains": "Manchas",
+    "highest": "Más alta",
+    "max": "Máx. <b>{n}×</b>"
+  },
+  "meter": {
+    "idleA": "<b>5+</b> gotas vecinas del mismo color pagan",
+    "idleB": "El peine desplaza las filas",
+    "idleC": "Mancha de pintura <b>×256</b>",
+    "win": "Premio",
+    "totalWin": "Premio total"
+  },
+  "gated": {
+    "title": "No hay Ebru on-chain.",
+    "text": "Este juego se juega solo con crédito DEMO; no se aceptan apuestas reales.",
+    "back": "Volver a la demo local"
+  },
+  "splash": {
+    "f1Title": "Grupo de 5+",
+    "f1Text": "Cinco o más gotas vecinas del mismo color, en horizontal o vertical, pagan",
+    "f2Text": "El peine recorre el agua, las filas se deslizan, nacen nuevos grupos",
+    "f3Title": "Mancha ×256 · {max}×",
+    "f3Text": "En el Marmoleado de Tulipanes, las manchas se deslizan con el peine",
+    "loading": "Cargando el juego",
+    "play": "Jugar",
+    "skip": "No volver a mostrar esta pantalla de inicio",
+    "note": "El crédito DEMO no tiene valor · El resultado se fija antes del giro · Simulación no certificada, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Sonido listo: la música, los efectos y el ambiente están preparados en este dispositivo.",
+    "soundLoading": "Cargando sonido {percent} (mientras tanto el juego permanece en silencio).",
+    "soundOnTouch": "El sonido se carga con el primer toque.",
+    "demoTitle": "Saldo DEMO",
+    "demoText": "Saldo {balance}{server, select, yes { (servidor)} other {}}. Recargar fija el saldo en {amount} y añade una fila «{label}» al historial; no es posible durante una ronda o el juego automático."
+  },
+  "buy": {
+    "feature": "Marmoleado de Tulipanes · {spins, plural, one {# giro gratis} other {# giros gratis}} · apuesta {bet}",
+    "rtp": "RTP de compra {buy} · estándar {standard} (simulación, no certificada)",
+    "description": "<b>100 veces</b> tu apuesta. La ronda empieza con al menos 3 Peines Dorados y {spins, plural, one {# giro gratis está garantizado} other {# giros gratis están garantizados}}; cada celda que estalla recibe una mancha de pintura, las manchas se deslizan con el peine y multiplican por su suma el grupo bajo el que pasan. Los premios se pagan sobre una apuesta de {bet}, hasta un máximo de {max}."
+  },
+  "history": {
+    "scope": "Esta sesión · las repeticiones nunca cambian tu saldo",
+    "time": "Hora",
+    "mode": "Modo",
+    "win": "Premio",
+    "result": "Resultado",
+    "roundId": "ID de la ronda",
+    "replay": "Repetir",
+    "replayAria": "Repetir: ronda {id}, saldo sin cambios",
+    "share": "Compartir tu premio",
+    "shareAria": "Compartir tu premio: ronda {id}",
+    "latest": "Última ronda",
+    "refilled": "Saldo recargado",
+    "refilledRemote": "Saldo recargado (servidor)",
+    "emptyTitle": "Tu primera ronda aparecerá aquí.",
+    "emptyText": "Se registran el modo, la apuesta, el coste, el premio y el ID de cada ronda; puedes volver a ver cualquier ronda.",
+    "capped": "Premio máximo · {times}×",
+    "free": "Giros gratis ×{spins} · {times}×",
+    "none": "Sin premio",
+    "freeStain": "Marmoleado de Tulipanes ×{spins} · mancha más grande ×{stain} · {times}×",
+    "clusters": "{n, plural, one {# grupo} other {# grupos}}",
+    "combWins": "{n, plural, one {# premio del peine} other {# premios del peine}}",
+    "combs": "{n, plural, one {# Peine Dorado} other {# Peines Dorados}}",
+    "clusterRow": "{items} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× la apuesta",
+    "capNote": "La ronda alcanzó el límite · los giros restantes no se juegan",
+    "continue": "Continuar",
+    "tapToSpeed": "Toca para acelerar"
+  },
+  "intro": {
+    "word": "MARMOLEADO DE TULIPANES",
+    "title": "Comienza el Marmoleado de Tulipanes",
+    "freeA": "giros",
+    "freeB": "gratis",
+    "text": "Cada celda que estalla recibe una <b>mancha de pintura</b>: primero ×2, duplicándose cada vez en la misma celda, hasta ×256. Las manchas permanecen durante toda la función y <b>se deslizan con el peine</b>; el pago de un grupo que pasa sobre ellas se multiplica por la suma de las manchas. 3 Peines Dorados dan +4 giros.",
+    "start": "Empezar"
+  },
+  "total": {
+    "titleA": "Marmoleado de Tulipanes",
+    "titleB": "Total",
+    "word": "TOTAL",
+    "sub": "GIROS GRATIS",
+    "spins": "Giros",
+    "spinsValue": "{n, plural, one {# giro} other {# giros}}",
+    "maxStain": "Mancha más grande",
+    "none": "Ninguno",
+    "stainedClusters": "{n, plural, one {# grupo con mancha} other {# grupos con mancha}}",
+    "noStainedClusters": "ningún grupo con mancha",
+    "betMultiple": "De tu apuesta",
+    "combWins": "{n, plural, one {# premio del peine} other {# premios del peine}}",
+    "noCombWins": "ningún premio del peine",
+    "capNote": "Premio máximo alcanzado · los giros restantes no se juegan",
+    "toCelebration": "Pasar a la celebración"
+  },
+  "info": {
+    "windowTitle": "Ebru · Información del juego",
+    "how": {
+      "title": "Cómo jugar",
+      "s1": "<b>Elige tu apuesta.</b> Los botones − y + cambian la apuesta un nivel; al tocar el importe se abren todos los niveles. «{max}» elige el nivel más alto que cubre tu saldo.",
+      "s2": "<b>Gira.</b> Pulsa el botón de tinta o usa la barra espaciadora. El coste de la ronda ({multiple} veces la apuesta con Chance ×2 activa) se descuenta una sola vez del saldo.",
+      "s3": "<b>Forma grupos.</b> En la cubeta de agua de 7 × 7, <b>5 o más gotas vecinas del mismo color</b>, en horizontal o vertical, pagan; cuanto mayor es el grupo, mayor es el nivel de pago.",
+      "s4": "<b>Cadena.</b> Los grupos ganadores se disuelven en el agua, las gotas de arriba caen y nuevas gotas llenan los huecos; continúa hasta que no queda ningún grupo.",
+      "s5": "<b>Peine.</b> Cuando la cadena termina —incluso sin premio— el Peine Dorado recorre el agua: cada fila se desliza a la derecha o a la izquierda según su propia medida y pueden nacer nuevos grupos. Como máximo {passes} pasadas del peine por giro.",
+      "s6": "<b>Resultado.</b> Toda la ronda la decide el motor antes de empezar el giro; la animación solo reproduce ese resultado. El botón de girar permanece bloqueado hasta que termina la ronda (todas las caídas, pasadas del peine y giros gratis); usa el ajuste {quick}/{turbo} para acelerar. Los ajustes de velocidad, tocar el contador de celebración, una pestaña oculta o salir de la página nunca cambian el pago; la ronda siempre se cierra una vez, con el pago del motor.",
+      "note": "El crédito DEMO no tiene valor; no genera SOL, tokens ni recompensas. El juego funciona en el navegador con aleatoriedad local; no hay prueba VRF."
+    },
+    "pay": {
+      "title": "Tabla de pagos",
+      "lead": "<b>5 o más gotas vecinas del mismo color</b>, en horizontal o vertical, forman un grupo. La cifra grande es el importe DEMO bruto con una apuesta de <b>{bet}</b>; el multiplicador de debajo es un múltiplo de la apuesta. Cada grupo de la misma cuadrícula paga por separado.",
+      "clustersAria": "Pagos de los grupos",
+      "fullSummary": "Todos los tamaños de grupo (12 niveles)",
+      "fullCaption": "Pago por color y tamaño de grupo, como múltiplo de la apuesta",
+      "colour": "Color",
+      "scatterTitle": "{name} · pago scatter",
+      "combs5": "5+ peines",
+      "combs4": "4 peines",
+      "combs3": "3 peines",
+      "scatterText": "Si la cuadrícula final del giro base contiene 3 o más Peines Dorados, estos pagan y activan <b>{spins} giros gratis</b> (Marmoleado de Tulipanes). Los peines no se disuelven; solo caen y se deslizan con el peine.",
+      "dropText": "No forma parte de ningún grupo; donde cae, extiende su tinta: elige el color más frecuente entre sus 4 vecinas y pinta a las vecinas y a sí misma de ese color. Los detalles están en la página «{features}».",
+      "maxTitle": "Premio máximo {n}×",
+      "maxText": "Con esta apuesta son <b>{amount}</b>. Si el total de la ronda alcanza este límite, la ronda termina de inmediato; los giros gratis restantes no se juegan."
+    },
+    "features": {
+      "title": "Características",
+      "combTitle": "Pasada del peine",
+      "combText": "Cuando termina cada cadena de caídas, el peine recorre el tablero una vez: la fila r se desliza cíclicamente <b>round(A · sin(φ + r · k))</b> columnas (lo que sale por la derecha entra por la izquierda). A vale 1, 2 o 3 en cada pasada ({weights}); φ y k se sortean de nuevo en cada pasada. Si el desplazamiento forma un nuevo grupo, la cadena continúa; si no, el giro termina. Como máximo {passes} pasadas por giro. Los símbolos solo cambian de lugar; ninguno se añade ni se elimina.",
+      "combExample": "Ejemplo: A = 2, φ = 0, k = 8·2π/64 → desplazamientos de las filas {shifts}.",
+      "combExampleAria": "Ejemplo de pasada del peine, desplazamiento por fila",
+      "combRow": "Fila {n} {shift}",
+      "dropTitle": "{name}",
+      "dropText": "En el momento en que cae (al repartir o al rellenar) extiende su tinta: cuenta los colores de sus 4 vecinas, elige el más frecuente (el empate se resuelve al azar; sin vecinas coloreadas, un color aleatorio), pinta a sus vecinas coloreadas de ese color y ella misma toma ese color. Los Peines Dorados no se pintan.",
+      "freeTitle": "Marmoleado de Tulipanes (giros gratis)",
+      "freeText": "3+ Peines Dorados activan {trigger} giros gratis. En los giros gratis, cada celda que estalla recibe un <b>multiplicador de mancha de pintura</b>: ×2 la primera vez, duplicándose cada vez en la misma celda, hasta ×{stainMax}. Las manchas permanecen durante toda la función; las caídas no las mueven, pero <b>la pasada del peine desplaza las manchas con el mismo desplazamiento que los símbolos</b>. Cuando un grupo pasa sobre celdas con mancha, su pago se multiplica por la <b>suma</b> de las manchas que tiene debajo (primero el pago, luego la nueva mancha). En los giros gratis, 3+ peines añaden {retrigger} giros; en una sola ronda se juegan como máximo {max} giros. La Gota de Hollín no se extiende en los giros gratis (solo una Gota Maestra sin vecinas coloreadas puede elegir ese color al azar).",
+      "stainsAria": "Multiplicadores de mancha",
+      "cumTitle": "Premio acumulado",
+      "cumText": "El marcador de premios nunca se reinicia durante una ronda: grupos, premios del peine, el pago scatter y todos los giros gratis se suman en el mismo total. Una ronda de giros gratis siempre termina con la pantalla «{screen}».",
+      "tiersTitle": "Niveles de premio y anuncios de multiplicador",
+      "tiersText": "Cuando el total de la ronda es <b>10×</b> la apuesta base o más, se abre la pantalla de celebración y el contador sube por los niveles: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; una ronda que alcanza el límite termina con {max}. Los multiplicadores de mancha de ×10 o más se anuncian en letras grandes sobre la cuadrícula con su propio sonido. Tocar la pantalla lleva el contador al resultado; nunca cambia el pago.",
+      "anteTitle": "Chance ×2 · coste {cost}",
+      "anteText": "Mientras está activa, cada giro cuesta <b>{multiple} veces tu apuesta</b> y los Peines Dorados son más probables en el juego base: la probabilidad de giros gratis es aproximadamente el doble ({ante} / {standard}). Los premios se siguen pagando sobre la apuesta base. Con ella activa no se puede comprar el bono.",
+      "buyTitle": "Comprar bono · precio {price}",
+      "buyText": "Por <b>100 veces</b> tu apuesta, la ronda empieza con al menos 3 Peines Dorados; {spins} giros gratis están garantizados. La compra se hace mediante una ventana de confirmación, funciona con un RTP aparte ({rtp}) y no se puede usar con el juego automático."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Retorno teórico (RTP)",
+      "caption": "Retorno teórico por modo",
+      "mode": "Modo",
+      "cost": "Coste",
+      "ci": "IC del 95 %",
+      "feature": "Función",
+      "everyRound": "cada ronda",
+      "method": "Una simulación independiente de {millions} millones de rondas para cada modo (motor <code>ebru-ink-1</code>). El RTP se calcula sobre el importe pagado. Frecuencia de premio (giro base): estándar {hit}, Chance ×2 {hitAnte}. Volatilidad (desviación típica en unidades de coste): estándar {sdStandard}, compra {sdBuy}.",
+      "note": "La simulación es una estimación y <b>no está certificada</b>; por la cola pesada, el intervalo de confianza puede ser optimista. El resultado de una sesión corta puede diferir mucho del RTP. El crédito DEMO <b>no tiene valor</b>."
+    },
+    "limits": {
+      "title": "Límites de apuesta y premio",
+      "range": "Rango de apuestas",
+      "levels": "Niveles",
+      "current": "Apuesta actual",
+      "currentValue": "{bet} · Chance ×2 {ante} · Compra {buy}",
+      "max": "Premio máximo",
+      "maxValue": "{n} veces la apuesta · {amount} con esta apuesta",
+      "p1": "Una ronda que alcanza el premio máximo termina de inmediato; los giros gratis restantes no se juegan. El pago siempre se calcula sobre la apuesta base, redondeando hacia abajo las fracciones de céntimo.",
+      "p2": "Los niveles y modos que tu saldo no cubre no se pueden seleccionar. Una ronda es una única reserva y un único pago; solo se juega una ronda a la vez."
+    },
+    "keys": {
+      "title": "Teclas",
+      "heading": "Teclado",
+      "space": "Espacio",
+      "spaceText": "Inicia el giro ({settings} → «{option}»). Durante una ronda no salta el giro; solo acelera las pantallas de giros gratis y el contador de celebración.",
+      "enterText": "Pulsa el botón enfocado.",
+      "escText": "Cierra la ventana abierta (excepto el recordatorio de sesión).",
+      "tabText": "Se mueve entre los controles; el foco siempre es visible.",
+      "arrowsText": "Cambia de página en esta ventana de información; cambia la opción en las selecciones de ajustes.",
+      "pageText": "Se mueve entre las páginas de información.",
+      "note": "El lector de pantalla anuncia cada paso («{example}», pasadas del peine, resultado de la ronda); la cuadrícula se lee como una tabla de 7×7 y las celdas con mancha se leen con su multiplicador. Los símbolos se distinguen por la forma además del color (tulipán, clavel, flor hatip, hoja, ojo de pavo real, margarita, rosa, guijarro). La preferencia de movimiento reducido reduce el peine a un breve deslizamiento y desactiva partículas y temblores."
+    },
+    "fault": {
+      "title": "Cláusula de fallo",
+      "p1": "<b>Un fallo anula todos los juegos y pagos afectados.</b> En caso de fallo del software, del navegador o del dispositivo, prevalece el registro de la ronda; un importe que aparezca en pantalla pero no coincida con el registro del motor no es válido.",
+      "p2": "Este juego se juega solo con crédito DEMO. El DEMO no tiene valor y no se puede convertir en dinero ni en tokens; en caso de fallo, el saldo DEMO y el historial de la sesión pueden corregirse o restablecerse.",
+      "p3": "Como el resultado se fija antes del giro, una animación interrumpida, una pestaña oculta o salir de la página no cambian el resultado; la ronda se cierra igualmente una vez con el pago del motor."
+    }
+  }
+}

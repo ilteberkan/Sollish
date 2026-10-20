@@ -1,12 +1,135 @@
 {
   "meta": {
-    "title": "Jeux — En direct & solo",
-    "description": "Jeux Sollish. Rejoignez le combat Ringside en direct partagé ou essayez les jeux solo."
+    "title": "Lobby du casino",
+    "description": "Les jeux originaux de Sollish dans un seul lobby : cinq machines à sous maison, l’arène en direct Ringside, Crash et Coinflip. Crédits DEMO uniquement, pas d’argent réel."
   },
+  "heading": "Lobby du casino Sollish",
   "hero": {
+    "region": "Jeux à la une",
+    "slide": "{index} sur {total}",
+    "prev": "Jeu à la une précédent",
+    "next": "Jeu à la une suivant",
+    "pause": "Mettre la rotation en pause",
+    "resume": "Reprendre la rotation",
+    "goTo": "Afficher {name}",
+    "eyebrow": "Nouveau · Original Sollish",
+    "play": "Jouer en démo"
+  },
+  "chips": {
+    "label": "Filtrer les jeux",
+    "all": "Tous les jeux"
+  },
+  "rows": {
+    "recent": {
+      "title": "Joués récemment",
+      "subtitle": "Enregistré dans ce navigateur uniquement.",
+      "clear": "Vider la liste"
+    },
+    "originals": {
+      "title": "Originaux Sollish",
+      "subtitle": "Cinq machines à sous maison. Chaque tour peut être vérifié sur la page de vérification."
+    },
+    "live": {
+      "title": "En direct",
+      "subtitle": "Un seul combat partagé, tout le monde regarde le même."
+    },
+    "instant": {
+      "title": "Jeux instantanés",
+      "subtitle": "À ton rythme, résultat immédiat."
+    },
+    "new": {
+      "title": "Nouveautés",
+      "subtitle": "Les dernières sorties."
+    },
+    "fair": {
+      "title": "Équité prouvable",
+      "subtitle": "Le résultat est fixé par des seeds que tu peux vérifier après le tour.",
+      "cta": "Vérifier un tour"
+    }
+  },
+  "row": {
+    "viewAll": "Tout voir",
+    "viewAllAria": "Tout voir : {title}",
+    "prev": "Défiler en arrière : {title}",
+    "next": "Défiler en avant : {title}",
+    "count": "{count, plural, one {# jeu} other {# jeux}}"
+  },
+  "grid": {
+    "results": "Résultats de recherche",
+    "resultsCount": "{count, plural, =0 {Aucun jeu pour « {query} »} one {# jeu pour « {query} »} other {# jeux pour « {query} »}}",
+    "empty": "Aucun jeu ne correspond à « {query} ». Essaie un nom de jeu, un thème comme « loup » ou « candy », ou une catégorie.",
+    "reset": "Afficher tous les jeux",
+    "favoritesEmpty": "Pas encore de favoris. Touche le cœur d’un jeu pour le garder ici.",
+    "back": "Retour au lobby"
+  },
+  "tile": {
+    "provider": "Sollish",
+    "demo": "DEMO",
+    "new": "Nouveau",
+    "original": "Original",
+    "live": "Direct",
+    "rtp": "RTP {value}",
+    "maxWin": "Max {value}",
+    "poolFee": "Frais de pool {value}",
+    "poolNote": "Paris mutuels",
+    "volatility": "Volatilité : {level}",
+    "vol": {
+      "low": "Faible",
+      "medium": "Moyenne",
+      "high": "Élevée",
+      "veryHigh": "Très élevée",
+      "player": "À toi de choisir"
+    },
+    "favAdd": "Ajouter {name} aux favoris",
+    "favRemove": "Retirer {name} des favoris",
+    "play": "Jouer en démo",
+    "watch": "Rejoindre le direct"
+  },
+  "cards": {
+    "crash": {
+      "tagline": "Encaisse avant que la ligne ne casse.",
+      "text": "Choisissez le moment d’encaisser pendant que le multiplicateur grimpe.",
+      "type": "Encaissement manuel"
+    },
+    "coinflip": {
+      "tagline": "Deux faces, un seul choix.",
+      "text": "Deux faces, un choix, un résultat immédiat.",
+      "type": "Classique"
+    },
+    "cascade": {
+      "tagline": "Cascades sucrées et multiplicateurs de cristal.",
+      "text": "Faites éclater huit symboles identiques et enchaînez avec les bonbons qui tombent.",
+      "type": "Tumble"
+    },
+    "tarhun": {
+      "tagline": "Le dieu de l’orage charge les pierres.",
+      "text": "Le dieu de la tempête frappe les pierres de ses éclairs ; les multiplicateurs s’accumulent pendant les tours gratuits.",
+      "type": "Tumble · multiplicateur"
+    },
+    "ebru": {
+      "tagline": "De l’encre, de l’eau et un peigne d’or.",
+      "text": "Le peigne balaie l’eau et l’encre se réorganise vague après vague ; les taches de couleur glissent avec leurs multiplicateurs.",
+      "type": "Grappe · peigne"
+    },
+    "cezeri": {
+      "tagline": "Quatre roues de laiton, un moyeu qui monte.",
+      "text": "Quatre roues de laiton tournent ; les segments gagnants se verrouillent, les roues repartent et le multiplicateur central gagne +1 à chaque fois.",
+      "type": "Roue · chaîne"
+    },
+    "asena": {
+      "tagline": "Suis le Loup céleste à travers les étoiles.",
+      "text": "Les grappes dessinent des constellations dans le ciel et la Louve céleste avance en laissant une traînée d’étoiles ; la carte d’Ergenekon porte le multiplicateur global jusqu’à ×5.",
+      "type": "Grappe · constellation"
+    },
+    "ringside": {
+      "tagline": "Trois rounds, trois pools, un combat en direct.",
+      "text": "Un combat en trois rounds avec coups de poing et de pied. Faites votre choix avant le début, puis suivez votre ticket round après round. Un réseau entraîné dirige les combattants et Jev donne la tactique depuis le coin.",
+      "type": "Direct · paris mutuels"
+    }
+  },
+  "liveCard": {
     "aria": "Entrer dans l’arène Ringside en direct",
     "tag": "EN DIRECT · TOUT LE MONDE REGARDE LE MÊME COMBAT",
-    "text": "Un combat en trois rounds avec coups de poing et de pied. Faites votre choix avant le début, puis suivez votre ticket round après round. Un réseau entraîné dirige les combattants et Jev donne la tactique depuis le coin.",
     "cta": "Entrer dans l’arène",
     "factWindowValue": "30 s",
     "factWindow": "fenêtre de paris",
@@ -16,16 +139,6 @@
     "factMarkets": "marchés du combat",
     "factFeeValue": "2 %",
     "factFee": "commission du pool"
-  },
-  "solo": { "title": "Solo", "subtitle": "À votre rythme, résultat immédiat.", "demo": "DEMO" },
-  "cards": {
-    "crash": { "text": "Choisissez le moment d’encaisser pendant que le multiplicateur grimpe.", "type": "Encaissement manuel" },
-    "coinflip": { "text": "Deux faces, un choix, un résultat immédiat.", "type": "Classique" },
-    "cascade": { "text": "Faites éclater huit symboles identiques et enchaînez avec les bonbons qui tombent.", "type": "Tumble" },
-    "tarhun": { "text": "Le dieu de la tempête frappe les pierres de ses éclairs ; les multiplicateurs s’accumulent pendant les tours gratuits.", "type": "Tumble · multiplicateur" },
-    "ebru": { "text": "Le peigne balaie l’eau et l’encre se réorganise vague après vague ; les taches de couleur glissent avec leurs multiplicateurs.", "type": "Grappe · peigne" },
-    "cezeri": { "text": "Quatre roues de laiton tournent ; les segments gagnants se verrouillent, les roues repartent et le multiplicateur central gagne +1 à chaque fois.", "type": "Roue · chaîne" },
-    "asena": { "text": "Les grappes dessinent des constellations dans le ciel et la Louve céleste avance en laissant une traînée d’étoiles ; la carte d’Ergenekon porte le multiplicateur global jusqu’à ×5.", "type": "Grappe · constellation" }
   },
   "trust": {
     "aria": "Règles",
@@ -44,5 +157,6 @@
     "fightersA": "Chaque coup de poing, coup de pied, enchaînement, distance et défense est choisi par un réseau qui apprend pendant le combat ; le connectome de mouche MaleCNS sert de réservoir fixe. L’entraîneur de coin Jev propose un plan toutes les 9 secondes ; comme ce plan arrive après la clôture des paris, le jeu reste en DEMO uniquement. Nous n’affirmons ni qu’il s’agit d’un cerveau complet ni que le connectome est supérieur.",
     "demoQ": "La limite entre démo et paris réels",
     "demoA": "Les crédits DEMO n’ont ici aucune valeur monétaire. Les paris réels en SOL restent désactivés tant que le déploiement du contrat, la reprise de l’oracle, la confidentialité de Crash et les flux de paiement ne sont pas validés. Nous ne prétendons pas qu’un audit indépendant a été réalisé. Ces versions n’ont pas de preuve VRF."
-  }
+  },
+  "footnote": "Le RTP et la volatilité sont des estimations simulées pour le mode standard de chaque jeu DEMO, pas des valeurs certifiées. Les tours d’entraînement de Crash et Coinflip utilisent l’aléatoire de ton navigateur et ne sont pas d’équité prouvable."
 }

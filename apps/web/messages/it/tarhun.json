@@ -1,0 +1,327 @@
+{
+  "meta": {
+    "description": "{title} — un gioco tumble DEMO originale. Il dio della tempesta scaglia fulmini sulle pietre e i moltiplicatori si accumulano nei giri gratis."
+  },
+  "subtitle": "Il dio della tempesta scaglia fulmini sulle pietre; i moltiplicatori si accumulano nei giri gratis.",
+  "logo": {
+    "subtitle": "TRONO DELLA TEMPESTA"
+  },
+  "table": {
+    "aria": "Tavolo di gioco Tarhun"
+  },
+  "board": {
+    "label": "Griglia Tarhun, 6 colonne, 5 righe",
+    "labelFree": "Griglia dei giri gratis Tarhun, 6 colonne, 5 righe"
+  },
+  "badge": {
+    "checking": "Verifica del server in corso"
+  },
+  "symbols": {
+    "h1": "Rhyton del Toro d’Oro",
+    "h2": "Ascia del Fulmine",
+    "h3": "Medaglione della Porta del Leone",
+    "h4": "Disco Solare",
+    "l1": "Pietra dell’Onda Blu Notte",
+    "l2": "Pietra dell’Aquila d’Agata",
+    "l3": "Pietra del Sole d’Ambra",
+    "l4": "Pietra dell’Albero di Malachite",
+    "l5": "Pietra del Fulmine d’Ossidiana",
+    "scatter": "Sigillo del Fulmine",
+    "orb": "Pietra della Tempesta",
+    "orbValue": "{name} ×{value}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Moltiplicatore",
+      "1": "Moltiplicatore potente",
+      "2": "Moltiplicatore tuonante",
+      "3": "Moltiplicatore devastante",
+      "4": "Moltiplicatore leggendario",
+      "5": "Fragore di tuono",
+      "6": "Moltiplicatore divino"
+    },
+    "total": "Totale · {tag}"
+  },
+  "error": {
+    "entropy": "La casualità locale sicura non è disponibile. La demo non è stata avviata.",
+    "noCredit": "Non hai abbastanza credito demo oppure è già in corso un round demo.",
+    "insufficientSpin": "Saldo insufficiente: questo giro costa {cost}. Abbassa la puntata o ricarica il saldo.",
+    "insufficientBuy": "Saldo insufficiente: questo acquisto costa {cost}. Abbassa la puntata o ricarica il saldo."
+  },
+  "buyBlock": {
+    "gated": "Disponibile solo con credito DEMO",
+    "autoplay": "Non acquistabile durante il gioco automatico",
+    "busy": "Non acquistabile prima della fine del round",
+    "ante": "Non acquistabile con Chance ×2 attiva",
+    "balance": "Saldo insufficiente (prezzo {price})"
+  },
+  "autoplay": {
+    "title": "Gioco automatico",
+    "serverFailed": "Il server non è riuscito ad avviare il round",
+    "spinFailed": "Non è stato possibile avviare il giro",
+    "quit": "Hai lasciato la sessione",
+    "stopped": "Gioco automatico interrotto: {reason}. {spins, plural, one {# giro} other {# giri}}, netto {net}.",
+    "stoppedShort": "Gioco automatico interrotto: {reason}.",
+    "note": "{cost} per giro{ante, select, yes { (Chance ×2)} other {}} · non acquista mai un bonus · si ferma quando la scheda è nascosta."
+  },
+  "toast": {
+    "autoplay": "Gioco automatico: {spins, plural, one {# giro} other {# giri}}, limite di perdita {limit}.",
+    "refilled": "Saldo ricaricato: {amount}.",
+    "shareCopied": "Link di condivisione copiato: {url}",
+    "shareLink": "Link di condivisione: {url}",
+    "shareFailed": "Impossibile condividere: {reason}",
+    "replayFailed": "Non è stato possibile rivedere questo round.",
+    "replayMismatch": "Replay non verificabile: il record non corrisponde al motore.",
+    "close": "Chiudi la notifica"
+  },
+  "announce": {
+    "replayDone": "Replay terminato: {amount}, {times}×. Saldo invariato.",
+    "roundEnd": "Round terminato. Vincita totale {amount}, {times}×.",
+    "roundEndNoWin": "Round terminato. Nessuna vincita.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{count} {name}, vincita {times}×",
+    "orbCharge": "Tarhun scaglia fulmini sulle Pietre della Tempesta.",
+    "orbChargeFree": "Tarhun scaglia fulmini sulle Pietre della Tempesta: i loro valori verranno aggiunti al moltiplicatore totale.",
+    "orbArrive": "Pietra della Tempesta ×{value}: moltiplicatore ×{multiplier}.",
+    "orbArriveFree": "Pietra della Tempesta ×{value}: moltiplicatore totale ×{multiplier}.",
+    "multiply": "Moltiplicatore ×{multiplier}: la vincita di {base}× è stata moltiplicata per {multiplier}.",
+    "retrigger": "{count} Sigilli del Fulmine: {awarded, plural, one {# giro gratis aggiunto} other {# giri gratis aggiunti}}.",
+    "trigger": "{count} Sigilli del Fulmine: giri gratis vinti.",
+    "freeIntro": "La tempesta inizia: hai vinto {awarded, plural, one {# giro gratis} other {# giri gratis}}.",
+    "freeSpinWin": "Il giro gratis ha fruttato {win}×. Totale {total}×, moltiplicatore totale ×{multiplier}.",
+    "freeSpinNoWin": "Nessuna vincita nel giro gratis.",
+    "noWin": "Nessuna vincita.",
+    "totalWin": "Vincita totale {amount}, {times}×.",
+    "freeOutro": "La tempesta si è placata. Totale: {amount}, {spins, plural, one {# giro} other {# giri}}, moltiplicatore totale ×{multiplier}.",
+    "sent": "Giro inviato al server, {amount}.",
+    "buyStarted": "Bonus acquistato, {amount}. I giri gratis stanno per iniziare.",
+    "spinStarted": "Giro avviato, {amount}.",
+    "recovered": "Un round interrotto è stato recuperato dal server; il pagamento è già stato effettuato lì ({amount}).",
+    "replaying": "Replay in corso: round {id}. Il saldo non cambia.",
+    "refilled": "Saldo DEMO ricaricato a {amount}.",
+    "refilledRemote": "Saldo DEMO del server ricaricato a {amount}.",
+    "speed": "Velocità dei giri: {speed}.",
+    "anteOn": "Chance ×2 attiva: probabilità di giri gratis circa doppia, costo {cost}.",
+    "anteOff": "Chance ×2 disattiva: costo {cost}."
+  },
+  "banner": {
+    "scatterPay": "{count} Sigilli del Fulmine · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# giro gratis} other {# giri gratis}}"
+  },
+  "deck": {
+    "aria": "Comandi di gioco",
+    "balance": "Saldo",
+    "refill": "Ricarica il saldo",
+    "replay": "Replay",
+    "win": "Vincita",
+    "replayWin": "Vincita del replay",
+    "lastWin": "Ultima vincita",
+    "spin": "Gira",
+    "spinLocked": "Round in corso; bloccato finché non finiscono tutte le cascate, i fulmini e i giri gratis.",
+    "auto": "Auto",
+    "info": "Info",
+    "on": "Attivo",
+    "off": "Disattivo",
+    "anteDesc": "Probabilità di giri gratis circa doppia",
+    "buyDesc": "{spins, plural, one {# giro gratis} other {# giri gratis}} · {rtp}",
+    "speed": "Velocità dei giri: {speed}",
+    "soundLoading": "Caricamento audio {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Il tuo saldo DEMO è esaurito.",
+    "lastRound": "Ultimo round <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "Nessuna vincita nell’ultimo round.",
+    "spaceHint": "Puoi girare anche con la barra spaziatrice.",
+    "fixedBefore": "Il risultato è stabilito prima del giro."
+  },
+  "replay": {
+    "ribbon": "Replay — saldo invariato · round {id}"
+  },
+  "auto": {
+    "ribbon": "Gioco automatico · {n, plural, one {# giro rimasto} other {# giri rimasti}}"
+  },
+  "free": {
+    "tag": "Giro gratis",
+    "spinNumber": "Giro {n}",
+    "left": "Rimasti",
+    "counterAria": "Giro gratis {number}, ne restano {left}"
+  },
+  "mult": {
+    "label": "Moltiplicatore",
+    "total": "Moltiplicatore totale"
+  },
+  "meter": {
+    "idleA": "<b>8+</b> simboli uguali pagano ovunque",
+    "idleB": "Pietre della Tempesta fino a <b>×500</b>",
+    "win": "Vincita",
+    "totalWin": "Vincita totale"
+  },
+  "gated": {
+    "title": "Nessun Tarhun on-chain.",
+    "text": "Questo gioco si gioca solo con credito DEMO; le puntate reali non sono accettate.",
+    "back": "Torna alla demo locale"
+  },
+  "splash": {
+    "f1Title": "8+ ovunque",
+    "f1Text": "Otto simboli uguali pagano ovunque nella griglia",
+    "f2Title": "Pietra della Tempesta ×500",
+    "f2Text": "Raccolta dai fulmini; il moltiplicatore si accumula nei giri gratis",
+    "f3Title": "Vincita massima {max}×",
+    "f3Text": "4 Sigilli del Fulmine sbloccano {spins, plural, one {# giro gratis} other {# giri gratis}}",
+    "loading": "Caricamento del gioco",
+    "play": "Gioca",
+    "skip": "Non mostrare più questa schermata iniziale",
+    "note": "Il credito DEMO non ha valore · Il risultato è stabilito prima del giro · Simulazione non certificata, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Audio pronto: musica, effetti e voce fuori campo sono pronti su questo dispositivo.",
+    "soundLoading": "Caricamento audio {percent} (nel frattempo il gioco resta muto o usa effetti semplici).",
+    "soundOnTouch": "L’audio si carica al primo tocco.",
+    "demoTitle": "Saldo DEMO",
+    "demoText": "Saldo {balance}{server, select, yes { (server)} other {}}. La ricarica porta il saldo a {amount} e aggiunge una riga “{label}” alla cronologia; non è possibile durante un round o il gioco automatico."
+  },
+  "buy": {
+    "feature": "{spins, plural, one {# giro gratis} other {# giri gratis}} · puntata {bet}",
+    "rtp": "RTP dell’acquisto {buy} · standard {standard} (simulazione, non certificata)",
+    "description": "<b>100 volte</b> la tua puntata. Il round inizia con almeno 4 Sigilli del Fulmine e {spins, plural, one {# giro gratis è garantito} other {# giri gratis sono garantiti}}; il moltiplicatore totale parte da ×0 e cresce a ogni giro vincente. Le vincite sono pagate su una puntata di {bet}, fino a un massimo di {max}."
+  },
+  "history": {
+    "scope": "Questa sessione · i replay non modificano mai il saldo",
+    "time": "Ora",
+    "mode": "Modalità",
+    "win": "Vincita",
+    "result": "Risultato",
+    "roundId": "ID del round",
+    "replay": "Rivedi",
+    "replayAria": "Rivedi: round {id}, saldo invariato",
+    "share": "Condividi la vincita",
+    "shareAria": "Condividi la vincita: round {id}",
+    "latest": "Ultimo round",
+    "refilled": "Saldo ricaricato",
+    "refilledRemote": "Saldo ricaricato (server)",
+    "emptyTitle": "Il tuo primo round apparirà qui.",
+    "emptyText": "Modalità, puntata, costo, vincita e ID di ogni round vengono registrati; puoi rivedere qualsiasi round.",
+    "capped": "Vincita massima · {times}×",
+    "free": "Giri gratis ×{spins} · {times}×",
+    "freeTotal": "Giri gratis ×{spins} · totale ×{multiplier} · {times}×",
+    "none": "Nessuna vincita",
+    "tumbles": "{n, plural, one {# cascata} other {# cascate}} · {times}×",
+    "tumblesMultiplied": "{n, plural, one {# cascata} other {# cascate}} · ×{multiplier} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× la puntata",
+    "capNote": "Il round ha raggiunto il limite · i giri rimanenti non vengono giocati",
+    "continue": "Continua",
+    "tapToSpeed": "Tocca per accelerare"
+  },
+  "intro": {
+    "title": "La Tempesta Inizia",
+    "titleCaps": "LA TEMPESTA INIZIA",
+    "freeA": "giri",
+    "freeB": "gratis",
+    "text": "A ogni giro vincente le Pietre della Tempesta si aggiungono al <b>moltiplicatore totale</b>; il moltiplicatore totale si conserva per tutti i giri gratis. 3 Sigilli del Fulmine danno +5 giri.",
+    "start": "Inizia"
+  },
+  "total": {
+    "titleA": "La Tempesta si Placa",
+    "titleB": "Totale",
+    "word": "TOTALE",
+    "sub": "GIRI GRATIS",
+    "spins": "Giri",
+    "spinsValue": "{n, plural, one {# giro} other {# giri}}",
+    "none": "Nessuno",
+    "strikes": "{n, plural, one {# fulmine} other {# fulmini}}",
+    "noOrbs": "nessuna pietra",
+    "betMultiple": "Della tua puntata",
+    "capNote": "Vincita massima raggiunta · i giri rimanenti non vengono giocati",
+    "toCelebration": "Vai alla celebrazione"
+  },
+  "info": {
+    "windowTitle": "Tarhun · Info sul gioco",
+    "how": {
+      "title": "Come si gioca",
+      "s1": "<b>Scegli la puntata.</b> I pulsanti − e + cambiano la puntata di un livello; toccando l’importo si aprono tutti i livelli. “{max}” sceglie il livello più alto coperto dal tuo saldo.",
+      "s2": "<b>Gira.</b> Premi il pulsante della tempesta o usa la barra spaziatrice. Il costo del round ({multiple} volte la puntata con Chance ×2 attiva) viene addebitato una sola volta dal saldo.",
+      "s3": "<b>Combina.</b> Nella griglia di 6 colonne × 5 righe vinci con <b>8 o più simboli uguali ovunque</b>; più sono, più alto è il livello di pagamento.",
+      "s4": "<b>Catena.</b> Le pietre vincenti si frantumano, quelle sopra cadono e nuove pietre riempiono gli spazi. Si va avanti finché non ci sono nuove vincite.",
+      "s5": "<b>Fulmine.</b> Quando la catena termina con una vincita, Tarhun colpisce ogni Pietra della Tempesta sulla griglia; i valori delle pietre vengono sommati e la vincita è moltiplicata per quel totale.",
+      "s6": "<b>Risultato.</b> L’intero round viene deciso dal motore prima dell’inizio del giro; l’animazione si limita a riprodurre quel risultato. Il pulsante di gioco resta bloccato finché il round (ogni cascata e ogni giro gratis) non è finito; usa l’impostazione {quick}/{turbo} per velocizzare. Le impostazioni di velocità, un tocco sul contatore della celebrazione, una scheda nascosta o l’uscita dalla pagina non cambiano mai il pagamento; il round si chiude sempre una sola volta, con il pagamento del motore.",
+      "note": "Il credito DEMO non ha valore; non fa guadagnare SOL, token o premi. Il gioco gira nel browser con casualità locale; non esiste una prova VRF."
+    },
+    "pay": {
+      "title": "Tabella dei pagamenti",
+      "lead": "Vinci con <b>8 o più simboli uguali ovunque</b> nella griglia. La cifra grande è l’importo DEMO lordo con una puntata di <b>{bet}</b>; il moltiplicatore sotto è un multiplo della puntata.",
+      "symbolsAria": "Pagamenti dei simboli",
+      "scatterTitle": "{name} · pagamento scatter",
+      "seals6": "6+ sigilli",
+      "seals5": "5 sigilli",
+      "seals4": "4 sigilli",
+      "scatterText": "Quando il giro base finisce, 4 o più sigilli nella griglia pagano e sbloccano <b>{spins} giri gratis</b>. I sigilli non scoppiano.",
+      "orbTitle": "{name} · sfera moltiplicatrice",
+      "orbText": "Porta un valore da ×2 a ×500 e può comparire sia nel gioco base sia nei giri gratis. Non scoppia: resta al suo posto e scivola durante le cascate. I dettagli sono nella pagina “{features}”.",
+      "maxTitle": "Vincita massima {n}×",
+      "maxText": "Con questa puntata equivale a <b>{amount}</b>. Se il totale del round raggiunge questo limite, il round termina subito; i giri gratis rimanenti non vengono giocati."
+    },
+    "features": {
+      "title": "Funzioni",
+      "tumbleTitle": "Pietre che cadono (tumble)",
+      "tumbleText": "Dopo ogni vincita le pietre vincenti si frantumano, le altre scivolano in basso e gli spazi si riempiono dall’alto. Il contatore delle vincite non si azzera mai durante un round: cascate, moltiplicatori e tutti i giri gratis si sommano nello stesso totale.",
+      "orbTitle": "Pietra della Tempesta (sfera moltiplicatrice)",
+      "orbText": "Può comparire nel gioco base e nei giri gratis; il suo valore va da ×2 a ×500. Nel gioco base, se la catena di cascate di un giro termina con una vincita, i valori delle pietre sulla griglia vengono <b>sommati</b> e la vincita di quel giro è moltiplicata per il totale (il pagamento dei sigilli non viene moltiplicato). Senza vincita le pietre non hanno effetto.",
+      "orbListAria": "Valori e probabilità delle Pietre della Tempesta",
+      "totalTitle": "Moltiplicatore totale (giri gratis)",
+      "totalText": "I giri gratis iniziano con un <b>moltiplicatore totale di ×0</b>. A ogni giro vincente i valori delle Pietre della Tempesta sulla griglia vengono <b>aggiunti</b> al moltiplicatore totale, poi la vincita di quel giro è moltiplicata per il nuovo totale (×1 se il totale è ancora 0). In un giro senza vincita le pietre non vengono aggiunte. Il moltiplicatore totale si conserva per tutti i giri gratis, compresi quelli extra.",
+      "sealTitle": "Sigillo del Fulmine (scatter)",
+      "sealText": "Quando un giro base finisce, 4 o più sigilli pagano e sbloccano {trigger} giri gratis. Nei giri gratis, 3 o più sigilli aggiungono altri {retrigger} giri (senza pagamento). In un singolo round vengono assegnati al massimo {max} giri gratis.",
+      "freeTitle": "Giri gratis",
+      "freeText": "I giri gratis si giocano con la stessa puntata nello stesso round; non viene addebitato alcun costo extra. Terminano sempre con la schermata “{screen}”: giri giocati, moltiplicatore totale finale e vincita totale.",
+      "tiersTitle": "Livelli di vincita e annunci del moltiplicatore",
+      "tiersText": "Quando il totale del round è almeno <b>10×</b> la puntata base, si apre la schermata di celebrazione e il contatore sale attraverso i livelli: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; un round che raggiunge il limite termina con {max}. Ogni moltiplicatore applicato viene annunciato a caratteri grandi sopra la griglia; alle soglie ×10, ×25, ×50, ×100, ×250 e ×500 testo e suono crescono. Toccando lo schermo il contatore salta al risultato; il pagamento non cambia mai.",
+      "anteTitle": "Chance ×2 · costo {cost}",
+      "anteText": "Quando è attiva, ogni giro costa <b>{multiple} volte la tua puntata</b> e i sigilli sono più probabili nel gioco base: la probabilità di giri gratis è circa doppia ({ante} / {standard}). Le vincite sono comunque pagate sulla puntata base. Con la funzione attiva non si può acquistare il bonus.",
+      "buyTitle": "Acquista bonus · prezzo {price}",
+      "buyText": "Per <b>100 volte</b> la tua puntata il round inizia con almeno 4 sigilli; {spins} giri gratis sono garantiti. L’acquisto avviene tramite una finestra di conferma, ha un RTP separato ({rtp}) e non è utilizzabile con il gioco automatico."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Ritorno teorico (RTP)",
+      "caption": "Ritorno teorico per modalità",
+      "mode": "Modalità",
+      "cost": "Costo",
+      "ci": "IC al 95%",
+      "feature": "Funzione",
+      "everyRound": "ogni round",
+      "method": "Una simulazione separata di {millions} milioni di round per ogni modalità (motore <code>storm-throne-1</code>). L’RTP è calcolato sull’importo pagato. Frequenza di vincita (giro base): standard {hit}, Chance ×2 {hitAnte}. Volatilità (deviazione standard in unità di costo): standard {sdStandard}, acquisto {sdBuy}.",
+      "note": "La simulazione è una stima e <b>non è certificata</b>; a causa della coda pesante, l’intervallo di confidenza può essere ottimistico. Il risultato di una sessione breve può discostarsi molto dall’RTP. Il credito DEMO <b>non ha valore</b>."
+    },
+    "limits": {
+      "title": "Limiti di puntata e vincita",
+      "range": "Intervallo di puntata",
+      "levels": "Livelli",
+      "current": "Puntata attuale",
+      "currentValue": "{bet} · Chance ×2 {ante} · Acquisto {buy}",
+      "max": "Vincita massima",
+      "maxValue": "{n} volte la puntata · {amount} con questa puntata",
+      "p1": "Un round che raggiunge la vincita massima termina subito; i giri gratis rimanenti non vengono giocati. Il pagamento è sempre calcolato sulla puntata base, con le frazioni di centesimo arrotondate per difetto.",
+      "p2": "I livelli e le modalità che il saldo non copre non possono essere selezionati. Un round è una sola prenotazione e un solo pagamento; si gioca un solo round alla volta."
+    },
+    "keys": {
+      "title": "Tasti",
+      "heading": "Tastiera",
+      "space": "Spazio",
+      "spaceText": "Avvia il giro ({settings} → “{option}”). Durante un round non salta il giro; accelera solo le schermate dei giri gratis e il contatore della celebrazione.",
+      "enterText": "Preme il pulsante attivo.",
+      "escText": "Chiude la finestra aperta (tranne il promemoria di sessione).",
+      "tabText": "Si sposta tra i controlli; il focus è sempre visibile.",
+      "arrowsText": "Cambia pagina in questa finestra info; cambia l’opzione nelle scelte delle impostazioni.",
+      "pageText": "Si sposta tra le pagine info.",
+      "note": "Lo screen reader annuncia ogni passaggio (“{example}”, moltiplicatori, risultato del round); la griglia viene letta come una tabella 6×5. I simboli si distinguono per forma e marcatura oltre che per colore. La preferenza per il movimento ridotto disattiva particelle, fulmini e vibrazioni."
+    },
+    "fault": {
+      "title": "Clausola di malfunzionamento",
+      "p1": "<b>Un malfunzionamento rende nulli tutti i giochi e i pagamenti interessati.</b> In caso di guasto del software, del browser o del dispositivo fa fede il registro del round; un importo mostrato a schermo che non corrisponde al registro del motore non è valido.",
+      "p2": "Questo gioco si gioca solo con credito DEMO. Il DEMO non ha valore e non può essere convertito in denaro o token; in caso di malfunzionamento il saldo DEMO e la cronologia della sessione possono essere corretti o azzerati.",
+      "p3": "Poiché il risultato è stabilito prima del giro, un’animazione interrotta, una scheda nascosta o l’uscita dalla pagina non cambiano il risultato; il round si chiude comunque una sola volta con il pagamento del motore."
+    }
+  }
+}

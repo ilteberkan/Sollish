@@ -1,12 +1,135 @@
 {
   "meta": {
-    "title": "Giochi — Dal vivo e in solitaria",
-    "description": "Giochi Sollish. Partecipa all’incontro Ringside dal vivo condiviso o prova i giochi per un giocatore."
+    "title": "Lobby del casinò",
+    "description": "I giochi originali di Sollish in un’unica lobby: cinque slot della casa, l’arena live Ringside, Crash e Coinflip. Solo crediti DEMO, niente denaro reale."
   },
+  "heading": "Lobby del casinò Sollish",
   "hero": {
+    "region": "Giochi in evidenza",
+    "slide": "{index} di {total}",
+    "prev": "Gioco in evidenza precedente",
+    "next": "Gioco in evidenza successivo",
+    "pause": "Metti in pausa la rotazione",
+    "resume": "Riprendi la rotazione",
+    "goTo": "Mostra {name}",
+    "eyebrow": "Novità · Originale Sollish",
+    "play": "Gioca la demo"
+  },
+  "chips": {
+    "label": "Filtra i giochi",
+    "all": "Tutti i giochi"
+  },
+  "rows": {
+    "recent": {
+      "title": "Giocati di recente",
+      "subtitle": "Salvato solo in questo browser.",
+      "clear": "Svuota l’elenco"
+    },
+    "originals": {
+      "title": "Originali Sollish",
+      "subtitle": "Cinque slot della casa. Ogni giro si può controllare nella pagina di verifica."
+    },
+    "live": {
+      "title": "Live",
+      "subtitle": "Un solo incontro condiviso, tutti guardano lo stesso."
+    },
+    "instant": {
+      "title": "Giochi istantanei",
+      "subtitle": "Al tuo ritmo, risultato immediato."
+    },
+    "new": {
+      "title": "Novità",
+      "subtitle": "Le ultime uscite."
+    },
+    "fair": {
+      "title": "Equità dimostrabile",
+      "subtitle": "Il risultato è fissato da seed che puoi controllare dopo il giro.",
+      "cta": "Verifica un giro"
+    }
+  },
+  "row": {
+    "viewAll": "Vedi tutti",
+    "viewAllAria": "Vedi tutti: {title}",
+    "prev": "Scorri indietro: {title}",
+    "next": "Scorri avanti: {title}",
+    "count": "{count, plural, one {# gioco} other {# giochi}}"
+  },
+  "grid": {
+    "results": "Risultati della ricerca",
+    "resultsCount": "{count, plural, =0 {Nessun gioco per “{query}”} one {# gioco per “{query}”} other {# giochi per “{query}”}}",
+    "empty": "Nessun gioco corrisponde a “{query}”. Prova il nome di un gioco, un tema come “lupo” o “candy”, oppure una categoria.",
+    "reset": "Mostra tutti i giochi",
+    "favoritesEmpty": "Ancora nessun preferito. Tocca il cuore di un gioco per tenerlo qui.",
+    "back": "Torna alla lobby"
+  },
+  "tile": {
+    "provider": "Sollish",
+    "demo": "DEMO",
+    "new": "Nuovo",
+    "original": "Originale",
+    "live": "Live",
+    "rtp": "RTP {value}",
+    "maxWin": "Max {value}",
+    "poolFee": "Commissione pool {value}",
+    "poolNote": "Scommessa a pool",
+    "volatility": "Volatilità: {level}",
+    "vol": {
+      "low": "Bassa",
+      "medium": "Media",
+      "high": "Alta",
+      "veryHigh": "Molto alta",
+      "player": "Decidi tu"
+    },
+    "favAdd": "Aggiungi {name} ai preferiti",
+    "favRemove": "Rimuovi {name} dai preferiti",
+    "play": "Gioca la demo",
+    "watch": "Entra nel live"
+  },
+  "cards": {
+    "crash": {
+      "tagline": "Incassa prima che la linea si spezzi.",
+      "text": "Scegli tu il momento di incassare mentre il moltiplicatore sale.",
+      "type": "Incasso manuale"
+    },
+    "coinflip": {
+      "tagline": "Due facce, una scelta.",
+      "text": "Due facce, una scelta, risultato immediato.",
+      "type": "Classico"
+    },
+    "cascade": {
+      "tagline": "Cascate dolci e moltiplicatori di cristallo.",
+      "text": "Fai esplodere otto simboli uguali e crea catene con le caramelle che cadono.",
+      "type": "Tumble"
+    },
+    "tarhun": {
+      "tagline": "Il dio della tempesta carica le pietre.",
+      "text": "Il dio della tempesta scaglia fulmini sulle pietre; i moltiplicatori si accumulano nei giri gratis.",
+      "type": "Tumble · moltiplicatore"
+    },
+    "ebru": {
+      "tagline": "Inchiostro, acqua e un pettine d’oro.",
+      "text": "Il pettine scorre sull’acqua e l’inchiostro si riordina onda dopo onda; le macchie di colore scivolano con i loro moltiplicatori.",
+      "type": "Cluster · pettine"
+    },
+    "cezeri": {
+      "tagline": "Quattro ruote d’ottone, un mozzo che sale.",
+      "text": "Quattro ruote d’ottone girano; i segmenti vincenti si bloccano, le ruote ripartono e il moltiplicatore centrale sale di +1 ogni volta.",
+      "type": "Ruota · catena"
+    },
+    "asena": {
+      "tagline": "Segui il Lupo celeste tra le stelle.",
+      "text": "I cluster disegnano costellazioni nel cielo e la Lupa celeste cammina lasciando una scia di stelle; la mappa di Ergenekon porta il moltiplicatore globale fino a ×5.",
+      "type": "Cluster · costellazione"
+    },
+    "ringside": {
+      "tagline": "Tre round, tre pool, un incontro dal vivo.",
+      "text": "Un incontro di tre round con pugni e calci. Fai la tua scelta prima dell’inizio e segui la schedina round dopo round. Una rete addestrata guida i lottatori e Jev dà la tattica dall’angolo.",
+      "type": "Live · scommessa a pool"
+    }
+  },
+  "liveCard": {
     "aria": "Entra nell’arena dal vivo di Ringside",
     "tag": "DAL VIVO · TUTTI GUARDANO LO STESSO INCONTRO",
-    "text": "Un incontro di tre round con pugni e calci. Fai la tua scelta prima dell’inizio e segui la schedina round dopo round. Una rete addestrata guida i lottatori e Jev dà la tattica dall’angolo.",
     "cta": "Entra nell’arena",
     "factWindowValue": "30 s",
     "factWindow": "finestra di puntata",
@@ -16,16 +139,6 @@
     "factMarkets": "mercati dell’incontro",
     "factFeeValue": "2%",
     "factFee": "commissione del pool"
-  },
-  "solo": { "title": "Giocatore singolo", "subtitle": "Al tuo ritmo, risultato immediato.", "demo": "DEMO" },
-  "cards": {
-    "crash": { "text": "Scegli tu il momento di incassare mentre il moltiplicatore sale.", "type": "Incasso manuale" },
-    "coinflip": { "text": "Due facce, una scelta, risultato immediato.", "type": "Classico" },
-    "cascade": { "text": "Fai esplodere otto simboli uguali e crea catene con le caramelle che cadono.", "type": "Tumble" },
-    "tarhun": { "text": "Il dio della tempesta scaglia fulmini sulle pietre; i moltiplicatori si accumulano nei giri gratis.", "type": "Tumble · moltiplicatore" },
-    "ebru": { "text": "Il pettine scorre sull’acqua e l’inchiostro si riordina onda dopo onda; le macchie di colore scivolano con i loro moltiplicatori.", "type": "Cluster · pettine" },
-    "cezeri": { "text": "Quattro ruote d’ottone girano; i segmenti vincenti si bloccano, le ruote ripartono e il moltiplicatore centrale sale di +1 ogni volta.", "type": "Ruota · catena" },
-    "asena": { "text": "I cluster disegnano costellazioni nel cielo e la Lupa celeste cammina lasciando una scia di stelle; la mappa di Ergenekon porta il moltiplicatore globale fino a ×5.", "type": "Cluster · costellazione" }
   },
   "trust": {
     "aria": "Regole",
@@ -44,5 +157,6 @@
     "fightersA": "Ogni pugno, calcio, combinazione, distanza e difesa è scelto da una rete che impara durante l’incontro; il connettoma di mosca MaleCNS è usato come serbatoio fisso. L’allenatore all’angolo Jev propone un piano ogni 9 secondi; poiché il piano arriva dopo la chiusura delle puntate, il gioco è solo DEMO. Non si afferma che sia un cervello completo né che il connettoma sia superiore.",
     "demoQ": "Il confine tra demo e puntate reali",
     "demoA": "I crediti DEMO qui non hanno valore monetario. Le puntate reali in SOL restano disattivate finché il deploy del contratto, il ripristino dell’oracolo, la privacy di Crash e i flussi di pagamento non saranno verificati. Non affermiamo che sia stato svolto un audit indipendente. Queste versioni non hanno prova VRF."
-  }
+  },
+  "footnote": "RTP e volatilità sono stime simulate per la modalità standard di ogni gioco DEMO, non valori certificati. I giri di prova di Crash e Coinflip usano la casualità del tuo browser e non hanno equità dimostrabile."
 }

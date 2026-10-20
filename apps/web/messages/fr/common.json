@@ -14,7 +14,14 @@
     "liveSuffix": " (en direct)",
     "nav": {
       "rewards": "Récompenses",
-      "stake": "Stake"
+      "stake": "Stake",
+      "lobby": "Lobby",
+      "slots": "Machines à sous",
+      "live": "En direct",
+      "instant": "Jeux instantanés",
+      "new": "Nouveautés",
+      "fair": "Équité prouvable",
+      "favorites": "Favoris"
     },
     "network": {
       "devnet": "Aperçu Devnet",
@@ -30,6 +37,30 @@
       "tagline": "Comprenez le jeu. Gardez le contrôle.",
       "devnet": "Démo et devnet · Aucun argent réel n’est utilisé",
       "demo": "Démo · Aucun actif réel n’est utilisé"
+    },
+    "sections": {
+      "casino": "Casino",
+      "games": "Jeux",
+      "more": "Plus"
+    },
+    "collapse": "Réduire le menu",
+    "expand": "Développer le menu",
+    "menu": "Menu",
+    "closeMenu": "Fermer le menu",
+    "tabbar": "Navigation rapide",
+    "search": {
+      "label": "Rechercher des jeux",
+      "placeholder": "Rechercher des jeux",
+      "open": "Recherche",
+      "close": "Fermer la recherche",
+      "clear": "Effacer la recherche",
+      "results": "{count, plural, =0 {Aucun jeu trouvé} one {# jeu trouvé} other {# jeux trouvés}}",
+      "seeAll": "Voir les résultats dans le lobby"
+    },
+    "kind": {
+      "slot": "Machine à sous",
+      "live": "Direct",
+      "instant": "Instantané"
     }
   },
   "chat": {

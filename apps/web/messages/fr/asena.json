@@ -1,0 +1,404 @@
+{
+  "deck": {
+    "group": "Commandes du jeu",
+    "balance": "Solde",
+    "refill": "Recharger le solde",
+    "win": "Gain",
+    "winReplay": "Replay",
+    "winReplayLast": "Gain du replay",
+    "winLast": "Dernier gain",
+    "cost": "Coût",
+    "spin": "Lancer",
+    "spinCost": "Coût {cost}",
+    "auto": "Auto",
+    "info": "Infos",
+    "infoAria": "Infos du jeu",
+    "on": "Activé",
+    "off": "Désactivé",
+    "buy": "Acheter le bonus",
+    "buyDesc": "{spins, plural, one {# tour gratuit} other {# tours gratuits}} · {rtp}",
+    "speedAria": "Vitesse des tours : {speed}",
+    "sound": "Son",
+    "soundLoading": "Chargement du son {percent} %",
+    "outOfCredit": "Votre solde DEMO est épuisé.",
+    "lastWin": "Dernier tour <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Dernier tour sans gain.",
+    "hintSpace": "Vous pouvez aussi lancer avec la barre d’espace.",
+    "hintFixed": "Le résultat est déterminé avant le tour.",
+    "spinLocked": "Tour en cours ; verrouillé jusqu’à la fin de toutes les chutes, des pas du loup et des tours gratuits.",
+    "anteDesc": "Chances de tours gratuits ≈2×"
+  },
+  "hud": {
+    "freeAria": "Tour gratuit {number}, {left} restants",
+    "freeSpin": "Tour {n}",
+    "left": "Restants",
+    "free": "Ergenekon",
+    "moonAria": "3 Ay Ata ou plus déclenchent 10 tours gratuits",
+    "moonLong": "<b>3+</b> Ay Ata · 10 tours gratuits",
+    "moonShort": "<b>3+</b> Ay Ata · 10 tours",
+    "templateChip": "Constellation <b>×{multiplier}</b> · Max <b>{max}×</b>",
+    "globalAria": "Multiplicateur global ×{multiplier}, {distinct} constellations sur la carte",
+    "global": "Global",
+    "map": "Carte"
+  },
+  "meter": {
+    "total": "Gain total",
+    "win": "Gain",
+    "idleA": "<b>5+</b> symboles identiques adjacents paient",
+    "idleB": "Le Loup Céleste marche et laisse une traînée",
+    "idleC": "constellation <b>×2–×10</b>"
+  },
+  "replay": {
+    "ribbon": "Replay — solde inchangé · tour {id}"
+  },
+  "auto": {
+    "ribbon": "Auto · {spins, plural, one {# tour restant} other {# tours restants}}"
+  },
+  "toast": {
+    "close": "Fermer la notification",
+    "autoplayStopped": "Jeu automatique arrêté : {reason}. {spins, plural, one {# tour} other {# tours}}, net {net}.",
+    "autoplayStoppedShort": "Jeu automatique arrêté : {reason}.",
+    "autoplayStarted": "Jeu automatique : {spins, plural, one {# tour} other {# tours}}, limite de perte {limit}.",
+    "refilled": "Solde rechargé : {amount} DEMO.",
+    "shareCopied": "Lien de partage copié : {url}",
+    "shareLink": "Lien de partage : {url}",
+    "shareFailed": "Partage impossible : {error}",
+    "replayFailed": "Ce tour n’a pas pu être rejoué.",
+    "replayMismatch": "Replay non vérifiable : l’enregistrement ne correspond pas au moteur."
+  },
+  "banner": {
+    "extraSpins": "+{awarded} tours gratuits",
+    "constellation": "{name} ×{multiplier}",
+    "mapSpins": "Carte · +{awarded} tours gratuits",
+    "scatterPay": "{count} Ay Ata · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "Tour lancé, {amount} DEMO.",
+    "sentToServer": "Tour envoyé au serveur, {amount} DEMO.",
+    "recovered": "Le tour interrompu a été récupéré depuis le serveur ; il y a déjà été payé ({amount} DEMO).",
+    "replaying": "Replay en cours : tour {id}. Le solde ne change pas.",
+    "replayDone": "Replay terminé : {amount} DEMO, {times}×. Solde inchangé.",
+    "roundEnd": "Tour terminé. Gain total {amount} DEMO, {times}×.",
+    "roundEndNone": "Tour terminé. Aucun gain.",
+    "noWin": "Aucun gain.",
+    "totalWin": "Gain total {amount} DEMO, {times}×.",
+    "celebration": "{title} : {amount} DEMO, {times}×.",
+    "speed": "Vitesse des tours : {speed}.",
+    "anteOn": "Chance ×2 activée : chances de tours gratuits ≈2×, coût {cost}.",
+    "anteOff": "Chance ×2 désactivée : coût {cost}.",
+    "refilled": "Solde DEMO rechargé à {amount} DEMO.",
+    "refilledRemote": "Solde DEMO du serveur rechargé à {amount} DEMO.",
+    "bonusBought": "Bonus acheté, {amount} DEMO. Ergenekon commence.",
+    "moonTease": "Deux Ay Ata sont apparus ; un troisième déclenche les tours gratuits.",
+    "cluster": "{size} {name}{template, select, none {} other {, {templateName} ×{templateMultiplier}}}, gain de {times}×",
+    "constellation": "Constellation allumée : {name}, gain du groupe ×{multiplier}.",
+    "map": "Carte d’Ergenekon : {distinct} / 6 constellations allumées.",
+    "ergenekon": "Ergenekon : {distinct} constellations, multiplicateur global ×{after}. Chaque gain à partir de maintenant est ×{after}.",
+    "mapSpins": "La carte d’Ergenekon a ajouté {awarded} tours gratuits.",
+    "wolfWalk": "Le Loup Céleste a marché : colonne {fromCol}, ligne {fromRow} → colonne {toCol}, ligne {toRow} ; une Traînée d’Étoiles est restée derrière lui.",
+    "moons": "{count} Ay Ata.",
+    "retrigger": "{count} Ay Ata : {awarded} tours gratuits ajoutés.",
+    "trigger": "{count} Ay Ata : Ergenekon gagné.",
+    "freeIntro": "Ergenekon commence : vous avez gagné {awarded} tours gratuits.",
+    "freeSpinWin": "Le tour gratuit a rapporté {times}×. Total {total}×.",
+    "freeSpinNone": "Aucun gain sur ce tour gratuit.",
+    "freeOutro": "Ergenekon terminé. Total : {amount} DEMO, {spins} tours, {constellations} constellations, multiplicateur global ×{multiplier}."
+  },
+  "autoplay": {
+    "serverFailed": "Le serveur n’a pas pu lancer le tour",
+    "spinFailed": "Le tour n’a pas pu être lancé",
+    "quit": "Vous avez quitté la session",
+    "title": "Jeu automatique",
+    "note": "{cost} par tour{ante, select, yes { (Chance ×2)} other {}} · n’achète jamais le bonus · s’arrête quand l’onglet est masqué."
+  },
+  "errors": {
+    "entropy": "Le hasard local sécurisé est indisponible. La démo n’a pas démarré.",
+    "insufficient": "Solde insuffisant : {kind, select, buy {cet achat coûte} other {ce tour coûte}} {cost}. Baissez la mise ou rechargez le solde.",
+    "noCredit": "Vous n’avez pas assez de crédit démo, ou une démo est déjà en cours."
+  },
+  "buy": {
+    "block": {
+      "gated": "Achat possible uniquement avec le crédit DEMO",
+      "autoplay": "Achat impossible pendant le jeu automatique",
+      "busy": "Achat impossible avant la fin du tour",
+      "ante": "Achat impossible avec Chance ×2 activée",
+      "balance": "Solde insuffisant (prix {price})"
+    },
+    "rtp": "RTP d’achat {buy} · standard {standard} (simulation, non certifiée)",
+    "feature": "Ergenekon · 10 tours gratuits · mise {bet}",
+    "text": "<b>80×</b> votre mise. Le tour démarre avec au moins 3 Ay Ata et 10 tours gratuits sont garantis ; chaque constellation qui s’allume débloque la carte d’Ergenekon, le multiplicateur global monte à ×2, ×3 puis ×5 et multiplie chaque gain pendant toute la fonction. Les gains sont payés sur une mise de {bet}, maximum {max}."
+  },
+  "gated": {
+    "text": "Ce jeu se joue uniquement avec du crédit DEMO ; les mises réelles ne sont pas acceptées.",
+    "back": "Retour à la démo locale",
+    "title": "Pas d’Asena on-chain."
+  },
+  "splash": {
+    "max": {
+      "title": "{max}× maximum"
+    },
+    "loading": "Chargement du jeu",
+    "play": "Jouer",
+    "skip": "Ne plus afficher l’écran d’accueil",
+    "note": "Le crédit DEMO n’a aucune valeur · Le résultat est déterminé avant le tour · Simulation non certifiée, RTP ≈ {rtp}",
+    "constellation": {
+      "title": "Constellation ×10",
+      "text": "Si un groupe contient une forme du ciel, elle est tracée étoile par étoile et multiplie le gain"
+    },
+    "wolf": {
+      "title": "Le Loup Céleste marche",
+      "text": "Un loup qui participe à un gain avance d’une case à chaque chute et laisse une Traînée d’Étoiles"
+    },
+    "ergenekon": {
+      "title": "Ergenekon · {max}×",
+      "text": "À mesure que la carte se dévoile, la montagne de fer se fissure : multiplicateur global ×2, ×3, ×5"
+    }
+  },
+  "settings": {
+    "soundReady": "Son prêt : la musique, les effets et l’ambiance sont préparés sur cet appareil.",
+    "soundIdle": "Le son se charge au premier toucher.",
+    "demoTitle": "Solde DEMO",
+    "demoText": "Solde {balance}{remote, select, yes { (serveur)} other {}}. Recharger fixe le solde à {start} DEMO et ajoute une ligne « Solde rechargé » à l’historique ; impossible pendant un tour ou le jeu automatique.",
+    "soundLoading": "Chargement du son {percent} % (le jeu reste muet en attendant)."
+  },
+  "history": {
+    "title": "Votre historique de jeu",
+    "scope": "Cette session · les replays ne modifient jamais le solde",
+    "time": "Heure",
+    "mode": "Mode",
+    "bet": "Mise",
+    "cost": "Coût",
+    "win": "Gain",
+    "result": "Résultat",
+    "roundId": "ID du tour",
+    "replayColumn": "Rejouer",
+    "latest": "Dernier tour",
+    "replay": "Rejouer",
+    "replayAria": "Rejouer : tour {id}, solde inchangé",
+    "share": "Partager mon gain",
+    "shareAria": "Partager mon gain : tour {id}",
+    "emptyTitle": "Votre premier tour apparaîtra ici.",
+    "emptyText": "Le mode, la mise, le coût, le gain et l’ID de chaque tour sont enregistrés ; vous pouvez revoir n’importe quel tour.",
+    "reset": "Solde rechargé",
+    "resetRemote": "Solde rechargé (serveur)",
+    "detail": {
+      "capped": "Gain maximum · {times}×",
+      "none": "Aucun gain",
+      "free": "Ergenekon ×{spins}{multiplier, plural, =0 {} other { · global ×#}} · {times}×",
+      "base": "{clusters, plural, one {# groupe} other {# groupes}}{stars, plural, =0 {} one { · # constellation} other { · # constellations}}{moons, plural, =0 {} other { · # Ay Ata}} · {times}×"
+    },
+    "tableRegion": "Tableau de l’historique de jeu"
+  },
+  "celebration": {
+    "aria": "{title} : {money} DEMO",
+    "times": "{times}× la mise",
+    "capNote": "Le tour a atteint le plafond · les tours restants ne sont pas joués",
+    "speedUp": "Touchez pour accélérer",
+    "continue": "Continuer"
+  },
+  "intro": {
+    "start": "Commencer",
+    "word": "ERGENEKON",
+    "srTitle": "Ergenekon commence",
+    "freeSpins": "tours\ngratuits",
+    "text": "Chaque constellation qui s’allume débloque une partie de la <b>carte d’Ergenekon</b>. <b>3 constellations différentes</b> donnent +5 tours et un multiplicateur global de <b>×2</b>, <b>les six</b> donnent +5 tours et <b>×3</b>, et toutes allumées deux fois donnent <b>×5</b>. Le multiplicateur global reste pendant toute la fonction et multiplie chaque gain. 3 Ay Ata donnent +3 tours."
+  },
+  "total": {
+    "word": "TOTAL",
+    "sub": "TOURS GRATUITS",
+    "titleB": "Total",
+    "toCelebration": "Passer à la célébration",
+    "capNote": "Gain maximum atteint · les tours restants ne sont pas joués",
+    "titleA": "Ergenekon",
+    "spins": "Tours",
+    "spinsValue": "{spins, plural, one {# tour} other {# tours}}",
+    "wolfSteps": "{n, plural, one {# pas du loup} other {# pas du loup}}",
+    "wolfNone": "le loup n’a pas marché",
+    "constellations": "Constellations",
+    "mapOf": "carte {distinct}/6",
+    "global": "Multiplicateur global",
+    "ofBet": "{times}× la mise"
+  },
+  "badge": {
+    "checking": "Vérification du serveur"
+  },
+  "rules": {
+    "fixed": "Le résultat est déterminé localement dans votre navigateur, avec un hasard local, avant le début du tour ; l’animation ne fait que le rejouer. Même si vous quittez la page, le tour se clôt avec le gain déterminé. Il n’y a pas de preuve VRF.",
+    "board": "Le champ d’étoiles fait 6×6. 5 symboles identiques adjacents ou plus, à l’horizontale ou à la verticale (jokers Loup Céleste et Traînée d’Étoiles compris), forment un groupe et paient ; le palier de gain monte avec la taille du groupe. Les groupes gagnants se changent en étoiles et éclatent, les symboles du dessus tombent et les vides sont comblés.",
+    "features": "Si un groupe contient l’un des six modèles de constellation (Tête de Loup ×10, Arbre de Vie ×8, Aigle ×6, Cheval ×4, Arc ×3, Croissant ×2 ; pivoté ou en miroir), la constellation s’allume et le gain du groupe est multiplié par le multiplicateur du modèle. Un Loup Céleste qui participe à un gain avance d’une case après chaque chute et laisse derrière lui un joker Traînée d’Étoiles. 3 Ay Ata ou plus déclenchent 10 tours gratuits (Ergenekon) : chaque constellation qui s’allume débloque une partie de la carte ; 3 constellations différentes donnent +5 tours et un multiplicateur global de ×2, 6 différentes +5 et ×3, et toutes deux fois ×5. Le gain maximum est de 5 000 fois la mise."
+  },
+  "meta": {
+    "title": "Asena : Louve des Étoiles",
+    "description": "Asena : Louve des Étoiles — un jeu de groupes DEMO original. Les groupes dessinent des constellations dans le ciel, le Loup Céleste marche et laisse une traînée d’étoiles ; la carte d’Ergenekon débloque un multiplicateur global jusqu’à ×5."
+  },
+  "title": "Asena : Louve des Étoiles",
+  "subtitle": "Les groupes dessinent des constellations dans le ciel, le Loup Céleste marche et laisse une traînée d’étoiles ; dans Ergenekon, le multiplicateur global monte jusqu’à ×5.",
+  "table": "Table de jeu Asena",
+  "logo": {
+    "subtitle": "LOUVE DES ÉTOILES",
+    "label": "Asena : Louve des Étoiles"
+  },
+  "symbols": {
+    "h1": "Asena",
+    "h2": "Kün Ana",
+    "h3": "Aigle Céleste",
+    "h4": "Cheval des Steppes",
+    "l1": "Étoile Turquoise",
+    "l2": "Rubis Écarlate",
+    "l3": "Flèche d’Émeraude",
+    "l4": "Tamga d’Améthyste",
+    "wolf": "Loup Céleste (joker marcheur)",
+    "trail": "Traînée d’Étoiles (joker)",
+    "moon": "Ay Ata (scatter)"
+  },
+  "templates": {
+    "kurt-basi": "Tête de Loup",
+    "yay": "Arc",
+    "at": "Cheval",
+    "kartal": "Aigle",
+    "hayat-agaci": "Arbre de Vie",
+    "hilal": "Croissant"
+  },
+  "board": {
+    "label": "Champ d’étoiles d’Asena",
+    "labelPlay": "Champ d’étoiles d’Asena, 6 colonnes, 6 lignes",
+    "labelFree": "Champ d’étoiles d’Asena en tours gratuits, 6 colonnes, 6 lignes",
+    "cell": "{symbol}, colonne {col}, ligne {row}"
+  },
+  "callout": {
+    "tier0": "Constellation",
+    "tier1": "Constellation brillante",
+    "tier2": "Multiplicateur céleste",
+    "tier3": "Multiplicateur de Tengri",
+    "tier4": "Ciel légendaire",
+    "tier5": "Kün Ana"
+  },
+  "fx": {
+    "spins": "TOURS",
+    "extraSpins": "TOURS BONUS",
+    "freeSpins": "TOURS GRATUITS"
+  },
+  "info": {
+    "title": "Asena · Infos du jeu",
+    "tab": {
+      "how": "Comment jouer",
+      "pay": "Table des gains",
+      "features": "Fonctionnalités",
+      "rtp": "RTP",
+      "limits": "Limites de mise et de gain",
+      "keys": "Touches",
+      "fault": "Clause de dysfonctionnement"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Choisissez votre mise.</b> Les boutons − et + modifient la mise d’un cran ; touchez le montant pour ouvrir tous les paliers. « Mise max » choisit le palier le plus élevé que votre solde permet.",
+        "spin": "<b>Lancer.</b> Appuyez sur le bouton étoile ou utilisez la barre d’espace. Le coût du tour ({factor} fois la mise avec Chance ×2 activée) est déduit du solde une seule fois.",
+        "cluster": "<b>Formez des groupes.</b> Sur le champ d’étoiles 6 × 6, <b>5 symboles identiques ou plus</b> adjacents à l’horizontale ou à la verticale paient ; le palier de gain monte avec la taille du groupe.",
+        "constellation": "<b>Constellation.</b> Si un groupe contient l’une des six formes du ciel, la constellation est tracée étoile par étoile, résonne dans le ciel, le loup hurle et le gain du groupe est multiplié par le multiplicateur de la forme (×2–×10).",
+        "chain": "<b>La chaîne.</b> Les groupes gagnants se changent en étoiles et éclatent, les symboles du dessus tombent et les vides sont comblés ; un Loup Céleste qui participe à un gain avance d’une case. Cela continue tant qu’il reste un nouveau groupe.",
+        "result": "<b>Le résultat.</b> Tout le tour est déterminé par le moteur avant le début du tour ; l’animation ne fait que le rejouer. Le bouton de lancement reste verrouillé jusqu’à la fin du tour (toutes les chutes, tous les pas du loup et tous les tours gratuits) ; utilisez le réglage Rapide/Turbo pour accélérer. Le réglage de vitesse, un toucher sur le compteur de célébration, un onglet masqué ou le fait de quitter la page ne modifient pas le gain ; le tour se clôt toujours une seule fois, avec le gain du moteur."
+      },
+      "note": "Le crédit DEMO n’a aucune valeur ; il ne rapporte ni SOL, ni jetons, ni récompenses. Le jeu fonctionne dans le navigateur avec un hasard local ; il n’y a pas de preuve VRF. Gök Tengri, Ay Ata, Kün Ana, Asena et Ergenekon relèvent de la mythologie turque, qui est dans le domaine public ; les personnages et les illustrations sont originaux."
+    },
+    "pay": {
+      "maxTitle": "Gain maximum {max}×",
+      "maxText": "Avec cette mise : <b>{amount}</b>. Si le total du tour atteint ce plafond, le tour s’arrête immédiatement ; les tours gratuits restants ne sont pas joués.",
+      "lead": "<b>5 symboles identiques ou plus</b> adjacents à l’horizontale ou à la verticale forment un groupe ; les jokers Loup Céleste et Traînée d’Étoiles remplacent tous les symboles. Le grand chiffre est le montant DEMO brut pour une mise de <b>{bet}</b> ; le multiplicateur dessous est un multiple de la mise. Tous les groupes d’un même plateau paient séparément.",
+      "gridAria": "Gains des groupes",
+      "fullTable": "Toutes les tailles de groupe (7 paliers)",
+      "fullCaption": "Gain par symbole et taille de groupe, en multiple de la mise",
+      "colSymbol": "Symbole",
+      "moon5": "5+ Ay Ata",
+      "moon4": "4 Ay Ata",
+      "moon3": "3 Ay Ata",
+      "moonText": "Paie s’il y a 3 Ay Ata ou plus sur le plateau final du tour de base et déclenche <b>{spins} tours gratuits</b> (Ergenekon). Ay Ata n’éclate pas ; le loup ne marche pas dessus non plus.",
+      "wolfText": "Remplace tous les symboles payants et n’apparaît que sur le premier plateau d’un tour. S’il participe à un gain, il n’éclate pas mais <b>marche</b> : il avance d’une case après la chute et laisse un joker Traînée d’Étoiles dans la case quittée. Détails sur la page « Fonctionnalités ».",
+      "trailText": "Le joker laissé derrière par le loup. Il descend avec les chutes et est consommé lorsqu’il participe à un gain ; il disparaît à la fin du tour et n’est pas reporté au tour suivant."
+    },
+    "rtp": {
+      "title": "Taux de retour théorique (RTP)",
+      "caption": "Taux de retour théorique par mode",
+      "colMode": "Mode",
+      "colCost": "Coût",
+      "colCi": "IC à 95 %",
+      "colFeature": "Fonction",
+      "everyRound": "chaque tour",
+      "oneIn": "1 / {n}",
+      "note": "La simulation est une estimation et <b>n’est pas certifiée</b> ; en raison de la queue de distribution épaisse, l’intervalle de confiance peut être optimiste. Le résultat d’une courte session peut s’écarter fortement du RTP. Le crédit DEMO est <b>sans valeur</b>.",
+      "text": "Une simulation distincte de {millions} millions de tours pour chaque mode (moteur <code>asena-stars-1</code>). Le RTP est calculé sur le coût payé. Fréquence de gain (tour de base) : standard {hitStandard}, Chance ×2 {hitAnte}. Volatilité (écart type en unités de coût) : standard {sdStandard}, achat {sdBuy}."
+    },
+    "limits": {
+      "title": "Limites de mise et de gain",
+      "range": "Plage de mise",
+      "steps": "Paliers",
+      "current": "Mise actuelle",
+      "currentValue": "{bet} · Chance ×2 {ante} · Achat {buy}",
+      "max": "Gain maximum",
+      "maxValue": "{multiplier} fois la mise · {amount} avec cette mise",
+      "text1": "Un tour qui atteint le gain maximum s’arrête immédiatement ; les tours gratuits restants ne sont pas joués. Le gain est toujours calculé sur la mise de base, et tout ce qui est inférieur au centime est arrondi à l’inférieur.",
+      "text2": "Les paliers et modes que votre solde ne couvre pas ne peuvent pas être sélectionnés. Un tour correspond à une seule réservation et un seul paiement ; un seul tour est joué à la fois."
+    },
+    "keys": {
+      "heading": "Clavier",
+      "space": "Espace",
+      "spaceText": "Lance le tour (Paramètres → « {option} »). Pendant un tour, elle ne saute pas le tour ; elle accélère seulement les écrans de tours gratuits et le compteur de célébration.",
+      "enterText": "Active le bouton ayant le focus.",
+      "escText": "Ferme la fenêtre ouverte (sauf le rappel de session).",
+      "tabText": "Navigue entre les commandes ; le focus est toujours visible.",
+      "arrowsText": "Change de page dans cette fenêtre d’infos ; change l’option dans les choix des paramètres.",
+      "pageText": "Navigue entre les pages d’infos.",
+      "note": "Le lecteur d’écran annonce chaque étape (« 6 asena, Tête de Loup ×10, gain de 12,00× », pas du loup, carte et multiplicateur global, résultat du tour) ; chaque case est lue avec son symbole, sa colonne et sa ligne. Les symboles se distinguent par leur forme en plus de la couleur (tête de loup, soleil, aigle, cheval, étoile, rubis, flèche, sceau). La préférence de réduction des animations trace la constellation déjà complète et désactive les particules et les secousses ; toutes les étapes restent affichées."
+    },
+    "fault": {
+      "title": "Clause de dysfonctionnement",
+      "p1": "<b>Un dysfonctionnement annule tous les jeux et paiements concernés.</b> En cas de panne logicielle, de navigateur ou d’appareil, c’est l’enregistrement du tour qui fait foi ; un montant affiché à l’écran qui ne correspond pas à l’enregistrement du moteur n’est pas valable.",
+      "p2": "Ce jeu se joue uniquement avec du crédit DEMO. Le DEMO n’a aucune valeur et ne peut être converti ni en argent ni en jetons ; en cas de dysfonctionnement, le solde DEMO et l’historique de session peuvent être corrigés ou réinitialisés.",
+      "p3": "Comme le résultat est déterminé avant le tour, une animation interrompue, un onglet masqué ou le fait de quitter la page ne le modifient pas ; le tour se clôt quand même une seule fois, avec le gain du moteur."
+    },
+    "features": {
+      "buy": {
+        "title": "Acheter le bonus · prix {price}",
+        "text": "Pour <b>80 fois la mise</b>, le tour démarre avec au moins 3 Ay Ata ; {spins} tours gratuits sont garantis (le gain des Ay Ata suit la table normale). L’achat passe par une fenêtre de confirmation, fonctionne avec un RTP distinct ({rtp}) et ne peut pas être utilisé avec le jeu automatique."
+      },
+      "templates": {
+        "title": "Modèles de constellation",
+        "text": "Si un groupe gagnant contient entièrement l’une des formes ci-dessous — y compris pivotée ou en miroir, dans l’une des 8 orientations —, la constellation s’allume et <b>le gain du groupe est multiplié par le multiplicateur du modèle</b>. Les jokers comptent comme des cases du groupe. Si plusieurs modèles conviennent, celui au multiplicateur le plus élevé s’allume ; chaque groupe allume au plus une constellation, mais des groupes différents d’une même étape peuvent allumer des constellations différentes.",
+        "aria": "Modèles de constellation",
+        "stars": "{n, plural, one {# étoile} other {# étoiles}}"
+      },
+      "wolf": {
+        "title": "Le Loup Céleste marche",
+        "text": "Un loup qui participe à un gain n’éclate pas. Après la chute et le remplissage, il avance d’une case (vers le haut, la droite, le bas ou la gauche ; au hasard, jamais hors du plateau, jamais sur un Ay Ata ou un autre loup). Il avale le symbole de la case où il entre et laisse un joker <b>Traînée d’Étoiles</b> dans la case quittée. Plusieurs loups marchent à tour de rôle. Une Traînée d’Étoiles est consommée lorsqu’elle participe à un gain ; elle disparaît à la fin du tour."
+      },
+      "ergenekon": {
+        "title": "Ergenekon (tours gratuits)",
+        "text": "3 Ay Ata ou plus déclenchent {spins} tours gratuits (pendant un tour gratuit, 3 Ay Ata ou plus donnent +{retrigger} ; au plus {max} tours par partie). Pendant les tours gratuits, chaque constellation qui s’allume débloque sa propre partie de la <b>carte d’Ergenekon</b> (une partie compte au plus deux fois) :",
+        "map3": "<bold>3 constellations différentes</bold> → +{spins} tours et multiplicateur global <b>×{multiplier}</b>",
+        "map6": "<bold>6 constellations différentes</bold> → +{spins} tours et multiplicateur global <b>×{multiplier}</b>",
+        "mapTwice": "<bold>Les six, deux fois</bold> → multiplicateur global <b>×{multiplier}</b> (la montagne de fer se fend)",
+        "after": "Le multiplicateur global et la carte restent pendant toute la fonction, ne sont jamais réinitialisés et multiplient <b>chaque gain de groupe</b> — y compris celui de l’étape où ils se débloquent (les constellations sont d’abord inscrites sur la carte, puis l’étape paie). Le jeu de base se joue toujours à ×1."
+      },
+      "cumulative": {
+        "title": "Gain cumulé",
+        "text": "L’affichage des gains n’est jamais réinitialisé pendant un tour : les groupes, le gain des Ay Ata et tous les tours gratuits s’additionnent dans le même total. Un tour de tours gratuits se termine toujours par l’écran « Ergenekon — Total »."
+      },
+      "tiers": {
+        "title": "Paliers de gain et annonces de multiplicateur",
+        "text": "Si le total du tour atteint <b>10 fois</b> la mise de base ou plus, la porte du ciel s’ouvre et le compteur grimpe à travers les paliers : {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100× ; un tour qui atteint le plafond se termine par {max}. Si modèle × multiplicateur global vaut ×10 ou plus, il est annoncé en grandes lettres avec son propre son et le hurlement du loup ; chaque hausse du multiplicateur global est montrée par la montagne de fer qui se fissure. Toucher l’écran amène le compteur directement au résultat ; cela ne modifie pas le gain."
+      },
+      "ante": {
+        "title": "Chance ×2 · coût {cost}",
+        "text": "Lorsqu’elle est activée, chaque tour coûte <b>{factor} fois la mise</b> et Ay Ata a plus de chances d’apparaître dans le jeu de base : les chances de tours gratuits sont environ doublées ({ante} / {standard}). Les gains sont toujours payés sur la mise de base. Tant qu’elle est activée, le bonus ne peut pas être acheté."
+      }
+    }
+  },
+  "burst": {
+    "tag": "ERGENEKON · MULTIPLICATEUR GLOBAL"
+  },
+  "skymap": {
+    "aria": "Carte d’Ergenekon : {distinct} constellations allumées, multiplicateur global ×{multiplier}",
+    "inactive": "s’ouvre pendant les tours gratuits",
+    "lit": "{distinct}/6 constellations",
+    "pips": "allumée {n, plural, one {# fois} other {# fois}}"
+  }
+}

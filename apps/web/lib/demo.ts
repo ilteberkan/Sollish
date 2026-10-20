@@ -1,3 +1,4 @@
+import { INTL_LOCALE, type Locale } from './i18n/config';
 /** Local, non-verifiable practice mechanics. Never used for a Solana transaction. */
 export const DEMO_START_CENTS = 100_000;
 export const DEMO_MAX_BET_CENTS = 50_000;
@@ -84,12 +85,14 @@ export function grossPayout(stakeCents: number, multiplier: number): number {
   return Number(payout);
 }
 
-export function demoNumber(cents: number): string {
-  return new Intl.NumberFormat('tr-TR', { maximumFractionDigits: 2 }).format(cents / 100);
+/** Cents as a plain number text ("1.234,5"); Turkish unless a locale is given (UI: `useFormat().number(cents / 100)`). */
+export function demoNumber(cents: number, locale: Locale = 'tr'): string {
+  return new Intl.NumberFormat(INTL_LOCALE[locale], { maximumFractionDigits: 2 }).format(cents / 100);
 }
 
-export function multiplierLabel(value: number): string {
-  return `${value.toFixed(2).replace('.', ',')}×`;
+/** 1.5 -> "1,50×" (tr, the default) / "1.50×" (en): always two decimals. */
+export function multiplierLabel(value: number, locale: Locale = 'tr'): string {
+  return `${new Intl.NumberFormat(INTL_LOCALE[locale], { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: false }).format(Number(value.toFixed(2)))}×`;
 }
 
 export function shortAddress(address: string): string {

@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "description": "{title} — un gioco a cluster DEMO originale. Il pettine scorre sull’acqua e l’inchiostro si riordina; nella Marmorizzazione dei Tulipani le macchie di colore scivolano con i loro moltiplicatori."
+  },
+  "subtitle": "Il pettine scorre sull’acqua e l’inchiostro si riordina onda dopo onda; le macchie scivolano con i loro moltiplicatori.",
+  "logo": {
+    "subtitle": "GIARDINO D’INCHIOSTRO"
+  },
+  "table": {
+    "aria": "Tavolo di gioco Ebru"
+  },
+  "board": {
+    "label": "Griglia Ebru, 7 colonne, 7 righe",
+    "labelFree": "Griglia dei giri gratis Ebru, 7 colonne, 7 righe"
+  },
+  "badge": {
+    "checking": "Verifica del server in corso"
+  },
+  "symbols": {
+    "c1": "Tulipano Dorato",
+    "c2": "Garofano Rubino",
+    "c3": "Fiore Hatip Turchese",
+    "c4": "Foglia di Smeraldo",
+    "c5": "Occhio di Pavone Blu Notte",
+    "c6": "Margherita Zafferano",
+    "c7": "Onda Rosa",
+    "c8": "Goccia di Fuliggine",
+    "drop": "Goccia Maestra (jolly)",
+    "comb": "Pettine Dorato",
+    "stained": "{name}, macchia ×{stain}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Moltiplicatore di macchia",
+      "1": "Macchia potente",
+      "2": "Macchia brillante",
+      "3": "Moltiplicatore del tulipano",
+      "4": "Macchia leggendaria",
+      "5": "Foglia d’oro"
+    }
+  },
+  "error": {
+    "entropy": "La casualità locale sicura non è disponibile. La demo non è stata avviata.",
+    "noCredit": "Non hai abbastanza credito demo oppure è già in corso un round demo.",
+    "insufficientSpin": "Saldo insufficiente: questo giro costa {cost}. Abbassa la puntata o ricarica il saldo.",
+    "insufficientBuy": "Saldo insufficiente: questo acquisto costa {cost}. Abbassa la puntata o ricarica il saldo."
+  },
+  "buyBlock": {
+    "gated": "Disponibile solo con credito DEMO",
+    "autoplay": "Non acquistabile durante il gioco automatico",
+    "busy": "Non acquistabile prima della fine del round",
+    "ante": "Non acquistabile con Chance ×2 attiva",
+    "balance": "Saldo insufficiente (prezzo {price})"
+  },
+  "autoplay": {
+    "title": "Gioco automatico",
+    "serverFailed": "Il server non è riuscito ad avviare il round",
+    "spinFailed": "Non è stato possibile avviare il giro",
+    "quit": "Hai lasciato la sessione",
+    "stopped": "Gioco automatico interrotto: {reason}. {spins, plural, one {# giro} other {# giri}}, netto {net}.",
+    "stoppedShort": "Gioco automatico interrotto: {reason}.",
+    "note": "{cost} per giro{ante, select, yes { (Chance ×2)} other {}} · non acquista mai un bonus · si ferma quando la scheda è nascosta."
+  },
+  "toast": {
+    "autoplay": "Gioco automatico: {spins, plural, one {# giro} other {# giri}}, limite di perdita {limit}.",
+    "refilled": "Saldo ricaricato: {amount}.",
+    "shareCopied": "Link di condivisione copiato: {url}",
+    "shareLink": "Link di condivisione: {url}",
+    "shareFailed": "Impossibile condividere: {reason}",
+    "replayFailed": "Non è stato possibile rivedere questo round.",
+    "replayMismatch": "Replay non verificabile: il record non corrisponde al motore.",
+    "close": "Chiudi la notifica"
+  },
+  "announce": {
+    "replayDone": "Replay terminato: {amount}, {times}×. Saldo invariato.",
+    "roundEnd": "Round terminato. Vincita totale {amount}, {times}×.",
+    "roundEndNoWin": "Round terminato. Nessuna vincita.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{size} {name}, vincita {times}×",
+    "clusterStain": "{size} {name}, macchia ×{stain}, vincita {times}×",
+    "bleed": "La Goccia Maestra ha sparso il suo inchiostro: {n, plural, one {# vicina è diventata} other {# vicine sono diventate}} {name}.",
+    "stainMultiplier": "Moltiplicatore di macchia ×{best}: il pagamento del cluster viene moltiplicato per la somma delle macchie.",
+    "comb": "Passaggio del pettine {pass}: righe spostate di {shifts}.",
+    "combCluster": "Il pettine ha formato un nuovo cluster.",
+    "retrigger": "{count} Pettini Dorati: {awarded, plural, one {# giro gratis aggiunto} other {# giri gratis aggiunti}}.",
+    "trigger": "{count} Pettini Dorati: Marmorizzazione dei Tulipani vinta.",
+    "freeIntro": "La Marmorizzazione dei Tulipani inizia: hai vinto {awarded, plural, one {# giro gratis} other {# giri gratis}}.",
+    "freeSpinWin": "Il giro gratis ha fruttato {win}×. Totale {total}×.",
+    "freeSpinNoWin": "Nessuna vincita nel giro gratis.",
+    "noWin": "Nessuna vincita.",
+    "totalWin": "Vincita totale {amount}, {times}×.",
+    "freeOutro": "La Marmorizzazione dei Tulipani è finita. Totale: {amount}, {spins, plural, one {# giro} other {# giri}}, macchia più grande ×{stain}.",
+    "sent": "Giro inviato al server, {amount}.",
+    "buyStarted": "Bonus acquistato, {amount}. La Marmorizzazione dei Tulipani sta per iniziare.",
+    "spinStarted": "Giro avviato, {amount}.",
+    "recovered": "Un round interrotto è stato recuperato dal server; il pagamento è già stato effettuato lì ({amount}).",
+    "replaying": "Replay in corso: round {id}. Il saldo non cambia.",
+    "refilled": "Saldo DEMO ricaricato a {amount}.",
+    "refilledRemote": "Saldo DEMO del server ricaricato a {amount}.",
+    "speed": "Velocità dei giri: {speed}.",
+    "anteOn": "Chance ×2 attiva: probabilità di giri gratis circa doppia, costo {cost}.",
+    "anteOff": "Chance ×2 disattiva: costo {cost}."
+  },
+  "banner": {
+    "combCluster": "Il pettine ha formato un nuovo cluster",
+    "scatterPay": "{count} Pettini Dorati · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# giro gratis} other {# giri gratis}}"
+  },
+  "deck": {
+    "aria": "Comandi di gioco",
+    "balance": "Saldo",
+    "refill": "Ricarica il saldo",
+    "replay": "Replay",
+    "win": "Vincita",
+    "replayWin": "Vincita del replay",
+    "lastWin": "Ultima vincita",
+    "spin": "Gira",
+    "spinLocked": "Round in corso; bloccato finché non finiscono tutte le cascate, i fulmini e i giri gratis.",
+    "auto": "Auto",
+    "info": "Info",
+    "on": "Attivo",
+    "off": "Disattivo",
+    "anteDesc": "Probabilità di giri gratis circa doppia",
+    "buyDesc": "{spins, plural, one {# giro gratis} other {# giri gratis}} · {rtp}",
+    "speed": "Velocità dei giri: {speed}",
+    "soundLoading": "Caricamento audio {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Il tuo saldo DEMO è esaurito.",
+    "lastRound": "Ultimo round <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "Nessuna vincita nell’ultimo round.",
+    "spaceHint": "Puoi girare anche con la barra spaziatrice.",
+    "fixedBefore": "Il risultato è stabilito prima del giro."
+  },
+  "replay": {
+    "ribbon": "Replay — saldo invariato · round {id}"
+  },
+  "auto": {
+    "ribbon": "Gioco automatico · {n, plural, one {# giro rimasto} other {# giri rimasti}}"
+  },
+  "free": {
+    "tag": "Marmorizzazione dei Tulipani",
+    "spinNumber": "Giro {n}",
+    "left": "Rimasti",
+    "counterAria": "Giro gratis {number}, ne restano {left}"
+  },
+  "comb": {
+    "label": "Pettine",
+    "passAria": "Passaggio del pettine {pass} / 3",
+    "maxAria": "Al massimo 3 passaggi del pettine per giro"
+  },
+  "stain": {
+    "aria": "Celle con macchia {cells}, macchia più alta ×{max}",
+    "stains": "Macchie",
+    "highest": "Più alta",
+    "max": "Max <b>{n}×</b>"
+  },
+  "meter": {
+    "idleA": "<b>5+</b> gocce adiacenti dello stesso colore pagano",
+    "idleB": "Il pettine sposta le righe",
+    "idleC": "Macchia di colore <b>×256</b>",
+    "win": "Vincita",
+    "totalWin": "Vincita totale"
+  },
+  "gated": {
+    "title": "Nessun Ebru on-chain.",
+    "text": "Questo gioco si gioca solo con credito DEMO; le puntate reali non sono accettate.",
+    "back": "Torna alla demo locale"
+  },
+  "splash": {
+    "f1Title": "Cluster da 5+",
+    "f1Text": "Cinque o più gocce adiacenti dello stesso colore, in orizzontale o in verticale, pagano",
+    "f2Text": "Il pettine scorre sull’acqua, le righe scivolano, nascono nuovi cluster",
+    "f3Title": "Macchia ×256 · {max}×",
+    "f3Text": "Nella Marmorizzazione dei Tulipani le macchie scivolano con il pettine",
+    "loading": "Caricamento del gioco",
+    "play": "Gioca",
+    "skip": "Non mostrare più questa schermata iniziale",
+    "note": "Il credito DEMO non ha valore · Il risultato è stabilito prima del giro · Simulazione non certificata, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Audio pronto: musica, effetti e atmosfera sono pronti su questo dispositivo.",
+    "soundLoading": "Caricamento audio {percent} (nel frattempo il gioco resta muto).",
+    "soundOnTouch": "L’audio si carica al primo tocco.",
+    "demoTitle": "Saldo DEMO",
+    "demoText": "Saldo {balance}{server, select, yes { (server)} other {}}. La ricarica porta il saldo a {amount} e aggiunge una riga “{label}” alla cronologia; non è possibile durante un round o il gioco automatico."
+  },
+  "buy": {
+    "feature": "Marmorizzazione dei Tulipani · {spins, plural, one {# giro gratis} other {# giri gratis}} · puntata {bet}",
+    "rtp": "RTP dell’acquisto {buy} · standard {standard} (simulazione, non certificata)",
+    "description": "<b>100 volte</b> la tua puntata. Il round inizia con almeno 3 Pettini Dorati e {spins, plural, one {# giro gratis è garantito} other {# giri gratis sono garantiti}}; ogni cella che scoppia riceve una macchia di colore, le macchie scivolano con il pettine e moltiplicano per la loro somma il cluster sotto cui passano. Le vincite sono pagate su una puntata di {bet}, fino a un massimo di {max}."
+  },
+  "history": {
+    "scope": "Questa sessione · i replay non modificano mai il saldo",
+    "time": "Ora",
+    "mode": "Modalità",
+    "win": "Vincita",
+    "result": "Risultato",
+    "roundId": "ID del round",
+    "replay": "Rivedi",
+    "replayAria": "Rivedi: round {id}, saldo invariato",
+    "share": "Condividi la vincita",
+    "shareAria": "Condividi la vincita: round {id}",
+    "latest": "Ultimo round",
+    "refilled": "Saldo ricaricato",
+    "refilledRemote": "Saldo ricaricato (server)",
+    "emptyTitle": "Il tuo primo round apparirà qui.",
+    "emptyText": "Modalità, puntata, costo, vincita e ID di ogni round vengono registrati; puoi rivedere qualsiasi round.",
+    "capped": "Vincita massima · {times}×",
+    "free": "Giri gratis ×{spins} · {times}×",
+    "none": "Nessuna vincita",
+    "freeStain": "Marmorizzazione dei Tulipani ×{spins} · macchia più grande ×{stain} · {times}×",
+    "clusters": "{n, plural, one {# cluster} other {# cluster}}",
+    "combWins": "{n, plural, one {# vincita del pettine} other {# vincite del pettine}}",
+    "combs": "{n, plural, one {# Pettine Dorato} other {# Pettini Dorati}}",
+    "clusterRow": "{items} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× la puntata",
+    "capNote": "Il round ha raggiunto il limite · i giri rimanenti non vengono giocati",
+    "continue": "Continua",
+    "tapToSpeed": "Tocca per accelerare"
+  },
+  "intro": {
+    "word": "MARMORIZZAZIONE DEI TULIPANI",
+    "title": "La Marmorizzazione dei Tulipani Inizia",
+    "freeA": "giri",
+    "freeB": "gratis",
+    "text": "Ogni cella che scoppia riceve una <b>macchia di colore</b>: prima ×2, raddoppiata ogni volta nella stessa cella, fino a ×256. Le macchie restano per tutta la funzione e <b>scivolano con il pettine</b>; il pagamento di un cluster che passa sopra di esse viene moltiplicato per la somma delle macchie. 3 Pettini Dorati danno +4 giri.",
+    "start": "Inizia"
+  },
+  "total": {
+    "titleA": "Marmorizzazione dei Tulipani",
+    "titleB": "Totale",
+    "word": "TOTALE",
+    "sub": "GIRI GRATIS",
+    "spins": "Giri",
+    "spinsValue": "{n, plural, one {# giro} other {# giri}}",
+    "maxStain": "Macchia più grande",
+    "none": "Nessuno",
+    "stainedClusters": "{n, plural, one {# cluster con macchia} other {# cluster con macchia}}",
+    "noStainedClusters": "nessun cluster con macchia",
+    "betMultiple": "Della tua puntata",
+    "combWins": "{n, plural, one {# vincita del pettine} other {# vincite del pettine}}",
+    "noCombWins": "nessuna vincita del pettine",
+    "capNote": "Vincita massima raggiunta · i giri rimanenti non vengono giocati",
+    "toCelebration": "Vai alla celebrazione"
+  },
+  "info": {
+    "windowTitle": "Ebru · Info sul gioco",
+    "how": {
+      "title": "Come si gioca",
+      "s1": "<b>Scegli la puntata.</b> I pulsanti − e + cambiano la puntata di un livello; toccando l’importo si aprono tutti i livelli. “{max}” sceglie il livello più alto coperto dal tuo saldo.",
+      "s2": "<b>Gira.</b> Premi il pulsante dell’inchiostro o usa la barra spaziatrice. Il costo del round ({multiple} volte la puntata con Chance ×2 attiva) viene addebitato una sola volta dal saldo.",
+      "s3": "<b>Forma cluster.</b> Nella vasca d’acqua 7 × 7, <b>5 o più gocce adiacenti dello stesso colore</b>, in orizzontale o in verticale, pagano; più grande è il cluster, più alto è il livello di pagamento.",
+      "s4": "<b>Catena.</b> I cluster vincenti si dissolvono nell’acqua, le gocce sopra cadono e nuove gocce riempiono gli spazi; si va avanti finché non resta alcun cluster.",
+      "s5": "<b>Pettine.</b> Quando la catena termina — anche senza vincita — il Pettine Dorato scorre sull’acqua: ogni riga scivola a destra o a sinistra della propria misura e possono nascere nuovi cluster. Al massimo {passes} passaggi del pettine per giro.",
+      "s6": "<b>Risultato.</b> L’intero round viene deciso dal motore prima dell’inizio del giro; l’animazione si limita a riprodurre quel risultato. Il pulsante di gioco resta bloccato finché il round (ogni cascata, ogni passaggio del pettine e ogni giro gratis) non è finito; usa l’impostazione {quick}/{turbo} per velocizzare. Le impostazioni di velocità, un tocco sul contatore della celebrazione, una scheda nascosta o l’uscita dalla pagina non cambiano mai il pagamento; il round si chiude sempre una sola volta, con il pagamento del motore.",
+      "note": "Il credito DEMO non ha valore; non fa guadagnare SOL, token o premi. Il gioco gira nel browser con casualità locale; non esiste una prova VRF."
+    },
+    "pay": {
+      "title": "Tabella dei pagamenti",
+      "lead": "<b>5 o più gocce adiacenti dello stesso colore</b>, in orizzontale o in verticale, formano un cluster. La cifra grande è l’importo DEMO lordo con una puntata di <b>{bet}</b>; il moltiplicatore sotto è un multiplo della puntata. Ogni cluster nella stessa griglia paga separatamente.",
+      "clustersAria": "Pagamenti dei cluster",
+      "fullSummary": "Tutte le dimensioni dei cluster (12 livelli)",
+      "fullCaption": "Pagamento per colore e dimensione del cluster, come multiplo della puntata",
+      "colour": "Colore",
+      "scatterTitle": "{name} · pagamento scatter",
+      "combs5": "5+ pettini",
+      "combs4": "4 pettini",
+      "combs3": "3 pettini",
+      "scatterText": "Se la griglia finale del giro base contiene 3 o più Pettini Dorati, questi pagano e sbloccano <b>{spins} giri gratis</b> (Marmorizzazione dei Tulipani). I pettini non si dissolvono; cadono soltanto e scivolano con il pettine.",
+      "dropText": "Non fa parte di alcun cluster; dove cade, sparge il suo inchiostro: sceglie il colore più frequente tra le sue 4 vicine e colora le vicine e se stessa di quel colore. I dettagli sono nella pagina “{features}”.",
+      "maxTitle": "Vincita massima {n}×",
+      "maxText": "Con questa puntata equivale a <b>{amount}</b>. Se il totale del round raggiunge questo limite, il round termina subito; i giri gratis rimanenti non vengono giocati."
+    },
+    "features": {
+      "title": "Funzioni",
+      "combTitle": "Passaggio del pettine",
+      "combText": "Quando ogni catena di cascate termina, il pettine scorre una volta sul tabellone: la riga r scivola ciclicamente di <b>round(A · sin(φ + r · k))</b> colonne (ciò che esce a destra rientra a sinistra). A vale 1, 2 o 3 a ogni passaggio ({weights}); φ e k vengono estratti di nuovo a ogni passaggio. Se lo spostamento forma un nuovo cluster la catena continua; altrimenti il giro termina. Al massimo {passes} passaggi per giro. I simboli cambiano solo posto; nessuno viene aggiunto o rimosso.",
+      "combExample": "Esempio: A = 2, φ = 0, k = 8·2π/64 → spostamenti delle righe {shifts}.",
+      "combExampleAria": "Esempio di passaggio del pettine, spostamento per riga",
+      "combRow": "Riga {n} {shift}",
+      "dropTitle": "{name}",
+      "dropText": "Nel momento in cui cade (alla distribuzione o al riempimento) sparge il suo inchiostro: conta i colori delle sue 4 vicine, sceglie il più frequente (parità risolta a caso; senza vicine colorate, un colore casuale), colora le vicine colorate di quel colore e diventa lei stessa di quel colore. I Pettini Dorati non vengono colorati.",
+      "freeTitle": "Marmorizzazione dei Tulipani (giri gratis)",
+      "freeText": "3+ Pettini Dorati sbloccano {trigger} giri gratis. Nei giri gratis ogni cella che scoppia riceve un <b>moltiplicatore di macchia di colore</b>: ×2 la prima volta, raddoppiato ogni volta nella stessa cella, fino a ×{stainMax}. Le macchie restano per tutta la funzione; le cascate non le spostano, ma <b>il passaggio del pettine sposta le macchie con lo stesso spostamento dei simboli</b>. Quando un cluster passa su celle con macchia, il suo pagamento viene moltiplicato per la <b>somma</b> delle macchie sottostanti (prima il pagamento, poi la nuova macchia). Nei giri gratis, 3+ pettini aggiungono {retrigger} giri; in un singolo round si giocano al massimo {max} giri. La Goccia di Fuliggine non si diffonde nei giri gratis (solo una Goccia Maestra senza vicine colorate può scegliere quel colore a caso).",
+      "stainsAria": "Moltiplicatori di macchia",
+      "cumTitle": "Vincita cumulativa",
+      "cumText": "Il contatore delle vincite non si azzera mai durante un round: cluster, vincite del pettine, pagamento scatter e tutti i giri gratis si sommano nello stesso totale. Un round di giri gratis termina sempre con la schermata “{screen}”.",
+      "tiersTitle": "Livelli di vincita e annunci del moltiplicatore",
+      "tiersText": "Quando il totale del round è almeno <b>10×</b> la puntata base, si apre la schermata di celebrazione e il contatore sale attraverso i livelli: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; un round che raggiunge il limite termina con {max}. I moltiplicatori di macchia da ×10 in su vengono annunciati a caratteri grandi sopra la griglia con un suono dedicato. Toccando lo schermo il contatore salta al risultato; il pagamento non cambia mai.",
+      "anteTitle": "Chance ×2 · costo {cost}",
+      "anteText": "Quando è attiva, ogni giro costa <b>{multiple} volte la tua puntata</b> e i Pettini Dorati sono più probabili nel gioco base: la probabilità di giri gratis è circa doppia ({ante} / {standard}). Le vincite sono comunque pagate sulla puntata base. Con la funzione attiva non si può acquistare il bonus.",
+      "buyTitle": "Acquista bonus · prezzo {price}",
+      "buyText": "Per <b>100 volte</b> la tua puntata il round inizia con almeno 3 Pettini Dorati; {spins} giri gratis sono garantiti. L’acquisto avviene tramite una finestra di conferma, ha un RTP separato ({rtp}) e non è utilizzabile con il gioco automatico."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Ritorno teorico (RTP)",
+      "caption": "Ritorno teorico per modalità",
+      "mode": "Modalità",
+      "cost": "Costo",
+      "ci": "IC al 95%",
+      "feature": "Funzione",
+      "everyRound": "ogni round",
+      "method": "Una simulazione separata di {millions} milioni di round per ogni modalità (motore <code>ebru-ink-1</code>). L’RTP è calcolato sull’importo pagato. Frequenza di vincita (giro base): standard {hit}, Chance ×2 {hitAnte}. Volatilità (deviazione standard in unità di costo): standard {sdStandard}, acquisto {sdBuy}.",
+      "note": "La simulazione è una stima e <b>non è certificata</b>; a causa della coda pesante, l’intervallo di confidenza può essere ottimistico. Il risultato di una sessione breve può discostarsi molto dall’RTP. Il credito DEMO <b>non ha valore</b>."
+    },
+    "limits": {
+      "title": "Limiti di puntata e vincita",
+      "range": "Intervallo di puntata",
+      "levels": "Livelli",
+      "current": "Puntata attuale",
+      "currentValue": "{bet} · Chance ×2 {ante} · Acquisto {buy}",
+      "max": "Vincita massima",
+      "maxValue": "{n} volte la puntata · {amount} con questa puntata",
+      "p1": "Un round che raggiunge la vincita massima termina subito; i giri gratis rimanenti non vengono giocati. Il pagamento è sempre calcolato sulla puntata base, con le frazioni di centesimo arrotondate per difetto.",
+      "p2": "I livelli e le modalità che il saldo non copre non possono essere selezionati. Un round è una sola prenotazione e un solo pagamento; si gioca un solo round alla volta."
+    },
+    "keys": {
+      "title": "Tasti",
+      "heading": "Tastiera",
+      "space": "Spazio",
+      "spaceText": "Avvia il giro ({settings} → “{option}”). Durante un round non salta il giro; accelera solo le schermate dei giri gratis e il contatore della celebrazione.",
+      "enterText": "Preme il pulsante attivo.",
+      "escText": "Chiude la finestra aperta (tranne il promemoria di sessione).",
+      "tabText": "Si sposta tra i controlli; il focus è sempre visibile.",
+      "arrowsText": "Cambia pagina in questa finestra info; cambia l’opzione nelle scelte delle impostazioni.",
+      "pageText": "Si sposta tra le pagine info.",
+      "note": "Lo screen reader annuncia ogni passaggio (“{example}”, passaggi del pettine, risultato del round); la griglia viene letta come una tabella 7×7 e le celle con macchia vengono lette con il loro moltiplicatore. I simboli si distinguono per forma oltre che per colore (tulipano, garofano, fiore hatip, foglia, occhio di pavone, margherita, rosa, ciottolo). La preferenza per il movimento ridotto riduce il pettine a un breve scivolamento e disattiva particelle e vibrazioni."
+    },
+    "fault": {
+      "title": "Clausola di malfunzionamento",
+      "p1": "<b>Un malfunzionamento rende nulli tutti i giochi e i pagamenti interessati.</b> In caso di guasto del software, del browser o del dispositivo fa fede il registro del round; un importo mostrato a schermo che non corrisponde al registro del motore non è valido.",
+      "p2": "Questo gioco si gioca solo con credito DEMO. Il DEMO non ha valore e non può essere convertito in denaro o token; in caso di malfunzionamento il saldo DEMO e la cronologia della sessione possono essere corretti o azzerati.",
+      "p3": "Poiché il risultato è stabilito prima del giro, un’animazione interrotta, una scheda nascosta o l’uscita dalla pagina non cambiano il risultato; il round si chiude comunque una sola volta con il pagamento del motore."
+    }
+  }
+}

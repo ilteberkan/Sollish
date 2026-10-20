@@ -150,5 +150,25 @@
       "word": "MAX"
     }
   },
-  "winWord": "VINCITA"
+  "winWord": "VINCITA",
+  "rgs": {
+    "source": {
+      "local": "Demo locale",
+      "remote": "Verificato dal server"
+    },
+    "errors": {
+      "INSUFFICIENT_BALANCE": "Il saldo del server non è sufficiente per questo round.",
+      "RATE_LIMITED": "Stai giocando troppo in fretta; il server ti fa attendere un secondo.",
+      "SESSION_BUSY": "La richiesta precedente è ancora in elaborazione.",
+      "SESSION_EXPIRED": "La sessione del server è scaduta; ricarica la pagina.",
+      "AUTH_INVALID": "La sessione del server non è valida; ricarica la pagina.",
+      "SESSION_LIMIT": "Questa sessione ha raggiunto il limite di round; ricarica la pagina.",
+      "ROUND_MISMATCH": "Il round del server non corrispondeva al motore; il round non è stato mostrato.",
+      "NETWORK": "Impossibile raggiungere il server. Se il risultato del round è salvato sul server, verrà mostrato quando la pagina viene ricaricata.",
+      "INVALID_BET": "La puntata è stata rifiutata dal server.",
+      "INVALID_MODE": "La modalità è stata rifiutata dal server.",
+      "SERVICE_UNAVAILABLE": "Il server al momento non accetta round.",
+      "UNKNOWN": "Il server non ha accettato il round."
+    }
+  }
 }

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { SLOT_GAMES } from '@sollish/protocol';
 import { configuredApi } from '@/lib/chat';
-import { RgsClient, rgsErrorMessage, safeSessionStorage, type RemoteHistoryRow } from '@/lib/rgs-client';
+import { RgsClient, rgsErrorCode, safeSessionStorage, type RemoteHistoryRow } from '@/lib/rgs-client';
 import { verifyForm, verifyHistoryRow, type RowStatus, type VerifyOutcome } from '@/lib/slot-verify';
 import styles from './rgs-pages.module.css';
 import { useFormat, useT } from '@/lib/i18n/client';
@@ -23,15 +23,19 @@ export function VerifyPanel() {
   const [outcome, setOutcome] = useState<VerifyOutcome | null>(null);
   const [busy, setBusy] = useState(false);
   const [rows, setRows] = useState<Row[] | null>(null);
-  /** A message key; `rgs:` notes carry an already formatted lib message (TODO(i18n): lib/rgs-client codes). */
+  /** A message key: `verify.*` (this namespace) or `rgs.errors.*` (slotKit). */
   const [note, setNote] = useState('');
   const t = useT('verify');
   const common = useT('common');
+  const kit = useT('slotKit');
   const format = useFormat();
   const gameName = (id: string) => (GAME_KEYS.has(id) ? common(`games.${id}` as MessageKey<'common'>) : id);
   const modeName = (id: string) => (MODE_KEYS.has(id) ? common(`modes.${id}` as MessageKey<'common'>) : id);
   const times = (hundredths: number) => format.amount(hundredths);
-  const noteText = note.startsWith('verify.') ? t(note as MessageKey<'verify'>) : note;
+  const noteText = note.startsWith('verify.') ? t(note as MessageKey<'verify'>) : note.startsWith('rgs.errors.') ? kit(note as MessageKey<'slotKit'>) : note;
+  const outcomeText = (o: VerifyOutcome) => (o.code === 'mismatch'
+    ? t('outcome.mismatch', { failed: (o.failed ?? []).map(name => (t.has(`checks.${name}`) ? t(`checks.${name}` as MessageKey<'verify'>) : name)).join(', ') })
+    : t(`outcome.${o.code}` as MessageKey<'verify'>));
   const game = SLOT_GAMES[form.game]!;
   const set = (key: keyof Form) => (event: { target: { value: string } }) => setForm(f => ({ ...f, [key]: event.target.value }));
 
@@ -49,12 +53,12 @@ export function VerifyPanel() {
       const history = await c.history();
       setRows(await Promise.all(history.rounds.map(async row => ({ ...row, status: (await verifyHistoryRow(row)).status }))));
       if (!history.rounds.length) setNote('verify.noteEmpty');
-    } catch (error) { setNote(rgsErrorMessage(error)); } finally { setBusy(false); }
+    } catch (error) { setNote(`rgs.errors.${rgsErrorCode(error)}`); } finally { setBusy(false); }
   };
   const reveal = async () => {
     const c = client(); if (!c?.hasSession) return;
     setBusy(true);
-    try { await c.rotate(); setNote('verify.noteRevealed'); } catch (error) { setNote(rgsErrorMessage(error)); setBusy(false); return; }
+    try { await c.rotate(); setNote('verify.noteRevealed'); } catch (error) { setNote(`rgs.errors.${rgsErrorCode(error)}`); setBusy(false); return; }
     setBusy(false);
     await load();
   };
@@ -92,7 +96,7 @@ export function VerifyPanel() {
         </form>
         {outcome && (
           <div role="status" aria-live="polite" data-testid="verify-result">
-            <p><span className={`${styles.status} ${styles[outcome.status === 'invalid' ? 'pending' : outcome.status]}`}>{t(STATUS_KEY[outcome.status])}</span> {outcome.message}</p>
+            <p><span className={`${styles.status} ${styles[outcome.status === 'invalid' ? 'pending' : outcome.status]}`}>{t(STATUS_KEY[outcome.status])}</span> {outcomeText(outcome)}</p>
             {outcome.result?.round && (
               <dl className={styles.facts}>
                 <dt>{t('verify.factSeedHash')}</dt><dd className={styles.mono}>{outcome.result.serverSeedHash} {outcome.result.checks.hash === null ? '' : outcome.result.checks.hash ? '✓' : '✗'}</dd>

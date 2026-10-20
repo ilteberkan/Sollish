@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "description": "{title} — 原创演示簇集游戏。梳子划过水面，墨色重新排列；在郁金香水拓中，颜料斑点会带着倍数一同滑动。"
+  },
+  "subtitle": "梳子划过水面，墨色层层重排；斑点带着倍数一同滑动。",
+  "logo": {
+    "subtitle": "墨韵花园"
+  },
+  "table": {
+    "aria": "Ebru 游戏桌"
+  },
+  "board": {
+    "label": "Ebru 棋盘，7 列 7 行",
+    "labelFree": "Ebru 免费旋转棋盘，7 列 7 行"
+  },
+  "badge": {
+    "checking": "正在检查服务器"
+  },
+  "symbols": {
+    "c1": "金郁金香",
+    "c2": "红宝石康乃馨",
+    "c3": "绿松石哈蒂普花",
+    "c4": "翡翠叶",
+    "c5": "藏青孔雀眼",
+    "c6": "藏红花雏菊",
+    "c7": "玫瑰波纹",
+    "c8": "烟灰墨滴",
+    "drop": "大师墨滴（百搭）",
+    "comb": "金梳",
+    "stained": "{name}，斑点 ×{stain}"
+  },
+  "callout": {
+    "tags": {
+      "0": "斑点倍数",
+      "1": "强力斑点",
+      "2": "璀璨斑点",
+      "3": "郁金香倍数",
+      "4": "传奇斑点",
+      "5": "金箔"
+    }
+  },
+  "error": {
+    "entropy": "无法使用安全的本地随机数，演示未启动。",
+    "noCredit": "演示额度不足，或已有演示局正在进行。",
+    "insufficientSpin": "余额不足：本次旋转需要 {cost}。请降低投注或重置余额。",
+    "insufficientBuy": "余额不足：本次购买需要 {cost}。请降低投注或重置余额。"
+  },
+  "buyBlock": {
+    "gated": "仅可使用演示额度购买",
+    "autoplay": "自动旋转期间无法购买",
+    "busy": "本局结束前无法购买",
+    "ante": "开启机会 ×2 时无法购买",
+    "balance": "余额不足（价格 {price}）"
+  },
+  "autoplay": {
+    "title": "自动旋转",
+    "serverFailed": "服务器无法开始本局",
+    "spinFailed": "无法开始旋转",
+    "quit": "你已退出会话",
+    "stopped": "自动旋转已停止：{reason}。共 {spins} 次，净额 {net}。",
+    "stoppedShort": "自动旋转已停止：{reason}。",
+    "note": "每次旋转 {cost}{ante, select, yes {（机会 ×2）} other {}} · 不会自动购买奖励 · 标签页隐藏时停止。"
+  },
+  "toast": {
+    "autoplay": "自动旋转：{spins} 次，亏损上限 {limit}。",
+    "refilled": "余额已重置：{amount}。",
+    "shareCopied": "分享链接已复制：{url}",
+    "shareLink": "分享链接：{url}",
+    "shareFailed": "无法分享：{reason}",
+    "replayFailed": "无法重放这一局。",
+    "replayMismatch": "无法验证重放：记录与引擎不一致。",
+    "close": "关闭提示"
+  },
+  "announce": {
+    "replayDone": "重放结束：{amount}，{times}×。余额未变。",
+    "roundEnd": "本局结束。总赢额 {amount}，{times}×。",
+    "roundEndNoWin": "本局结束。没有中奖。",
+    "bigWin": "{tier}：{amount}，{times}×。",
+    "cluster": "{size} 个{name}，赢 {times}×",
+    "clusterStain": "{size} 个{name}，斑点 ×{stain}，赢 {times}×",
+    "bleed": "大师墨滴扩散了墨汁：{n} 个相邻格变成了{name}。",
+    "stainMultiplier": "斑点倍数 ×{best}：簇集赔付乘以斑点总和。",
+    "comb": "梳子第 {pass} 次划过：各行位移 {shifts}。",
+    "combCluster": "梳子形成了新的簇集。",
+    "retrigger": "{count} 把金梳：增加了 {awarded} 次免费旋转。",
+    "trigger": "{count} 把金梳：赢得郁金香水拓。",
+    "freeIntro": "郁金香水拓开始：你赢得了 {awarded} 次免费旋转。",
+    "freeSpinWin": "本次免费旋转赢得 {win}×。累计 {total}×。",
+    "freeSpinNoWin": "本次免费旋转没有中奖。",
+    "noWin": "没有中奖。",
+    "totalWin": "总赢额 {amount}，{times}×。",
+    "freeOutro": "郁金香水拓结束。总计：{amount}，{spins} 次旋转，最大斑点 ×{stain}。",
+    "sent": "旋转已发送到服务器，{amount}。",
+    "buyStarted": "已购买奖励，{amount}。郁金香水拓即将开始。",
+    "spinStarted": "旋转已开始，{amount}。",
+    "recovered": "已从服务器恢复一局未完成的游戏；奖金已在服务器端发放（{amount}）。",
+    "replaying": "正在重放：第 {id} 局。余额不会变化。",
+    "refilled": "演示余额已重置为 {amount}。",
+    "refilledRemote": "服务器演示余额已重置为 {amount}。",
+    "speed": "旋转速度：{speed}。",
+    "anteOn": "机会 ×2 已开启：免费旋转几率约翻倍，费用 {cost}。",
+    "anteOff": "机会 ×2 已关闭：费用 {cost}。"
+  },
+  "banner": {
+    "combCluster": "梳子形成了新簇集",
+    "scatterPay": "{count} 把金梳 · +{amount} DEMO",
+    "retrigger": "+{n} 次免费旋转"
+  },
+  "deck": {
+    "aria": "游戏控制",
+    "balance": "余额",
+    "refill": "重置余额",
+    "replay": "重放",
+    "win": "赢额",
+    "replayWin": "重放赢额",
+    "lastWin": "上次赢额",
+    "spin": "旋转",
+    "spinLocked": "本局进行中；所有消除掉落、闪电和免费旋转结束前已锁定。",
+    "auto": "自动",
+    "info": "说明",
+    "on": "开",
+    "off": "关",
+    "anteDesc": "免费旋转几率约翻倍",
+    "buyDesc": "{spins} 次免费旋转 · {rtp}",
+    "speed": "旋转速度：{speed}",
+    "soundLoading": "正在加载声音 {percent}"
+  },
+  "msg": {
+    "outOfCredit": "你的演示余额已用完。",
+    "lastRound": "上一局 <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "上一局没有中奖。",
+    "spaceHint": "也可以按空格键旋转。",
+    "fixedBefore": "结果在旋转前就已确定。"
+  },
+  "replay": {
+    "ribbon": "重放 — 余额不变 · 第 {id} 局"
+  },
+  "auto": {
+    "ribbon": "自动旋转 · 剩余 {n} 次"
+  },
+  "free": {
+    "tag": "郁金香水拓",
+    "spinNumber": "第 {n} 次",
+    "left": "剩余",
+    "counterAria": "第 {number} 次免费旋转，剩余 {left} 次"
+  },
+  "comb": {
+    "label": "梳子",
+    "passAria": "梳子第 {pass} / 3 次划过",
+    "maxAria": "每次旋转最多划过 3 次"
+  },
+  "stain": {
+    "aria": "有斑点的格子 {cells} 个，最高斑点 ×{max}",
+    "stains": "斑点",
+    "highest": "最高",
+    "max": "最高 <b>{n}×</b>"
+  },
+  "meter": {
+    "idleA": "<b>5+</b> 个相邻同色墨滴即可赢奖",
+    "idleB": "梳子会让各行滑动",
+    "idleC": "<b>×256</b> 颜料斑点",
+    "win": "赢额",
+    "totalWin": "总赢额"
+  },
+  "gated": {
+    "title": "暂无链上 Ebru。",
+    "text": "本游戏仅使用演示额度，不接受真实投注。",
+    "back": "返回本地演示"
+  },
+  "splash": {
+    "f1Title": "5+ 簇集",
+    "f1Text": "横向或纵向相邻的 5 个及以上同色墨滴即可赢奖",
+    "f2Text": "梳子划过水面，各行滑动，新的簇集随之出现",
+    "f3Title": "×256 斑点 · {max}×",
+    "f3Text": "在郁金香水拓中，斑点会随梳子一同滑动",
+    "loading": "游戏加载中",
+    "play": "开始游戏",
+    "skip": "不再显示此启动画面",
+    "note": "演示额度没有价值 · 结果在旋转前就已确定 · 未经认证的模拟 RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "声音已就绪：音乐、音效和环境音已在此设备上准备完毕。",
+    "soundLoading": "正在加载声音 {percent}（加载期间游戏保持静音）。",
+    "soundOnTouch": "声音会在首次触碰时加载。",
+    "demoTitle": "演示余额",
+    "demoText": "余额 {balance}{server, select, yes {（服务器）} other {}}。重置会将余额设为 {amount}，并在记录中添加一行“{label}”；本局或自动旋转进行期间无法重置。"
+  },
+  "buy": {
+    "feature": "郁金香水拓 · {spins} 次免费旋转 · 投注 {bet}",
+    "rtp": "购买 RTP {buy} · 标准 {standard}（模拟，未经认证）",
+    "description": "投注的 <b>100 倍</b>。本局至少以 3 把金梳开始，并保证 {spins} 次免费旋转；每个消除的格子都会落下一个颜料斑点，斑点随梳子滑动，并按总和放大其下方经过的簇集。奖金按 {bet} 的投注计算，最高 {max}。"
+  },
+  "history": {
+    "scope": "本次会话 · 重放不会改变余额",
+    "time": "时间",
+    "mode": "模式",
+    "win": "赢额",
+    "result": "结果",
+    "roundId": "局编号",
+    "replay": "重放",
+    "replayAria": "重放：第 {id} 局，余额不变",
+    "share": "分享你的赢额",
+    "shareAria": "分享你的赢额：第 {id} 局",
+    "latest": "最近一局",
+    "refilled": "余额已重置",
+    "refilledRemote": "余额已重置（服务器）",
+    "emptyTitle": "你的第一局会显示在这里。",
+    "emptyText": "每局的模式、投注、费用、赢额和局编号都会被记录；你可以重新观看任意一局。",
+    "capped": "最高奖 · {times}×",
+    "free": "免费旋转 ×{spins} · {times}×",
+    "none": "未中奖",
+    "freeStain": "郁金香水拓 ×{spins} · 最大斑点 ×{stain} · {times}×",
+    "clusters": "{n} 个簇集",
+    "combWins": "{n} 次梳子赢奖",
+    "combs": "{n} 把金梳",
+    "clusterRow": "{items} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× 投注",
+    "capNote": "本局已达上限 · 剩余旋转不再进行",
+    "continue": "继续",
+    "tapToSpeed": "点按加速"
+  },
+  "intro": {
+    "word": "郁金香水拓",
+    "title": "郁金香水拓开始",
+    "freeA": "免费",
+    "freeB": "旋转",
+    "text": "每个消除的格子都会落下一个<b>颜料斑点</b>：先是 ×2，同一格每次翻倍，最高 ×256。斑点在整个特色玩法中保留，并<b>随梳子一同滑动</b>；经过斑点的簇集，其赔付会乘以斑点总和。3 把金梳可额外获得 +4 次旋转。",
+    "start": "开始"
+  },
+  "total": {
+    "titleA": "郁金香水拓",
+    "titleB": "总计",
+    "word": "总计",
+    "sub": "免费旋转",
+    "spins": "旋转",
+    "spinsValue": "{n} 次旋转",
+    "maxStain": "最大斑点",
+    "none": "无",
+    "stainedClusters": "{n} 个带斑点的簇集",
+    "noStainedClusters": "没有带斑点的簇集",
+    "betMultiple": "相当于投注",
+    "combWins": "{n} 次梳子赢奖",
+    "noCombWins": "没有梳子赢奖",
+    "capNote": "已达最高奖 · 剩余旋转不再进行",
+    "toCelebration": "进入庆祝画面"
+  },
+  "info": {
+    "windowTitle": "Ebru · 游戏说明",
+    "how": {
+      "title": "玩法说明",
+      "s1": "<b>选择投注。</b>点击 − 和 + 可每次调整一档；点击投注金额可展开所有档位。“{max}”会选中余额可承受的最高档位。",
+      "s2": "<b>旋转。</b>点击墨水按钮或按空格键。每局费用（开启机会 ×2 时为投注的 {multiple} 倍）只会从余额中扣除一次。",
+      "s3": "<b>组成簇集。</b>在 7 × 7 的水槽中，横向或纵向相邻的 <b>5 个或更多同色</b>墨滴即可赢奖；簇集越大，赔付档位越高。",
+      "s4": "<b>连锁。</b>中奖的簇集融入水中，上方墨滴落下，新墨滴填补空位；直到没有簇集为止。",
+      "s5": "<b>梳子。</b>连锁结束后——即使没有中奖——金梳都会划过水面：每一行按各自的幅度向左或向右滑动，并可能形成新的簇集。每次旋转最多划过 {passes} 次。",
+      "s6": "<b>结果。</b>整局在旋转开始前就已由引擎决定，动画只是回放这一结果。在整局（所有消除掉落、梳子划过和免费旋转）结束前，旋转按钮保持锁定；可使用“{quick}/{turbo}”设置来加快节奏。速度设置、点按庆祝计数器、隐藏标签页或离开页面都不会改变赔付；每局始终只会以引擎的赔付结算一次。",
+      "note": "演示额度没有价值，不会带来 SOL、代币或奖励。游戏在浏览器中使用本地随机数运行，没有 VRF 证明。"
+    },
+    "pay": {
+      "title": "赔付表",
+      "lead": "横向或纵向相邻的 <b>5 个或更多同色</b>墨滴组成一个簇集。大号数字是投注 <b>{bet}</b> 时的税前 DEMO 金额；下方的倍数是投注的倍数。同一棋盘上的所有簇集分别赔付。",
+      "clustersAria": "簇集赔付",
+      "fullSummary": "所有簇集大小（12 档）",
+      "fullCaption": "按颜色和簇集大小列出的赔付（投注的倍数）",
+      "colour": "颜色",
+      "scatterTitle": "{name} · 散布符号赔付",
+      "combs5": "5 把以上金梳",
+      "combs4": "4 把金梳",
+      "combs3": "3 把金梳",
+      "scatterText": "基础旋转的最终棋盘上出现 3 把或更多金梳时，即可赔付并触发 <b>{spins} 次免费旋转</b>（郁金香水拓）。金梳不会融入水中，只会落下并随梳子滑动。",
+      "dropText": "它本身不属于任何簇集；落下的地方会扩散墨汁：在 4 个相邻格中选出最常见的颜色，把相邻格和自己都染成该颜色。详情见“{features}”页。",
+      "maxTitle": "最高奖 {n}×",
+      "maxText": "在当前投注下为 <b>{amount}</b>。本局总额达到该上限时，本局立即结束，剩余的免费旋转不再进行。"
+    },
+    "features": {
+      "title": "特色功能",
+      "combTitle": "梳子划过",
+      "combText": "每条消除掉落连锁结束后，梳子会划过棋盘一次：第 r 行循环位移 <b>round(A · sin(φ + r · k))</b> 列（从右侧移出的从左侧进入）。每次划过时 A 为 1、2 或 3（{weights}）；φ 和 k 也在每次划过时重新抽取。若位移形成新的簇集，连锁继续；否则本次旋转结束。每次旋转最多划过 {passes} 次。符号只会交换位置，不会增加或删除。",
+      "combExample": "示例：A = 2，φ = 0，k = 8·2π/64 → 各行位移 {shifts}。",
+      "combExampleAria": "梳子划过示例，每行的位移",
+      "combRow": "第 {n} 行 {shift}",
+      "dropTitle": "{name}",
+      "dropText": "落下的瞬间（发牌或补位时）它就会扩散墨汁：统计 4 个相邻格的颜色，选出最常见的一种（并列时随机选择；没有带色相邻格时随机取色），把带色的相邻格染成该颜色，自己也变成该颜色。金梳不会被染色。",
+      "freeTitle": "郁金香水拓（免费旋转）",
+      "freeText": "3 把以上金梳触发 {trigger} 次免费旋转。免费旋转中，每个消除的格子都会落下一个<b>颜料斑点倍数</b>：首次为 ×2，同一格每次翻倍，最高 ×{stainMax}。斑点在整个特色玩法中保留；消除掉落不会移动它们，但<b>梳子划过时，斑点与符号一起按相同幅度滑动</b>。簇集经过带斑点的格子时，其赔付会乘以其下方斑点的<b>总和</b>（先赔付，后生成新斑点）。免费旋转中 3 把以上金梳可增加 {retrigger} 次旋转；单局最多 {max} 次旋转。免费旋转中烟灰墨滴不会扩散（只有没有带色相邻格的大师墨滴才会随机选取该颜色）。",
+      "stainsAria": "斑点倍数",
+      "cumTitle": "累计赢额",
+      "cumText": "赢额计数器在整局中不会清零：簇集、梳子赢奖、散布赔付和所有免费旋转都累计在同一个总额中。免费旋转局总会以“{screen}”画面收尾。",
+      "tiersTitle": "奖励等级与倍数提示",
+      "tiersText": "当本局总额达到基础投注的 <b>10 倍</b>或以上时，会打开庆祝画面，计数器依次升级：{big} ≥10×、{mega} ≥25×、{super} ≥50×、{epic} ≥100×；达到上限的一局以{max}收尾。×10 及以上的斑点倍数会在棋盘上方以大字并伴随专属音效提示。点按屏幕会让计数器直接跳到结果，不会改变赔付。",
+      "anteTitle": "机会 ×2 · 费用 {cost}",
+      "anteText": "开启后，每次旋转的费用为投注的 <b>{multiple} 倍</b>，基础游戏中出现金梳的几率更高：免费旋转几率约为原来的 2 倍（{ante} / {standard}）。赔付仍按基础投注计算。开启期间无法购买奖励。",
+      "buyTitle": "购买奖励 · 价格 {price}",
+      "buyText": "支付投注的 <b>100 倍</b>，本局至少以 3 把金梳开始，并保证 {spins} 次免费旋转。购买需通过确认窗口完成，使用独立的 RTP（{rtp}），且不能与自动旋转同时使用。"
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "理论回报率（RTP）",
+      "caption": "各模式的理论回报率",
+      "mode": "模式",
+      "cost": "费用",
+      "ci": "95% 置信区间",
+      "feature": "特色触发",
+      "everyRound": "每局",
+      "method": "每种模式各自进行了 {millions} 百万局模拟（引擎 <code>ebru-ink-1</code>）。RTP 按实际支付的费用计算。中奖频率（基础旋转）：标准 {hit}，机会 ×2 {hitAnte}。波动性（以费用为单位的标准差）：标准 {sdStandard}，购买 {sdBuy}。",
+      "note": "模拟结果仅为估计值，<b>未经认证</b>；由于分布存在重尾，置信区间可能偏乐观。短时间游戏的结果可能与 RTP 相差很大。演示额度<b>没有价值</b>。"
+    },
+    "limits": {
+      "title": "投注与赢奖上限",
+      "range": "投注范围",
+      "levels": "档位",
+      "current": "当前投注",
+      "currentValue": "{bet} · 机会 ×2 {ante} · 购买 {buy}",
+      "max": "最高奖",
+      "maxValue": "投注的 {n} 倍 · 当前投注下为 {amount}",
+      "p1": "达到最高奖的一局立即结束，剩余的免费旋转不再进行。赔付始终按基础投注计算，不足一分的部分向下取整。",
+      "p2": "余额不足以支付的档位和模式无法选择。一局只对应一次预留和一次赔付；同一时间只能进行一局。"
+    },
+    "keys": {
+      "title": "按键",
+      "heading": "键盘",
+      "space": "空格",
+      "spaceText": "开始旋转（{settings} → “{option}”）。本局进行中不会跳过旋转，只会加快免费旋转画面和庆祝计数器。",
+      "enterText": "按下当前聚焦的按钮。",
+      "escText": "关闭打开的窗口（会话提醒除外）。",
+      "tabText": "在各控件之间切换；焦点始终可见。",
+      "arrowsText": "在此说明窗口中切换页面；在设置选项中切换选项。",
+      "pageText": "在说明页面之间切换。",
+      "note": "屏幕阅读器会播报每一步（“{example}”、梳子划过、本局结果）；棋盘会按 7×7 表格朗读，带斑点的格子会连同倍数一起朗读。符号除颜色外还通过形状区分（郁金香、康乃馨、哈蒂普花、叶子、孔雀眼、雏菊、玫瑰、卵石）。“减少动态效果”偏好会把梳子缩短为短暂滑动，并关闭粒子和震动。"
+    },
+    "fault": {
+      "title": "故障条款",
+      "p1": "<b>发生故障时，所有受影响的游戏和赔付均无效。</b>如出现软件、浏览器或设备故障，以本局记录为准；屏幕上显示但与引擎记录不符的金额无效。",
+      "p2": "本游戏仅使用演示额度。DEMO 没有价值，无法兑换为金钱或代币；发生故障时，演示余额和会话记录可能会被更正或重置。",
+      "p3": "由于结果在旋转前就已确定，动画中断、标签页隐藏或离开页面都不会改变结果；本局仍会以引擎的赔付结算一次。"
+    }
+  }
+}

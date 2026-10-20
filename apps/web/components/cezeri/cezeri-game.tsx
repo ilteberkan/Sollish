@@ -2,21 +2,24 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { useRouter } from 'next/navigation';
 import { CEZERI_MAX_RESPINS, CEZERI_RTP, playCezeriRound, type CezeriMode, type CezeriPos, type CezeriRound } from '@sollish/protocol';
-import { demoNumber } from '@/lib/demo';
+import { DEMO_START_CENTS } from '@/lib/demo';
+import { useRgsText } from '@/lib/use-rgs-text';
+import { useFormat, useT } from '@/lib/i18n/client';
+import { richText } from '../game-rich';
+import type { Locale } from '@/lib/i18n/config';
 import {
-  buildCezeriTimeline, cezeriCents, cezeriFinalBoard, cezeriHistoryDetail, cezeriMoney, cezeriTimes, cezeriWinAnnouncement,
+  buildCezeriTimeline, cezeriCents, cezeriFinalBoard, cezeriHistoryDetail, cezeriMoney, cezeriTimes,
   type CezeriEvent, type CezeriMeter, type CezeriTimeline,
 } from '@/lib/cezeri-timeline';
 import { WIN_TIER_INFO, countUpSchedule, multiplierCalloutTier, type CelebrationLevel, type CountUpSchedule, type WinTier } from '@/lib/slot-kit/win-tiers';
 import { TimelinePlayer } from '@/lib/slot-kit/timeline-player';
-import { AUTOPLAY_STOP_REASONS, autoplayNetLossCents, createAutoplay, type AutoplayConfig, type AutoplayState } from '@/lib/slot-kit/autoplay';
-import { formatAmount, formatDemo, formatSignedDemo } from '@/lib/slot-kit/bet';
+import { autoplayNetLossCents, createAutoplay, type AutoplayConfig, type AutoplayState, type AutoplayStopCode } from '@/lib/slot-kit/autoplay';
 import { SPIN_SPEEDS, type SpinSpeed } from '@/lib/slot-kit/settings';
 import {
   CEZERI_AUTOPLAY_GAP, CEZERI_BET_LADDER, CEZERI_COST_MODES, CEZERI_DEFAULT_BET_CENTS, CEZERI_MAX_BET_CENTS, CEZERI_MIN_BET_CENTS,
-  cezeriAutoplayAfterRound, cezeriAutoplayBeforeSpin, cezeriBuyBlockReason, cezeriCost, cezeriLedgerLimits, cezeriRoundId, cezeriRtp, cezeriTimelineOptions,
+  cezeriAutoplayAfterRound, cezeriAutoplayBeforeSpin, cezeriBuyBlock, cezeriCost, cezeriLedgerLimits, cezeriRoundId, cezeriRtp, cezeriTimelineOptions,
 } from '@/lib/cezeri-controls';
-import { markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
+import { markRoundShown, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
 import { CEZERI_ENGINE } from '@/lib/slot-engines/cezeri';
 import { localSourceFor, useRoundSource } from '@/lib/use-round-source';
 import { useCezeriSound } from '@/lib/slot-audio/use-cezeri-sound';
@@ -37,7 +40,7 @@ import { CZ_BOUNDS, CZ_RIM_R, cezeriRotateTiming, polar, sliceAngle } from './ge
 import { CezeriLogo } from './logo';
 import { CezeriReservoir } from './meter';
 import { CezeriScene, type CezeriSceneHandle } from './scene';
-import { CEZERI_SYMBOL_LABELS, CezeriSymbolArt, CezeriSymbolSprites } from './symbols';
+import { CezeriSymbolArt, CezeriSymbolSprites, useCezeriSymbolLabels } from './symbols';
 import styles from './cezeri-game.module.css';
 
 /* Lifecycle: entropy -> engine cezeri-gears-1 resolves the whole round (bet + mode) -> one reservation of the mode cost ->
@@ -70,9 +73,9 @@ type Chain = { round: number; capped: boolean } | null;
 type ModalId = 'settings' | 'info' | 'autoplay' | 'buy' | null;
 type Boot = { phase: 'loading' | 'ready' | 'done'; progress: number };
 
-const ENTROPY_ERROR = 'Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.';
-const CALLOUT_TAGS: Record<WinTier, string> = { 0: 'Göbek', 1: 'Güçlü göbek', 2: 'Coşkun göbek', 3: 'Kudretli göbek', 4: 'Efsane göbek' };
-const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hızlı', turbo: 'Turbo' };
+const CALLOUT_KEY = { 0: 'callout.tier0', 1: 'callout.tier1', 2: 'callout.tier2', 3: 'callout.tier3', 4: 'callout.tier4' } as const satisfies Record<WinTier, string>;
+const SPEED_KEY = { normal: 'settings.speedNormal', quick: 'settings.speedQuick', turbo: 'settings.speedTurbo' } as const satisfies Record<SpinSpeed, string>;
+type StopCode = AutoplayStopCode | 'server-failed' | 'spin-failed' | 'quit';
 const ZERO: CezeriMeter = { spin: 0, total: 0 };
 const BET_KEY = 'sollish:cezeri:bet';
 /** The local DEMO source over cezeri's engine only (lib/slot-engines/cezeri.ts); the other games' engines are not in this route. */
@@ -100,24 +103,24 @@ function realityIntervalOverride(): number | undefined {
 }
 
 /** Count-up number that writes its own text node (no React re-render per frame). */
-function CountUp({ cents, duration }: { cents: number; duration: number }) {
+function CountUp({ cents, duration, locale }: { cents: number; duration: number; locale: Locale }) {
   const node = useRef<HTMLSpanElement>(null);
   const shown = useRef(cents);
-  const [initial] = useState(() => cezeriMoney(cents));
+  const [initial] = useState(() => cezeriMoney(cents, locale));
   useEffect(() => {
     const el = node.current; if (!el) return;
     const from = shown.current, to = cents;
-    if (duration <= 0 || from === to || typeof requestAnimationFrame === 'undefined') { shown.current = to; el.textContent = cezeriMoney(to); return; }
+    if (duration <= 0 || from === to || typeof requestAnimationFrame === 'undefined') { shown.current = to; el.textContent = cezeriMoney(to, locale); return; }
     const start = performance.now(); let frame = 0;
     const step = (now: number) => {
       const p = Math.min(1, Math.max(0, (now - start) / duration));
       shown.current = Math.round(from + (to - from) * (1 - (1 - p) ** 3));
-      el.textContent = cezeriMoney(shown.current);
+      el.textContent = cezeriMoney(shown.current, locale);
       if (p < 1) frame = requestAnimationFrame(step);
     };
     frame = requestAnimationFrame(step);
-    return () => { cancelAnimationFrame(frame); shown.current = to; el.textContent = cezeriMoney(to); };
-  }, [cents, duration]);
+    return () => { cancelAnimationFrame(frame); shown.current = to; el.textContent = cezeriMoney(to, locale); };
+  }, [cents, duration, locale]);
   return <span ref={node}>{initial}</span>;
 }
 
@@ -169,6 +172,13 @@ const MemoScene = memo(CezeriScene);
 export function CezeriGame() {
   const { reserveDemo, settleDemo, recordRemote, setActiveDemo, demoBalance, resetDemoBalance } = useProduct();
   const router = useRouter();
+  const t = useT('cezeri');
+  const tk = useT('slotKit');
+  const tc = useT('common');
+  const format = useFormat();
+  const rgs = useRgsText();
+  const loc = format.locale;
+  const symbolLabels = useCezeriSymbolLabels();
   const { settings, update: updateSettings, reset: resetSettings } = useSlotSettings('cezeri');
   const [realityMs] = useState(realityIntervalOverride);
   const session = useSession(realityMs ? { realityIntervalMs: realityMs } : {});
@@ -314,16 +324,17 @@ export function CezeriGame() {
     if (current && !current.settled) settleRef.current(current);
   }, []);
 
-  const stopAutoplay = useCallback((reason: string, tone: Toast['tone'] = 'warn') => {
+  const stopAutoplay = useCallback((code: StopCode, tone: Toast['tone'] = 'warn') => {
     const state = autoRef.current;
     if (!state) return;
     autoRef.current = null;
     setAuto(null);
     sound.autoplay(false);
     const net = -autoplayNetLossCents(state);
-    showToast(`Otomatik oyun durdu: ${reason}. ${state.spinsDone} tur, net ${formatSignedDemo(net)}.`, tone);
-    setAnnounce(`Otomatik oyun durdu: ${reason}.`);
-  }, [showToast, sound]);
+    const reason = code === 'server-failed' ? t('autoplay.serverFailed') : code === 'spin-failed' ? t('autoplay.spinFailed') : code === 'quit' ? t('autoplay.quit') : tk(`autoplay.reasons.${code}`);
+    showToast(t('toast.autoplayStopped', { reason, spins: state.spinsDone, net: format.signedDemo(net) }), tone);
+    setAnnounce(t('toast.autoplayStoppedShort', { reason }));
+  }, [showToast, sound, t, tk, format]);
 
   const finishRound = useCallback((current: LiveRound) => {
     settle(current);
@@ -336,7 +347,7 @@ export function CezeriGame() {
     sound.scene('base');
     if (current.id === null) {
       setReplaying(null);
-      setAnnounce(`Tekrar bitti: ${demoNumber(round.payoutCents)} DEMO, ${cezeriTimes(round.totalHundredths)}×. Bakiye değişmedi.`);
+      setAnnounce(t('announce.replayDone', { amount: format.number(round.payoutCents / 100), times: cezeriTimes(round.totalHundredths, loc) }));
       return;
     }
     const state = autoRef.current;
@@ -345,8 +356,8 @@ export function CezeriGame() {
       autoRef.current = next;
       setAuto(next);
     }
-    setAnnounce(round.payoutCents > 0 ? `Tur bitti. Toplam kazanç ${demoNumber(round.payoutCents)} DEMO, ${cezeriTimes(round.totalHundredths)}×.` : 'Tur bitti. Kazanç yok.');
-  }, [settle, sound]);
+    setAnnounce(round.payoutCents > 0 ? t('announce.roundEnd', { amount: format.number(round.payoutCents / 100), times: cezeriTimes(round.totalHundredths, loc) }) : t('announce.roundEndNone'));
+  }, [settle, sound, t, format, loc]);
 
   /* ---------------------------------------------------------------- presentation helpers */
   /** Board-unit point (1000 × 1000 board space) -> px inside the stage. */
@@ -386,8 +397,8 @@ export function CezeriGame() {
     setCard({ kind: 'big', schedule, bet: betCents, at, dur });
     setMood('bigwin');
     sound.scene('bigwin');
-    setAnnounce(`${WIN_TIER_INFO[schedule.finalLevel].title}: ${demoNumber(cezeriCents(betCents, schedule.totalHundredths))} DEMO, ${cezeriTimes(schedule.totalHundredths)}×.`);
-  }, [sound]);
+    setAnnounce(t('announce.celebration', { title: tk(`winTier.${WIN_TIER_INFO[schedule.finalLevel].id}.title`), amount: format.number(cezeriCents(betCents, schedule.totalHundredths) / 100), times: cezeriTimes(schedule.totalHundredths, loc) }));
+  }, [sound, t, tk, format, loc]);
   const onCelebrationLevel = useCallback((level: CelebrationLevel, first: boolean, remainingMs: number) => {
     const { lite } = celebrateFx.current;
     if (level === 5) sound.maxWin(); else sound.bigWin(level as 1 | 2 | 3 | 4);
@@ -422,11 +433,11 @@ export function CezeriGame() {
           if (!reduced) { b?.jolt(1); scene.current?.strike(); }
           void f?.hubTick(event.value);
           setChain(prev => ({ round: event.round, capped: prev?.capped ?? false }));
-          setAnnounce(`Göbek +1: ×${event.value}. Bütün halkalar yeniden dönüyor (${event.round}. yeniden dönüş).`);
+          setAnnounce(t('announce.hubRespin', { value: event.value, round: event.round }));
         } else {
           void b?.hub(event.value, 'spin');
           sound.hubReveal(event.value);
-          setAnnounce(event.carried > 0 ? `Göbek ×${event.value} (önceki dönüşten ×${event.carried} korundu).` : `Göbek ×${event.value}.`);
+          setAnnounce(event.carried > 0 ? t('announce.hubCarried', { value: event.value, carried: event.carried }) : t('announce.hub', { value: event.value }));
         }
         if (event.calloutTier > 0) showCallout(event.value, free, lite, Math.max(1300, Math.min(2200, event.dur * 3)));
         break;
@@ -459,8 +470,8 @@ export function CezeriGame() {
         const deg = sliceAngle(event.spoke);
         const end = polar(Math.min(CZ_RIM_R + 40, CZ_BOUNDS[event.startRing + event.length]! + 70), deg);
         const p = boardPoint(end.x, end.y);
-        floatLabel(p.x, p.y, `+${cezeriMoney(cezeriCents(betCents, event.winHundredths))}`, styles.floatLabel, reduced ? 800 : 1300, reduced);
-        setAnnounce(cezeriWinAnnouncement(event, CEZERI_SYMBOL_LABELS));
+        floatLabel(p.x, p.y, `+${cezeriMoney(cezeriCents(betCents, event.winHundredths), loc)}`, styles.floatLabel, reduced ? 800 : 1300, reduced);
+        setAnnounce(t('announce.win', { spoke: event.spoke + 1, length: event.length, name: symbolLabels[event.symbol as keyof typeof symbolLabels] ?? event.symbol, extended: event.paidBefore > 0 ? 'yes' : 'no', hub: event.hub, times: cezeriTimes(event.winHundredths, loc) }));
         break;
       }
       case 'lock':
@@ -469,17 +480,17 @@ export function CezeriGame() {
         if (!reduced) b?.jolt(0.8);
         sound.gearLock(event.newHeld.length, event.respin);
         if (!event.respin) setChain(prev => (prev ? { ...prev, capped: true } : { round: 0, capped: true }));
-        setAnnounce(`Dişli Kilidi: ${event.newHeld.length} dilim kilitlendi, toplam ${event.held.length}.${event.respin ? ' Halkalar yeniden dönecek.' : ''}`);
+        setAnnounce(t('announce.lock', { count: event.newHeld.length, total: event.held.length, respin: event.respin ? 'yes' : 'no' }));
         break;
       case 'chain-end':
         sound.chainEnd(event.respins, event.chainCapped, event.heldSlices);
         void b?.release().then(() => { if (live.current === current) b?.clearWins(); });
         if (event.respins >= 2) {
-          setBanner({ key: ++bannerKey.current, text: event.chainCapped || event.respins >= CEZERI_MAX_RESPINS ? `Tam zincir · ${event.respins} dönüş · göbek ×${event.hub}` : `${event.respins} yeniden dönüş · göbek ×${event.hub}`, tone: 'gold' });
+          setBanner({ key: ++bannerKey.current, text: event.chainCapped || event.respins >= CEZERI_MAX_RESPINS ? t('banner.fullChain', { respins: event.respins, hub: event.hub }) : t('banner.respins', { respins: event.respins, hub: event.hub }), tone: 'gold' });
           if (!lite) scene.current?.glow(0.6);
         }
         setChain(null);
-        if (event.chainHundredths === 0 && event.respins === 0) setAnnounce('Bu dönüşte ışın kazancı yok.');
+        if (event.chainHundredths === 0 && event.respins === 0) setAnnounce(t('announce.noSpokeWin'));
         break;
       case 'scatter': {
         if (event.forged.length) {
@@ -492,23 +503,23 @@ export function CezeriGame() {
         if (event.retrigger) {
           sound.retrigger();
           setFreeInfo(prev => (prev ? { ...prev, left: event.freeSpinsLeft } : prev));
-          setBanner({ key: ++bannerKey.current, text: `+${event.awarded} bedava dönüş`, tone: 'water' });
-          setAnnounce(`${event.count} Su Kabı: ${event.awarded} bedava dönüş eklendi.`);
+          setBanner({ key: ++bannerKey.current, text: t('banner.extraSpins', { awarded: event.awarded }), tone: 'water' });
+          setAnnounce(t('announce.vesselsRetrigger', { count: event.count, awarded: event.awarded }));
         } else if (event.awarded > 0) {
           sound.featureTrigger();
-          setAnnounce(`${event.count} Su Kabı: Fil Saati kazanıldı.`);
+          setAnnounce(t('announce.vesselsTrigger', { count: event.count }));
         }
         break;
       }
       case 'scatter-pay':
         setMeterDur(500); setMeter(event.meter);
-        setBanner({ key: ++bannerKey.current, text: `${event.count} Su Kabı · +${cezeriMoney(cezeriCents(betCents, event.hundredths))} DEMO`, tone: 'gold' });
+        setBanner({ key: ++bannerKey.current, text: t('banner.scatterPay', { count: event.count, money: cezeriMoney(cezeriCents(betCents, event.hundredths), loc) }), tone: 'gold' });
         break;
       case 'free-intro':
         setCard({ kind: 'intro', awarded: event.awarded, at: event.at, dur: event.dur });
         sound.freeSpinsIntro();
         setMood('feature');
-        setAnnounce(`Fil Saati başlıyor: ${event.awarded} bedava dönüş kazandın.`);
+        setAnnounce(t('announce.freeIntro', { awarded: event.awarded }));
         break;
       case 'free-mode':
         setCard(null); b?.showVessels(null); setFree(event.on); setFreeInfo({ number: 0, left: event.freeSpinsLeft }); setReservoir(0);
@@ -517,12 +528,12 @@ export function CezeriGame() {
       case 'reservoir':
         setReservoir(event.level);
         sound.reservoirFill(event.level);
-        if (event.level >= 3) setAnnounce('Su haznesi doldu.');
+        if (event.level >= 3) setAnnounce(t('announce.reservoirFull'));
         break;
       case 'falcon':
         sound.falconFlight();
         void f?.falcon(event.ring, event.order, { speed: event.speed });
-        setAnnounce(`Otomat şahin geldi: halka ${event.ring + 1}, ${event.order.length} Altın Dişli.`);
+        setAnnounce(t('announce.falcon', { ring: event.ring + 1, count: event.order.length }));
         break;
       case 'falcon-drop':
         b?.setPinned(event.pinned, [[event.ring, event.slice] as CezeriPos]);
@@ -538,10 +549,10 @@ export function CezeriGame() {
           const m = meterRef.current, stage = stageRef.current;
           if (m && stage && event.winHundredths > 0) {
             const a = m.getBoundingClientRect(), s = stage.getBoundingClientRect();
-            floatLabel(a.left - s.left + a.width / 2, a.top - s.top - 8, `+${cezeriMoney(cezeriCents(betCents, event.winHundredths))}`, styles.floatSpin, reduced ? 900 : 1400, reduced);
+            floatLabel(a.left - s.left + a.width / 2, a.top - s.top - 8, `+${cezeriMoney(cezeriCents(betCents, event.winHundredths), loc)}`, styles.floatSpin, reduced ? 900 : 1400, reduced);
           }
-          setAnnounce(event.winHundredths > 0 ? `Bedava dönüş ${cezeriTimes(event.winHundredths)}× kazandırdı. Toplam ${cezeriTimes(event.meter.total)}×, göbek ×${event.hub}.` : `Bedava dönüşte kazanç yok. Göbek ×${event.hub} korunuyor.`);
-        } else if (event.winHundredths === 0) setAnnounce('Kazanç yok.');
+          setAnnounce(event.winHundredths > 0 ? t('announce.freeSpinWin', { times: cezeriTimes(event.winHundredths, loc), total: cezeriTimes(event.meter.total, loc), hub: event.hub }) : t('announce.freeSpinNone', { hub: event.hub }));
+        } else if (event.winHundredths === 0) setAnnounce(t('announce.noWin'));
         else if (event.winHundredths >= 300 && event.winHundredths < 1000) sound.nice();
         break;
       }
@@ -550,7 +561,7 @@ export function CezeriGame() {
         if (event.totalHundredths >= 200) sound.totalWinFanfare();
         const m = meterRef.current;
         if (!reduced) m?.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.1)', offset: 0.3 }, { transform: 'scale(.98)', offset: 0.65 }, { transform: 'scale(1)' }], { duration: 620, easing: 'ease-out' });
-        setAnnounce(`Toplam kazanç ${demoNumber(cezeriCents(betCents, event.totalHundredths))} DEMO, ${cezeriTimes(event.totalHundredths)}×.`);
+        setAnnounce(t('announce.totalWin', { amount: format.number(cezeriCents(betCents, event.totalHundredths) / 100), times: cezeriTimes(event.totalHundredths, loc) }));
         break;
       }
       case 'free-outro':
@@ -559,7 +570,7 @@ export function CezeriGame() {
         setMood('base'); setReservoir(0);
         b?.setPinned([]);
         if (!lite) scene.current?.glow(0.8);
-        setAnnounce(`Fil Saati bitti. Toplam: ${demoNumber(cezeriCents(betCents, event.totalHundredths))} DEMO, ${event.spins} dönüş, en yüksek göbek ×${event.topHub}.`);
+        setAnnounce(t('announce.freeOutro', { amount: format.number(cezeriCents(betCents, event.totalHundredths) / 100), spins: event.spins, topHub: event.topHub }));
         break;
       case 'big-win':
         openCelebration(event.schedule, betCents, event.at, event.dur, reduced, lite);
@@ -571,7 +582,7 @@ export function CezeriGame() {
         finishRound(current);
         break;
     }
-  }, [boardPoint, finishRound, floatLabel, free, openCelebration, showCallout, sound]);
+  }, [boardPoint, finishRound, floatLabel, free, openCelebration, showCallout, sound, t, format, loc, symbolLabels]);
   const handleRef = useRef(handle); handleRef.current = handle;
 
   /* ---------------------------------------------------------------- starting rounds */
@@ -603,21 +614,21 @@ export function CezeriGame() {
     pendingRemote.current = true;
     setError(''); setPhase('playing'); setActiveDemo(true); setReplaying(null);
     setRemoteBalance(balanceBefore - cost);
-    setAnnounce(`Dönüş sunucuya gönderildi, ${demoNumber(cost)} DEMO.`);
+    setAnnounce(t('announce.sentToServer', { amount: format.number(cost / 100) }));
     source.client.play('cezeri', betCents, roundMode).then(play => {
       pendingRemote.current = false;
       const current = makeLive({ id: `remote:${play.receipt.roundId}`, replayOf: null, bet: betCents, cost: play.receipt.costCents, mode: roundMode, balanceBefore, round: play.round, remote: { receipt: play.receipt, balanceAfter: play.receipt.balanceCents } });
       if (!mounted.current) { settleRef.current(current); return; }
-      begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Fil Saati başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+      begin(current, roundMode === 'buy' ? t('announce.bonusBought', { amount: format.number(cost / 100) }) : t('announce.spinStarted', { amount: format.number(cost / 100) }));
     }, (failure: unknown) => {
       pendingRemote.current = false;
       setActiveDemo(false);
       if (!mounted.current) return;
-      setPhase('idle'); setError(rgsErrorMessage(failure)); sound.denied();
-      if (autoRef.current) stopAutoplay('Sunucu turu başlatılamadı');
+      setPhase('idle'); setError(rgs.error(failure)); sound.denied();
+      if (autoRef.current) stopAutoplay('server-failed');
       source.client.state().then(state => { if (mounted.current) setRemoteBalance(state.balanceCents); }, () => undefined);
     });
-  }, [bet, begin, makeLive, setActiveDemo, sound, stopAutoplay]);
+  }, [bet, begin, makeLive, setActiveDemo, sound, stopAutoplay, t, format, rgs]);
 
   const startRound = useCallback((kind: 'spin' | 'buy'): boolean => {
     if ((live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
@@ -626,7 +637,7 @@ export function CezeriGame() {
     const cost = cezeriCost(bet, roundMode);
     const balanceBefore = balanceRef.current;
     if (cost > balanceBefore) {
-      setError(`Bakiye yetersiz: bu ${roundMode === 'buy' ? 'satın alma' : 'dönüş'} ${formatDemo(cost)}. Bahsi düşür veya bakiyeyi yenile.`);
+      setError(t('errors.insufficient', { kind: roundMode, cost: format.demo(cost) }));
       sound.denied();
       return false;
     }
@@ -634,16 +645,16 @@ export function CezeriGame() {
     let round: CezeriRound;
     try {
       round = localRoundSource.resolve('cezeri', bet, roundMode);
-    } catch { setError(ENTROPY_ERROR); return false; }
+    } catch { setError(t('errors.entropy')); return false; }
     let id: string | null;
-    try { id = reserveDemo(cost, cezeriLedgerLimits(bet, roundMode)); } catch { setError(ENTROPY_ERROR); return false; }
-    if (!id) { setError('Yeterli demo kredin yok veya devam eden bir demo var.'); sound.denied(); return false; }
+    try { id = reserveDemo(cost, cezeriLedgerLimits(bet, roundMode)); } catch { setError(t('errors.entropy')); return false; }
+    if (!id) { setError(t('errors.noCredit')); sound.denied(); return false; }
     setActiveDemo(true);
     const current = makeLive({ id, replayOf: null, bet, cost, mode: roundMode, balanceBefore, round, remote: null });
     setReplaying(null);
-    begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Fil Saati başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+    begin(current, roundMode === 'buy' ? t('announce.bonusBought', { amount: format.number(cost / 100) }) : t('announce.spinStarted', { amount: format.number(cost / 100) }));
     return true;
-  }, [ante, bet, begin, booting, gated, makeLive, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote]);
+  }, [ante, bet, begin, booting, gated, makeLive, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote, t, format]);
 
   // Reload recovery (remote): the last server round of this game that this tab did not finish showing is shown again.
   const recoveredOnce = useRef(false);
@@ -658,8 +669,8 @@ export function CezeriGame() {
     });
     setActiveDemo(true);
     setRemoteBalance(current.balanceBefore - current.cost);
-    begin(current, `Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı (${demoNumber(receipt.payoutCents)} DEMO).`);
-  }, [sourceView, booting, begin, makeLive, setActiveDemo]);
+    begin(current, t('announce.recovered', { amount: format.number(receipt.payoutCents / 100) }));
+  }, [sourceView, booting, begin, makeLive, setActiveDemo, t, format]);
 
   /** Remote only: publish the signed replay of a server round and hand out its link ("Kazancını paylaş"). */
   const shareRound = useCallback((record: DemoRecord) => {
@@ -669,22 +680,22 @@ export function CezeriGame() {
       const url = `${window.location.origin}${path}`;
       let copied = false;
       try { await navigator.clipboard.writeText(url); copied = true; } catch { /* clipboard blocked: show the link */ }
-      showToast(copied ? `Paylaşım bağlantısı kopyalandı: ${url}` : `Paylaşım bağlantısı: ${url}`);
-    }, (failure: unknown) => showToast(`Paylaşılamadı: ${rgsErrorMessage(failure)}`, 'warn'));
-  }, [remote, showToast]);
+      showToast(copied ? t('toast.shareCopied', { url }) : t('toast.shareLink', { url }));
+    }, (failure: unknown) => showToast(t('toast.shareFailed', { error: rgs.error(failure) }), 'warn'));
+  }, [remote, showToast, t, rgs]);
   const startRef = useRef(startRound); startRef.current = startRound;
 
   const replay = useCallback((record: DemoRecord) => {
     const meta = record.cezeri;
     if (!meta || (live.current && !live.current.settled) || autoRef.current || booting) return;
     let round: CezeriRound;
-    try { round = playCezeriRound(meta.seedHex, meta.betCents, meta.mode); } catch { showToast('Bu tur tekrar oynatılamadı.', 'warn'); return; }
-    if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast('Tekrar doğrulanamadı: kayıt motorla uyuşmuyor.', 'warn'); return; }
+    try { round = playCezeriRound(meta.seedHex, meta.betCents, meta.mode); } catch { showToast(t('toast.replayFailed'), 'warn'); return; }
+    if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast(t('toast.replayMismatch'), 'warn'); return; }
     const current = makeLive({ id: null, replayOf: record.id, bet: meta.betCents, cost: meta.costCents, mode: meta.mode, balanceBefore: balanceRef.current, round, remote: null });
     setReplaying({ recordId: record.id, seed: meta.seedHex });
     stageRef.current?.scrollIntoView({ block: 'start' });
-    begin(current, `Tekrar oynatılıyor: tur ${cezeriRoundId(meta.seedHex)}. Bakiye değişmez.`);
-  }, [begin, booting, makeLive, showToast]);
+    begin(current, t('announce.replaying', { id: cezeriRoundId(meta.seedHex) }));
+  }, [begin, booting, makeLive, showToast, t]);
 
   /** Tap on a hold screen: the first tap on a celebration finishes the count-up, the next closes. Never touches a result. */
   const advanceHold = useCallback(() => {
@@ -753,8 +764,8 @@ export function CezeriGame() {
     setAuto(state);
     setModal(null);
     sound.unlock(); sound.autoplay(true);
-    showToast(`Otomatik oyun: ${config.spins} tur, kayıp limiti ${formatDemo(config.lossLimitCents)}.`);
-  }, [busy, gated, showToast, sound]);
+    showToast(t('toast.autoplayStarted', { spins: config.spins, limit: format.demo(config.lossLimitCents) }));
+  }, [busy, gated, showToast, sound, t, format]);
 
   const realityDue = session.realityDue;
   useEffect(() => {
@@ -763,14 +774,14 @@ export function CezeriGame() {
     const timer = window.setTimeout(() => {
       const state = autoRef.current; if (!state) return;
       const decision = cezeriAutoplayBeforeSpin(state, { balanceCents: balanceRef.current, betCents: bet, ante, tabHidden: document.hidden });
-      if (!decision.continue) { stopAutoplay(decision.reason, decision.code === 'completed' ? 'info' : 'warn'); return; }
-      if (!startRef.current('spin')) stopAutoplay('Dönüş başlatılamadı');
+      if (!decision.continue) { stopAutoplay(decision.code, decision.code === 'completed' ? 'info' : 'warn'); return; }
+      if (!startRef.current('spin')) stopAutoplay('spin-failed');
     }, phase === 'idle' ? 0 : gap);
     return () => window.clearTimeout(timer);
   }, [auto, phase, modal, realityDue, booting, gated, bet, ante, stopAutoplay]);
 
   useEffect(() => {
-    const onVisibility = () => { if (document.hidden && autoRef.current) stopAutoplay(AUTOPLAY_STOP_REASONS['tab-hidden']); };
+    const onVisibility = () => { if (document.hidden && autoRef.current) stopAutoplay('tab-hidden'); };
     document.addEventListener('visibilitychange', onVisibility);
     return () => document.removeEventListener('visibilitychange', onVisibility);
   }, [stopAutoplay]);
@@ -797,10 +808,11 @@ export function CezeriGame() {
   const roundMode: CezeriMode = ante ? 'ante' : 'standard';
   const spinCost = cezeriCost(bet, roundMode);
   const buyPrice = cezeriCost(bet, 'buy');
-  const buyReason = cezeriBuyBlockReason({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const buyBlock = cezeriBuyBlock({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const buyReason = buyBlock ? t(`buy.block.${buyBlock.code}`, { price: format.demo(buyPrice) }) : null;
   const locked = busy || auto !== null || gated || booting || sourcePending;
   const amountCents = (h: number) => (roundBet === null ? 0 : cezeriCents(roundBet, h));
-  const boardLabel = free ? 'Cezeri Fil Saati çarkları: göbek ve 4 halka, 12 dilim' : 'Cezeri çarkları: göbek ve 4 halka, 12 dilim';
+  const boardLabel = free ? t('board.labelFree') : t('board.label');
   const boardMood = free ? 'feature' : 'base';
   const boardElement = useMemo(() => (
     <CezeriFrame mood={boardMood} spinning={spinning}>
@@ -808,11 +820,11 @@ export function CezeriGame() {
     </CezeriFrame>
   ), [boardLabel, boardMood, spinning]);
   const celebrating = card?.kind === 'big' || card?.kind === 'outro' || card?.kind === 'intro';
-  const infoPages = useMemo(() => cezeriInfoPages(bet), [bet]);
+  const infoPages = useMemo(() => cezeriInfoPages(bet, { t, tk, tc, format }), [bet, t, tk, tc, format]);
   const outOfCredit = !busy && balance < CEZERI_MIN_BET_CENTS;
   const deckWin = busy ? amountCents(meter.total) : (lastWin?.payout ?? 0);
   const speedIndex = SPIN_SPEEDS.indexOf(settings.spinSpeed);
-  const replayInfo = replaying ? `Tekrar — bakiye değişmez · tur ${cezeriRoundId(replaying.seed)}` : null;
+  const replayInfo = replaying ? t('replay.ribbon', { id: cezeriRoundId(replaying.seed) }) : null;
   const hubTier = Math.min(4, multiplierCalloutTier(hub));
 
   const openInfo = (page = 'how') => { setInfoPage(page); setModal('info'); sound.click(); };
@@ -824,25 +836,25 @@ export function CezeriGame() {
         setRemoteBalance(cents);
         const at = Date.now();
         recordRemote({ id: `remote-reset:${at}`, game: 'Cezeri', stake: 0, payout: 0, detail: 'Bakiye yenilendi (sunucu)', at, kind: 'reset' });
-        showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('Sunucu DEMO bakiyesi 1.000 DEMO olarak yenilendi.');
-      }, (failure: unknown) => showToast(rgsErrorMessage(failure), 'warn'));
+        showToast(t('toast.refilled', { amount: format.number(DEMO_START_CENTS / 100) })); setError(''); setAnnounce(t('announce.refilledRemote', { amount: format.number(DEMO_START_CENTS / 100) }));
+      }, (failure: unknown) => showToast(rgs.error(failure), 'warn'));
       return;
     }
-    if (resetDemoBalance('Cezeri')) { showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('DEMO bakiyesi 1.000 DEMO olarak yenilendi.'); }
+    if (resetDemoBalance('Cezeri')) { showToast(t('toast.refilled', { amount: format.number(DEMO_START_CENTS / 100) })); setError(''); setAnnounce(t('announce.refilled', { amount: format.number(DEMO_START_CENTS / 100) })); }
   };
   const toggleSound = () => { const muted = !settings.muted; updateSettings({ muted }); if (!muted) sound.unlock(); };
   const cycleSpeed = () => {
     const next = SPIN_SPEEDS[(speedIndex + 1) % SPIN_SPEEDS.length]!;
     updateSettings({ spinSpeed: next });
     sound.click();
-    setAnnounce(`Dönüş hızı: ${SPEED_LABELS[next]}.`);
+    setAnnounce(t('announce.speed', { speed: tk(SPEED_KEY[next]) }));
   };
   const toggleAnte = () => {
     if (locked) return;
     const next = !ante;
     setAnte(next);
     sound.click();
-    setAnnounce(next ? `Şans ×2 açık: bedava dönüş şansı ≈2 kat, maliyet ${formatDemo(cezeriCost(bet, 'ante'))}.` : `Şans ×2 kapalı: maliyet ${formatDemo(bet)}.`);
+    setAnnounce(next ? t('announce.anteOn', { cost: format.demo(cezeriCost(bet, 'ante')) }) : t('announce.anteOff', { cost: format.demo(bet) }));
   };
   const onSpinClick = () => { if (busy) return; startRound('spin'); };
   const confirmBuy = () => { if (buyReason) return; setModal(null); startRound('buy'); };
@@ -855,72 +867,72 @@ export function CezeriGame() {
       balanceCents={balance}
       maxBetCents={CEZERI_MAX_BET_CENTS}
       costMode={CEZERI_COST_MODES[roundMode]}
-      modeLabel={ante ? 'Şans ×2' : undefined}
+      modeLabel={ante ? tc('modes.ante') : undefined}
       disabled={locked}
       classNames={{ minus: styles.stepBtn, plus: styles.stepBtn, value: styles.betValue, max: styles.maxChip }}
       render={parts => (
-        <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label="Oyun kontrolleri">
+        <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label={t('deck.group')}>
           <div className={styles.cellBalance}>
-            <span className={styles.cellLabel}>Bakiye</span>
-            <strong className={styles.cellValue} data-testid="cezeri-balance">{formatAmount(balance)}<small> DEMO</small></strong>
-            <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated} aria-label="Bakiyeyi yenile"><RefillIcon /><span aria-hidden="true">Bakiyeyi yenile</span></button>
+            <span className={styles.cellLabel}>{t('deck.balance')}</span>
+            <strong className={styles.cellValue} data-testid="cezeri-balance">{format.amount(balance)}<small> DEMO</small></strong>
+            <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated} aria-label={t('deck.refill')}><RefillIcon /><span aria-hidden="true">{t('deck.refill')}</span></button>
           </div>
           <div className={styles.cellWin}>
-            <span className={styles.cellLabel}>{busy ? (replaying ? 'Tekrar' : 'Kazanç') : lastWin?.replay ? 'Tekrar kazancı' : 'Son kazanç'}</span>
-            <strong className={`${styles.cellValue} ${deckWin > 0 ? styles.cellWinOn : ''}`}>{formatAmount(deckWin)}<small> DEMO</small></strong>
+            <span className={styles.cellLabel}>{busy ? (replaying ? t('deck.winReplay') : t('deck.win')) : lastWin?.replay ? t('deck.winReplayLast') : t('deck.winLast')}</span>
+            <strong className={`${styles.cellValue} ${deckWin > 0 ? styles.cellWinOn : ''}`}>{format.amount(deckWin)}<small> DEMO</small></strong>
           </div>
           <div className={styles.cellBet}>
             {parts.label}
             {parts.value}
-            <span className={styles.costLine} data-testid="cezeri-cost">Maliyet <strong>{formatAmount(spinCost)} DEMO</strong>{ante && <em> · ×1,25</em>}</span>
+            <span className={styles.costLine} data-testid="cezeri-cost">{t('deck.cost')} <strong>{format.amount(spinCost)} DEMO</strong>{ante && <em> · {format.factor(CEZERI_COST_MODES.ante.num, CEZERI_COST_MODES.ante.den)}</em>}</span>
           </div>
           <div className={styles.areaMinus}>{parts.minus}</div>
           <div className={styles.areaPlus}>{parts.plus}</div>
           <div className={styles.areaMax}>{parts.max}</div>
           <div className={styles.areaSpin}>
             {auto ? (
-              <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay(AUTOPLAY_STOP_REASONS.cancelled, 'info')} />
+              <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay('cancelled', 'info')} />
             ) : (
               <button type="button" className={`${styles.spin} ${busy ? styles.spinning : ''}`} onClick={onSpinClick} disabled={busy || gated || booting || sourcePending}
-                aria-label="Çevir" aria-describedby="cz-spin-cost" data-locked={busy || undefined} data-testid="cezeri-spin">
+                aria-label={t('deck.spin')} aria-describedby="cz-spin-cost" data-locked={busy || undefined} data-testid="cezeri-spin">
                 <span className={styles.spinFace}><SpinSigil /></span>
                 {busy && <span className={styles.spinLock} aria-hidden="true"><LockIcon /></span>}
               </button>
             )}
-            <span id="cz-spin-cost" className="sr-only">{busy ? 'Tur sürüyor; bütün yeniden dönüşler ve bedava dönüşler bitene kadar kilitli.' : `Maliyet ${formatDemo(spinCost)}`}</span>
+            <span id="cz-spin-cost" className="sr-only">{busy ? t('deck.spinLocked') : t('deck.spinCost', { cost: format.demo(spinCost) })}</span>
           </div>
           <button type="button" className={`${styles.tool} ${styles.areaAuto}`} onClick={() => { sound.click(); setModal('autoplay'); }} disabled={locked} aria-haspopup="dialog">
-            <LoopIcon /><span>Otomatik</span>
+            <LoopIcon /><span>{t('deck.auto')}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaInfo}`} onClick={() => openInfo()} aria-haspopup="dialog" aria-label="Oyun bilgisi">
-            <InfoIcon /><span>Bilgi</span>
+          <button type="button" className={`${styles.tool} ${styles.areaInfo}`} onClick={() => openInfo()} aria-haspopup="dialog" aria-label={t('deck.infoAria')}>
+            <InfoIcon /><span>{t('deck.info')}</span>
           </button>
           <button type="button" role="switch" aria-checked={ante} className={`${styles.feature} ${styles.areaAnte} ${ante ? styles.featureOn : ''}`} onClick={toggleAnte} disabled={locked}
-            aria-label="Şans ×2" aria-describedby="cz-ante-desc">
-            <span className={styles.featureTitle}>Şans ×2</span>
-            <span className={styles.featureState}>{ante ? 'Açık' : 'Kapalı'}<span className={styles.featureFactor}> · ×1,25</span></span>
-            <span id="cz-ante-desc" className={styles.featureDesc}>Fil Saati şansı ≈2 kat</span>
+            aria-label={tc('modes.ante')} aria-describedby="cz-ante-desc">
+            <span className={styles.featureTitle}>{tc('modes.ante')}</span>
+            <span className={styles.featureState}>{ante ? t('deck.on') : t('deck.off')}<span className={styles.featureFactor}> · {format.factor(CEZERI_COST_MODES.ante.num, CEZERI_COST_MODES.ante.den)}</span></span>
+            <span id="cz-ante-desc" className={styles.featureDesc}>{t('deck.anteDesc')}</span>
           </button>
           <button type="button" className={`${styles.feature} ${styles.featureBuy} ${styles.areaBuy}`} aria-disabled={buyReason ? true : undefined}
             onClick={() => { if (buyReason) sound.denied(); else sound.click(); setModal('buy'); }} aria-haspopup="dialog" aria-describedby="cz-buy-desc">
-            <span className={styles.featureTitle}>Bonus satın al</span>
-            <span className={styles.featureState}>{formatAmount(buyPrice, { trimZeros: true })} DEMO</span>
-            <span id="cz-buy-desc" className={styles.featureDesc}>{buyReason ?? `10 bedava dönüş · ${cezeriRtp(CEZERI_RTP.buy.rtp)}`}</span>
+            <span className={styles.featureTitle}>{t('deck.buy')}</span>
+            <span className={styles.featureState}>{format.amount(buyPrice, { trimZeros: true })} DEMO</span>
+            <span id="cz-buy-desc" className={styles.featureDesc}>{buyReason ?? t('deck.buyDesc', { spins: 10, rtp: cezeriRtp(CEZERI_RTP.buy.rtp, loc) })}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSet}`} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label="Ayarlar">
-            <GearIcon /><span>Ayarlar</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSet}`} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label={tk('settings.title')}>
+            <GearIcon /><span>{tk('settings.title')}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSpeed} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed} aria-label={`Dönüş hızı: ${SPEED_LABELS[settings.spinSpeed]}`}>
-            <SpeedGears count={speedIndex + 1} /><span>{SPEED_LABELS[settings.spinSpeed]}</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSpeed} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed} aria-label={t('deck.speedAria', { speed: tk(SPEED_KEY[settings.spinSpeed]) })}>
+            <SpeedGears count={speedIndex + 1} /><span>{tk(SPEED_KEY[settings.spinSpeed])}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSound} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label="Ses">
-            <SoundIcon on={!settings.muted} /><span>Ses</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSound} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label={t('deck.sound')}>
+            <SoundIcon on={!settings.muted} /><span>{t('deck.sound')}</span>
           </button>
           <div className={styles.areaMsg}>
-            {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">Ses yükleniyor %{soundLoad.percent}</p>}
+            {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">{t('deck.soundLoading', { percent: soundLoad.percent })}</p>}
             {error ? <p className={styles.msgError} role="alert">{error}</p>
-              : outOfCredit ? <p className={styles.msgHint}>DEMO bakiyen bitti. <button type="button" className={styles.inlineLink} onClick={refill}>Bakiyeyi yenile</button></p>
-              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? <>Son tur <strong>+{cezeriMoney(lastWin.payout)} DEMO</strong> · {cezeriTimes(lastWin.total)}×</> : <>Son tur kazançsız.</>) : settings.spaceToSpin ? <>Boşluk tuşu ile de çevirebilirsin.</> : <>Sonuç dönüşten önce belirlenir.</>}</p>}
+              : outOfCredit ? <p className={styles.msgHint}>{t('deck.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
+              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? richText(t, 'deck.lastWin', { money: cezeriMoney(lastWin.payout, loc), times: cezeriTimes(lastWin.total, loc) }) : t('deck.lastNone')) : settings.spaceToSpin ? t('deck.hintSpace') : t('deck.hintFixed')}</p>}
           </div>
         </div>
       )}
@@ -930,9 +942,9 @@ export function CezeriGame() {
   return (
     <div className={`game-page ${styles.page}`}>
       <CezeriSymbolSprites />
-      <GameHeading title="Cezeri: Zamanın Çarkları" subtitle="Kazanan dilimler kenetlenir, çarklar yeniden döner, göbek her turda +1 atar." mode={mode} setMode={setMode} active={busy || auto !== null}
-        badge={remote ? remote.label : sourcePending ? 'Sunucu kontrol ediliyor' : localRoundSource.label} />
-      <section className={`game-table ${styles.table}`} aria-label="Cezeri oyun masası" data-free={free || undefined}>
+      <GameHeading title={t('title')} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
+        badge={remote ? rgs.source('remote') : sourcePending ? t('badge.checking') : rgs.source('local')} />
+      <section className={`game-table ${styles.table}`} aria-label={t('table')} data-free={free || undefined}>
         <div className={styles.layout}>
           <div ref={stageRef} className={styles.stage} data-phase={phase} data-celebrate={celebrating || undefined}>
             <MemoScene ref={scene} mood={mood} className={styles.scene} corners />
@@ -942,18 +954,18 @@ export function CezeriGame() {
               </div>
               <div className={styles.hud}>
                 {freeInfo ? (
-                  <div className={styles.freeCounter} aria-label={`Bedava dönüş ${freeInfo.number}, kalan dönüş ${freeInfo.left}`} data-testid="cezeri-free-counter">
-                    <span className={styles.freeTag}>{freeInfo.number > 0 ? `${freeInfo.number}. dönüş` : 'Fil Saati'}</span>
-                    <span className={styles.freeLeft}><small>Kalan</small><strong key={freeInfo.left}>{freeInfo.left}</strong></span>
+                  <div className={styles.freeCounter} aria-label={t('hud.freeAria', { number: freeInfo.number, left: freeInfo.left })} data-testid="cezeri-free-counter">
+                    <span className={styles.freeTag}>{freeInfo.number > 0 ? t('hud.freeSpin', { n: freeInfo.number }) : t('hud.freeTitle')}</span>
+                    <span className={styles.freeLeft}><small>{t('hud.left')}</small><strong key={freeInfo.left}>{freeInfo.left}</strong></span>
                   </div>
                 ) : <span className={styles.hudSpacer} />}
                 <div className={`${styles.chain} ${chain ? styles.chainOn : ''}`} data-testid="cezeri-chain" aria-hidden={chain ? undefined : true}
-                  aria-label={chain ? `Dişli Kilidi: ${chain.round}. yeniden dönüş, en çok ${CEZERI_MAX_RESPINS}` : undefined} role={chain ? 'status' : undefined}>
-                  <small>Dişli Kilidi</small>
+                  aria-label={chain ? t('hud.chainAria', { round: chain.round, max: CEZERI_MAX_RESPINS }) : undefined} role={chain ? 'status' : undefined}>
+                  <small>{t('hud.chain')}</small>
                   <span className={styles.chainPips}>{Array.from({ length: CEZERI_MAX_RESPINS }, (_, i) => <i key={i} data-on={chain && i < chain.round ? '' : undefined} />)}</span>
                 </div>
-                <div className={`${styles.hubPill} ${free ? styles.hubFree : ''}`} data-tier={hubTier} data-testid="cezeri-hub" aria-label={`Göbek çarpanı ×${hub}${free ? ', korunur' : ''}`}>
-                  <small>{free ? 'Göbek · korunur' : 'Göbek'}</small>
+                <div className={`${styles.hubPill} ${free ? styles.hubFree : ''}`} data-tier={hubTier} data-testid="cezeri-hub" aria-label={t('hud.hubAria', { hub, kept: free ? 'yes' : 'no' })}>
+                  <small>{free ? t('hud.hubKept') : t('hud.hub')}</small>
                   <strong key={hubPunch} className={styles.hubValue}>×{hub}</strong>
                 </div>
               </div>
@@ -966,11 +978,11 @@ export function CezeriGame() {
               {/* One cumulative meter: never resets inside a round (respins, scatter pay, every free spin add up). */}
               <div ref={meterRef} className={`${styles.meter} ${free ? styles.meterFree : ''}`} data-testid="cezeri-meter">
                 {phase === 'idle' ? (
-                  <div className={styles.meterIdle}><span>Işında <strong>3–4</strong> aynı dilim öder</span><span aria-hidden="true">·</span><span>Kilitle, döndür, göbek <strong>+1</strong></span></div>
+                  <div className={styles.meterIdle}><span>{richText(t, 'meter.idleA')}</span><span aria-hidden="true">·</span><span>{richText(t, 'meter.idleB')}</span></div>
                 ) : (
                   <div className={styles.meterPart}>
-                    <small>{free || phase === 'done' ? 'Toplam kazanç' : 'Kazanç'}</small>
-                    <strong data-testid="cezeri-meter-total"><CountUp cents={amountCents(meter.total)} duration={meterDur} /><em> DEMO</em></strong>
+                    <small>{free || phase === 'done' ? t('meter.total') : t('meter.win')}</small>
+                    <strong data-testid="cezeri-meter-total"><CountUp cents={amountCents(meter.total)} duration={meterDur} locale={loc} /><em> DEMO</em></strong>
                   </div>
                 )}
                 {flourish > 0 && phase !== 'idle' && <span key={flourish} className={styles.meterShine} aria-hidden="true" />}
@@ -979,18 +991,18 @@ export function CezeriGame() {
             <canvas ref={canvasRef} className={styles.fxCanvas} aria-hidden="true" />
             <div ref={layerRef} className={styles.fxLayer} aria-hidden="true" />
             {replayInfo && <div className={styles.replayRibbon} data-testid="cezeri-replay"><Icon name="history" size={15} /><span>{replayInfo}</span></div>}
-            {auto && !replayInfo && <div className={styles.autoRibbon} aria-hidden="true"><LoopIcon /><span>Otomatik · {auto.spinsRemaining} tur kaldı</span></div>}
+            {auto && !replayInfo && <div className={styles.autoRibbon} aria-hidden="true"><LoopIcon /><span>{t('auto.ribbon', { spins: auto.spinsRemaining })}</span></div>}
             {toast && (
               <div key={`toast-${toast.key}`} className={`${styles.toast} ${toast.tone === 'warn' ? styles.toastWarn : ''}`} data-testid="cezeri-toast">
                 <span>{toast.text}</span>
-                <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label="Bildirimi kapat"><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
+                <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label={t('toast.close')}><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
               </div>
             )}
             {banner && <div key={`banner-${banner.key}`} className={`${styles.banner} ${banner.tone === 'water' ? styles.bannerWater : ''}`} data-testid="cezeri-banner" aria-hidden="true">{banner.text}</div>}
             {callout && (
               <div key={`callout-${callout.key}`} className={styles.callout} data-tier={callout.tier} style={{ animationDuration: `${callout.life}ms` }} aria-hidden="true" data-testid="cezeri-callout" data-key={callout.key}>
                 <span className={styles.calloutGlow} />
-                {callout.tier >= 1 && <span className={styles.calloutTag}>{callout.free ? `Fil Saati · ${CALLOUT_TAGS[callout.tier]}` : CALLOUT_TAGS[callout.tier]}</span>}
+                {callout.tier >= 1 && <span className={styles.calloutTag}>{callout.free ? t('callout.free', { tag: t(CALLOUT_KEY[callout.tier]) }) : t(CALLOUT_KEY[callout.tier])}</span>}
                 <span className={styles.calloutText} data-text={`×${callout.value}`}><span className={styles.calloutFill}>×{callout.value}</span></span>
               </div>
             )}
@@ -1007,9 +1019,9 @@ export function CezeriGame() {
               <div className={styles.gated}>
                 <div className={styles.gatedCard}>
                   <Icon name="lock" size={26} />
-                  <h2>Zincir üstü Cezeri yok.</h2>
-                  <p>Bu oyun yalnız DEMO kredisiyle oynanır; gerçek bahis kabul edilmez.</p>
-                  <button className="text-button" onClick={() => setMode('demo')}>Yerel demoya dön<Icon name="arrow" size={17} /></button>
+                  <h2>{t('gated.title')}</h2>
+                  <p>{t('gated.text')}</p>
+                  <button className="text-button" onClick={() => setMode('demo')}>{t('gated.back')}<Icon name="arrow" size={17} /></button>
                 </div>
               </div>
             )}
@@ -1021,21 +1033,21 @@ export function CezeriGame() {
             <div className={styles.splashCard}>
               <div className={styles.splashLogo}><CezeriLogo /></div>
               <ul className={styles.splashFeatures}>
-                <li><span aria-hidden="true"><CezeriSymbolArt symbol="h1" size="100%" /></span><strong>Dişli Kilidi</strong><small>Kazanan dilimler kenetlenir, dört çark yeniden döner, göbek +1</small></li>
-                <li><span aria-hidden="true"><CezeriSymbolArt symbol="vessel" size="100%" /></span><strong>Fil Saati</strong><small>3 Su Kabı 10 bedava dönüş açar; göbek korunur, şahin joker bırakır</small></li>
-                <li><span aria-hidden="true"><CezeriSymbolArt symbol="gear" size="100%" /></span><strong>10.000× azami</strong><small>Altın Dişli joker her sembolün yerine geçer</small></li>
+                <li><span aria-hidden="true"><CezeriSymbolArt symbol="h1" size="100%" /></span><strong>{t('splash.gearLock.title')}</strong><small>{t('splash.gearLock.text')}</small></li>
+                <li><span aria-hidden="true"><CezeriSymbolArt symbol="vessel" size="100%" /></span><strong>{t('splash.elephant.title')}</strong><small>{t('splash.elephant.text')}</small></li>
+                <li><span aria-hidden="true"><CezeriSymbolArt symbol="gear" size="100%" /></span><strong>{t('splash.max.title', { max: format.number(10000, 0) })}</strong><small>{t('splash.max.text')}</small></li>
               </ul>
               {boot.phase === 'loading' ? (
-                <div className={styles.loadBar} role="progressbar" aria-label="Oyun yükleniyor" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(boot.progress * 100)}>
+                <div className={styles.loadBar} role="progressbar" aria-label={t('splash.loading')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(boot.progress * 100)}>
                   <span style={{ transform: `scaleX(${boot.progress})` } as CSSProperties} />
                 </div>
               ) : (
                 <div className={styles.splashActions}>
-                  <button type="button" className={styles.playButton} autoFocus onClick={() => { sound.unlock(); sound.click(); setBoot(b => ({ ...b, phase: 'done' })); }}>Oyna</button>
-                  <button type="button" className={styles.splashSkip} onClick={() => { updateSettings({ introScreen: false }); setBoot(b => ({ ...b, phase: 'done' })); }}>Açılış ekranını bir daha gösterme</button>
+                  <button type="button" className={styles.playButton} autoFocus onClick={() => { sound.unlock(); sound.click(); setBoot(b => ({ ...b, phase: 'done' })); }}>{t('splash.play')}</button>
+                  <button type="button" className={styles.splashSkip} onClick={() => { updateSettings({ introScreen: false }); setBoot(b => ({ ...b, phase: 'done' })); }}>{t('splash.skip')}</button>
                 </div>
               )}
-              <p className={styles.splashNote}>DEMO kredisi değersizdir · Sonuç dönüşten önce belirlenir · Sertifikasız simülasyon RTP ≈ {cezeriRtp(CEZERI_RTP.standard.rtp)}</p>
+              <p className={styles.splashNote}>{t('splash.note', { rtp: cezeriRtp(CEZERI_RTP.standard.rtp, loc) })}</p>
             </div>
           </div>
         )}
@@ -1045,29 +1057,29 @@ export function CezeriGame() {
       <CezeriHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <StaticFooter remote={remote !== null} />
 
-      <Modal open={modal === 'settings'} onClose={() => setModal(null)} title="Ayarlar" size="md">
+      <Modal open={modal === 'settings'} onClose={() => setModal(null)} title={tk('settings.title')} size="md">
         <SettingsPanel settings={settings} onChange={updateSettings} onReset={resetSettings} />
-        <p className={styles.modalNote} role="status">{soundLoad.ready ? 'Ses hazır: müzik, efektler ve ortam sesi bu cihazda hazırlandı.' : soundLoad.started ? `Ses yükleniyor %${soundLoad.percent} (bu sırada oyun sessiz veya basit efektlerle sürer).` : 'Ses ilk dokunuşta yüklenir.'}</p>
+        <p className={styles.modalNote} role="status">{soundLoad.ready ? t('settings.soundReady') : soundLoad.started ? t('settings.soundLoading', { percent: soundLoad.percent }) : t('settings.soundIdle')}</p>
         <section className={styles.demoBox} aria-labelledby="cz-demo-title">
-          <h3 id="cz-demo-title">DEMO bakiyesi</h3>
-          <p>Bakiye {formatDemo(balance)}{remote ? ' (sunucu)' : ''}. Yenilemek bakiyeyi 1.000 DEMO yapar ve geçmişe "Bakiye yenilendi" satırı ekler; tur veya otomatik oyun sürerken yapılamaz.</p>
-          <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>Bakiyeyi yenile</button>
+          <h3 id="cz-demo-title">{t('settings.demoTitle')}</h3>
+          <p>{t('settings.demoText', { balance: format.demo(balance), remote: remote ? 'yes' : 'no', start: format.number(DEMO_START_CENTS / 100) })}</p>
+          <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>{t('deck.refill')}</button>
         </section>
       </Modal>
-      <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title="Cezeri · Oyun bilgisi" initialPageId={infoPage} />
-      <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title="Otomatik oyun" size="md">
+      <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title={t('info.title')} initialPageId={infoPage} />
+      <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title={t('autoplay.title')} size="md">
         <AutoplayPanel onStart={startAutoplay} spinCostCents={spinCost} balanceCents={balance} disabled={busy || gated} />
-        <p className={styles.modalNote}>Tur başı {formatDemo(spinCost)}{ante ? ' (Şans ×2)' : ''} · bonus satın almaz · sekme gizlenince durur.</p>
+        <p className={styles.modalNote}>{t('autoplay.note', { cost: format.demo(spinCost), ante: ante ? 'yes' : 'no' })}</p>
       </Modal>
       <BuyFeatureDialog
         open={modal === 'buy'}
         onClose={() => setModal(null)}
         onConfirm={confirmBuy}
-        featureName={`Fil Saati · 10 bedava dönüş · bahis ${formatDemo(bet)}`}
+        featureName={t('buy.feature', { bet: format.demo(bet) })}
         priceCents={buyPrice}
         balanceCents={balance}
-        rtpText={`Satın alma RTP ${cezeriRtp(CEZERI_RTP.buy.rtp)} · standart ${cezeriRtp(CEZERI_RTP.standard.rtp)} (simülasyon, sertifikasız)`}
-        description={<>Bahsin <strong>100 katı</strong>. Temel dönüşün sonunda tahtada en az 3 Su Kabı olur ve 10 bedava dönüş garantilidir; göbek çarpanı dönüşler boyunca korunur ve otomat şahin kalıcı Altın Dişli jokerleri bırakır. Kazançlar {formatDemo(bet)} bahse göre ödenir, azami {formatDemo(bet * 10_000)}.</>}
+        rtpText={t('buy.rtp', { buy: cezeriRtp(CEZERI_RTP.buy.rtp, loc), standard: cezeriRtp(CEZERI_RTP.standard.rtp, loc) })}
+        description={richText(t, 'buy.text', { bet: format.demo(bet), max: format.demo(bet * 10_000) })}
         disabledReason={buyReason ?? undefined}
       />
       <RealityCheckDialog
@@ -1075,7 +1087,7 @@ export function CezeriGame() {
         elapsedMs={session.elapsedMs}
         netCents={session.netCents}
         onContinue={() => session.acknowledge()}
-        onQuit={() => { stopAutoplay('Oturumdan çıkıldı', 'info'); session.acknowledge(); router.push('/games'); }}
+        onQuit={() => { stopAutoplay('quit', 'info'); session.acknowledge(); router.push('/games'); }}
       />
     </div>
   );

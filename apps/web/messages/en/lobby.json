@@ -1,12 +1,135 @@
 {
   "meta": {
-    "title": "Games — Live & Solo",
-    "description": "Sollish games. Join the shared live Ringside match or try the single-player games."
+    "title": "Casino lobby",
+    "description": "Sollish original games in one lobby: five in-house slots, the live Ringside arena, Crash and Coinflip. DEMO credits only, no real money."
   },
+  "heading": "Sollish casino lobby",
   "hero": {
+    "region": "Featured games",
+    "slide": "{index} of {total}",
+    "prev": "Previous featured game",
+    "next": "Next featured game",
+    "pause": "Pause rotation",
+    "resume": "Resume rotation",
+    "goTo": "Show {name}",
+    "eyebrow": "New · Sollish Original",
+    "play": "Play demo"
+  },
+  "chips": {
+    "label": "Filter games",
+    "all": "All games"
+  },
+  "rows": {
+    "recent": {
+      "title": "Recently played",
+      "subtitle": "Saved in this browser only.",
+      "clear": "Clear list"
+    },
+    "originals": {
+      "title": "Sollish Originals",
+      "subtitle": "Five in-house slots. Every round can be checked on the verify page."
+    },
+    "live": {
+      "title": "Live",
+      "subtitle": "One shared match, everyone watches the same fight."
+    },
+    "instant": {
+      "title": "Instant games",
+      "subtitle": "At your own pace, instant results."
+    },
+    "new": {
+      "title": "New",
+      "subtitle": "The latest releases."
+    },
+    "fair": {
+      "title": "Provably fair",
+      "subtitle": "The result is fixed by seeds you can check after the round.",
+      "cta": "Verify a round"
+    }
+  },
+  "row": {
+    "viewAll": "View all",
+    "viewAllAria": "View all: {title}",
+    "prev": "Scroll back: {title}",
+    "next": "Scroll forward: {title}",
+    "count": "{count, plural, one {# game} other {# games}}"
+  },
+  "grid": {
+    "results": "Search results",
+    "resultsCount": "{count, plural, =0 {No games found for “{query}”} one {# game for “{query}”} other {# games for “{query}”}}",
+    "empty": "No game matches “{query}”. Try a game name, a theme such as “wolf” or “candy”, or a category.",
+    "reset": "Show all games",
+    "favoritesEmpty": "No favorites yet. Use the heart on a game to keep it here.",
+    "back": "Back to the lobby"
+  },
+  "tile": {
+    "provider": "Sollish",
+    "demo": "DEMO",
+    "new": "New",
+    "original": "Original",
+    "live": "Live",
+    "rtp": "RTP {value}",
+    "maxWin": "Max {value}",
+    "poolFee": "Pool fee {value}",
+    "poolNote": "Pool betting",
+    "volatility": "Volatility: {level}",
+    "vol": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "veryHigh": "Very high",
+      "player": "You choose"
+    },
+    "favAdd": "Add {name} to favorites",
+    "favRemove": "Remove {name} from favorites",
+    "play": "Play demo",
+    "watch": "Join live"
+  },
+  "cards": {
+    "crash": {
+      "tagline": "Cash out before the line breaks.",
+      "text": "Pick your moment to cash out while the multiplier climbs.",
+      "type": "Manual cash-out"
+    },
+    "coinflip": {
+      "tagline": "Two sides, one call.",
+      "text": "Two sides, one choice, an instant result.",
+      "type": "Classic"
+    },
+    "cascade": {
+      "tagline": "Sweet tumbles and crystal multipliers.",
+      "text": "Pop eight of a kind and build chains with the falling candies.",
+      "type": "Tumble"
+    },
+    "tarhun": {
+      "tagline": "The storm god charges the stones.",
+      "text": "The storm god strikes the stones with lightning; multipliers build up during free spins.",
+      "type": "Tumble · multiplier"
+    },
+    "ebru": {
+      "tagline": "Ink, water and a golden comb.",
+      "text": "The comb sweeps the water and the ink rearranges wave by wave; paint stains slide along with their multipliers.",
+      "type": "Cluster · comb"
+    },
+    "cezeri": {
+      "tagline": "Four brass wheels, one rising hub.",
+      "text": "Four brass wheels turn; winning segments lock, the wheels spin again and the hub multiplier rises by +1 each time.",
+      "type": "Wheel · chain"
+    },
+    "asena": {
+      "tagline": "Follow the Sky Wolf across the stars.",
+      "text": "Clusters draw constellations in the sky and the Sky Wolf walks, leaving a star trail; the Ergenekon map raises the global multiplier up to ×5.",
+      "type": "Cluster · constellation"
+    },
+    "ringside": {
+      "tagline": "Three rounds, three pools, one live fight.",
+      "text": "A three-round fight with punches and kicks. Make your pick before the match starts, then follow your slip round by round. A trained network controls the fighters, and Jev gives tactics from the corner.",
+      "type": "Live · pool betting"
+    }
+  },
+  "liveCard": {
     "aria": "Enter the Ringside live arena",
     "tag": "LIVE · EVERYONE WATCHES THE SAME MATCH",
-    "text": "A three-round fight with punches and kicks. Make your pick before the match starts, then follow your slip round by round. A trained network controls the fighters, and Jev gives tactics from the corner.",
     "cta": "Enter the arena",
     "factWindowValue": "30 s",
     "factWindow": "betting window",
@@ -16,20 +139,6 @@
     "factMarkets": "match markets",
     "factFeeValue": "2%",
     "factFee": "pool fee"
-  },
-  "solo": {
-    "title": "Single player",
-    "subtitle": "At your own pace, instant results.",
-    "demo": "DEMO"
-  },
-  "cards": {
-    "crash": { "text": "Pick your moment to cash out while the multiplier climbs.", "type": "Manual cash-out" },
-    "coinflip": { "text": "Two sides, one choice, an instant result.", "type": "Classic" },
-    "cascade": { "text": "Pop eight of a kind and build chains with the falling candies.", "type": "Tumble" },
-    "tarhun": { "text": "The storm god strikes the stones with lightning; multipliers build up during free spins.", "type": "Tumble · multiplier" },
-    "ebru": { "text": "The comb sweeps the water and the ink rearranges wave by wave; paint stains slide along with their multipliers.", "type": "Cluster · comb" },
-    "cezeri": { "text": "Four brass wheels turn; winning segments lock, the wheels spin again and the hub multiplier rises by +1 each time.", "type": "Wheel · chain" },
-    "asena": { "text": "Clusters draw constellations in the sky and the Sky Wolf walks, leaving a star trail; the Ergenekon map raises the global multiplier up to ×5.", "type": "Cluster · constellation" }
   },
   "trust": {
     "aria": "Rules",
@@ -48,5 +157,6 @@
     "fightersA": "Every punch, kick, combination, distance and defence choice is made by a network that learns during the match; the MaleCNS fly connectome is used as a fixed reservoir. The corner coach Jev suggests a plan every 9 seconds; because the plan arrives after betting closes, the game is DEMO only. There is no claim of a complete brain or of any superiority of the connectome.",
     "demoQ": "The line between demo and real betting",
     "demoA": "The DEMO credits here have no monetary value. Real SOL betting stays disabled until the contract deployment, oracle recovery, Crash privacy and payment flows are validated. We do not claim that an independent audit has been carried out. These versions have no VRF proof."
-  }
+  },
+  "footnote": "RTP and volatility are simulated estimates for the standard mode of each DEMO game, not certified figures. Crash and Coinflip practice rounds use your browser’s randomness and are not provably fair."
 }

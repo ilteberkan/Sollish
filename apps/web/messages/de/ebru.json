@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "description": "{title} — ein eigenständiges DEMO-Cluster-Spiel. Der Kamm zieht durchs Wasser und die Tinte ordnet sich neu; in der Tulpen-Marmorierung gleiten die Farbflecken samt ihren Multiplikatoren mit."
+  },
+  "subtitle": "Der Kamm zieht durchs Wasser, die Tinte ordnet sich Welle um Welle neu; Flecken gleiten mit ihren Multiplikatoren mit.",
+  "logo": {
+    "subtitle": "TINTENGARTEN"
+  },
+  "table": {
+    "aria": "Ebru-Spieltisch"
+  },
+  "board": {
+    "label": "Ebru-Raster, 7 Spalten, 7 Zeilen",
+    "labelFree": "Ebru-Freispiel-Raster, 7 Spalten, 7 Zeilen"
+  },
+  "badge": {
+    "checking": "Server wird geprüft"
+  },
+  "symbols": {
+    "c1": "Goldene Tulpe",
+    "c2": "Rubinrote Nelke",
+    "c3": "Türkisfarbene Hatip-Blume",
+    "c4": "Smaragdblatt",
+    "c5": "Nachtblaues Pfauenauge",
+    "c6": "Safran-Gänseblümchen",
+    "c7": "Rosenwelle",
+    "c8": "Rußtropfen",
+    "drop": "Meistertropfen (Wild)",
+    "comb": "Goldener Kamm",
+    "stained": "{name}, Fleck ×{stain}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Fleck-Multiplikator",
+      "1": "Starker Fleck",
+      "2": "Leuchtender Fleck",
+      "3": "Tulpen-Multiplikator",
+      "4": "Legendärer Fleck",
+      "5": "Blattgold"
+    }
+  },
+  "error": {
+    "entropy": "Sichere lokale Zufallszahlen sind nicht verfügbar. Die Demo wurde nicht gestartet.",
+    "noCredit": "Du hast nicht genug Demo-Guthaben, oder es läuft bereits eine Demo-Runde.",
+    "insufficientSpin": "Guthaben reicht nicht: Dieser Spin kostet {cost}. Senke den Einsatz oder fülle dein Guthaben auf.",
+    "insufficientBuy": "Guthaben reicht nicht: Dieser Kauf kostet {cost}. Senke den Einsatz oder fülle dein Guthaben auf."
+  },
+  "buyBlock": {
+    "gated": "Nur mit DEMO-Guthaben verfügbar",
+    "autoplay": "Während des Autoplays nicht kaufbar",
+    "busy": "Erst nach Rundenende kaufbar",
+    "ante": "Nicht kaufbar, solange Chance ×2 aktiv ist",
+    "balance": "Guthaben reicht nicht (Preis {price})"
+  },
+  "autoplay": {
+    "title": "Autoplay",
+    "serverFailed": "Der Server konnte die Runde nicht starten",
+    "spinFailed": "Der Spin konnte nicht gestartet werden",
+    "quit": "Du hast die Sitzung verlassen",
+    "stopped": "Autoplay gestoppt: {reason}. {spins, plural, one {# Spin} other {# Spins}}, netto {net}.",
+    "stoppedShort": "Autoplay gestoppt: {reason}.",
+    "note": "Pro Spin {cost}{ante, select, yes { (Chance ×2)} other {}} · kauft nie einen Bonus · stoppt, wenn der Tab verborgen wird."
+  },
+  "toast": {
+    "autoplay": "Autoplay: {spins, plural, one {# Spin} other {# Spins}}, Verlustlimit {limit}.",
+    "refilled": "Guthaben aufgefüllt: {amount}.",
+    "shareCopied": "Link zum Teilen kopiert: {url}",
+    "shareLink": "Link zum Teilen: {url}",
+    "shareFailed": "Teilen nicht möglich: {reason}",
+    "replayFailed": "Diese Runde konnte nicht wiederholt werden.",
+    "replayMismatch": "Wiederholung nicht verifizierbar: Der Eintrag passt nicht zur Engine.",
+    "close": "Hinweis schließen"
+  },
+  "announce": {
+    "replayDone": "Wiederholung beendet: {amount}, {times}×. Guthaben unverändert.",
+    "roundEnd": "Runde beendet. Gesamtgewinn {amount}, {times}×.",
+    "roundEndNoWin": "Runde beendet. Kein Gewinn.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{size} {name}, {times}× Gewinn",
+    "clusterStain": "{size} {name}, Fleck ×{stain}, {times}× Gewinn",
+    "bleed": "Der Meistertropfen hat seine Tinte verteilt: {n, plural, one {# Nachbar wurde} other {# Nachbarn wurden}} zu {name}.",
+    "stainMultiplier": "Fleck-Multiplikator ×{best}: Die Cluster-Auszahlung wird mit der Summe der Flecken multipliziert.",
+    "comb": "Kammdurchgang {pass}: Zeilen verschoben um {shifts}.",
+    "combCluster": "Der Kamm hat einen neuen Cluster gebildet.",
+    "retrigger": "{count} Goldene Kämme: {awarded, plural, one {# Freispiel} other {# Freispiele}} hinzugefügt.",
+    "trigger": "{count} Goldene Kämme: Tulpen-Marmorierung gewonnen.",
+    "freeIntro": "Die Tulpen-Marmorierung beginnt: Du hast {awarded, plural, one {# Freispiel} other {# Freispiele}} gewonnen.",
+    "freeSpinWin": "Das Freispiel brachte {win}×. Gesamt {total}×.",
+    "freeSpinNoWin": "Kein Gewinn im Freispiel.",
+    "noWin": "Kein Gewinn.",
+    "totalWin": "Gesamtgewinn {amount}, {times}×.",
+    "freeOutro": "Die Tulpen-Marmorierung ist vorbei. Gesamt: {amount}, {spins, plural, one {# Spin} other {# Spins}}, größter Fleck ×{stain}.",
+    "sent": "Spin an den Server gesendet, {amount}.",
+    "buyStarted": "Bonus gekauft, {amount}. Die Tulpen-Marmorierung beginnt.",
+    "spinStarted": "Spin gestartet, {amount}.",
+    "recovered": "Eine unvollendete Runde wurde vom Server wiederhergestellt; die Auszahlung erfolgte dort bereits ({amount}).",
+    "replaying": "Wiederholung läuft: Runde {id}. Das Guthaben ändert sich nicht.",
+    "refilled": "DEMO-Guthaben auf {amount} aufgefüllt.",
+    "refilledRemote": "DEMO-Guthaben auf dem Server auf {amount} aufgefüllt.",
+    "speed": "Spin-Tempo: {speed}.",
+    "anteOn": "Chance ×2 an: etwa doppelte Chance auf Freispiele, Kosten {cost}.",
+    "anteOff": "Chance ×2 aus: Kosten {cost}."
+  },
+  "banner": {
+    "combCluster": "Der Kamm bildete einen neuen Cluster",
+    "scatterPay": "{count} Goldene Kämme · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# Freispiel} other {# Freispiele}}"
+  },
+  "deck": {
+    "aria": "Spielsteuerung",
+    "balance": "Guthaben",
+    "refill": "Guthaben auffüllen",
+    "replay": "Wiederholung",
+    "win": "Gewinn",
+    "replayWin": "Wiederholungsgewinn",
+    "lastWin": "Letzter Gewinn",
+    "spin": "Drehen",
+    "spinLocked": "Runde läuft; gesperrt, bis alle Tumbles, Blitze und Freispiele beendet sind.",
+    "auto": "Auto",
+    "info": "Info",
+    "on": "An",
+    "off": "Aus",
+    "anteDesc": "Etwa doppelte Freispiel-Chance",
+    "buyDesc": "{spins, plural, one {# Freispiel} other {# Freispiele}} · {rtp}",
+    "speed": "Spin-Tempo: {speed}",
+    "soundLoading": "Ton wird geladen {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Dein DEMO-Guthaben ist aufgebraucht.",
+    "lastRound": "Letzte Runde <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "Letzte Runde ohne Gewinn.",
+    "spaceHint": "Du kannst auch mit der Leertaste drehen.",
+    "fixedBefore": "Das Ergebnis steht vor dem Spin fest."
+  },
+  "replay": {
+    "ribbon": "Wiederholung — Guthaben unverändert · Runde {id}"
+  },
+  "auto": {
+    "ribbon": "Autoplay · noch {n, plural, one {# Spin} other {# Spins}}"
+  },
+  "free": {
+    "tag": "Tulpen-Marmorierung",
+    "spinNumber": "Spin {n}",
+    "left": "Übrig",
+    "counterAria": "Freispiel {number}, noch {left}"
+  },
+  "comb": {
+    "label": "Kamm",
+    "passAria": "Kammdurchgang {pass} / 3",
+    "maxAria": "Höchstens 3 Kammdurchgänge pro Spin"
+  },
+  "stain": {
+    "aria": "Gefleckte Zellen {cells}, höchster Fleck ×{max}",
+    "stains": "Flecken",
+    "highest": "Höchster",
+    "max": "Max. <b>{n}×</b>"
+  },
+  "meter": {
+    "idleA": "<b>5+</b> benachbarte Tropfen einer Farbe zahlen",
+    "idleB": "Der Kamm verschiebt die Zeilen",
+    "idleC": "<b>×256</b> Farbfleck",
+    "win": "Gewinn",
+    "totalWin": "Gesamtgewinn"
+  },
+  "gated": {
+    "title": "Kein On-Chain-Ebru.",
+    "text": "Dieses Spiel wird nur mit DEMO-Guthaben gespielt; echte Einsätze werden nicht angenommen.",
+    "back": "Zurück zur lokalen Demo"
+  },
+  "splash": {
+    "f1Title": "5+ Cluster",
+    "f1Text": "Fünf oder mehr waagerecht oder senkrecht benachbarte Tropfen derselben Farbe zahlen",
+    "f2Text": "Der Kamm zieht durchs Wasser, Zeilen gleiten, neue Cluster entstehen",
+    "f3Title": "×256 Fleck · {max}×",
+    "f3Text": "In der Tulpen-Marmorierung gleiten die Flecken mit dem Kamm mit",
+    "loading": "Spiel wird geladen",
+    "play": "Spielen",
+    "skip": "Diesen Startbildschirm nicht mehr zeigen",
+    "note": "DEMO-Guthaben hat keinen Wert · Das Ergebnis steht vor dem Spin fest · Nicht zertifizierte Simulation, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Ton bereit: Musik, Effekte und Atmosphäre sind auf diesem Gerät vorbereitet.",
+    "soundLoading": "Ton wird geladen {percent} (bis dahin bleibt das Spiel stumm).",
+    "soundOnTouch": "Der Ton wird bei der ersten Berührung geladen.",
+    "demoTitle": "DEMO-Guthaben",
+    "demoText": "Guthaben {balance}{server, select, yes { (Server)} other {}}. Das Auffüllen setzt das Guthaben auf {amount} und fügt dem Verlauf eine Zeile „{label}“ hinzu; während einer Runde oder des Autoplays ist es nicht möglich."
+  },
+  "buy": {
+    "feature": "Tulpen-Marmorierung · {spins, plural, one {# Freispiel} other {# Freispiele}} · Einsatz {bet}",
+    "rtp": "Kauf-RTP {buy} · Standard {standard} (Simulation, nicht zertifiziert)",
+    "description": "Das <b>100-Fache</b> deines Einsatzes. Die Runde beginnt mit mindestens 3 Goldenen Kämmen und {spins, plural, one {# Freispiel ist} other {# Freispiele sind}} garantiert; jede geplatzte Zelle erhält einen Farbfleck, die Flecken gleiten mit dem Kamm mit und multiplizieren den Cluster, unter dem sie liegen, mit ihrer Summe. Gewinne werden auf Basis eines Einsatzes von {bet} ausgezahlt, maximal {max}."
+  },
+  "history": {
+    "scope": "Diese Sitzung · Wiederholungen ändern dein Guthaben nie",
+    "time": "Zeit",
+    "mode": "Modus",
+    "win": "Gewinn",
+    "result": "Ergebnis",
+    "roundId": "Runden-ID",
+    "replay": "Wiederholen",
+    "replayAria": "Wiederholen: Runde {id}, Guthaben unverändert",
+    "share": "Gewinn teilen",
+    "shareAria": "Gewinn teilen: Runde {id}",
+    "latest": "Letzte Runde",
+    "refilled": "Guthaben aufgefüllt",
+    "refilledRemote": "Guthaben aufgefüllt (Server)",
+    "emptyTitle": "Deine erste Runde erscheint hier.",
+    "emptyText": "Modus, Einsatz, Kosten, Gewinn und Runden-ID jeder Runde werden gespeichert; du kannst jede Runde erneut ansehen.",
+    "capped": "Maximalgewinn · {times}×",
+    "free": "Freispiele ×{spins} · {times}×",
+    "none": "Kein Gewinn",
+    "freeStain": "Tulpen-Marmorierung ×{spins} · größter Fleck ×{stain} · {times}×",
+    "clusters": "{n, plural, one {# Cluster} other {# Cluster}}",
+    "combWins": "{n, plural, one {# Kammgewinn} other {# Kammgewinne}}",
+    "combs": "{n, plural, one {# Goldener Kamm} other {# Goldene Kämme}}",
+    "clusterRow": "{items} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× Einsatz",
+    "capNote": "Die Runde hat die Obergrenze erreicht · verbleibende Spins entfallen",
+    "continue": "Weiter",
+    "tapToSpeed": "Tippen zum Beschleunigen"
+  },
+  "intro": {
+    "word": "TULPEN-MARMORIERUNG",
+    "title": "Die Tulpen-Marmorierung beginnt",
+    "freeA": "Frei-",
+    "freeB": "spiele",
+    "text": "Jede geplatzte Zelle erhält einen <b>Farbfleck</b>: zuerst ×2, in derselben Zelle jedes Mal verdoppelt, bis ×256. Die Flecken bleiben während des gesamten Features und <b>gleiten mit dem Kamm mit</b>; ein Cluster, der über ihnen liegt, wird mit der Summe der Flecken multipliziert. 3 Goldene Kämme geben +4 Spins.",
+    "start": "Los"
+  },
+  "total": {
+    "titleA": "Tulpen-Marmorierung",
+    "titleB": "Gesamt",
+    "word": "GESAMT",
+    "sub": "FREISPIELE",
+    "spins": "Spins",
+    "spinsValue": "{n, plural, one {# Spin} other {# Spins}}",
+    "maxStain": "Größter Fleck",
+    "none": "Keiner",
+    "stainedClusters": "{n, plural, one {# gefleckter Cluster} other {# gefleckte Cluster}}",
+    "noStainedClusters": "keine gefleckten Cluster",
+    "betMultiple": "Deines Einsatzes",
+    "combWins": "{n, plural, one {# Kammgewinn} other {# Kammgewinne}}",
+    "noCombWins": "keine Kammgewinne",
+    "capNote": "Maximalgewinn erreicht · verbleibende Spins entfallen",
+    "toCelebration": "Weiter zur Feier"
+  },
+  "info": {
+    "windowTitle": "Ebru · Spielinfo",
+    "how": {
+      "title": "So wird gespielt",
+      "s1": "<b>Wähle deinen Einsatz.</b> Die Tasten − und + ändern den Einsatz um eine Stufe; ein Tipp auf den Einsatzbetrag öffnet alle Stufen. „{max}“ wählt die höchste Stufe, die dein Guthaben deckt.",
+      "s2": "<b>Drehen.</b> Drücke den Tinten-Button oder nutze die Leertaste. Die Rundenkosten (das {multiple}-Fache des Einsatzes bei aktivem Chance ×2) werden einmal vom Guthaben abgezogen.",
+      "s3": "<b>Cluster bilden.</b> Im 7 × 7 großen Wasserbecken zahlen <b>5 oder mehr waagerecht oder senkrecht benachbarte Tropfen derselben Farbe</b>; je größer der Cluster, desto höher die Gewinnstufe.",
+      "s4": "<b>Kette.</b> Gewinn-Cluster lösen sich im Wasser auf, die darüberliegenden Tropfen fallen herab und neue füllen die Lücken; das geht weiter, bis kein Cluster mehr übrig ist.",
+      "s5": "<b>Kamm.</b> Wenn die Kette endet — auch ohne Gewinn — zieht der Goldene Kamm durchs Wasser: Jede Zeile gleitet um ihren eigenen Betrag nach rechts oder links, und neue Cluster können entstehen. Höchstens {passes} Kammdurchgänge pro Spin.",
+      "s6": "<b>Ergebnis.</b> Die gesamte Runde wird von der Engine vor dem Spin entschieden; die Animation spielt nur dieses Ergebnis ab. Der Dreh-Button bleibt gesperrt, bis die Runde (jeder Tumble, jeder Kammdurchgang und jedes Freispiel) beendet ist; zum Beschleunigen nutze die Einstellung {quick}/{turbo}. Tempo-Einstellungen, ein Tipp auf den Feier-Zähler, ein verborgener Tab oder das Verlassen der Seite ändern die Auszahlung nie; die Runde wird immer genau einmal mit der Auszahlung der Engine abgeschlossen.",
+      "note": "DEMO-Guthaben hat keinen Wert; es bringt weder SOL noch Token oder Belohnungen. Das Spiel läuft im Browser mit lokalem Zufall; es gibt keinen VRF-Nachweis."
+    },
+    "pay": {
+      "title": "Gewinntabelle",
+      "lead": "<b>5 oder mehr waagerecht oder senkrecht benachbarte Tropfen derselben Farbe</b> bilden einen Cluster. Die große Zahl ist der Brutto-DEMO-Betrag bei einem Einsatz von <b>{bet}</b>; der Multiplikator darunter ist ein Vielfaches des Einsatzes. Jeder Cluster im selben Raster zahlt einzeln.",
+      "clustersAria": "Cluster-Gewinne",
+      "fullSummary": "Alle Cluster-Größen (12 Stufen)",
+      "fullCaption": "Auszahlung nach Farbe und Cluster-Größe, als Vielfaches des Einsatzes",
+      "colour": "Farbe",
+      "scatterTitle": "{name} · Scatter-Gewinn",
+      "combs5": "5+ Kämme",
+      "combs4": "4 Kämme",
+      "combs3": "3 Kämme",
+      "scatterText": "Liegen im Endraster des Basis-Spins 3 oder mehr Goldene Kämme, zahlen sie und lösen <b>{spins} Freispiele</b> (Tulpen-Marmorierung) aus. Kämme lösen sich nicht auf; sie fallen nur und gleiten mit dem Kamm.",
+      "dropText": "Er gehört selbst zu keinem Cluster; wo er landet, verteilt er seine Tinte: Er wählt die häufigste Farbe unter seinen 4 Nachbarn und färbt seine Nachbarn und sich selbst in dieser Farbe. Details findest du auf der Seite „{features}“.",
+      "maxTitle": "Maximalgewinn {n}×",
+      "maxText": "Bei diesem Einsatz sind das <b>{amount}</b>. Erreicht die Rundensumme diese Obergrenze, endet die Runde sofort; verbleibende Freispiele entfallen."
+    },
+    "features": {
+      "title": "Besonderheiten",
+      "combTitle": "Kammdurchgang",
+      "combText": "Wenn jede Tumble-Kette endet, zieht der Kamm einmal übers Brett: Zeile r gleitet zyklisch um <b>round(A · sin(φ + r · k))</b> Spalten (was rechts hinausgeht, kommt links wieder herein). A ist bei jedem Durchgang 1, 2 oder 3 ({weights}); φ und k werden bei jedem Durchgang neu gezogen. Bildet die Verschiebung einen neuen Cluster, geht die Kette weiter; sonst endet der Spin. Höchstens {passes} Durchgänge pro Spin. Symbole tauschen nur die Plätze; keines wird hinzugefügt oder entfernt.",
+      "combExample": "Beispiel: A = 2, φ = 0, k = 8·2π/64 → Zeilenverschiebungen {shifts}.",
+      "combExampleAria": "Beispiel-Kammdurchgang, Verschiebung pro Zeile",
+      "combRow": "Zeile {n} {shift}",
+      "dropTitle": "{name}",
+      "dropText": "In dem Moment, in dem er fällt (beim Austeilen oder Auffüllen), verteilt er seine Tinte: Er zählt die Farben seiner 4 Nachbarn, wählt die häufigste (bei Gleichstand zufällig; ohne farbigen Nachbarn eine zufällige Farbe), färbt seine farbigen Nachbarn in dieser Farbe und wird selbst zu dieser Farbe. Goldene Kämme werden nicht gefärbt.",
+      "freeTitle": "Tulpen-Marmorierung (Freispiele)",
+      "freeText": "3+ Goldene Kämme lösen {trigger} Freispiele aus. In den Freispielen erhält jede geplatzte Zelle einen <b>Farbfleck-Multiplikator</b>: beim ersten Mal ×2, in derselben Zelle jedes Mal verdoppelt, höchstens ×{stainMax}. Die Flecken bleiben während des gesamten Features; Tumbles bewegen sie nicht, aber <b>der Kammdurchgang schiebt die Flecken mit derselben Verschiebung wie die Symbole</b>. Liegt ein Cluster über gefleckten Zellen, wird seine Auszahlung mit der <b>Summe</b> der darunterliegenden Flecken multipliziert (erst Auszahlung, dann der neue Fleck). In den Freispielen geben 3+ Kämme {retrigger} Spins; in einer Runde werden höchstens {max} Spins gespielt. Der Rußtropfen wird in den Freispielen nicht verteilt (nur ein Meistertropfen ohne farbigen Nachbarn kann diese Farbe zufällig wählen).",
+      "stainsAria": "Fleck-Multiplikatoren",
+      "cumTitle": "Kumulativer Gewinn",
+      "cumText": "Die Gewinnanzeige wird während einer Runde nie zurückgesetzt: Cluster, Kammgewinne, die Scatter-Auszahlung und alle Freispiele addieren sich in derselben Summe. Eine Freispiel-Runde endet immer mit dem Bildschirm „{screen}“.",
+      "tiersTitle": "Gewinnstufen und Multiplikator-Ansagen",
+      "tiersText": "Liegt die Rundensumme beim <b>10-Fachen</b> deines Basiseinsatzes oder darüber, öffnet sich der Feier-Bildschirm und der Zähler steigt durch die Stufen: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; eine Runde, die die Obergrenze erreicht, endet mit {max}. Fleck-Multiplikatoren ab ×10 werden groß über dem Raster und mit eigenem Ton angesagt. Ein Tipp auf den Bildschirm springt zum Ergebnis; die Auszahlung ändert sich dadurch nie.",
+      "anteTitle": "Chance ×2 · Kosten {cost}",
+      "anteText": "Solange aktiv, kostet jeder Spin das <b>{multiple}-Fache deines Einsatzes</b>, und Goldene Kämme erscheinen im Basisspiel häufiger: Die Freispiel-Chance ist etwa doppelt so hoch ({ante} / {standard}). Gewinne werden weiterhin auf Basis des Grundeinsatzes ausgezahlt. Solange es aktiv ist, kann der Bonus nicht gekauft werden.",
+      "buyTitle": "Bonus kaufen · Preis {price}",
+      "buyText": "Für das <b>100-Fache</b> deines Einsatzes beginnt die Runde mit mindestens 3 Goldenen Kämmen; {spins} Freispiele sind garantiert. Der Kauf erfolgt über ein Bestätigungsfenster, läuft mit eigenem RTP ({rtp}) und ist beim Autoplay nicht nutzbar."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Theoretische Rückzahlung (RTP)",
+      "caption": "Theoretische Rückzahlung je Modus",
+      "mode": "Modus",
+      "cost": "Kosten",
+      "ci": "95 % KI",
+      "feature": "Feature",
+      "everyRound": "jede Runde",
+      "method": "Für jeden Modus eine eigene Simulation mit {millions} Millionen Runden (Engine <code>ebru-ink-1</code>). Der RTP wird auf den gezahlten Betrag bezogen. Trefferquote (Basis-Spin): Standard {hit}, Chance ×2 {hitAnte}. Volatilität (Standardabweichung in Kosteneinheiten): Standard {sdStandard}, Kauf {sdBuy}.",
+      "note": "Die Simulation ist eine Schätzung und <b>nicht zertifiziert</b>; wegen der schweren Verteilungsenden kann das Konfidenzintervall zu optimistisch sein. Ergebnisse in einer kurzen Sitzung können stark vom RTP abweichen. DEMO-Guthaben hat <b>keinen Wert</b>."
+    },
+    "limits": {
+      "title": "Einsatz- und Gewinnlimits",
+      "range": "Einsatzspanne",
+      "levels": "Stufen",
+      "current": "Aktueller Einsatz",
+      "currentValue": "{bet} · Chance ×2 {ante} · Kauf {buy}",
+      "max": "Maximalgewinn",
+      "maxValue": "Das {n}-Fache des Einsatzes · {amount} bei diesem Einsatz",
+      "p1": "Eine Runde, die den Maximalgewinn erreicht, endet sofort; verbleibende Freispiele entfallen. Die Auszahlung wird immer auf Basis des Grundeinsatzes berechnet, Bruchteile eines Cents werden abgerundet.",
+      "p2": "Stufen und Modi, die dein Guthaben nicht deckt, sind nicht wählbar. Eine Runde ist eine einzige Reservierung und eine einzige Auszahlung; es wird immer nur eine Runde gleichzeitig gespielt."
+    },
+    "keys": {
+      "title": "Tasten",
+      "heading": "Tastatur",
+      "space": "Leertaste",
+      "spaceText": "Startet den Spin ({settings} → „{option}“). Während einer Runde überspringt sie den Spin nicht; sie beschleunigt nur die Freispiel-Bildschirme und den Feier-Zähler.",
+      "enterText": "Betätigt die fokussierte Schaltfläche.",
+      "escText": "Schließt das geöffnete Fenster (außer der Sitzungserinnerung).",
+      "tabText": "Wechselt zwischen den Bedienelementen; der Fokus ist immer sichtbar.",
+      "arrowsText": "Wechselt in diesem Infofenster die Seite; ändert in Einstellungsauswahlen die Option.",
+      "pageText": "Wechselt zwischen den Infoseiten.",
+      "note": "Der Screenreader sagt jeden Schritt an („{example}“, Kammdurchgänge, Rundenergebnis); das Raster wird als 7×7-Tabelle vorgelesen, gefleckte Zellen samt ihrem Multiplikator. Symbole unterscheiden sich neben der Farbe auch durch die Form (Tulpe, Nelke, Hatip-Blume, Blatt, Pfauenauge, Gänseblümchen, Rose, Kiesel). Die Einstellung „Bewegung reduzieren“ verkürzt den Kamm auf eine kurze Gleitbewegung und schaltet Partikel und Wackeln ab."
+    },
+    "fault": {
+      "title": "Störungsklausel",
+      "p1": "<b>Eine Störung macht alle betroffenen Spiele und Auszahlungen ungültig.</b> Bei einer Software-, Browser- oder Gerätestörung gilt die Rundenaufzeichnung; ein auf dem Bildschirm angezeigter Betrag, der nicht mit der Engine-Aufzeichnung übereinstimmt, ist ungültig.",
+      "p2": "Dieses Spiel wird nur mit DEMO-Guthaben gespielt. DEMO hat keinen Wert und kann nicht in Geld oder Token umgewandelt werden; bei einer Störung können das DEMO-Guthaben und der Sitzungsverlauf korrigiert oder zurückgesetzt werden.",
+      "p3": "Da das Ergebnis vor dem Spin feststeht, ändern eine abgebrochene Animation, ein verborgener Tab oder das Verlassen der Seite nichts am Ergebnis; die Runde wird weiterhin genau einmal mit der Auszahlung der Engine abgeschlossen."
+    }
+  }
+}

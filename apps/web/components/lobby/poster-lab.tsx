@@ -76,7 +76,7 @@ function Ebru({ variant }: { variant: PosterVariant }) {
 
 function Cezeri({ variant }: { variant: PosterVariant }) {
   const p = L({
-    tile: [{ x: 50, y: 82, w: 94, z: 5 }, { x: 50, y: 40, w: 66 }, { x: 16, y: 20, w: 30, r: -8, z: 3 }, { x: 86, y: 18, w: 28, r: 12, z: 3 }, { x: 84, y: 58, w: 24, z: 4 }],
+    tile: [{ x: 50, y: 82, w: 86, z: 5 }, { x: 50, y: 40, w: 66 }, { x: 16, y: 20, w: 30, r: -8, z: 3 }, { x: 86, y: 18, w: 28, r: 12, z: 3 }, { x: 84, y: 58, w: 24, z: 4 }],
     wide: [{ x: 76, y: 78, w: 40, z: 5 }, { x: 70, y: 36, w: 20 }, { x: 52, y: 30, w: 11, r: -8, z: 3 }, { x: 90, y: 30, w: 12, r: 12, z: 3 }, { x: 93, y: 62, w: 9, z: 4 }],
     narrow: [{ x: 50, y: 78, w: 72, z: 5 }, { x: 50, y: 34, w: 34 }, { x: 20, y: 30, w: 22, r: -8, z: 3 }, { x: 80, y: 28, w: 22, r: 12, z: 3 }, { x: 88, y: 60, w: 14, z: 4 }],
   })[variant]!;
@@ -115,7 +115,7 @@ function CandyWordmark() {
       <pattern id="ccStripe" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)"><rect width="26" height="26" fill="transparent" /><rect width="9" height="26" fill="#ffffff" opacity=".28" /></pattern>
       <filter id="ccShadow" x="-10%" y="-10%" width="120%" height="140%"><feDropShadow dx="0" dy="7" stdDeviation="5" floodColor="#2a0b3a" floodOpacity=".75" /></filter>
     </defs>
-    <g filter="url(#ccShadow)" fontFamily="var(--font-barlow-face), Barlow, sans-serif" fontWeight="600" textAnchor="middle" strokeLinejoin="round" paintOrder="stroke">
+    <g filter="url(#ccShadow)" style={{ fontFamily: "var(--font-barlow-face), Barlow, sans-serif" }} fontWeight="600" textAnchor="middle" strokeLinejoin="round" paintOrder="stroke">
       <text x="260" y="96" fontSize="104" letterSpacing="-2" fill="url(#ccFill)" stroke="#5a1446" strokeWidth="14">Candy</text>
       <text x="260" y="96" fontSize="104" letterSpacing="-2" fill="url(#ccStripe)">Candy</text>
       <text x="260" y="196" fontSize="92" letterSpacing="-1" fill="url(#ccFill2)" stroke="#5a2a0e" strokeWidth="13">Cascade</text>
@@ -140,12 +140,13 @@ function Cascade({ variant }: { variant: PosterVariant }) {
    outcomes are drawn: a poster must not look like game data. */
 function Wordmark({ text, size = 120 }: { text: string; size?: number }) {
   return <svg viewBox={`0 0 ${text.length * size * 0.62} ${size * 1.1}`} width="100%" role="img" aria-label={text} style={{ display: 'block', overflow: 'visible' }}>
-    <text x="50%" y={size * 0.86} textAnchor="middle" fontFamily="var(--font-barlow-face), Barlow, sans-serif" fontWeight="600" fontSize={size} letterSpacing={-size * 0.03} fill="#f3f5f8">{text}</text>
+    <text x="50%" y={size * 0.86} textAnchor="middle" style={{ fontFamily: "var(--font-barlow-face), Barlow, sans-serif" }} fontWeight="600" fontSize={size} letterSpacing={-size * 0.03} fill="#f3f5f8">{text}</text>
   </svg>;
 }
 function CrashArt({ wide }: { wide: boolean }) {
-  const w = wide ? 1600 : 900, h = 900;
-  const path = wide ? `M-20 820 C 420 800 760 700 980 520 S 1340 160 1500 70` : `M-20 840 C 260 820 470 720 600 560 S 800 210 880 90`;
+  const w = wide ? 1600 : 720, h = wide ? 900 : 960;
+  const end = wide ? [1340, 130] : [640, 120], start = wide ? 180 : -20;
+  const path = wide ? `M180 820 C 560 800 820 700 980 540 S 1220 240 1340 130` : `M-20 700 C 200 690 360 610 450 470 S 590 200 640 120`;
   return <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="xMidYMid slice" className={styles.fill} aria-hidden="true">
     <defs>
       <radialGradient id={`crBg${wide}`} cx=".78" cy=".2" r=".9"><stop offset="0" stopColor="#3a1a14" /><stop offset=".45" stopColor="#141019" /><stop offset="1" stopColor="#090b10" /></radialGradient>
@@ -156,10 +157,10 @@ function CrashArt({ wide }: { wide: boolean }) {
     <rect width={w} height={h} fill={`url(#crBg${wide})`} />
     {Array.from({ length: 12 }, (_, i) => <path key={`v${i}`} d={`M${(i + 1) * (w / 12)} 0V${h}`} stroke="#ffffff" strokeOpacity=".045" />)}
     {Array.from({ length: 8 }, (_, i) => <path key={`h${i}`} d={`M0 ${(i + 1) * (h / 8)}H${w}`} stroke="#ffffff" strokeOpacity=".045" />)}
-    <path d={`${path} L ${w + 40} ${h + 40} L -20 ${h + 40} Z`} fill={`url(#crArea${wide})`} />
+    <path d={`${path} L ${end[0]} ${h + 40} L ${start} ${h + 40} Z`} fill={`url(#crArea${wide})`} />
     <path d={path} stroke="#ff6a3d" strokeWidth="34" fill="none" opacity=".55" filter={`url(#crGlow${wide})`} />
     <path d={path} stroke={`url(#crLine${wide})`} strokeWidth="12" strokeLinecap="round" fill="none" />
-    <g transform={wide ? 'translate(1500 70) rotate(-38)' : 'translate(880 90) rotate(-52)'}>
+    <g transform={wide ? 'translate(1340 130) rotate(-42)' : 'translate(640 120) rotate(-58)'}>
       <circle r="46" fill="#ff6a3d" opacity=".35" filter={`url(#crGlow${wide})`} />
       <path d="M-30 -18 L 34 0 L -30 18 L -18 0 Z" fill="#fff2e6" />
     </g>
@@ -169,7 +170,7 @@ function Crash({ variant }: { variant: PosterVariant }) {
   const wide = variant === 'land' || variant === 'wide';
   return <Frame id="crash" variant={variant}>
     <CrashArt wide={wide} />
-    <At x={wide ? 30 : 50} y={wide ? 76 : 80} w={wide ? 46 : 82} z={5}><Wordmark text="Crash" /></At>
+    {!wide && <At x={50} y={80} w={82} z={5}><Wordmark text="Crash" /></At>}
   </Frame>;
 }
 function Coin({ face }: { face: 'heads' | 'tails' }) {
@@ -184,7 +185,7 @@ function Coin({ face }: { face: 'heads' | 'tails' }) {
     <circle cx="100" cy="100" r="70" fill="none" stroke="#fff2d8" strokeOpacity=".55" strokeWidth="3" strokeDasharray="2 7" />
     {face === 'heads'
       ? <g transform="translate(66 62) scale(2.3)" color="#5a230c"><BrandMark /></g>
-      : <text x="100" y="128" textAnchor="middle" fontSize="80" fontFamily="var(--font-barlow-face), Barlow, sans-serif" fontWeight="600" fill="#5a230c">Ⅱ</text>}
+      : <text x="100" y="128" textAnchor="middle" fontSize="80" style={{ fontFamily: "var(--font-barlow-face), Barlow, sans-serif" }} fontWeight="600" fill="#5a230c">Ⅱ</text>}
   </svg>;
 }
 function Coinflip({ variant }: { variant: PosterVariant }) {
@@ -195,9 +196,9 @@ function Coinflip({ variant }: { variant: PosterVariant }) {
       <rect width="900" height="900" fill={`url(#cfBg${variant})`} />
       {[260, 360, 470].map((r, i) => <ellipse key={r} cx="450" cy="380" rx={r} ry={r * 0.62} fill="none" stroke="#6fd6e6" strokeOpacity={0.22 - i * 0.05} strokeWidth="2" transform="rotate(-18 450 380)" />)}
     </svg>
-    <At x={wide ? 62 : 38} y={wide ? 42 : 36} w={wide ? 26 : 50} r={-14} z={3}><Coin face="heads" /></At>
-    <At x={wide ? 84 : 72} y={wide ? 30 : 22} w={wide ? 16 : 30} r={18} z={2} o={0.9}><Coin face="tails" /></At>
-    <At x={wide ? 30 : 50} y={wide ? 76 : 80} w={wide ? 50 : 86} z={5}><Wordmark text="Coinflip" /></At>
+    <At x={wide ? 44 : 38} y={wide ? 54 : 36} w={wide ? 34 : 50} r={-14} z={3}><Coin face="heads" /></At>
+    <At x={wide ? 64 : 72} y={wide ? 34 : 22} w={wide ? 20 : 30} r={18} z={2} o={0.9}><Coin face="tails" /></At>
+    {!wide && <At x={50} y={80} w={86} z={5}><Wordmark text="Coinflip" /></At>}
   </Frame>;
 }
 

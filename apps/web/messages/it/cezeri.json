@@ -138,7 +138,8 @@
     "anteOn": "Chance ×2 attiva: probabilità di giri gratis ≈2×, costo {cost}.",
     "anteOff": "Chance ×2 disattiva: costo {cost}.",
     "refilled": "Saldo DEMO ricaricato a {amount} DEMO.",
-    "refilledRemote": "Saldo DEMO del server ricaricato a {amount} DEMO."
+    "refilledRemote": "Saldo DEMO del server ricaricato a {amount} DEMO.",
+    "celebration": "{title}: {amount} DEMO, {times}×."
   },
   "autoplay": {
     "serverFailed": "Il server non ha potuto avviare il round",
@@ -369,5 +370,8 @@
     "board": "La plancia è un mozzo centrale circondato da 4 anelli concentrici di 12 spicchi. Su ciascuno dei 12 raggi che vanno dal mozzo verso l’esterno, 3 o 4 spicchi consecutivi dello stesso simbolo, dall’interno verso l’esterno (partendo dall’anello 1 o dall’anello 2), pagano; il wild Ingranaggio d’Oro sostituisce ogni simbolo. Il moltiplicatore del mozzo (×1–×10) moltiplica tutte le vincite sui raggi di quel giro.",
     "features": "Blocco Ingranaggi: se c’è una nuova vincita, gli spicchi vincenti si bloccano, i quattro anelli girano di nuovo sotto di essi e il mozzo sale di +1 a ogni respin; fino a 10 respin, finché non arriva alcun nuovo pagamento. 3 o più Brocche d’Acqua attivano 10 giri gratis (Orologio dell’Elefante): il moltiplicatore del mozzo si mantiene tra i giri e può solo salire, e ogni 3 giri il falco automa lascia wild Ingranaggio d’Oro permanenti. La vincita massima è 10.000 volte la puntata.",
     "fixed": "Il risultato viene stabilito localmente nel tuo browser, con casualità locale, prima che il giro inizi; l’animazione si limita a riprodurlo. Anche se lasci la pagina, il round si chiude con il pagamento stabilito. Non c’è alcuna prova VRF."
+  },
+  "badge": {
+    "checking": "Verifica del server in corso"
   }
 }

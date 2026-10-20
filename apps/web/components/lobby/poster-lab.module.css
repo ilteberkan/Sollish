@@ -12,4 +12,4 @@
 .fade[data-variant='tile'] { background: linear-gradient(180deg, rgba(6, 8, 12, 0) 52%, rgba(6, 8, 12, 0.72) 100%); }
 .fade[data-variant='wide'] { background: linear-gradient(90deg, rgba(8, 10, 14, 0.96) 0%, rgba(8, 10, 14, 0.86) 26%, rgba(8, 10, 14, 0.35) 46%, rgba(8, 10, 14, 0) 60%); }
 .fade[data-variant='narrow'] { background: linear-gradient(180deg, rgba(6, 8, 12, 0) 60%, rgba(6, 8, 12, 0.55) 100%); }
-.fade[data-variant='land'] { background: linear-gradient(90deg, rgba(6, 8, 12, 0.55) 0%, rgba(6, 8, 12, 0) 55%); }
+.fade[data-variant='land'] { background: none; }

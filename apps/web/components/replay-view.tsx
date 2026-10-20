@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
 import { configuredApi } from '@/lib/chat';
-import { fetchReplay, rgsErrorMessage, RgsError, type RemoteReplay } from '@/lib/rgs-client';
+import { fetchReplay, rgsErrorCode, RgsError, type RemoteReplay } from '@/lib/rgs-client';
 import { ALL_SLOT_ENGINES } from '@/lib/slot-engines/all';
 import { replayFrames, verifyReplay, type ReplayCell, type RowStatus } from '@/lib/slot-verify';
 import { SymbolArt, type CascadeArtSymbol } from './cascade/symbols';
@@ -16,7 +16,7 @@ import type { MessageKey } from '@/lib/i18n/catalog';
 const api = configuredApi(process.env.NEXT_PUBLIC_API_URL);
 const GAME_KEYS = new Set(['cascade', 'tarhun', 'ebru', 'cezeri', 'asena']);
 const MODE_KEYS = new Set(['standard', 'ante', 'buy']);
-/** `message` is a verify-namespace key, or (from lib/rgs-client) an already formatted text. */
+/** `message` is a verify-namespace key (`replay.*`) or a slotKit key (`rgs.errors.*`). */
 type State = { phase: 'loading' } | { phase: 'error'; message: string } | { phase: 'ready'; replay: RemoteReplay; frames: ReturnType<typeof replayFrames>; verified: RowStatus };
 
 function Cell({ game, cell, win }: { game: string; cell: ReplayCell; win: boolean }) {
@@ -40,6 +40,7 @@ export function ReplayView({ id }: { id: string }) {
   const [playing, setPlaying] = useState(true);
   const t = useT('verify');
   const common = useT('common');
+  const kit = useT('slotKit');
   const format = useFormat();
   const times = (hundredths: number) => format.amount(hundredths);
   const gameName = (id: string) => (GAME_KEYS.has(id) ? common(`games.${id}` as MessageKey<'common'>) : id);
@@ -51,7 +52,7 @@ export function ReplayView({ id }: { id: string }) {
       const verified = (await verifyReplay(replay)).status;
       if (!cancelled) setState({ phase: 'ready', replay, frames: replayFrames(round), verified });
     }, (error: unknown) => {
-      if (!cancelled) setState({ phase: 'error', message: error instanceof RgsError && error.code === 'NOT_FOUND' ? 'replay.notFound' : rgsErrorMessage(error) });
+      if (!cancelled) setState({ phase: 'error', message: error instanceof RgsError && error.code === 'NOT_FOUND' ? 'replay.notFound' : `rgs.errors.${rgsErrorCode(error)}` });
     });
     return () => { cancelled = true; };
   }, [id]);
@@ -66,7 +67,7 @@ export function ReplayView({ id }: { id: string }) {
   const winSet = useMemo(() => new Set(frame?.winIds ?? []), [frame]);
 
   if (state.phase === 'loading') return <div className={`game-page ${styles.page}`}><h1>{t('replay.title')}</h1><p role="status" className={styles.meta}>{t('replay.loading')}</p></div>;
-  if (state.phase === 'error') return <div className={`game-page ${styles.page}`}><h1>{t('replay.title')}</h1><p role="alert">{state.message.startsWith('replay.') ? t(state.message as MessageKey<'verify'>) : state.message}</p></div>;
+  if (state.phase === 'error') return <div className={`game-page ${styles.page}`}><h1>{t('replay.title')}</h1><p role="alert">{state.message.startsWith('replay.') ? t(state.message as MessageKey<'verify'>) : kit(state.message as MessageKey<'slotKit'>)}</p></div>;
   const { replay } = state;
   return (
     <div className={`game-page ${styles.page}`}>

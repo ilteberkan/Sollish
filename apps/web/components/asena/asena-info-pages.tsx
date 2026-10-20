@@ -6,12 +6,18 @@ import {
   type AsenaMode, type AsenaPaySymbol,
 } from '@sollish/protocol';
 import type { GameInfoPage } from '../slot-kit';
-import { formatAmount, formatDemo } from '@/lib/slot-kit/bet';
-import { ASENA_MODE_LABELS, asenaCost, asenaRtp, asenaRtpRange } from '@/lib/asena-controls';
+import type { Translator } from '@/lib/i18n/translator';
+import type { Formatter } from '@/lib/i18n/format';
+import { groupedInt, fixed1, percentPoints } from '@/lib/slot-format';
+import { ASENA_COST_MODES, asenaCost, asenaRtp, asenaRtpRange } from '@/lib/asena-controls';
 import { asenaCents, asenaMoney, asenaTimes } from '@/lib/asena-timeline';
-import { ASENA_SYMBOL_LABELS, AsenaSymbolArt } from './symbols';
+import { richText } from '../game-rich';
+import { AsenaSymbolArt, useAsenaSymbolLabels } from './symbols';
 import { AsenaTemplateGlyph } from './template-glyph';
 import styles from './asena-info.module.css';
+
+/** Translators and formatter the info pages are built with (they are plain data for the modal, not a component). */
+export interface AsenaInfoContext { t: Translator<'asena'>; tk: Translator<'slotKit'>; tc: Translator<'common'>; format: Formatter }
 
 const MODES: AsenaMode[] = ['standard', 'ante', 'buy'];
 const HIGH = new Set<AsenaPaySymbol>(['h1', 'h2', 'h3', 'h4']);
@@ -19,8 +25,6 @@ const HIGH = new Set<AsenaPaySymbol>(['h1', 'h2', 'h3', 'h4']);
 const TIER_LABELS = ['5', '6', '7', '8–9', '10–12', '13–17', '18+'] as const;
 /** Tiers shown on the cards (18+, 13–17, 10–12, 8–9, 5); the full table lists all seven. */
 const CARD_TIERS = [6, 5, 4, 3, 0];
-const pct = (ratio: number, digits = 1) => `%${(ratio * 100).toFixed(digits).replace('.', ',')}`;
-const int = (n: number) => new Intl.NumberFormat('tr-TR').format(n);
 const BY_MULTIPLIER = [...ASENA_TEMPLATES].sort((a, b) => b.multiplier - a.multiplier);
 
 function Feature({ art, title, children }: { art?: ReactNode; title: string; children: ReactNode }) {
@@ -32,21 +36,25 @@ function Feature({ art, title, children }: { art?: ReactNode; title: string; chi
   );
 }
 
-function Paytable({ betCents }: { betCents: number }) {
-  const amount = (h: number) => asenaMoney(asenaCents(betCents, h));
+function Paytable({ betCents, ctx }: { betCents: number; ctx: AsenaInfoContext }) {
+  const { t, format } = ctx;
+  const loc = format.locale;
+  const labels = useAsenaSymbolLabels();
+  const amount = (h: number) => asenaMoney(asenaCents(betCents, h), loc);
+  const times = (h: number) => asenaTimes(h, loc);
   return (
     <div className={styles.page}>
-      <h3>Ödeme tablosu</h3>
-      <p className={styles.lead}>Yatay veya dikey komşu <strong>5 veya daha fazla aynı sembol</strong> bir küme oluşturur; Gök Kurt ve Yıldız İzi jokerleri her sembolün yerine geçer. Büyük rakam <strong>{formatDemo(betCents)}</strong> bahiste brüt DEMO tutarıdır; altındaki çarpan bahsin katıdır. Aynı tahtadaki bütün kümeler ayrı ayrı öder.</p>
-      <ul className={styles.payGrid} aria-label="Küme ödemeleri">
+      <h3>{t('info.tab.pay')}</h3>
+      <p className={styles.lead}>{richText(t, 'info.pay.lead', { bet: format.demo(betCents) })}</p>
+      <ul className={styles.payGrid} aria-label={t('info.pay.gridAria')}>
         {ASENA_PAY_SYMBOLS.map(symbol => (
           <li key={symbol} className={`${styles.payCard} ${HIGH.has(symbol) ? styles.payHigh : ''}`}>
             <span className={styles.payArt} aria-hidden="true"><AsenaSymbolArt symbol={symbol} size="100%" /></span>
             <div className={styles.payBody}>
-              <h4 className={styles.payName}>{ASENA_SYMBOL_LABELS[symbol]}</h4>
+              <h4 className={styles.payName}>{labels[symbol]}</h4>
               <dl className={styles.payRows}>
                 {CARD_TIERS.map(tier => (
-                  <div key={tier}><dt>{TIER_LABELS[tier]}</dt><dd><strong>{amount(ASENA_PAYTABLE[symbol][tier]!)}</strong><small>{asenaTimes(ASENA_PAYTABLE[symbol][tier]!)}×</small></dd></div>
+                  <div key={tier}><dt>{TIER_LABELS[tier]}</dt><dd><strong>{amount(ASENA_PAYTABLE[symbol][tier]!)}</strong><small>{times(ASENA_PAYTABLE[symbol][tier]!)}×</small></dd></div>
                 ))}
               </dl>
             </div>
@@ -54,15 +62,15 @@ function Paytable({ betCents }: { betCents: number }) {
         ))}
       </ul>
       <details className={styles.fullTable}>
-        <summary>Bütün küme boyları (7 kademe)</summary>
+        <summary>{t('info.pay.fullTable')}</summary>
         <table>
-          <caption className="sr-only">Sembol ve küme boyuna göre ödeme, bahsin katı</caption>
-          <thead><tr><th scope="col">Sembol</th>{TIER_LABELS.map(label => <th key={label} scope="col">{label}</th>)}</tr></thead>
+          <caption className="sr-only">{t('info.pay.fullCaption')}</caption>
+          <thead><tr><th scope="col">{t('info.pay.colSymbol')}</th>{TIER_LABELS.map(label => <th key={label} scope="col">{label}</th>)}</tr></thead>
           <tbody>
             {ASENA_PAY_SYMBOLS.map(symbol => (
               <tr key={symbol}>
-                <th scope="row"><span aria-hidden="true"><AsenaSymbolArt symbol={symbol} size="100%" /></span>{ASENA_SYMBOL_LABELS[symbol]}</th>
-                {ASENA_PAYTABLE[symbol].map((h, i) => <td key={i}>{asenaTimes(h)}×</td>)}
+                <th scope="row"><span aria-hidden="true"><AsenaSymbolArt symbol={symbol} size="100%" /></span>{labels[symbol]}</th>
+                {ASENA_PAYTABLE[symbol].map((h, i) => <td key={i}>{times(h)}×</td>)}
               </tr>
             ))}
           </tbody>
@@ -72,33 +80,33 @@ function Paytable({ betCents }: { betCents: number }) {
         <section className={styles.special}>
           <span className={styles.specialArt} aria-hidden="true"><AsenaSymbolArt symbol="moon" size="100%" /></span>
           <div>
-            <h4>{ASENA_SYMBOL_LABELS.moon}</h4>
+            <h4>{labels.moon}</h4>
             <dl className={styles.scatterRows}>
-              <div><dt>5+ Ay Ata</dt><dd><strong>{amount(ASENA_SCATTER_PAY[5])}</strong> <small>{asenaTimes(ASENA_SCATTER_PAY[5])}×</small></dd></div>
-              <div><dt>4 Ay Ata</dt><dd><strong>{amount(ASENA_SCATTER_PAY[4])}</strong> <small>{asenaTimes(ASENA_SCATTER_PAY[4])}×</small></dd></div>
-              <div><dt>3 Ay Ata</dt><dd><strong>{amount(ASENA_SCATTER_PAY[3])}</strong> <small>{asenaTimes(ASENA_SCATTER_PAY[3])}×</small></dd></div>
+              <div><dt>{t('info.pay.moon5')}</dt><dd><strong>{amount(ASENA_SCATTER_PAY[5])}</strong> <small>{times(ASENA_SCATTER_PAY[5])}×</small></dd></div>
+              <div><dt>{t('info.pay.moon4')}</dt><dd><strong>{amount(ASENA_SCATTER_PAY[4])}</strong> <small>{times(ASENA_SCATTER_PAY[4])}×</small></dd></div>
+              <div><dt>{t('info.pay.moon3')}</dt><dd><strong>{amount(ASENA_SCATTER_PAY[3])}</strong> <small>{times(ASENA_SCATTER_PAY[3])}×</small></dd></div>
             </dl>
-            <p>Temel dönüşün son tahtasında 3 veya daha fazla Ay Ata varsa öder ve <strong>{ASENA_FREE_SPINS_TRIGGER} bedava dönüş</strong> (Ergenekon) açar. Ay Ata patlamaz; kurt da üstüne basmaz.</p>
+            <p>{richText(t, 'info.pay.moonText', { spins: ASENA_FREE_SPINS_TRIGGER })}</p>
           </div>
         </section>
         <section className={styles.special}>
           <span className={styles.specialArt} aria-hidden="true"><AsenaSymbolArt symbol="wolf" size="100%" /></span>
           <div>
-            <h4>{ASENA_SYMBOL_LABELS.wolf}</h4>
-            <p>Her ödeme sembolünün yerine geçer ve yalnız dönüşün ilk tahtasında gelir. Bir kazanca katılırsa patlamaz, <strong>yürür</strong>: düşmeden sonra bir hücre ilerler ve ayrıldığı hücreye Yıldız İzi bırakır. Ayrıntı "Özellikler" sayfasında.</p>
+            <h4>{labels.wolf}</h4>
+            <p>{richText(t, 'info.pay.wolfText')}</p>
           </div>
         </section>
         <section className={styles.special}>
           <span className={styles.specialArt} aria-hidden="true"><AsenaSymbolArt symbol="trail" size="100%" /></span>
           <div>
-            <h4>{ASENA_SYMBOL_LABELS.trail}</h4>
-            <p>Kurdun ardında kalan joker. Düşmelerle birlikte iner ve bir kazanca katılınca harcanır; dönüş bitince silinir, sonraki dönüşe geçmez.</p>
+            <h4>{labels.trail}</h4>
+            <p>{t('info.pay.trailText')}</p>
           </div>
         </section>
         <section className={`${styles.special} ${styles.specialMax}`}>
           <div>
-            <h4>Azami kazanç {int(ASENA_MAX_WIN_MULTIPLIER)}×</h4>
-            <p>Bu bahiste <strong>{formatDemo(betCents * ASENA_MAX_WIN_MULTIPLIER)}</strong>. Tur toplamı bu tavana ulaşırsa tur hemen biter; kalan bedava dönüşler oynanmaz.</p>
+            <h4>{t('info.pay.maxTitle', { max: groupedInt(ASENA_MAX_WIN_MULTIPLIER, loc) })}</h4>
+            <p>{richText(t, 'info.pay.maxText', { amount: format.demo(betCents * ASENA_MAX_WIN_MULTIPLIER) })}</p>
           </div>
         </section>
       </div>
@@ -106,143 +114,151 @@ function Paytable({ betCents }: { betCents: number }) {
   );
 }
 
-/** Multi-page game information (game-standards §3 "Bilgi"). Amounts follow the current bet. */
-export function asenaInfoPages(betCents: number): GameInfoPage[] {
+/** Multi-page game information (game-standards §3 "Bilgi"). Amounts follow the current bet; text follows the active language. */
+export function asenaInfoPages(betCents: number, ctx: AsenaInfoContext): GameInfoPage[] {
+  const { t, tk, tc, format } = ctx;
+  const loc = format.locale;
+  const pct = (ratio: number, digits = 1) => percentPoints(ratio * 100, digits, loc);
   const minBet = ASENA_BET_LEVELS_CENTS[0]!, maxBet = ASENA_BET_LEVELS_CENTS[ASENA_BET_LEVELS_CENTS.length - 1]!;
+  const anteFactor = format.number(ASENA_COST_MODES.ante.num / ASENA_COST_MODES.ante.den);
+  const tier = (id: 'big' | 'mega' | 'super' | 'epic' | 'max') => tk(`winTier.${id}.title`);
   return [
     {
-      id: 'how', title: 'Nasıl oynanır',
+      id: 'how', title: t('info.tab.how'),
       content: (
         <div className={styles.page}>
-          <h3>Nasıl oynanır</h3>
+          <h3>{t('info.tab.how')}</h3>
           <ol className={styles.steps}>
-            <li><strong>Bahsini seç.</strong> − ve + düğmeleri bahsi bir basamak değiştirir; bahis tutarına dokununca bütün basamaklar açılır. "Azami bahis" bakiyenin yettiği en yüksek basamağı seçer.</li>
-            <li><strong>Çevir.</strong> Yıldız düğmesine bas veya Boşluk tuşunu kullan. Tur maliyeti (Şans ×2 açıksa bahsin 1,25 katı) bakiyeden bir kez düşer.</li>
-            <li><strong>Küme kur.</strong> 6 × 6 yıldız alanında yatay veya dikey komşu <strong>5 veya daha fazla aynı sembol</strong> öder; küme büyüdükçe ödeme kademesi yükselir.</li>
-            <li><strong>Takımyıldız.</strong> Küme gökteki altı şablondan birini içeriyorsa takımyıldız yıldız yıldız çizilir, gökte yankılanır, kurt uluyor ve küme ödemesi şablonun çarpanıyla (×2–×10) çarpılır.</li>
-            <li><strong>Zincir.</strong> Kazanan kümeler yıldıza dönüşüp patlar, üsttekiler düşer, boşluklar dolar; kazanca katılan Gök Kurt bir hücre yürür. Yeni küme kalmayana kadar sürer.</li>
-            <li><strong>Sonuç.</strong> Turun tamamı dönüş başlamadan önce motorla belirlenir; animasyon yalnızca bu sonucu oynatır. Çevir düğmesi tur (bütün düşmeler, kurt adımları ve bedava dönüşler) bitene kadar kilitlidir; hızlandırmak için Hızlı/Turbo ayarını kullan. Hız ayarı, kutlama sayacına dokunmak, gizli sekme veya sayfadan ayrılmak ödemeyi değiştirmez; tur her durumda bir kez, motorun ödemesiyle kapanır.</li>
+            <li>{richText(t, 'info.how.steps.bet')}</li>
+            <li>{richText(t, 'info.how.steps.spin', { factor: anteFactor })}</li>
+            <li>{richText(t, 'info.how.steps.cluster')}</li>
+            <li>{richText(t, 'info.how.steps.constellation')}</li>
+            <li>{richText(t, 'info.how.steps.chain')}</li>
+            <li>{richText(t, 'info.how.steps.result')}</li>
           </ol>
-          <p className={styles.note}>DEMO kredisi değersizdir; SOL, token veya ödül kazandırmaz. Oyun tarayıcıda yerel rastgelelikle çalışır, VRF kanıtı yoktur. Gök Tengri, Ay Ata, Kün Ana, Asena ve Ergenekon kamu malı Türk mitolojisidir; karakterler ve çizimler özgündür.</p>
+          <p className={styles.note}>{t('info.how.note')}</p>
         </div>
       ),
     },
-    { id: 'pay', title: 'Ödeme tablosu', content: <Paytable betCents={betCents} /> },
+    { id: 'pay', title: t('info.tab.pay'), content: <Paytable betCents={betCents} ctx={ctx} /> },
     {
-      id: 'features', title: 'Özellikler',
+      id: 'features', title: t('info.tab.features'),
       content: (
         <div className={styles.page}>
-          <h3>Özellikler</h3>
-          <Feature title="Takımyıldız şablonları">
-            <p>Kazanan bir küme aşağıdaki şekillerden birini — döndürülmüş veya yansıtılmış hâli dahil, 8 yönün herhangi biri — tamamen içeriyorsa takımyıldız tutuşur ve <strong>küme ödemesi şablonun çarpanıyla çarpılır</strong>. Jokerler kümenin hücresidir. Birden çok şablon sığarsa çarpanı en yüksek olan tutuşur; her küme en çok bir takımyıldız yakar, aynı adımdaki farklı kümeler ayrı takımyıldızlar yakabilir.</p>
-            <ul className={styles.templates} aria-label="Takımyıldız şablonları">
-              {BY_MULTIPLIER.map(t => (
-                <li key={t.id}>
-                  <AsenaTemplateGlyph id={t.id} className={styles.templateArt} />
-                  <span><strong>{t.name}</strong><small>{t.cells.length} yıldız</small></span>
-                  <b>×{t.multiplier}</b>
+          <h3>{t('info.tab.features')}</h3>
+          <Feature title={t('info.features.templates.title')}>
+            <p>{richText(t, 'info.features.templates.text')}</p>
+            <ul className={styles.templates} aria-label={t('info.features.templates.aria')}>
+              {BY_MULTIPLIER.map(tpl => (
+                <li key={tpl.id}>
+                  <AsenaTemplateGlyph id={tpl.id} className={styles.templateArt} />
+                  <span><strong>{t(`templates.${tpl.id}`)}</strong><small>{t('info.features.templates.stars', { n: tpl.cells.length })}</small></span>
+                  <b>×{tpl.multiplier}</b>
                 </li>
               ))}
             </ul>
           </Feature>
-          <Feature title="Gök Kurt yürür" art={<AsenaSymbolArt symbol="wolf" size="100%" />}>
-            <p>Bir kazanca katılan kurt patlamaz. Düşme ve dolumdan sonra bir hücre yürür (yukarı, sağ, aşağı veya sol; rastgele, tahtadan çıkmaz, Ay Ata’ya ve başka kurda basmaz). Girdiği hücredeki sembolü yutar, ayrıldığı hücrede bir <strong>Yıldız İzi</strong> jokeri bırakır. Birden çok kurt sırayla yürür. Yıldız İzi bir kazanca katılınca harcanır; dönüş bitince silinir.</p>
+          <Feature title={t('info.features.wolf.title')} art={<AsenaSymbolArt symbol="wolf" size="100%" />}>
+            <p>{richText(t, 'info.features.wolf.text')}</p>
           </Feature>
-          <Feature title="Ergenekon (bedava dönüş)" art={<AsenaSymbolArt symbol="moon" size="100%" />}>
-            <p>3+ Ay Ata {ASENA_FREE_SPINS_TRIGGER} bedava dönüş açar (bedava dönüşte 3+ Ay Ata +{ASENA_FREE_SPINS_RETRIGGER}; bir turda en çok {ASENA_MAX_FREE_SPINS} dönüş). Bedava dönüşte yanan her takımyıldız <strong>Ergenekon haritasında</strong> kendi parçasını açar (bir parça en çok iki kez sayılır):</p>
+          <Feature title={t('info.features.ergenekon.title')} art={<AsenaSymbolArt symbol="moon" size="100%" />}>
+            <p>{richText(t, 'info.features.ergenekon.text', { spins: ASENA_FREE_SPINS_TRIGGER, retrigger: ASENA_FREE_SPINS_RETRIGGER, max: ASENA_MAX_FREE_SPINS })}</p>
             <ol className={styles.mapSteps}>
-              <li><b>3 farklı takımyıldız</b> → +{ASENA_MAP_SPINS_AT_3} dönüş ve genel çarpan <strong>×{ASENA_MAP_MULTIPLIERS[3]}</strong></li>
-              <li><b>6 farklı takımyıldız</b> → +{ASENA_MAP_SPINS_AT_6} dönüş ve genel çarpan <strong>×{ASENA_MAP_MULTIPLIERS[6]}</strong></li>
-              <li><b>Altısı da iki kez</b> → genel çarpan <strong>×{ASENA_MAP_MULTIPLIERS.twice}</strong> (demir dağ yarılır)</li>
+              <li>{richText(t, 'info.features.ergenekon.map3', { spins: ASENA_MAP_SPINS_AT_3, multiplier: ASENA_MAP_MULTIPLIERS[3] })}</li>
+              <li>{richText(t, 'info.features.ergenekon.map6', { spins: ASENA_MAP_SPINS_AT_6, multiplier: ASENA_MAP_MULTIPLIERS[6] })}</li>
+              <li>{richText(t, 'info.features.ergenekon.mapTwice', { multiplier: ASENA_MAP_MULTIPLIERS.twice })}</li>
             </ol>
-            <p>Genel çarpan ve harita özellik boyunca kalır, hiç sıfırlanmaz ve <strong>her küme kazancını</strong> çarpar — açıldığı adımın kazancı dahil (önce takımyıldızlar haritaya işlenir, sonra adım öder). Temel oyun her zaman ×1 ile oynanır.</p>
+            <p>{richText(t, 'info.features.ergenekon.after')}</p>
           </Feature>
-          <Feature title="Birikimli kazanç">
-            <p>Kazanç göstergesi tur boyunca sıfırlanmaz: kümeler, Ay Ata ödemesi ve bütün bedava dönüşler aynı toplamda birikir. Bedava dönüş turu her zaman "Ergenekon — Toplam" ekranıyla biter.</p>
+          <Feature title={t('info.features.cumulative.title')}>
+            <p>{t('info.features.cumulative.text')}</p>
           </Feature>
-          <Feature title="Kazanç kademeleri ve çarpan anonsu">
-            <p>Tur toplamı taban bahsin <strong>10 katı</strong> veya üstüyse gök kapısı açılır ve sayaç kademeler arasında tırmanır: Büyük Kazanç ≥10×, Mega Kazanç ≥25×, Süper Kazanç ≥50×, Efsane Kazanç ≥100×; tavana ulaşan tur Azami Kazanç ile biter. Şablon × genel çarpan ×10 veya üstüyse kurdun ulumasıyla birlikte büyük yazıyla ve kendi sesiyle duyurulur; genel çarpanın her artışı demir dağın çatlamasıyla gösterilir. Ekrana dokunmak sayacı hemen sonuca getirir; ödemeyi değiştirmez.</p>
+          <Feature title={t('info.features.tiers.title')}>
+            <p>{richText(t, 'info.features.tiers.text', { big: tier('big'), mega: tier('mega'), super: tier('super'), epic: tier('epic'), max: tier('max') })}</p>
           </Feature>
-          <Feature title={`Şans ×2 · maliyet ${formatDemo(asenaCost(betCents, 'ante'))}`}>
-            <p>Açıkken her dönüş bahsin <strong>1,25 katına</strong> mal olur ve temel oyunda Ay Ata çıkma olasılığı artar: bedava dönüş şansı yaklaşık 2 katıdır ({pct(ASENA_RTP.ante.featureRate, 2)} / {pct(ASENA_RTP.standard.featureRate, 2)}). Kazançlar yine taban bahse göre ödenir. Açıkken bonus satın alınamaz.</p>
+          <Feature title={t('info.features.ante.title', { cost: format.demo(asenaCost(betCents, 'ante')) })}>
+            <p>{richText(t, 'info.features.ante.text', { factor: anteFactor, ante: pct(ASENA_RTP.ante.featureRate, 2), standard: pct(ASENA_RTP.standard.featureRate, 2) })}</p>
           </Feature>
-          <Feature title={`Bonus satın al · fiyat ${formatDemo(asenaCost(betCents, 'buy'))}`}>
-            <p>Bahsin <strong>80 katı</strong> karşılığında tur en az 3 Ay Ata ile başlar; {ASENA_FREE_SPINS_TRIGGER} bedava dönüş garantilidir (Ay Ata ödemesi normal tabloya göre). Satın alma onay penceresiyle yapılır, ayrı bir RTP ile çalışır ({asenaRtp(ASENA_RTP.buy.rtp)}) ve otomatik oyunla kullanılamaz.</p>
+          <Feature title={t('info.features.buy.title', { price: format.demo(asenaCost(betCents, 'buy')) })}>
+            <p>{richText(t, 'info.features.buy.text', { spins: ASENA_FREE_SPINS_TRIGGER, rtp: asenaRtp(ASENA_RTP.buy.rtp, loc) })}</p>
           </Feature>
         </div>
       ),
     },
     {
-      id: 'rtp', title: 'RTP',
+      id: 'rtp', title: t('info.tab.rtp'),
       content: (
         <div className={styles.page}>
-          <h3>Teorik dönüş (RTP)</h3>
+          <h3>{t('info.rtp.title')}</h3>
           <div className={styles.tableWrap}>
             <table>
-              <caption className="sr-only">Mod başına teorik dönüş</caption>
-              <thead><tr><th scope="col">Mod</th><th scope="col">Maliyet</th><th scope="col">RTP</th><th scope="col">%95 GA</th><th scope="col">Özellik</th></tr></thead>
+              <caption className="sr-only">{t('info.rtp.caption')}</caption>
+              <thead><tr><th scope="col">{t('info.rtp.colMode')}</th><th scope="col">{t('info.rtp.colCost')}</th><th scope="col">RTP</th><th scope="col">{t('info.rtp.colCi')}</th><th scope="col">{t('info.rtp.colFeature')}</th></tr></thead>
               <tbody>
                 {MODES.map(mode => {
                   const r = ASENA_RTP[mode];
                   return (
                     <tr key={mode}>
-                      <th scope="row">{ASENA_MODE_LABELS[mode]}</th>
-                      <td>{mode === 'standard' ? '×1' : mode === 'ante' ? '×1,25' : '×80'}</td>
-                      <td><strong>{asenaRtp(r.rtp)}</strong></td>
-                      <td>{asenaRtpRange(r.ciLow, r.ciHigh)}</td>
-                      <td>{r.featureRate >= 1 ? 'her tur' : `1 / ${int(Math.round(1 / r.featureRate))}`}</td>
+                      <th scope="row">{tc(`modes.${mode}`)}</th>
+                      <td>{format.factor(ASENA_COST_MODES[mode].num, ASENA_COST_MODES[mode].den)}</td>
+                      <td><strong>{asenaRtp(r.rtp, loc)}</strong></td>
+                      <td>{asenaRtpRange(r.ciLow, r.ciHigh, loc)}</td>
+                      <td>{r.featureRate >= 1 ? t('info.rtp.everyRound') : t('info.rtp.oneIn', { n: groupedInt(Math.round(1 / r.featureRate), loc) })}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
-          <p>Her mod için ayrı {int(ASENA_RTP.standard.rounds / 1_000_000)} milyon tur simülasyonu (motor <code>asena-stars-1</code>). RTP ödenen maliyete göre hesaplanır. Kazanç sıklığı (taban dönüş): standart {pct(ASENA_RTP.standard.hitRate)}, Şans ×2 {pct(ASENA_RTP.ante.hitRate)}. Oynaklık (maliyet biriminde standart sapma): standart {ASENA_RTP.standard.stdDev.toFixed(1).replace('.', ',')}, satın alma {ASENA_RTP.buy.stdDev.toFixed(1).replace('.', ',')}.</p>
-          <p className={styles.note}>Simülasyon tahminidir, <strong>sertifikasızdır</strong>; ağır kuyruk nedeniyle güven aralığı iyimser olabilir. Kısa oturumdaki sonuç RTP'den çok farklı olabilir. DEMO kredisi <strong>değersizdir</strong>.</p>
+          <p>{richText(t, 'info.rtp.text', {
+            millions: groupedInt(ASENA_RTP.standard.rounds / 1_000_000, loc), hitStandard: pct(ASENA_RTP.standard.hitRate), hitAnte: pct(ASENA_RTP.ante.hitRate),
+            sdStandard: fixed1(ASENA_RTP.standard.stdDev, loc), sdBuy: fixed1(ASENA_RTP.buy.stdDev, loc),
+          })}</p>
+          <p className={styles.note}>{richText(t, 'info.rtp.note')}</p>
         </div>
       ),
     },
     {
-      id: 'limits', title: 'Bahis ve kazanç sınırları',
+      id: 'limits', title: t('info.tab.limits'),
       content: (
         <div className={styles.page}>
-          <h3>Bahis ve kazanç sınırları</h3>
+          <h3>{t('info.limits.title')}</h3>
           <dl className={styles.facts}>
-            <div><dt>Bahis aralığı</dt><dd>{formatDemo(minBet, { trimZeros: true })} – {formatDemo(maxBet, { trimZeros: true })}</dd></div>
-            <div><dt>Basamaklar</dt><dd>{ASENA_BET_LEVELS_CENTS.map(cents => formatAmount(cents, { trimZeros: true })).join(' · ')}</dd></div>
-            <div><dt>Şu anki bahis</dt><dd>{formatDemo(betCents)} · Şans ×2 {formatDemo(asenaCost(betCents, 'ante'))} · Satın alma {formatDemo(asenaCost(betCents, 'buy'))}</dd></div>
-            <div><dt>Azami kazanç</dt><dd>Bahsin {int(ASENA_MAX_WIN_MULTIPLIER)} katı · bu bahiste {formatDemo(betCents * ASENA_MAX_WIN_MULTIPLIER)}</dd></div>
+            <div><dt>{t('info.limits.range')}</dt><dd>{format.demo(minBet, { trimZeros: true })} – {format.demo(maxBet, { trimZeros: true })}</dd></div>
+            <div><dt>{t('info.limits.steps')}</dt><dd>{ASENA_BET_LEVELS_CENTS.map(cents => format.amount(cents, { trimZeros: true })).join(' · ')}</dd></div>
+            <div><dt>{t('info.limits.current')}</dt><dd>{t('info.limits.currentValue', { bet: format.demo(betCents), ante: format.demo(asenaCost(betCents, 'ante')), buy: format.demo(asenaCost(betCents, 'buy')) })}</dd></div>
+            <div><dt>{t('info.limits.max')}</dt><dd>{t('info.limits.maxValue', { multiplier: groupedInt(ASENA_MAX_WIN_MULTIPLIER, loc), amount: format.demo(betCents * ASENA_MAX_WIN_MULTIPLIER) })}</dd></div>
           </dl>
-          <p>Azami kazanca ulaşan tur hemen biter; kalan bedava dönüşler oynanmaz. Ödeme her zaman taban bahse göre hesaplanır, kuruşun altı aşağı yuvarlanır.</p>
-          <p>Bakiyenin yetmediği basamaklar ve modlar seçilemez. Bir tur tek rezervasyon ve tek ödemedir; aynı anda yalnız bir tur oynanır.</p>
+          <p>{t('info.limits.text1')}</p>
+          <p>{t('info.limits.text2')}</p>
         </div>
       ),
     },
     {
-      id: 'keys', title: 'Tuşlar',
+      id: 'keys', title: t('info.tab.keys'),
       content: (
         <div className={styles.page}>
-          <h3>Klavye</h3>
+          <h3>{t('info.keys.heading')}</h3>
           <dl className={styles.keys}>
-            <div><dt><kbd>Boşluk</kbd></dt><dd>Dönüşü başlatır (Ayarlar → "Boşluk tuşuyla döndür"). Tur sürerken dönüşü atlamaz; yalnız bedava dönüş ekranlarını ve kutlama sayacını hızlandırır.</dd></div>
-            <div><dt><kbd>Enter</kbd></dt><dd>Odaktaki düğmeye basar.</dd></div>
-            <div><dt><kbd>Esc</kbd></dt><dd>Açık pencereyi kapatır (oturum hatırlatması hariç).</dd></div>
-            <div><dt><kbd>Tab</kbd></dt><dd>Kontroller arasında gezinir; odak her zaman görünür.</dd></div>
-            <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Bu bilgi penceresinde sayfa değiştirir; ayar seçimlerinde seçeneği değiştirir.</dd></div>
-            <div><dt><kbd>PageUp</kbd> <kbd>PageDown</kbd></dt><dd>Bilgi sayfaları arasında gezinir.</dd></div>
+            <div><dt><kbd>{t('info.keys.space')}</kbd></dt><dd>{t('info.keys.spaceText', { option: tk('settings.spaceToSpin') })}</dd></div>
+            <div><dt><kbd>Enter</kbd></dt><dd>{t('info.keys.enterText')}</dd></div>
+            <div><dt><kbd>Esc</kbd></dt><dd>{t('info.keys.escText')}</dd></div>
+            <div><dt><kbd>Tab</kbd></dt><dd>{t('info.keys.tabText')}</dd></div>
+            <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>{t('info.keys.arrowsText')}</dd></div>
+            <div><dt><kbd>PageUp</kbd> <kbd>PageDown</kbd></dt><dd>{t('info.keys.pageText')}</dd></div>
           </dl>
-          <p className={styles.note}>Ekran okuyucu her adımı ("6 asena, Kurt Başı ×10, 12,00× kazanç", kurt adımları, harita ve genel çarpan, tur sonucu) duyurur; her hücre sembolü, sütunu ve satırıyla okunur. Semboller renk yanında biçimle de ayrılır (kurt başı, güneş, kartal, at, yıldız, yakut, ok, damga). Hareketi azalt tercihi takımyıldızı tamamlanmış çizer, parçacıkları ve sarsıntıyı kapatır; bütün adımlar yine gösterilir.</p>
+          <p className={styles.note}>{t('info.keys.note')}</p>
         </div>
       ),
     },
     {
-      id: 'fault', title: 'Arıza hükmü',
+      id: 'fault', title: t('info.tab.fault'),
       content: (
         <div className={styles.page}>
-          <h3>Arıza hükmü</h3>
-          <p><strong>Arıza, etkilenen bütün oyunları ve ödemeleri geçersiz kılar.</strong> Yazılım, tarayıcı veya cihaz arızasında tur kaydı esas alınır; ekranda görünen ama motor kaydıyla uyuşmayan bir tutar geçerli değildir.</p>
-          <p>Bu oyun yalnız DEMO kredisiyle oynanır. DEMO değersizdir, paraya veya tokene çevrilemez; arıza halinde DEMO bakiyesi ve oturum geçmişi düzeltilebilir veya sıfırlanabilir.</p>
-          <p>Sonuç dönüşten önce belirlendiği için animasyonun yarıda kalması, sekmenin gizlenmesi veya sayfadan ayrılmak sonucu değiştirmez; tur yine motorun ödemesiyle bir kez kapanır.</p>
+          <h3>{t('info.fault.title')}</h3>
+          <p>{richText(t, 'info.fault.p1')}</p>
+          <p>{t('info.fault.p2')}</p>
+          <p>{t('info.fault.p3')}</p>
         </div>
       ),
     },

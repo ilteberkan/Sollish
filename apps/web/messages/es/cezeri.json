@@ -138,7 +138,8 @@
     "anteOn": "Chance ×2 activada: probabilidad de giros gratis ≈2×, coste {cost}.",
     "anteOff": "Chance ×2 desactivada: coste {cost}.",
     "refilled": "Saldo DEMO recargado a {amount} DEMO.",
-    "refilledRemote": "Saldo DEMO del servidor recargado a {amount} DEMO."
+    "refilledRemote": "Saldo DEMO del servidor recargado a {amount} DEMO.",
+    "celebration": "{title}: {amount} DEMO, {times}×."
   },
   "autoplay": {
     "serverFailed": "El servidor no pudo iniciar la ronda",
@@ -369,5 +370,8 @@
     "board": "El tablero es un cubo central rodeado de 4 anillos concéntricos de 12 sectores. En cada uno de los 12 radios que van del cubo hacia fuera, pagan 3 o 4 sectores consecutivos del mismo símbolo, de dentro hacia fuera (empezando en el anillo 1 o en el anillo 2); el comodín Engranaje Dorado sustituye a cualquier símbolo. El multiplicador del cubo (×1–×10) multiplica todos los premios de radios de ese giro.",
     "features": "Bloqueo de Engranajes: si hay un premio nuevo, los sectores ganadores se bloquean, los cuatro anillos vuelven a girar debajo de ellos y el cubo sube +1 con cada respin; hasta 10 respins, mientras no llegue un pago nuevo. 3 o más Vasijas de Agua activan 10 giros gratis (Reloj del Elefante): el multiplicador del cubo se conserva entre giros y solo sube, y cada 3 giros el halcón autómata deja comodines Engranaje Dorado permanentes. El premio máximo es 10.000 veces la apuesta.",
     "fixed": "El resultado se determina localmente en tu navegador, con aleatoriedad local, antes de que empiece el giro; la animación solo reproduce ese resultado. Aunque salgas de la página, la ronda se cierra con el pago determinado. No hay prueba VRF."
+  },
+  "badge": {
+    "checking": "Comprobando el servidor"
   }
 }

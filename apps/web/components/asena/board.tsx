@@ -5,7 +5,8 @@ import type { CSSProperties, Ref } from 'react';
 import { flushSync } from 'react-dom';
 import { ASENA_COLS, ASENA_ROWS, type AsenaFall, type AsenaGrid, type AsenaSymbol, type AsenaWolfWalk } from '@sollish/protocol';
 import { AS_UNITS, type AsPos, type AsenaConstellationPlan } from './geometry';
-import { ASENA_SYMBOL_GLOW, ASENA_SYMBOL_LABELS, AsenaSymbolUse } from './symbols';
+import { useT } from '@/lib/i18n/client';
+import { ASENA_SYMBOL_GLOW, AsenaSymbolUse, useAsenaSymbolLabels } from './symbols';
 import styles from './board.module.css';
 
 /* Asena 6 × 6 star field, drawn inside the frame well (above the scene's sky canvas, under the FX canvas).
@@ -92,12 +93,14 @@ const viewsOf = (grid: AsenaGrid, epoch: number): View[] => {
 };
 
 const Cell = memo(function Cell({ view, register }: { view: View; register: (key: string, els: CellEls | null) => void }) {
+  const t = useT('asena');
+  const labels = useAsenaSymbolLabels();
   const attach = useCallback((node: HTMLDivElement | null) => {
     if (!node) { register(view.key, null); return; }
     register(view.key, { cell: node, inner: node.firstElementChild as HTMLDivElement, glow: node.querySelector(`.${styles.glow}`) as HTMLDivElement, sym: node.querySelector(`.${styles.sym}`) as HTMLDivElement });
   }, [register, view.key]);
   return (
-    <div ref={attach} className={styles.cell} role="img" aria-label={`${ASENA_SYMBOL_LABELS[view.symbol]}, sütun ${view.col + 1}, satır ${view.row + 1}`}
+    <div ref={attach} className={styles.cell} role="img" aria-label={t('board.cell', { symbol: labels[view.symbol], col: view.col + 1, row: view.row + 1 })}
       aria-hidden={view.leaving || undefined} data-sym={view.symbol} data-leaving={view.leaving || undefined}
       style={{ transform: `translate3d(${view.col * 100}%, ${view.row * 100}%, 0)`, '--glow': ASENA_SYMBOL_GLOW[view.symbol] } as CSSProperties}>
       <div className={styles.inner}>
@@ -139,7 +142,8 @@ const Plate = memo(function Plate() {
   );
 });
 
-export function AsenaBoard({ initial, mood = 'base', className, style, ref, label = 'Asena yıldız alanı' }: AsenaBoardProps) {
+export function AsenaBoard({ initial, mood = 'base', className, style, ref, label }: AsenaBoardProps) {
+  const t = useT('asena');
   const epoch = useRef(0);
   const [cells, setCells] = useState<View[]>(() => viewsOf(initial ?? ASENA_IDLE_GRID, 0));
   const [links, setLinks] = useState<Link[]>([]);
@@ -367,7 +371,7 @@ export function AsenaBoard({ initial, mood = 'base', className, style, ref, labe
   ), [links, nodes, linksLeaving]);
 
   return (
-    <div ref={rootRef} className={`${styles.board} ${className ?? ''}`} style={style} data-mood={mood} role="group" aria-label={label}>
+    <div ref={rootRef} className={`${styles.board} ${className ?? ''}`} style={style} data-mood={mood} role="group" aria-label={label ?? t('board.label')}>
       <Plate />
       <div className={styles.cells}>
         {cells.map((v) => <Cell key={v.key} view={v} register={register} />)}

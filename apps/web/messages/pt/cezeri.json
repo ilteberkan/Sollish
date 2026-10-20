@@ -138,7 +138,8 @@
     "anteOn": "Chance ×2 ativada: chance de giros grátis ≈2×, custo {cost}.",
     "anteOff": "Chance ×2 desativada: custo {cost}.",
     "refilled": "Saldo DEMO recarregado para {amount} DEMO.",
-    "refilledRemote": "Saldo DEMO do servidor recarregado para {amount} DEMO."
+    "refilledRemote": "Saldo DEMO do servidor recarregado para {amount} DEMO.",
+    "celebration": "{title}: {amount} DEMO, {times}×."
   },
   "autoplay": {
     "serverFailed": "O servidor não conseguiu iniciar a rodada",
@@ -369,5 +370,8 @@
     "board": "O tabuleiro é um cubo central com 4 anéis concêntricos de 12 fatias ao redor. Em cada um dos 12 raios que saem do cubo para fora, 3 ou 4 fatias consecutivas do mesmo símbolo, de dentro para fora (começando no anel 1 ou no anel 2), pagam; o coringa Engrenagem Dourada substitui todos os símbolos. O multiplicador do cubo (×1–×10) multiplica todos os ganhos em raios desse giro.",
     "features": "Trava de Engrenagens: se houver um novo ganho, as fatias vencedoras travam, os quatro anéis giram de novo por baixo delas e o cubo sobe +1 a cada novo giro; até 10 novos giros, até que nenhum pagamento novo apareça. 3 ou mais Vasos d’Água ativam 10 giros grátis (Relógio do Elefante): o multiplicador do cubo é mantido entre os giros e só sobe, e a cada 3 giros o falcão autômato solta coringas permanentes de Engrenagem Dourada. O ganho máximo é 10.000 vezes a aposta.",
     "fixed": "O resultado é determinado localmente no seu navegador, com aleatoriedade local, antes de o giro começar; a animação apenas reproduz esse resultado. Mesmo que você saia da página, a rodada é encerrada com o pagamento determinado. Não há prova VRF."
+  },
+  "badge": {
+    "checking": "Verificando o servidor"
   }
 }

@@ -928,7 +928,7 @@ export function TarhunGame() {
             {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">{t('deck.soundLoading', { percent: format.percent(soundLoad.percent / 100) })}</p>}
             {error ? <p className={styles.msgError} role="alert">{error}</p>
               : outOfCredit ? <p className={styles.msgHint}>{t('msg.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
-              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? t.rich('msg.lastRound', { b: chunk => <strong>{chunk}</strong> }, { amount: money(lastWin.payout), times: money(lastWin.total) }) : t('msg.lastRoundNoWin')) : settings.spaceToSpin ? t('msg.spaceHint') : t('msg.fixedBefore')}</p>}
+              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? t.rich('msg.lastRound', { b: chunk => <strong key={chunk}>{chunk}</strong> }, { amount: money(lastWin.payout), times: money(lastWin.total) }) : t('msg.lastRoundNoWin')) : settings.spaceToSpin ? t('msg.spaceHint') : t('msg.fixedBefore')}</p>}
           </div>
         </div>
       )}
@@ -971,7 +971,7 @@ export function TarhunGame() {
                 {/* One cumulative meter: never resets inside a round (tumbles, orbs, every free spin add up). */}
                 <div ref={meterRef} className={`${styles.meter} ${free ? styles.meterFree : ''}`} data-testid="tarhun-meter">
                   {phase === 'idle' ? (
-                    <div className={styles.meterIdle}><span>{t.rich('meter.idleA', { b: chunk => <strong>{chunk}</strong> })}</span><span aria-hidden="true">·</span><span>{t.rich('meter.idleB', { b: chunk => <strong>{chunk}</strong> })}</span></div>
+                    <div className={styles.meterIdle}><span>{t.rich('meter.idleA', { b: chunk => <strong key={chunk}>{chunk}</strong> })}</span><span aria-hidden="true">·</span><span>{t.rich('meter.idleB', { b: chunk => <strong key={chunk}>{chunk}</strong> })}</span></div>
                   ) : (
                     <div className={styles.meterPart}>
                       <small>{free || phase === 'done' ? t('meter.totalWin') : t('meter.win')}</small>
@@ -1073,7 +1073,7 @@ export function TarhunGame() {
         priceCents={buyPrice}
         balanceCents={balance}
         rtpText={t('buy.rtp', { buy: rtpOf(STORM_RTP.buy.rtp), standard: rtpOf(STORM_RTP.standard.rtp) })}
-        description={<>{t.rich('buy.description', { b: chunk => <strong>{chunk}</strong> }, { spins: STORM_FREE_SPINS_TRIGGER, bet: format.demo(bet), max: format.demo(bet * STORM_MAX_WIN_MULTIPLIER) })}</>}
+        description={<>{t.rich('buy.description', { b: chunk => <strong key={chunk}>{chunk}</strong> }, { spins: STORM_FREE_SPINS_TRIGGER, bet: format.demo(bet), max: format.demo(bet * STORM_MAX_WIN_MULTIPLIER) })}</>}
         disabledReason={buyReason ?? undefined}
       />
       <RealityCheckDialog

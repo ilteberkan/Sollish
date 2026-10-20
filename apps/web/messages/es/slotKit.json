@@ -150,5 +150,25 @@
       "word": "MÁXIMO"
     }
   },
-  "winWord": "PREMIO"
+  "winWord": "PREMIO",
+  "rgs": {
+    "source": {
+      "local": "Demo local",
+      "remote": "Verificado por el servidor"
+    },
+    "errors": {
+      "INSUFFICIENT_BALANCE": "El saldo del servidor no es suficiente para esta ronda.",
+      "RATE_LIMITED": "Estás jugando demasiado rápido; el servidor te hace esperar un segundo.",
+      "SESSION_BUSY": "La solicitud anterior aún se está procesando.",
+      "SESSION_EXPIRED": "La sesión del servidor ha caducado; recarga la página.",
+      "AUTH_INVALID": "La sesión del servidor no es válida; recarga la página.",
+      "SESSION_LIMIT": "Esta sesión ha alcanzado su límite de rondas; recarga la página.",
+      "ROUND_MISMATCH": "La ronda del servidor no coincidió con el motor; la ronda no se mostró.",
+      "NETWORK": "No se pudo conectar con el servidor. Si el resultado de la ronda está guardado en el servidor, se mostrará al recargar la página.",
+      "INVALID_BET": "La apuesta fue rechazada por el servidor.",
+      "INVALID_MODE": "El modo fue rechazado por el servidor.",
+      "SERVICE_UNAVAILABLE": "El servidor no acepta rondas en este momento.",
+      "UNKNOWN": "El servidor no aceptó la ronda."
+    }
+  }
 }

@@ -1,6 +1,7 @@
-import { memo, useId } from 'react';
+import { memo, useId, useMemo } from 'react';
 import type { ReactNode } from 'react';
 import type { AsenaSymbol } from '@sollish/protocol';
+import { useT } from '@/lib/i18n/client';
 
 /* Asena: Yıldız Kurdu symbol art. Hand-authored, original SVG (viewBox 100 × 100), Turkic sky mythology:
      highs  h1 Asena (front wolf head, silver-blue, forehead star) · h2 Kün Ana (gold sun disc with a serene face and
@@ -19,6 +20,14 @@ import type { AsenaSymbol } from '@sollish/protocol';
 
 export type { AsenaSymbol };
 
+/** Symbol names in the active language (`asena.symbols.*`). The constant below stays the Turkish source for tests and the art lab. */
+export function useAsenaSymbolLabels(): Record<AsenaSymbol, string> {
+  const t = useT('asena');
+  return useMemo(() => ({
+    h1: t('symbols.h1'), h2: t('symbols.h2'), h3: t('symbols.h3'), h4: t('symbols.h4'), l1: t('symbols.l1'), l2: t('symbols.l2'), l3: t('symbols.l3'), l4: t('symbols.l4'),
+    wolf: t('symbols.wolf'), trail: t('symbols.trail'), moon: t('symbols.moon'),
+  }), [t]);
+}
 export const ASENA_SYMBOL_LABELS: Record<AsenaSymbol, string> = {
   h1: 'Asena',
   h2: 'Kün Ana',

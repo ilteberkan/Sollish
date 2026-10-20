@@ -79,5 +79,27 @@
     "play": "Oynat",
     "forward": "İleri",
     "noSteps": "Bu turun adımları gösterilemedi."
+  },
+  "outcome": {
+    "game": "Oyun tanınmadı.",
+    "serverSeed": "Sunucu tohumu 64 onaltılık karakter olmalı (açıklanmış tohum).",
+    "serverSeedHash": "Tohum özeti 64 onaltılık karakter olmalı.",
+    "clientSeed": "Oyuncu tohumu 1–64 karakter olmalı: harf, rakam, _ veya -.",
+    "nonce": "Nonce 0 veya daha büyük bir tam sayı olmalı.",
+    "bet": "Bahis bu oyunun bahis basamaklarından biri olmalı.",
+    "mode": "Mod bu oyunda yok.",
+    "expectedSeed": "Beklenen tur tohumu 32 onaltılık karakter olmalı.",
+    "expectedPayout": "Beklenen kazanç tam sayı (DEMO kuruş) olmalı.",
+    "engineRejected": "Motor bu bahis/mod bileşimini kabul etmedi.",
+    "match": "Eşleşti: sonuç bu tohumlardan yeniden hesaplandı.",
+    "mismatch": "Uyuşmuyor: {failed}."
+  },
+  "checks": {
+    "hash": "tohum özeti",
+    "engine": "motor",
+    "seed": "tur tohumu",
+    "payout": "kazanç",
+    "total": "çarpan",
+    "cost": "maliyet"
   }
 }

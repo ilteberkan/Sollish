@@ -30,7 +30,7 @@ export function StormLogo({ size = 420, variant = 'full', className, title }: { 
   const tc = useT('common');
   const t = useT('tarhun');
   const name = title ?? tc('games.tarhun');
-  const ribbon = t('logo.subtitle');
+  const ribbon = variant === 'full' ? t('logo.subtitle') : '';
   /* Long translations are squeezed to the ribbon instead of overflowing it. */
   const fit = ribbon.length > 14 ? { textLength: 236, lengthAdjust: 'spacingAndGlyphs' as const } : {};
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');

@@ -3,7 +3,8 @@ import { memo, useCallback, useImperativeHandle, useLayoutEffect, useRef, useSta
 import { flushSync } from 'react-dom';
 import { EBRU_COLS, EBRU_ROWS, type EbruColour, type EbruGrid, type EbruStains, type EbruSymbol } from '@sollish/protocol';
 import type { EbruPlacedCell } from '@/lib/ebru-timeline';
-import { EbruStainUse, EbruSymbolUse, ebruCellLabel } from './symbols';
+import { EbruStainUse, EbruSymbolUse } from './symbols';
+import { useEbruSymbolNames } from './use-symbol-names';
 import { combRowTiming } from './water';
 import styles from './ebru-board.module.css';
 
@@ -90,6 +91,7 @@ const emptyStains = (): Stains => Array.from({ length: EBRU_COLS }, () => new Ar
 const rowsOf = (cells: EbruCellView[]) => Array.from({ length: EBRU_ROWS }, (_, row) => cells.filter(c => c.row === row && !c.leaving).sort((a, b) => a.col - b.col));
 
 export function EbruBoard({ ref, label }: { ref?: Ref<EbruBoardHandle>; label: string }) {
+  const names = useEbruSymbolNames();
   const [cells, setCells] = useState<EbruCellView[]>(EBRU_IDLE_CELLS);
   const [stains, setStainsState] = useState<Stains | null>(null);
   const [combShifts, setCombShifts] = useState<number[] | null>(null);
@@ -277,7 +279,7 @@ export function EbruBoard({ ref, label }: { ref?: Ref<EbruBoardHandle>; label: s
       <div role="grid" aria-label={label} aria-rowcount={EBRU_ROWS} aria-colcount={EBRU_COLS} className="sr-only">
         {rows.map((cellsInRow, row) => (
           <div key={row} role="row" aria-rowindex={row + 1}>
-            {cellsInRow.map(c => <span key={c.key} role="gridcell" aria-colindex={c.col + 1}>{ebruCellLabel({ symbol: c.symbol, stain: stainAt(c.col, c.row) || undefined })}</span>)}
+            {cellsInRow.map(c => <span key={c.key} role="gridcell" aria-colindex={c.col + 1}>{names.cell({ symbol: c.symbol, stain: stainAt(c.col, c.row) || undefined })}</span>)}
           </div>
         ))}
       </div>

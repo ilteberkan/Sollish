@@ -1,12 +1,135 @@
 {
   "meta": {
-    "title": "Juegos — En vivo y en solitario",
-    "description": "Juegos de Sollish. Únete al combate Ringside en vivo compartido o prueba los juegos individuales."
+    "title": "Lobby del casino",
+    "description": "Los juegos originales de Sollish en un solo lobby: cinco tragaperras propias, la arena en directo Ringside, Crash y Coinflip. Solo créditos DEMO, sin dinero real."
   },
+  "heading": "Lobby del casino Sollish",
   "hero": {
+    "region": "Juegos destacados",
+    "slide": "{index} de {total}",
+    "prev": "Juego destacado anterior",
+    "next": "Juego destacado siguiente",
+    "pause": "Pausar la rotación",
+    "resume": "Reanudar la rotación",
+    "goTo": "Mostrar {name}",
+    "eyebrow": "Nuevo · Original de Sollish",
+    "play": "Jugar la demo"
+  },
+  "chips": {
+    "label": "Filtrar juegos",
+    "all": "Todos los juegos"
+  },
+  "rows": {
+    "recent": {
+      "title": "Jugados recientemente",
+      "subtitle": "Guardado solo en este navegador.",
+      "clear": "Vaciar la lista"
+    },
+    "originals": {
+      "title": "Originales de Sollish",
+      "subtitle": "Cinco tragaperras propias. Cada ronda se puede comprobar en la página de verificación."
+    },
+    "live": {
+      "title": "En directo",
+      "subtitle": "Un único combate compartido, todos ven el mismo."
+    },
+    "instant": {
+      "title": "Juegos instantáneos",
+      "subtitle": "A tu ritmo, resultado inmediato."
+    },
+    "new": {
+      "title": "Novedades",
+      "subtitle": "Los últimos lanzamientos."
+    },
+    "fair": {
+      "title": "Justo y demostrable",
+      "subtitle": "El resultado lo fijan semillas que puedes comprobar después de la ronda.",
+      "cta": "Verificar una ronda"
+    }
+  },
+  "row": {
+    "viewAll": "Ver todo",
+    "viewAllAria": "Ver todo: {title}",
+    "prev": "Desplazar atrás: {title}",
+    "next": "Desplazar adelante: {title}",
+    "count": "{count, plural, one {# juego} other {# juegos}}"
+  },
+  "grid": {
+    "results": "Resultados de búsqueda",
+    "resultsCount": "{count, plural, =0 {No hay juegos para «{query}»} one {# juego para «{query}»} other {# juegos para «{query}»}}",
+    "empty": "Ningún juego coincide con «{query}». Prueba con el nombre de un juego, un tema como «lobo» o «candy», o una categoría.",
+    "reset": "Mostrar todos los juegos",
+    "favoritesEmpty": "Aún no hay favoritos. Toca el corazón de un juego para guardarlo aquí.",
+    "back": "Volver al lobby"
+  },
+  "tile": {
+    "provider": "Sollish",
+    "demo": "DEMO",
+    "new": "Nuevo",
+    "original": "Original",
+    "live": "Directo",
+    "rtp": "RTP {value}",
+    "maxWin": "Máx. {value}",
+    "poolFee": "Comisión del bote {value}",
+    "poolNote": "Apuesta de bote",
+    "volatility": "Volatilidad: {level}",
+    "vol": {
+      "low": "Baja",
+      "medium": "Media",
+      "high": "Alta",
+      "veryHigh": "Muy alta",
+      "player": "Tú decides"
+    },
+    "favAdd": "Añadir {name} a favoritos",
+    "favRemove": "Quitar {name} de favoritos",
+    "play": "Jugar la demo",
+    "watch": "Unirse al directo"
+  },
+  "cards": {
+    "crash": {
+      "tagline": "Retira antes de que se rompa la línea.",
+      "text": "Elige el momento de retirarte mientras sube el multiplicador.",
+      "type": "Retiro manual"
+    },
+    "coinflip": {
+      "tagline": "Dos caras, una decisión.",
+      "text": "Dos caras, una elección, resultado al instante.",
+      "type": "Clásico"
+    },
+    "cascade": {
+      "tagline": "Cascadas dulces y multiplicadores de cristal.",
+      "text": "Haz estallar ocho iguales y forma cadenas con los caramelos que caen.",
+      "type": "Tumble"
+    },
+    "tarhun": {
+      "tagline": "El dios de la tormenta carga las piedras.",
+      "text": "El dios de la tormenta lanza rayos sobre las piedras; los multiplicadores se acumulan en los giros gratis.",
+      "type": "Tumble · multiplicador"
+    },
+    "ebru": {
+      "tagline": "Tinta, agua y un peine de oro.",
+      "text": "El peine recorre el agua y la tinta se reordena ola tras ola; las manchas de color se deslizan con sus multiplicadores.",
+      "type": "Grupo · peine"
+    },
+    "cezeri": {
+      "tagline": "Cuatro ruedas de latón, un eje que sube.",
+      "text": "Cuatro ruedas de latón giran; los segmentos ganadores se bloquean, las ruedas vuelven a girar y el multiplicador central sube +1 cada vez.",
+      "type": "Rueda · cadena"
+    },
+    "asena": {
+      "tagline": "Sigue al Lobo celeste entre las estrellas.",
+      "text": "Los grupos dibujan constelaciones en el cielo y la Loba celeste camina dejando un rastro de estrellas; el mapa de Ergenekon eleva el multiplicador global hasta ×5.",
+      "type": "Grupo · constelación"
+    },
+    "ringside": {
+      "tagline": "Tres asaltos, tres botes, un combate en directo.",
+      "text": "Un combate a tres asaltos con puñetazos y patadas. Haz tu elección antes de que empiece y sigue tu boleto asalto a asalto. Una red entrenada dirige a los luchadores y Jev da la táctica desde la esquina.",
+      "type": "Directo · apuesta de bote"
+    }
+  },
+  "liveCard": {
     "aria": "Entrar en la arena en vivo de Ringside",
     "tag": "EN VIVO · TODOS VEN EL MISMO COMBATE",
-    "text": "Un combate a tres asaltos con puñetazos y patadas. Haz tu elección antes de que empiece y sigue tu boleto asalto a asalto. Una red entrenada dirige a los luchadores y Jev da la táctica desde la esquina.",
     "cta": "Entrar en la arena",
     "factWindowValue": "30 s",
     "factWindow": "ventana de apuestas",
@@ -16,16 +139,6 @@
     "factMarkets": "mercados del combate",
     "factFeeValue": "2 %",
     "factFee": "comisión del bote"
-  },
-  "solo": { "title": "Individual", "subtitle": "A tu ritmo, resultado al instante.", "demo": "DEMO" },
-  "cards": {
-    "crash": { "text": "Elige el momento de retirarte mientras sube el multiplicador.", "type": "Retiro manual" },
-    "coinflip": { "text": "Dos caras, una elección, resultado al instante.", "type": "Clásico" },
-    "cascade": { "text": "Haz estallar ocho iguales y forma cadenas con los caramelos que caen.", "type": "Tumble" },
-    "tarhun": { "text": "El dios de la tormenta lanza rayos sobre las piedras; los multiplicadores se acumulan en los giros gratis.", "type": "Tumble · multiplicador" },
-    "ebru": { "text": "El peine recorre el agua y la tinta se reordena ola tras ola; las manchas de color se deslizan con sus multiplicadores.", "type": "Grupo · peine" },
-    "cezeri": { "text": "Cuatro ruedas de latón giran; los segmentos ganadores se bloquean, las ruedas vuelven a girar y el multiplicador central sube +1 cada vez.", "type": "Rueda · cadena" },
-    "asena": { "text": "Los grupos dibujan constelaciones en el cielo y la Loba celeste camina dejando un rastro de estrellas; el mapa de Ergenekon eleva el multiplicador global hasta ×5.", "type": "Grupo · constelación" }
   },
   "trust": {
     "aria": "Reglas",
@@ -44,5 +157,6 @@
     "fightersA": "Cada puñetazo, patada, combinación, distancia y defensa la elige una red que aprende durante el combate; el conectoma de mosca MaleCNS se usa como reservorio fijo. El entrenador de esquina Jev propone un plan cada 9 segundos; como el plan llega después del cierre de apuestas, el juego es solo DEMO. No se afirma que sea un cerebro completo ni que el conectoma sea superior.",
     "demoQ": "La frontera entre demo y apuestas reales",
     "demoA": "Los créditos DEMO de aquí no tienen valor monetario. Las apuestas reales en SOL seguirán desactivadas hasta validar el despliegue del contrato, la recuperación del oráculo, la privacidad de Crash y los flujos de pago. No afirmamos que se haya realizado una auditoría independiente. Estas versiones no tienen prueba VRF."
-  }
+  },
+  "footnote": "El RTP y la volatilidad son estimaciones simuladas del modo estándar de cada juego DEMO, no cifras certificadas. Las rondas de práctica de Crash y Coinflip usan la aleatoriedad de tu navegador y no son demostrablemente justas."
 }

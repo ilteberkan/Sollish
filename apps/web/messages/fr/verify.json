@@ -79,5 +79,27 @@
     "play": "Lire",
     "forward": "Avancer",
     "noSteps": "Impossible d’afficher les étapes de cette partie."
+  },
+  "outcome": {
+    "game": "Jeu non reconnu.",
+    "serverSeed": "La graine du serveur doit comporter 64 caractères hexadécimaux (la graine révélée).",
+    "serverSeedHash": "L’empreinte de la graine doit comporter 64 caractères hexadécimaux.",
+    "clientSeed": "La graine du joueur doit comporter 1 à 64 caractères : lettres, chiffres, _ ou -.",
+    "nonce": "Le nonce doit être un entier supérieur ou égal à 0.",
+    "bet": "La mise doit correspondre à l’un des paliers de ce jeu.",
+    "mode": "Ce mode n’existe pas dans ce jeu.",
+    "expectedSeed": "La graine de tour attendue doit comporter 32 caractères hexadécimaux.",
+    "expectedPayout": "Le gain attendu doit être un entier (centimes DEMO).",
+    "engineRejected": "Le moteur n’a pas accepté cette combinaison mise/mode.",
+    "match": "Concordance : le résultat a été recalculé à partir de ces graines.",
+    "mismatch": "Non concordant : {failed}."
+  },
+  "checks": {
+    "hash": "empreinte de la graine",
+    "engine": "moteur",
+    "seed": "graine du tour",
+    "payout": "gain",
+    "total": "multiplicateur",
+    "cost": "coût"
   }
 }

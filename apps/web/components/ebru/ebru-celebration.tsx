@@ -11,7 +11,8 @@
  */
 import { useEffect, useId, useRef, useState, type CSSProperties, type Ref } from 'react';
 import { WIN_TIER_INFO, countUpValueAt, levelAt, type CelebrationLevel, type CountUpSchedule } from '@/lib/slot-kit/win-tiers';
-import { ebruCents, ebruMoney, ebruTimes } from '@/lib/ebru-timeline';
+import { useFormat, useT } from '@/lib/i18n/client';
+import { ebruCents } from '@/lib/ebru-timeline';
 import { EbruStainUse, EbruSymbolUse } from './symbols';
 import c from './ebru-celebration.module.css';
 
@@ -114,6 +115,11 @@ export interface EbruCelebrationProps {
 }
 
 export function EbruCelebration({ schedule, betCents, elapsed, reducedMotion, onLevel, onCountDone, onTap }: EbruCelebrationProps) {
+  const t = useT('ebru');
+  const tk = useT('slotKit');
+  const money = useFormat().amount;
+  const xBet = useRef((times: string) => t('celebration.xBet', { times }));
+  xBet.current = (times: string) => t('celebration.xBet', { times });
   const [level, setLevel] = useState<CelebrationLevel>(() => levelAt(schedule, Math.max(0, elapsed())));
   const [done, setDone] = useState(false);
   const [flash, setFlash] = useState(0);
@@ -129,11 +135,11 @@ export function EbruCelebration({ schedule, betCents, elapsed, reducedMotion, on
     const step = () => {
       const e = Math.max(0, elapsed());
       const value = countUpValueAt(schedule, e);
-      const text = ebruMoney(ebruCents(betCents, value));
+      const text = money(ebruCents(betCents, value));
       if (text !== lastText) {
         lastText = text;
         writeAmount(amountRef.current, text);
-        if (multRef.current) multRef.current.textContent = `${ebruTimes(value)}× bahis`;
+        if (multRef.current) multRef.current.textContent = xBet.current(money(value));
       }
       const now = levelAt(schedule, e);
       if (now !== shownLevel) {
@@ -157,7 +163,7 @@ export function EbruCelebration({ schedule, betCents, elapsed, reducedMotion, on
     };
     step();
     return () => cancelAnimationFrame(frame);
-  }, [schedule, betCents, elapsed, reducedMotion]);
+  }, [schedule, betCents, elapsed, reducedMotion, money]);
 
   const info = WIN_TIER_INFO[level];
   const initial = countUpValueAt(schedule, Math.max(0, elapsed()));
@@ -173,7 +179,7 @@ export function EbruCelebration({ schedule, betCents, elapsed, reducedMotion, on
       </div>
       <div className={c.front} data-level={level} data-done={done || undefined} data-reduced={reducedMotion || undefined}
         data-testid="ebru-celebration" role="dialog" aria-modal="false"
-        aria-label={`${info.title}: ${ebruMoney(ebruCents(betCents, schedule.totalHundredths))} DEMO`} onClick={onTap}>
+        aria-label={`${tk(`winTier.${info.id}.title`)}: ${money(ebruCents(betCents, schedule.totalHundredths))} DEMO`} onClick={onTap}>
         <div className={c.column}>
           <ol className={c.pips} aria-hidden="true">
             {PIPS.map(pip => <li key={pip.level} data-on={level >= pip.level || undefined}><span>{pip.x}</span></li>)}
@@ -181,16 +187,16 @@ export function EbruCelebration({ schedule, betCents, elapsed, reducedMotion, on
           <div key={level} className={c.lockup} data-shake>
             <Cartouche />
             <DisplayWord text={info.word} className={c.tierWord} />
-            <span className={c.sub} aria-hidden="true">KAZANÇ</span>
+            <span className={c.sub} aria-hidden="true">{tk('winWord')}</span>
           </div>
           <div ref={plaqueRef} className={c.plaque}>
-            <Amount ref={amountRef} text={ebruMoney(ebruCents(betCents, initial))} testId="ebru-celebration-amount" />
+            <Amount ref={amountRef} text={money(ebruCents(betCents, initial))} testId="ebru-celebration-amount" />
             <small className={c.unit}>DEMO</small>
           </div>
-          <span ref={multRef} className={c.mult}>{ebruTimes(initial)}× bahis</span>
-          {level === 5 && <p className={c.capNote}>Tur tavana ulaştı · kalan dönüşler oynanmaz</p>}
+          <span ref={multRef} className={c.mult}>{t('celebration.xBet', { times: money(initial) })}</span>
+          {level === 5 && <p className={c.capNote}>{t('celebration.capNote')}</p>}
           <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>
-            {done ? 'Devam' : 'Hızlandırmak için dokun'}
+            {done ? t('celebration.continue') : t('celebration.tapToSpeed')}
           </button>
         </div>
       </div>
@@ -199,6 +205,7 @@ export function EbruCelebration({ schedule, betCents, elapsed, reducedMotion, on
 }
 
 export function EbruFreeIntro({ awarded, dur, reducedMotion, onTap }: { awarded: number; dur: number; reducedMotion: boolean; onTap: () => void }) {
+  const t = useT('ebru');
   return (
     <>
       <div className={c.back} data-level="intro" data-reduced={reducedMotion || undefined} aria-hidden="true">
@@ -211,16 +218,16 @@ export function EbruFreeIntro({ awarded, dur, reducedMotion, onTap }: { awarded:
           <div className={c.seals} aria-hidden="true">
             {[0, 1, 2].map(i => <span key={i} className={c.seal} style={{ '--i': i } as CSSProperties}><EbruSymbolUse symbol="comb" /></span>)}
           </div>
-          <h2 id="eb-intro-title" className={c.introTitle}><DisplayWord text="LALE EBRUSU" className={c.introWord} /><span className="sr-only">Lale Ebrusu Başlıyor</span></h2>
+          <h2 id="eb-intro-title" className={c.introTitle}><DisplayWord text={t('intro.word')} className={c.introWord} /><span className="sr-only">{t('intro.title')}</span></h2>
           <div className={c.introCount}>
             <strong>{awarded}</strong>
-            <span>bedava<br />dönüş</span>
+            <span>{t('intro.freeA')}<br />{t('intro.freeB')}</span>
           </div>
           <div className={c.introStains} aria-hidden="true">
             {[2, 4, 8, 16, 32].map((v, i) => <span key={v} style={{ '--i': i } as CSSProperties}><EbruStainUse value={v} /></span>)}
           </div>
-          <p className={c.introText}>Patlayan her hücreye <strong>boya lekesi</strong> düşer: önce ×2, aynı hücrede her seferinde iki katı, ×256’ya kadar. Lekeler özellik boyunca kalır ve <strong>tarakla birlikte kayar</strong>; üstünden geçen kümenin ödemesi lekelerin toplamıyla çarpılır. 3 Altın Tarak +4 dönüş.</p>
-          <button type="button" className={c.go} onClick={event => { event.stopPropagation(); onTap(); }}>Başla</button>
+          <p className={c.introText}>{t.rich('intro.text', { b: chunk => <strong key={chunk}>{chunk}</strong> })}</p>
+          <button type="button" className={c.go} onClick={event => { event.stopPropagation(); onTap(); }}>{t('intro.start')}</button>
           <span className={c.timer} style={{ '--hold': `${dur}ms` } as CSSProperties} aria-hidden="true" />
         </div>
       </div>
@@ -234,6 +241,8 @@ export interface EbruFeatureTotalProps {
 }
 /** "Lale Ebrusu — Toplam": always ends a free-spin round, whatever the total. */
 export function EbruFeatureTotal({ spins, totalHundredths, maxStain, stainedClusters, combWins, betCents, celebration, capped, dur, elapsed, reducedMotion, onTap }: EbruFeatureTotalProps) {
+  const t = useT('ebru');
+  const money = useFormat().amount;
   const amountRef = useRef<HTMLSpanElement>(null);
   const countMs = Math.max(1, Math.min(1500, Math.round(dur * 0.5)));
   useEffect(() => {
@@ -242,12 +251,12 @@ export function EbruFeatureTotal({ spins, totalHundredths, maxStain, stainedClus
       const e = Math.max(0, elapsed());
       const p = reducedMotion ? 1 : Math.min(1, e / countMs);
       const value = p >= 1 ? totalHundredths : Math.floor(totalHundredths * (1 - (1 - p) ** 3));
-      writeAmount(amountRef.current, ebruMoney(ebruCents(betCents, value)));
+      writeAmount(amountRef.current, money(ebruCents(betCents, value)));
       if (p < 1) frame = requestAnimationFrame(step);
     };
     step();
     return () => cancelAnimationFrame(frame);
-  }, [elapsed, countMs, totalHundredths, betCents, reducedMotion]);
+  }, [elapsed, countMs, totalHundredths, betCents, reducedMotion, money]);
   return (
     <>
       <div className={c.back} data-level="feature" data-reduced={reducedMotion || undefined} aria-hidden="true">
@@ -257,23 +266,23 @@ export function EbruFeatureTotal({ spins, totalHundredths, maxStain, stainedClus
       </div>
       <div className={c.front} data-level="feature" data-reduced={reducedMotion || undefined} role="dialog" aria-modal="false" aria-labelledby="eb-ft-title" data-testid="ebru-feature-total" onClick={onTap}>
         <div className={`${c.column} ${c.featureColumn}`}>
-          <h2 id="eb-ft-title" className={c.ftTitle}>Lale Ebrusu <span aria-hidden="true">—</span> Toplam</h2>
+          <h2 id="eb-ft-title" className={c.ftTitle}>{t('total.titleA')} <span aria-hidden="true">—</span> {t('total.titleB')}</h2>
           <div className={c.lockup}>
             <Cartouche />
-            <DisplayWord text="TOPLAM" className={c.tierWord} />
-            <span className={c.sub} aria-hidden="true">BEDAVA DÖNÜŞ</span>
+            <DisplayWord text={t('total.word')} className={c.tierWord} />
+            <span className={c.sub} aria-hidden="true">{t('total.sub')}</span>
           </div>
           <div className={c.plaque}>
-            <Amount ref={amountRef} text={ebruMoney(0)} testId="ebru-feature-amount" />
+            <Amount ref={amountRef} text={money(0)} testId="ebru-feature-amount" />
             <small className={c.unit}>DEMO</small>
           </div>
           <dl className={c.stats}>
-            <div><dt>Dönüş</dt><dd>{spins} dönüş</dd></div>
-            <div><dt>En büyük leke</dt><dd>{maxStain > 0 ? `×${maxStain}` : 'Yok'}<small>{stainedClusters > 0 ? `${stainedClusters} lekeli küme` : 'lekeli küme yok'}</small></dd></div>
-            <div><dt>Bahsin</dt><dd>{ebruTimes(totalHundredths)}×<small>{combWins > 0 ? `${combWins} tarak kazancı` : 'tarak kazancı yok'}</small></dd></div>
+            <div><dt>{t('total.spins')}</dt><dd>{t('total.spinsValue', { n: spins })}</dd></div>
+            <div><dt>{t('total.maxStain')}</dt><dd>{maxStain > 0 ? `×${maxStain}` : t('total.none')}<small>{stainedClusters > 0 ? t('total.stainedClusters', { n: stainedClusters }) : t('total.noStainedClusters')}</small></dd></div>
+            <div><dt>{t('total.betMultiple')}</dt><dd>{money(totalHundredths)}×<small>{combWins > 0 ? t('total.combWins', { n: combWins }) : t('total.noCombWins')}</small></dd></div>
           </dl>
-          {capped && <p className={c.capNote}>Azami kazanca ulaşıldı · kalan dönüşler oynanmaz</p>}
-          <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>{celebration ? 'Kutlamaya geç' : 'Devam'}</button>
+          {capped && <p className={c.capNote}>{t('total.capNote')}</p>}
+          <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>{celebration ? t('total.toCelebration') : t('celebration.continue')}</button>
         </div>
       </div>
     </>

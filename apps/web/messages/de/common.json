@@ -14,7 +14,14 @@
     "liveSuffix": " (live)",
     "nav": {
       "rewards": "Prämien",
-      "stake": "Stake"
+      "stake": "Stake",
+      "lobby": "Lobby",
+      "slots": "Slots",
+      "live": "Live",
+      "instant": "Sofortspiele",
+      "new": "Neu",
+      "fair": "Nachweislich fair",
+      "favorites": "Favoriten"
     },
     "network": {
       "devnet": "Devnet-Vorschau",
@@ -30,6 +37,30 @@
       "tagline": "Verstehe das Spiel. Behalte die Kontrolle.",
       "devnet": "Demo und Devnet · Es wird kein echtes Geld verwendet",
       "demo": "Demo · Es werden keine echten Vermögenswerte verwendet"
+    },
+    "sections": {
+      "casino": "Casino",
+      "games": "Spiele",
+      "more": "Mehr"
+    },
+    "collapse": "Menü einklappen",
+    "expand": "Menü ausklappen",
+    "menu": "Menü",
+    "closeMenu": "Menü schließen",
+    "tabbar": "Schnellnavigation",
+    "search": {
+      "label": "Spiele suchen",
+      "placeholder": "Spiele suchen",
+      "open": "Suche",
+      "close": "Suche schließen",
+      "clear": "Suche löschen",
+      "results": "{count, plural, =0 {Keine Spiele gefunden} one {# Spiel gefunden} other {# Spiele gefunden}}",
+      "seeAll": "Ergebnisse in der Lobby zeigen"
+    },
+    "kind": {
+      "slot": "Slot",
+      "live": "Live",
+      "instant": "Sofort"
     }
   },
   "chat": {

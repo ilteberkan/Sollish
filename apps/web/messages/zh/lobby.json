@@ -1,12 +1,135 @@
 {
   "meta": {
-    "title": "游戏 — 直播与单人",
-    "description": "Sollish 游戏。加入共享的 Ringside 直播比赛，或试玩单人游戏。"
+    "title": "娱乐场大厅",
+    "description": "Sollish 原创游戏汇集于一个大厅：五款自研老虎机、Ringside 直播竞技场、Crash 和 Coinflip。仅限 DEMO 积分，不涉及真实资金。"
   },
+  "heading": "Sollish 娱乐场大厅",
   "hero": {
+    "region": "精选游戏",
+    "slide": "第 {index} 张，共 {total} 张",
+    "prev": "上一个精选游戏",
+    "next": "下一个精选游戏",
+    "pause": "暂停轮播",
+    "resume": "继续轮播",
+    "goTo": "显示{name}",
+    "eyebrow": "新品 · Sollish 原创",
+    "play": "试玩演示"
+  },
+  "chips": {
+    "label": "筛选游戏",
+    "all": "全部游戏"
+  },
+  "rows": {
+    "recent": {
+      "title": "最近玩过",
+      "subtitle": "仅保存在此浏览器中。",
+      "clear": "清空列表"
+    },
+    "originals": {
+      "title": "Sollish 原创",
+      "subtitle": "五款自研老虎机，每一局都可在验证页面核对。"
+    },
+    "live": {
+      "title": "直播",
+      "subtitle": "同一场比赛，所有人观看同一场对决。"
+    },
+    "instant": {
+      "title": "即时游戏",
+      "subtitle": "节奏自定，即时出结果。"
+    },
+    "new": {
+      "title": "新游戏",
+      "subtitle": "最新上线。"
+    },
+    "fair": {
+      "title": "可证公平",
+      "subtitle": "结果由种子决定，你可以在每局结束后核对。",
+      "cta": "验证一局"
+    }
+  },
+  "row": {
+    "viewAll": "查看全部",
+    "viewAllAria": "查看全部：{title}",
+    "prev": "向后滚动：{title}",
+    "next": "向前滚动：{title}",
+    "count": "{count, plural, other {# 款游戏}}"
+  },
+  "grid": {
+    "results": "搜索结果",
+    "resultsCount": "{count, plural, =0 {没有找到与“{query}”相关的游戏} other {与“{query}”相关的游戏 # 款}}",
+    "empty": "没有与“{query}”匹配的游戏。试试游戏名称、主题（如“狼”或“糖果”）或某个分类。",
+    "reset": "显示全部游戏",
+    "favoritesEmpty": "还没有收藏。点击游戏上的爱心即可收藏在这里。",
+    "back": "返回大厅"
+  },
+  "tile": {
+    "provider": "Sollish",
+    "demo": "DEMO",
+    "new": "新",
+    "original": "原创",
+    "live": "直播",
+    "rtp": "RTP {value}",
+    "maxWin": "最高 {value}",
+    "poolFee": "奖池抽成 {value}",
+    "poolNote": "奖池投注",
+    "volatility": "波动性：{level}",
+    "vol": {
+      "low": "低",
+      "medium": "中",
+      "high": "高",
+      "veryHigh": "极高",
+      "player": "由你决定"
+    },
+    "favAdd": "收藏{name}",
+    "favRemove": "取消收藏{name}",
+    "play": "试玩演示",
+    "watch": "加入直播"
+  },
+  "cards": {
+    "crash": {
+      "tagline": "在线条断裂前兑现。",
+      "text": "倍数上升时，由你决定何时兑现。",
+      "type": "手动兑现"
+    },
+    "coinflip": {
+      "tagline": "两面，一个选择。",
+      "text": "两面、一次选择、即时结果。",
+      "type": "经典"
+    },
+    "cascade": {
+      "tagline": "甜蜜连消与水晶倍数。",
+      "text": "八个相同即可消除，让掉落的糖果连环消除。",
+      "type": "消除掉落"
+    },
+    "tarhun": {
+      "tagline": "风暴之神为宝石注入雷电。",
+      "text": "风暴之神以闪电击打石块；免费旋转中倍数不断累积。",
+      "type": "消除掉落 · 倍数"
+    },
+    "ebru": {
+      "tagline": "墨、水与一把金梳。",
+      "text": "梳子划过水面，墨色层层重排；颜料斑点带着倍数一同滑动。",
+      "type": "簇集 · 梳纹"
+    },
+    "cezeri": {
+      "tagline": "四个黄铜轮盘，一个不断上升的轮毂。",
+      "text": "四个黄铜轮转动；中奖格锁定，轮盘再次旋转，中心倍数每次 +1。",
+      "type": "转轮 · 连锁"
+    },
+    "asena": {
+      "tagline": "追随天狼穿越星空。",
+      "text": "簇集在夜空中连成星座，天狼行走并留下星迹；Ergenekon 地图可将全局倍数提升至 ×5。",
+      "type": "簇集 · 星座"
+    },
+    "ringside": {
+      "tagline": "三回合、三个奖池、一场直播对决。",
+      "text": "拳脚并用的三回合格斗。比赛开始前做出选择，然后逐回合跟踪你的投注单。选手由经过训练的网络控制，Jev 在角落提供战术。",
+      "type": "直播 · 奖池投注"
+    }
+  },
+  "liveCard": {
     "aria": "进入 Ringside 直播竞技场",
     "tag": "直播 · 所有人观看同一场比赛",
-    "text": "拳脚并用的三回合格斗。比赛开始前做出选择，然后逐回合跟踪你的投注单。选手由经过训练的网络控制，Jev 在角落提供战术。",
     "cta": "进入竞技场",
     "factWindowValue": "30 秒",
     "factWindow": "投注窗口",
@@ -16,16 +139,6 @@
     "factMarkets": "比赛盘口",
     "factFeeValue": "2%",
     "factFee": "奖池抽成"
-  },
-  "solo": { "title": "单人游戏", "subtitle": "节奏自定，即时出结果。", "demo": "DEMO" },
-  "cards": {
-    "crash": { "text": "倍数上升时，由你决定何时兑现。", "type": "手动兑现" },
-    "coinflip": { "text": "两面、一次选择、即时结果。", "type": "经典" },
-    "cascade": { "text": "八个相同即可消除，让掉落的糖果连环消除。", "type": "消除掉落" },
-    "tarhun": { "text": "风暴之神以闪电击打石块；免费旋转中倍数不断累积。", "type": "消除掉落 · 倍数" },
-    "ebru": { "text": "梳子划过水面，墨色层层重排；颜料斑点带着倍数一同滑动。", "type": "簇集 · 梳纹" },
-    "cezeri": { "text": "四个黄铜轮转动；中奖格锁定，轮盘再次旋转，中心倍数每次 +1。", "type": "转轮 · 连锁" },
-    "asena": { "text": "簇集在夜空中连成星座，天狼行走并留下星迹；Ergenekon 地图可将全局倍数提升至 ×5。", "type": "簇集 · 星座" }
   },
   "trust": {
     "aria": "规则",
@@ -44,5 +157,6 @@
     "fightersA": "每一次出拳、踢腿、连击、距离和防守选择，都由一个在比赛中学习的网络完成；MaleCNS 果蝇连接组被用作固定的储备池。角落教练 Jev 每 9 秒提出一次方案；由于方案在投注关闭后才到达，本游戏仅限演示。我们不声称这是完整的大脑，也不声称连接组具有优越性。",
     "demoQ": "演示与真实投注的界限",
     "demoA": "这里的 DEMO 额度没有货币价值。在合约部署、预言机恢复、Crash 隐私和支付流程完成验证之前，真实 SOL 投注保持关闭。我们不声称已进行独立审计。这些版本没有 VRF 证明。"
-  }
+  },
+  "footnote": "RTP 和波动性是各 DEMO 游戏标准模式的模拟估计值，并非认证数据。Crash 和 Coinflip 的练习局使用浏览器的随机数，不具备可证公平性。"
 }

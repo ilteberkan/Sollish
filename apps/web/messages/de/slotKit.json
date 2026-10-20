@@ -150,5 +150,25 @@
       "word": "MAX"
     }
   },
-  "winWord": "GEWINN"
+  "winWord": "GEWINN",
+  "rgs": {
+    "source": {
+      "local": "Lokale Demo",
+      "remote": "Server-geprüft"
+    },
+    "errors": {
+      "INSUFFICIENT_BALANCE": "Das Server-Guthaben reicht für diese Runde nicht aus.",
+      "RATE_LIMITED": "Du spielst zu schnell; der Server lässt dich eine Sekunde warten.",
+      "SESSION_BUSY": "Die vorherige Anfrage wird noch verarbeitet.",
+      "SESSION_EXPIRED": "Die Server-Sitzung ist abgelaufen; lade die Seite neu.",
+      "AUTH_INVALID": "Die Server-Sitzung ist ungültig; lade die Seite neu.",
+      "SESSION_LIMIT": "Diese Sitzung hat ihr Rundenlimit erreicht; lade die Seite neu.",
+      "ROUND_MISMATCH": "Die Runde des Servers stimmte nicht mit der Engine überein; die Runde wurde nicht angezeigt.",
+      "NETWORK": "Der Server ist nicht erreichbar. Ist das Rundenergebnis auf dem Server gespeichert, wird es nach dem Neuladen der Seite angezeigt.",
+      "INVALID_BET": "Der Einsatz wurde vom Server abgelehnt.",
+      "INVALID_MODE": "Der Modus wurde vom Server abgelehnt.",
+      "SERVICE_UNAVAILABLE": "Der Server nimmt gerade keine Runden an.",
+      "UNKNOWN": "Der Server hat die Runde nicht akzeptiert."
+    }
+  }
 }

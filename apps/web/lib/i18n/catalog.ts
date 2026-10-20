@@ -10,10 +10,15 @@ import type common from '@/messages/en/common.json';
 import type lobby from '@/messages/en/lobby.json';
 import type slotKit from '@/messages/en/slotKit.json';
 import type verify from '@/messages/en/verify.json';
+import type ebru from '@/messages/en/ebru.json';
+import type cascade from '@/messages/en/cascade.json';
+import type cezeri from '@/messages/en/cezeri.json';
+import type asena from '@/messages/en/asena.json';
+import type tarhun from '@/messages/en/tarhun.json';
 
-export interface Catalogs { common: typeof common; lobby: typeof lobby; slotKit: typeof slotKit; verify: typeof verify }
+export interface Catalogs { common: typeof common; lobby: typeof lobby; slotKit: typeof slotKit; verify: typeof verify; tarhun: typeof tarhun; cascade: typeof cascade; cezeri: typeof cezeri; asena: typeof asena; ebru: typeof ebru }
 export type Namespace = keyof Catalogs;
-export const NAMESPACES: readonly Namespace[] = ['common', 'lobby', 'slotKit', 'verify'];
+export const NAMESPACES: readonly Namespace[] = ['common', 'lobby', 'slotKit', 'verify', 'tarhun', 'cascade', 'cezeri', 'asena', 'ebru'];
 
 /** Dotted paths to every string leaf of T: "shell.nav.rewards". */
 export type Leaves<T, P extends string = ''> = {
@@ -27,15 +32,15 @@ export type Dictionary = { readonly [key: string]: string | Dictionary };
 type Loader = () => Promise<{ default: unknown }>;
 /* Explicit table (not a template import) so every bundler emits exactly one chunk per file. */
 const LOADERS: Readonly<Record<Locale, Readonly<Record<Namespace, Loader>>>> = {
-  en: { common: () => import('@/messages/en/common.json'), lobby: () => import('@/messages/en/lobby.json'), slotKit: () => import('@/messages/en/slotKit.json'), verify: () => import('@/messages/en/verify.json') },
-  de: { common: () => import('@/messages/de/common.json'), lobby: () => import('@/messages/de/lobby.json'), slotKit: () => import('@/messages/de/slotKit.json'), verify: () => import('@/messages/de/verify.json') },
-  pt: { common: () => import('@/messages/pt/common.json'), lobby: () => import('@/messages/pt/lobby.json'), slotKit: () => import('@/messages/pt/slotKit.json'), verify: () => import('@/messages/pt/verify.json') },
-  fr: { common: () => import('@/messages/fr/common.json'), lobby: () => import('@/messages/fr/lobby.json'), slotKit: () => import('@/messages/fr/slotKit.json'), verify: () => import('@/messages/fr/verify.json') },
-  it: { common: () => import('@/messages/it/common.json'), lobby: () => import('@/messages/it/lobby.json'), slotKit: () => import('@/messages/it/slotKit.json'), verify: () => import('@/messages/it/verify.json') },
-  es: { common: () => import('@/messages/es/common.json'), lobby: () => import('@/messages/es/lobby.json'), slotKit: () => import('@/messages/es/slotKit.json'), verify: () => import('@/messages/es/verify.json') },
-  tr: { common: () => import('@/messages/tr/common.json'), lobby: () => import('@/messages/tr/lobby.json'), slotKit: () => import('@/messages/tr/slotKit.json'), verify: () => import('@/messages/tr/verify.json') },
-  zh: { common: () => import('@/messages/zh/common.json'), lobby: () => import('@/messages/zh/lobby.json'), slotKit: () => import('@/messages/zh/slotKit.json'), verify: () => import('@/messages/zh/verify.json') },
-  ko: { common: () => import('@/messages/ko/common.json'), lobby: () => import('@/messages/ko/lobby.json'), slotKit: () => import('@/messages/ko/slotKit.json'), verify: () => import('@/messages/ko/verify.json') },
+  en: { common: () => import('@/messages/en/common.json'), lobby: () => import('@/messages/en/lobby.json'), slotKit: () => import('@/messages/en/slotKit.json'), verify: () => import('@/messages/en/verify.json'), tarhun: () => import('@/messages/en/tarhun.json'), cascade: () => import('@/messages/en/cascade.json'), cezeri: () => import('@/messages/en/cezeri.json'), asena: () => import('@/messages/en/asena.json'), ebru: () => import('@/messages/en/ebru.json') },
+  de: { common: () => import('@/messages/de/common.json'), lobby: () => import('@/messages/de/lobby.json'), slotKit: () => import('@/messages/de/slotKit.json'), verify: () => import('@/messages/de/verify.json'), tarhun: () => import('@/messages/de/tarhun.json'), cascade: () => import('@/messages/de/cascade.json'), cezeri: () => import('@/messages/de/cezeri.json'), asena: () => import('@/messages/de/asena.json'), ebru: () => import('@/messages/de/ebru.json') },
+  pt: { common: () => import('@/messages/pt/common.json'), lobby: () => import('@/messages/pt/lobby.json'), slotKit: () => import('@/messages/pt/slotKit.json'), verify: () => import('@/messages/pt/verify.json'), tarhun: () => import('@/messages/pt/tarhun.json'), cascade: () => import('@/messages/pt/cascade.json'), cezeri: () => import('@/messages/pt/cezeri.json'), asena: () => import('@/messages/pt/asena.json'), ebru: () => import('@/messages/pt/ebru.json') },
+  fr: { common: () => import('@/messages/fr/common.json'), lobby: () => import('@/messages/fr/lobby.json'), slotKit: () => import('@/messages/fr/slotKit.json'), verify: () => import('@/messages/fr/verify.json'), tarhun: () => import('@/messages/fr/tarhun.json'), cascade: () => import('@/messages/fr/cascade.json'), cezeri: () => import('@/messages/fr/cezeri.json'), asena: () => import('@/messages/fr/asena.json'), ebru: () => import('@/messages/fr/ebru.json') },
+  it: { common: () => import('@/messages/it/common.json'), lobby: () => import('@/messages/it/lobby.json'), slotKit: () => import('@/messages/it/slotKit.json'), verify: () => import('@/messages/it/verify.json'), tarhun: () => import('@/messages/it/tarhun.json'), cascade: () => import('@/messages/it/cascade.json'), cezeri: () => import('@/messages/it/cezeri.json'), asena: () => import('@/messages/it/asena.json'), ebru: () => import('@/messages/it/ebru.json') },
+  es: { common: () => import('@/messages/es/common.json'), lobby: () => import('@/messages/es/lobby.json'), slotKit: () => import('@/messages/es/slotKit.json'), verify: () => import('@/messages/es/verify.json'), tarhun: () => import('@/messages/es/tarhun.json'), cascade: () => import('@/messages/es/cascade.json'), cezeri: () => import('@/messages/es/cezeri.json'), asena: () => import('@/messages/es/asena.json'), ebru: () => import('@/messages/es/ebru.json') },
+  tr: { common: () => import('@/messages/tr/common.json'), lobby: () => import('@/messages/tr/lobby.json'), slotKit: () => import('@/messages/tr/slotKit.json'), verify: () => import('@/messages/tr/verify.json'), tarhun: () => import('@/messages/tr/tarhun.json'), cascade: () => import('@/messages/tr/cascade.json'), cezeri: () => import('@/messages/tr/cezeri.json'), asena: () => import('@/messages/tr/asena.json'), ebru: () => import('@/messages/tr/ebru.json') },
+  zh: { common: () => import('@/messages/zh/common.json'), lobby: () => import('@/messages/zh/lobby.json'), slotKit: () => import('@/messages/zh/slotKit.json'), verify: () => import('@/messages/zh/verify.json'), tarhun: () => import('@/messages/zh/tarhun.json'), cascade: () => import('@/messages/zh/cascade.json'), cezeri: () => import('@/messages/zh/cezeri.json'), asena: () => import('@/messages/zh/asena.json'), ebru: () => import('@/messages/zh/ebru.json') },
+  ko: { common: () => import('@/messages/ko/common.json'), lobby: () => import('@/messages/ko/lobby.json'), slotKit: () => import('@/messages/ko/slotKit.json'), verify: () => import('@/messages/ko/verify.json'), tarhun: () => import('@/messages/ko/tarhun.json'), cascade: () => import('@/messages/ko/cascade.json'), cezeri: () => import('@/messages/ko/cezeri.json'), asena: () => import('@/messages/ko/asena.json'), ebru: () => import('@/messages/ko/ebru.json') },
 };
 
 const isDict = (value: unknown): value is Dictionary => typeof value === 'object' && value !== null && !Array.isArray(value);

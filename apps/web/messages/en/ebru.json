@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "description": "{title} — an original DEMO cluster game. The comb sweeps the water and the ink rearranges itself; in Tulip Marbling the paint stains slide along with their multipliers."
+  },
+  "subtitle": "The comb sweeps the water and the ink rearranges wave by wave; stains slide along with their multipliers.",
+  "logo": {
+    "subtitle": "INK GARDEN"
+  },
+  "table": {
+    "aria": "Ebru game table"
+  },
+  "board": {
+    "label": "Ebru grid, 7 columns, 7 rows",
+    "labelFree": "Ebru free spins grid, 7 columns, 7 rows"
+  },
+  "badge": {
+    "checking": "Checking server"
+  },
+  "symbols": {
+    "c1": "Golden Tulip",
+    "c2": "Ruby Carnation",
+    "c3": "Turquoise Hatip Flower",
+    "c4": "Emerald Leaf",
+    "c5": "Navy Peacock Eye",
+    "c6": "Saffron Daisy",
+    "c7": "Rose Wave",
+    "c8": "Soot Drop",
+    "drop": "Master Drop (wild)",
+    "comb": "Golden Comb",
+    "stained": "{name}, stain ×{stain}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Stain multiplier",
+      "1": "Strong stain",
+      "2": "Brilliant stain",
+      "3": "Tulip multiplier",
+      "4": "Legendary stain",
+      "5": "Gold leaf"
+    }
+  },
+  "error": {
+    "entropy": "Secure local randomness is unavailable. The demo did not start.",
+    "noCredit": "You don’t have enough demo credit, or a demo round is already running.",
+    "insufficientSpin": "Insufficient balance: this spin costs {cost}. Lower the bet or refill your balance.",
+    "insufficientBuy": "Insufficient balance: this purchase costs {cost}. Lower the bet or refill your balance."
+  },
+  "buyBlock": {
+    "gated": "Only available with DEMO credit",
+    "autoplay": "Can’t be bought while autoplay is running",
+    "busy": "Can’t be bought until the round ends",
+    "ante": "Can’t be bought while Chance ×2 is on",
+    "balance": "Insufficient balance (price {price})"
+  },
+  "autoplay": {
+    "title": "Autoplay",
+    "serverFailed": "The server could not start the round",
+    "spinFailed": "The spin could not be started",
+    "quit": "You left the session",
+    "stopped": "Autoplay stopped: {reason}. {spins, plural, one {# spin} other {# spins}}, net {net}.",
+    "stoppedShort": "Autoplay stopped: {reason}.",
+    "note": "Per spin {cost}{ante, select, yes { (Chance ×2)} other {}} · never buys a bonus · stops when the tab is hidden."
+  },
+  "toast": {
+    "autoplay": "Autoplay: {spins, plural, one {# spin} other {# spins}}, loss limit {limit}.",
+    "refilled": "Balance refilled: {amount}.",
+    "shareCopied": "Share link copied: {url}",
+    "shareLink": "Share link: {url}",
+    "shareFailed": "Couldn’t share: {reason}",
+    "replayFailed": "This round couldn’t be replayed.",
+    "replayMismatch": "Replay couldn’t be verified: the record doesn’t match the engine.",
+    "close": "Dismiss notice"
+  },
+  "announce": {
+    "replayDone": "Replay finished: {amount}, {times}×. Balance unchanged.",
+    "roundEnd": "Round over. Total win {amount}, {times}×.",
+    "roundEndNoWin": "Round over. No win.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{size} {name}, {times}× win",
+    "clusterStain": "{size} {name}, stain ×{stain}, {times}× win",
+    "bleed": "The Master Drop spread its ink: {n, plural, one {# neighbour turned} other {# neighbours turned}} {name}.",
+    "stainMultiplier": "Stain multiplier ×{best}: the cluster pay is multiplied by the sum of the stains.",
+    "comb": "Comb pass {pass}: rows shifted {shifts}.",
+    "combCluster": "The comb formed a new cluster.",
+    "retrigger": "{count} Golden Combs: {awarded, plural, one {# free spin} other {# free spins}} added.",
+    "trigger": "{count} Golden Combs: Tulip Marbling won.",
+    "freeIntro": "Tulip Marbling begins: you won {awarded, plural, one {# free spin} other {# free spins}}.",
+    "freeSpinWin": "The free spin won {win}×. Total {total}×.",
+    "freeSpinNoWin": "No win in the free spin.",
+    "noWin": "No win.",
+    "totalWin": "Total win {amount}, {times}×.",
+    "freeOutro": "Tulip Marbling is over. Total: {amount}, {spins, plural, one {# spin} other {# spins}}, biggest stain ×{stain}.",
+    "sent": "Spin sent to the server, {amount}.",
+    "buyStarted": "Bonus purchased, {amount}. Tulip Marbling is starting.",
+    "spinStarted": "Spin started, {amount}.",
+    "recovered": "An unfinished round was recovered from the server; its payout was already made there ({amount}).",
+    "replaying": "Replaying: round {id}. Balance does not change.",
+    "refilled": "DEMO balance refilled to {amount}.",
+    "refilledRemote": "Server DEMO balance refilled to {amount}.",
+    "speed": "Spin speed: {speed}.",
+    "anteOn": "Chance ×2 on: about double the chance of free spins, cost {cost}.",
+    "anteOff": "Chance ×2 off: cost {cost}."
+  },
+  "banner": {
+    "combCluster": "The comb formed a new cluster",
+    "scatterPay": "{count} Golden Combs · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# free spin} other {# free spins}}"
+  },
+  "deck": {
+    "aria": "Game controls",
+    "balance": "Balance",
+    "refill": "Refill balance",
+    "replay": "Replay",
+    "win": "Win",
+    "replayWin": "Replay win",
+    "lastWin": "Last win",
+    "spin": "Spin",
+    "spinLocked": "Round in progress; locked until every tumble, lightning strike and free spin has finished.",
+    "auto": "Auto",
+    "info": "Info",
+    "on": "On",
+    "off": "Off",
+    "anteDesc": "About double the free-spin chance",
+    "buyDesc": "{spins, plural, one {# free spin} other {# free spins}} · {rtp}",
+    "speed": "Spin speed: {speed}",
+    "soundLoading": "Loading sound {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Your DEMO balance is empty.",
+    "lastRound": "Last round <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "No win in the last round.",
+    "spaceHint": "You can also spin with the space bar.",
+    "fixedBefore": "The result is fixed before the spin."
+  },
+  "replay": {
+    "ribbon": "Replay — balance unchanged · round {id}"
+  },
+  "auto": {
+    "ribbon": "Autoplay · {n, plural, one {# spin} other {# spins}} left"
+  },
+  "free": {
+    "tag": "Tulip Marbling",
+    "spinNumber": "Spin {n}",
+    "left": "Left",
+    "counterAria": "Free spin {number}, {left} left"
+  },
+  "comb": {
+    "label": "Comb",
+    "passAria": "Comb pass {pass} / 3",
+    "maxAria": "At most 3 comb passes per spin"
+  },
+  "stain": {
+    "aria": "Stained cells {cells}, highest stain ×{max}",
+    "stains": "Stains",
+    "highest": "Highest",
+    "max": "Max <b>{n}×</b>"
+  },
+  "meter": {
+    "idleA": "<b>5+</b> adjacent drops of one colour pay",
+    "idleB": "The comb shifts the rows",
+    "idleC": "<b>×256</b> paint stain",
+    "win": "Win",
+    "totalWin": "Total win"
+  },
+  "gated": {
+    "title": "No on-chain Ebru.",
+    "text": "This game is played with DEMO credit only; real bets are not accepted.",
+    "back": "Back to local demo"
+  },
+  "splash": {
+    "f1Title": "5+ cluster",
+    "f1Text": "Five or more adjacent drops of the same colour pay, horizontally or vertically",
+    "f2Text": "The comb sweeps the water, rows slide, new clusters appear",
+    "f3Title": "×256 stain · {max}×",
+    "f3Text": "In Tulip Marbling the stains slide along with the comb",
+    "loading": "Loading game",
+    "play": "Play",
+    "skip": "Don’t show this splash screen again",
+    "note": "DEMO credit has no value · The result is fixed before the spin · Uncertified simulation RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Sound ready: music, effects and ambience have been prepared on this device.",
+    "soundLoading": "Loading sound {percent} (the game stays silent meanwhile).",
+    "soundOnTouch": "Sound loads on the first touch.",
+    "demoTitle": "DEMO balance",
+    "demoText": "Balance {balance}{server, select, yes { (server)} other {}}. Refilling sets the balance to {amount} and adds a “{label}” row to the history; it isn’t possible while a round or autoplay is running."
+  },
+  "buy": {
+    "feature": "Tulip Marbling · {spins, plural, one {# free spin} other {# free spins}} · bet {bet}",
+    "rtp": "Buy RTP {buy} · standard {standard} (simulation, uncertified)",
+    "description": "<b>100 times</b> your bet. The round starts with at least 3 Golden Combs and {spins, plural, one {# free spin is} other {# free spins are}} guaranteed; every cell that bursts gets a paint stain, the stains slide with the comb and multiply the cluster they pass under by their sum. Wins are paid on a {bet} bet, up to a maximum of {max}."
+  },
+  "history": {
+    "scope": "This session · replays never change your balance",
+    "time": "Time",
+    "mode": "Mode",
+    "win": "Win",
+    "result": "Result",
+    "roundId": "Round ID",
+    "replay": "Replay",
+    "replayAria": "Replay: round {id}, balance unchanged",
+    "share": "Share your win",
+    "shareAria": "Share your win: round {id}",
+    "latest": "Latest round",
+    "refilled": "Balance refilled",
+    "refilledRemote": "Balance refilled (server)",
+    "emptyTitle": "Your first round will appear here.",
+    "emptyText": "Every round’s mode, bet, cost, win and round ID are recorded; you can watch any round again.",
+    "capped": "Max win · {times}×",
+    "free": "Free spins ×{spins} · {times}×",
+    "none": "No win",
+    "freeStain": "Tulip Marbling ×{spins} · biggest stain ×{stain} · {times}×",
+    "clusters": "{n, plural, one {# cluster} other {# clusters}}",
+    "combWins": "{n, plural, one {# comb win} other {# comb wins}}",
+    "combs": "{n, plural, one {# Golden Comb} other {# Golden Combs}}",
+    "clusterRow": "{items} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× bet",
+    "capNote": "The round hit the cap · remaining spins are not played",
+    "continue": "Continue",
+    "tapToSpeed": "Tap to speed up"
+  },
+  "intro": {
+    "word": "TULIP MARBLING",
+    "title": "Tulip Marbling Begins",
+    "freeA": "free",
+    "freeB": "spins",
+    "text": "Every cell that bursts gets a <b>paint stain</b>: first ×2, doubling each time in the same cell, up to ×256. Stains stay for the whole feature and <b>slide along with the comb</b>; a cluster that passes over them has its pay multiplied by the sum of the stains. 3 Golden Combs give +4 spins.",
+    "start": "Start"
+  },
+  "total": {
+    "titleA": "Tulip Marbling",
+    "titleB": "Total",
+    "word": "TOTAL",
+    "sub": "FREE SPINS",
+    "spins": "Spins",
+    "spinsValue": "{n, plural, one {# spin} other {# spins}}",
+    "maxStain": "Biggest stain",
+    "none": "None",
+    "stainedClusters": "{n, plural, one {# stained cluster} other {# stained clusters}}",
+    "noStainedClusters": "no stained clusters",
+    "betMultiple": "Of your bet",
+    "combWins": "{n, plural, one {# comb win} other {# comb wins}}",
+    "noCombWins": "no comb wins",
+    "capNote": "Max win reached · remaining spins are not played",
+    "toCelebration": "On to the celebration"
+  },
+  "info": {
+    "windowTitle": "Ebru · Game info",
+    "how": {
+      "title": "How to play",
+      "s1": "<b>Choose your bet.</b> The − and + buttons change the bet by one step; tapping the bet amount opens every step. “{max}” picks the highest step your balance covers.",
+      "s2": "<b>Spin.</b> Press the ink button or use the space bar. The round cost ({multiple} times the bet when Chance ×2 is on) is taken from your balance once.",
+      "s3": "<b>Build clusters.</b> In the 7 × 7 water tray, <b>5 or more adjacent drops of the same colour</b>, horizontally or vertically, pay; the larger the cluster, the higher the pay tier.",
+      "s4": "<b>Chain.</b> Winning clusters dissolve into the water, the ones above fall and new drops fill the gaps; this continues until no cluster is left.",
+      "s5": "<b>Comb.</b> When the chain ends — even with no win — the Golden Comb sweeps the water: each row slides right or left by its own amount and new clusters may form. At most {passes} comb passes per spin.",
+      "s6": "<b>Result.</b> The whole round is decided by the engine before the spin starts; the animation only plays that result back. The Spin button stays locked until the round (every tumble, comb pass and free spin) has finished; use the {quick}/{turbo} setting to speed things up. Speed settings, tapping the celebration counter, a hidden tab or leaving the page never change the payout; the round always closes once, with the engine’s payout.",
+      "note": "DEMO credit has no value; it does not earn SOL, tokens or rewards. The game runs in the browser with local randomness; there is no VRF proof."
+    },
+    "pay": {
+      "title": "Paytable",
+      "lead": "<b>5 or more adjacent drops of the same colour</b>, horizontally or vertically, form a cluster. The large figure is the gross DEMO amount at a bet of <b>{bet}</b>; the multiplier below it is a multiple of the bet. Every cluster on the same grid pays separately.",
+      "clustersAria": "Cluster pays",
+      "fullSummary": "All cluster sizes (12 tiers)",
+      "fullCaption": "Pay by colour and cluster size, as a multiple of the bet",
+      "colour": "Colour",
+      "scatterTitle": "{name} · scatter pay",
+      "combs5": "5+ combs",
+      "combs4": "4 combs",
+      "combs3": "3 combs",
+      "scatterText": "If the final grid of the base spin holds 3 or more Golden Combs, they pay and unlock <b>{spins} free spins</b> (Tulip Marbling). Combs do not dissolve; they only fall and slide with the comb.",
+      "dropText": "It does not join a cluster itself; where it lands it spreads its ink: it picks the most frequent colour among its 4 neighbours and paints its neighbours and itself that colour. Details are on the “{features}” page.",
+      "maxTitle": "Max win {n}×",
+      "maxText": "At this bet that is <b>{amount}</b>. If the round total reaches this cap the round ends immediately; remaining free spins are not played."
+    },
+    "features": {
+      "title": "Features",
+      "combTitle": "Comb pass",
+      "combText": "When each tumble chain ends, the comb sweeps the board once: row r slides <b>round(A · sin(φ + r · k))</b> columns cyclically (what leaves on the right enters on the left). A is 1, 2 or 3 on each pass ({weights}); φ and k are drawn again on every pass. If the shift forms a new cluster the chain continues; if not, the spin ends. At most {passes} passes per spin. Symbols only change places; none is added or removed.",
+      "combExample": "Example: A = 2, φ = 0, k = 8·2π/64 → row shifts {shifts}.",
+      "combExampleAria": "Example comb pass, shift per row",
+      "combRow": "Row {n} {shift}",
+      "dropTitle": "{name}",
+      "dropText": "The moment it lands (on the deal or on a refill) it spreads its ink: it counts the colours of its 4 neighbours, picks the most frequent one (a tie is broken at random; with no coloured neighbour a random colour is used), paints its coloured neighbours that colour and becomes that colour itself. Golden Combs are not painted.",
+      "freeTitle": "Tulip Marbling (free spins)",
+      "freeText": "3+ Golden Combs unlock {trigger} free spins. In free spins every cell that bursts gets a <b>paint stain multiplier</b>: ×2 the first time, doubling each time in the same cell, up to ×{stainMax}. Stains stay for the whole feature; tumbles do not move them, but <b>the comb pass sweeps the stains with the same shift as the symbols</b>. When a cluster passes over stained cells, its pay is multiplied by the <b>sum</b> of the stains under it (pay first, then the new stain). In free spins 3+ combs add {retrigger} spins; a single round plays at most {max} spins. The Soot Drop does not spread in free spins (only a Master Drop with no coloured neighbour can pick that colour at random).",
+      "stainsAria": "Stain multipliers",
+      "cumTitle": "Cumulative win",
+      "cumText": "The win meter never resets during a round: clusters, comb wins, the scatter pay and all free spins add up in the same total. A free-spin round always ends with the “{screen}” screen.",
+      "tiersTitle": "Win tiers and multiplier announcements",
+      "tiersText": "When the round total is <b>10×</b> your base bet or more, the celebration screen opens and the counter climbs through the tiers: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; a round that reaches the cap ends with {max}. Stain multipliers of ×10 and above are announced in large type above the grid with their own sound. Tapping the screen jumps the counter to the result; it never changes the payout.",
+      "anteTitle": "Chance ×2 · cost {cost}",
+      "anteText": "While on, every spin costs <b>{multiple} times your bet</b> and Golden Combs are more likely in the base game: the free-spin chance is roughly double ({ante} / {standard}). Wins are still paid on the base bet. The bonus can’t be bought while it is on.",
+      "buyTitle": "Buy bonus · price {price}",
+      "buyText": "For <b>100 times</b> your bet the round starts with at least 3 Golden Combs; {spins} free spins are guaranteed. The purchase is made through a confirmation window, runs at a separate RTP ({rtp}) and can’t be used with autoplay."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Theoretical return (RTP)",
+      "caption": "Theoretical return per mode",
+      "mode": "Mode",
+      "cost": "Cost",
+      "ci": "95% CI",
+      "feature": "Feature",
+      "everyRound": "every round",
+      "method": "A separate simulation of {millions} million rounds for each mode (engine <code>ebru-ink-1</code>). RTP is calculated against the amount paid. Hit frequency (base spin): standard {hit}, Chance ×2 {hitAnte}. Volatility (standard deviation in cost units): standard {sdStandard}, buy {sdBuy}.",
+      "note": "The simulation is an estimate and is <b>uncertified</b>; because of the heavy tail the confidence interval may be optimistic. Results in a short session can differ greatly from the RTP. DEMO credit has <b>no value</b>."
+    },
+    "limits": {
+      "title": "Bet and win limits",
+      "range": "Bet range",
+      "levels": "Steps",
+      "current": "Current bet",
+      "currentValue": "{bet} · Chance ×2 {ante} · Buy {buy}",
+      "max": "Max win",
+      "maxValue": "{n} times the bet · {amount} at this bet",
+      "p1": "A round that reaches the max win ends immediately; remaining free spins are not played. The payout is always calculated on the base bet, with fractions of a cent rounded down.",
+      "p2": "Steps and modes your balance can’t cover can’t be selected. A round is a single reservation and a single payout; only one round is played at a time."
+    },
+    "keys": {
+      "title": "Keys",
+      "heading": "Keyboard",
+      "space": "Space",
+      "spaceText": "Starts the spin ({settings} → “{option}”). During a round it doesn’t skip the spin; it only speeds up the free-spin screens and the celebration counter.",
+      "enterText": "Presses the focused button.",
+      "escText": "Closes the open window (except the session reminder).",
+      "tabText": "Moves between controls; focus is always visible.",
+      "arrowsText": "Switches pages in this info window; changes the option in setting choices.",
+      "pageText": "Moves between info pages.",
+      "note": "The screen reader announces every step (“{example}”, comb passes, the round result); the grid is read as a 7×7 table and stained cells are read with their multiplier. Symbols are told apart by shape as well as colour (tulip, carnation, hatip flower, leaf, peacock eye, daisy, rose, pebble). The reduced-motion preference shortens the comb to a brief slide and turns off particles and shaking."
+    },
+    "fault": {
+      "title": "Fault clause",
+      "p1": "<b>A fault voids all affected games and payouts.</b> In case of a software, browser or device fault the round record is authoritative; an amount that appears on screen but does not match the engine record is not valid.",
+      "p2": "This game is played with DEMO credit only. DEMO has no value and cannot be converted to money or tokens; in case of a fault the DEMO balance and session history may be corrected or reset.",
+      "p3": "Because the result is decided before the spin, an animation that is cut short, a hidden tab or leaving the page does not change the result; the round still closes once with the engine’s payout."
+    }
+  }
+}

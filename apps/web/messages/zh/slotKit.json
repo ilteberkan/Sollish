@@ -150,5 +150,25 @@
       "word": "最高"
     }
   },
-  "winWord": "赢"
+  "winWord": "赢",
+  "rgs": {
+    "source": {
+      "local": "本地演示",
+      "remote": "服务器验证"
+    },
+    "errors": {
+      "INSUFFICIENT_BALANCE": "服务器余额不足以进行本轮。",
+      "RATE_LIMITED": "你玩得太快了，服务器需要你等待一秒。",
+      "SESSION_BUSY": "上一个请求仍在处理中。",
+      "SESSION_EXPIRED": "服务器会话已过期；请刷新页面。",
+      "AUTH_INVALID": "服务器会话无效；请刷新页面。",
+      "SESSION_LIMIT": "本会话已达到轮次上限；请刷新页面。",
+      "ROUND_MISMATCH": "服务器的这一轮与引擎不一致；未显示该轮。",
+      "NETWORK": "无法连接到服务器。若本轮结果已保存在服务器上，刷新页面后会显示。",
+      "INVALID_BET": "投注已被服务器拒绝。",
+      "INVALID_MODE": "模式已被服务器拒绝。",
+      "SERVICE_UNAVAILABLE": "服务器目前不接受新的一轮。",
+      "UNKNOWN": "服务器未接受本轮。"
+    }
+  }
 }

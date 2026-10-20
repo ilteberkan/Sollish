@@ -90,6 +90,7 @@
 .chip strong { color: var(--as-gold); }
 .chipArt { width: 32px; height: 32px; flex: none; }
 .chipSide { margin-left: auto; padding-left: 10px; }
+.narrowOnly { display: none; }
 .chipGlyph { width: 26px; height: 26px; display: block; }
 .freeCounter {
   display: inline-flex;
@@ -494,6 +495,7 @@
   .stage[data-replay] .column { padding-top: 40px; }
   .column { --bw: min(100cqw - 12px, 600px); position: relative; inset: auto; padding: 6px 3px 0; gap: 5px; }
   .wideOnly { display: none; }
+  .narrowOnly { display: inline; }
   .hud { min-height: 40px; padding: 0 6px; }
   .chip { min-height: 36px; font-size: 12px; padding-right: 10px; }
   .chipArt { width: 26px; height: 26px; }

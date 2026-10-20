@@ -1,4 +1,6 @@
+'use client';
 import { memo } from 'react';
+import { useT } from '@/lib/i18n/client';
 import { AS_PALETTE as P, asSparkle } from './symbols';
 import styles from './art.module.css';
 
@@ -22,9 +24,10 @@ const TOP = 26;
 const SKYLINE = LETTERS.map((l, i) => { const [nx, ny] = l.nodes[1]!; return `${i ? 'L' : 'M'}${l.x + nx} ${TOP + ny - 14}`; }).join('');
 
 export const AsenaLogo = memo(function AsenaLogo({ className, subtitle = true }: { className?: string; subtitle?: boolean }) {
+  const t = useT('asena');
   const h = subtitle ? 232 : 176;
   return (
-    <svg className={`${styles.logo} ${className ?? ''}`} viewBox={`0 0 640 ${h}`} role="img" aria-label="Asena: Yıldız Kurdu">
+    <svg className={`${styles.logo} ${className ?? ''}`} viewBox={`0 0 640 ${h}`} role="img" aria-label={t('logo.label')}>
       <defs>
         <linearGradient id="aslSteel" x1="0" y1={TOP} x2="0" y2={TOP + 130} gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#ffffff" /><stop offset=".28" stopColor={P.silver.light} /><stop offset=".55" stopColor="#8ea4e0" /><stop offset=".6" stopColor="#e8eeff" /><stop offset="1" stopColor={P.silver.deep} />
@@ -58,7 +61,7 @@ export const AsenaLogo = memo(function AsenaLogo({ className, subtitle = true }:
         <g>
           <path d="M60 200H200M440 200H580" stroke="url(#aslBronze)" strokeWidth="3" />
           <path d={`${asSparkle(206, 200, 7)}${asSparkle(434, 200, 7)}`} fill={P.turq.light} />
-          <text x="320" y="212" textAnchor="middle" className={styles.logoSub} fill="url(#aslGold)" stroke="#2a1406" strokeWidth="1" paintOrder="stroke">YILDIZ KURDU</text>
+          <text x="320" y="212" textAnchor="middle" className={styles.logoSub} fill="url(#aslGold)" stroke="#2a1406" strokeWidth="1" paintOrder="stroke">{t('logo.subtitle')}</text>
         </g>
       )}
     </svg>

@@ -79,5 +79,27 @@
     "play": "Reproducir",
     "forward": "Adelante",
     "noSteps": "No se pueden mostrar los pasos de esta ronda."
+  },
+  "outcome": {
+    "game": "Juego no reconocido.",
+    "serverSeed": "La semilla del servidor debe tener 64 caracteres hexadecimales (la semilla revelada).",
+    "serverSeedHash": "El hash de la semilla debe tener 64 caracteres hexadecimales.",
+    "clientSeed": "La semilla del jugador debe tener de 1 a 64 caracteres: letras, dígitos, _ o -.",
+    "nonce": "El nonce debe ser un entero igual o mayor que 0.",
+    "bet": "La apuesta debe ser uno de los niveles de apuesta de este juego.",
+    "mode": "Ese modo no existe en este juego.",
+    "expectedSeed": "La semilla de ronda esperada debe tener 32 caracteres hexadecimales.",
+    "expectedPayout": "El pago esperado debe ser un entero (céntimos DEMO).",
+    "engineRejected": "El motor no aceptó esta combinación de apuesta y modo.",
+    "match": "Coincide: el resultado se recalculó a partir de estas semillas.",
+    "mismatch": "No coincide: {failed}."
+  },
+  "checks": {
+    "hash": "hash de la semilla",
+    "engine": "motor",
+    "seed": "semilla de la ronda",
+    "payout": "pago",
+    "total": "multiplicador",
+    "cost": "coste"
   }
 }

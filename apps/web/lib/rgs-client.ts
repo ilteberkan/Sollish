@@ -22,6 +22,7 @@ import { configuredApi } from './chat';
 export type SlotGameId = ProtocolSlotGameId;
 export type SlotMode = CascadeMode;
 export type RoundOf<G extends SlotGameId> = G extends 'cascade' ? Cascade2Round : G extends 'ebru' ? EbruRound : G extends 'cezeri' ? CezeriRound : G extends 'asena' ? AsenaRound : StormRound;
+/** Turkish labels (legacy). Translated UI: `useRgsText().source(kind)` (slotKit `rgs.source.<kind>`). */
 export const SOURCE_LABELS = Object.freeze({ local: 'Yerel demo', remote: 'Sunucu doğrulamalı' } as const);
 
 /* ---------------------------------------------------------------- engines (injected, one per game) */
@@ -97,6 +98,13 @@ export const RGS_ERROR_TEXT: Readonly<Record<string, string>> = Object.freeze({
   INVALID_MODE: 'Mod sunucuda reddedildi.',
   SERVICE_UNAVAILABLE: 'Sunucu şu an turu kabul etmiyor.',
 });
+/** Codes with a translated text (`slotKit.rgs.errors.<code>`); anything else is 'UNKNOWN'. */
+export type RgsErrorCode = 'INSUFFICIENT_BALANCE' | 'RATE_LIMITED' | 'SESSION_BUSY' | 'SESSION_EXPIRED' | 'AUTH_INVALID' | 'SESSION_LIMIT' | 'ROUND_MISMATCH' | 'NETWORK' | 'INVALID_BET' | 'INVALID_MODE' | 'SERVICE_UNAVAILABLE' | 'UNKNOWN';
+export function rgsErrorCode(error: unknown): RgsErrorCode {
+  const code = error instanceof RgsError ? error.code : 'NETWORK';
+  return code in RGS_ERROR_TEXT ? (code as RgsErrorCode) : 'UNKNOWN';
+}
+/** Turkish text (legacy callers and tests). Translated UI: `useRgsText().error(failure)` (lib/use-rgs-text.ts). */
 export function rgsErrorMessage(error: unknown): string {
   const code = error instanceof RgsError ? error.code : 'NETWORK';
   return RGS_ERROR_TEXT[code] ?? 'Sunucu turu kabul etmedi.';

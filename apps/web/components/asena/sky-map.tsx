@@ -3,7 +3,8 @@
 import { memo, useEffect, useImperativeHandle, useRef } from 'react';
 import type { Ref } from 'react';
 import { ASENA_MAP_MULTIPLIERS, ASENA_TEMPLATES } from '@sollish/protocol';
-import { ASENA_TEMPLATE_INFO, asenaTemplateGlyph } from './geometry';
+import { useT } from '@/lib/i18n/client';
+import { asenaTemplateGlyph } from './geometry';
 import { asSparkle } from './symbols';
 import styles from './art.module.css';
 
@@ -62,6 +63,7 @@ const Emblem = memo(function Emblem() {
 });
 
 export function AsenaSkyMap({ pieces = [0, 0, 0, 0, 0, 0], multiplier = 1, orientation = 'column', className, ref, inactive }: AsenaSkyMapProps) {
+  const t = useT('asena');
   const tiles = useRef<Array<HTMLDivElement | null>>([]);
   const medal = useRef<HTMLDivElement>(null);
   const emblem = useRef<HTMLDivElement>(null);
@@ -88,20 +90,21 @@ export function AsenaSkyMap({ pieces = [0, 0, 0, 0, 0, 0], multiplier = 1, orien
     { need: '6×2', m: ASENA_MAP_MULTIPLIERS.twice, on: twice },
   ];
   return (
-    <section className={`${styles.map} ${className ?? ''}`} data-orient={orientation} data-level={level} data-inactive={inactive || undefined} aria-label={`Ergenekon haritası: ${distinct} takımyıldız yandı, genel çarpan ×${multiplier}`}>
+    <section className={`${styles.map} ${className ?? ''}`} data-orient={orientation} data-level={level} data-inactive={inactive || undefined} aria-label={t('skymap.aria', { distinct, multiplier })}>
       <header className={styles.mapHead}>
         <div ref={emblem} className={styles.emblem}><Emblem /></div>
-        <div className={styles.mapTitle}><span>ERGENEKON</span><small>{inactive ? 'bedava dönüşlerde açılır' : `${distinct}/6 takımyıldız`}</small></div>
+        <div className={styles.mapTitle}><span>ERGENEKON</span><small>{inactive ? t('skymap.inactive') : t('skymap.lit', { distinct })}</small></div>
         <div ref={medal} className={styles.medal} aria-live="polite"><span>×{multiplier}</span></div>
       </header>
       <div className={styles.tiles}>
-        {ASENA_TEMPLATES.map((t, i) => {
+        {ASENA_TEMPLATES.map((tpl, i) => {
           const n = Math.min(2, pieces[i] ?? 0);
+          const name = t(`templates.${tpl.id}`);
           return (
-            <div key={t.id} ref={(el) => { tiles.current[i] = el; }} className={styles.tile} data-n={n} title={`${t.name} ×${t.multiplier}`}>
+            <div key={tpl.id} ref={(el) => { tiles.current[i] = el; }} className={styles.tile} data-n={n} title={`${name} ×${tpl.multiplier}`}>
               <Glyph index={i} />
-              <div className={styles.tileText}><b>{ASENA_TEMPLATE_INFO[t.id].name}</b><span>×{t.multiplier}</span></div>
-              <div className={styles.pips} role="img" aria-label={`${n} kez yandı`}><i data-on={n >= 1 || undefined} /><i data-on={n >= 2 || undefined} /></div>
+              <div className={styles.tileText}><b>{name}</b><span>×{tpl.multiplier}</span></div>
+              <div className={styles.pips} role="img" aria-label={t('skymap.pips', { n })}><i data-on={n >= 1 || undefined} /><i data-on={n >= 2 || undefined} /></div>
             </div>
           );
         })}

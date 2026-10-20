@@ -2,21 +2,25 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { useRouter } from 'next/navigation';
 import { ASENA_RTP, playAsenaRound, type AsenaMode, type AsenaRound } from '@sollish/protocol';
-import { demoNumber } from '@/lib/demo';
+import { DEMO_START_CENTS } from '@/lib/demo';
+import { useFormat, useT } from '@/lib/i18n/client';
+import type { Locale } from '@/lib/i18n/config';
+import type { MessageKey } from '@/lib/i18n/catalog';
+import { useRgsText } from '@/lib/use-rgs-text';
+import { richText } from '../game-rich';
 import {
-  asenaCalloutTier, asenaCents, asenaClusterAnnouncement, asenaErgenekonLevel, asenaHistoryDetail, asenaMoney, asenaTimes, buildAsenaTimeline,
+  asenaCalloutTier, asenaCents, asenaErgenekonLevel, asenaHistoryDetail, asenaMoney, asenaTimes, buildAsenaTimeline,
   type AsenaCalloutTier, type AsenaEvent, type AsenaMeter, type AsenaTimeline,
 } from '@/lib/asena-timeline';
 import { WIN_TIER_INFO, countUpSchedule, type CelebrationLevel, type CountUpSchedule } from '@/lib/slot-kit/win-tiers';
 import { TimelinePlayer } from '@/lib/slot-kit/timeline-player';
-import { AUTOPLAY_STOP_REASONS, autoplayNetLossCents, createAutoplay, type AutoplayConfig, type AutoplayState } from '@/lib/slot-kit/autoplay';
-import { formatAmount, formatDemo, formatSignedDemo } from '@/lib/slot-kit/bet';
+import { autoplayNetLossCents, createAutoplay, type AutoplayConfig, type AutoplayState, type AutoplayStopCode } from '@/lib/slot-kit/autoplay';
 import { SPIN_SPEEDS, type SpinSpeed } from '@/lib/slot-kit/settings';
 import {
   ASENA_AUTOPLAY_GAP, ASENA_BET_LADDER, ASENA_COST_MODES, ASENA_DEFAULT_BET_CENTS, ASENA_MAX_BET_CENTS, ASENA_MIN_BET_CENTS,
-  asenaAutoplayAfterRound, asenaAutoplayBeforeSpin, asenaBuyBlockReason, asenaCost, asenaLedgerLimits, asenaRoundId, asenaRtp, asenaTimelineOptions,
+  asenaAutoplayAfterRound, asenaAutoplayBeforeSpin, asenaBuyBlock, asenaCost, asenaLedgerLimits, asenaRoundId, asenaRtp, asenaTimelineOptions,
 } from '@/lib/asena-controls';
-import { markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
+import { markRoundShown, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
 import { ASENA_ENGINE } from '@/lib/slot-engines/asena';
 import { localSourceFor, useRoundSource } from '@/lib/use-round-source';
 import { useAsenaSound } from '@/lib/slot-audio/use-asena-sound';
@@ -36,7 +40,7 @@ import { AsenaFx, type AsenaMood } from './fx';
 import { AsenaLogo } from './logo';
 import { AsenaScene, type AsenaSceneHandle } from './scene';
 import { AsenaSkyMap, type AsenaSkyMapHandle } from './sky-map';
-import { ASENA_SYMBOL_GLOW, ASENA_SYMBOL_LABELS, AsenaSymbolArt, AsenaSymbolSprites, asSparkle } from './symbols';
+import { ASENA_SYMBOL_GLOW, AsenaSymbolArt, AsenaSymbolSprites, asSparkle, useAsenaSymbolLabels } from './symbols';
 import { AsenaTemplateGlyph } from './template-glyph';
 import styles from './asena-game.module.css';
 
@@ -71,9 +75,9 @@ type Toast = { key: number; text: string; tone: 'info' | 'warn' };
 type ModalId = 'settings' | 'info' | 'autoplay' | 'buy' | null;
 type Boot = { phase: 'loading' | 'ready' | 'done'; progress: number };
 
-const ENTROPY_ERROR = 'Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.';
-const CALLOUT_TAGS: Record<AsenaCalloutTier, string> = { 0: 'Takımyıldız', 1: 'Parlak takımyıldız', 2: 'Gök çarpanı', 3: 'Tengri çarpanı', 4: 'Efsane gök', 5: 'Kün Ana' };
-const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hızlı', turbo: 'Turbo' };
+const CALLOUT_KEY = { 0: 'callout.tier0', 1: 'callout.tier1', 2: 'callout.tier2', 3: 'callout.tier3', 4: 'callout.tier4', 5: 'callout.tier5' } as const satisfies Record<AsenaCalloutTier, string>;
+const SPEED_KEY = { normal: 'settings.speedNormal', quick: 'settings.speedQuick', turbo: 'settings.speedTurbo' } as const satisfies Record<SpinSpeed, string>;
+type StopCode = AutoplayStopCode | 'server-failed' | 'spin-failed' | 'quit';
 const ZERO: AsenaMeter = { spin: 0, total: 0 };
 const NO_PIECES = [0, 0, 0, 0, 0, 0];
 const BET_KEY = 'sollish:asena:bet';
@@ -115,24 +119,24 @@ function realityIntervalOverride(): number | undefined {
 }
 
 /** Count-up number that writes its own text node (no React re-render per frame). */
-function CountUp({ cents, duration }: { cents: number; duration: number }) {
+function CountUp({ cents, duration, locale }: { cents: number; duration: number; locale: Locale }) {
   const node = useRef<HTMLSpanElement>(null);
   const shown = useRef(cents);
-  const [initial] = useState(() => asenaMoney(cents));
+  const [initial] = useState(() => asenaMoney(cents, locale));
   useEffect(() => {
     const el = node.current; if (!el) return;
     const from = shown.current, to = cents;
-    if (duration <= 0 || from === to || typeof requestAnimationFrame === 'undefined') { shown.current = to; el.textContent = asenaMoney(to); return; }
+    if (duration <= 0 || from === to || typeof requestAnimationFrame === 'undefined') { shown.current = to; el.textContent = asenaMoney(to, locale); return; }
     const start = performance.now(); let frame = 0;
     const step = (now: number) => {
       const p = Math.min(1, Math.max(0, (now - start) / duration));
       shown.current = Math.round(from + (to - from) * (1 - (1 - p) ** 3));
-      el.textContent = asenaMoney(shown.current);
+      el.textContent = asenaMoney(shown.current, locale);
       if (p < 1) frame = requestAnimationFrame(step);
     };
     frame = requestAnimationFrame(step);
-    return () => { cancelAnimationFrame(frame); shown.current = to; el.textContent = asenaMoney(to); };
-  }, [cents, duration]);
+    return () => { cancelAnimationFrame(frame); shown.current = to; el.textContent = asenaMoney(to, locale); };
+  }, [cents, duration, locale]);
   return <span ref={node}>{initial}</span>;
 }
 
@@ -179,6 +183,13 @@ const StaticFooter = memo(function StaticFooter({ remote }: { remote: boolean })
 export function AsenaGame() {
   const { reserveDemo, settleDemo, recordRemote, setActiveDemo, demoBalance, resetDemoBalance } = useProduct();
   const router = useRouter();
+  const t = useT('asena');
+  const tk = useT('slotKit');
+  const tc = useT('common');
+  const format = useFormat();
+  const rgs = useRgsText();
+  const loc = format.locale;
+  const symbolLabels = useAsenaSymbolLabels();
   const { settings, update: updateSettings, reset: resetSettings } = useSlotSettings('asena');
   const [realityMs] = useState(realityIntervalOverride);
   const session = useSession(realityMs ? { realityIntervalMs: realityMs } : {});
@@ -338,16 +349,17 @@ export function AsenaGame() {
     if (current && !current.settled) settleRef.current(current);
   }, []);
 
-  const stopAutoplay = useCallback((reason: string, tone: Toast['tone'] = 'warn') => {
+  const stopAutoplay = useCallback((code: StopCode, tone: Toast['tone'] = 'warn') => {
     const state = autoRef.current;
     if (!state) return;
     autoRef.current = null;
     setAuto(null);
     sound.autoplay(false);
     const net = -autoplayNetLossCents(state);
-    showToast(`Otomatik oyun durdu: ${reason}. ${state.spinsDone} tur, net ${formatSignedDemo(net)}.`, tone);
-    setAnnounce(`Otomatik oyun durdu: ${reason}.`);
-  }, [showToast, sound]);
+    const reason = code === 'server-failed' ? t('autoplay.serverFailed') : code === 'spin-failed' ? t('autoplay.spinFailed') : code === 'quit' ? t('autoplay.quit') : tk(`autoplay.reasons.${code}`);
+    showToast(t('toast.autoplayStopped', { reason, spins: state.spinsDone, net: format.signedDemo(net) }), tone);
+    setAnnounce(t('toast.autoplayStoppedShort', { reason }));
+  }, [showToast, sound, t, tk, format]);
 
   const finishRound = useCallback((current: LiveRound) => {
     settle(current);
@@ -360,7 +372,7 @@ export function AsenaGame() {
     sound.scene('base');
     if (current.id === null) {
       setReplaying(null);
-      setAnnounce(`Tekrar bitti: ${demoNumber(round.payoutCents)} DEMO, ${asenaTimes(round.totalHundredths)}×. Bakiye değişmedi.`);
+      setAnnounce(t('announce.replayDone', { amount: format.number(round.payoutCents / 100), times: asenaTimes(round.totalHundredths, loc) }));
       return;
     }
     const state = autoRef.current;
@@ -369,8 +381,8 @@ export function AsenaGame() {
       autoRef.current = next;
       setAuto(next);
     }
-    setAnnounce(round.payoutCents > 0 ? `Tur bitti. Toplam kazanç ${demoNumber(round.payoutCents)} DEMO, ${asenaTimes(round.totalHundredths)}×.` : 'Tur bitti. Kazanç yok.');
-  }, [settle, sound]);
+    setAnnounce(round.payoutCents > 0 ? t('announce.roundEnd', { amount: format.number(round.payoutCents / 100), times: asenaTimes(round.totalHundredths, loc) }) : t('announce.roundEndNone'));
+  }, [settle, sound, t, format, loc]);
 
   /* ---------------------------------------------------------------- presentation helpers */
   /** A point in cell units (col + 0.5 = cell centre) relative to the stage, plus the cell size. */
@@ -432,8 +444,8 @@ export function AsenaGame() {
     board.current?.dim(true);
     scene.current?.howl();
     if (!lite) void fx.current?.skyGate(Math.min(1.6, 0.7 + schedule.totalHundredths / 12_000), { howlAt: howlPoint(), duration: Math.min(4200, Math.max(1800, schedule.countUp)) });
-    setAnnounce(`${WIN_TIER_INFO[schedule.finalLevel].title}: ${demoNumber(asenaCents(betCents, schedule.totalHundredths))} DEMO, ${asenaTimes(schedule.totalHundredths)}×.`);
-  }, [howlPoint, sound]);
+    setAnnounce(t('announce.celebration', { title: tk(`winTier.${WIN_TIER_INFO[schedule.finalLevel].id}.title`), amount: format.number(asenaCents(betCents, schedule.totalHundredths) / 100), times: asenaTimes(schedule.totalHundredths, loc) }));
+  }, [howlPoint, sound, t, tk, format, loc]);
   const onCelebrationLevel = useCallback((level: CelebrationLevel, first: boolean) => {
     const { reduced, lite } = celebrateFx.current;
     if (level === 5) sound.maxWin(); else sound.bigWin(level);
@@ -467,7 +479,7 @@ export function AsenaGame() {
       case 'moon-tease':
         b?.moons(event.cells, 'tease');
         void f?.moons(event.cells, { tease: true, hold: 1600 });
-        setAnnounce('İki Ay Ata göründü; üçüncüsü bedava dönüşleri açar.');
+        setAnnounce(t('announce.moonTease'));
         break;
       case 'grid': b?.setGrid(event.grid); break;
       case 'highlight': {
@@ -475,19 +487,23 @@ export function AsenaGame() {
         if (!lite) f?.clusterWin(event.clusters.flatMap(cl => cl.positions), ASENA_SYMBOL_GLOW[event.clusters[0]!.symbol], event.stepHundredths / 100);
         for (const cl of event.clusters) sound.clusterWin(cl.symbol, cl.size);
         sound.winHighlight(event.stepHundredths / 100);
-        setAnnounce(event.clusters.map(cl => asenaClusterAnnouncement(cl, ASENA_SYMBOL_LABELS)).join('; '));
+        setAnnounce(event.clusters.map(cl => {
+          const label = symbolLabels[cl.symbol as keyof typeof symbolLabels] ?? cl.symbol;
+          return t('announce.cluster', { size: cl.size, name: loc === 'tr' ? label.toLocaleLowerCase('tr-TR') : label, template: cl.templateId ? 'yes' : 'none', templateName: cl.templateId ? t(`templates.${cl.templateId}` as MessageKey<'asena'>) : '', templateMultiplier: cl.templateMultiplier ?? 0, times: asenaTimes(cl.winHundredths, loc) });
+        }).join('; '));
         break;
       }
       case 'constellation': {
         const plan = event.plan;
         void b?.constellation(plan);
-        void f?.constellation(plan, { persist: event.persist });
+        const planName = t(`templates.${plan.templateId}`);
+        void f?.constellation(plan, { persist: event.persist, name: planName.toLocaleUpperCase(format.intl) });
         const key = `${current.prefix}:${event.spin}:${event.step}:${event.index}`;
         const seconds = sound.constellation(plan);
         // The wolf howls exactly when the sound's howl starts; without sound the timeline's own howl event does it.
         if (seconds > 0) { howled.current.add(key); later(seconds * 1000, () => { if (live.current === current) doHowl(reduced); }); }
-        setBanner({ key: ++bannerKey.current, text: `${plan.name} ×${plan.multiplier}`, tone: plan.multiplier >= 6 ? 'gold' : 'ice' });
-        setAnnounce(`Takımyıldız tutuştu: ${plan.name}, küme ödemesi ×${plan.multiplier}.`);
+        setBanner({ key: ++bannerKey.current, text: t('banner.constellation', { name: planName, multiplier: plan.multiplier }), tone: plan.multiplier >= 6 ? 'gold' : 'ice' });
+        setAnnounce(t('announce.constellation', { name: planName, multiplier: plan.multiplier }));
         break;
       }
       case 'howl': {
@@ -507,7 +523,7 @@ export function AsenaGame() {
           });
         }
         later(event.dur, () => { if (live.current === current) setPieces(event.pieces); });
-        setAnnounce(`Ergenekon haritası: ${event.distinct} / 6 takımyıldız yandı.`);
+        setAnnounce(t('announce.map', { distinct: event.distinct }));
         break;
       }
       case 'ergenekon': {
@@ -523,15 +539,15 @@ export function AsenaGame() {
           if (emblem) void f.ergenekon(emblem, level, { scale: 0.45 });
         }
         if (!reduced) shake(4 + level * 3, 420 + level * 80);
-        setAnnounce(`Ergenekon: ${event.distinct} takımyıldız, genel çarpan ×${event.after}. Bundan sonraki her kazanç ×${event.after}.`);
+        setAnnounce(t('announce.ergenekon', { distinct: event.distinct, after: event.after }));
         break;
       }
       case 'map-spins':
         setFreeInfo(prev => (prev ? { ...prev, left: event.freeSpinsLeft } : prev));
         sound.mapSpins(event.awarded);
-        f?.announce(`+${event.awarded}`, null, { sub: 'DÖNÜŞ', tone: 'ice' });
-        setBanner({ key: ++bannerKey.current, text: `Harita · +${event.awarded} bedava dönüş`, tone: 'aurora' });
-        setAnnounce(`Ergenekon haritası ${event.awarded} bedava dönüş ekledi.`);
+        f?.announce(`+${event.awarded}`, null, { sub: t('fx.spins'), tone: 'ice' });
+        setBanner({ key: ++bannerKey.current, text: t('banner.mapSpins', { awarded: event.awarded }), tone: 'aurora' });
+        setAnnounce(t('announce.mapSpins', { awarded: event.awarded }));
         break;
       case 'burst': {
         b?.clearConstellations(); b?.clearHighlight();
@@ -540,7 +556,7 @@ export function AsenaGame() {
         for (const cl of event.clusters) {
           sound.starBurst(cl.symbol, cl.size);
           const p = cellPoint(cl.centroid.x, cl.centroid.y);
-          floatLabel(p.x, p.y, `+${asenaMoney(asenaCents(betCents, cl.winHundredths))}`, styles.floatLabel, reduced ? 800 : 1300, reduced);
+          floatLabel(p.x, p.y, `+${asenaMoney(asenaCents(betCents, cl.winHundredths), loc)}`, styles.floatLabel, reduced ? 800 : 1300, reduced);
         }
         setMeterDur(Math.min(520, event.dur + 160)); setMeter(event.meter);
         break;
@@ -551,38 +567,38 @@ export function AsenaGame() {
         void b?.wolfWalk(w, { speed: event.speed });
         if (!lite) void f?.wolfWalk(w.from, w.to, { duration: event.ms });
         sound.wolfWalk(event.ms);
-        setAnnounce(`Gök Kurt yürüdü: sütun ${w.from[0] + 1}, satır ${w.from[1] + 1} → sütun ${w.to[0] + 1}, satır ${w.to[1] + 1}; arkasında Yıldız İzi kaldı.`);
+        setAnnounce(t('announce.wolfWalk', { fromCol: w.from[0] + 1, fromRow: w.from[1] + 1, toCol: w.to[0] + 1, toRow: w.to[1] + 1 }));
         break;
       }
       case 'moons':
         b?.moons(event.cells, 'land');
         void f?.moons(event.cells, { hold: Math.max(900, event.dur) });
-        setAnnounce(`${event.count} Ay Ata.`);
+        setAnnounce(t('announce.moons', { count: event.count }));
         break;
       case 'scatter-pay':
         setMeterDur(500); setMeter(event.meter);
-        setBanner({ key: ++bannerKey.current, text: `${event.count} Ay Ata · +${asenaMoney(asenaCents(betCents, event.hundredths))} DEMO`, tone: 'gold' });
+        setBanner({ key: ++bannerKey.current, text: t('banner.scatterPay', { count: event.count, money: asenaMoney(asenaCents(betCents, event.hundredths), loc) }), tone: 'gold' });
         break;
       case 'scatter-trigger':
         if (event.retrigger) {
           sound.retrigger();
           setFreeInfo(prev => (prev ? { ...prev, left: event.freeSpinsLeft } : prev));
-          setBanner({ key: ++bannerKey.current, text: `+${event.awarded} bedava dönüş`, tone: 'aurora' });
-          f?.announce(`+${event.awarded}`, null, { sub: 'EK DÖNÜŞ', tone: 'ice' });
-          setAnnounce(`${event.count} Ay Ata: ${event.awarded} bedava dönüş eklendi.`);
+          setBanner({ key: ++bannerKey.current, text: t('banner.extraSpins', { awarded: event.awarded }), tone: 'aurora' });
+          f?.announce(`+${event.awarded}`, null, { sub: t('fx.extraSpins'), tone: 'ice' });
+          setAnnounce(t('announce.retrigger', { count: event.count, awarded: event.awarded }));
         } else {
           b?.dim(true);
           sound.featureTrigger();
-          f?.announce(`+${event.awarded}`, null, { sub: 'BEDAVA DÖNÜŞ', tone: 'ice', life: 1800 });
+          f?.announce(`+${event.awarded}`, null, { sub: t('fx.freeSpins'), tone: 'ice', life: 1800 });
           scene.current?.howl();
-          setAnnounce(`${event.count} Ay Ata: Ergenekon kazanıldı.`);
+          setAnnounce(t('announce.trigger', { count: event.count }));
         }
         break;
       case 'free-intro':
         setCard({ kind: 'intro', awarded: event.awarded, at: event.at, dur: event.dur });
         sound.freeSpinsIntro();
         setMood('feature');
-        setAnnounce(`Ergenekon başlıyor: ${event.awarded} bedava dönüş kazandın.`);
+        setAnnounce(t('announce.freeIntro', { awarded: event.awarded }));
         break;
       case 'free-mode':
         setCard(null); b?.dim(false); setFree(event.on); setFreeInfo({ number: 0, left: event.freeSpinsLeft });
@@ -598,10 +614,10 @@ export function AsenaGame() {
           setPieces(event.pieces); setGlobalMult(event.globalMultiplier);
           setFreeInfo(prev => (prev ? { ...prev, left: event.freeSpinsLeft } : prev));
           const m = meterRef.current, s = stageRef.current;
-          if (m && s && event.winHundredths > 0) { const a = m.getBoundingClientRect(), o = s.getBoundingClientRect(); floatLabel(a.left - o.left + a.width / 2, a.top - o.top - 6, `+${asenaMoney(asenaCents(betCents, event.winHundredths))}`, styles.floatSpin, reduced ? 900 : 1400, reduced); }
-          setAnnounce(event.winHundredths > 0 ? `Bedava dönüş ${asenaTimes(event.winHundredths)}× kazandırdı. Toplam ${asenaTimes(event.meter.total)}×.` : 'Bedava dönüşte kazanç yok.');
+          if (m && s && event.winHundredths > 0) { const a = m.getBoundingClientRect(), o = s.getBoundingClientRect(); floatLabel(a.left - o.left + a.width / 2, a.top - o.top - 6, `+${asenaMoney(asenaCents(betCents, event.winHundredths), loc)}`, styles.floatSpin, reduced ? 900 : 1400, reduced); }
+          setAnnounce(event.winHundredths > 0 ? t('announce.freeSpinWin', { times: asenaTimes(event.winHundredths, loc), total: asenaTimes(event.meter.total, loc) }) : t('announce.freeSpinNone'));
         } else {
-          if (event.winHundredths === 0) setAnnounce('Kazanç yok.');
+          if (event.winHundredths === 0) setAnnounce(t('announce.noWin'));
           else if (event.winHundredths >= 300 && event.winHundredths < 1000) sound.nice();
         }
         break;
@@ -612,7 +628,7 @@ export function AsenaGame() {
         const m = meterRef.current;
         if (!reduced) m?.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.1)', offset: 0.3 }, { transform: 'scale(.98)', offset: 0.65 }, { transform: 'scale(1)' }], { duration: 620, easing: 'ease-out' });
         f?.pulse(0.6);
-        setAnnounce(`Toplam kazanç ${demoNumber(asenaCents(betCents, event.totalHundredths))} DEMO, ${asenaTimes(event.totalHundredths)}×.`);
+        setAnnounce(t('announce.totalWin', { amount: format.number(asenaCents(betCents, event.totalHundredths) / 100), times: asenaTimes(event.totalHundredths, loc) }));
         break;
       }
       case 'free-outro':
@@ -623,7 +639,7 @@ export function AsenaGame() {
         f?.clearEcho();
         scene.current?.ergenekon(0);
         setMood('base');
-        setAnnounce(`Ergenekon bitti. Toplam: ${demoNumber(asenaCents(betCents, event.totalHundredths))} DEMO, ${event.spins} dönüş, ${event.constellations} takımyıldız, genel çarpan ×${event.globalMultiplier}.`);
+        setAnnounce(t('announce.freeOutro', { amount: format.number(asenaCents(betCents, event.totalHundredths) / 100), spins: event.spins, constellations: event.constellations, multiplier: event.globalMultiplier }));
         break;
       case 'big-win':
         openCelebration(event.schedule, betCents, event.at, event.dur, reduced, lite);
@@ -636,7 +652,7 @@ export function AsenaGame() {
         finishRound(current);
         break;
     }
-  }, [cellPoint, doHowl, finishRound, floatLabel, later, openCelebration, shake, showCallout, sound]);
+  }, [cellPoint, doHowl, finishRound, floatLabel, later, openCelebration, shake, showCallout, sound, t, format, loc, symbolLabels]);
 
   /* ---------------------------------------------------------------- starting rounds */
   const begin = useCallback((current: LiveRound, text: string) => {
@@ -670,21 +686,21 @@ export function AsenaGame() {
     pendingRemote.current = true;
     setError(''); setPhase('playing'); setActiveDemo(true); setReplaying(null);
     setRemoteBalance(balanceBefore - cost);
-    setAnnounce(`Dönüş sunucuya gönderildi, ${demoNumber(cost)} DEMO.`);
+    setAnnounce(t('announce.sentToServer', { amount: format.number(cost / 100) }));
     source.client.play('asena', betCents, roundMode).then(play => {
       pendingRemote.current = false;
       const current = makeLive({ id: `remote:${play.receipt.roundId}`, replayOf: null, bet: betCents, cost: play.receipt.costCents, mode: roundMode, balanceBefore, round: play.round, remote: { receipt: play.receipt, balanceAfter: play.receipt.balanceCents } });
       if (!mounted.current) { settleRef.current(current); return; }
-      begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Ergenekon başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+      begin(current, roundMode === 'buy' ? t('announce.bonusBought', { amount: format.number(cost / 100) }) : t('announce.spinStarted', { amount: format.number(cost / 100) }));
     }, (failure: unknown) => {
       pendingRemote.current = false;
       setActiveDemo(false);
       if (!mounted.current) return;
-      setPhase('idle'); setError(rgsErrorMessage(failure)); sound.denied();
-      if (autoRef.current) stopAutoplay('Sunucu turu başlatılamadı');
+      setPhase('idle'); setError(rgs.error(failure)); sound.denied();
+      if (autoRef.current) stopAutoplay('server-failed');
       source.client.state().then(state => { if (mounted.current) setRemoteBalance(state.balanceCents); }, () => undefined);
     });
-  }, [bet, begin, makeLive, setActiveDemo, sound, stopAutoplay]);
+  }, [bet, begin, makeLive, setActiveDemo, sound, stopAutoplay, t, format, rgs]);
 
   const startRound = useCallback((kind: 'spin' | 'buy'): boolean => {
     if ((live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
@@ -693,22 +709,22 @@ export function AsenaGame() {
     const cost = asenaCost(bet, roundMode);
     const balanceBefore = balanceRef.current;
     if (cost > balanceBefore) {
-      setError(`Bakiye yetersiz: bu ${roundMode === 'buy' ? 'satın alma' : 'dönüş'} ${formatDemo(cost)}. Bahsi düşür veya bakiyeyi yenile.`);
+      setError(t('errors.insufficient', { kind: roundMode, cost: format.demo(cost) }));
       sound.denied();
       return false;
     }
     if (remote) { startRemote(remote, roundMode, cost, balanceBefore); return true; }
     let round: AsenaRound;
-    try { round = localRoundSource.resolve('asena', bet, roundMode); } catch { setError(ENTROPY_ERROR); return false; }
+    try { round = localRoundSource.resolve('asena', bet, roundMode); } catch { setError(t('errors.entropy')); return false; }
     let id: string | null;
-    try { id = reserveDemo(cost, asenaLedgerLimits(bet, roundMode)); } catch { setError(ENTROPY_ERROR); return false; }
-    if (!id) { setError('Yeterli demo kredin yok veya devam eden bir demo var.'); sound.denied(); return false; }
+    try { id = reserveDemo(cost, asenaLedgerLimits(bet, roundMode)); } catch { setError(t('errors.entropy')); return false; }
+    if (!id) { setError(t('errors.noCredit')); sound.denied(); return false; }
     setActiveDemo(true);
     const current = makeLive({ id, replayOf: null, bet, cost, mode: roundMode, balanceBefore, round, remote: null });
     setReplaying(null);
-    begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Ergenekon başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+    begin(current, roundMode === 'buy' ? t('announce.bonusBought', { amount: format.number(cost / 100) }) : t('announce.spinStarted', { amount: format.number(cost / 100) }));
     return true;
-  }, [ante, bet, begin, booting, gated, makeLive, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote]);
+  }, [ante, bet, begin, booting, gated, makeLive, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote, t, format]);
 
   // Reload recovery (remote): the last unseen server round of this game is shown again exactly as resolved.
   const recoveredOnce = useRef(false);
@@ -720,8 +736,8 @@ export function AsenaGame() {
     const current = makeLive({ id: `remote:${receipt.roundId}`, replayOf: null, bet: receipt.betCents, cost: receipt.costCents, mode: receipt.mode, balanceBefore: after + receipt.costCents - receipt.payoutCents, round, remote: { receipt, balanceAfter: after } });
     setActiveDemo(true);
     setRemoteBalance(current.balanceBefore - current.cost);
-    begin(current, `Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı (${demoNumber(receipt.payoutCents)} DEMO).`);
-  }, [sourceView, booting, begin, makeLive, setActiveDemo]);
+    begin(current, t('announce.recovered', { amount: format.number(receipt.payoutCents / 100) }));
+  }, [sourceView, booting, begin, makeLive, setActiveDemo, t, format]);
 
   /** Remote only: publish the signed replay of a server round and hand out its link ("Kazancını paylaş"). */
   const shareRound = useCallback((record: DemoRecord) => {
@@ -731,9 +747,9 @@ export function AsenaGame() {
       const url = `${window.location.origin}${path}`;
       let copied = false;
       try { await navigator.clipboard.writeText(url); copied = true; } catch { /* clipboard blocked: show the link */ }
-      showToast(copied ? `Paylaşım bağlantısı kopyalandı: ${url}` : `Paylaşım bağlantısı: ${url}`);
-    }, (failure: unknown) => showToast(`Paylaşılamadı: ${rgsErrorMessage(failure)}`, 'warn'));
-  }, [remote, showToast]);
+      showToast(copied ? t('toast.shareCopied', { url }) : t('toast.shareLink', { url }));
+    }, (failure: unknown) => showToast(t('toast.shareFailed', { error: rgs.error(failure) }), 'warn'));
+  }, [remote, showToast, t, rgs]);
   const startRef = useRef(startRound); startRef.current = startRound;
 
   /** Ledger-free presentation of an engine round (history replay; dev preview). */
@@ -746,11 +762,11 @@ export function AsenaGame() {
     const meta = record.asena;
     if (!meta || (live.current && !live.current.settled) || autoRef.current || booting) return;
     let round: AsenaRound;
-    try { round = playAsenaRound(meta.seedHex, meta.betCents, meta.mode); } catch { showToast('Bu tur tekrar oynatılamadı.', 'warn'); return; }
-    if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast('Tekrar doğrulanamadı: kayıt motorla uyuşmuyor.', 'warn'); return; }
+    try { round = playAsenaRound(meta.seedHex, meta.betCents, meta.mode); } catch { showToast(t('toast.replayFailed'), 'warn'); return; }
+    if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast(t('toast.replayMismatch'), 'warn'); return; }
     stageRef.current?.scrollIntoView({ block: 'start' });
-    presentReplay(round, record.id, `Tekrar oynatılıyor: tur ${asenaRoundId(meta.seedHex)}. Bakiye değişmez.`);
-  }, [booting, presentReplay, showToast]);
+    presentReplay(round, record.id, t('announce.replaying', { id: asenaRoundId(meta.seedHex) }));
+  }, [booting, presentReplay, showToast, t]);
 
   /** Tap on a hold screen: the first tap on a celebration finishes the count-up, the next closes. Never touches a result. */
   const advanceHold = useCallback(() => {
@@ -826,8 +842,8 @@ export function AsenaGame() {
     setAuto(state);
     setModal(null);
     sound.unlock(); sound.autoplay(true);
-    showToast(`Otomatik oyun: ${config.spins} tur, kayıp limiti ${formatDemo(config.lossLimitCents)}.`);
-  }, [busy, gated, showToast, sound]);
+    showToast(t('toast.autoplayStarted', { spins: config.spins, limit: format.demo(config.lossLimitCents) }));
+  }, [busy, gated, showToast, sound, t, format]);
 
   const realityDue = session.realityDue;
   useEffect(() => {
@@ -836,14 +852,14 @@ export function AsenaGame() {
     const timer = window.setTimeout(() => {
       const state = autoRef.current; if (!state) return;
       const decision = asenaAutoplayBeforeSpin(state, { balanceCents: balanceRef.current, betCents: bet, ante, tabHidden: document.hidden });
-      if (!decision.continue) { stopAutoplay(decision.reason, decision.code === 'completed' ? 'info' : 'warn'); return; }
-      if (!startRef.current('spin')) stopAutoplay('Dönüş başlatılamadı');
+      if (!decision.continue) { stopAutoplay(decision.code, decision.code === 'completed' ? 'info' : 'warn'); return; }
+      if (!startRef.current('spin')) stopAutoplay('spin-failed');
     }, phase === 'idle' ? 0 : gap);
     return () => window.clearTimeout(timer);
   }, [auto, phase, modal, realityDue, booting, gated, bet, ante, stopAutoplay]);
 
   useEffect(() => {
-    const onVisibility = () => { if (document.hidden && autoRef.current) stopAutoplay(AUTOPLAY_STOP_REASONS['tab-hidden']); };
+    const onVisibility = () => { if (document.hidden && autoRef.current) stopAutoplay('tab-hidden'); };
     document.addEventListener('visibilitychange', onVisibility);
     return () => document.removeEventListener('visibilitychange', onVisibility);
   }, [stopAutoplay]);
@@ -870,10 +886,11 @@ export function AsenaGame() {
   const roundMode: AsenaMode = ante ? 'ante' : 'standard';
   const spinCost = asenaCost(bet, roundMode);
   const buyPrice = asenaCost(bet, 'buy');
-  const buyReason = asenaBuyBlockReason({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const buyBlock = asenaBuyBlock({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const buyReason = buyBlock ? t(`buy.block.${buyBlock.code}`, { price: format.demo(buyPrice) }) : null;
   const locked = busy || auto !== null || gated || booting || sourcePending;
   const amountCents = (h: number) => (roundBet === null ? 0 : asenaCents(roundBet, h));
-  const boardLabel = free ? 'Asena bedava dönüş yıldız alanı, 6 sütun, 6 satır' : 'Asena yıldız alanı, 6 sütun, 6 satır';
+  const boardLabel = free ? t('board.labelFree') : t('board.labelPlay');
   const boardMood = free ? 'feature' : 'base';
   const boardElement = useMemo(() => (
     <AsenaFrame mood={boardMood}>
@@ -881,11 +898,11 @@ export function AsenaGame() {
     </AsenaFrame>
   ), [boardLabel, boardMood]);
   const celebrating = card?.kind === 'big' || card?.kind === 'outro' || card?.kind === 'intro';
-  const infoPages = useMemo(() => asenaInfoPages(bet), [bet]);
+  const infoPages = useMemo(() => asenaInfoPages(bet, { t, tk, tc, format }), [bet, t, tk, tc, format]);
   const outOfCredit = !busy && balance < ASENA_MIN_BET_CENTS;
   const deckWin = busy ? amountCents(meter.total) : (lastWin?.payout ?? 0);
   const speedIndex = SPIN_SPEEDS.indexOf(settings.spinSpeed);
-  const replayInfo = replaying ? `Tekrar — bakiye değişmez · tur ${asenaRoundId(replaying.seed)}` : null;
+  const replayInfo = replaying ? t('replay.ribbon', { id: asenaRoundId(replaying.seed) }) : null;
   const distinct = pieces.filter(p => p > 0).length;
 
   const openInfo = (page = 'how') => { setInfoPage(page); setModal('info'); sound.click(); };
@@ -897,25 +914,25 @@ export function AsenaGame() {
         setRemoteBalance(cents);
         const at = Date.now();
         recordRemote({ id: `remote-reset:${at}`, game: 'Asena', stake: 0, payout: 0, detail: 'Bakiye yenilendi (sunucu)', at, kind: 'reset' });
-        showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('Sunucu DEMO bakiyesi 1.000 DEMO olarak yenilendi.');
-      }, (failure: unknown) => showToast(rgsErrorMessage(failure), 'warn'));
+        showToast(t('toast.refilled', { amount: format.number(DEMO_START_CENTS / 100) })); setError(''); setAnnounce(t('announce.refilledRemote', { amount: format.number(DEMO_START_CENTS / 100) }));
+      }, (failure: unknown) => showToast(rgs.error(failure), 'warn'));
       return;
     }
-    if (resetDemoBalance('Asena')) { showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('DEMO bakiyesi 1.000 DEMO olarak yenilendi.'); }
+    if (resetDemoBalance('Asena')) { showToast(t('toast.refilled', { amount: format.number(DEMO_START_CENTS / 100) })); setError(''); setAnnounce(t('announce.refilled', { amount: format.number(DEMO_START_CENTS / 100) })); }
   };
   const toggleSound = () => { const muted = !settings.muted; updateSettings({ muted }); if (!muted) sound.unlock(); };
   const cycleSpeed = () => {
     const next = SPIN_SPEEDS[(speedIndex + 1) % SPIN_SPEEDS.length]!;
     updateSettings({ spinSpeed: next });
     sound.click();
-    setAnnounce(`Dönüş hızı: ${SPEED_LABELS[next]}.`);
+    setAnnounce(t('announce.speed', { speed: tk(SPEED_KEY[next]) }));
   };
   const toggleAnte = () => {
     if (locked) return;
     const next = !ante;
     setAnte(next);
     sound.click();
-    setAnnounce(next ? `Şans ×2 açık: bedava dönüş şansı ≈2 kat, maliyet ${formatDemo(asenaCost(bet, 'ante'))}.` : `Şans ×2 kapalı: maliyet ${formatDemo(bet)}.`);
+    setAnnounce(next ? t('announce.anteOn', { cost: format.demo(asenaCost(bet, 'ante')) }) : t('announce.anteOff', { cost: format.demo(bet) }));
   };
   const onSpinClick = () => { if (busy) return; startRound('spin'); };
   const confirmBuy = () => { if (buyReason) return; setModal(null); startRound('buy'); };
@@ -928,72 +945,72 @@ export function AsenaGame() {
       balanceCents={balance}
       maxBetCents={ASENA_MAX_BET_CENTS}
       costMode={ASENA_COST_MODES[roundMode]}
-      modeLabel={ante ? 'Şans ×2' : undefined}
+      modeLabel={ante ? tc('modes.ante') : undefined}
       disabled={locked}
       classNames={{ minus: styles.stepBtn, plus: styles.stepBtn, value: styles.betValue, max: styles.maxChip }}
       render={parts => (
-        <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label="Oyun kontrolleri">
+        <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label={t('deck.group')}>
           <div className={styles.cellBalance}>
-            <span className={styles.cellLabel}>Bakiye</span>
-            <strong className={styles.cellValue} data-testid="asena-balance">{formatAmount(balance)}<small> DEMO</small></strong>
-            <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated} aria-label="Bakiyeyi yenile"><RefillIcon /><span aria-hidden="true">Bakiyeyi yenile</span></button>
+            <span className={styles.cellLabel}>{t('deck.balance')}</span>
+            <strong className={styles.cellValue} data-testid="asena-balance">{format.amount(balance)}<small> DEMO</small></strong>
+            <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated} aria-label={t('deck.refill')}><RefillIcon /><span aria-hidden="true">{t('deck.refill')}</span></button>
           </div>
           <div className={styles.cellWin}>
-            <span className={styles.cellLabel}>{busy ? (replaying ? 'Tekrar' : 'Kazanç') : lastWin?.replay ? 'Tekrar kazancı' : 'Son kazanç'}</span>
-            <strong className={`${styles.cellValue} ${deckWin > 0 ? styles.cellWinOn : ''}`}>{formatAmount(deckWin)}<small> DEMO</small></strong>
+            <span className={styles.cellLabel}>{busy ? (replaying ? t('deck.winReplay') : t('deck.win')) : lastWin?.replay ? t('deck.winReplayLast') : t('deck.winLast')}</span>
+            <strong className={`${styles.cellValue} ${deckWin > 0 ? styles.cellWinOn : ''}`}>{format.amount(deckWin)}<small> DEMO</small></strong>
           </div>
           <div className={styles.cellBet}>
             {parts.label}
             {parts.value}
-            <span className={styles.costLine} data-testid="asena-cost">Maliyet <strong>{formatAmount(spinCost)} DEMO</strong>{ante && <em> · ×1,25</em>}</span>
+            <span className={styles.costLine} data-testid="asena-cost">{t('deck.cost')} <strong>{format.amount(spinCost)} DEMO</strong>{ante && <em> · {format.factor(ASENA_COST_MODES.ante.num, ASENA_COST_MODES.ante.den)}</em>}</span>
           </div>
           <div className={styles.areaMinus}>{parts.minus}</div>
           <div className={styles.areaPlus}>{parts.plus}</div>
           <div className={styles.areaMax}>{parts.max}</div>
           <div className={styles.areaSpin}>
             {auto ? (
-              <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay(AUTOPLAY_STOP_REASONS.cancelled, 'info')} />
+              <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay('cancelled', 'info')} />
             ) : (
               <button type="button" className={`${styles.spin} ${busy ? styles.spinning : ''}`} onClick={onSpinClick} disabled={busy || gated || booting || sourcePending}
-                aria-label="Çevir" aria-describedby="as-spin-cost" data-locked={busy || undefined} data-testid="asena-spin">
+                aria-label={t('deck.spin')} aria-describedby="as-spin-cost" data-locked={busy || undefined} data-testid="asena-spin">
                 <span className={styles.spinFace}><SpinSeal /></span>
                 {busy && <span className={styles.spinLock} aria-hidden="true"><LockIcon /></span>}
               </button>
             )}
-            <span id="as-spin-cost" className="sr-only">{busy ? 'Tur sürüyor; bütün düşmeler, kurt adımları ve bedava dönüşler bitene kadar kilitli.' : `Maliyet ${formatDemo(spinCost)}`}</span>
+            <span id="as-spin-cost" className="sr-only">{busy ? t('deck.spinLocked') : t('deck.spinCost', { cost: format.demo(spinCost) })}</span>
           </div>
           <button type="button" className={`${styles.tool} ${styles.areaAuto}`} onClick={() => { sound.click(); setModal('autoplay'); }} disabled={locked} aria-haspopup="dialog">
-            <LoopIcon /><span>Otomatik</span>
+            <LoopIcon /><span>{t('deck.auto')}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaInfo}`} onClick={() => openInfo()} aria-haspopup="dialog" aria-label="Oyun bilgisi">
-            <InfoIcon /><span>Bilgi</span>
+          <button type="button" className={`${styles.tool} ${styles.areaInfo}`} onClick={() => openInfo()} aria-haspopup="dialog" aria-label={t('deck.infoAria')}>
+            <InfoIcon /><span>{t('deck.info')}</span>
           </button>
           <button type="button" role="switch" aria-checked={ante} className={`${styles.feature} ${styles.areaAnte} ${ante ? styles.featureOn : ''}`} onClick={toggleAnte} disabled={locked}
-            aria-label="Şans ×2" aria-describedby="as-ante-desc">
-            <span className={styles.featureTitle}>Şans ×2</span>
-            <span className={styles.featureState}>{ante ? 'Açık' : 'Kapalı'}<span className={styles.featureFactor}> · ×1,25</span></span>
-            <span id="as-ante-desc" className={styles.featureDesc}>Bedava dönüş şansı ≈2 kat</span>
+            aria-label={tc('modes.ante')} aria-describedby="as-ante-desc">
+            <span className={styles.featureTitle}>{tc('modes.ante')}</span>
+            <span className={styles.featureState}>{ante ? t('deck.on') : t('deck.off')}<span className={styles.featureFactor}> · {format.factor(ASENA_COST_MODES.ante.num, ASENA_COST_MODES.ante.den)}</span></span>
+            <span id="as-ante-desc" className={styles.featureDesc}>{t('deck.anteDesc')}</span>
           </button>
           <button type="button" className={`${styles.feature} ${styles.featureBuy} ${styles.areaBuy}`} aria-disabled={buyReason ? true : undefined}
             onClick={() => { if (buyReason) sound.denied(); else sound.click(); setModal('buy'); }} aria-haspopup="dialog" aria-describedby="as-buy-desc">
-            <span className={styles.featureTitle}>Bonus satın al</span>
-            <span className={styles.featureState}>{formatAmount(buyPrice, { trimZeros: true })} DEMO</span>
-            <span id="as-buy-desc" className={styles.featureDesc}>{buyReason ?? `10 bedava dönüş · ${asenaRtp(ASENA_RTP.buy.rtp)}`}</span>
+            <span className={styles.featureTitle}>{t('deck.buy')}</span>
+            <span className={styles.featureState}>{format.amount(buyPrice, { trimZeros: true })} DEMO</span>
+            <span id="as-buy-desc" className={styles.featureDesc}>{buyReason ?? t('deck.buyDesc', { spins: 10, rtp: asenaRtp(ASENA_RTP.buy.rtp, loc) })}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSet}`} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label="Ayarlar">
-            <GearIcon /><span>Ayarlar</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSet}`} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label={tk('settings.title')}>
+            <GearIcon /><span>{tk('settings.title')}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSpeed} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed} aria-label={`Dönüş hızı: ${SPEED_LABELS[settings.spinSpeed]}`}>
-            <SpeedStars count={speedIndex + 1} /><span>{SPEED_LABELS[settings.spinSpeed]}</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSpeed} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed} aria-label={t('deck.speedAria', { speed: tk(SPEED_KEY[settings.spinSpeed]) })}>
+            <SpeedStars count={speedIndex + 1} /><span>{tk(SPEED_KEY[settings.spinSpeed])}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSound} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label="Ses">
-            <SoundIcon on={!settings.muted} /><span>Ses</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSound} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label={t('deck.sound')}>
+            <SoundIcon on={!settings.muted} /><span>{t('deck.sound')}</span>
           </button>
           <div className={styles.areaMsg}>
-            {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">Ses yükleniyor %{soundLoad.percent}</p>}
+            {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">{t('deck.soundLoading', { percent: soundLoad.percent })}</p>}
             {error ? <p className={styles.msgError} role="alert">{error}</p>
-              : outOfCredit ? <p className={styles.msgHint}>DEMO bakiyen bitti. <button type="button" className={styles.inlineLink} onClick={refill}>Bakiyeyi yenile</button></p>
-              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? <>Son tur <strong>+{asenaMoney(lastWin.payout)} DEMO</strong> · {asenaTimes(lastWin.total)}×</> : <>Son tur kazançsız.</>) : settings.spaceToSpin ? <>Boşluk tuşu ile de çevirebilirsin.</> : <>Sonuç dönüşten önce belirlenir.</>}</p>}
+              : outOfCredit ? <p className={styles.msgHint}>{t('deck.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
+              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? richText(t, 'deck.lastWin', { money: asenaMoney(lastWin.payout, loc), times: asenaTimes(lastWin.total, loc) }) : t('deck.lastNone')) : settings.spaceToSpin ? t('deck.hintSpace') : t('deck.hintFixed')}</p>}
           </div>
         </div>
       )}
@@ -1003,9 +1020,9 @@ export function AsenaGame() {
   return (
     <div className={`game-page ${styles.page}`}>
       <AsenaSymbolSprites />
-      <GameHeading title="Asena: Yıldız Kurdu" subtitle="Kümeler gökte takımyıldız çizer, Gök Kurt yürüyüp yıldız izi bırakır; Ergenekon’da genel çarpan ×5’e kadar açılır." mode={mode} setMode={setMode} active={busy || auto !== null}
-        badge={remote ? remote.label : sourcePending ? 'Sunucu kontrol ediliyor' : localRoundSource.label} />
-      <section className={`game-table ${styles.table}`} aria-label="Asena oyun masası" data-free={free || undefined}>
+      <GameHeading title={t('title')} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
+        badge={remote ? rgs.source('remote') : sourcePending ? t('badge.checking') : rgs.source('local')} />
+      <section className={`game-table ${styles.table}`} aria-label={t('table')} data-free={free || undefined}>
         <AsenaScene ref={scene} mood={mood} className={styles.scene}>
           <div className={styles.layout}>
             <div className={styles.left}>
@@ -1018,31 +1035,31 @@ export function AsenaGame() {
               <div ref={shakeRef} className={styles.column}>
                 <div className={styles.hud}>
                   {freeInfo ? (
-                    <div className={styles.freeCounter} aria-label={`Bedava dönüş ${freeInfo.number}, kalan dönüş ${freeInfo.left}`} data-testid="asena-free-counter">
-                      <span className={styles.freeTag}>{freeInfo.number > 0 ? `${freeInfo.number}. dönüş` : 'Ergenekon'}</span>
-                      <span className={styles.freeLeft}><small>Kalan</small><strong key={freeInfo.left}>{freeInfo.left}</strong></span>
+                    <div className={styles.freeCounter} aria-label={t('hud.freeAria', { number: freeInfo.number, left: freeInfo.left })} data-testid="asena-free-counter">
+                      <span className={styles.freeTag}>{freeInfo.number > 0 ? t('hud.freeSpin', { n: freeInfo.number }) : t('hud.free')}</span>
+                      <span className={styles.freeLeft}><small>{t('hud.left')}</small><strong key={freeInfo.left}>{freeInfo.left}</strong></span>
                     </div>
                   ) : (
-                    <div className={styles.chip} aria-label="3 veya daha fazla Ay Ata 10 bedava dönüş açar"><span className={styles.chipArt} aria-hidden="true"><AsenaSymbolArt symbol="moon" size="100%" /></span><span><strong>3+</strong> Ay Ata · 10 <span className={styles.wideOnly}>bedava </span>dönüş</span></div>
+                    <div className={styles.chip} aria-label={t('hud.moonAria')}><span className={styles.chipArt} aria-hidden="true"><AsenaSymbolArt symbol="moon" size="100%" /></span><span><span className={styles.wideOnly}>{richText(t, 'hud.moonLong')}</span><span className={styles.narrowOnly}>{richText(t, 'hud.moonShort')}</span></span></div>
                   )}
                   {free ? (
-                    <div key={globalMult} className={styles.globalChip} data-level={asenaErgenekonLevel(globalMult)} data-testid="asena-global" aria-label={`Genel çarpan ×${globalMult}, haritada ${distinct} takımyıldız`}>
-                      <span><small>Genel</small><strong>×{globalMult}</strong></span>
-                      <span><small>Harita</small><strong>{distinct}/6</strong></span>
+                    <div key={globalMult} className={styles.globalChip} data-level={asenaErgenekonLevel(globalMult)} data-testid="asena-global" aria-label={t('hud.globalAria', { multiplier: globalMult, distinct })}>
+                      <span><small>{t('hud.global')}</small><strong>×{globalMult}</strong></span>
+                      <span><small>{t('hud.map')}</small><strong>{distinct}/6</strong></span>
                     </div>
                   ) : freeInfo ? null : (
-                    <div className={`${styles.chip} ${styles.chipSide}`} aria-hidden="true"><span className={styles.wideOnly}><AsenaTemplateGlyph id="kurt-basi" className={styles.chipGlyph} /></span><span>Takımyıldız <strong>×10</strong> · Azami <strong>5.000×</strong></span></div>
+                    <div className={`${styles.chip} ${styles.chipSide}`} aria-hidden="true"><span className={styles.wideOnly}><AsenaTemplateGlyph id="kurt-basi" className={styles.chipGlyph} /></span><span>{richText(t, 'hud.templateChip', { multiplier: 10, max: format.number(5000, 0) })}</span></div>
                   )}
                 </div>
                 <div className={styles.boardWrap}>{boardElement}</div>
                 {/* One cumulative meter: never resets inside a round (tumbles, constellations, every free spin add up). */}
                 <div ref={meterRef} className={`${styles.meter} ${free ? styles.meterFree : ''}`} data-testid="asena-meter">
                   {phase === 'idle' ? (
-                    <div className={styles.meterIdle}><span><strong>5+</strong> komşu aynı sembol öder</span><span aria-hidden="true" className={styles.wideOnly}>·</span><span className={styles.wideOnly}>Gök Kurt yürür, iz bırakır</span><span aria-hidden="true">·</span><span>takımyıldız <strong>×2–×10</strong></span></div>
+                    <div className={styles.meterIdle}><span>{richText(t, 'meter.idleA')}</span><span aria-hidden="true" className={styles.wideOnly}>·</span><span className={styles.wideOnly}>{t('meter.idleB')}</span><span aria-hidden="true">·</span><span>{richText(t, 'meter.idleC')}</span></div>
                   ) : (
                     <div className={styles.meterPart}>
-                      <small>{free || phase === 'done' ? 'Toplam kazanç' : 'Kazanç'}</small>
-                      <strong data-testid="asena-meter-total"><CountUp cents={amountCents(meter.total)} duration={meterDur} /><em> DEMO</em></strong>
+                      <small>{free || phase === 'done' ? t('meter.total') : t('meter.win')}</small>
+                      <strong data-testid="asena-meter-total"><CountUp cents={amountCents(meter.total)} duration={meterDur} locale={loc} /><em> DEMO</em></strong>
                     </div>
                   )}
                   {flourish > 0 && phase !== 'idle' && <span key={flourish} className={styles.meterShine} aria-hidden="true" />}
@@ -1050,18 +1067,18 @@ export function AsenaGame() {
               </div>
               <div ref={layerRef} className={styles.fxLayer} aria-hidden="true" />
               {replayInfo && <div className={styles.replayRibbon} data-testid="asena-replay"><Icon name="history" size={15} /><span>{replayInfo}</span></div>}
-              {auto && !replayInfo && <div className={styles.autoRibbon} aria-hidden="true"><LoopIcon /><span>Otomatik · {auto.spinsRemaining} tur kaldı</span></div>}
+              {auto && !replayInfo && <div className={styles.autoRibbon} aria-hidden="true"><LoopIcon /><span>{t('auto.ribbon', { spins: auto.spinsRemaining })}</span></div>}
               {toast && (
                 <div key={`toast-${toast.key}`} className={`${styles.toast} ${toast.tone === 'warn' ? styles.toastWarn : ''}`} data-testid="asena-toast">
                   <span>{toast.text}</span>
-                  <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label="Bildirimi kapat"><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
+                  <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label={t('toast.close')}><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
                 </div>
               )}
               {banner && <div key={`banner-${banner.key}`} className={`${styles.banner} ${banner.tone === 'ice' ? styles.bannerIce : banner.tone === 'aurora' ? styles.bannerAurora : ''}`} data-testid="asena-banner" data-key={banner.key} aria-hidden="true">{banner.text}</div>}
               {callout && (
                 <div key={`callout-${callout.key}`} className={styles.callout} data-tier={callout.tier} style={{ animationDuration: `${callout.life}ms` }} aria-hidden="true" data-testid="asena-callout" data-key={callout.key}>
                   <span className={styles.calloutGlow} />
-                  <span className={styles.calloutTag}>{CALLOUT_TAGS[callout.tier]}</span>
+                  <span className={styles.calloutTag}>{t(CALLOUT_KEY[callout.tier])}</span>
                   <span className={styles.calloutText} data-text={`×${callout.value}`}><span className={styles.calloutFill}>×{callout.value}</span></span>
                 </div>
               )}
@@ -1086,9 +1103,9 @@ export function AsenaGame() {
                   <div className={styles.gated}>
                     <div className={styles.gatedCard}>
                       <Icon name="lock" size={26} />
-                      <h2>Zincir üstü Asena yok.</h2>
-                      <p>Bu oyun yalnız DEMO kredisiyle oynanır; gerçek bahis kabul edilmez.</p>
-                      <button className="text-button" onClick={() => setMode('demo')}>Yerel demoya dön<Icon name="arrow" size={17} /></button>
+                      <h2>{t('gated.title')}</h2>
+                      <p>{t('gated.text')}</p>
+                      <button className="text-button" onClick={() => setMode('demo')}>{t('gated.back')}<Icon name="arrow" size={17} /></button>
                     </div>
                   </div>
                 )}
@@ -1100,21 +1117,21 @@ export function AsenaGame() {
             <div className={styles.splashCard}>
               <div className={styles.splashLogo}><AsenaLogo /></div>
               <ul className={styles.splashFeatures}>
-                <li><span aria-hidden="true"><AsenaTemplateGlyph id="kurt-basi" /></span><strong>Takımyıldız ×10</strong><small>Küme gökteki şekli içerirse yıldız yıldız çizilir ve ödemeyi çarpar</small></li>
-                <li><span aria-hidden="true"><AsenaSymbolArt symbol="wolf" size="100%" /></span><strong>Gök Kurt yürür</strong><small>Kazanca katılan kurt her düşmede bir hücre ilerler, Yıldız İzi bırakır</small></li>
-                <li><span aria-hidden="true"><AsenaSymbolArt symbol="moon" size="100%" /></span><strong>Ergenekon · 5.000×</strong><small>Harita açıldıkça demir dağ çatlar: genel çarpan ×2, ×3, ×5</small></li>
+                <li><span aria-hidden="true"><AsenaTemplateGlyph id="kurt-basi" /></span><strong>{t('splash.constellation.title')}</strong><small>{t('splash.constellation.text')}</small></li>
+                <li><span aria-hidden="true"><AsenaSymbolArt symbol="wolf" size="100%" /></span><strong>{t('splash.wolf.title')}</strong><small>{t('splash.wolf.text')}</small></li>
+                <li><span aria-hidden="true"><AsenaSymbolArt symbol="moon" size="100%" /></span><strong>{t('splash.ergenekon.title', { max: format.number(5000, 0) })}</strong><small>{t('splash.ergenekon.text')}</small></li>
               </ul>
               {boot.phase === 'loading' ? (
-                <div className={styles.loadBar} role="progressbar" aria-label="Oyun yükleniyor" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(boot.progress * 100)}>
+                <div className={styles.loadBar} role="progressbar" aria-label={t('splash.loading')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(boot.progress * 100)}>
                   <span style={{ transform: `scaleX(${boot.progress})` } as CSSProperties} />
                 </div>
               ) : (
                 <div className={styles.splashActions}>
-                  <button type="button" className={styles.playButton} autoFocus onClick={() => { sound.unlock(); sound.click(); setBoot(b => ({ ...b, phase: 'done' })); }}>Oyna</button>
-                  <button type="button" className={styles.splashSkip} onClick={() => { updateSettings({ introScreen: false }); setBoot(b => ({ ...b, phase: 'done' })); }}>Açılış ekranını bir daha gösterme</button>
+                  <button type="button" className={styles.playButton} autoFocus onClick={() => { sound.unlock(); sound.click(); setBoot(b => ({ ...b, phase: 'done' })); }}>{t('splash.play')}</button>
+                  <button type="button" className={styles.splashSkip} onClick={() => { updateSettings({ introScreen: false }); setBoot(b => ({ ...b, phase: 'done' })); }}>{t('splash.skip')}</button>
                 </div>
               )}
-              <p className={styles.splashNote}>DEMO kredisi değersizdir · Sonuç dönüşten önce belirlenir · Sertifikasız simülasyon RTP ≈ {asenaRtp(ASENA_RTP.standard.rtp)}</p>
+              <p className={styles.splashNote}>{t('splash.note', { rtp: asenaRtp(ASENA_RTP.standard.rtp, loc) })}</p>
             </div>
           </div>
         )}
@@ -1124,29 +1141,29 @@ export function AsenaGame() {
       <AsenaHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <StaticFooter remote={remote !== null} />
 
-      <Modal open={modal === 'settings'} onClose={() => setModal(null)} title="Ayarlar" size="md">
+      <Modal open={modal === 'settings'} onClose={() => setModal(null)} title={tk('settings.title')} size="md">
         <SettingsPanel settings={settings} onChange={updateSettings} onReset={resetSettings} />
-        <p className={styles.modalNote} role="status">{soundLoad.ready ? 'Ses hazır: müzik, efektler ve ortam sesi bu cihazda hazırlandı.' : soundLoad.started ? `Ses yükleniyor %${soundLoad.percent} (bu sırada oyun sessiz sürer).` : 'Ses ilk dokunuşta yüklenir.'}</p>
+        <p className={styles.modalNote} role="status">{soundLoad.ready ? t('settings.soundReady') : soundLoad.started ? t('settings.soundLoading', { percent: soundLoad.percent }) : t('settings.soundIdle')}</p>
         <section className={styles.demoBox} aria-labelledby="as-demo-title">
-          <h3 id="as-demo-title">DEMO bakiyesi</h3>
-          <p>Bakiye {formatDemo(balance)}{remote ? ' (sunucu)' : ''}. Yenilemek bakiyeyi 1.000 DEMO yapar ve geçmişe "Bakiye yenilendi" satırı ekler; tur veya otomatik oyun sürerken yapılamaz.</p>
-          <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>Bakiyeyi yenile</button>
+          <h3 id="as-demo-title">{t('settings.demoTitle')}</h3>
+          <p>{t('settings.demoText', { balance: format.demo(balance), remote: remote ? 'yes' : 'no', start: format.number(DEMO_START_CENTS / 100) })}</p>
+          <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>{t('deck.refill')}</button>
         </section>
       </Modal>
-      <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title="Asena · Oyun bilgisi" initialPageId={infoPage} />
-      <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title="Otomatik oyun" size="md">
+      <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title={t('info.title')} initialPageId={infoPage} />
+      <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title={t('autoplay.title')} size="md">
         <AutoplayPanel onStart={startAutoplay} spinCostCents={spinCost} balanceCents={balance} disabled={busy || gated} />
-        <p className={styles.modalNote}>Tur başı {formatDemo(spinCost)}{ante ? ' (Şans ×2)' : ''} · bonus satın almaz · sekme gizlenince durur.</p>
+        <p className={styles.modalNote}>{t('autoplay.note', { cost: format.demo(spinCost), ante: ante ? 'yes' : 'no' })}</p>
       </Modal>
       <BuyFeatureDialog
         open={modal === 'buy'}
         onClose={() => setModal(null)}
         onConfirm={confirmBuy}
-        featureName={`Ergenekon · 10 bedava dönüş · bahis ${formatDemo(bet)}`}
+        featureName={t('buy.feature', { bet: format.demo(bet) })}
         priceCents={buyPrice}
         balanceCents={balance}
-        rtpText={`Satın alma RTP ${asenaRtp(ASENA_RTP.buy.rtp)} · standart ${asenaRtp(ASENA_RTP.standard.rtp)} (simülasyon, sertifikasız)`}
-        description={<>Bahsin <strong>80 katı</strong>. Tur en az 3 Ay Ata ile başlar ve 10 bedava dönüş garantilidir; yanan her takımyıldız Ergenekon haritasını açar, genel çarpan ×2, ×3 ve ×5’e çıkar ve özellik boyunca her kazancı çarpar. Kazançlar {formatDemo(bet)} bahse göre ödenir, azami {formatDemo(bet * 5000)}.</>}
+        rtpText={t('buy.rtp', { buy: asenaRtp(ASENA_RTP.buy.rtp, loc), standard: asenaRtp(ASENA_RTP.standard.rtp, loc) })}
+        description={richText(t, 'buy.text', { bet: format.demo(bet), max: format.demo(bet * 5000) })}
         disabledReason={buyReason ?? undefined}
       />
       <RealityCheckDialog
@@ -1154,7 +1171,7 @@ export function AsenaGame() {
         elapsedMs={session.elapsedMs}
         netCents={session.netCents}
         onContinue={() => session.acknowledge()}
-        onQuit={() => { stopAutoplay('Oturumdan çıkıldı', 'info'); session.acknowledge(); router.push('/games'); }}
+        onQuit={() => { stopAutoplay('quit', 'info'); session.acknowledge(); router.push('/games'); }}
       />
     </div>
   );

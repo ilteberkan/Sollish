@@ -1,0 +1,327 @@
+{
+  "meta": {
+    "description": "{title} — um jogo tumble DEMO original. O deus da tempestade lança raios nas pedras e os multiplicadores se acumulam nas rodadas grátis."
+  },
+  "subtitle": "O deus da tempestade lança raios nas pedras; os multiplicadores se acumulam nas rodadas grátis.",
+  "logo": {
+    "subtitle": "TRONO DA TEMPESTADE"
+  },
+  "table": {
+    "aria": "Mesa do jogo Tarhun"
+  },
+  "board": {
+    "label": "Grade do Tarhun, 6 colunas, 5 linhas",
+    "labelFree": "Grade das rodadas grátis do Tarhun, 6 colunas, 5 linhas"
+  },
+  "badge": {
+    "checking": "Verificando o servidor"
+  },
+  "symbols": {
+    "h1": "Rhyton do Touro Dourado",
+    "h2": "Machado-Relâmpago",
+    "h3": "Medalhão do Portão do Leão",
+    "h4": "Disco Solar",
+    "l1": "Pedra da Onda Azul-Marinho",
+    "l2": "Pedra da Águia de Ágata",
+    "l3": "Pedra do Sol de Âmbar",
+    "l4": "Pedra da Árvore de Malaquita",
+    "l5": "Pedra do Raio de Obsidiana",
+    "scatter": "Selo do Relâmpago",
+    "orb": "Pedra da Tempestade",
+    "orbValue": "{name} ×{value}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Multiplicador",
+      "1": "Multiplicador forte",
+      "2": "Multiplicador trovejante",
+      "3": "Multiplicador devastador",
+      "4": "Multiplicador lendário",
+      "5": "Trovão",
+      "6": "Multiplicador divino"
+    },
+    "total": "Total · {tag}"
+  },
+  "error": {
+    "entropy": "A aleatoriedade local segura não está disponível. A demo não foi iniciada.",
+    "noCredit": "Você não tem crédito demo suficiente ou já há uma rodada demo em andamento.",
+    "insufficientSpin": "Saldo insuficiente: este giro custa {cost}. Reduza a aposta ou recarregue o saldo.",
+    "insufficientBuy": "Saldo insuficiente: esta compra custa {cost}. Reduza a aposta ou recarregue o saldo."
+  },
+  "buyBlock": {
+    "gated": "Disponível apenas com crédito DEMO",
+    "autoplay": "Não pode ser comprado durante o jogo automático",
+    "busy": "Não pode ser comprado até o fim da rodada",
+    "ante": "Não pode ser comprado com Chance ×2 ativa",
+    "balance": "Saldo insuficiente (preço {price})"
+  },
+  "autoplay": {
+    "title": "Jogo automático",
+    "serverFailed": "O servidor não conseguiu iniciar a rodada",
+    "spinFailed": "Não foi possível iniciar o giro",
+    "quit": "Você saiu da sessão",
+    "stopped": "Jogo automático parado: {reason}. {spins, plural, one {# giro} other {# giros}}, líquido {net}.",
+    "stoppedShort": "Jogo automático parado: {reason}.",
+    "note": "Por giro {cost}{ante, select, yes { (Chance ×2)} other {}} · nunca compra bônus · para quando a aba fica oculta."
+  },
+  "toast": {
+    "autoplay": "Jogo automático: {spins, plural, one {# giro} other {# giros}}, limite de perda {limit}.",
+    "refilled": "Saldo recarregado: {amount}.",
+    "shareCopied": "Link de compartilhamento copiado: {url}",
+    "shareLink": "Link de compartilhamento: {url}",
+    "shareFailed": "Não foi possível compartilhar: {reason}",
+    "replayFailed": "Não foi possível reproduzir esta rodada.",
+    "replayMismatch": "Não foi possível verificar o replay: o registro não corresponde ao motor.",
+    "close": "Fechar aviso"
+  },
+  "announce": {
+    "replayDone": "Replay concluído: {amount}, {times}×. Saldo inalterado.",
+    "roundEnd": "Rodada encerrada. Ganho total {amount}, {times}×.",
+    "roundEndNoWin": "Rodada encerrada. Sem ganho.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{count} {name}, ganho de {times}×",
+    "orbCharge": "Tarhun lança raios nas Pedras da Tempestade.",
+    "orbChargeFree": "Tarhun lança raios nas Pedras da Tempestade: os valores serão somados ao multiplicador total.",
+    "orbArrive": "Pedra da Tempestade ×{value}: multiplicador ×{multiplier}.",
+    "orbArriveFree": "Pedra da Tempestade ×{value}: multiplicador total ×{multiplier}.",
+    "multiply": "Multiplicador ×{multiplier}: o ganho de {base}× foi multiplicado por {multiplier}.",
+    "retrigger": "{count} Selos do Relâmpago: {awarded, plural, one {# rodada grátis adicionada} other {# rodadas grátis adicionadas}}.",
+    "trigger": "{count} Selos do Relâmpago: rodadas grátis conquistadas.",
+    "freeIntro": "A tempestade começa: você ganhou {awarded, plural, one {# rodada grátis} other {# rodadas grátis}}.",
+    "freeSpinWin": "A rodada grátis rendeu {win}×. Total {total}×, multiplicador total ×{multiplier}.",
+    "freeSpinNoWin": "Sem ganho na rodada grátis.",
+    "noWin": "Sem ganho.",
+    "totalWin": "Ganho total {amount}, {times}×.",
+    "freeOutro": "A tempestade se acalmou. Total: {amount}, {spins, plural, one {# giro} other {# giros}}, multiplicador total ×{multiplier}.",
+    "sent": "Giro enviado ao servidor, {amount}.",
+    "buyStarted": "Bônus comprado, {amount}. As rodadas grátis estão começando.",
+    "spinStarted": "Giro iniciado, {amount}.",
+    "recovered": "Uma rodada inacabada foi recuperada do servidor; o pagamento já foi feito lá ({amount}).",
+    "replaying": "Reproduzindo: rodada {id}. O saldo não muda.",
+    "refilled": "Saldo DEMO recarregado para {amount}.",
+    "refilledRemote": "Saldo DEMO do servidor recarregado para {amount}.",
+    "speed": "Velocidade do giro: {speed}.",
+    "anteOn": "Chance ×2 ativada: cerca do dobro da chance de rodadas grátis, custo {cost}.",
+    "anteOff": "Chance ×2 desativada: custo {cost}."
+  },
+  "banner": {
+    "scatterPay": "{count} Selos do Relâmpago · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# rodada grátis} other {# rodadas grátis}}"
+  },
+  "deck": {
+    "aria": "Controles do jogo",
+    "balance": "Saldo",
+    "refill": "Recarregar saldo",
+    "replay": "Replay",
+    "win": "Ganho",
+    "replayWin": "Ganho do replay",
+    "lastWin": "Último ganho",
+    "spin": "Girar",
+    "spinLocked": "Rodada em andamento; bloqueado até terminarem todas as quedas, raios e rodadas grátis.",
+    "auto": "Auto",
+    "info": "Info",
+    "on": "Ligado",
+    "off": "Desligado",
+    "anteDesc": "Cerca do dobro da chance de rodadas grátis",
+    "buyDesc": "{spins, plural, one {# rodada grátis} other {# rodadas grátis}} · {rtp}",
+    "speed": "Velocidade do giro: {speed}",
+    "soundLoading": "Carregando som {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Seu saldo DEMO acabou.",
+    "lastRound": "Última rodada <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "A última rodada não teve ganho.",
+    "spaceHint": "Você também pode girar com a barra de espaço.",
+    "fixedBefore": "O resultado é definido antes do giro."
+  },
+  "replay": {
+    "ribbon": "Replay — saldo inalterado · rodada {id}"
+  },
+  "auto": {
+    "ribbon": "Jogo automático · {n, plural, one {# giro restante} other {# giros restantes}}"
+  },
+  "free": {
+    "tag": "Rodada grátis",
+    "spinNumber": "Giro {n}",
+    "left": "Restam",
+    "counterAria": "Rodada grátis {number}, restam {left}"
+  },
+  "mult": {
+    "label": "Multiplicador",
+    "total": "Multiplicador total"
+  },
+  "meter": {
+    "idleA": "<b>8+</b> símbolos iguais pagam em qualquer lugar",
+    "idleB": "Pedras da Tempestade até <b>×500</b>",
+    "win": "Ganho",
+    "totalWin": "Ganho total"
+  },
+  "gated": {
+    "title": "Não há Tarhun on-chain.",
+    "text": "Este jogo é jogado apenas com crédito DEMO; apostas reais não são aceitas.",
+    "back": "Voltar à demo local"
+  },
+  "splash": {
+    "f1Title": "8+ em qualquer lugar",
+    "f1Text": "Oito símbolos iguais pagam em qualquer lugar da grade",
+    "f2Title": "Pedra da Tempestade ×500",
+    "f2Text": "Coletada por raios; o multiplicador se acumula nas rodadas grátis",
+    "f3Title": "Ganho máximo de {max}×",
+    "f3Text": "4 Selos do Relâmpago liberam {spins, plural, one {# rodada grátis} other {# rodadas grátis}}",
+    "loading": "Carregando o jogo",
+    "play": "Jogar",
+    "skip": "Não mostrar esta tela inicial novamente",
+    "note": "O crédito DEMO não tem valor · O resultado é definido antes do giro · Simulação não certificada, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Som pronto: música, efeitos e narração foram preparados neste dispositivo.",
+    "soundLoading": "Carregando som {percent} (enquanto isso o jogo fica em silêncio ou usa efeitos simples).",
+    "soundOnTouch": "O som é carregado no primeiro toque.",
+    "demoTitle": "Saldo DEMO",
+    "demoText": "Saldo {balance}{server, select, yes { (servidor)} other {}}. Recarregar define o saldo em {amount} e adiciona uma linha “{label}” ao histórico; não é possível durante uma rodada ou o jogo automático."
+  },
+  "buy": {
+    "feature": "{spins, plural, one {# rodada grátis} other {# rodadas grátis}} · aposta {bet}",
+    "rtp": "RTP da compra {buy} · padrão {standard} (simulação, não certificada)",
+    "description": "<b>100 vezes</b> a sua aposta. A rodada começa com pelo menos 4 Selos do Relâmpago e {spins, plural, one {# rodada grátis é garantida} other {# rodadas grátis são garantidas}}; o multiplicador total começa em ×0 e cresce a cada giro vencedor. Os ganhos são pagos com base em uma aposta de {bet}, até no máximo {max}."
+  },
+  "history": {
+    "scope": "Esta sessão · replays nunca alteram seu saldo",
+    "time": "Hora",
+    "mode": "Modo",
+    "win": "Ganho",
+    "result": "Resultado",
+    "roundId": "ID da rodada",
+    "replay": "Reproduzir",
+    "replayAria": "Reproduzir: rodada {id}, saldo inalterado",
+    "share": "Compartilhar seu ganho",
+    "shareAria": "Compartilhar seu ganho: rodada {id}",
+    "latest": "Última rodada",
+    "refilled": "Saldo recarregado",
+    "refilledRemote": "Saldo recarregado (servidor)",
+    "emptyTitle": "Sua primeira rodada aparecerá aqui.",
+    "emptyText": "Modo, aposta, custo, ganho e ID de cada rodada são registrados; você pode rever qualquer rodada.",
+    "capped": "Ganho máximo · {times}×",
+    "free": "Rodadas grátis ×{spins} · {times}×",
+    "freeTotal": "Rodadas grátis ×{spins} · total ×{multiplier} · {times}×",
+    "none": "Sem ganho",
+    "tumbles": "{n, plural, one {# queda} other {# quedas}} · {times}×",
+    "tumblesMultiplied": "{n, plural, one {# queda} other {# quedas}} · ×{multiplier} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× a aposta",
+    "capNote": "A rodada atingiu o limite · os giros restantes não são jogados",
+    "continue": "Continuar",
+    "tapToSpeed": "Toque para acelerar"
+  },
+  "intro": {
+    "title": "A Tempestade Começa",
+    "titleCaps": "A TEMPESTADE COMEÇA",
+    "freeA": "rodadas",
+    "freeB": "grátis",
+    "text": "A cada giro vencedor, as Pedras da Tempestade são somadas ao <b>multiplicador total</b>; o multiplicador total é mantido durante todas as rodadas grátis. 3 Selos do Relâmpago dão +5 giros.",
+    "start": "Começar"
+  },
+  "total": {
+    "titleA": "A Tempestade se Acalma",
+    "titleB": "Total",
+    "word": "TOTAL",
+    "sub": "RODADAS GRÁTIS",
+    "spins": "Giros",
+    "spinsValue": "{n, plural, one {# giro} other {# giros}}",
+    "none": "Nenhum",
+    "strikes": "{n, plural, one {# raio} other {# raios}}",
+    "noOrbs": "sem pedras",
+    "betMultiple": "Da sua aposta",
+    "capNote": "Ganho máximo atingido · os giros restantes não são jogados",
+    "toCelebration": "Ir para a celebração"
+  },
+  "info": {
+    "windowTitle": "Tarhun · Informações do jogo",
+    "how": {
+      "title": "Como jogar",
+      "s1": "<b>Escolha sua aposta.</b> Os botões − e + mudam a aposta em um nível; tocar no valor da aposta abre todos os níveis. “{max}” escolhe o nível mais alto que o seu saldo cobre.",
+      "s2": "<b>Girar.</b> Pressione o botão da tempestade ou use a barra de espaço. O custo da rodada ({multiple} vez a aposta com Chance ×2 ativa) é debitado do saldo uma única vez.",
+      "s3": "<b>Combine.</b> Na grade de 6 colunas × 5 linhas você ganha quando há <b>8 ou mais símbolos iguais em qualquer lugar</b>; quanto mais símbolos, maior o nível de pagamento.",
+      "s4": "<b>Corrente.</b> As pedras vencedoras se estilhaçam, as de cima caem e novas pedras preenchem os espaços. Isso continua até não haver novos ganhos.",
+      "s5": "<b>Raio.</b> Quando a corrente termina com ganho, Tarhun atinge todas as Pedras da Tempestade da grade; os valores das pedras são somados e o ganho é multiplicado por esse total.",
+      "s6": "<b>Resultado.</b> A rodada inteira é decidida pelo motor antes do início do giro; a animação apenas reproduz esse resultado. O botão de girar fica bloqueado até a rodada (todas as quedas e rodadas grátis) terminar; use a configuração {quick}/{turbo} para acelerar. Configurações de velocidade, tocar no contador da celebração, uma aba oculta ou sair da página nunca alteram o pagamento; a rodada sempre se encerra uma vez, com o pagamento do motor.",
+      "note": "O crédito DEMO não tem valor; não gera SOL, tokens nem recompensas. O jogo roda no navegador com aleatoriedade local; não há prova VRF."
+    },
+    "pay": {
+      "title": "Tabela de pagamentos",
+      "lead": "Você ganha com <b>8 ou mais símbolos iguais em qualquer lugar</b> da grade. O número grande é o valor bruto em DEMO com aposta de <b>{bet}</b>; o multiplicador abaixo é um múltiplo da aposta.",
+      "symbolsAria": "Pagamentos dos símbolos",
+      "scatterTitle": "{name} · pagamento scatter",
+      "seals6": "6+ selos",
+      "seals5": "5 selos",
+      "seals4": "4 selos",
+      "scatterText": "Quando o giro base termina, 4 ou mais selos na grade pagam e liberam <b>{spins} rodadas grátis</b>. Os selos não estouram.",
+      "orbTitle": "{name} · esfera multiplicadora",
+      "orbText": "Carrega um valor de ×2 a ×500 e pode cair tanto no jogo base quanto nas rodadas grátis. Não estoura; fica no lugar e desliza durante as quedas. Os detalhes estão na página “{features}”.",
+      "maxTitle": "Ganho máximo {n}×",
+      "maxText": "Com esta aposta, isso equivale a <b>{amount}</b>. Se o total da rodada atingir esse limite, a rodada termina na hora; as rodadas grátis restantes não são jogadas."
+    },
+    "features": {
+      "title": "Recursos",
+      "tumbleTitle": "Pedras que caem (tumble)",
+      "tumbleText": "Após cada ganho, as pedras vencedoras se estilhaçam, as restantes deslizam para baixo e os espaços são preenchidos por cima. O medidor de ganhos nunca é zerado durante uma rodada: quedas, multiplicadores e todas as rodadas grátis se somam no mesmo total.",
+      "orbTitle": "Pedra da Tempestade (esfera multiplicadora)",
+      "orbText": "Pode cair no jogo base e nas rodadas grátis; seu valor fica entre ×2 e ×500. No jogo base, se a corrente de quedas de um giro termina com ganho, os valores das pedras na grade são <b>somados</b> e o ganho desse giro é multiplicado pelo total (o pagamento dos selos não é multiplicado). Sem ganho, as pedras não têm efeito.",
+      "orbListAria": "Valores e probabilidades das Pedras da Tempestade",
+      "totalTitle": "Multiplicador total (rodadas grátis)",
+      "totalText": "As rodadas grátis começam com um <b>multiplicador total de ×0</b>. A cada giro vencedor, os valores das Pedras da Tempestade na grade são <b>somados</b> ao multiplicador total, e o ganho desse giro é multiplicado pelo novo total (×1 se o total ainda for 0). Em um giro sem ganho, as pedras não são somadas. O multiplicador total é mantido durante todas as rodadas grátis, inclusive as extras.",
+      "sealTitle": "Selo do Relâmpago (scatter)",
+      "sealText": "Quando um giro base termina, 4 ou mais selos pagam e liberam {trigger} rodadas grátis. Nas rodadas grátis, 3 ou mais selos adicionam mais {retrigger} giros (sem pagamento). Uma única rodada concede no máximo {max} rodadas grátis.",
+      "freeTitle": "Rodadas grátis",
+      "freeText": "As rodadas grátis são jogadas com a mesma aposta, dentro da mesma rodada; nenhuma taxa extra é cobrada. Elas sempre terminam com a tela “{screen}”: giros jogados, multiplicador total final e ganho total.",
+      "tiersTitle": "Níveis de ganho e anúncios de multiplicador",
+      "tiersText": "Quando o total da rodada é <b>10×</b> a aposta base ou mais, a tela de celebração é aberta e o contador sobe pelos níveis: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; uma rodada que atinge o limite termina com {max}. Cada multiplicador aplicado é anunciado em letras grandes acima da grade; nos limiares ×10, ×25, ×50, ×100, ×250 e ×500 o texto e o som crescem. Tocar na tela leva o contador direto ao resultado; isso nunca altera o pagamento.",
+      "anteTitle": "Chance ×2 · custo {cost}",
+      "anteText": "Enquanto ativa, cada giro custa <b>{multiple} vez a sua aposta</b> e os selos são mais prováveis no jogo base: a chance de rodadas grátis é cerca do dobro ({ante} / {standard}). Os ganhos continuam sendo pagos com base na aposta base. Com ela ativa, o bônus não pode ser comprado.",
+      "buyTitle": "Comprar bônus · preço {price}",
+      "buyText": "Por <b>100 vezes</b> a sua aposta, a rodada começa com pelo menos 4 selos; {spins} rodadas grátis são garantidas. A compra é feita por uma janela de confirmação, tem um RTP próprio ({rtp}) e não pode ser usada com o jogo automático."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Retorno teórico (RTP)",
+      "caption": "Retorno teórico por modo",
+      "mode": "Modo",
+      "cost": "Custo",
+      "ci": "IC de 95%",
+      "feature": "Recurso",
+      "everyRound": "toda rodada",
+      "method": "Uma simulação separada de {millions} milhões de rodadas para cada modo (motor <code>storm-throne-1</code>). O RTP é calculado sobre o valor pago. Frequência de acerto (giro base): padrão {hit}, Chance ×2 {hitAnte}. Volatilidade (desvio padrão em unidades de custo): padrão {sdStandard}, compra {sdBuy}.",
+      "note": "A simulação é uma estimativa e <b>não é certificada</b>; devido à cauda pesada, o intervalo de confiança pode ser otimista. O resultado de uma sessão curta pode diferir muito do RTP. O crédito DEMO <b>não tem valor</b>."
+    },
+    "limits": {
+      "title": "Limites de aposta e ganho",
+      "range": "Faixa de apostas",
+      "levels": "Níveis",
+      "current": "Aposta atual",
+      "currentValue": "{bet} · Chance ×2 {ante} · Compra {buy}",
+      "max": "Ganho máximo",
+      "maxValue": "{n} vezes a aposta · {amount} com esta aposta",
+      "p1": "Uma rodada que atinge o ganho máximo termina na hora; as rodadas grátis restantes não são jogadas. O pagamento é sempre calculado sobre a aposta base, com frações de centavo arredondadas para baixo.",
+      "p2": "Níveis e modos que o seu saldo não cobre não podem ser selecionados. Uma rodada é uma única reserva e um único pagamento; apenas uma rodada é jogada por vez."
+    },
+    "keys": {
+      "title": "Teclas",
+      "heading": "Teclado",
+      "space": "Espaço",
+      "spaceText": "Inicia o giro ({settings} → “{option}”). Durante uma rodada, não pula o giro; apenas acelera as telas das rodadas grátis e o contador da celebração.",
+      "enterText": "Aciona o botão em foco.",
+      "escText": "Fecha a janela aberta (exceto o lembrete de sessão).",
+      "tabText": "Navega entre os controles; o foco é sempre visível.",
+      "arrowsText": "Troca de página nesta janela de informações; altera a opção nas escolhas de configuração.",
+      "pageText": "Navega entre as páginas de informações.",
+      "note": "O leitor de tela anuncia cada etapa (“{example}”, multiplicadores, resultado da rodada); a grade é lida como uma tabela 6×5. Os símbolos se distinguem por forma e marcação, além da cor. A preferência de movimento reduzido desliga partículas, raios e tremores."
+    },
+    "fault": {
+      "title": "Cláusula de falha",
+      "p1": "<b>Uma falha anula todos os jogos e pagamentos afetados.</b> Em caso de falha de software, navegador ou dispositivo, vale o registro da rodada; um valor exibido na tela que não corresponda ao registro do motor não é válido.",
+      "p2": "Este jogo é jogado apenas com crédito DEMO. DEMO não tem valor e não pode ser convertido em dinheiro ou tokens; em caso de falha, o saldo DEMO e o histórico da sessão podem ser corrigidos ou zerados.",
+      "p3": "Como o resultado é definido antes do giro, uma animação interrompida, uma aba oculta ou sair da página não altera o resultado; a rodada ainda se encerra uma vez com o pagamento do motor."
+    }
+  }
+}

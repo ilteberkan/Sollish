@@ -1,0 +1,404 @@
+{
+  "deck": {
+    "group": "Controles do jogo",
+    "balance": "Saldo",
+    "refill": "Recarregar saldo",
+    "win": "Ganho",
+    "winReplay": "Repetição",
+    "winReplayLast": "Ganho da repetição",
+    "winLast": "Último ganho",
+    "cost": "Custo",
+    "spin": "Girar",
+    "spinCost": "Custo {cost}",
+    "auto": "Autoplay",
+    "info": "Info",
+    "infoAria": "Informações do jogo",
+    "on": "Ligado",
+    "off": "Desligado",
+    "buy": "Comprar bônus",
+    "buyDesc": "{spins, plural, one {# giro grátis} other {# giros grátis}} · {rtp}",
+    "speedAria": "Velocidade do giro: {speed}",
+    "sound": "Som",
+    "soundLoading": "Carregando o som {percent}%",
+    "outOfCredit": "Seu saldo DEMO acabou.",
+    "lastWin": "Última rodada <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Última rodada sem ganho.",
+    "hintSpace": "Você também pode girar com a barra de espaço.",
+    "hintFixed": "O resultado é definido antes do giro.",
+    "spinLocked": "Rodada em andamento; bloqueado até que todas as quedas, passos do lobo e giros grátis terminem.",
+    "anteDesc": "Chance de giros grátis ≈2×"
+  },
+  "hud": {
+    "freeAria": "Giro grátis {number}, restam {left}",
+    "freeSpin": "Giro {n}",
+    "left": "Restam",
+    "free": "Ergenekon",
+    "moonAria": "3 ou mais Ay Ata ativam 10 giros grátis",
+    "moonLong": "<b>3+</b> Ay Ata · 10 giros grátis",
+    "moonShort": "<b>3+</b> Ay Ata · 10 giros",
+    "templateChip": "Constelação <b>×{multiplier}</b> · Máx. <b>{max}×</b>",
+    "globalAria": "Multiplicador global ×{multiplier}, {distinct} constelações no mapa",
+    "global": "Global",
+    "map": "Mapa"
+  },
+  "meter": {
+    "total": "Ganho total",
+    "win": "Ganho",
+    "idleA": "<b>5+</b> símbolos iguais adjacentes pagam",
+    "idleB": "O Lobo Celeste caminha e deixa um rastro",
+    "idleC": "constelação <b>×2–×10</b>"
+  },
+  "replay": {
+    "ribbon": "Repetição — saldo inalterado · rodada {id}"
+  },
+  "auto": {
+    "ribbon": "Autoplay · {spins, plural, one {resta # giro} other {restam # giros}}"
+  },
+  "toast": {
+    "close": "Fechar aviso",
+    "autoplayStopped": "Autoplay interrompido: {reason}. {spins, plural, one {# giro} other {# giros}}, líquido {net}.",
+    "autoplayStoppedShort": "Autoplay interrompido: {reason}.",
+    "autoplayStarted": "Autoplay: {spins, plural, one {# giro} other {# giros}}, limite de perda {limit}.",
+    "refilled": "Saldo recarregado: {amount} DEMO.",
+    "shareCopied": "Link de compartilhamento copiado: {url}",
+    "shareLink": "Link de compartilhamento: {url}",
+    "shareFailed": "Não foi possível compartilhar: {error}",
+    "replayFailed": "Não foi possível reproduzir esta rodada.",
+    "replayMismatch": "A repetição não pôde ser verificada: o registro não corresponde ao motor."
+  },
+  "banner": {
+    "extraSpins": "+{awarded} giros grátis",
+    "constellation": "{name} ×{multiplier}",
+    "mapSpins": "Mapa · +{awarded} giros grátis",
+    "scatterPay": "{count} Ay Ata · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "Giro iniciado, {amount} DEMO.",
+    "sentToServer": "Giro enviado ao servidor, {amount} DEMO.",
+    "recovered": "A rodada interrompida foi recuperada do servidor; o pagamento já foi feito lá ({amount} DEMO).",
+    "replaying": "Reproduzindo: rodada {id}. O saldo não muda.",
+    "replayDone": "Repetição concluída: {amount} DEMO, {times}×. Saldo inalterado.",
+    "roundEnd": "Rodada encerrada. Ganho total {amount} DEMO, {times}×.",
+    "roundEndNone": "Rodada encerrada. Sem ganho.",
+    "noWin": "Sem ganho.",
+    "totalWin": "Ganho total {amount} DEMO, {times}×.",
+    "celebration": "{title}: {amount} DEMO, {times}×.",
+    "speed": "Velocidade do giro: {speed}.",
+    "anteOn": "Chance ×2 ativada: chance de giros grátis ≈2×, custo {cost}.",
+    "anteOff": "Chance ×2 desativada: custo {cost}.",
+    "refilled": "Saldo DEMO recarregado para {amount} DEMO.",
+    "refilledRemote": "Saldo DEMO do servidor recarregado para {amount} DEMO.",
+    "bonusBought": "Bônus comprado, {amount} DEMO. Ergenekon começa.",
+    "moonTease": "Dois Ay Ata apareceram; um terceiro ativa os giros grátis.",
+    "cluster": "{size} {name}{template, select, none {} other {, {templateName} ×{templateMultiplier}}}, ganho de {times}×",
+    "constellation": "Constelação acesa: {name}, pagamento do grupo ×{multiplier}.",
+    "map": "Mapa de Ergenekon: {distinct} / 6 constelações acesas.",
+    "ergenekon": "Ergenekon: {distinct} constelações, multiplicador global ×{after}. Todo ganho a partir de agora é ×{after}.",
+    "mapSpins": "O mapa de Ergenekon adicionou {awarded} giros grátis.",
+    "wolfWalk": "O Lobo Celeste caminhou: coluna {fromCol}, linha {fromRow} → coluna {toCol}, linha {toRow}; um Rastro Estelar ficou para trás.",
+    "moons": "{count} Ay Ata.",
+    "retrigger": "{count} Ay Ata: {awarded} giros grátis adicionados.",
+    "trigger": "{count} Ay Ata: Ergenekon conquistado.",
+    "freeIntro": "Ergenekon começa: você ganhou {awarded} giros grátis.",
+    "freeSpinWin": "O giro grátis pagou {times}×. Total {total}×.",
+    "freeSpinNone": "Sem ganho neste giro grátis.",
+    "freeOutro": "Ergenekon encerrado. Total: {amount} DEMO, {spins} giros, {constellations} constelações, multiplicador global ×{multiplier}."
+  },
+  "autoplay": {
+    "serverFailed": "O servidor não conseguiu iniciar a rodada",
+    "spinFailed": "Não foi possível iniciar o giro",
+    "quit": "Você saiu da sessão",
+    "title": "Autoplay",
+    "note": "{cost} por giro{ante, select, yes { (Chance ×2)} other {}} · nunca compra o bônus · para quando a aba fica oculta."
+  },
+  "errors": {
+    "entropy": "A aleatoriedade local segura não está disponível. A demo não foi iniciada.",
+    "insufficient": "Saldo insuficiente: {kind, select, buy {esta compra custa} other {este giro custa}} {cost}. Reduza a aposta ou recarregue o saldo.",
+    "noCredit": "Você não tem crédito demo suficiente, ou já há uma demo em andamento."
+  },
+  "buy": {
+    "block": {
+      "gated": "Só pode ser comprado com crédito DEMO",
+      "autoplay": "Não pode ser comprado durante o autoplay",
+      "busy": "Não pode ser comprado antes do fim da rodada",
+      "ante": "Não pode ser comprado com a Chance ×2 ativada",
+      "balance": "Saldo insuficiente (preço {price})"
+    },
+    "rtp": "RTP da compra {buy} · padrão {standard} (simulação, sem certificação)",
+    "feature": "Ergenekon · 10 giros grátis · aposta {bet}",
+    "text": "<b>80×</b> a sua aposta. A rodada começa com pelo menos 3 Ay Ata e 10 giros grátis são garantidos; cada constelação acesa libera o mapa de Ergenekon, o multiplicador global sobe para ×2, ×3 e ×5 e multiplica todos os ganhos durante todo o recurso. Os ganhos são pagos sobre uma aposta de {bet}, máximo de {max}."
+  },
+  "gated": {
+    "text": "Este jogo é jogado apenas com crédito DEMO; apostas reais não são aceitas.",
+    "back": "Voltar à demo local",
+    "title": "Não há Asena on-chain."
+  },
+  "splash": {
+    "max": {
+      "title": "{max}× máximo"
+    },
+    "loading": "Carregando o jogo",
+    "play": "Jogar",
+    "skip": "Não mostrar a tela de abertura novamente",
+    "note": "O crédito DEMO não tem valor · O resultado é definido antes do giro · Simulação sem certificação, RTP ≈ {rtp}",
+    "constellation": {
+      "title": "Constelação ×10",
+      "text": "Se um grupo contiver uma forma do céu, ela é desenhada estrela por estrela e multiplica o pagamento"
+    },
+    "wolf": {
+      "title": "O Lobo Celeste caminha",
+      "text": "O lobo que participa de um ganho avança uma célula a cada queda e deixa um Rastro Estelar"
+    },
+    "ergenekon": {
+      "title": "Ergenekon · {max}×",
+      "text": "À medida que o mapa se abre, a montanha de ferro racha: multiplicador global ×2, ×3, ×5"
+    }
+  },
+  "settings": {
+    "soundReady": "Som pronto: música, efeitos e ambiente foram preparados neste dispositivo.",
+    "soundIdle": "O som é carregado no primeiro toque.",
+    "demoTitle": "Saldo DEMO",
+    "demoText": "Saldo {balance}{remote, select, yes { (servidor)} other {}}. Recarregar define o saldo em {start} DEMO e adiciona uma linha “Saldo recarregado” ao histórico; não é possível durante uma rodada ou o autoplay.",
+    "soundLoading": "Carregando o som {percent}% (o jogo segue em silêncio enquanto isso)."
+  },
+  "history": {
+    "title": "Seu histórico de jogo",
+    "scope": "Esta sessão · repetições nunca alteram o saldo",
+    "time": "Hora",
+    "mode": "Modo",
+    "bet": "Aposta",
+    "cost": "Custo",
+    "win": "Ganho",
+    "result": "Resultado",
+    "roundId": "ID da rodada",
+    "replayColumn": "Reproduzir",
+    "latest": "Última rodada",
+    "replay": "Reproduzir",
+    "replayAria": "Reproduzir: rodada {id}, saldo inalterado",
+    "share": "Compartilhar meu ganho",
+    "shareAria": "Compartilhar meu ganho: rodada {id}",
+    "emptyTitle": "Sua primeira rodada aparecerá aqui.",
+    "emptyText": "O modo, a aposta, o custo, o ganho e o ID de cada rodada são registrados; você pode rever qualquer rodada.",
+    "reset": "Saldo recarregado",
+    "resetRemote": "Saldo recarregado (servidor)",
+    "detail": {
+      "capped": "Ganho máximo · {times}×",
+      "none": "Sem ganho",
+      "free": "Ergenekon ×{spins}{multiplier, plural, =0 {} other { · global ×#}} · {times}×",
+      "base": "{clusters, plural, one {# grupo} other {# grupos}}{stars, plural, =0 {} one { · # constelação} other { · # constelações}}{moons, plural, =0 {} other { · # Ay Ata}} · {times}×"
+    },
+    "tableRegion": "Tabela do histórico de jogo"
+  },
+  "celebration": {
+    "aria": "{title}: {money} DEMO",
+    "times": "{times}× a aposta",
+    "capNote": "A rodada atingiu o limite · os giros restantes não são jogados",
+    "speedUp": "Toque para acelerar",
+    "continue": "Continuar"
+  },
+  "intro": {
+    "start": "Começar",
+    "word": "ERGENEKON",
+    "srTitle": "Ergenekon começa",
+    "freeSpins": "giros\ngrátis",
+    "text": "Cada constelação acesa libera uma parte do <b>mapa de Ergenekon</b>. <b>3 constelações diferentes</b> dão +5 giros e um multiplicador global de <b>×2</b>, <b>as seis</b> dão +5 giros e <b>×3</b>, e todas acesas duas vezes dão <b>×5</b>. O multiplicador global permanece durante todo o recurso e multiplica todos os ganhos. 3 Ay Ata dão +3 giros."
+  },
+  "total": {
+    "word": "TOTAL",
+    "sub": "GIROS GRÁTIS",
+    "titleB": "Total",
+    "toCelebration": "Ir para a comemoração",
+    "capNote": "Ganho máximo atingido · os giros restantes não são jogados",
+    "titleA": "Ergenekon",
+    "spins": "Giros",
+    "spinsValue": "{spins, plural, one {# giro} other {# giros}}",
+    "wolfSteps": "{n, plural, one {# passo do lobo} other {# passos do lobo}}",
+    "wolfNone": "o lobo não caminhou",
+    "constellations": "Constelações",
+    "mapOf": "mapa {distinct}/6",
+    "global": "Multiplicador global",
+    "ofBet": "{times}× a aposta"
+  },
+  "badge": {
+    "checking": "Verificando o servidor"
+  },
+  "rules": {
+    "fixed": "O resultado é determinado localmente no seu navegador, com aleatoriedade local, antes de o giro começar; a animação apenas reproduz esse resultado. Mesmo que você saia da página, a rodada é encerrada com o pagamento determinado. Não há prova VRF.",
+    "board": "O campo estelar é 6×6. 5 ou mais símbolos iguais adjacentes, na horizontal ou na vertical (incluindo os coringas Lobo Celeste e Rastro Estelar), formam um grupo e pagam; o nível de pagamento sobe conforme o grupo cresce. Os grupos vencedores viram estrelas e estouram, os símbolos de cima caem e os espaços são preenchidos.",
+    "features": "Se um grupo contiver um dos seis modelos de constelação (Cabeça de Lobo ×10, Árvore da Vida ×8, Águia ×6, Cavalo ×4, Arco ×3, Crescente ×2; girado ou espelhado), a constelação se acende e o pagamento do grupo é multiplicado pelo multiplicador do modelo. Um Lobo Celeste que participa de um ganho caminha uma célula após cada queda e deixa atrás de si um coringa Rastro Estelar. 3 ou mais Ay Ata ativam 10 giros grátis (Ergenekon): cada constelação acesa libera uma parte do mapa; 3 constelações diferentes dão +5 giros e um multiplicador global de ×2, 6 diferentes dão +5 e ×3, e todas elas duas vezes dão ×5. O ganho máximo é 5.000 vezes a aposta."
+  },
+  "meta": {
+    "title": "Asena: Loba das Estrelas",
+    "description": "Asena: Loba das Estrelas — um jogo de grupos DEMO original. Os grupos desenham constelações no céu, o Lobo Celeste caminha e deixa um rastro estelar; o mapa de Ergenekon libera um multiplicador global de até ×5."
+  },
+  "title": "Asena: Loba das Estrelas",
+  "subtitle": "Os grupos desenham constelações no céu, o Lobo Celeste caminha e deixa um rastro estelar; em Ergenekon o multiplicador global cresce até ×5.",
+  "table": "Mesa de jogo Asena",
+  "logo": {
+    "subtitle": "LOBA DAS ESTRELAS",
+    "label": "Asena: Loba das Estrelas"
+  },
+  "symbols": {
+    "h1": "Asena",
+    "h2": "Kün Ana",
+    "h3": "Águia Celeste",
+    "h4": "Cavalo da Estepe",
+    "l1": "Estrela Turquesa",
+    "l2": "Rubi Carmesim",
+    "l3": "Flecha Esmeralda",
+    "l4": "Tamga de Ametista",
+    "wolf": "Lobo Celeste (coringa andarilho)",
+    "trail": "Rastro Estelar (coringa)",
+    "moon": "Ay Ata (scatter)"
+  },
+  "templates": {
+    "kurt-basi": "Cabeça de Lobo",
+    "yay": "Arco",
+    "at": "Cavalo",
+    "kartal": "Águia",
+    "hayat-agaci": "Árvore da Vida",
+    "hilal": "Crescente"
+  },
+  "board": {
+    "label": "Campo estelar da Asena",
+    "labelPlay": "Campo estelar da Asena, 6 colunas, 6 linhas",
+    "labelFree": "Campo estelar da Asena nos giros grátis, 6 colunas, 6 linhas",
+    "cell": "{symbol}, coluna {col}, linha {row}"
+  },
+  "callout": {
+    "tier0": "Constelação",
+    "tier1": "Constelação brilhante",
+    "tier2": "Multiplicador do céu",
+    "tier3": "Multiplicador de Tengri",
+    "tier4": "Céu lendário",
+    "tier5": "Kün Ana"
+  },
+  "fx": {
+    "spins": "GIROS",
+    "extraSpins": "GIROS EXTRAS",
+    "freeSpins": "GIROS GRÁTIS"
+  },
+  "info": {
+    "title": "Asena · Informações do jogo",
+    "tab": {
+      "how": "Como jogar",
+      "pay": "Tabela de pagamentos",
+      "features": "Recursos",
+      "rtp": "RTP",
+      "limits": "Limites de aposta e ganho",
+      "keys": "Teclas",
+      "fault": "Cláusula de falhas"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Escolha sua aposta.</b> Os botões − e + mudam a aposta em um nível; toque no valor da aposta para abrir todos os níveis. “Aposta máxima” escolhe o nível mais alto que o seu saldo permite.",
+        "spin": "<b>Girar.</b> Pressione o botão da estrela ou use a barra de espaço. O custo da rodada ({factor} vez a aposta com a Chance ×2 ativada) é descontado do saldo uma única vez.",
+        "cluster": "<b>Forme grupos.</b> No campo estelar 6 × 6, <b>5 ou mais símbolos iguais</b> adjacentes na horizontal ou na vertical pagam; o nível de pagamento sobe conforme o grupo cresce.",
+        "constellation": "<b>Constelação.</b> Se um grupo contiver uma das seis formas do céu, a constelação é desenhada estrela por estrela, ecoa pelo céu, o lobo uiva e o pagamento do grupo é multiplicado pelo multiplicador da forma (×2–×10).",
+        "chain": "<b>A corrente.</b> Os grupos vencedores viram estrelas e estouram, os símbolos de cima caem e os espaços são preenchidos; um Lobo Celeste que participa de um ganho caminha uma célula. Isso continua até que não reste nenhum grupo novo.",
+        "result": "<b>O resultado.</b> A rodada inteira é determinada pelo motor antes de o giro começar; a animação apenas reproduz esse resultado. O botão de girar fica bloqueado até a rodada (todas as quedas, passos do lobo e giros grátis) terminar; use a configuração Rápido/Turbo para acelerar. A configuração de velocidade, tocar no contador da comemoração, uma aba oculta ou sair da página não alteram o pagamento; a rodada sempre se encerra uma única vez, com o pagamento do motor."
+      },
+      "note": "O crédito DEMO não tem valor; ele não rende SOL, tokens ou recompensas. O jogo roda no navegador com aleatoriedade local; não há prova VRF. Gök Tengri, Ay Ata, Kün Ana, Asena e Ergenekon pertencem à mitologia turca de domínio público; os personagens e as ilustrações são originais."
+    },
+    "pay": {
+      "maxTitle": "Ganho máximo {max}×",
+      "maxText": "Com esta aposta: <b>{amount}</b>. Se o total da rodada atingir esse limite, a rodada termina na hora; os giros grátis restantes não são jogados.",
+      "lead": "<b>5 ou mais símbolos iguais</b> adjacentes na horizontal ou na vertical formam um grupo; os coringas Lobo Celeste e Rastro Estelar substituem todos os símbolos. O número grande é o valor bruto em DEMO com uma aposta de <b>{bet}</b>; o multiplicador abaixo é um múltiplo da aposta. Todos os grupos no mesmo tabuleiro pagam separadamente.",
+      "gridAria": "Pagamentos dos grupos",
+      "fullTable": "Todos os tamanhos de grupo (7 níveis)",
+      "fullCaption": "Pagamento por símbolo e tamanho do grupo, como múltiplo da aposta",
+      "colSymbol": "Símbolo",
+      "moon5": "5+ Ay Ata",
+      "moon4": "4 Ay Ata",
+      "moon3": "3 Ay Ata",
+      "moonText": "Paga se houver 3 ou mais Ay Ata no tabuleiro final do giro base e ativa <b>{spins} giros grátis</b> (Ergenekon). Ay Ata não estoura; o lobo também não pisa nele.",
+      "wolfText": "Substitui todos os símbolos de pagamento e aparece apenas no primeiro tabuleiro do giro. Se participar de um ganho, não estoura, mas <b>caminha</b>: avança uma célula após a queda e deixa um coringa Rastro Estelar na célula que deixou. Detalhes na página “Recursos”.",
+      "trailText": "O coringa deixado para trás pelo lobo. Ele desce com as quedas e é gasto quando participa de um ganho; é apagado ao fim do giro e não passa para o giro seguinte."
+    },
+    "rtp": {
+      "title": "Retorno teórico (RTP)",
+      "caption": "Retorno teórico por modo",
+      "colMode": "Modo",
+      "colCost": "Custo",
+      "colCi": "IC de 95%",
+      "colFeature": "Recurso",
+      "everyRound": "toda rodada",
+      "oneIn": "1 / {n}",
+      "note": "A simulação é uma estimativa e <b>não tem certificação</b>; por causa da cauda pesada, o intervalo de confiança pode ser otimista. O resultado de uma sessão curta pode ser muito diferente do RTP. O crédito DEMO <b>não tem valor</b>.",
+      "text": "Uma simulação separada de {millions} milhões de rodadas para cada modo (motor <code>asena-stars-1</code>). O RTP é calculado sobre o custo pago. Frequência de ganho (giro base): padrão {hitStandard}, Chance ×2 {hitAnte}. Volatilidade (desvio padrão em unidades de custo): padrão {sdStandard}, compra {sdBuy}."
+    },
+    "limits": {
+      "title": "Limites de aposta e ganho",
+      "range": "Faixa de apostas",
+      "steps": "Níveis",
+      "current": "Aposta atual",
+      "currentValue": "{bet} · Chance ×2 {ante} · Compra {buy}",
+      "max": "Ganho máximo",
+      "maxValue": "{multiplier} vezes a aposta · {amount} com esta aposta",
+      "text1": "Uma rodada que atinge o ganho máximo termina na hora; os giros grátis restantes não são jogados. O pagamento é sempre calculado sobre a aposta base, e frações de centavo são arredondadas para baixo.",
+      "text2": "Níveis e modos que o seu saldo não cobre não podem ser selecionados. Uma rodada é uma única reserva e um único pagamento; apenas uma rodada é jogada por vez."
+    },
+    "keys": {
+      "heading": "Teclado",
+      "space": "Espaço",
+      "spaceText": "Inicia o giro (Configurações → “{option}”). Durante uma rodada, não pula o giro; apenas acelera as telas de giros grátis e o contador da comemoração.",
+      "enterText": "Aciona o botão em foco.",
+      "escText": "Fecha a janela aberta (exceto o lembrete de sessão).",
+      "tabText": "Navega entre os controles; o foco está sempre visível.",
+      "arrowsText": "Muda de página nesta janela de informações; troca a opção nas escolhas das configurações.",
+      "pageText": "Navega entre as páginas de informações.",
+      "note": "O leitor de tela anuncia cada passo (“6 asena, Cabeça de Lobo ×10, ganho de 12,00×”, passos do lobo, o mapa e o multiplicador global, o resultado da rodada); cada célula é lida com seu símbolo, coluna e linha. Os símbolos se distinguem pela forma além da cor (cabeça de lobo, sol, águia, cavalo, estrela, rubi, flecha, selo). A preferência de reduzir movimento desenha a constelação já completa e desativa partículas e tremores; todos os passos continuam sendo mostrados."
+    },
+    "fault": {
+      "title": "Cláusula de falhas",
+      "p1": "<b>Uma falha invalida todos os jogos e pagamentos afetados.</b> Em caso de falha de software, navegador ou dispositivo, vale o registro da rodada; um valor mostrado na tela que não corresponda ao registro do motor não é válido.",
+      "p2": "Este jogo é jogado apenas com crédito DEMO. DEMO não tem valor e não pode ser convertido em dinheiro ou tokens; em caso de falha, o saldo DEMO e o histórico da sessão podem ser corrigidos ou redefinidos.",
+      "p3": "Como o resultado é definido antes do giro, uma animação interrompida, uma aba oculta ou sair da página não o alteram; a rodada ainda se encerra uma única vez, com o pagamento do motor."
+    },
+    "features": {
+      "buy": {
+        "title": "Comprar bônus · preço {price}",
+        "text": "Por <b>80 vezes a aposta</b>, a rodada começa com pelo menos 3 Ay Ata; {spins} giros grátis são garantidos (o pagamento de Ay Ata segue a tabela normal). A compra é feita por uma janela de confirmação, funciona com um RTP separado ({rtp}) e não pode ser usada com o autoplay."
+      },
+      "templates": {
+        "title": "Modelos de constelação",
+        "text": "Se um grupo vencedor contiver por inteiro uma das formas abaixo — inclusive girada ou espelhada, em qualquer uma das 8 orientações —, a constelação se acende e <b>o pagamento do grupo é multiplicado pelo multiplicador do modelo</b>. Os coringas contam como células do grupo. Se vários modelos couberem, acende-se o de maior multiplicador; cada grupo acende no máximo uma constelação, mas grupos diferentes no mesmo passo podem acender constelações diferentes.",
+        "aria": "Modelos de constelação",
+        "stars": "{n, plural, one {# estrela} other {# estrelas}}"
+      },
+      "wolf": {
+        "title": "O Lobo Celeste caminha",
+        "text": "O lobo que participa de um ganho não estoura. Após a queda e o preenchimento, ele caminha uma célula (para cima, direita, baixo ou esquerda; aleatório, nunca para fora do tabuleiro, nunca sobre um Ay Ata ou outro lobo). Ele engole o símbolo da célula em que entra e deixa um coringa <b>Rastro Estelar</b> na célula que deixou. Vários lobos caminham em sequência. Um Rastro Estelar é gasto quando participa de um ganho; é apagado ao fim do giro."
+      },
+      "ergenekon": {
+        "title": "Ergenekon (giros grátis)",
+        "text": "3+ Ay Ata ativam {spins} giros grátis (em um giro grátis, 3+ Ay Ata dão +{retrigger}; no máximo {max} giros por rodada). Nos giros grátis, cada constelação acesa libera a sua própria parte do <b>mapa de Ergenekon</b> (uma parte conta no máximo duas vezes):",
+        "map3": "<bold>3 constelações diferentes</bold> → +{spins} giros e multiplicador global <b>×{multiplier}</b>",
+        "map6": "<bold>6 constelações diferentes</bold> → +{spins} giros e multiplicador global <b>×{multiplier}</b>",
+        "mapTwice": "<bold>Todas as seis, duas vezes</bold> → multiplicador global <b>×{multiplier}</b> (a montanha de ferro se parte)",
+        "after": "O multiplicador global e o mapa permanecem durante todo o recurso, nunca são reiniciados e multiplicam <b>todo ganho de grupo</b> — inclusive o do passo em que são liberados (primeiro as constelações são registradas no mapa, depois o passo paga). O jogo base é sempre jogado com ×1."
+      },
+      "cumulative": {
+        "title": "Ganho acumulado",
+        "text": "O indicador de ganho nunca é reiniciado durante uma rodada: grupos, o pagamento de Ay Ata e todos os giros grátis se somam no mesmo total. Uma rodada de giros grátis sempre termina com a tela “Ergenekon — Total”."
+      },
+      "tiers": {
+        "title": "Faixas de ganho e anúncios de multiplicador",
+        "text": "Se o total da rodada for <b>10 vezes</b> a aposta base ou mais, o portão do céu se abre e o contador sobe pelas faixas: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; uma rodada que atinge o limite termina com {max}. Se modelo × multiplicador global for ×10 ou mais, isso é anunciado com letras grandes e som próprio, junto com o uivo do lobo; cada aumento do multiplicador global é mostrado pela montanha de ferro que racha. Tocar na tela leva o contador direto ao resultado; isso não altera o pagamento."
+      },
+      "ante": {
+        "title": "Chance ×2 · custo {cost}",
+        "text": "Quando ativada, cada giro custa <b>{factor} vez a aposta</b> e Ay Ata tem mais chance de aparecer no jogo base: a chance de giros grátis é cerca de duas vezes maior ({ante} / {standard}). Os ganhos continuam sendo pagos sobre a aposta base. Com ela ativada, o bônus não pode ser comprado."
+      }
+    }
+  },
+  "burst": {
+    "tag": "ERGENEKON · MULTIPLICADOR GLOBAL"
+  },
+  "skymap": {
+    "aria": "Mapa de Ergenekon: {distinct} constelações acesas, multiplicador global ×{multiplier}",
+    "inactive": "abre nos giros grátis",
+    "lit": "{distinct}/6 constelações",
+    "pips": "acesa {n, plural, one {# vez} other {# vezes}}"
+  }
+}

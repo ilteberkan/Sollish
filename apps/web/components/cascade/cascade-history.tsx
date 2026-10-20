@@ -1,7 +1,9 @@
 'use client';
-import { memo } from 'react';
-import { formatAmount } from '@/lib/slot-kit/bet';
-import { CASCADE_MODE_LABELS, shortRoundId } from '@/lib/cascade-controls';
+import { memo, useMemo } from 'react';
+import { playCascade2Round, type CascadeMode } from '@sollish/protocol';
+import { useFormat, useT } from '@/lib/i18n/client';
+import { shortRoundId } from '@/lib/cascade-controls';
+import { cascadeHistoryParts, type CascadeHistoryParts } from '@/lib/cascade-timeline';
 import { Icon } from '../icons';
 import { useProduct, type DemoRecord } from '../providers';
 import styles from './cascade-game.module.css';
@@ -15,53 +17,79 @@ export interface CascadeHistoryProps {
   onShare?: (record: DemoRecord) => void;
 }
 
-const time = (at: number) => new Date(at).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+/* The ledger stores the result line in Turkish. The row text is rebuilt from the engine round (same seed, bet and
+   mode as a replay) so it follows the language; one entry per round, computed once. */
+const partsCache = new Map<string, CascadeHistoryParts | null>();
+function partsOf(seedHex: string, betCents: number, mode: CascadeMode): CascadeHistoryParts | null {
+  const key = `${seedHex}|${betCents}|${mode}`;
+  let parts = partsCache.get(key);
+  if (parts === undefined) {
+    try { parts = cascadeHistoryParts(playCascade2Round(seedHex, betCents, mode)); } catch { parts = null; }
+    partsCache.set(key, parts);
+  }
+  return parts;
+}
 
 /** Session round list (time, mode, bet, cost, win, round id) with an exact, ledger-free replay. */
 export const CascadeHistory = memo(function CascadeHistory({ onReplay, replayDisabled, replayingId, onShare }: CascadeHistoryProps) {
   const { records } = useProduct();
+  const t = useT('cascade');
+  const tc = useT('common');
+  const tk = useT('slotKit');
+  const format = useFormat();
   const relevant = records.filter(record => record.game === 'Cascade');
+  const detail = useMemo(() => (record: DemoRecord): string => {
+    const parts = record.cascade ? partsOf(record.cascade.seedHex, record.cascade.betCents, record.cascade.mode) : null;
+    if (!parts) return record.detail;
+    const times = format.amount(parts.kind === 'none' ? 0 : parts.totalHundredths);
+    switch (parts.kind) {
+      case 'capped': return t('history.capped', { times });
+      case 'free': return t('history.free', { spins: String(parts.spins), times });
+      case 'none': return t('history.none');
+      case 'tumbles': return t('history.tumbles', { n: parts.tumbles, times });
+    }
+  }, [t, format]);
   return (
     <section className={`history-section ${styles.history}`} aria-labelledby="history-heading">
       <div className="section-heading">
-        <h2 id="history-heading">Oyun geçmişin</h2>
-        <span className="small muted">Bu oturum · tekrar bakiyeyi değiştirmez</span>
+        <h2 id="history-heading">{tc('game.historyTitle')}</h2>
+        <span className="small muted">{t('history.scope')}</span>
       </div>
       {relevant.length ? (
         <div className="table-scroll">
           <table className={`history-table ${styles.historyTable}`}>
             <thead>
               <tr>
-                <th scope="col">Zaman</th><th scope="col">Mod</th><th scope="col" className="text-right">Bahis</th><th scope="col" className="text-right">Maliyet</th>
-                <th scope="col" className="text-right">Kazanç</th><th scope="col">Sonuç</th><th scope="col">Tur kimliği</th><th scope="col"><span className="sr-only">Tekrar oynat</span></th>
+                <th scope="col">{t('history.time')}</th><th scope="col">{t('history.mode')}</th><th scope="col" className="text-right">{tk('bet.label')}</th><th scope="col" className="text-right">{tk('bet.cost')}</th>
+                <th scope="col" className="text-right">{t('history.win')}</th><th scope="col">{t('history.result')}</th><th scope="col">{t('history.roundId')}</th><th scope="col"><span className="sr-only">{t('history.replay')}</span></th>
               </tr>
             </thead>
             <tbody>
               {relevant.map((record, index) => record.kind === 'reset' ? (
                 <tr key={record.id} className={styles.historyReset}>
-                  <td>{time(record.at)}</td>
-                  <td colSpan={7}><Icon name="history" size={14} /> {record.detail} · DEMO</td>
+                  <td>{format.time(record.at)}</td>
+                  <td colSpan={7}><Icon name="history" size={14} /> {record.id.startsWith('remote-reset:') ? t('history.refilledRemote') : t('history.refilled')} · DEMO</td>
                 </tr>
               ) : (
                 <tr key={record.id} data-replaying={replayingId === record.id || undefined}>
-                  <td>{time(record.at)}{index === 0 && <span className="sr-only"> Son tur</span>}</td>
-                  <td>{record.cascade ? <span className={`${styles.modeTag} ${styles[`mode_${record.cascade.mode}`] ?? ''}`}>{CASCADE_MODE_LABELS[record.cascade.mode]}</span> : '—'}</td>
-                  <td className="text-right">{record.cascade ? formatAmount(record.cascade.betCents) : formatAmount(record.stake)}</td>
-                  <td className="text-right">{formatAmount(record.stake)}</td>
-                  <td className={`text-right ${record.payout > record.stake ? 'positive' : ''}`}>{formatAmount(record.payout)} <span className="muted">DEMO</span></td>
-                  <td>{record.detail}</td>
+                  <td>{format.time(record.at)}{index === 0 && <span className="sr-only"> {t('history.latest')}</span>}</td>
+                  <td>{record.cascade ? <span className={`${styles.modeTag} ${styles[`mode_${record.cascade.mode}`] ?? ''}`}>{tc(`modes.${record.cascade.mode}`)}</span> : '—'}</td>
+                  <td className="text-right">{record.cascade ? format.amount(record.cascade.betCents) : format.amount(record.stake)}</td>
+                  <td className="text-right">{format.amount(record.stake)}</td>
+                  <td className={`text-right ${record.payout > record.stake ? 'positive' : ''}`}>{format.amount(record.payout)} <span className="muted">DEMO</span></td>
+                  <td>{detail(record)}</td>
                   <td><code className={styles.roundId} title={record.cascade?.seedHex}>{record.cascade ? shortRoundId(record.cascade.seedHex) : '—'}</code></td>
                   <td>
                     {record.cascade && (
                       <button type="button" className={styles.replayButton} disabled={replayDisabled} onClick={() => onReplay(record)}
-                        aria-label={`Tekrar oynat: tur ${shortRoundId(record.cascade.seedHex)}, bakiye değişmez`}>
-                        <Icon name="history" size={15} /><span>Tekrar oynat</span>
+                        aria-label={t('history.replayAria', { id: shortRoundId(record.cascade.seedHex) })}>
+                        <Icon name="history" size={15} /><span>{t('history.replay')}</span>
                       </button>
                     )}
                     {onShare && record.remote && (
                       <button type="button" className={styles.replayButton} onClick={() => onShare(record)} data-testid="share-round"
-                        aria-label={`Kazancını paylaş: tur ${shortRoundId(record.remote.roundId)}`}>
-                        <Icon name="arrow" size={15} /><span>Kazancını paylaş</span>
+                        aria-label={t('history.shareAria', { id: shortRoundId(record.remote.roundId) })}>
+                        <Icon name="arrow" size={15} /><span>{t('history.share')}</span>
                       </button>
                     )}
                   </td>
@@ -71,7 +99,7 @@ export const CascadeHistory = memo(function CascadeHistory({ onReplay, replayDis
           </table>
         </div>
       ) : (
-        <div className="empty-history"><Icon name="history" size={24} /><div><strong>İlk turun burada görünecek.</strong><p>Her turun modu, bahsi, maliyeti, kazancı ve tur kimliği kaydedilir; istediğin turu tekrar izleyebilirsin.</p></div></div>
+        <div className="empty-history"><Icon name="history" size={24} /><div><strong>{t('history.emptyTitle')}</strong><p>{t('history.emptyText')}</p></div></div>
       )}
     </section>
   );

@@ -1,0 +1,306 @@
+{
+  "subtitle": "Lass acht Gleiche platzen und baue Ketten mit fallenden Bonbons.",
+  "table": {
+    "aria": "Candy-Cascade-Spieltisch"
+  },
+  "board": {
+    "label": "Candy-Cascade-Raster, 6 Spalten, 5 Zeilen",
+    "labelFree": "Candy-Cascade-Freispiel-Raster, 6 Spalten, 5 Zeilen"
+  },
+  "badge": {
+    "checking": "Server wird geprüft"
+  },
+  "symbols": {
+    "crown": "Kronen-Macaron",
+    "cupcake": "Minz-Cupcake",
+    "donut": "Lila Donut",
+    "gumdrop": "Orangefarbenes Gummibonbon",
+    "strawberry": "Erdbeere",
+    "blueberry": "Blaubeere",
+    "kiwi": "Kiwi",
+    "lemon": "Zitrone",
+    "cherry": "Kirsche",
+    "star": "Goldener Sternkeks",
+    "crystal": "Multiplikator-Kristall",
+    "crystalValue": "{name} {value}×"
+  },
+  "callout": {
+    "tags": {
+      "0": "Multiplikator",
+      "1": "Großer Multiplikator",
+      "2": "Mega-Multiplikator",
+      "3": "Super-Multiplikator",
+      "4": "Epischer Multiplikator"
+    }
+  },
+  "error": {
+    "entropy": "Sichere lokale Zufallszahlen sind nicht verfügbar. Die Demo wurde nicht gestartet.",
+    "noCredit": "Du hast nicht genug Demo-Guthaben, oder es läuft bereits eine Demo-Runde.",
+    "insufficientSpin": "Guthaben reicht nicht: Dieser Spin kostet {cost}. Senke den Einsatz oder fülle dein Guthaben auf.",
+    "insufficientBuy": "Guthaben reicht nicht: Dieser Kauf kostet {cost}. Senke den Einsatz oder fülle dein Guthaben auf."
+  },
+  "buyBlock": {
+    "gated": "Nur mit DEMO-Guthaben verfügbar",
+    "autoplay": "Während des Autoplays nicht kaufbar",
+    "busy": "Erst nach Rundenende kaufbar",
+    "ante": "Nicht kaufbar, solange Chance ×2 aktiv ist",
+    "balance": "Guthaben reicht nicht (Preis {price})"
+  },
+  "autoplay": {
+    "title": "Autoplay",
+    "serverFailed": "Der Server konnte die Runde nicht starten",
+    "spinFailed": "Der Spin konnte nicht gestartet werden",
+    "quit": "Du hast die Sitzung verlassen",
+    "stopped": "Autoplay gestoppt: {reason}. {spins, plural, one {# Spin} other {# Spins}}, netto {net}.",
+    "stoppedShort": "Autoplay gestoppt: {reason}.",
+    "note": "Pro Spin {cost}{ante, select, yes { (Chance ×2)} other {}} · kauft nie einen Bonus · stoppt, wenn der Tab verborgen wird."
+  },
+  "toast": {
+    "autoplay": "Autoplay: {spins, plural, one {# Spin} other {# Spins}}, Verlustlimit {limit}.",
+    "refilled": "Guthaben aufgefüllt: {amount}.",
+    "shareCopied": "Link zum Teilen kopiert: {url}",
+    "shareLink": "Link zum Teilen: {url}",
+    "shareFailed": "Teilen nicht möglich: {reason}",
+    "replayFailed": "Diese Runde konnte nicht wiederholt werden.",
+    "replayMismatch": "Wiederholung nicht verifizierbar: Der Eintrag passt nicht zur Engine.",
+    "close": "Hinweis schließen"
+  },
+  "announce": {
+    "replayDone": "Wiederholung beendet: {amount}, {times}×. Guthaben unverändert.",
+    "roundEnd": "Runde beendet. Gesamtgewinn {amount}, {times}×.",
+    "roundEndNoWin": "Runde beendet. Kein Gewinn.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{count} {name}, {times}× Gewinn",
+    "crystals": "Multiplikator-Kristalle werden eingesammelt: gesamt {sum}×.",
+    "multiply": "Multiplikator ×{sum}: Der Gewinn von {base}× wurde mit {sum} multipliziert.",
+    "retrigger": "{count} Sterne: {awarded, plural, one {# Freispiel} other {# Freispiele}} hinzugefügt.",
+    "trigger": "{count} Sterne: Freispiele gewonnen.",
+    "freeIntro": "Du hast {awarded, plural, one {# Freispiel} other {# Freispiele}} gewonnen.",
+    "freeSpinWin": "Das Freispiel brachte {win}×. Gesamt {total}×.",
+    "freeSpinNoWin": "Kein Gewinn im Freispiel.",
+    "noWin": "Kein Gewinn.",
+    "totalWin": "Gesamtgewinn {amount}, {times}×.",
+    "freeOutro": "Freispiel-Summe: {amount}, {spins, plural, one {# Spin} other {# Spins}}.",
+    "sent": "Spin an den Server gesendet, {amount}.",
+    "buyStarted": "Bonus gekauft, {amount}. Die Freispiele beginnen.",
+    "spinStarted": "Spin gestartet, {amount}.",
+    "recovered": "Eine unvollendete Runde wurde vom Server wiederhergestellt; die Auszahlung erfolgte dort bereits ({amount}).",
+    "replaying": "Wiederholung läuft: Runde {id}. Das Guthaben ändert sich nicht.",
+    "refilled": "DEMO-Guthaben auf {amount} aufgefüllt.",
+    "refilledRemote": "DEMO-Guthaben auf dem Server auf {amount} aufgefüllt.",
+    "speed": "Spin-Tempo: {speed}.",
+    "anteOn": "Chance ×2 an: etwa doppelte Chance auf Freispiele, Kosten {cost}.",
+    "anteOff": "Chance ×2 aus: Kosten {cost}."
+  },
+  "banner": {
+    "scatterPay": "{count} Sterne · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# Freispiel} other {# Freispiele}}"
+  },
+  "deck": {
+    "aria": "Spielsteuerung",
+    "balance": "Guthaben",
+    "refill": "Guthaben auffüllen",
+    "replay": "Wiederholung",
+    "win": "Gewinn",
+    "replayWin": "Wiederholungsgewinn",
+    "lastWin": "Letzter Gewinn",
+    "spin": "Drehen",
+    "spinLocked": "Runde läuft; gesperrt, bis alle Tumbles, Blitze und Freispiele beendet sind.",
+    "auto": "Auto",
+    "info": "Info",
+    "on": "An",
+    "off": "Aus",
+    "anteDesc": "Etwa doppelte Freispiel-Chance",
+    "buyDesc": "{spins, plural, one {# Freispiel} other {# Freispiele}} · {rtp}",
+    "speed": "Spin-Tempo: {speed}",
+    "soundLoading": "Ton wird geladen {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Dein DEMO-Guthaben ist aufgebraucht.",
+    "lastRound": "Letzte Runde <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "Letzte Runde ohne Gewinn.",
+    "spaceHint": "Du kannst auch mit der Leertaste drehen.",
+    "fixedBefore": "Das Ergebnis steht vor dem Spin fest."
+  },
+  "replay": {
+    "ribbon": "Wiederholung — Guthaben unverändert · Runde {id}"
+  },
+  "auto": {
+    "ribbon": "Autoplay · noch {n, plural, one {# Spin} other {# Spins}}"
+  },
+  "free": {
+    "long": "Freispiele",
+    "longN": "Freispiel {n}",
+    "short": "Frei",
+    "shortN": "Spin {n}",
+    "left": "Spins übrig",
+    "counterAria": "Freispiel {number}, noch {left}"
+  },
+  "mult": {
+    "label": "Multiplikator"
+  },
+  "meter": {
+    "idleA": "<b>8+</b> gleiche Süßigkeiten zahlen überall",
+    "idleB": "<b>4</b> Sterne = <b>10</b> Freispiele",
+    "win": "Gewinn",
+    "totalWin": "Gesamtgewinn"
+  },
+  "gated": {
+    "title": "Kein On-Chain-Candy-Cascade.",
+    "text": "Dieses Spiel wird nur mit DEMO-Guthaben gespielt; echte Einsätze werden nicht angenommen.",
+    "back": "Zurück zur lokalen Demo"
+  },
+  "splash": {
+    "f1Title": "8+ überall",
+    "f1Text": "Acht gleiche Süßigkeiten zahlen überall im Raster",
+    "f2Title": "100×-Kristall",
+    "f2Text": "Multiplikatoren werden in den Freispielen addiert",
+    "f3Title": "{max}× Maximalgewinn",
+    "f3Text": "4 Sterne lösen {spins, plural, one {# Freispiel} other {# Freispiele}} aus",
+    "loading": "Spiel wird geladen",
+    "play": "Spielen",
+    "skip": "Diesen Startbildschirm nicht mehr zeigen",
+    "note": "DEMO-Guthaben hat keinen Wert · Das Ergebnis steht vor dem Spin fest · Nicht zertifizierte Simulation, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Ton bereit: Musik und Effekte sind auf diesem Gerät vorbereitet.",
+    "soundLoading": "Ton wird geladen {percent} (bis dahin laufen einfache Effekte).",
+    "soundOnTouch": "Der Ton wird bei der ersten Berührung geladen.",
+    "demoTitle": "DEMO-Guthaben",
+    "demoText": "Guthaben {balance}{server, select, yes { (Server)} other {}}. Das Auffüllen setzt das Guthaben auf {amount} und fügt dem Verlauf eine Zeile „{label}“ hinzu; während einer Runde oder des Autoplays ist es nicht möglich."
+  },
+  "buy": {
+    "feature": "{spins, plural, one {# Freispiel} other {# Freispiele}} · Einsatz {bet}",
+    "rtp": "Kauf-RTP {buy} · Standard {standard} (Simulation, nicht zertifiziert)",
+    "description": "Das <b>100-Fache</b> deines Einsatzes. Die Runde beginnt mit mindestens 4 Sternen und {spins, plural, one {# Freispiel ist} other {# Freispiele sind}} garantiert; Gewinne werden auf Basis eines Einsatzes von {bet} ausgezahlt, maximal {max}."
+  },
+  "history": {
+    "scope": "Diese Sitzung · Wiederholungen ändern dein Guthaben nie",
+    "time": "Zeit",
+    "mode": "Modus",
+    "win": "Gewinn",
+    "result": "Ergebnis",
+    "roundId": "Runden-ID",
+    "replay": "Wiederholen",
+    "replayAria": "Wiederholen: Runde {id}, Guthaben unverändert",
+    "share": "Gewinn teilen",
+    "shareAria": "Gewinn teilen: Runde {id}",
+    "latest": "Letzte Runde",
+    "refilled": "Guthaben aufgefüllt",
+    "refilledRemote": "Guthaben aufgefüllt (Server)",
+    "emptyTitle": "Deine erste Runde erscheint hier.",
+    "emptyText": "Modus, Einsatz, Kosten, Gewinn und Runden-ID jeder Runde werden gespeichert; du kannst jede Runde erneut ansehen.",
+    "capped": "Maximalgewinn · {times}×",
+    "free": "Freispiele ×{spins} · {times}×",
+    "none": "Kein Gewinn",
+    "tumbles": "{n, plural, one {# Tumble} other {# Tumbles}} · {times}×"
+  },
+  "celebration": {
+    "capNote": "Die Runde hat die Obergrenze erreicht · verbleibende Spins entfallen",
+    "continue": "Weiter",
+    "tapToSpeed": "Tippen zum Beschleunigen"
+  },
+  "intro": {
+    "title": "Freispiele",
+    "count": "Freispiele",
+    "text": "Multiplikator-Kristalle fallen nur in dieser Runde und werden am Ende jedes Spins eingesammelt.",
+    "start": "Los"
+  },
+  "total": {
+    "title": "Freispiel-Summe",
+    "ribbon": "FREISPIELE",
+    "word": "GESAMT",
+    "spins": "Spins",
+    "spinsValue": "{n, plural, one {# Spin} other {# Spins}}",
+    "crystal": "Kristall",
+    "crystalTimes": "{n, plural, one {# Mal} other {# Mal}}",
+    "crystalBest": "{n, plural, one {# Mal} other {# Mal}} · höchster ×{best}",
+    "none": "Nicht angewendet",
+    "betMultiple": "Deines Einsatzes",
+    "capNote": "Maximalgewinn erreicht · verbleibende Spins entfallen",
+    "toCelebration": "Weiter zur Feier"
+  },
+  "info": {
+    "windowTitle": "Candy Cascade · Spielinfo",
+    "how": {
+      "title": "So wird gespielt",
+      "s1": "<b>Wähle deinen Einsatz.</b> Die Tasten − und + ändern den Einsatz um eine Stufe; ein Tipp auf den Einsatzbetrag öffnet alle Stufen. „{max}“ wählt die höchste Stufe, die dein Guthaben deckt.",
+      "s2": "<b>Drehen.</b> Drücke den großen Button oder nutze die Leertaste. Der Einsatzbetrag (das {multiple}-Fache bei aktivem Chance ×2) wird einmal vom Guthaben abgezogen.",
+      "s3": "<b>Kombinieren.</b> Im Raster mit 6 Spalten × 5 Zeilen gewinnst du, wenn <b>8 oder mehr gleiche Süßigkeiten irgendwo</b> liegen; je mehr es sind, desto höher die Gewinnstufe.",
+      "s4": "<b>Kette.</b> Gewinn-Süßigkeiten platzen, die darüberliegenden fallen herab und neue füllen die Lücken. Das geht weiter, bis es keine neuen Gewinne mehr gibt.",
+      "s5": "<b>Ergebnis.</b> Die gesamte Runde wird von der Engine vor dem Spin entschieden; die Animation spielt nur dieses Ergebnis ab. Der Dreh-Button bleibt gesperrt, bis die Runde (jeder Tumble und jedes Freispiel) beendet ist; zum Beschleunigen nutze die Einstellung {quick}/{turbo}. Tempo-Einstellungen, ein Tipp auf den Feier-Zähler, ein verborgener Tab oder das Verlassen der Seite ändern die Auszahlung nie; die Runde wird immer genau einmal mit der Auszahlung der Engine abgeschlossen.",
+      "note": "DEMO-Guthaben hat keinen Wert; es bringt weder SOL noch Token oder Belohnungen. Das Spiel läuft im Browser mit lokalem Zufall; es gibt keinen VRF-Nachweis."
+    },
+    "pay": {
+      "title": "Gewinntabelle",
+      "lead": "Du gewinnst mit <b>8 oder mehr gleichen Süßigkeiten irgendwo</b> im Raster. Die große Zahl ist der Brutto-DEMO-Betrag bei einem Einsatz von <b>{bet}</b>; der Multiplikator darunter ist ein Vielfaches des Einsatzes.",
+      "symbolsAria": "Symbolgewinne",
+      "scatterTitle": "{name} · Scatter-Gewinn",
+      "stars6": "6+ Sterne",
+      "stars5": "5 Sterne",
+      "stars4": "4 Sterne",
+      "scatterText": "Wenn der Basis-Spin endet, zahlen 4 oder mehr Sterne im Raster und lösen <b>{spins} Freispiele</b> aus. Sterne platzen nicht.",
+      "crystalText": "Fällt nur in den Freispielen und trägt einen Wert von 2× bis 100×. Am Ende des Spins werden die Kristalle im Raster <b>summiert</b>; hat der Spin einen Gewinn, wird er mit der Summe multipliziert.",
+      "maxTitle": "Maximalgewinn {n}×",
+      "maxText": "Bei diesem Einsatz sind das <b>{amount}</b>. Erreicht die Rundensumme diese Obergrenze, endet die Runde sofort; verbleibende Freispiele entfallen."
+    },
+    "features": {
+      "title": "Besonderheiten",
+      "tumbleTitle": "Fallende Süßigkeiten (Tumble)",
+      "tumbleText": "Nach jedem Gewinn platzen die Gewinn-Süßigkeiten, die übrigen rutschen nach unten und die Lücken füllen sich von oben. Die Gewinnanzeige wird während einer Runde nie zurückgesetzt: Tumbles, Multiplikatoren und alle Freispiele addieren sich in derselben Summe.",
+      "starTitle": "Sternkeks (Scatter)",
+      "starText": "Wenn ein Basis-Spin endet, zahlen 4 oder mehr Sterne und lösen {trigger} Freispiele aus. In den Freispielen geben 3 oder mehr Sterne {retrigger} weitere Spins (ohne Auszahlung). In einer Runde werden höchstens {max} Freispiele gespielt.",
+      "crystalTitle": "Multiplikator-Kristalle",
+      "crystalText": "Fallen nur in den Freispielen und tragen einen Wert von 2× bis 100×. Am Ende des Spins werden die Werte der Kristalle im Raster summiert; ist der Gewinn dieses Spins größer als null, wird er mit der Summe multipliziert. Ohne Gewinn bleiben die Kristalle wirkungslos.",
+      "freeTitle": "Freispiele",
+      "freeText": "Freispiele werden mit demselben Einsatz in derselben Runde gespielt; es fallen keine Zusatzkosten an. Sie enden immer mit dem Bildschirm „{screen}“: gespielte Spins, angewendete Kristall-Multiplikatoren und Gesamtgewinn.",
+      "tiersTitle": "Gewinnstufen",
+      "tiersText": "Liegt die Rundensumme beim <b>10-Fachen</b> deines Basiseinsatzes oder darüber, öffnet sich der Feier-Bildschirm und der Zähler steigt durch die Stufen: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; eine Runde, die die Obergrenze erreicht, endet mit {max}. Gewinne unter 10× werden kurz an der Anzeige hervorgehoben. Multiplikator-Summen ab 10× werden groß über dem Raster angesagt. Ein Tipp auf den Bildschirm springt zum Ergebnis; die Auszahlung ändert sich dadurch nie.",
+      "anteTitle": "Chance ×2 · Kosten {cost}",
+      "anteText": "Solange aktiv, kostet jeder Spin das <b>{multiple}-Fache deines Einsatzes</b>, und Sterne erscheinen im Basisspiel häufiger: Die Freispiel-Chance ist etwa doppelt so hoch ({ante} / {standard}). Gewinne werden weiterhin auf Basis des Grundeinsatzes ausgezahlt. Solange es aktiv ist, kann der Bonus nicht gekauft werden.",
+      "buyTitle": "Bonus kaufen · Preis {price}",
+      "buyText": "Für das <b>100-Fache</b> deines Einsatzes beginnt die Runde mit mindestens 4 Sternen; {spins} Freispiele sind garantiert. Der Kauf erfolgt über ein Bestätigungsfenster, läuft mit eigenem RTP ({rtp}) und ist beim Autoplay nicht nutzbar."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Theoretische Rückzahlung (RTP)",
+      "caption": "Theoretische Rückzahlung je Modus",
+      "mode": "Modus",
+      "cost": "Kosten",
+      "ci": "95 % KI",
+      "feature": "Feature",
+      "everyRound": "jede Runde",
+      "method": "Für jeden Modus eine eigene Simulation mit {millions} Millionen Runden (Engine <code>candy-cascade-2</code>). Der RTP wird auf den gezahlten Betrag bezogen. Trefferquote (Basis-Spin): Standard {hit}, Chance ×2 {hitAnte}.",
+      "note": "Die Simulation ist eine Schätzung und <b>nicht zertifiziert</b>; wegen der schweren Verteilungsenden kann das Konfidenzintervall zu optimistisch sein. Ergebnisse in einer kurzen Sitzung können stark vom RTP abweichen. DEMO-Guthaben hat <b>keinen Wert</b>."
+    },
+    "limits": {
+      "title": "Einsatz- und Gewinnlimits",
+      "range": "Einsatzspanne",
+      "levels": "Stufen",
+      "current": "Aktueller Einsatz",
+      "currentValue": "{bet} · Chance ×2 {ante} · Kauf {buy}",
+      "max": "Maximalgewinn",
+      "maxValue": "Das {n}-Fache des Einsatzes · {amount} bei diesem Einsatz",
+      "p1": "Eine Runde, die den Maximalgewinn erreicht, endet sofort; verbleibende Freispiele entfallen. Die Auszahlung wird immer auf Basis des Grundeinsatzes berechnet, Bruchteile eines Cents werden abgerundet.",
+      "p2": "Stufen und Modi, die dein Guthaben nicht deckt, sind nicht wählbar. Eine Runde ist eine einzige Reservierung und eine einzige Auszahlung; es wird immer nur eine Runde gleichzeitig gespielt."
+    },
+    "keys": {
+      "title": "Tasten",
+      "heading": "Tastatur",
+      "space": "Leertaste",
+      "spaceText": "Startet den Spin ({settings} → „{option}“). Während einer Runde überspringt sie den Spin nicht; sie beschleunigt nur die Freispiel-Karten und den Feier-Zähler.",
+      "enterText": "Betätigt die fokussierte Schaltfläche.",
+      "escText": "Schließt das geöffnete Fenster (außer der Sitzungserinnerung).",
+      "tabText": "Wechselt zwischen den Bedienelementen; der Fokus ist immer sichtbar.",
+      "arrowsText": "Wechselt in diesem Infofenster die Seite; ändert in Einstellungsauswahlen die Option.",
+      "pageText": "Wechselt zwischen den Infoseiten.",
+      "note": "Der Screenreader sagt jeden Schritt an („{example}“, Rundenergebnis); das Raster wird als 6×5-Tabelle vorgelesen. Die Einstellung „Bewegung reduzieren“ schaltet Partikel und Wackeln ab."
+    },
+    "fault": {
+      "title": "Störungsklausel",
+      "p1": "<b>Eine Störung macht alle betroffenen Spiele und Auszahlungen ungültig.</b> Bei einer Software-, Browser- oder Gerätestörung gilt die Rundenaufzeichnung; ein auf dem Bildschirm angezeigter Betrag, der nicht mit der Engine-Aufzeichnung übereinstimmt, ist ungültig.",
+      "p2": "Dieses Spiel wird nur mit DEMO-Guthaben gespielt. DEMO hat keinen Wert und kann nicht in Geld oder Token umgewandelt werden; bei einer Störung können das DEMO-Guthaben und der Sitzungsverlauf korrigiert oder zurückgesetzt werden.",
+      "p3": "Da das Ergebnis vor dem Spin feststeht, ändern eine abgebrochene Animation, ein verborgener Tab oder das Verlassen der Seite nichts am Ergebnis; die Runde wird weiterhin genau einmal mit der Auszahlung der Engine abgeschlossen."
+    }
+  }
+}

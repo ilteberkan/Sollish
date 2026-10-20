@@ -150,5 +150,25 @@
       "word": "MAX"
     }
   },
-  "winWord": "GAIN"
+  "winWord": "GAIN",
+  "rgs": {
+    "source": {
+      "local": "Démo locale",
+      "remote": "Vérifié par le serveur"
+    },
+    "errors": {
+      "INSUFFICIENT_BALANCE": "Le solde du serveur est insuffisant pour ce tour.",
+      "RATE_LIMITED": "Vous jouez trop vite ; le serveur vous fait attendre une seconde.",
+      "SESSION_BUSY": "La requête précédente est encore en cours de traitement.",
+      "SESSION_EXPIRED": "La session du serveur a expiré ; actualisez la page.",
+      "AUTH_INVALID": "La session du serveur n’est pas valide ; actualisez la page.",
+      "SESSION_LIMIT": "Cette session a atteint sa limite de tours ; actualisez la page.",
+      "ROUND_MISMATCH": "Le tour du serveur ne correspondait pas au moteur ; le tour n’a pas été affiché.",
+      "NETWORK": "Le serveur est injoignable. Si le résultat du tour est conservé sur le serveur, il s’affichera à l’actualisation de la page.",
+      "INVALID_BET": "La mise a été refusée par le serveur.",
+      "INVALID_MODE": "Le mode a été refusé par le serveur.",
+      "SERVICE_UNAVAILABLE": "Le serveur n’accepte pas de tours pour le moment.",
+      "UNKNOWN": "Le serveur n’a pas accepté le tour."
+    }
+  }
 }

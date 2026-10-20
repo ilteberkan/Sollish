@@ -8,6 +8,7 @@ import type { GameInfoPage } from '../slot-kit';
 import type { Formatter } from '@/lib/i18n/format';
 import type { Translator } from '@/lib/i18n/translator';
 import { percentOf, percentRange } from '@/lib/slot-kit/percent';
+import { inlineName } from '@/lib/slot-kit/inline-name';
 import { STORM_COST_MODES, stormCost } from '@/lib/storm-controls';
 import { stormCents } from '@/lib/storm-timeline';
 import { StormSymbolArt } from './symbols';
@@ -28,8 +29,8 @@ const ORDER: StormPaySymbol[] = ['h1', 'h2', 'h3', 'h4', 'l1', 'l2', 'l3', 'l4',
 const HIGH = new Set<StormPaySymbol>(['h1', 'h2', 'h3', 'h4']);
 const TIERS = ['12+', '10–11', '8–9'] as const;
 const ORB_TOTAL = STORM_ORB_WEIGHTS.reduce((sum, [, w]) => sum + w, 0);
-const bold = (chunk: string) => <strong>{chunk}</strong>;
-const code = (chunk: string) => <code>{chunk}</code>;
+const bold = (chunk: string) => <strong key={chunk}>{chunk}</strong>;
+const code = (chunk: string) => <code key={chunk}>{chunk}</code>;
 
 function Feature({ art, title, children }: { art?: ReactNode; title: string; children: ReactNode }) {
   return (
@@ -225,7 +226,7 @@ export function stormInfoPages(betCents: number, cx: StormInfoContext): GameInfo
             <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>{t('info.keys.arrowsText')}</dd></div>
             <div><dt><kbd>PageUp</kbd> <kbd>PageDown</kbd></dt><dd>{t('info.keys.pageText')}</dd></div>
           </dl>
-          <p className={styles.note}>{t('info.keys.note', { example: t('announce.cluster', { count: 8, name: cx.symbol('h1').toLocaleLowerCase(t.locale === 'tr' ? 'tr-TR' : t.locale), times: format.amount(960) }) })}</p>
+          <p className={styles.note}>{t('info.keys.note', { example: t('announce.cluster', { count: 8, name: inlineName(t.locale, cx.symbol('h1')), times: format.amount(960) }) })}</p>
         </div>
       ),
     },

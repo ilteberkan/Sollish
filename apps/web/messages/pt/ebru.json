@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "description": "{title} — um jogo de clusters DEMO original. O pente passa pela água e a tinta se reorganiza; na Marmorização das Tulipas, as manchas de tinta deslizam junto com seus multiplicadores."
+  },
+  "subtitle": "O pente passa pela água e a tinta se reorganiza onda a onda; as manchas deslizam junto com seus multiplicadores.",
+  "logo": {
+    "subtitle": "JARDIM DE TINTA"
+  },
+  "table": {
+    "aria": "Mesa do jogo Ebru"
+  },
+  "board": {
+    "label": "Grade do Ebru, 7 colunas, 7 linhas",
+    "labelFree": "Grade das rodadas grátis do Ebru, 7 colunas, 7 linhas"
+  },
+  "badge": {
+    "checking": "Verificando o servidor"
+  },
+  "symbols": {
+    "c1": "Tulipa Dourada",
+    "c2": "Cravo Rubi",
+    "c3": "Flor Hatip Turquesa",
+    "c4": "Folha Esmeralda",
+    "c5": "Olho de Pavão Azul-Marinho",
+    "c6": "Margarida Açafrão",
+    "c7": "Onda Rosa",
+    "c8": "Gota de Fuligem",
+    "drop": "Gota Mestra (curinga)",
+    "comb": "Pente Dourado",
+    "stained": "{name}, mancha ×{stain}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Multiplicador de mancha",
+      "1": "Mancha forte",
+      "2": "Mancha brilhante",
+      "3": "Multiplicador de tulipa",
+      "4": "Mancha lendária",
+      "5": "Folha de ouro"
+    }
+  },
+  "error": {
+    "entropy": "A aleatoriedade local segura não está disponível. A demo não foi iniciada.",
+    "noCredit": "Você não tem crédito demo suficiente ou já há uma rodada demo em andamento.",
+    "insufficientSpin": "Saldo insuficiente: este giro custa {cost}. Reduza a aposta ou recarregue o saldo.",
+    "insufficientBuy": "Saldo insuficiente: esta compra custa {cost}. Reduza a aposta ou recarregue o saldo."
+  },
+  "buyBlock": {
+    "gated": "Disponível apenas com crédito DEMO",
+    "autoplay": "Não pode ser comprado durante o jogo automático",
+    "busy": "Não pode ser comprado até o fim da rodada",
+    "ante": "Não pode ser comprado com Chance ×2 ativa",
+    "balance": "Saldo insuficiente (preço {price})"
+  },
+  "autoplay": {
+    "title": "Jogo automático",
+    "serverFailed": "O servidor não conseguiu iniciar a rodada",
+    "spinFailed": "Não foi possível iniciar o giro",
+    "quit": "Você saiu da sessão",
+    "stopped": "Jogo automático parado: {reason}. {spins, plural, one {# giro} other {# giros}}, líquido {net}.",
+    "stoppedShort": "Jogo automático parado: {reason}.",
+    "note": "Por giro {cost}{ante, select, yes { (Chance ×2)} other {}} · nunca compra bônus · para quando a aba fica oculta."
+  },
+  "toast": {
+    "autoplay": "Jogo automático: {spins, plural, one {# giro} other {# giros}}, limite de perda {limit}.",
+    "refilled": "Saldo recarregado: {amount}.",
+    "shareCopied": "Link de compartilhamento copiado: {url}",
+    "shareLink": "Link de compartilhamento: {url}",
+    "shareFailed": "Não foi possível compartilhar: {reason}",
+    "replayFailed": "Não foi possível reproduzir esta rodada.",
+    "replayMismatch": "Não foi possível verificar o replay: o registro não corresponde ao motor.",
+    "close": "Fechar aviso"
+  },
+  "announce": {
+    "replayDone": "Replay concluído: {amount}, {times}×. Saldo inalterado.",
+    "roundEnd": "Rodada encerrada. Ganho total {amount}, {times}×.",
+    "roundEndNoWin": "Rodada encerrada. Sem ganho.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{size} {name}, ganho de {times}×",
+    "clusterStain": "{size} {name}, mancha ×{stain}, ganho de {times}×",
+    "bleed": "A Gota Mestra espalhou sua tinta: {n, plural, one {# vizinha virou} other {# vizinhas viraram}} {name}.",
+    "stainMultiplier": "Multiplicador de mancha ×{best}: o pagamento do cluster é multiplicado pela soma das manchas.",
+    "comb": "Passada do pente {pass}: linhas deslocadas {shifts}.",
+    "combCluster": "O pente formou um novo cluster.",
+    "retrigger": "{count} Pentes Dourados: {awarded, plural, one {# rodada grátis adicionada} other {# rodadas grátis adicionadas}}.",
+    "trigger": "{count} Pentes Dourados: Marmorização das Tulipas conquistada.",
+    "freeIntro": "A Marmorização das Tulipas começa: você ganhou {awarded, plural, one {# rodada grátis} other {# rodadas grátis}}.",
+    "freeSpinWin": "A rodada grátis rendeu {win}×. Total {total}×.",
+    "freeSpinNoWin": "Sem ganho na rodada grátis.",
+    "noWin": "Sem ganho.",
+    "totalWin": "Ganho total {amount}, {times}×.",
+    "freeOutro": "A Marmorização das Tulipas terminou. Total: {amount}, {spins, plural, one {# giro} other {# giros}}, maior mancha ×{stain}.",
+    "sent": "Giro enviado ao servidor, {amount}.",
+    "buyStarted": "Bônus comprado, {amount}. A Marmorização das Tulipas está começando.",
+    "spinStarted": "Giro iniciado, {amount}.",
+    "recovered": "Uma rodada inacabada foi recuperada do servidor; o pagamento já foi feito lá ({amount}).",
+    "replaying": "Reproduzindo: rodada {id}. O saldo não muda.",
+    "refilled": "Saldo DEMO recarregado para {amount}.",
+    "refilledRemote": "Saldo DEMO do servidor recarregado para {amount}.",
+    "speed": "Velocidade do giro: {speed}.",
+    "anteOn": "Chance ×2 ativada: cerca do dobro da chance de rodadas grátis, custo {cost}.",
+    "anteOff": "Chance ×2 desativada: custo {cost}."
+  },
+  "banner": {
+    "combCluster": "O pente formou um novo cluster",
+    "scatterPay": "{count} Pentes Dourados · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# rodada grátis} other {# rodadas grátis}}"
+  },
+  "deck": {
+    "aria": "Controles do jogo",
+    "balance": "Saldo",
+    "refill": "Recarregar saldo",
+    "replay": "Replay",
+    "win": "Ganho",
+    "replayWin": "Ganho do replay",
+    "lastWin": "Último ganho",
+    "spin": "Girar",
+    "spinLocked": "Rodada em andamento; bloqueado até terminarem todas as quedas, raios e rodadas grátis.",
+    "auto": "Auto",
+    "info": "Info",
+    "on": "Ligado",
+    "off": "Desligado",
+    "anteDesc": "Cerca do dobro da chance de rodadas grátis",
+    "buyDesc": "{spins, plural, one {# rodada grátis} other {# rodadas grátis}} · {rtp}",
+    "speed": "Velocidade do giro: {speed}",
+    "soundLoading": "Carregando som {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Seu saldo DEMO acabou.",
+    "lastRound": "Última rodada <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "A última rodada não teve ganho.",
+    "spaceHint": "Você também pode girar com a barra de espaço.",
+    "fixedBefore": "O resultado é definido antes do giro."
+  },
+  "replay": {
+    "ribbon": "Replay — saldo inalterado · rodada {id}"
+  },
+  "auto": {
+    "ribbon": "Jogo automático · {n, plural, one {# giro restante} other {# giros restantes}}"
+  },
+  "free": {
+    "tag": "Marmorização das Tulipas",
+    "spinNumber": "Giro {n}",
+    "left": "Restam",
+    "counterAria": "Rodada grátis {number}, restam {left}"
+  },
+  "comb": {
+    "label": "Pente",
+    "passAria": "Passada do pente {pass} / 3",
+    "maxAria": "No máximo 3 passadas do pente por giro"
+  },
+  "stain": {
+    "aria": "Células com mancha {cells}, maior mancha ×{max}",
+    "stains": "Manchas",
+    "highest": "Maior",
+    "max": "Máx. <b>{n}×</b>"
+  },
+  "meter": {
+    "idleA": "<b>5+</b> gotas vizinhas da mesma cor pagam",
+    "idleB": "O pente desloca as linhas",
+    "idleC": "Mancha de tinta <b>×256</b>",
+    "win": "Ganho",
+    "totalWin": "Ganho total"
+  },
+  "gated": {
+    "title": "Não há Ebru on-chain.",
+    "text": "Este jogo é jogado apenas com crédito DEMO; apostas reais não são aceitas.",
+    "back": "Voltar à demo local"
+  },
+  "splash": {
+    "f1Title": "Cluster de 5+",
+    "f1Text": "Cinco ou mais gotas vizinhas da mesma cor, na horizontal ou na vertical, pagam",
+    "f2Text": "O pente passa pela água, as linhas deslizam, novos clusters surgem",
+    "f3Title": "Mancha ×256 · {max}×",
+    "f3Text": "Na Marmorização das Tulipas, as manchas deslizam junto com o pente",
+    "loading": "Carregando o jogo",
+    "play": "Jogar",
+    "skip": "Não mostrar esta tela inicial novamente",
+    "note": "O crédito DEMO não tem valor · O resultado é definido antes do giro · Simulação não certificada, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Som pronto: música, efeitos e ambiente foram preparados neste dispositivo.",
+    "soundLoading": "Carregando som {percent} (enquanto isso o jogo fica em silêncio).",
+    "soundOnTouch": "O som é carregado no primeiro toque.",
+    "demoTitle": "Saldo DEMO",
+    "demoText": "Saldo {balance}{server, select, yes { (servidor)} other {}}. Recarregar define o saldo em {amount} e adiciona uma linha “{label}” ao histórico; não é possível durante uma rodada ou o jogo automático."
+  },
+  "buy": {
+    "feature": "Marmorização das Tulipas · {spins, plural, one {# rodada grátis} other {# rodadas grátis}} · aposta {bet}",
+    "rtp": "RTP da compra {buy} · padrão {standard} (simulação, não certificada)",
+    "description": "<b>100 vezes</b> a sua aposta. A rodada começa com pelo menos 3 Pentes Dourados e {spins, plural, one {# rodada grátis é garantida} other {# rodadas grátis são garantidas}}; cada célula que estoura recebe uma mancha de tinta, as manchas deslizam com o pente e multiplicam pela soma o cluster sob o qual passam. Os ganhos são pagos com base em uma aposta de {bet}, até no máximo {max}."
+  },
+  "history": {
+    "scope": "Esta sessão · replays nunca alteram seu saldo",
+    "time": "Hora",
+    "mode": "Modo",
+    "win": "Ganho",
+    "result": "Resultado",
+    "roundId": "ID da rodada",
+    "replay": "Reproduzir",
+    "replayAria": "Reproduzir: rodada {id}, saldo inalterado",
+    "share": "Compartilhar seu ganho",
+    "shareAria": "Compartilhar seu ganho: rodada {id}",
+    "latest": "Última rodada",
+    "refilled": "Saldo recarregado",
+    "refilledRemote": "Saldo recarregado (servidor)",
+    "emptyTitle": "Sua primeira rodada aparecerá aqui.",
+    "emptyText": "Modo, aposta, custo, ganho e ID de cada rodada são registrados; você pode rever qualquer rodada.",
+    "capped": "Ganho máximo · {times}×",
+    "free": "Rodadas grátis ×{spins} · {times}×",
+    "none": "Sem ganho",
+    "freeStain": "Marmorização das Tulipas ×{spins} · maior mancha ×{stain} · {times}×",
+    "clusters": "{n, plural, one {# cluster} other {# clusters}}",
+    "combWins": "{n, plural, one {# ganho do pente} other {# ganhos do pente}}",
+    "combs": "{n, plural, one {# Pente Dourado} other {# Pentes Dourados}}",
+    "clusterRow": "{items} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× a aposta",
+    "capNote": "A rodada atingiu o limite · os giros restantes não são jogados",
+    "continue": "Continuar",
+    "tapToSpeed": "Toque para acelerar"
+  },
+  "intro": {
+    "word": "MARMORIZAÇÃO DAS TULIPAS",
+    "title": "A Marmorização das Tulipas Começa",
+    "freeA": "rodadas",
+    "freeB": "grátis",
+    "text": "Cada célula que estoura recebe uma <b>mancha de tinta</b>: primeiro ×2, dobrando a cada vez na mesma célula, até ×256. As manchas permanecem durante todo o recurso e <b>deslizam junto com o pente</b>; o pagamento de um cluster que passa por cima delas é multiplicado pela soma das manchas. 3 Pentes Dourados dão +4 giros.",
+    "start": "Começar"
+  },
+  "total": {
+    "titleA": "Marmorização das Tulipas",
+    "titleB": "Total",
+    "word": "TOTAL",
+    "sub": "RODADAS GRÁTIS",
+    "spins": "Giros",
+    "spinsValue": "{n, plural, one {# giro} other {# giros}}",
+    "maxStain": "Maior mancha",
+    "none": "Nenhum",
+    "stainedClusters": "{n, plural, one {# cluster com mancha} other {# clusters com mancha}}",
+    "noStainedClusters": "nenhum cluster com mancha",
+    "betMultiple": "Da sua aposta",
+    "combWins": "{n, plural, one {# ganho do pente} other {# ganhos do pente}}",
+    "noCombWins": "nenhum ganho do pente",
+    "capNote": "Ganho máximo atingido · os giros restantes não são jogados",
+    "toCelebration": "Ir para a celebração"
+  },
+  "info": {
+    "windowTitle": "Ebru · Informações do jogo",
+    "how": {
+      "title": "Como jogar",
+      "s1": "<b>Escolha sua aposta.</b> Os botões − e + mudam a aposta em um nível; tocar no valor da aposta abre todos os níveis. “{max}” escolhe o nível mais alto que o seu saldo cobre.",
+      "s2": "<b>Girar.</b> Pressione o botão de tinta ou use a barra de espaço. O custo da rodada ({multiple} vez a aposta com Chance ×2 ativa) é debitado do saldo uma única vez.",
+      "s3": "<b>Forme clusters.</b> No tanque de água de 7 × 7, <b>5 ou mais gotas vizinhas da mesma cor</b>, na horizontal ou na vertical, pagam; quanto maior o cluster, maior o nível de pagamento.",
+      "s4": "<b>Corrente.</b> Os clusters vencedores se dissolvem na água, as gotas de cima caem e novas gotas preenchem os espaços; isso continua até não restar nenhum cluster.",
+      "s5": "<b>Pente.</b> Quando a corrente termina — mesmo sem ganho — o Pente Dourado passa pela água: cada linha desliza para a direita ou para a esquerda na sua própria medida e novos clusters podem surgir. No máximo {passes} passadas do pente por giro.",
+      "s6": "<b>Resultado.</b> A rodada inteira é decidida pelo motor antes do início do giro; a animação apenas reproduz esse resultado. O botão de girar fica bloqueado até a rodada (todas as quedas, passadas do pente e rodadas grátis) terminar; use a configuração {quick}/{turbo} para acelerar. Configurações de velocidade, tocar no contador da celebração, uma aba oculta ou sair da página nunca alteram o pagamento; a rodada sempre se encerra uma vez, com o pagamento do motor.",
+      "note": "O crédito DEMO não tem valor; não gera SOL, tokens nem recompensas. O jogo roda no navegador com aleatoriedade local; não há prova VRF."
+    },
+    "pay": {
+      "title": "Tabela de pagamentos",
+      "lead": "<b>5 ou mais gotas vizinhas da mesma cor</b>, na horizontal ou na vertical, formam um cluster. O número grande é o valor bruto em DEMO com aposta de <b>{bet}</b>; o multiplicador abaixo é um múltiplo da aposta. Cada cluster na mesma grade paga separadamente.",
+      "clustersAria": "Pagamentos dos clusters",
+      "fullSummary": "Todos os tamanhos de cluster (12 níveis)",
+      "fullCaption": "Pagamento por cor e tamanho do cluster, como múltiplo da aposta",
+      "colour": "Cor",
+      "scatterTitle": "{name} · pagamento scatter",
+      "combs5": "5+ pentes",
+      "combs4": "4 pentes",
+      "combs3": "3 pentes",
+      "scatterText": "Se a grade final do giro base tiver 3 ou mais Pentes Dourados, eles pagam e liberam <b>{spins} rodadas grátis</b> (Marmorização das Tulipas). Os pentes não se dissolvem; apenas caem e deslizam com o pente.",
+      "dropText": "Ele não entra em nenhum cluster; onde cai, espalha sua tinta: escolhe a cor mais frequente entre seus 4 vizinhos e pinta os vizinhos e a si mesma dessa cor. Os detalhes estão na página “{features}”.",
+      "maxTitle": "Ganho máximo {n}×",
+      "maxText": "Com esta aposta, isso equivale a <b>{amount}</b>. Se o total da rodada atingir esse limite, a rodada termina na hora; as rodadas grátis restantes não são jogadas."
+    },
+    "features": {
+      "title": "Recursos",
+      "combTitle": "Passada do pente",
+      "combText": "Quando cada corrente de quedas termina, o pente passa uma vez pelo tabuleiro: a linha r desliza ciclicamente <b>round(A · sin(φ + r · k))</b> colunas (o que sai pela direita entra pela esquerda). A é 1, 2 ou 3 em cada passada ({weights}); φ e k são sorteados novamente a cada passada. Se o deslocamento formar um novo cluster, a corrente continua; se não, o giro termina. No máximo {passes} passadas por giro. Os símbolos apenas trocam de lugar; nenhum é adicionado ou removido.",
+      "combExample": "Exemplo: A = 2, φ = 0, k = 8·2π/64 → deslocamentos das linhas {shifts}.",
+      "combExampleAria": "Exemplo de passada do pente, deslocamento por linha",
+      "combRow": "Linha {n} {shift}",
+      "dropTitle": "{name}",
+      "dropText": "No instante em que cai (na distribuição ou no reabastecimento), ela espalha sua tinta: conta as cores dos seus 4 vizinhos, escolhe a mais frequente (empate é resolvido ao acaso; sem vizinho colorido, usa uma cor aleatória), pinta os vizinhos coloridos dessa cor e ela própria passa a ter essa cor. Os Pentes Dourados não são pintados.",
+      "freeTitle": "Marmorização das Tulipas (rodadas grátis)",
+      "freeText": "3+ Pentes Dourados liberam {trigger} rodadas grátis. Nas rodadas grátis, cada célula que estoura recebe um <b>multiplicador de mancha de tinta</b>: ×2 na primeira vez, dobrando a cada vez na mesma célula, até ×{stainMax}. As manchas permanecem durante todo o recurso; as quedas não as movem, mas <b>a passada do pente desloca as manchas com o mesmo deslocamento dos símbolos</b>. Quando um cluster passa por células com mancha, seu pagamento é multiplicado pela <b>soma</b> das manchas sob ele (primeiro o pagamento, depois a nova mancha). Nas rodadas grátis, 3+ pentes adicionam {retrigger} giros; uma única rodada joga no máximo {max} giros. A Gota de Fuligem não se espalha nas rodadas grátis (apenas uma Gota Mestra sem vizinho colorido pode escolher essa cor ao acaso).",
+      "stainsAria": "Multiplicadores de mancha",
+      "cumTitle": "Ganho acumulado",
+      "cumText": "O medidor de ganhos nunca é zerado durante uma rodada: clusters, ganhos do pente, o pagamento scatter e todas as rodadas grátis se somam no mesmo total. Uma rodada de giros grátis sempre termina com a tela “{screen}”.",
+      "tiersTitle": "Níveis de ganho e anúncios de multiplicador",
+      "tiersText": "Quando o total da rodada é <b>10×</b> a aposta base ou mais, a tela de celebração é aberta e o contador sobe pelos níveis: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; uma rodada que atinge o limite termina com {max}. Multiplicadores de mancha a partir de ×10 são anunciados em letras grandes acima da grade, com som próprio. Tocar na tela leva o contador direto ao resultado; isso nunca altera o pagamento.",
+      "anteTitle": "Chance ×2 · custo {cost}",
+      "anteText": "Enquanto ativa, cada giro custa <b>{multiple} vez a sua aposta</b> e os Pentes Dourados são mais prováveis no jogo base: a chance de rodadas grátis é cerca do dobro ({ante} / {standard}). Os ganhos continuam sendo pagos com base na aposta base. Com ela ativa, o bônus não pode ser comprado.",
+      "buyTitle": "Comprar bônus · preço {price}",
+      "buyText": "Por <b>100 vezes</b> a sua aposta, a rodada começa com pelo menos 3 Pentes Dourados; {spins} rodadas grátis são garantidas. A compra é feita por uma janela de confirmação, tem um RTP próprio ({rtp}) e não pode ser usada com o jogo automático."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Retorno teórico (RTP)",
+      "caption": "Retorno teórico por modo",
+      "mode": "Modo",
+      "cost": "Custo",
+      "ci": "IC de 95%",
+      "feature": "Recurso",
+      "everyRound": "toda rodada",
+      "method": "Uma simulação separada de {millions} milhões de rodadas para cada modo (motor <code>ebru-ink-1</code>). O RTP é calculado sobre o valor pago. Frequência de acerto (giro base): padrão {hit}, Chance ×2 {hitAnte}. Volatilidade (desvio padrão em unidades de custo): padrão {sdStandard}, compra {sdBuy}.",
+      "note": "A simulação é uma estimativa e <b>não é certificada</b>; devido à cauda pesada, o intervalo de confiança pode ser otimista. O resultado de uma sessão curta pode diferir muito do RTP. O crédito DEMO <b>não tem valor</b>."
+    },
+    "limits": {
+      "title": "Limites de aposta e ganho",
+      "range": "Faixa de apostas",
+      "levels": "Níveis",
+      "current": "Aposta atual",
+      "currentValue": "{bet} · Chance ×2 {ante} · Compra {buy}",
+      "max": "Ganho máximo",
+      "maxValue": "{n} vezes a aposta · {amount} com esta aposta",
+      "p1": "Uma rodada que atinge o ganho máximo termina na hora; as rodadas grátis restantes não são jogadas. O pagamento é sempre calculado sobre a aposta base, com frações de centavo arredondadas para baixo.",
+      "p2": "Níveis e modos que o seu saldo não cobre não podem ser selecionados. Uma rodada é uma única reserva e um único pagamento; apenas uma rodada é jogada por vez."
+    },
+    "keys": {
+      "title": "Teclas",
+      "heading": "Teclado",
+      "space": "Espaço",
+      "spaceText": "Inicia o giro ({settings} → “{option}”). Durante uma rodada, não pula o giro; apenas acelera as telas das rodadas grátis e o contador da celebração.",
+      "enterText": "Aciona o botão em foco.",
+      "escText": "Fecha a janela aberta (exceto o lembrete de sessão).",
+      "tabText": "Navega entre os controles; o foco é sempre visível.",
+      "arrowsText": "Troca de página nesta janela de informações; altera a opção nas escolhas de configuração.",
+      "pageText": "Navega entre as páginas de informações.",
+      "note": "O leitor de tela anuncia cada etapa (“{example}”, passadas do pente, resultado da rodada); a grade é lida como uma tabela 7×7 e as células com mancha são lidas com seu multiplicador. Os símbolos se distinguem pela forma, além da cor (tulipa, cravo, flor hatip, folha, olho de pavão, margarida, rosa, seixo). A preferência de movimento reduzido encurta o pente a um breve deslize e desliga partículas e tremores."
+    },
+    "fault": {
+      "title": "Cláusula de falha",
+      "p1": "<b>Uma falha anula todos os jogos e pagamentos afetados.</b> Em caso de falha de software, navegador ou dispositivo, vale o registro da rodada; um valor exibido na tela que não corresponda ao registro do motor não é válido.",
+      "p2": "Este jogo é jogado apenas com crédito DEMO. DEMO não tem valor e não pode ser convertido em dinheiro ou tokens; em caso de falha, o saldo DEMO e o histórico da sessão podem ser corrigidos ou zerados.",
+      "p3": "Como o resultado é definido antes do giro, uma animação interrompida, uma aba oculta ou sair da página não altera o resultado; a rodada ainda se encerra uma vez com o pagamento do motor."
+    }
+  }
+}

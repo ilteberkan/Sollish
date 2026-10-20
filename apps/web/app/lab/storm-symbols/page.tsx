@@ -4,6 +4,7 @@ import { orbTier, STORM_SYMBOL_LABELS, StormSymbolArt, StormSymbolSprites, Storm
 import { StormFrame } from '@/components/storm/frame';
 import { StormLogo } from '@/components/storm/logo';
 import styles from '@/components/storm/symbols.module.css';
+import { I18nMessages } from '@/lib/i18n/messages';
 
 export const metadata: Metadata = { title: 'Tarhun sembol galerisi', robots: { index: false, follow: false } };
 
@@ -33,6 +34,7 @@ function Board({ mood }: { mood: 'base' | 'feature' }) {
 export default function StormSymbolsLab() {
   if (process.env.NODE_ENV === 'production') notFound();
   return (
+    <I18nMessages namespaces={['tarhun']}>
     <main className={styles.labPage}>
       <StormSymbolSprites />
       <div className={styles.labInner}>
@@ -93,5 +95,6 @@ export default function StormSymbolsLab() {
         </section>
       </div>
     </main>
+    </I18nMessages>
   );
 }

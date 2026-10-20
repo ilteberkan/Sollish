@@ -150,5 +150,25 @@
       "word": "AZAMİ"
     }
   },
-  "winWord": "KAZANÇ"
+  "winWord": "KAZANÇ",
+  "rgs": {
+    "source": {
+      "local": "Yerel demo",
+      "remote": "Sunucu doğrulamalı"
+    },
+    "errors": {
+      "INSUFFICIENT_BALANCE": "Sunucu bakiyesi bu tur için yetersiz.",
+      "RATE_LIMITED": "Çok hızlı oynuyorsun; sunucu bir saniye bekletiyor.",
+      "SESSION_BUSY": "Önceki istek hâlâ işleniyor.",
+      "SESSION_EXPIRED": "Sunucu oturumunun süresi doldu; sayfayı yenile.",
+      "AUTH_INVALID": "Sunucu oturumu geçersiz; sayfayı yenile.",
+      "SESSION_LIMIT": "Bu oturumun tur sınırı doldu; sayfayı yenile.",
+      "ROUND_MISMATCH": "Sunucunun turu motorla uyuşmadı; tur gösterilmedi.",
+      "NETWORK": "Sunucuya ulaşılamadı. Tur sonucu sunucuda saklıysa sayfa yenilenince gösterilir.",
+      "INVALID_BET": "Bahis sunucuda reddedildi.",
+      "INVALID_MODE": "Mod sunucuda reddedildi.",
+      "SERVICE_UNAVAILABLE": "Sunucu şu an turu kabul etmiyor.",
+      "UNKNOWN": "Sunucu turu kabul etmedi."
+    }
+  }
 }

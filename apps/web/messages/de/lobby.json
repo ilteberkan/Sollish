@@ -1,12 +1,135 @@
 {
   "meta": {
-    "title": "Spiele — Live & Solo",
-    "description": "Sollish-Spiele. Sei beim gemeinsamen Live-Kampf in Ringside dabei oder probiere die Einzelspieler-Spiele aus."
+    "title": "Casino-Lobby",
+    "description": "Die Originalspiele von Sollish in einer Lobby: fünf hauseigene Slots, die Live-Arena Ringside, Crash und Coinflip. Nur DEMO-Guthaben, kein echtes Geld."
   },
+  "heading": "Sollish Casino-Lobby",
   "hero": {
+    "region": "Empfohlene Spiele",
+    "slide": "{index} von {total}",
+    "prev": "Vorheriges empfohlenes Spiel",
+    "next": "Nächstes empfohlenes Spiel",
+    "pause": "Wechsel anhalten",
+    "resume": "Wechsel fortsetzen",
+    "goTo": "{name} zeigen",
+    "eyebrow": "Neu · Sollish Original",
+    "play": "Demo spielen"
+  },
+  "chips": {
+    "label": "Spiele filtern",
+    "all": "Alle Spiele"
+  },
+  "rows": {
+    "recent": {
+      "title": "Zuletzt gespielt",
+      "subtitle": "Nur in diesem Browser gespeichert.",
+      "clear": "Liste leeren"
+    },
+    "originals": {
+      "title": "Sollish-Originale",
+      "subtitle": "Fünf hauseigene Slots. Jede Runde lässt sich auf der Prüfseite nachrechnen."
+    },
+    "live": {
+      "title": "Live",
+      "subtitle": "Ein gemeinsamer Kampf, alle sehen dasselbe Duell."
+    },
+    "instant": {
+      "title": "Sofortspiele",
+      "subtitle": "In deinem Tempo, sofortiges Ergebnis."
+    },
+    "new": {
+      "title": "Neu",
+      "subtitle": "Die neuesten Veröffentlichungen."
+    },
+    "fair": {
+      "title": "Nachweislich fair",
+      "subtitle": "Das Ergebnis steht durch Seeds fest, die du nach der Runde prüfen kannst.",
+      "cta": "Eine Runde prüfen"
+    }
+  },
+  "row": {
+    "viewAll": "Alle anzeigen",
+    "viewAllAria": "Alle anzeigen: {title}",
+    "prev": "Zurückblättern: {title}",
+    "next": "Weiterblättern: {title}",
+    "count": "{count, plural, one {# Spiel} other {# Spiele}}"
+  },
+  "grid": {
+    "results": "Suchergebnisse",
+    "resultsCount": "{count, plural, =0 {Keine Spiele für „{query}“} one {# Spiel für „{query}“} other {# Spiele für „{query}“}}",
+    "empty": "Kein Spiel passt zu „{query}“. Versuche einen Spielnamen, ein Thema wie „Wolf“ oder „Candy“ oder eine Kategorie.",
+    "reset": "Alle Spiele zeigen",
+    "favoritesEmpty": "Noch keine Favoriten. Tippe auf das Herz eines Spiels, um es hier zu behalten.",
+    "back": "Zurück zur Lobby"
+  },
+  "tile": {
+    "provider": "Sollish",
+    "demo": "DEMO",
+    "new": "Neu",
+    "original": "Original",
+    "live": "Live",
+    "rtp": "RTP {value}",
+    "maxWin": "Max. {value}",
+    "poolFee": "Poolgebühr {value}",
+    "poolNote": "Poolwette",
+    "volatility": "Volatilität: {level}",
+    "vol": {
+      "low": "Niedrig",
+      "medium": "Mittel",
+      "high": "Hoch",
+      "veryHigh": "Sehr hoch",
+      "player": "Du entscheidest"
+    },
+    "favAdd": "{name} zu den Favoriten hinzufügen",
+    "favRemove": "{name} aus den Favoriten entfernen",
+    "play": "Demo spielen",
+    "watch": "Live dabei sein"
+  },
+  "cards": {
+    "crash": {
+      "tagline": "Steig aus, bevor die Linie reißt.",
+      "text": "Wähle selbst den Moment zum Auszahlen, während der Multiplikator steigt.",
+      "type": "Manuelles Auszahlen"
+    },
+    "coinflip": {
+      "tagline": "Zwei Seiten, eine Entscheidung.",
+      "text": "Zwei Seiten, eine Wahl, sofortiges Ergebnis.",
+      "type": "Klassiker"
+    },
+    "cascade": {
+      "tagline": "Süße Kaskaden und Kristall-Multiplikatoren.",
+      "text": "Lass acht Gleiche platzen und baue Ketten mit fallenden Bonbons.",
+      "type": "Tumble"
+    },
+    "tarhun": {
+      "tagline": "Der Sturmgott lädt die Steine auf.",
+      "text": "Der Sturmgott schleudert Blitze auf die Steine; in den Freispielen sammeln sich die Multiplikatoren.",
+      "type": "Tumble · Multiplikator"
+    },
+    "ebru": {
+      "tagline": "Tinte, Wasser und ein goldener Kamm.",
+      "text": "Der Kamm zieht durchs Wasser, die Tinte ordnet sich Welle um Welle neu; Farbflecken gleiten mit ihren Multiplikatoren mit.",
+      "type": "Cluster · Kamm"
+    },
+    "cezeri": {
+      "tagline": "Vier Messingräder, eine steigende Nabe.",
+      "text": "Vier Messingräder drehen sich; Gewinnsegmente rasten ein, die Räder drehen erneut und der Nabenmultiplikator steigt jedes Mal um +1.",
+      "type": "Rad · Kette"
+    },
+    "asena": {
+      "tagline": "Folge dem Himmelswolf durch die Sterne.",
+      "text": "Cluster zeichnen Sternbilder an den Himmel, der Himmelswolf wandert und hinterlässt eine Sternenspur; die Ergenekon-Karte hebt den Gesamtmultiplikator bis ×5.",
+      "type": "Cluster · Sternbild"
+    },
+    "ringside": {
+      "tagline": "Drei Runden, drei Pools, ein Live-Kampf.",
+      "text": "Ein Kampf über drei Runden mit Schlägen und Tritten. Triff deine Wahl vor Kampfbeginn und verfolge deinen Schein Runde für Runde. Ein trainiertes Netz steuert die Kämpfer, Jev gibt aus der Ecke Taktik vor.",
+      "type": "Live · Poolwette"
+    }
+  },
+  "liveCard": {
     "aria": "Die Ringside-Live-Arena betreten",
     "tag": "LIVE · ALLE SEHEN DENSELBEN KAMPF",
-    "text": "Ein Kampf über drei Runden mit Schlägen und Tritten. Triff deine Wahl vor Kampfbeginn und verfolge deinen Schein Runde für Runde. Ein trainiertes Netz steuert die Kämpfer, Jev gibt aus der Ecke Taktik vor.",
     "cta": "Zur Arena",
     "factWindowValue": "30 Sek.",
     "factWindow": "Wettfenster",
@@ -16,16 +139,6 @@
     "factMarkets": "Kampfmärkte",
     "factFeeValue": "2 %",
     "factFee": "Poolgebühr"
-  },
-  "solo": { "title": "Einzelspieler", "subtitle": "In deinem Tempo, sofortiges Ergebnis.", "demo": "DEMO" },
-  "cards": {
-    "crash": { "text": "Wähle selbst den Moment zum Auszahlen, während der Multiplikator steigt.", "type": "Manuelles Auszahlen" },
-    "coinflip": { "text": "Zwei Seiten, eine Wahl, sofortiges Ergebnis.", "type": "Klassiker" },
-    "cascade": { "text": "Lass acht Gleiche platzen und baue Ketten mit fallenden Bonbons.", "type": "Tumble" },
-    "tarhun": { "text": "Der Sturmgott schleudert Blitze auf die Steine; in den Freispielen sammeln sich die Multiplikatoren.", "type": "Tumble · Multiplikator" },
-    "ebru": { "text": "Der Kamm zieht durchs Wasser, die Tinte ordnet sich Welle um Welle neu; Farbflecken gleiten mit ihren Multiplikatoren mit.", "type": "Cluster · Kamm" },
-    "cezeri": { "text": "Vier Messingräder drehen sich; Gewinnsegmente rasten ein, die Räder drehen erneut und der Nabenmultiplikator steigt jedes Mal um +1.", "type": "Rad · Kette" },
-    "asena": { "text": "Cluster zeichnen Sternbilder an den Himmel, der Himmelswolf wandert und hinterlässt eine Sternenspur; die Ergenekon-Karte hebt den Gesamtmultiplikator bis ×5.", "type": "Cluster · Sternbild" }
   },
   "trust": {
     "aria": "Regeln",
@@ -44,5 +157,6 @@
     "fightersA": "Jeden Schlag, Tritt, jede Serie, Distanz und Abwehr wählt ein Netz, das während des Kampfes lernt; das MaleCNS-Konnektom der Fliege dient als festes Reservoir. Eckcoach Jev schlägt alle 9 Sekunden einen Plan vor; da der Plan nach Wettschluss kommt, ist das Spiel nur DEMO. Es wird weder ein vollständiges Gehirn noch eine Überlegenheit des Konnektoms behauptet.",
     "demoQ": "Die Grenze zwischen Demo und echten Wetten",
     "demoA": "Die DEMO-Guthaben hier haben keinen Geldwert. Echte SOL-Wetten bleiben gesperrt, bis Vertragsbereitstellung, Oracle-Wiederherstellung, Crash-Datenschutz und Zahlungsabläufe geprüft sind. Wir behaupten nicht, dass eine unabhängige Prüfung stattgefunden hat. Diese Versionen haben keinen VRF-Nachweis."
-  }
+  },
+  "footnote": "RTP und Volatilität sind simulierte Schätzwerte für den Standardmodus jedes DEMO-Spiels, keine zertifizierten Werte. Übungsrunden von Crash und Coinflip nutzen den Zufall deines Browsers und sind nicht nachweislich fair."
 }

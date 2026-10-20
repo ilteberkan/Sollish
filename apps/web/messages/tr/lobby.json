@@ -1,12 +1,135 @@
 {
   "meta": {
-    "title": "Oyunlar — Canlı & Solo",
-    "description": "Sollish oyunları. Ortak canlı Ringside maçına katıl veya tek kişilik oyunları dene."
+    "title": "Kumarhane lobisi",
+    "description": "Sollish’in özgün oyunları tek lobide: beş kendi slotumuz, canlı Ringside arenası, Crash ve Coinflip. Yalnız DEMO kredisi, gerçek para yok."
   },
+  "heading": "Sollish kumarhane lobisi",
   "hero": {
+    "region": "Öne çıkan oyunlar",
+    "slide": "{index} / {total}",
+    "prev": "Önceki öne çıkan oyun",
+    "next": "Sonraki öne çıkan oyun",
+    "pause": "Dönüşü duraklat",
+    "resume": "Dönüşü sürdür",
+    "goTo": "{name} göster",
+    "eyebrow": "Yeni · Sollish yapımı",
+    "play": "Demoyu oyna"
+  },
+  "chips": {
+    "label": "Oyunları filtrele",
+    "all": "Tüm oyunlar"
+  },
+  "rows": {
+    "recent": {
+      "title": "Son oynananlar",
+      "subtitle": "Yalnız bu tarayıcıda saklanır.",
+      "clear": "Listeyi temizle"
+    },
+    "originals": {
+      "title": "Sollish Orijinalleri",
+      "subtitle": "Beş kendi slotumuz. Her tur doğrulama sayfasında kontrol edilebilir."
+    },
+    "live": {
+      "title": "Canlı",
+      "subtitle": "Tek ortak maç, herkes aynı dövüşü izler."
+    },
+    "instant": {
+      "title": "Anında oyunlar",
+      "subtitle": "Kendi hızında, anında sonuç."
+    },
+    "new": {
+      "title": "Yeni",
+      "subtitle": "En son çıkan oyunlar."
+    },
+    "fair": {
+      "title": "Kanıtlanabilir adil",
+      "subtitle": "Sonucu, tur bitince kontrol edebileceğin seed’ler belirler.",
+      "cta": "Bir turu doğrula"
+    }
+  },
+  "row": {
+    "viewAll": "Tümünü gör",
+    "viewAllAria": "Tümünü gör: {title}",
+    "prev": "Geri kaydır: {title}",
+    "next": "İleri kaydır: {title}",
+    "count": "{count, plural, one {# oyun} other {# oyun}}"
+  },
+  "grid": {
+    "results": "Arama sonuçları",
+    "resultsCount": "{count, plural, =0 {“{query}” için oyun bulunamadı} one {“{query}” için # oyun} other {“{query}” için # oyun}}",
+    "empty": "“{query}” ile eşleşen oyun yok. Bir oyun adı, “kurt” ya da “şeker” gibi bir tema veya bir kategori dene.",
+    "reset": "Tüm oyunları göster",
+    "favoritesEmpty": "Henüz favori yok. Bir oyunu burada tutmak için kalbe dokun.",
+    "back": "Lobiye dön"
+  },
+  "tile": {
+    "provider": "Sollish",
+    "demo": "DEMO",
+    "new": "Yeni",
+    "original": "Orijinal",
+    "live": "Canlı",
+    "rtp": "RTP {value}",
+    "maxWin": "En çok {value}",
+    "poolFee": "Havuz kesintisi {value}",
+    "poolNote": "Havuz bahsi",
+    "volatility": "Oynaklık: {level}",
+    "vol": {
+      "low": "Düşük",
+      "medium": "Orta",
+      "high": "Yüksek",
+      "veryHigh": "Çok yüksek",
+      "player": "Sen seçersin"
+    },
+    "favAdd": "{name} oyununu favorilere ekle",
+    "favRemove": "{name} oyununu favorilerden çıkar",
+    "play": "Demoyu oyna",
+    "watch": "Canlıya katıl"
+  },
+  "cards": {
+    "crash": {
+      "tagline": "Çizgi kırılmadan çıkış yap.",
+      "text": "Çarpan yükselirken çıkış anını sen seç.",
+      "type": "Manuel çıkış"
+    },
+    "coinflip": {
+      "tagline": "İki yüz, tek karar.",
+      "text": "İki yüz, bir seçim, anında sonuç.",
+      "type": "Klasik"
+    },
+    "cascade": {
+      "tagline": "Tatlı düşüşler, kristal çarpanlar.",
+      "text": "Sekiz eşleşmede patlat, düşen şekerlerle zincir kur.",
+      "type": "Tumble"
+    },
+    "tarhun": {
+      "tagline": "Fırtına tanrısı taşları yükler.",
+      "text": "Fırtına tanrısı taşlara yıldırım atar; çarpanlar bedava dönüşte birikir.",
+      "type": "Tumble · çarpan"
+    },
+    "ebru": {
+      "tagline": "Mürekkep, su ve altın bir tarak.",
+      "text": "Tarak suyu tarar, mürekkep dalga dalga yeniden dizilir; boya lekeleri çarpanla birlikte kayar.",
+      "type": "Küme · tarak"
+    },
+    "cezeri": {
+      "tagline": "Dört pirinç çark, yükselen bir göbek.",
+      "text": "Dört pirinç çark döner; kazanan dilimler kenetlenir, çarklar yeniden döner ve göbek çarpanı her turda +1 atar.",
+      "type": "Çark · zincir"
+    },
+    "asena": {
+      "tagline": "Gök Kurt’un yıldız izini takip et.",
+      "text": "Kümeler gökte takımyıldız çizer, Gök Kurt yürüyüp yıldız izi bırakır; Ergenekon haritası genel çarpanı ×5’e kadar açar.",
+      "type": "Küme · takımyıldız"
+    },
+    "ringside": {
+      "tagline": "Üç raunt, üç havuz, tek canlı dövüş.",
+      "text": "Yumruk ve tekmelerle üç rauntluk dövüş. Maç başlamadan seçimini yap, sonra kuponunu raunt raunt izle. Dövüşçüleri eğitilmiş bir ağ yönetir, köşesinden Jev taktik verir.",
+      "type": "Canlı · havuz bahsi"
+    }
+  },
+  "liveCard": {
     "aria": "Ringside canlı arenaya gir",
     "tag": "CANLI · HERKES AYNI MAÇI İZLER",
-    "text": "Yumruk ve tekmelerle üç rauntluk dövüş. Maç başlamadan seçimini yap, sonra kuponunu raunt raunt izle. Dövüşçüleri eğitilmiş bir ağ yönetir, köşesinden Jev taktik verir.",
     "cta": "Arenaya gir",
     "factWindowValue": "30 sn",
     "factWindow": "bahis penceresi",
@@ -16,20 +139,6 @@
     "factMarkets": "maç pazarı",
     "factFeeValue": "%2",
     "factFee": "havuz kesintisi"
-  },
-  "solo": {
-    "title": "Tek kişilik",
-    "subtitle": "Kendi hızında, anında sonuç.",
-    "demo": "DEMO"
-  },
-  "cards": {
-    "crash": { "text": "Çarpan yükselirken çıkış anını sen seç.", "type": "Manuel çıkış" },
-    "coinflip": { "text": "İki yüz, bir seçim, anında sonuç.", "type": "Klasik" },
-    "cascade": { "text": "Sekiz eşleşmede patlat, düşen şekerlerle zincir kur.", "type": "Tumble" },
-    "tarhun": { "text": "Fırtına tanrısı taşlara yıldırım atar; çarpanlar bedava dönüşte birikir.", "type": "Tumble · çarpan" },
-    "ebru": { "text": "Tarak suyu tarar, mürekkep dalga dalga yeniden dizilir; boya lekeleri çarpanla birlikte kayar.", "type": "Küme · tarak" },
-    "cezeri": { "text": "Dört pirinç çark döner; kazanan dilimler kenetlenir, çarklar yeniden döner ve göbek çarpanı her turda +1 atar.", "type": "Çark · zincir" },
-    "asena": { "text": "Kümeler gökte takımyıldız çizer, Gök Kurt yürüyüp yıldız izi bırakır; Ergenekon haritası genel çarpanı ×5’e kadar açar.", "type": "Küme · takımyıldız" }
   },
   "trust": {
     "aria": "Kurallar",
@@ -48,5 +157,6 @@
     "fightersA": "Her yumruk, tekme, seri, mesafe ve savunma seçimini maç içinde öğrenen bir ağ yapar; MaleCNS sinek bağlantı ağı sabit bir rezervuar olarak kullanılır. Köşe antrenörü Jev her 9 saniyede plan önerir; plan bahis kapandıktan sonra geldiği için oyun yalnız DEMO’dur. Tam beyin ya da bağlantı yapısının üstünlüğü iddiası yoktur.",
     "demoQ": "Demo ile gerçek bahis arasındaki sınır",
     "demoA": "Buradaki DEMO kredilerinin parasal değeri yoktur. Gerçek SOL bahisleri; sözleşme dağıtımı, oracle kurtarma, Crash gizliliği ve ödeme akışları doğrulanana kadar kapalıdır. Bağımsız denetim yapılmış gibi bir iddiada bulunmuyoruz. Bu sürümlerin VRF kanıtı yoktur."
-  }
+  },
+  "footnote": "RTP ve oynaklık, her DEMO oyununun standart modu için simülasyon tahminleridir; sertifikalı değerler değildir. Crash ve Coinflip deneme turları tarayıcının rastgeleliğini kullanır ve kanıtlanabilir adil değildir."
 }

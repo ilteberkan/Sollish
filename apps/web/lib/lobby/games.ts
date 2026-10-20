@@ -93,9 +93,9 @@ export function searchText(game: LobbyGame, title: string, extra: readonly strin
 
 /** Recently played: newest first, unique, known ids only, at most `limit`. */
 export function pushRecent(list: readonly unknown[], id: LobbyGameId, limit = 8): LobbyGameId[] {
-  return [id, ...list.filter((x): x is LobbyGameId => isLobbyGameId(x) && x !== id)].slice(0, limit);
+  return [...new Set([id, ...list.filter(isLobbyGameId)])].slice(0, limit);
 }
 export function toggleFavorite(list: readonly unknown[], id: LobbyGameId): LobbyGameId[] {
-  const clean = list.filter(isLobbyGameId);
+  const clean = [...new Set(list.filter(isLobbyGameId))];
   return clean.includes(id) ? clean.filter(x => x !== id) : [...clean, id];
 }

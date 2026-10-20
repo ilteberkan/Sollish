@@ -1,0 +1,404 @@
+{
+  "deck": {
+    "group": "Oyun kontrolleri",
+    "balance": "Bakiye",
+    "refill": "Bakiyeyi yenile",
+    "win": "Kazanç",
+    "winReplay": "Tekrar",
+    "winReplayLast": "Tekrar kazancı",
+    "winLast": "Son kazanç",
+    "cost": "Maliyet",
+    "spin": "Çevir",
+    "spinCost": "Maliyet {cost}",
+    "auto": "Otomatik",
+    "info": "Bilgi",
+    "infoAria": "Oyun bilgisi",
+    "on": "Açık",
+    "off": "Kapalı",
+    "buy": "Bonus satın al",
+    "buyDesc": "{spins, plural, other {# bedava dönüş}} · {rtp}",
+    "speedAria": "Dönüş hızı: {speed}",
+    "sound": "Ses",
+    "soundLoading": "Ses yükleniyor %{percent}",
+    "outOfCredit": "DEMO bakiyen bitti.",
+    "lastWin": "Son tur <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Son tur kazançsız.",
+    "hintSpace": "Boşluk tuşu ile de çevirebilirsin.",
+    "hintFixed": "Sonuç dönüşten önce belirlenir.",
+    "spinLocked": "Tur sürüyor; bütün düşmeler, kurt adımları ve bedava dönüşler bitene kadar kilitli.",
+    "anteDesc": "Bedava dönüş şansı ≈2 kat"
+  },
+  "hud": {
+    "freeAria": "Bedava dönüş {number}, kalan dönüş {left}",
+    "freeSpin": "{n}. dönüş",
+    "left": "Kalan",
+    "free": "Ergenekon",
+    "moonAria": "3 veya daha fazla Ay Ata 10 bedava dönüş açar",
+    "moonLong": "<b>3+</b> Ay Ata · 10 bedava dönüş",
+    "moonShort": "<b>3+</b> Ay Ata · 10 dönüş",
+    "templateChip": "Takımyıldız <b>×{multiplier}</b> · Azami <b>{max}×</b>",
+    "globalAria": "Genel çarpan ×{multiplier}, haritada {distinct} takımyıldız",
+    "global": "Genel",
+    "map": "Harita"
+  },
+  "meter": {
+    "total": "Toplam kazanç",
+    "win": "Kazanç",
+    "idleA": "<b>5+</b> komşu aynı sembol öder",
+    "idleB": "Gök Kurt yürür, iz bırakır",
+    "idleC": "takımyıldız <b>×2–×10</b>"
+  },
+  "replay": {
+    "ribbon": "Tekrar — bakiye değişmez · tur {id}"
+  },
+  "auto": {
+    "ribbon": "Otomatik · {spins, plural, other {# tur}} kaldı"
+  },
+  "toast": {
+    "close": "Bildirimi kapat",
+    "autoplayStopped": "Otomatik oyun durdu: {reason}. {spins, plural, other {# tur}}, net {net}.",
+    "autoplayStoppedShort": "Otomatik oyun durdu: {reason}.",
+    "autoplayStarted": "Otomatik oyun: {spins, plural, other {# tur}}, kayıp limiti {limit}.",
+    "refilled": "Bakiye yenilendi: {amount} DEMO.",
+    "shareCopied": "Paylaşım bağlantısı kopyalandı: {url}",
+    "shareLink": "Paylaşım bağlantısı: {url}",
+    "shareFailed": "Paylaşılamadı: {error}",
+    "replayFailed": "Bu tur tekrar oynatılamadı.",
+    "replayMismatch": "Tekrar doğrulanamadı: kayıt motorla uyuşmuyor."
+  },
+  "banner": {
+    "extraSpins": "+{awarded} bedava dönüş",
+    "constellation": "{name} ×{multiplier}",
+    "mapSpins": "Harita · +{awarded} bedava dönüş",
+    "scatterPay": "{count} Ay Ata · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "Dönüş başladı, {amount} DEMO.",
+    "sentToServer": "Dönüş sunucuya gönderildi, {amount} DEMO.",
+    "recovered": "Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı ({amount} DEMO).",
+    "replaying": "Tekrar oynatılıyor: tur {id}. Bakiye değişmez.",
+    "replayDone": "Tekrar bitti: {amount} DEMO, {times}×. Bakiye değişmedi.",
+    "roundEnd": "Tur bitti. Toplam kazanç {amount} DEMO, {times}×.",
+    "roundEndNone": "Tur bitti. Kazanç yok.",
+    "noWin": "Kazanç yok.",
+    "totalWin": "Toplam kazanç {amount} DEMO, {times}×.",
+    "celebration": "{title}: {amount} DEMO, {times}×.",
+    "speed": "Dönüş hızı: {speed}.",
+    "anteOn": "Şans ×2 açık: bedava dönüş şansı ≈2 kat, maliyet {cost}.",
+    "anteOff": "Şans ×2 kapalı: maliyet {cost}.",
+    "refilled": "DEMO bakiyesi {amount} DEMO olarak yenilendi.",
+    "refilledRemote": "Sunucu DEMO bakiyesi {amount} DEMO olarak yenilendi.",
+    "bonusBought": "Bonus satın alındı, {amount} DEMO. Ergenekon başlıyor.",
+    "moonTease": "İki Ay Ata göründü; üçüncüsü bedava dönüşleri açar.",
+    "cluster": "{size} {name}{template, select, none {} other {, {templateName} ×{templateMultiplier}}}, {times}× kazanç",
+    "constellation": "Takımyıldız tutuştu: {name}, küme ödemesi ×{multiplier}.",
+    "map": "Ergenekon haritası: {distinct} / 6 takımyıldız yandı.",
+    "ergenekon": "Ergenekon: {distinct} takımyıldız, genel çarpan ×{after}. Bundan sonraki her kazanç ×{after}.",
+    "mapSpins": "Ergenekon haritası {awarded} bedava dönüş ekledi.",
+    "wolfWalk": "Gök Kurt yürüdü: sütun {fromCol}, satır {fromRow} → sütun {toCol}, satır {toRow}; arkasında Yıldız İzi kaldı.",
+    "moons": "{count} Ay Ata.",
+    "retrigger": "{count} Ay Ata: {awarded} bedava dönüş eklendi.",
+    "trigger": "{count} Ay Ata: Ergenekon kazanıldı.",
+    "freeIntro": "Ergenekon başlıyor: {awarded} bedava dönüş kazandın.",
+    "freeSpinWin": "Bedava dönüş {times}× kazandırdı. Toplam {total}×.",
+    "freeSpinNone": "Bedava dönüşte kazanç yok.",
+    "freeOutro": "Ergenekon bitti. Toplam: {amount} DEMO, {spins} dönüş, {constellations} takımyıldız, genel çarpan ×{multiplier}."
+  },
+  "autoplay": {
+    "serverFailed": "Sunucu turu başlatılamadı",
+    "spinFailed": "Dönüş başlatılamadı",
+    "quit": "Oturumdan çıkıldı",
+    "title": "Otomatik oyun",
+    "note": "Tur başı {cost}{ante, select, yes { (Şans ×2)} other {}} · bonus satın almaz · sekme gizlenince durur."
+  },
+  "errors": {
+    "entropy": "Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.",
+    "insufficient": "Bakiye yetersiz: bu {kind, select, buy {satın alma} other {dönüş}} {cost}. Bahsi düşür veya bakiyeyi yenile.",
+    "noCredit": "Yeterli demo kredin yok veya devam eden bir demo var."
+  },
+  "buy": {
+    "block": {
+      "gated": "Yalnız DEMO kredisiyle satın alınır",
+      "autoplay": "Otomatik oyun sürerken satın alınamaz",
+      "busy": "Tur bitmeden satın alınamaz",
+      "ante": "Şans ×2 açıkken satın alınamaz",
+      "balance": "Bakiye yetersiz (fiyat {price})"
+    },
+    "rtp": "Satın alma RTP {buy} · standart {standard} (simülasyon, sertifikasız)",
+    "feature": "Ergenekon · 10 bedava dönüş · bahis {bet}",
+    "text": "Bahsin <b>80 katı</b>. Tur en az 3 Ay Ata ile başlar ve 10 bedava dönüş garantilidir; yanan her takımyıldız Ergenekon haritasını açar, genel çarpan ×2, ×3 ve ×5’e çıkar ve özellik boyunca her kazancı çarpar. Kazançlar {bet} bahse göre ödenir, azami {max}."
+  },
+  "gated": {
+    "text": "Bu oyun yalnız DEMO kredisiyle oynanır; gerçek bahis kabul edilmez.",
+    "back": "Yerel demoya dön",
+    "title": "Zincir üstü Asena yok."
+  },
+  "splash": {
+    "max": {
+      "title": "{max}× azami"
+    },
+    "loading": "Oyun yükleniyor",
+    "play": "Oyna",
+    "skip": "Açılış ekranını bir daha gösterme",
+    "note": "DEMO kredisi değersizdir · Sonuç dönüşten önce belirlenir · Sertifikasız simülasyon RTP ≈ {rtp}",
+    "constellation": {
+      "title": "Takımyıldız ×10",
+      "text": "Küme gökteki şekli içerirse yıldız yıldız çizilir ve ödemeyi çarpar"
+    },
+    "wolf": {
+      "title": "Gök Kurt yürür",
+      "text": "Kazanca katılan kurt her düşmede bir hücre ilerler, Yıldız İzi bırakır"
+    },
+    "ergenekon": {
+      "title": "Ergenekon · {max}×",
+      "text": "Harita açıldıkça demir dağ çatlar: genel çarpan ×2, ×3, ×5"
+    }
+  },
+  "settings": {
+    "soundReady": "Ses hazır: müzik, efektler ve ortam sesi bu cihazda hazırlandı.",
+    "soundIdle": "Ses ilk dokunuşta yüklenir.",
+    "demoTitle": "DEMO bakiyesi",
+    "demoText": "Bakiye {balance}{remote, select, yes { (sunucu)} other {}}. Yenilemek bakiyeyi {start} DEMO yapar ve geçmişe \"Bakiye yenilendi\" satırı ekler; tur veya otomatik oyun sürerken yapılamaz.",
+    "soundLoading": "Ses yükleniyor %{percent} (bu sırada oyun sessiz sürer)."
+  },
+  "history": {
+    "title": "Oyun geçmişin",
+    "scope": "Bu oturum · tekrar bakiyeyi değiştirmez",
+    "time": "Zaman",
+    "mode": "Mod",
+    "bet": "Bahis",
+    "cost": "Maliyet",
+    "win": "Kazanç",
+    "result": "Sonuç",
+    "roundId": "Tur kimliği",
+    "replayColumn": "Tekrar oynat",
+    "latest": "Son tur",
+    "replay": "Tekrar oynat",
+    "replayAria": "Tekrar oynat: tur {id}, bakiye değişmez",
+    "share": "Kazancını paylaş",
+    "shareAria": "Kazancını paylaş: tur {id}",
+    "emptyTitle": "İlk turun burada görünecek.",
+    "emptyText": "Her turun modu, bahsi, maliyeti, kazancı ve tur kimliği kaydedilir; istediğin turu tekrar izleyebilirsin.",
+    "reset": "Bakiye yenilendi",
+    "resetRemote": "Bakiye yenilendi (sunucu)",
+    "detail": {
+      "capped": "Azami kazanç · {times}×",
+      "none": "Kazanç yok",
+      "free": "Ergenekon ×{spins}{multiplier, plural, =0 {} other { · genel ×#}} · {times}×",
+      "base": "{clusters, plural, other {# küme}}{stars, plural, =0 {} other { · # takımyıldız}}{moons, plural, =0 {} other { · # Ay Ata}} · {times}×"
+    },
+    "tableRegion": "Oyun geçmişi tablosu"
+  },
+  "celebration": {
+    "aria": "{title}: {money} DEMO",
+    "times": "{times}× bahis",
+    "capNote": "Tur tavana ulaştı · kalan dönüşler oynanmaz",
+    "speedUp": "Hızlandırmak için dokun",
+    "continue": "Devam"
+  },
+  "intro": {
+    "start": "Başla",
+    "word": "ERGENEKON",
+    "srTitle": "Ergenekon Başlıyor",
+    "freeSpins": "bedava\ndönüş",
+    "text": "Yanan her takımyıldız <b>Ergenekon haritasının</b> bir parçasını açar. <b>3 farklı</b> takımyıldız +5 dönüş ve genel çarpan <b>×2</b>, <b>altısı</b> +5 dönüş ve <b>×3</b>, hepsi iki kez yanınca <b>×5</b>. Genel çarpan özellik boyunca kalır ve her kazancı çarpar. 3 Ay Ata +3 dönüş."
+  },
+  "total": {
+    "word": "TOPLAM",
+    "sub": "BEDAVA DÖNÜŞ",
+    "titleB": "Toplam",
+    "toCelebration": "Kutlamaya geç",
+    "capNote": "Azami kazanca ulaşıldı · kalan dönüşler oynanmaz",
+    "titleA": "Ergenekon",
+    "spins": "Dönüş",
+    "spinsValue": "{spins, plural, other {# dönüş}}",
+    "wolfSteps": "{n, plural, other {# kurt adımı}}",
+    "wolfNone": "kurt yürümedi",
+    "constellations": "Takımyıldız",
+    "mapOf": "harita {distinct}/6",
+    "global": "Genel çarpan",
+    "ofBet": "{times}× bahis"
+  },
+  "badge": {
+    "checking": "Sunucu kontrol ediliyor"
+  },
+  "rules": {
+    "fixed": "Sonuç, dönüş başlamadan önce tarayıcında yerel rastgelelikle belirlenir; animasyon yalnızca bu sonucu oynatır. Sayfadan ayrılsan bile tur belirlenen ödemeyle kapanır. VRF kanıtı yoktur.",
+    "board": "Yıldız alanı 6×6’dır. Yatay veya dikey komşu 5 veya daha fazla aynı sembol (Gök Kurt ve Yıldız İzi jokerleri dahil) bir küme oluşturur ve öder; küme büyüdükçe ödeme kademesi yükselir. Kazanan kümeler yıldıza dönüşüp patlar, üsttekiler düşer ve boşluklar dolar.",
+    "features": "Bir küme altı takımyıldız şablonundan birini (Kurt Başı ×10, Hayat Ağacı ×8, Kartal ×6, At ×4, Yay ×3, Hilal ×2; döndürülmüş veya yansıtılmış) içeriyorsa takımyıldız tutuşur ve küme ödemesi şablonun çarpanıyla çarpılır. Kazanca katılan Gök Kurt her düşmeden sonra bir hücre yürür ve arkasında Yıldız İzi jokeri bırakır. 3 veya daha fazla Ay Ata 10 bedava dönüş (Ergenekon) açar: yanan her takımyıldız haritanın bir parçasını açar; 3 farklı takımyıldız +5 dönüş ve genel çarpan ×2, 6 farklı +5 ve ×3, hepsi iki kez ×5. Azami kazanç bahsin 5.000 katıdır."
+  },
+  "meta": {
+    "title": "Asena: Yıldız Kurdu",
+    "description": "Asena: Yıldız Kurdu — özgün DEMO küme oyunu. Kümeler gökte takımyıldız çizer, Gök Kurt yürüyüp yıldız izi bırakır; Ergenekon haritası genel çarpanı ×5’e kadar açar."
+  },
+  "title": "Asena: Yıldız Kurdu",
+  "subtitle": "Kümeler gökte takımyıldız çizer, Gök Kurt yürüyüp yıldız izi bırakır; Ergenekon’da genel çarpan ×5’e kadar açılır.",
+  "table": "Asena oyun masası",
+  "logo": {
+    "subtitle": "YILDIZ KURDU",
+    "label": "Asena: Yıldız Kurdu"
+  },
+  "symbols": {
+    "h1": "Asena",
+    "h2": "Kün Ana",
+    "h3": "Gök Kartal",
+    "h4": "Doru At",
+    "l1": "Firuze Yıldız",
+    "l2": "Al Yakut",
+    "l3": "Zümrüt Ok",
+    "l4": "Ametist Damga",
+    "wolf": "Gök Kurt (yürüyen joker)",
+    "trail": "Yıldız İzi (joker)",
+    "moon": "Ay Ata (dağılım)"
+  },
+  "templates": {
+    "kurt-basi": "Kurt Başı",
+    "yay": "Yay",
+    "at": "At",
+    "kartal": "Kartal",
+    "hayat-agaci": "Hayat Ağacı",
+    "hilal": "Hilal"
+  },
+  "board": {
+    "label": "Asena yıldız alanı",
+    "labelPlay": "Asena yıldız alanı, 6 sütun, 6 satır",
+    "labelFree": "Asena bedava dönüş yıldız alanı, 6 sütun, 6 satır",
+    "cell": "{symbol}, sütun {col}, satır {row}"
+  },
+  "callout": {
+    "tier0": "Takımyıldız",
+    "tier1": "Parlak takımyıldız",
+    "tier2": "Gök çarpanı",
+    "tier3": "Tengri çarpanı",
+    "tier4": "Efsane gök",
+    "tier5": "Kün Ana"
+  },
+  "fx": {
+    "spins": "DÖNÜŞ",
+    "extraSpins": "EK DÖNÜŞ",
+    "freeSpins": "BEDAVA DÖNÜŞ"
+  },
+  "info": {
+    "title": "Asena · Oyun bilgisi",
+    "tab": {
+      "how": "Nasıl oynanır",
+      "pay": "Ödeme tablosu",
+      "features": "Özellikler",
+      "rtp": "RTP",
+      "limits": "Bahis ve kazanç sınırları",
+      "keys": "Tuşlar",
+      "fault": "Arıza hükmü"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Bahsini seç.</b> − ve + düğmeleri bahsi bir basamak değiştirir; bahis tutarına dokununca bütün basamaklar açılır. \"Azami bahis\" bakiyenin yettiği en yüksek basamağı seçer.",
+        "spin": "<b>Çevir.</b> Yıldız düğmesine bas veya Boşluk tuşunu kullan. Tur maliyeti (Şans ×2 açıksa bahsin {factor} katı) bakiyeden bir kez düşer.",
+        "cluster": "<b>Küme kur.</b> 6 × 6 yıldız alanında yatay veya dikey komşu <b>5 veya daha fazla aynı sembol</b> öder; küme büyüdükçe ödeme kademesi yükselir.",
+        "constellation": "<b>Takımyıldız.</b> Küme gökteki altı şablondan birini içeriyorsa takımyıldız yıldız yıldız çizilir, gökte yankılanır, kurt uluyor ve küme ödemesi şablonun çarpanıyla (×2–×10) çarpılır.",
+        "chain": "<b>Zincir.</b> Kazanan kümeler yıldıza dönüşüp patlar, üsttekiler düşer, boşluklar dolar; kazanca katılan Gök Kurt bir hücre yürür. Yeni küme kalmayana kadar sürer.",
+        "result": "<b>Sonuç.</b> Turun tamamı dönüş başlamadan önce motorla belirlenir; animasyon yalnızca bu sonucu oynatır. Çevir düğmesi tur (bütün düşmeler, kurt adımları ve bedava dönüşler) bitene kadar kilitlidir; hızlandırmak için Hızlı/Turbo ayarını kullan. Hız ayarı, kutlama sayacına dokunmak, gizli sekme veya sayfadan ayrılmak ödemeyi değiştirmez; tur her durumda bir kez, motorun ödemesiyle kapanır."
+      },
+      "note": "DEMO kredisi değersizdir; SOL, token veya ödül kazandırmaz. Oyun tarayıcıda yerel rastgelelikle çalışır, VRF kanıtı yoktur. Gök Tengri, Ay Ata, Kün Ana, Asena ve Ergenekon kamu malı Türk mitolojisidir; karakterler ve çizimler özgündür."
+    },
+    "pay": {
+      "maxTitle": "Azami kazanç {max}×",
+      "maxText": "Bu bahiste <b>{amount}</b>. Tur toplamı bu tavana ulaşırsa tur hemen biter; kalan bedava dönüşler oynanmaz.",
+      "lead": "Yatay veya dikey komşu <b>5 veya daha fazla aynı sembol</b> bir küme oluşturur; Gök Kurt ve Yıldız İzi jokerleri her sembolün yerine geçer. Büyük rakam <b>{bet}</b> bahiste brüt DEMO tutarıdır; altındaki çarpan bahsin katıdır. Aynı tahtadaki bütün kümeler ayrı ayrı öder.",
+      "gridAria": "Küme ödemeleri",
+      "fullTable": "Bütün küme boyları (7 kademe)",
+      "fullCaption": "Sembol ve küme boyuna göre ödeme, bahsin katı",
+      "colSymbol": "Sembol",
+      "moon5": "5+ Ay Ata",
+      "moon4": "4 Ay Ata",
+      "moon3": "3 Ay Ata",
+      "moonText": "Temel dönüşün son tahtasında 3 veya daha fazla Ay Ata varsa öder ve <b>{spins} bedava dönüş</b> (Ergenekon) açar. Ay Ata patlamaz; kurt da üstüne basmaz.",
+      "wolfText": "Her ödeme sembolünün yerine geçer ve yalnız dönüşün ilk tahtasında gelir. Bir kazanca katılırsa patlamaz, <b>yürür</b>: düşmeden sonra bir hücre ilerler ve ayrıldığı hücreye Yıldız İzi bırakır. Ayrıntı \"Özellikler\" sayfasında.",
+      "trailText": "Kurdun ardında kalan joker. Düşmelerle birlikte iner ve bir kazanca katılınca harcanır; dönüş bitince silinir, sonraki dönüşe geçmez."
+    },
+    "rtp": {
+      "title": "Teorik dönüş (RTP)",
+      "caption": "Mod başına teorik dönüş",
+      "colMode": "Mod",
+      "colCost": "Maliyet",
+      "colCi": "%95 GA",
+      "colFeature": "Özellik",
+      "everyRound": "her tur",
+      "oneIn": "1 / {n}",
+      "note": "Simülasyon tahminidir, <b>sertifikasızdır</b>; ağır kuyruk nedeniyle güven aralığı iyimser olabilir. Kısa oturumdaki sonuç RTP'den çok farklı olabilir. DEMO kredisi <b>değersizdir</b>.",
+      "text": "Her mod için ayrı {millions} milyon tur simülasyonu (motor <code>asena-stars-1</code>). RTP ödenen maliyete göre hesaplanır. Kazanç sıklığı (taban dönüş): standart {hitStandard}, Şans ×2 {hitAnte}. Oynaklık (maliyet biriminde standart sapma): standart {sdStandard}, satın alma {sdBuy}."
+    },
+    "limits": {
+      "title": "Bahis ve kazanç sınırları",
+      "range": "Bahis aralığı",
+      "steps": "Basamaklar",
+      "current": "Şu anki bahis",
+      "currentValue": "{bet} · Şans ×2 {ante} · Satın alma {buy}",
+      "max": "Azami kazanç",
+      "maxValue": "Bahsin {multiplier} katı · bu bahiste {amount}",
+      "text1": "Azami kazanca ulaşan tur hemen biter; kalan bedava dönüşler oynanmaz. Ödeme her zaman taban bahse göre hesaplanır, kuruşun altı aşağı yuvarlanır.",
+      "text2": "Bakiyenin yetmediği basamaklar ve modlar seçilemez. Bir tur tek rezervasyon ve tek ödemedir; aynı anda yalnız bir tur oynanır."
+    },
+    "keys": {
+      "heading": "Klavye",
+      "space": "Boşluk",
+      "spaceText": "Dönüşü başlatır (Ayarlar → \"{option}\"). Tur sürerken dönüşü atlamaz; yalnız bedava dönüş ekranlarını ve kutlama sayacını hızlandırır.",
+      "enterText": "Odaktaki düğmeye basar.",
+      "escText": "Açık pencereyi kapatır (oturum hatırlatması hariç).",
+      "tabText": "Kontroller arasında gezinir; odak her zaman görünür.",
+      "arrowsText": "Bu bilgi penceresinde sayfa değiştirir; ayar seçimlerinde seçeneği değiştirir.",
+      "pageText": "Bilgi sayfaları arasında gezinir.",
+      "note": "Ekran okuyucu her adımı (\"6 asena, Kurt Başı ×10, 12,00× kazanç\", kurt adımları, harita ve genel çarpan, tur sonucu) duyurur; her hücre sembolü, sütunu ve satırıyla okunur. Semboller renk yanında biçimle de ayrılır (kurt başı, güneş, kartal, at, yıldız, yakut, ok, damga). Hareketi azalt tercihi takımyıldızı tamamlanmış çizer, parçacıkları ve sarsıntıyı kapatır; bütün adımlar yine gösterilir."
+    },
+    "fault": {
+      "title": "Arıza hükmü",
+      "p1": "<b>Arıza, etkilenen bütün oyunları ve ödemeleri geçersiz kılar.</b> Yazılım, tarayıcı veya cihaz arızasında tur kaydı esas alınır; ekranda görünen ama motor kaydıyla uyuşmayan bir tutar geçerli değildir.",
+      "p2": "Bu oyun yalnız DEMO kredisiyle oynanır. DEMO değersizdir, paraya veya tokene çevrilemez; arıza halinde DEMO bakiyesi ve oturum geçmişi düzeltilebilir veya sıfırlanabilir.",
+      "p3": "Sonuç dönüşten önce belirlendiği için animasyonun yarıda kalması, sekmenin gizlenmesi veya sayfadan ayrılmak sonucu değiştirmez; tur yine motorun ödemesiyle bir kez kapanır."
+    },
+    "features": {
+      "buy": {
+        "title": "Bonus satın al · fiyat {price}",
+        "text": "Bahsin <b>80 katı</b> karşılığında tur en az 3 Ay Ata ile başlar; {spins} bedava dönüş garantilidir (Ay Ata ödemesi normal tabloya göre). Satın alma onay penceresiyle yapılır, ayrı bir RTP ile çalışır ({rtp}) ve otomatik oyunla kullanılamaz."
+      },
+      "templates": {
+        "title": "Takımyıldız şablonları",
+        "text": "Kazanan bir küme aşağıdaki şekillerden birini — döndürülmüş veya yansıtılmış hâli dahil, 8 yönün herhangi biri — tamamen içeriyorsa takımyıldız tutuşur ve <b>küme ödemesi şablonun çarpanıyla çarpılır</b>. Jokerler kümenin hücresidir. Birden çok şablon sığarsa çarpanı en yüksek olan tutuşur; her küme en çok bir takımyıldız yakar, aynı adımdaki farklı kümeler ayrı takımyıldızlar yakabilir.",
+        "aria": "Takımyıldız şablonları",
+        "stars": "{n, plural, other {# yıldız}}"
+      },
+      "wolf": {
+        "title": "Gök Kurt yürür",
+        "text": "Bir kazanca katılan kurt patlamaz. Düşme ve dolumdan sonra bir hücre yürür (yukarı, sağ, aşağı veya sol; rastgele, tahtadan çıkmaz, Ay Ata’ya ve başka kurda basmaz). Girdiği hücredeki sembolü yutar, ayrıldığı hücrede bir <b>Yıldız İzi</b> jokeri bırakır. Birden çok kurt sırayla yürür. Yıldız İzi bir kazanca katılınca harcanır; dönüş bitince silinir."
+      },
+      "ergenekon": {
+        "title": "Ergenekon (bedava dönüş)",
+        "text": "3+ Ay Ata {spins} bedava dönüş açar (bedava dönüşte 3+ Ay Ata +{retrigger}; bir turda en çok {max} dönüş). Bedava dönüşte yanan her takımyıldız <b>Ergenekon haritasında</b> kendi parçasını açar (bir parça en çok iki kez sayılır):",
+        "map3": "<bold>3 farklı takımyıldız</bold> → +{spins} dönüş ve genel çarpan <b>×{multiplier}</b>",
+        "map6": "<bold>6 farklı takımyıldız</bold> → +{spins} dönüş ve genel çarpan <b>×{multiplier}</b>",
+        "mapTwice": "<bold>Altısı da iki kez</bold> → genel çarpan <b>×{multiplier}</b> (demir dağ yarılır)",
+        "after": "Genel çarpan ve harita özellik boyunca kalır, hiç sıfırlanmaz ve <b>her küme kazancını</b> çarpar — açıldığı adımın kazancı dahil (önce takımyıldızlar haritaya işlenir, sonra adım öder). Temel oyun her zaman ×1 ile oynanır."
+      },
+      "cumulative": {
+        "title": "Birikimli kazanç",
+        "text": "Kazanç göstergesi tur boyunca sıfırlanmaz: kümeler, Ay Ata ödemesi ve bütün bedava dönüşler aynı toplamda birikir. Bedava dönüş turu her zaman \"Ergenekon — Toplam\" ekranıyla biter."
+      },
+      "tiers": {
+        "title": "Kazanç kademeleri ve çarpan anonsu",
+        "text": "Tur toplamı taban bahsin <b>10 katı</b> veya üstüyse gök kapısı açılır ve sayaç kademeler arasında tırmanır: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; tavana ulaşan tur {max} ile biter. Şablon × genel çarpan ×10 veya üstüyse kurdun ulumasıyla birlikte büyük yazıyla ve kendi sesiyle duyurulur; genel çarpanın her artışı demir dağın çatlamasıyla gösterilir. Ekrana dokunmak sayacı hemen sonuca getirir; ödemeyi değiştirmez."
+      },
+      "ante": {
+        "title": "Şans ×2 · maliyet {cost}",
+        "text": "Açıkken her dönüş bahsin <b>{factor} katına</b> mal olur ve temel oyunda Ay Ata çıkma olasılığı artar: bedava dönüş şansı yaklaşık 2 katıdır ({ante} / {standard}). Kazançlar yine taban bahse göre ödenir. Açıkken bonus satın alınamaz."
+      }
+    }
+  },
+  "burst": {
+    "tag": "ERGENEKON · GENEL ÇARPAN"
+  },
+  "skymap": {
+    "aria": "Ergenekon haritası: {distinct} takımyıldız yandı, genel çarpan ×{multiplier}",
+    "inactive": "bedava dönüşlerde açılır",
+    "lit": "{distinct}/6 takımyıldız",
+    "pips": "{n} kez yandı"
+  }
+}

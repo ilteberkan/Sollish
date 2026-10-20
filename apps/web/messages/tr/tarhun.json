@@ -1,0 +1,327 @@
+{
+  "meta": {
+    "description": "{title} — özgün DEMO tumble oyunu. Fırtına tanrısı taşlara yıldırım atar, çarpanlar bedava dönüşte birikir."
+  },
+  "subtitle": "Fırtına tanrısı taşlara yıldırım atar; çarpanlar bedava dönüşte birikir.",
+  "logo": {
+    "subtitle": "FIRTINA TAHTI"
+  },
+  "table": {
+    "aria": "Tarhun oyun masası"
+  },
+  "board": {
+    "label": "Tarhun ızgarası, 6 sütun, 5 satır",
+    "labelFree": "Tarhun bedava dönüş ızgarası, 6 sütun, 5 satır"
+  },
+  "badge": {
+    "checking": "Sunucu kontrol ediliyor"
+  },
+  "symbols": {
+    "h1": "Altın Boğa Ritonu",
+    "h2": "Şimşek Baltası",
+    "h3": "Aslan Kapısı Madalyonu",
+    "h4": "Güneş Kursu",
+    "l1": "Lacivert Dalga Taşı",
+    "l2": "Akik Kartal Taşı",
+    "l3": "Kehribar Güneş Taşı",
+    "l4": "Malakit Ağaç Taşı",
+    "l5": "Obsidyen Şimşek Taşı",
+    "scatter": "Şimşek Mührü",
+    "orb": "Fırtına Taşı",
+    "orbValue": "{name} ×{value}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Çarpan",
+      "1": "Güçlü çarpan",
+      "2": "Gürleyen çarpan",
+      "3": "Yıkıcı çarpan",
+      "4": "Efsane çarpan",
+      "5": "Gök gürültüsü",
+      "6": "Tanrısal çarpan"
+    },
+    "total": "Toplam · {tag}"
+  },
+  "error": {
+    "entropy": "Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.",
+    "noCredit": "Yeterli demo kredin yok veya devam eden bir demo var.",
+    "insufficientSpin": "Bakiye yetersiz: bu dönüş {cost}. Bahsi düşür veya bakiyeyi yenile.",
+    "insufficientBuy": "Bakiye yetersiz: bu satın alma {cost}. Bahsi düşür veya bakiyeyi yenile."
+  },
+  "buyBlock": {
+    "gated": "Yalnız DEMO kredisiyle satın alınır",
+    "autoplay": "Otomatik oyun sürerken satın alınamaz",
+    "busy": "Tur bitmeden satın alınamaz",
+    "ante": "Şans ×2 açıkken satın alınamaz",
+    "balance": "Bakiye yetersiz (fiyat {price})"
+  },
+  "autoplay": {
+    "title": "Otomatik oyun",
+    "serverFailed": "Sunucu turu başlatılamadı",
+    "spinFailed": "Dönüş başlatılamadı",
+    "quit": "Oturumdan çıkıldı",
+    "stopped": "Otomatik oyun durdu: {reason}. {spins, plural, other {# tur}}, net {net}.",
+    "stoppedShort": "Otomatik oyun durdu: {reason}.",
+    "note": "Tur başı {cost}{ante, select, yes { (Şans ×2)} other {}} · bonus satın almaz · sekme gizlenince durur."
+  },
+  "toast": {
+    "autoplay": "Otomatik oyun: {spins, plural, other {# tur}}, kayıp limiti {limit}.",
+    "refilled": "Bakiye yenilendi: {amount}.",
+    "shareCopied": "Paylaşım bağlantısı kopyalandı: {url}",
+    "shareLink": "Paylaşım bağlantısı: {url}",
+    "shareFailed": "Paylaşılamadı: {reason}",
+    "replayFailed": "Bu tur tekrar oynatılamadı.",
+    "replayMismatch": "Tekrar doğrulanamadı: kayıt motorla uyuşmuyor.",
+    "close": "Bildirimi kapat"
+  },
+  "announce": {
+    "replayDone": "Tekrar bitti: {amount}, {times}×. Bakiye değişmedi.",
+    "roundEnd": "Tur bitti. Toplam kazanç {amount}, {times}×.",
+    "roundEndNoWin": "Tur bitti. Kazanç yok.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{count} {name}, {times}× kazanç",
+    "orbCharge": "Tarhun Fırtına Taşlarına yıldırım atıyor.",
+    "orbChargeFree": "Tarhun Fırtına Taşlarına yıldırım atıyor: değerler toplam çarpana eklenecek.",
+    "orbArrive": "Fırtına Taşı ×{value}: çarpan ×{multiplier}.",
+    "orbArriveFree": "Fırtına Taşı ×{value}: toplam çarpan ×{multiplier}.",
+    "multiply": "Çarpan ×{multiplier}: {base}× kazanç {multiplier} ile çarpıldı.",
+    "retrigger": "{count} Şimşek Mührü: {awarded, plural, other {# bedava dönüş eklendi}}.",
+    "trigger": "{count} Şimşek Mührü: bedava dönüş kazanıldı.",
+    "freeIntro": "Fırtına başlıyor: {awarded, plural, other {# bedava dönüş}} kazandın.",
+    "freeSpinWin": "Bedava dönüş {win}× kazandırdı. Toplam {total}×, toplam çarpan ×{multiplier}.",
+    "freeSpinNoWin": "Bedava dönüşte kazanç yok.",
+    "noWin": "Kazanç yok.",
+    "totalWin": "Toplam kazanç {amount}, {times}×.",
+    "freeOutro": "Fırtına dindi. Toplam: {amount}, {spins, plural, other {# dönüş}}, toplam çarpan ×{multiplier}.",
+    "sent": "Dönüş sunucuya gönderildi, {amount}.",
+    "buyStarted": "Bonus satın alındı, {amount}. Bedava dönüşler başlıyor.",
+    "spinStarted": "Dönüş başladı, {amount}.",
+    "recovered": "Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı ({amount}).",
+    "replaying": "Tekrar oynatılıyor: tur {id}. Bakiye değişmez.",
+    "refilled": "DEMO bakiyesi {amount} olarak yenilendi.",
+    "refilledRemote": "Sunucu DEMO bakiyesi {amount} olarak yenilendi.",
+    "speed": "Dönüş hızı: {speed}.",
+    "anteOn": "Şans ×2 açık: bedava dönüş şansı ≈2 kat, maliyet {cost}.",
+    "anteOff": "Şans ×2 kapalı: maliyet {cost}."
+  },
+  "banner": {
+    "scatterPay": "{count} Şimşek Mührü · +{amount} DEMO",
+    "retrigger": "+{n, plural, other {# bedava dönüş}}"
+  },
+  "deck": {
+    "aria": "Oyun kontrolleri",
+    "balance": "Bakiye",
+    "refill": "Bakiyeyi yenile",
+    "replay": "Tekrar",
+    "win": "Kazanç",
+    "replayWin": "Tekrar kazancı",
+    "lastWin": "Son kazanç",
+    "spin": "Çevir",
+    "spinLocked": "Tur sürüyor; bütün düşmeler, yıldırımlar ve bedava dönüşler bitene kadar kilitli.",
+    "auto": "Otomatik",
+    "info": "Bilgi",
+    "on": "Açık",
+    "off": "Kapalı",
+    "anteDesc": "Bedava dönüş şansı ≈2 kat",
+    "buyDesc": "{spins, plural, other {# bedava dönüş}} · {rtp}",
+    "speed": "Dönüş hızı: {speed}",
+    "soundLoading": "Ses yükleniyor {percent}"
+  },
+  "msg": {
+    "outOfCredit": "DEMO bakiyen bitti.",
+    "lastRound": "Son tur <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "Son tur kazançsız.",
+    "spaceHint": "Boşluk tuşu ile de çevirebilirsin.",
+    "fixedBefore": "Sonuç dönüşten önce belirlenir."
+  },
+  "replay": {
+    "ribbon": "Tekrar — bakiye değişmez · tur {id}"
+  },
+  "auto": {
+    "ribbon": "Otomatik · {n, plural, other {# tur}} kaldı"
+  },
+  "free": {
+    "tag": "Bedava dönüş",
+    "spinNumber": "{n}. dönüş",
+    "left": "Kalan",
+    "counterAria": "Bedava dönüş {number}, kalan dönüş {left}"
+  },
+  "mult": {
+    "label": "Çarpan",
+    "total": "Toplam çarpan"
+  },
+  "meter": {
+    "idleA": "Her yerde <b>8+</b> aynı sembol öder",
+    "idleB": "<b>×500</b>’e kadar Fırtına Taşı",
+    "win": "Kazanç",
+    "totalWin": "Toplam kazanç"
+  },
+  "gated": {
+    "title": "Zincir üstü Tarhun yok.",
+    "text": "Bu oyun yalnız DEMO kredisiyle oynanır; gerçek bahis kabul edilmez.",
+    "back": "Yerel demoya dön"
+  },
+  "splash": {
+    "f1Title": "8+ her yerde",
+    "f1Text": "Aynı sembolden 8 tane, ızgaranın her yerinde öder",
+    "f2Title": "×500 Fırtına Taşı",
+    "f2Text": "Yıldırımla toplanır; bedava dönüşte çarpan birikir",
+    "f3Title": "{max}× azami",
+    "f3Text": "4 Şimşek Mührü {spins, plural, other {# bedava dönüş}} açar",
+    "loading": "Oyun yükleniyor",
+    "play": "Oyna",
+    "skip": "Açılış ekranını bir daha gösterme",
+    "note": "DEMO kredisi değersizdir · Sonuç dönüşten önce belirlenir · Sertifikasız simülasyon RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Ses hazır: müzik, efektler ve seslendirme bu cihazda hazırlandı.",
+    "soundLoading": "Ses yükleniyor {percent} (bu sırada oyun sessiz veya basit efektlerle sürer).",
+    "soundOnTouch": "Ses ilk dokunuşta yüklenir.",
+    "demoTitle": "DEMO bakiyesi",
+    "demoText": "Bakiye {balance}{server, select, yes { (sunucu)} other {}}. Yenilemek bakiyeyi {amount} yapar ve geçmişe \"{label}\" satırı ekler; tur veya otomatik oyun sürerken yapılamaz."
+  },
+  "buy": {
+    "feature": "{spins, plural, other {# bedava dönüş}} · bahis {bet}",
+    "rtp": "Satın alma RTP {buy} · standart {standard} (simülasyon, sertifikasız)",
+    "description": "Bahsin <b>100 katı</b>. Tur en az 4 Şimşek Mührüyle başlar ve {spins, plural, other {# bedava dönüş}} garantilidir; toplam çarpan ×0’dan başlayıp kazanan her dönüşte büyür. Kazançlar {bet} bahse göre ödenir, azami {max}."
+  },
+  "history": {
+    "scope": "Bu oturum · tekrar bakiyeyi değiştirmez",
+    "time": "Zaman",
+    "mode": "Mod",
+    "win": "Kazanç",
+    "result": "Sonuç",
+    "roundId": "Tur kimliği",
+    "replay": "Tekrar oynat",
+    "replayAria": "Tekrar oynat: tur {id}, bakiye değişmez",
+    "share": "Kazancını paylaş",
+    "shareAria": "Kazancını paylaş: tur {id}",
+    "latest": "Son tur",
+    "refilled": "Bakiye yenilendi",
+    "refilledRemote": "Bakiye yenilendi (sunucu)",
+    "emptyTitle": "İlk turun burada görünecek.",
+    "emptyText": "Her turun modu, bahsi, maliyeti, kazancı ve tur kimliği kaydedilir; istediğin turu tekrar izleyebilirsin.",
+    "capped": "Azami kazanç · {times}×",
+    "free": "Bedava dönüş ×{spins} · {times}×",
+    "freeTotal": "Bedava dönüş ×{spins} · toplam ×{multiplier} · {times}×",
+    "none": "Kazanç yok",
+    "tumbles": "{n, plural, other {# düşme}} · {times}×",
+    "tumblesMultiplied": "{n, plural, other {# düşme}} · ×{multiplier} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× bahis",
+    "capNote": "Tur tavana ulaştı · kalan dönüşler oynanmaz",
+    "continue": "Devam",
+    "tapToSpeed": "Hızlandırmak için dokun"
+  },
+  "intro": {
+    "title": "Fırtına Başlıyor",
+    "titleCaps": "FIRTINA BAŞLIYOR",
+    "freeA": "bedava",
+    "freeB": "dönüş",
+    "text": "Kazanan her dönüşte Fırtına Taşları <b>toplam çarpana</b> eklenir; toplam çarpan bedava dönüşler boyunca korunur. 3 Şimşek Mührü +5 dönüş verir.",
+    "start": "Başla"
+  },
+  "total": {
+    "titleA": "Fırtına Dindi",
+    "titleB": "Toplam",
+    "word": "TOPLAM",
+    "sub": "BEDAVA DÖNÜŞ",
+    "spins": "Dönüş",
+    "spinsValue": "{n, plural, other {# dönüş}}",
+    "none": "Yok",
+    "strikes": "{n, plural, other {# yıldırım}}",
+    "noOrbs": "küre yok",
+    "betMultiple": "Bahsin",
+    "capNote": "Azami kazanca ulaşıldı · kalan dönüşler oynanmaz",
+    "toCelebration": "Kutlamaya geç"
+  },
+  "info": {
+    "windowTitle": "Tarhun · Oyun bilgisi",
+    "how": {
+      "title": "Nasıl oynanır",
+      "s1": "<b>Bahsini seç.</b> − ve + düğmeleri bahsi bir basamak değiştirir; bahis tutarına dokununca bütün basamaklar açılır. \"{max}\" bakiyenin yettiği en yüksek basamağı seçer.",
+      "s2": "<b>Çevir.</b> Fırtına düğmesine bas veya Boşluk tuşunu kullan. Tur maliyeti (Şans ×2 açıksa bahsin {multiple} katı) bakiyeden bir kez düşer.",
+      "s3": "<b>Eşleştir.</b> 6 sütun × 5 satırlık ızgarada aynı sembolden <b>her yerde 8 veya daha fazla</b> varsa kazanırsın; sayı arttıkça ödeme kademesi yükselir.",
+      "s4": "<b>Zincir.</b> Kazanan taşlar parçalanır, üsttekiler düşer, boşluklar yeni taşla dolar. Yeni kazanç kalmayana kadar sürer.",
+      "s5": "<b>Yıldırım.</b> Zincir kazançla bitince Tarhun ızgaradaki her Fırtına Taşına yıldırım atar; taşların değerleri toplanır ve kazanç bu toplamla çarpılır.",
+      "s6": "<b>Sonuç.</b> Turun tamamı dönüş başlamadan önce motorla belirlenir; animasyon yalnızca bu sonucu oynatır. Çevir düğmesi tur (bütün düşmeler ve bedava dönüşler) bitene kadar kilitlidir; hızlandırmak için {quick}/{turbo} ayarını kullan. Hız ayarı, kutlama sayacına dokunmak, gizli sekme veya sayfadan ayrılmak ödemeyi değiştirmez; tur her durumda bir kez, motorun ödemesiyle kapanır.",
+      "note": "DEMO kredisi değersizdir; SOL, token veya ödül kazandırmaz. Oyun tarayıcıda yerel rastgelelikle çalışır, VRF kanıtı yoktur."
+    },
+    "pay": {
+      "title": "Ödeme tablosu",
+      "lead": "Aynı sembolden ızgarada <b>her yerde 8 veya daha fazla</b> varsa kazanırsın. Büyük rakam <b>{bet}</b> bahiste brüt DEMO tutarıdır; altındaki çarpan bahsin katıdır.",
+      "symbolsAria": "Sembol ödemeleri",
+      "scatterTitle": "{name} · dağınık ödeme",
+      "seals6": "6+ mühür",
+      "seals5": "5 mühür",
+      "seals4": "4 mühür",
+      "scatterText": "Temel dönüş bitince ızgarada 4 veya daha fazla mühür varsa öder ve <b>{spins} bedava dönüş</b> açar. Mühürler patlamaz.",
+      "orbTitle": "{name} · çarpan küresi",
+      "orbText": "×2 ile ×500 arası değer taşır, hem temel oyunda hem bedava dönüşte düşer. Patlamaz, düşmelerde yerinde kalıp kayar. Ayrıntı \"{features}\" sayfasında.",
+      "maxTitle": "Azami kazanç {n}×",
+      "maxText": "Bu bahiste <b>{amount}</b>. Tur toplamı bu tavana ulaşırsa tur hemen biter; kalan bedava dönüşler oynanmaz."
+    },
+    "features": {
+      "title": "Özellikler",
+      "tumbleTitle": "Düşen taşlar (tumble)",
+      "tumbleText": "Her kazançtan sonra kazanan taşlar parçalanır, kalanlar aşağı kayar ve boşluklar üstten dolar. Kazanç göstergesi tur boyunca sıfırlanmaz: düşmeler, çarpanlar ve bütün bedava dönüşler aynı toplamda birikir.",
+      "orbTitle": "Fırtına Taşı (çarpan küresi)",
+      "orbText": "Temel oyunda ve bedava dönüşte düşebilir; değeri ×2 ile ×500 arasıdır. Temel oyunda dönüşün düşme zinciri kazançla biterse ızgaradaki taşların değerleri <b>toplanır</b> ve o dönüşün kazancı bu toplamla çarpılır (mühür ödemesi çarpılmaz). Kazanç yoksa taşlar etkisiz kalır.",
+      "orbListAria": "Fırtına Taşı değerleri ve olasılıkları",
+      "totalTitle": "Toplam çarpan (bedava dönüş)",
+      "totalText": "Bedava dönüşler <b>×0 toplam çarpanla</b> başlar. Kazanan her dönüşte ızgaradaki Fırtına Taşlarının değerleri toplam çarpana <b>eklenir</b>, sonra o dönüşün kazancı yeni toplamla çarpılır (toplam henüz 0 ise ×1). Kazançsız dönüşte taşlar eklenmez. Toplam çarpan bedava dönüşler boyunca, ek dönüşler dahil, korunur.",
+      "sealTitle": "Şimşek Mührü (scatter)",
+      "sealText": "Temel dönüş bitince 4 veya daha fazla mühür ödeme yapar ve {trigger} bedava dönüş açar. Bedava dönüşte 3 veya daha fazla mühür {retrigger} dönüş daha ekler (ödemesiz). Bir turda en çok {max} bedava dönüş verilir.",
+      "freeTitle": "Bedava dönüş",
+      "freeText": "Bedava dönüşler aynı bahisle, aynı tur içinde oynanır; ek ücret alınmaz. Her zaman \"{screen}\" ekranıyla biter: oynanan dönüş, son toplam çarpan ve toplam kazanç.",
+      "tiersTitle": "Kazanç kademeleri ve çarpan anonsu",
+      "tiersText": "Tur toplamı taban bahsin <b>10 katı</b> veya üstüyse kutlama ekranı açılır ve sayaç kademeler arasında tırmanır: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; tavana ulaşan tur {max} ile biter. Uygulanan her çarpan ızgaranın üstünde büyük yazıyla duyurulur; ×10, ×25, ×50, ×100, ×250 ve ×500 eşiklerinde yazı ve ses büyür. Ekrana dokunmak sayacı hemen sonuca getirir; ödemeyi değiştirmez.",
+      "anteTitle": "Şans ×2 · maliyet {cost}",
+      "anteText": "Açıkken her dönüş bahsin <b>{multiple} katına</b> mal olur ve temel oyunda mühür çıkma olasılığı artar: bedava dönüş şansı yaklaşık 2 katıdır ({ante} / {standard}). Kazançlar yine taban bahse göre ödenir. Açıkken bonus satın alınamaz.",
+      "buyTitle": "Bonus satın al · fiyat {price}",
+      "buyText": "Bahsin <b>100 katı</b> karşılığında tur en az 4 mühürle başlar; {spins} bedava dönüş garantilidir. Satın alma onay penceresiyle yapılır, ayrı bir RTP ile çalışır ({rtp}) ve otomatik oyunla kullanılamaz."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Teorik dönüş (RTP)",
+      "caption": "Mod başına teorik dönüş",
+      "mode": "Mod",
+      "cost": "Maliyet",
+      "ci": "%95 GA",
+      "feature": "Özellik",
+      "everyRound": "her tur",
+      "method": "Her mod için ayrı {millions} milyon tur simülasyonu (motor <code>storm-throne-1</code>). RTP ödenen maliyete göre hesaplanır. Kazanç sıklığı (taban dönüş): standart {hit}, Şans ×2 {hitAnte}. Oynaklık (maliyet biriminde standart sapma): standart {sdStandard}, satın alma {sdBuy}.",
+      "note": "Simülasyon tahminidir, <b>sertifikasızdır</b>; ağır kuyruk nedeniyle güven aralığı iyimser olabilir. Kısa oturumdaki sonuç RTP'den çok farklı olabilir. DEMO kredisi <b>değersizdir</b>."
+    },
+    "limits": {
+      "title": "Bahis ve kazanç sınırları",
+      "range": "Bahis aralığı",
+      "levels": "Basamaklar",
+      "current": "Şu anki bahis",
+      "currentValue": "{bet} · Şans ×2 {ante} · Satın alma {buy}",
+      "max": "Azami kazanç",
+      "maxValue": "Bahsin {n} katı · bu bahiste {amount}",
+      "p1": "Azami kazanca ulaşan tur hemen biter; kalan bedava dönüşler oynanmaz. Ödeme her zaman taban bahse göre hesaplanır, kuruşun altı aşağı yuvarlanır.",
+      "p2": "Bakiyenin yetmediği basamaklar ve modlar seçilemez. Bir tur tek rezervasyon ve tek ödemedir; aynı anda yalnız bir tur oynanır."
+    },
+    "keys": {
+      "title": "Tuşlar",
+      "heading": "Klavye",
+      "space": "Boşluk",
+      "spaceText": "Dönüşü başlatır ({settings} → \"{option}\"). Tur sürerken dönüşü atlamaz; yalnız bedava dönüş ekranlarını ve kutlama sayacını hızlandırır.",
+      "enterText": "Odaktaki düğmeye basar.",
+      "escText": "Açık pencereyi kapatır (oturum hatırlatması hariç).",
+      "tabText": "Kontroller arasında gezinir; odak her zaman görünür.",
+      "arrowsText": "Bu bilgi penceresinde sayfa değiştirir; ayar seçimlerinde seçeneği değiştirir.",
+      "pageText": "Bilgi sayfaları arasında gezinir.",
+      "note": "Ekran okuyucu her adımı (\"{example}\", çarpanlar, tur sonucu) duyurur; ızgara 6×5 tablo olarak okunur. Semboller renk yanında biçim ve işaretle de ayrılır. Hareketi azalt tercihi parçacık, şimşek ve sarsıntıyı kapatır."
+    },
+    "fault": {
+      "title": "Arıza hükmü",
+      "p1": "<b>Arıza, etkilenen bütün oyunları ve ödemeleri geçersiz kılar.</b> Yazılım, tarayıcı veya cihaz arızasında tur kaydı esas alınır; ekranda görünen ama motor kaydıyla uyuşmayan bir tutar geçerli değildir.",
+      "p2": "Bu oyun yalnız DEMO kredisiyle oynanır. DEMO değersizdir, paraya veya tokene çevrilemez; arıza halinde DEMO bakiyesi ve oturum geçmişi düzeltilebilir veya sıfırlanabilir.",
+      "p3": "Sonuç dönüşten önce belirlendiği için animasyonun yarıda kalması, sekmenin gizlenmesi veya sayfadan ayrılmak sonucu değiştirmez; tur yine motorun ödemesiyle bir kez kapanır."
+    }
+  }
+}

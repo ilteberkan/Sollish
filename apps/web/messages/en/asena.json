@@ -1,0 +1,404 @@
+{
+  "deck": {
+    "group": "Game controls",
+    "balance": "Balance",
+    "refill": "Refill balance",
+    "win": "Win",
+    "winReplay": "Replay",
+    "winReplayLast": "Replay win",
+    "winLast": "Last win",
+    "cost": "Cost",
+    "spin": "Spin",
+    "spinCost": "Cost {cost}",
+    "auto": "Autoplay",
+    "info": "Info",
+    "infoAria": "Game info",
+    "on": "On",
+    "off": "Off",
+    "buy": "Buy bonus",
+    "buyDesc": "{spins, plural, one {# free spin} other {# free spins}} · {rtp}",
+    "speedAria": "Spin speed: {speed}",
+    "sound": "Sound",
+    "soundLoading": "Loading sound {percent}%",
+    "outOfCredit": "Your DEMO balance has run out.",
+    "lastWin": "Last round <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Last round: no win.",
+    "hintSpace": "You can also spin with the space bar.",
+    "hintFixed": "The result is fixed before the spin.",
+    "spinLocked": "Round in progress; locked until every tumble, wolf step and free spin has played.",
+    "anteDesc": "Free-spin chance ≈2×"
+  },
+  "hud": {
+    "freeAria": "Free spin {number}, {left} left",
+    "freeSpin": "Spin {n}",
+    "left": "Left",
+    "free": "Ergenekon",
+    "moonAria": "3 or more Ay Ata trigger 10 free spins",
+    "moonLong": "<b>3+</b> Ay Ata · 10 free spins",
+    "moonShort": "<b>3+</b> Ay Ata · 10 spins",
+    "templateChip": "Constellation <b>×{multiplier}</b> · Max <b>{max}×</b>",
+    "globalAria": "Global multiplier ×{multiplier}, {distinct} constellations on the map",
+    "global": "Global",
+    "map": "Map"
+  },
+  "meter": {
+    "total": "Total win",
+    "win": "Win",
+    "idleA": "<b>5+</b> adjacent matching symbols pay",
+    "idleB": "The Sky Wolf walks and leaves a trail",
+    "idleC": "constellation <b>×2–×10</b>"
+  },
+  "replay": {
+    "ribbon": "Replay — balance unchanged · round {id}"
+  },
+  "auto": {
+    "ribbon": "Autoplay · {spins, plural, one {# spin} other {# spins}} left"
+  },
+  "toast": {
+    "close": "Dismiss notification",
+    "autoplayStopped": "Autoplay stopped: {reason}. {spins, plural, one {# spin} other {# spins}}, net {net}.",
+    "autoplayStoppedShort": "Autoplay stopped: {reason}.",
+    "autoplayStarted": "Autoplay: {spins, plural, one {# spin} other {# spins}}, loss limit {limit}.",
+    "refilled": "Balance refilled: {amount} DEMO.",
+    "shareCopied": "Share link copied: {url}",
+    "shareLink": "Share link: {url}",
+    "shareFailed": "Could not share: {error}",
+    "replayFailed": "This round could not be replayed.",
+    "replayMismatch": "Replay could not be verified: the record does not match the engine."
+  },
+  "banner": {
+    "extraSpins": "+{awarded} free spins",
+    "constellation": "{name} ×{multiplier}",
+    "mapSpins": "Map · +{awarded} free spins",
+    "scatterPay": "{count} Ay Ata · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "Spin started, {amount} DEMO.",
+    "sentToServer": "Spin sent to the server, {amount} DEMO.",
+    "recovered": "The unfinished round was recovered from the server; it was already paid there ({amount} DEMO).",
+    "replaying": "Replaying: round {id}. Balance does not change.",
+    "replayDone": "Replay finished: {amount} DEMO, {times}×. Balance unchanged.",
+    "roundEnd": "Round over. Total win {amount} DEMO, {times}×.",
+    "roundEndNone": "Round over. No win.",
+    "noWin": "No win.",
+    "totalWin": "Total win {amount} DEMO, {times}×.",
+    "celebration": "{title}: {amount} DEMO, {times}×.",
+    "speed": "Spin speed: {speed}.",
+    "anteOn": "Chance ×2 on: free-spin chance ≈2×, cost {cost}.",
+    "anteOff": "Chance ×2 off: cost {cost}.",
+    "refilled": "DEMO balance refilled to {amount} DEMO.",
+    "refilledRemote": "Server DEMO balance refilled to {amount} DEMO.",
+    "bonusBought": "Bonus bought, {amount} DEMO. Ergenekon begins.",
+    "moonTease": "Two Ay Ata appeared; a third triggers the free spins.",
+    "cluster": "{size} {name}{template, select, none {} other {, {templateName} ×{templateMultiplier}}}, {times}× win",
+    "constellation": "Constellation lit: {name}, cluster pay ×{multiplier}.",
+    "map": "Ergenekon map: {distinct} / 6 constellations lit.",
+    "ergenekon": "Ergenekon: {distinct} constellations, global multiplier ×{after}. Every win from now on is ×{after}.",
+    "mapSpins": "The Ergenekon map added {awarded} free spins.",
+    "wolfWalk": "The Sky Wolf walked: column {fromCol}, row {fromRow} → column {toCol}, row {toRow}; a Star Trail stayed behind.",
+    "moons": "{count} Ay Ata.",
+    "retrigger": "{count} Ay Ata: {awarded} free spins added.",
+    "trigger": "{count} Ay Ata: Ergenekon won.",
+    "freeIntro": "Ergenekon begins: you won {awarded} free spins.",
+    "freeSpinWin": "Free spin paid {times}×. Total {total}×.",
+    "freeSpinNone": "No win on this free spin.",
+    "freeOutro": "Ergenekon ended. Total: {amount} DEMO, {spins} spins, {constellations} constellations, global multiplier ×{multiplier}."
+  },
+  "autoplay": {
+    "serverFailed": "The server could not start the round",
+    "spinFailed": "The spin could not be started",
+    "quit": "You left the session",
+    "title": "Autoplay",
+    "note": "{cost} per spin{ante, select, yes { (Chance ×2)} other {}} · never buys the bonus · stops when the tab is hidden."
+  },
+  "errors": {
+    "entropy": "Secure local randomness is unavailable. The demo did not start.",
+    "insufficient": "Insufficient balance: this {kind, select, buy {purchase} other {spin}} costs {cost}. Lower the bet or refill the balance.",
+    "noCredit": "You don't have enough demo credit, or a demo is already running."
+  },
+  "buy": {
+    "block": {
+      "gated": "Only bought with DEMO credit",
+      "autoplay": "Cannot be bought while autoplay is running",
+      "busy": "Cannot be bought before the round ends",
+      "ante": "Cannot be bought while Chance ×2 is on",
+      "balance": "Insufficient balance (price {price})"
+    },
+    "rtp": "Purchase RTP {buy} · standard {standard} (simulation, uncertified)",
+    "feature": "Ergenekon · 10 free spins · bet {bet}",
+    "text": "<b>80×</b> your bet. The round starts with at least 3 Ay Ata and 10 free spins are guaranteed; every constellation that lights up unlocks the Ergenekon map, the global multiplier rises to ×2, ×3 and ×5 and multiplies every win for the whole feature. Wins are paid on a bet of {bet}, maximum {max}."
+  },
+  "gated": {
+    "text": "This game is played with DEMO credit only; real bets are not accepted.",
+    "back": "Back to the local demo",
+    "title": "No on-chain Asena."
+  },
+  "splash": {
+    "max": {
+      "title": "{max}× max"
+    },
+    "loading": "Loading game",
+    "play": "Play",
+    "skip": "Don't show the intro screen again",
+    "note": "DEMO credit has no value · The result is fixed before the spin · Uncertified simulation RTP ≈ {rtp}",
+    "constellation": {
+      "title": "Constellation ×10",
+      "text": "If a cluster contains a shape from the sky, it is drawn star by star and multiplies the pay"
+    },
+    "wolf": {
+      "title": "The Sky Wolf walks",
+      "text": "A wolf that joins a win advances one cell with every tumble and leaves a Star Trail"
+    },
+    "ergenekon": {
+      "title": "Ergenekon · {max}×",
+      "text": "As the map unlocks, the iron mountain cracks: global multiplier ×2, ×3, ×5"
+    }
+  },
+  "settings": {
+    "soundReady": "Sound ready: music, effects and ambience are prepared on this device.",
+    "soundIdle": "Sound loads on the first tap.",
+    "demoTitle": "DEMO balance",
+    "demoText": "Balance {balance}{remote, select, yes { (server)} other {}}. Refilling sets the balance to {start} DEMO and adds a “Balance refilled” row to the history; it is not possible while a round or autoplay is running.",
+    "soundLoading": "Loading sound {percent}% (the game stays silent meanwhile)."
+  },
+  "history": {
+    "title": "Your game history",
+    "scope": "This session · replays never change the balance",
+    "time": "Time",
+    "mode": "Mode",
+    "bet": "Bet",
+    "cost": "Cost",
+    "win": "Win",
+    "result": "Result",
+    "roundId": "Round ID",
+    "replayColumn": "Replay",
+    "latest": "Latest round",
+    "replay": "Replay",
+    "replayAria": "Replay: round {id}, balance unchanged",
+    "share": "Share my win",
+    "shareAria": "Share my win: round {id}",
+    "emptyTitle": "Your first round will appear here.",
+    "emptyText": "The mode, bet, cost, win and round ID of every round are recorded; you can watch any round again.",
+    "reset": "Balance refilled",
+    "resetRemote": "Balance refilled (server)",
+    "detail": {
+      "capped": "Max win · {times}×",
+      "none": "No win",
+      "free": "Ergenekon ×{spins}{multiplier, plural, =0 {} other { · global ×#}} · {times}×",
+      "base": "{clusters, plural, one {# cluster} other {# clusters}}{stars, plural, =0 {} one { · # constellation} other { · # constellations}}{moons, plural, =0 {} other { · # Ay Ata}} · {times}×"
+    },
+    "tableRegion": "Game history table"
+  },
+  "celebration": {
+    "aria": "{title}: {money} DEMO",
+    "times": "{times}× bet",
+    "capNote": "The round hit the cap · remaining spins are not played",
+    "speedUp": "Tap to speed up",
+    "continue": "Continue"
+  },
+  "intro": {
+    "start": "Start",
+    "word": "ERGENEKON",
+    "srTitle": "Ergenekon begins",
+    "freeSpins": "free\nspins",
+    "text": "Every constellation that lights up unlocks a piece of the <b>Ergenekon map</b>. <b>3 different</b> constellations give +5 spins and a global multiplier of <b>×2</b>, <b>all six</b> give +5 spins and <b>×3</b>, and all lit twice give <b>×5</b>. The global multiplier stays for the whole feature and multiplies every win. 3 Ay Ata give +3 spins."
+  },
+  "total": {
+    "word": "TOTAL",
+    "sub": "FREE SPINS",
+    "titleB": "Total",
+    "toCelebration": "On to the celebration",
+    "capNote": "Maximum win reached · remaining spins are not played",
+    "titleA": "Ergenekon",
+    "spins": "Spins",
+    "spinsValue": "{spins, plural, one {# spin} other {# spins}}",
+    "wolfSteps": "{n, plural, one {# wolf step} other {# wolf steps}}",
+    "wolfNone": "the wolf did not walk",
+    "constellations": "Constellations",
+    "mapOf": "map {distinct}/6",
+    "global": "Global multiplier",
+    "ofBet": "{times}× bet"
+  },
+  "badge": {
+    "checking": "Checking the server"
+  },
+  "rules": {
+    "fixed": "The result is determined locally in your browser with local randomness before the spin starts; the animation only plays that result. Even if you leave the page, the round closes with the determined payout. There is no VRF proof.",
+    "board": "The star field is 6×6. 5 or more adjacent symbols, horizontally or vertically, of the same kind (including the Sky Wolf and Star Trail wilds) form a cluster and pay; the pay tier rises as the cluster grows. Winning clusters turn into stars and burst, the symbols above fall and the gaps are filled.",
+    "features": "If a cluster contains one of the six constellation templates (Wolf Head ×10, Tree of Life ×8, Eagle ×6, Horse ×4, Bow ×3, Crescent ×2; rotated or mirrored), the constellation lights up and the cluster pay is multiplied by the template's multiplier. A Sky Wolf that takes part in a win walks one cell after every tumble and leaves a Star Trail wild behind it. 3 or more Ay Ata trigger 10 free spins (Ergenekon): every constellation that lights up unlocks a piece of the map; 3 different constellations give +5 spins and a global multiplier of ×2, 6 different give +5 and ×3, and all of them twice give ×5. The maximum win is 5,000 times the bet."
+  },
+  "meta": {
+    "title": "Asena: Star Wolf",
+    "description": "Asena: Star Wolf — an original DEMO cluster game. Clusters draw constellations in the sky, the Sky Wolf walks and leaves a star trail; the Ergenekon map unlocks a global multiplier of up to ×5."
+  },
+  "title": "Asena: Star Wolf",
+  "subtitle": "Clusters draw constellations in the sky, the Sky Wolf walks and leaves a star trail; in Ergenekon the global multiplier grows up to ×5.",
+  "table": "Asena game table",
+  "logo": {
+    "subtitle": "STAR WOLF",
+    "label": "Asena: Star Wolf"
+  },
+  "symbols": {
+    "h1": "Asena",
+    "h2": "Kün Ana",
+    "h3": "Sky Eagle",
+    "h4": "Steppe Horse",
+    "l1": "Turquoise Star",
+    "l2": "Crimson Ruby",
+    "l3": "Emerald Arrow",
+    "l4": "Amethyst Tamga",
+    "wolf": "Sky Wolf (walking wild)",
+    "trail": "Star Trail (wild)",
+    "moon": "Ay Ata (scatter)"
+  },
+  "templates": {
+    "kurt-basi": "Wolf Head",
+    "yay": "Bow",
+    "at": "Horse",
+    "kartal": "Eagle",
+    "hayat-agaci": "Tree of Life",
+    "hilal": "Crescent"
+  },
+  "board": {
+    "label": "Asena star field",
+    "labelPlay": "Asena star field, 6 columns, 6 rows",
+    "labelFree": "Asena free-spin star field, 6 columns, 6 rows",
+    "cell": "{symbol}, column {col}, row {row}"
+  },
+  "callout": {
+    "tier0": "Constellation",
+    "tier1": "Bright constellation",
+    "tier2": "Sky multiplier",
+    "tier3": "Tengri multiplier",
+    "tier4": "Legendary sky",
+    "tier5": "Kün Ana"
+  },
+  "fx": {
+    "spins": "SPINS",
+    "extraSpins": "EXTRA SPINS",
+    "freeSpins": "FREE SPINS"
+  },
+  "info": {
+    "title": "Asena · Game info",
+    "tab": {
+      "how": "How to play",
+      "pay": "Paytable",
+      "features": "Features",
+      "rtp": "RTP",
+      "limits": "Bet and win limits",
+      "keys": "Keys",
+      "fault": "Malfunction clause"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Choose your bet.</b> The − and + buttons change the bet by one step; tap the bet amount to open every step. “Max bet” picks the highest step your balance allows.",
+        "spin": "<b>Spin.</b> Press the star button or use the space bar. The round cost ({factor} times the bet when Chance ×2 is on) is deducted from the balance once.",
+        "cluster": "<b>Form clusters.</b> On the 6 × 6 star field, <b>5 or more matching symbols</b> adjacent horizontally or vertically pay; the pay tier rises as the cluster grows.",
+        "constellation": "<b>Constellation.</b> If a cluster contains one of the six shapes in the sky, the constellation is drawn star by star, echoes across the sky, the wolf howls and the cluster pay is multiplied by the shape's multiplier (×2–×10).",
+        "chain": "<b>The chain.</b> Winning clusters turn into stars and burst, the symbols above fall and the gaps are filled; a Sky Wolf that takes part in a win walks one cell. This goes on until no new cluster remains.",
+        "result": "<b>The result.</b> The whole round is determined by the engine before the spin starts; the animation only plays that result. The spin button stays locked until the round (every tumble, wolf step and free spin) has finished; use the Quick/Turbo setting to speed it up. The speed setting, tapping the celebration counter, a hidden tab or leaving the page does not change the payout; the round always closes once, with the engine's payout."
+      },
+      "note": "DEMO credit has no value; it does not earn SOL, tokens or rewards. The game runs in the browser with local randomness; there is no VRF proof. Gök Tengri, Ay Ata, Kün Ana, Asena and Ergenekon belong to public-domain Turkic mythology; the characters and artwork are original."
+    },
+    "pay": {
+      "maxTitle": "Maximum win {max}×",
+      "maxText": "At this bet: <b>{amount}</b>. If the round total reaches this cap, the round ends immediately; the remaining free spins are not played.",
+      "lead": "<b>5 or more matching symbols</b> adjacent horizontally or vertically form a cluster; the Sky Wolf and Star Trail wilds stand in for every symbol. The large figure is the gross DEMO amount at a bet of <b>{bet}</b>; the multiplier beneath it is a multiple of the bet. Every cluster on the same board pays separately.",
+      "gridAria": "Cluster payouts",
+      "fullTable": "All cluster sizes (7 tiers)",
+      "fullCaption": "Payout by symbol and cluster size, as a multiple of the bet",
+      "colSymbol": "Symbol",
+      "moon5": "5+ Ay Ata",
+      "moon4": "4 Ay Ata",
+      "moon3": "3 Ay Ata",
+      "moonText": "Pays if there are 3 or more Ay Ata on the final board of the base spin and triggers <b>{spins} free spins</b> (Ergenekon). Ay Ata does not burst; the wolf does not step on it either.",
+      "wolfText": "Stands in for every pay symbol and appears only on the first board of a spin. If it takes part in a win it does not burst but <b>walks</b>: it advances one cell after the fall and leaves a Star Trail wild in the cell it left. Details on the “Features” page.",
+      "trailText": "The wild left behind by the wolf. It comes down with the tumbles and is spent when it takes part in a win; it is wiped when the spin ends and does not carry into the next spin."
+    },
+    "rtp": {
+      "title": "Theoretical return (RTP)",
+      "caption": "Theoretical return per mode",
+      "colMode": "Mode",
+      "colCost": "Cost",
+      "colCi": "95% CI",
+      "colFeature": "Feature",
+      "everyRound": "every round",
+      "oneIn": "1 / {n}",
+      "note": "The simulation is an estimate and is <b>uncertified</b>; because of the heavy tail the confidence interval may be optimistic. Results in a short session can differ greatly from the RTP. DEMO credit is <b>worthless</b>.",
+      "text": "A separate {millions}-million-round simulation for each mode (engine <code>asena-stars-1</code>). RTP is computed on the cost paid. Win frequency (base spin): standard {hitStandard}, Chance ×2 {hitAnte}. Volatility (standard deviation in units of cost): standard {sdStandard}, purchase {sdBuy}."
+    },
+    "limits": {
+      "title": "Bet and win limits",
+      "range": "Bet range",
+      "steps": "Steps",
+      "current": "Current bet",
+      "currentValue": "{bet} · Chance ×2 {ante} · Purchase {buy}",
+      "max": "Maximum win",
+      "maxValue": "{multiplier} times the bet · {amount} at this bet",
+      "text1": "A round that reaches the maximum win ends immediately; the remaining free spins are not played. The payout is always computed on the base bet and anything below a cent is rounded down.",
+      "text2": "Steps and modes your balance cannot cover cannot be selected. A round is a single reservation and a single payout; only one round is played at a time."
+    },
+    "keys": {
+      "heading": "Keyboard",
+      "space": "Space",
+      "spaceText": "Starts the spin (Settings → “{option}”). It does not skip the spin during a round; it only speeds up the free-spin screens and the celebration counter.",
+      "enterText": "Presses the focused button.",
+      "escText": "Closes the open window (except the session reminder).",
+      "tabText": "Moves between the controls; focus is always visible.",
+      "arrowsText": "Changes the page in this info window; changes the option in settings choices.",
+      "pageText": "Moves between the info pages.",
+      "note": "The screen reader announces every step (“6 asena, Wolf Head ×10, 12.00× win”, wolf steps, the map and global multiplier, the round result); every cell is read with its symbol, column and row. Symbols are told apart by shape as well as colour (wolf head, sun, eagle, horse, star, ruby, arrow, seal). The reduce-motion preference draws the constellation already complete and turns off particles and shake; every step is still shown."
+    },
+    "fault": {
+      "title": "Malfunction clause",
+      "p1": "<b>A malfunction voids all affected games and payouts.</b> In case of a software, browser or device failure the round record prevails; an amount shown on screen that does not match the engine record is not valid.",
+      "p2": "This game is played with DEMO credit only. DEMO is worthless and cannot be converted into money or tokens; in the event of a malfunction the DEMO balance and session history may be corrected or reset.",
+      "p3": "Because the result is determined before the spin, an animation cut short, a hidden tab or leaving the page does not change it; the round still closes once with the engine's payout."
+    },
+    "features": {
+      "buy": {
+        "title": "Buy bonus · price {price}",
+        "text": "For <b>80 times the bet</b>, the round starts with at least 3 Ay Ata; {spins} free spins are guaranteed (the Ay Ata pay follows the normal table). The purchase is made through a confirmation window, runs at a separate RTP ({rtp}) and cannot be used with autoplay."
+      },
+      "templates": {
+        "title": "Constellation templates",
+        "text": "If a winning cluster completely contains one of the shapes below — including its rotated or mirrored forms, in any of 8 orientations — the constellation lights up and <b>the cluster pay is multiplied by the template's multiplier</b>. Wilds count as cells of the cluster. If several templates fit, the one with the highest multiplier lights up; each cluster lights at most one constellation, while different clusters in the same step can light different constellations.",
+        "aria": "Constellation templates",
+        "stars": "{n, plural, one {# star} other {# stars}}"
+      },
+      "wolf": {
+        "title": "The Sky Wolf walks",
+        "text": "A wolf that takes part in a win does not burst. After the fall and refill it walks one cell (up, right, down or left; random, never off the board, never onto an Ay Ata or another wolf). It swallows the symbol in the cell it enters and leaves a <b>Star Trail</b> wild in the cell it left. Several wolves walk in turn. A Star Trail is spent when it takes part in a win; it is wiped when the spin ends."
+      },
+      "ergenekon": {
+        "title": "Ergenekon (free spins)",
+        "text": "3+ Ay Ata trigger {spins} free spins (in a free spin 3+ Ay Ata give +{retrigger}; at most {max} spins in a round). In free spins every constellation that lights up unlocks its own piece of the <b>Ergenekon map</b> (a piece counts at most twice):",
+        "map3": "<bold>3 different constellations</bold> → +{spins} spins and a global multiplier <b>×{multiplier}</b>",
+        "map6": "<bold>6 different constellations</bold> → +{spins} spins and a global multiplier <b>×{multiplier}</b>",
+        "mapTwice": "<bold>All six, twice</bold> → global multiplier <b>×{multiplier}</b> (the iron mountain splits)",
+        "after": "The global multiplier and the map stay for the whole feature, never reset and multiply <b>every cluster win</b> — including the win of the step in which they unlock (first the constellations are written to the map, then the step pays). The base game is always played at ×1."
+      },
+      "cumulative": {
+        "title": "Cumulative win",
+        "text": "The win display never resets during a round: clusters, the Ay Ata pay and every free spin add up in the same total. A free-spin round always ends with the “Ergenekon — Total” screen."
+      },
+      "tiers": {
+        "title": "Win tiers and multiplier callouts",
+        "text": "If the round total is <b>10 times</b> the base bet or more, the sky gate opens and the counter climbs through the tiers: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; a round that reaches the cap ends with {max}. If template × global multiplier is ×10 or more, it is announced with large lettering and its own sound along with the wolf's howl; every rise of the global multiplier is shown by the iron mountain cracking. Tapping the screen brings the counter straight to the result; it does not change the payout."
+      },
+      "ante": {
+        "title": "Chance ×2 · cost {cost}",
+        "text": "When on, every spin costs <b>{factor} times the bet</b> and Ay Ata is more likely in the base game: the free-spin chance is about double ({ante} / {standard}). Wins are still paid on the base bet. The bonus cannot be bought while it is on."
+      }
+    }
+  },
+  "burst": {
+    "tag": "ERGENEKON · GLOBAL MULTIPLIER"
+  },
+  "skymap": {
+    "aria": "Ergenekon map: {distinct} constellations lit, global multiplier ×{multiplier}",
+    "inactive": "opens in the free spins",
+    "lit": "{distinct}/6 constellations",
+    "pips": "lit {n, plural, one {# time} other {# times}}"
+  }
+}

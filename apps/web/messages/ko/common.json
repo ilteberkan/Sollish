@@ -14,7 +14,14 @@
     "liveSuffix": " (라이브)",
     "nav": {
       "rewards": "보상",
-      "stake": "스테이킹"
+      "stake": "스테이킹",
+      "lobby": "로비",
+      "slots": "슬롯",
+      "live": "라이브",
+      "instant": "즉시 게임",
+      "new": "신작",
+      "fair": "증명 가능한 공정성",
+      "favorites": "즐겨찾기"
     },
     "network": {
       "devnet": "Devnet 미리보기",
@@ -30,6 +37,30 @@
       "tagline": "게임을 이해하고, 주도권을 지키세요.",
       "devnet": "데모 및 devnet · 실제 돈을 사용하지 않습니다",
       "demo": "데모 · 실제 자산을 사용하지 않습니다"
+    },
+    "sections": {
+      "casino": "카지노",
+      "games": "게임",
+      "more": "더 보기"
+    },
+    "collapse": "메뉴 접기",
+    "expand": "메뉴 펼치기",
+    "menu": "메뉴",
+    "closeMenu": "메뉴 닫기",
+    "tabbar": "빠른 이동",
+    "search": {
+      "label": "게임 검색",
+      "placeholder": "게임 검색",
+      "open": "검색",
+      "close": "검색 닫기",
+      "clear": "검색어 지우기",
+      "results": "{count, plural, =0 {게임을 찾지 못했습니다} other {게임 #개를 찾았습니다}}",
+      "seeAll": "로비에서 결과 보기"
+    },
+    "kind": {
+      "slot": "슬롯",
+      "live": "라이브",
+      "instant": "즉시"
     }
   },
   "chat": {

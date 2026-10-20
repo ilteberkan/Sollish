@@ -1,20 +1,21 @@
 'use client';
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { useRouter } from 'next/navigation';
-import { EBRU_RTP, playEbruRound, type EbruMode, type EbruRound, type EbruStains } from '@sollish/protocol';
-import { demoNumber } from '@/lib/demo';
+import { EBRU_FREE_SPINS_TRIGGER, EBRU_MAX_WIN_MULTIPLIER, EBRU_RTP, playEbruRound, type EbruMode, type EbruRound, type EbruStains } from '@sollish/protocol';
+import { DEMO_START_CENTS } from '@/lib/demo';
+import { useFormat, useT } from '@/lib/i18n/client';
+import { percentOf } from '@/lib/slot-kit/percent';
 import {
-  buildEbruTimeline, ebruCalloutTier, ebruCents, ebruClusterAnnouncement, ebruHistoryDetail, ebruMoney, ebruTimes,
+  buildEbruTimeline, ebruCalloutTier, ebruCents, ebruHistoryDetail,
   type EbruCalloutTier, type EbruEvent, type EbruMeter, type EbruTimeline,
 } from '@/lib/ebru-timeline';
 import { WIN_TIER_INFO, countUpSchedule, type CelebrationLevel, type CountUpSchedule } from '@/lib/slot-kit/win-tiers';
 import { TimelinePlayer } from '@/lib/slot-kit/timeline-player';
-import { AUTOPLAY_STOP_REASONS, autoplayNetLossCents, createAutoplay, type AutoplayConfig, type AutoplayState } from '@/lib/slot-kit/autoplay';
-import { formatAmount, formatDemo, formatSignedDemo } from '@/lib/slot-kit/bet';
+import { autoplayNetLossCents, createAutoplay, type AutoplayConfig, type AutoplayState, type AutoplayStopCode } from '@/lib/slot-kit/autoplay';
 import { SPIN_SPEEDS, type SpinSpeed } from '@/lib/slot-kit/settings';
 import {
   EBRU_AUTOPLAY_GAP, EBRU_BET_LADDER, EBRU_COST_MODES, EBRU_DEFAULT_BET_CENTS, EBRU_MAX_BET_CENTS, EBRU_MIN_BET_CENTS,
-  ebruAutoplayAfterRound, ebruAutoplayBeforeSpin, ebruBuyBlockReason, ebruCost, ebruLedgerLimits, ebruRoundId, ebruRtp, ebruTimelineOptions,
+  ebruAutoplayAfterRound, ebruAutoplayBeforeSpin, ebruBuyBlock, ebruCost, ebruLedgerLimits, ebruRoundId, ebruTimelineOptions,
 } from '@/lib/ebru-controls';
 import { markRoundShown, rgsErrorMessage, type RemoteReceipt, type RemoteRoundSource } from '@/lib/rgs-client';
 import { EBRU_ENGINE } from '@/lib/slot-engines/ebru';
@@ -34,7 +35,8 @@ import { ebruInfoPages } from './ebru-info-pages';
 import { EbruFrame } from './frame';
 import { EbruLogo } from './logo';
 import { EbruScene, type EbruSceneHandle } from './scene';
-import { EBRU_SYMBOL_LABELS, EbruStainArt, EbruSymbolArt, EbruSymbolSprites } from './symbols';
+import { EbruStainArt, EbruSymbolArt, EbruSymbolSprites } from './symbols';
+import { useEbruSymbolNames } from './use-symbol-names';
 import { EbruWater, type EbruMood } from './water';
 import styles from './ebru-game.module.css';
 
@@ -68,9 +70,9 @@ type StainInfo = { cells: number; max: number };
 type ModalId = 'settings' | 'info' | 'autoplay' | 'buy' | null;
 type Boot = { phase: 'loading' | 'ready' | 'done'; progress: number };
 
-const ENTROPY_ERROR = 'Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.';
-const CALLOUT_TAGS: Record<EbruCalloutTier, string> = { 0: 'Leke çarpanı', 1: 'Güçlü leke', 2: 'Parlak leke', 3: 'Lale çarpanı', 4: 'Efsane leke', 5: 'Altın varak' };
-const SPEED_LABELS: Record<SpinSpeed, string> = { normal: 'Normal', quick: 'Hızlı', turbo: 'Turbo' };
+/** Why autoplay stopped: a slot-kit code, or one of this game's own. The text is translated where it is shown. */
+type StopCode = AutoplayStopCode | 'server-failed' | 'spin-failed' | 'quit';
+const SPEED_KEYS = { normal: 'settings.speedNormal', quick: 'settings.speedQuick', turbo: 'settings.speedTurbo' } as const satisfies Record<SpinSpeed, string>;
 const ZERO: EbruMeter = { spin: 0, total: 0 };
 const BET_KEY = 'sollish:ebru:bet';
 /** The local DEMO source over ebru's engine only (lib/slot-engines/ebru.ts); the other games' engines are not in this route. */
@@ -103,24 +105,24 @@ const stainInfoOf = (stains: EbruStains | null): StainInfo => {
 };
 
 /** Count-up number that writes its own text node (no React re-render per frame). */
-function CountUp({ cents, duration }: { cents: number; duration: number }) {
+function CountUp({ cents, duration, format }: { cents: number; duration: number; format: (cents: number) => string }) {
   const node = useRef<HTMLSpanElement>(null);
   const shown = useRef(cents);
-  const [initial] = useState(() => ebruMoney(cents));
+  const [initial] = useState(() => format(cents));
   useEffect(() => {
     const el = node.current; if (!el) return;
     const from = shown.current, to = cents;
-    if (duration <= 0 || from === to || typeof requestAnimationFrame === 'undefined') { shown.current = to; el.textContent = ebruMoney(to); return; }
+    if (duration <= 0 || from === to || typeof requestAnimationFrame === 'undefined') { shown.current = to; el.textContent = format(to); return; }
     const start = performance.now(); let frame = 0;
     const step = (now: number) => {
       const p = Math.min(1, Math.max(0, (now - start) / duration));
       shown.current = Math.round(from + (to - from) * (1 - (1 - p) ** 3));
-      el.textContent = ebruMoney(shown.current);
+      el.textContent = format(shown.current);
       if (p < 1) frame = requestAnimationFrame(step);
     };
     frame = requestAnimationFrame(step);
-    return () => { cancelAnimationFrame(frame); shown.current = to; el.textContent = ebruMoney(to); };
-  }, [cents, duration]);
+    return () => { cancelAnimationFrame(frame); shown.current = to; el.textContent = format(to); };
+  }, [cents, duration, format]);
   return <span ref={node}>{initial}</span>;
 }
 
@@ -173,6 +175,13 @@ const StaticFooter = memo(function StaticFooter({ remote }: { remote: boolean })
 export function EbruGame() {
   const { reserveDemo, settleDemo, recordRemote, setActiveDemo, demoBalance, resetDemoBalance } = useProduct();
   const router = useRouter();
+  const t = useT('ebru');
+  const tc = useT('common');
+  const tk = useT('slotKit');
+  const format = useFormat();
+  const names = useEbruSymbolNames();
+  const money = format.amount;
+  const gameTitle = tc('games.ebru');
   const { settings, update: updateSettings, reset: resetSettings } = useSlotSettings('ebru');
   const [realityMs] = useState(realityIntervalOverride);
   const session = useSession(realityMs ? { realityIntervalMs: realityMs } : {});
@@ -320,16 +329,17 @@ export function EbruGame() {
     if (current && !current.settled) settleRef.current(current);
   }, []);
 
-  const stopAutoplay = useCallback((reason: string, tone: Toast['tone'] = 'warn') => {
+  const stopAutoplay = useCallback((code: StopCode, tone: Toast['tone'] = 'warn') => {
     const state = autoRef.current;
     if (!state) return;
     autoRef.current = null;
     setAuto(null);
     sound.autoplay(false);
     const net = -autoplayNetLossCents(state);
-    showToast(`Otomatik oyun durdu: ${reason}. ${state.spinsDone} tur, net ${formatSignedDemo(net)}.`, tone);
-    setAnnounce(`Otomatik oyun durdu: ${reason}.`);
-  }, [showToast, sound]);
+    const reason = code === 'server-failed' ? t('autoplay.serverFailed') : code === 'spin-failed' ? t('autoplay.spinFailed') : code === 'quit' ? t('autoplay.quit') : tk(`autoplay.reasons.${code}`);
+    showToast(t('autoplay.stopped', { reason, spins: state.spinsDone, net: format.signedDemo(net) }), tone);
+    setAnnounce(t('autoplay.stoppedShort', { reason }));
+  }, [showToast, sound, t, tk, format]);
 
   const finishRound = useCallback((current: LiveRound) => {
     settle(current);
@@ -342,7 +352,7 @@ export function EbruGame() {
     sound.scene('base');
     if (current.id === null) {
       setReplaying(null);
-      setAnnounce(`Tekrar bitti: ${demoNumber(round.payoutCents)} DEMO, ${ebruTimes(round.totalHundredths)}×. Bakiye değişmedi.`);
+      setAnnounce(t('announce.replayDone', { amount: format.demo(round.payoutCents), times: money(round.totalHundredths) }));
       return;
     }
     const state = autoRef.current;
@@ -351,8 +361,8 @@ export function EbruGame() {
       autoRef.current = next;
       setAuto(next);
     }
-    setAnnounce(round.payoutCents > 0 ? `Tur bitti. Toplam kazanç ${demoNumber(round.payoutCents)} DEMO, ${ebruTimes(round.totalHundredths)}×.` : 'Tur bitti. Kazanç yok.');
-  }, [settle, sound]);
+    setAnnounce(round.payoutCents > 0 ? t('announce.roundEnd', { amount: format.demo(round.payoutCents), times: money(round.totalHundredths) }) : t('announce.roundEndNoWin'));
+  }, [settle, sound, t, format, money]);
 
   /* ---------------------------------------------------------------- presentation helpers */
   /** A point in cell units (col + 0.5 = cell centre) relative to the stage, plus the cell size. */
@@ -399,8 +409,8 @@ export function EbruGame() {
     setCard({ kind: 'big', schedule, bet: betCents, at, dur });
     setMood('bigwin');
     sound.scene('bigwin');
-    setAnnounce(`${WIN_TIER_INFO[schedule.finalLevel].title}: ${demoNumber(ebruCents(betCents, schedule.totalHundredths))} DEMO, ${ebruTimes(schedule.totalHundredths)}×.`);
-  }, [sound]);
+    setAnnounce(t('announce.bigWin', { tier: tk(`winTier.${WIN_TIER_INFO[schedule.finalLevel].id}.title`), amount: format.demo(ebruCents(betCents, schedule.totalHundredths)), times: money(schedule.totalHundredths) }));
+  }, [sound, t, tk, format, money]);
   const onCelebrationLevel = useCallback((level: CelebrationLevel, first: boolean) => {
     const { reduced, lite } = celebrateFx.current;
     if (level === 5) sound.maxWin(); else sound.bigWin(level);
@@ -441,13 +451,15 @@ export function EbruGame() {
       case 'bleed':
         w?.bleed(event.col, event.row, event.colour, event.targets, event.dur);
         sound.bleed(event.colour, event.targets.length);
-        setAnnounce(`Usta Damlası mürekkebini yaydı: ${event.targets.length} komşu ${EBRU_SYMBOL_LABELS[event.colour].toLocaleLowerCase('tr-TR')} oldu.`);
+        setAnnounce(t('announce.bleed', { n: event.targets.length, name: names.inline(event.colour) }));
         break;
       case 'bleed-apply': b?.recolour(event.id, event.colour, event.recoloured.map(r => r.id), reduced); break;
       case 'highlight':
         b?.highlight(event.clusters.flatMap(cl => cl.ids), event.dur, reduced);
         sound.winHighlight(event.stepHundredths / 100);
-        setAnnounce(event.clusters.map(cl => ebruClusterAnnouncement(cl, EBRU_SYMBOL_LABELS)).join('; '));
+        setAnnounce(event.clusters.map(cl => (cl.stainSum > 0
+          ? t('announce.clusterStain', { size: cl.size, name: names.inline(cl.colour), stain: String(cl.stainSum), times: money(cl.winHundredths) })
+          : t('announce.cluster', { size: cl.size, name: names.inline(cl.colour), times: money(cl.winHundredths) }))).join('; '));
         break;
       case 'stain-hit': {
         b?.stainHit(event.clusters.flatMap(cl => cl.cells), event.dur, reduced);
@@ -456,7 +468,7 @@ export function EbruGame() {
           floatLabel(p.x, p.y, `×${cl.multiplier}`, styles.stainLabel, Math.max(900, event.dur + 300), reduced);
         }
         if (event.best >= 10) showCallout(event.best, reduced, lite, Math.max(1100, Math.min(2300, Math.round(event.dur * 1.4))));
-        setAnnounce(`Leke çarpanı ×${event.best}: küme ödemesi lekelerin toplamıyla çarpılıyor.`);
+        setAnnounce(t('announce.stainMultiplier', { best: String(event.best) }));
         break;
       }
       case 'dissolve': {
@@ -465,7 +477,7 @@ export function EbruGame() {
         for (const cl of event.clusters) {
           sound.clusterDissolve(cl.colour, cl.size);
           const p = cellPoint(cl.centroid.x, cl.centroid.y);
-          floatLabel(p.x, p.y, `+${ebruMoney(ebruCents(betCents, cl.winHundredths))}`, styles.floatLabel, reduced ? 800 : 1300, reduced);
+          floatLabel(p.x, p.y, `+${money(ebruCents(betCents, cl.winHundredths))}`, styles.floatLabel, reduced ? 800 : 1300, reduced);
         }
         setMeterDur(Math.min(520, event.dur + 160)); setMeter(event.meter);
         if (event.stepHundredths >= 500) scene.current?.glow(0.5);
@@ -483,17 +495,17 @@ export function EbruGame() {
         b?.comb(event.shifts, event.dur, reduced);
         void w?.combPass({ shifts: event.shifts, amplitude: event.amplitude, duration: event.dur });
         sound.combSweep(event.shifts, event.dur, event.pass, event.createsWin);
-        setAnnounce(`Tarak geçişi ${event.pass}: satırlar ${event.shifts.map(s => (s > 0 ? `+${s}` : `${s}`)).join(', ')} kaydı.`);
+        setAnnounce(t('announce.comb', { pass: event.pass, shifts: event.shifts.map(s => (s > 0 ? `+${s}` : `${s}`)).join(', ') }));
         break;
       case 'comb-end':
         b?.combEnd(event.grid, event.stains);
         if (event.stains) { w?.setStains(event.stains); setStainInfo(stainInfoOf(event.stains)); }
         setCombing(false);
-        if (event.createsWin) { setBanner({ key: ++bannerKey.current, text: 'Tarak yeni küme kurdu', tone: 'ink' }); setAnnounce('Tarak yeni bir küme kurdu.'); }
+        if (event.createsWin) { setBanner({ key: ++bannerKey.current, text: t('banner.combCluster'), tone: 'ink' }); setAnnounce(t('announce.combCluster')); }
         break;
       case 'scatter-pay':
         setMeterDur(500); setMeter(event.meter);
-        setBanner({ key: ++bannerKey.current, text: `${event.count} Altın Tarak · +${ebruMoney(ebruCents(betCents, event.hundredths))} DEMO`, tone: 'gold' });
+        setBanner({ key: ++bannerKey.current, text: t('banner.scatterPay', { count: event.count, amount: money(ebruCents(betCents, event.hundredths)) }), tone: 'gold' });
         break;
       case 'scatter-trigger': {
         b?.dim(true); b?.flare(event.ids, event.dur, reduced);
@@ -502,11 +514,11 @@ export function EbruGame() {
         if (event.retrigger) {
           sound.retrigger();
           setFreeInfo(prev => (prev ? { ...prev, left: event.freeSpinsLeft } : prev));
-          setBanner({ key: ++bannerKey.current, text: `+${event.awarded} bedava dönüş`, tone: 'ink' });
-          setAnnounce(`${event.count} Altın Tarak: ${event.awarded} bedava dönüş eklendi.`);
+          setBanner({ key: ++bannerKey.current, text: t('banner.retrigger', { n: event.awarded }), tone: 'ink' });
+          setAnnounce(t('announce.retrigger', { count: event.count, awarded: event.awarded }));
         } else {
           sound.featureTrigger();
-          setAnnounce(`${event.count} Altın Tarak: Lale Ebrusu kazanıldı.`);
+          setAnnounce(t('announce.trigger', { count: event.count }));
         }
         break;
       }
@@ -514,7 +526,7 @@ export function EbruGame() {
         setCard({ kind: 'intro', awarded: event.awarded, at: event.at, dur: event.dur });
         sound.freeSpinsIntro();
         setMood('feature');
-        setAnnounce(`Lale Ebrusu başlıyor: ${event.awarded} bedava dönüş kazandın.`);
+        setAnnounce(t('announce.freeIntro', { awarded: event.awarded }));
         break;
       case 'free-mode':
         setCard(null); b?.dim(false); setFree(event.on); setFreeInfo({ number: 0, left: event.freeSpinsLeft });
@@ -527,10 +539,10 @@ export function EbruGame() {
         setMeterDur(300); setMeter(event.meter);
         if (event.kind === 'free') {
           const m = meterRef.current, s = stageRef.current;
-          if (m && s && event.winHundredths > 0) { const a = m.getBoundingClientRect(), o = s.getBoundingClientRect(); floatLabel(a.left - o.left + a.width / 2, a.top - o.top - 6, `+${ebruMoney(ebruCents(betCents, event.winHundredths))}`, styles.floatSpin, reduced ? 900 : 1400, reduced); }
-          setAnnounce(event.winHundredths > 0 ? `Bedava dönüş ${ebruTimes(event.winHundredths)}× kazandırdı. Toplam ${ebruTimes(event.meter.total)}×.` : 'Bedava dönüşte kazanç yok.');
+          if (m && s && event.winHundredths > 0) { const a = m.getBoundingClientRect(), o = s.getBoundingClientRect(); floatLabel(a.left - o.left + a.width / 2, a.top - o.top - 6, `+${money(ebruCents(betCents, event.winHundredths))}`, styles.floatSpin, reduced ? 900 : 1400, reduced); }
+          setAnnounce(event.winHundredths > 0 ? t('announce.freeSpinWin', { win: money(event.winHundredths), total: money(event.meter.total) }) : t('announce.freeSpinNoWin'));
         } else {
-          if (event.winHundredths === 0) setAnnounce('Kazanç yok.');
+          if (event.winHundredths === 0) setAnnounce(t('announce.noWin'));
           else if (event.winHundredths >= 300 && event.winHundredths < 1000) sound.nice();
         }
         break;
@@ -541,7 +553,7 @@ export function EbruGame() {
         const m = meterRef.current;
         if (!reduced) m?.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.1)', offset: 0.3 }, { transform: 'scale(.98)', offset: 0.65 }, { transform: 'scale(1)' }], { duration: 620, easing: 'ease-out' });
         if (!lite) w?.goldLeaf(30);
-        setAnnounce(`Toplam kazanç ${demoNumber(ebruCents(betCents, event.totalHundredths))} DEMO, ${ebruTimes(event.totalHundredths)}×.`);
+        setAnnounce(t('announce.totalWin', { amount: format.demo(ebruCents(betCents, event.totalHundredths)), times: money(event.totalHundredths) }));
         break;
       }
       case 'free-outro':
@@ -549,7 +561,7 @@ export function EbruGame() {
         sound.featureOutro();
         setMood('base');
         if (!lite) w?.goldLeaf(50);
-        setAnnounce(`Lale Ebrusu bitti. Toplam: ${demoNumber(ebruCents(betCents, event.totalHundredths))} DEMO, ${event.spins} dönüş, en büyük leke ×${event.maxStain}.`);
+        setAnnounce(t('announce.freeOutro', { amount: format.demo(ebruCents(betCents, event.totalHundredths)), spins: event.spins, stain: String(event.maxStain) }));
         break;
       case 'big-win':
         openCelebration(event.schedule, betCents, event.at, event.dur, reduced, lite);
@@ -560,7 +572,7 @@ export function EbruGame() {
         finishRound(current);
         break;
     }
-  }, [cellPoint, finishRound, floatLabel, openCelebration, showCallout, sound]);
+  }, [cellPoint, finishRound, floatLabel, openCelebration, showCallout, sound, t, format, money, names]);
 
   /* ---------------------------------------------------------------- starting rounds */
   const begin = useCallback((current: LiveRound, text: string) => {
@@ -591,21 +603,21 @@ export function EbruGame() {
     pendingRemote.current = true;
     setError(''); setPhase('playing'); setActiveDemo(true); setReplaying(null);
     setRemoteBalance(balanceBefore - cost);
-    setAnnounce(`Dönüş sunucuya gönderildi, ${demoNumber(cost)} DEMO.`);
+    setAnnounce(t('announce.sent', { amount: format.demo(cost) }));
     source.client.play('ebru', betCents, roundMode).then(play => {
       pendingRemote.current = false;
       const current = makeLive({ id: `remote:${play.receipt.roundId}`, replayOf: null, bet: betCents, cost: play.receipt.costCents, mode: roundMode, balanceBefore, round: play.round, remote: { receipt: play.receipt, balanceAfter: play.receipt.balanceCents } });
       if (!mounted.current) { settleRef.current(current); return; }
-      begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Lale Ebrusu başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+      begin(current, t(roundMode === 'buy' ? 'announce.buyStarted' : 'announce.spinStarted', { amount: format.demo(cost) }));
     }, (failure: unknown) => {
       pendingRemote.current = false;
       setActiveDemo(false);
       if (!mounted.current) return;
       setPhase('idle'); setError(rgsErrorMessage(failure)); sound.denied();
-      if (autoRef.current) stopAutoplay('Sunucu turu başlatılamadı');
+      if (autoRef.current) stopAutoplay('server-failed');
       source.client.state().then(state => { if (mounted.current) setRemoteBalance(state.balanceCents); }, () => undefined);
     });
-  }, [bet, begin, makeLive, setActiveDemo, sound, stopAutoplay]);
+  }, [bet, begin, makeLive, setActiveDemo, sound, stopAutoplay, t, format]);
 
   const startRound = useCallback((kind: 'spin' | 'buy'): boolean => {
     if ((live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
@@ -614,22 +626,22 @@ export function EbruGame() {
     const cost = ebruCost(bet, roundMode);
     const balanceBefore = balanceRef.current;
     if (cost > balanceBefore) {
-      setError(`Bakiye yetersiz: bu ${roundMode === 'buy' ? 'satın alma' : 'dönüş'} ${formatDemo(cost)}. Bahsi düşür veya bakiyeyi yenile.`);
+      setError(t(roundMode === 'buy' ? 'error.insufficientBuy' : 'error.insufficientSpin', { cost: format.demo(cost) }));
       sound.denied();
       return false;
     }
     if (remote) { startRemote(remote, roundMode, cost, balanceBefore); return true; }
     let round: EbruRound;
-    try { round = localRoundSource.resolve('ebru', bet, roundMode); } catch { setError(ENTROPY_ERROR); return false; }
+    try { round = localRoundSource.resolve('ebru', bet, roundMode); } catch { setError(t('error.entropy')); return false; }
     let id: string | null;
-    try { id = reserveDemo(cost, ebruLedgerLimits(bet, roundMode)); } catch { setError(ENTROPY_ERROR); return false; }
-    if (!id) { setError('Yeterli demo kredin yok veya devam eden bir demo var.'); sound.denied(); return false; }
+    try { id = reserveDemo(cost, ebruLedgerLimits(bet, roundMode)); } catch { setError(t('error.entropy')); return false; }
+    if (!id) { setError(t('error.noCredit')); sound.denied(); return false; }
     setActiveDemo(true);
     const current = makeLive({ id, replayOf: null, bet, cost, mode: roundMode, balanceBefore, round, remote: null });
     setReplaying(null);
-    begin(current, roundMode === 'buy' ? `Bonus satın alındı, ${demoNumber(cost)} DEMO. Lale Ebrusu başlıyor.` : `Dönüş başladı, ${demoNumber(cost)} DEMO.`);
+    begin(current, t(roundMode === 'buy' ? 'announce.buyStarted' : 'announce.spinStarted', { amount: format.demo(cost) }));
     return true;
-  }, [ante, bet, begin, booting, gated, makeLive, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote]);
+  }, [ante, bet, begin, booting, gated, makeLive, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote, t, format]);
 
   // Reload recovery (remote): the last unseen server round of this game is shown again exactly as resolved.
   const recoveredOnce = useRef(false);
@@ -641,8 +653,8 @@ export function EbruGame() {
     const current = makeLive({ id: `remote:${receipt.roundId}`, replayOf: null, bet: receipt.betCents, cost: receipt.costCents, mode: receipt.mode, balanceBefore: after + receipt.costCents - receipt.payoutCents, round, remote: { receipt, balanceAfter: after } });
     setActiveDemo(true);
     setRemoteBalance(current.balanceBefore - current.cost);
-    begin(current, `Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı (${demoNumber(receipt.payoutCents)} DEMO).`);
-  }, [sourceView, booting, begin, makeLive, setActiveDemo]);
+    begin(current, t('announce.recovered', { amount: format.demo(receipt.payoutCents) }));
+  }, [sourceView, booting, begin, makeLive, setActiveDemo, t, format]);
 
   /** Remote only: publish the signed replay of a server round and hand out its link ("Kazancını paylaş"). */
   const shareRound = useCallback((record: DemoRecord) => {
@@ -652,22 +664,22 @@ export function EbruGame() {
       const url = `${window.location.origin}${path}`;
       let copied = false;
       try { await navigator.clipboard.writeText(url); copied = true; } catch { /* clipboard blocked: show the link */ }
-      showToast(copied ? `Paylaşım bağlantısı kopyalandı: ${url}` : `Paylaşım bağlantısı: ${url}`);
-    }, (failure: unknown) => showToast(`Paylaşılamadı: ${rgsErrorMessage(failure)}`, 'warn'));
-  }, [remote, showToast]);
+      showToast(t(copied ? 'toast.shareCopied' : 'toast.shareLink', { url }));
+    }, (failure: unknown) => showToast(t('toast.shareFailed', { reason: rgsErrorMessage(failure) }), 'warn'));
+  }, [remote, showToast, t]);
   const startRef = useRef(startRound); startRef.current = startRound;
 
   const replay = useCallback((record: DemoRecord) => {
     const meta = record.ebru;
     if (!meta || (live.current && !live.current.settled) || autoRef.current || booting) return;
     let round: EbruRound;
-    try { round = playEbruRound(meta.seedHex, meta.betCents, meta.mode); } catch { showToast('Bu tur tekrar oynatılamadı.', 'warn'); return; }
-    if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast('Tekrar doğrulanamadı: kayıt motorla uyuşmuyor.', 'warn'); return; }
+    try { round = playEbruRound(meta.seedHex, meta.betCents, meta.mode); } catch { showToast(t('toast.replayFailed'), 'warn'); return; }
+    if (round.payoutCents !== record.payout || round.costCents !== meta.costCents) { showToast(t('toast.replayMismatch'), 'warn'); return; }
     const current = makeLive({ id: null, replayOf: record.id, bet: meta.betCents, cost: meta.costCents, mode: meta.mode, balanceBefore: balanceRef.current, round, remote: null });
     setReplaying({ recordId: record.id, seed: meta.seedHex });
     stageRef.current?.scrollIntoView({ block: 'start' });
-    begin(current, `Tekrar oynatılıyor: tur ${ebruRoundId(meta.seedHex)}. Bakiye değişmez.`);
-  }, [begin, booting, makeLive, showToast]);
+    begin(current, t('announce.replaying', { id: ebruRoundId(meta.seedHex) }));
+  }, [begin, booting, makeLive, showToast, t]);
 
   /** Tap on a hold screen: the first tap on a celebration finishes the count-up, the next closes. Never touches a result. */
   const advanceHold = useCallback(() => {
@@ -730,8 +742,8 @@ export function EbruGame() {
     setAuto(state);
     setModal(null);
     sound.unlock(); sound.autoplay(true);
-    showToast(`Otomatik oyun: ${config.spins} tur, kayıp limiti ${formatDemo(config.lossLimitCents)}.`);
-  }, [busy, gated, showToast, sound]);
+    showToast(t('toast.autoplay', { spins: config.spins, limit: format.demo(config.lossLimitCents) }));
+  }, [busy, gated, showToast, sound, t, format]);
 
   const realityDue = session.realityDue;
   useEffect(() => {
@@ -740,14 +752,14 @@ export function EbruGame() {
     const timer = window.setTimeout(() => {
       const state = autoRef.current; if (!state) return;
       const decision = ebruAutoplayBeforeSpin(state, { balanceCents: balanceRef.current, betCents: bet, ante, tabHidden: document.hidden });
-      if (!decision.continue) { stopAutoplay(decision.reason, decision.code === 'completed' ? 'info' : 'warn'); return; }
-      if (!startRef.current('spin')) stopAutoplay('Dönüş başlatılamadı');
+      if (!decision.continue) { stopAutoplay(decision.code, decision.code === 'completed' ? 'info' : 'warn'); return; }
+      if (!startRef.current('spin')) stopAutoplay('spin-failed');
     }, phase === 'idle' ? 0 : gap);
     return () => window.clearTimeout(timer);
   }, [auto, phase, modal, realityDue, booting, gated, bet, ante, stopAutoplay]);
 
   useEffect(() => {
-    const onVisibility = () => { if (document.hidden && autoRef.current) stopAutoplay(AUTOPLAY_STOP_REASONS['tab-hidden']); };
+    const onVisibility = () => { if (document.hidden && autoRef.current) stopAutoplay('tab-hidden'); };
     document.addEventListener('visibilitychange', onVisibility);
     return () => document.removeEventListener('visibilitychange', onVisibility);
   }, [stopAutoplay]);
@@ -774,10 +786,12 @@ export function EbruGame() {
   const roundMode: EbruMode = ante ? 'ante' : 'standard';
   const spinCost = ebruCost(bet, roundMode);
   const buyPrice = ebruCost(bet, 'buy');
-  const buyReason = ebruBuyBlockReason({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const block = ebruBuyBlock({ betCents: bet, balanceCents: balance, ante, autoplay: auto !== null, busy, gated });
+  const buyReason = block ? (block.code === 'balance' ? t('buyBlock.balance', { price: format.demo(block.priceCents) }) : t(`buyBlock.${block.code}`)) : null;
+  const rtpOf = (ratio: number) => percentOf(format.intl, ratio);
   const locked = busy || auto !== null || gated || booting || sourcePending;
   const amountCents = (h: number) => (roundBet === null ? 0 : ebruCents(roundBet, h));
-  const boardLabel = free ? 'Ebru bedava dönüş ızgarası, 7 sütun, 7 satır' : 'Ebru ızgarası, 7 sütun, 7 satır';
+  const boardLabel = t(free ? 'board.labelFree' : 'board.label');
   const boardElement = useMemo(() => (
     <EbruFrame mood={free ? 'feature' : 'base'} wellRef={wellRef}>
       <canvas ref={waterRef} className={styles.water} aria-hidden="true" />
@@ -786,11 +800,11 @@ export function EbruGame() {
     </EbruFrame>
   ), [boardLabel, free]);
   const celebrating = card?.kind === 'big' || card?.kind === 'outro' || card?.kind === 'intro';
-  const infoPages = useMemo(() => ebruInfoPages(bet), [bet]);
+  const infoPages = useMemo(() => ebruInfoPages(bet, { t, tc, tk, format, symbol: names.label }), [bet, t, tc, tk, format, names]);
   const outOfCredit = !busy && balance < EBRU_MIN_BET_CENTS;
   const deckWin = busy ? amountCents(meter.total) : (lastWin?.payout ?? 0);
   const speedIndex = SPIN_SPEEDS.indexOf(settings.spinSpeed);
-  const replayInfo = replaying ? `Tekrar — bakiye değişmez · tur ${ebruRoundId(replaying.seed)}` : null;
+  const replayInfo = replaying ? t('replay.ribbon', { id: ebruRoundId(replaying.seed) }) : null;
 
   const openInfo = (page = 'how') => { setInfoPage(page); setModal('info'); sound.click(); };
   const refill = () => {
@@ -801,25 +815,26 @@ export function EbruGame() {
         setRemoteBalance(cents);
         const at = Date.now();
         recordRemote({ id: `remote-reset:${at}`, game: 'Ebru', stake: 0, payout: 0, detail: 'Bakiye yenilendi (sunucu)', at, kind: 'reset' });
-        showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('Sunucu DEMO bakiyesi 1.000 DEMO olarak yenilendi.');
+        const amount = format.demo(DEMO_START_CENTS, { trimZeros: true });
+        showToast(t('toast.refilled', { amount })); setError(''); setAnnounce(t('announce.refilledRemote', { amount }));
       }, (failure: unknown) => showToast(rgsErrorMessage(failure), 'warn'));
       return;
     }
-    if (resetDemoBalance('Ebru')) { showToast('Bakiye yenilendi: 1.000 DEMO.'); setError(''); setAnnounce('DEMO bakiyesi 1.000 DEMO olarak yenilendi.'); }
+    if (resetDemoBalance('Ebru')) { const amount = format.demo(DEMO_START_CENTS, { trimZeros: true }); showToast(t('toast.refilled', { amount })); setError(''); setAnnounce(t('announce.refilled', { amount })); }
   };
   const toggleSound = () => { const muted = !settings.muted; updateSettings({ muted }); if (!muted) sound.unlock(); };
   const cycleSpeed = () => {
     const next = SPIN_SPEEDS[(speedIndex + 1) % SPIN_SPEEDS.length]!;
     updateSettings({ spinSpeed: next });
     sound.click();
-    setAnnounce(`Dönüş hızı: ${SPEED_LABELS[next]}.`);
+    setAnnounce(t('announce.speed', { speed: tk(SPEED_KEYS[next]) }));
   };
   const toggleAnte = () => {
     if (locked) return;
     const next = !ante;
     setAnte(next);
     sound.click();
-    setAnnounce(next ? `Şans ×2 açık: bedava dönüş şansı ≈2 kat, maliyet ${formatDemo(ebruCost(bet, 'ante'))}.` : `Şans ×2 kapalı: maliyet ${formatDemo(bet)}.`);
+    setAnnounce(next ? t('announce.anteOn', { cost: format.demo(ebruCost(bet, 'ante')) }) : t('announce.anteOff', { cost: format.demo(bet) }));
   };
   const onSpinClick = () => { if (busy) return; startRound('spin'); };
   const confirmBuy = () => { if (buyReason) return; setModal(null); startRound('buy'); };
@@ -832,72 +847,72 @@ export function EbruGame() {
       balanceCents={balance}
       maxBetCents={EBRU_MAX_BET_CENTS}
       costMode={EBRU_COST_MODES[roundMode]}
-      modeLabel={ante ? 'Şans ×2' : undefined}
+      modeLabel={ante ? tc('modes.ante') : undefined}
       disabled={locked}
       classNames={{ minus: styles.stepBtn, plus: styles.stepBtn, value: styles.betValue, max: styles.maxChip }}
       render={parts => (
-        <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label="Oyun kontrolleri">
+        <div className={`${kit.kit} ${styles.deck}`} data-auto={auto ? '' : undefined} role="group" aria-label={t('deck.aria')}>
           <div className={styles.cellBalance}>
-            <span className={styles.cellLabel}>Bakiye</span>
-            <strong className={styles.cellValue} data-testid="ebru-balance">{formatAmount(balance)}<small> DEMO</small></strong>
-            <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated} aria-label="Bakiyeyi yenile"><RefillIcon /><span aria-hidden="true">Bakiyeyi yenile</span></button>
+            <span className={styles.cellLabel}>{t('deck.balance')}</span>
+            <strong className={styles.cellValue} data-testid="ebru-balance">{money(balance)}<small> DEMO</small></strong>
+            <button type="button" className={styles.refill} onClick={refill} disabled={busy || auto !== null || gated} aria-label={t('deck.refill')}><RefillIcon /><span aria-hidden="true">{t('deck.refill')}</span></button>
           </div>
           <div className={styles.cellWin}>
-            <span className={styles.cellLabel}>{busy ? (replaying ? 'Tekrar' : 'Kazanç') : lastWin?.replay ? 'Tekrar kazancı' : 'Son kazanç'}</span>
-            <strong className={`${styles.cellValue} ${deckWin > 0 ? styles.cellWinOn : ''}`}>{formatAmount(deckWin)}<small> DEMO</small></strong>
+            <span className={styles.cellLabel}>{busy ? (replaying ? t('deck.replay') : t('deck.win')) : lastWin?.replay ? t('deck.replayWin') : t('deck.lastWin')}</span>
+            <strong className={`${styles.cellValue} ${deckWin > 0 ? styles.cellWinOn : ''}`}>{money(deckWin)}<small> DEMO</small></strong>
           </div>
           <div className={styles.cellBet}>
             {parts.label}
             {parts.value}
-            <span className={styles.costLine} data-testid="ebru-cost">Maliyet <strong>{formatAmount(spinCost)} DEMO</strong>{ante && <em> · ×1,25</em>}</span>
+            <span className={styles.costLine} data-testid="ebru-cost">{tk('bet.cost')} <strong>{money(spinCost)} DEMO</strong>{ante && <em> · {format.factor(EBRU_COST_MODES.ante.num, EBRU_COST_MODES.ante.den)}</em>}</span>
           </div>
           <div className={styles.areaMinus}>{parts.minus}</div>
           <div className={styles.areaPlus}>{parts.plus}</div>
           <div className={styles.areaMax}>{parts.max}</div>
           <div className={styles.areaSpin}>
             {auto ? (
-              <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay(AUTOPLAY_STOP_REASONS.cancelled, 'info')} />
+              <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay('cancelled', 'info')} />
             ) : (
               <button type="button" className={`${styles.spin} ${busy ? styles.spinning : ''}`} onClick={onSpinClick} disabled={busy || gated || booting || sourcePending}
-                aria-label="Çevir" aria-describedby="eb-spin-cost" data-locked={busy || undefined} data-testid="ebru-spin">
+                aria-label={t('deck.spin')} aria-describedby="eb-spin-cost" data-locked={busy || undefined} data-testid="ebru-spin">
                 <span className={styles.spinFace}><SpinSeal /></span>
                 {busy && <span className={styles.spinLock} aria-hidden="true"><LockIcon /></span>}
               </button>
             )}
-            <span id="eb-spin-cost" className="sr-only">{busy ? 'Tur sürüyor; bütün düşmeler, tarak geçişleri ve bedava dönüşler bitene kadar kilitli.' : `Maliyet ${formatDemo(spinCost)}`}</span>
+            <span id="eb-spin-cost" className="sr-only">{busy ? t('deck.spinLocked') : `${tk('bet.cost')} ${format.demo(spinCost)}`}</span>
           </div>
           <button type="button" className={`${styles.tool} ${styles.areaAuto}`} onClick={() => { sound.click(); setModal('autoplay'); }} disabled={locked} aria-haspopup="dialog">
-            <LoopIcon /><span>Otomatik</span>
+            <LoopIcon /><span>{t('deck.auto')}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaInfo}`} onClick={() => openInfo()} aria-haspopup="dialog" aria-label="Oyun bilgisi">
-            <InfoIcon /><span>Bilgi</span>
+          <button type="button" className={`${styles.tool} ${styles.areaInfo}`} onClick={() => openInfo()} aria-haspopup="dialog" aria-label={tk('info.title')}>
+            <InfoIcon /><span>{t('deck.info')}</span>
           </button>
           <button type="button" role="switch" aria-checked={ante} className={`${styles.feature} ${styles.areaAnte} ${ante ? styles.featureOn : ''}`} onClick={toggleAnte} disabled={locked}
-            aria-label="Şans ×2" aria-describedby="eb-ante-desc">
-            <span className={styles.featureTitle}>Şans ×2</span>
-            <span className={styles.featureState}>{ante ? 'Açık' : 'Kapalı'}<span className={styles.featureFactor}> · ×1,25</span></span>
-            <span id="eb-ante-desc" className={styles.featureDesc}>Bedava dönüş şansı ≈2 kat</span>
+            aria-label={tc('modes.ante')} aria-describedby="eb-ante-desc">
+            <span className={styles.featureTitle}>{tc('modes.ante')}</span>
+            <span className={styles.featureState}>{ante ? t('deck.on') : t('deck.off')}<span className={styles.featureFactor}> · {format.factor(EBRU_COST_MODES.ante.num, EBRU_COST_MODES.ante.den)}</span></span>
+            <span id="eb-ante-desc" className={styles.featureDesc}>{t('deck.anteDesc')}</span>
           </button>
           <button type="button" className={`${styles.feature} ${styles.featureBuy} ${styles.areaBuy}`} aria-disabled={buyReason ? true : undefined}
             onClick={() => { if (buyReason) sound.denied(); else sound.click(); setModal('buy'); }} aria-haspopup="dialog" aria-describedby="eb-buy-desc">
-            <span className={styles.featureTitle}>Bonus satın al</span>
-            <span className={styles.featureState}>{formatAmount(buyPrice, { trimZeros: true })} DEMO</span>
-            <span id="eb-buy-desc" className={styles.featureDesc}>{buyReason ?? `8 bedava dönüş · ${ebruRtp(EBRU_RTP.buy.rtp)}`}</span>
+            <span className={styles.featureTitle}>{tk('buy.title')}</span>
+            <span className={styles.featureState}>{format.amount(buyPrice, { trimZeros: true })} DEMO</span>
+            <span id="eb-buy-desc" className={styles.featureDesc}>{buyReason ?? t('deck.buyDesc', { spins: EBRU_FREE_SPINS_TRIGGER, rtp: rtpOf(EBRU_RTP.buy.rtp) })}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSet}`} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label="Ayarlar">
-            <GearIcon /><span>Ayarlar</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSet}`} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label={tk('settings.title')}>
+            <GearIcon /><span>{tk('settings.title')}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSpeed} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed} aria-label={`Dönüş hızı: ${SPEED_LABELS[settings.spinSpeed]}`}>
-            <SpeedDrops count={speedIndex + 1} /><span>{SPEED_LABELS[settings.spinSpeed]}</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSpeed} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed} aria-label={t('deck.speed', { speed: tk(SPEED_KEYS[settings.spinSpeed]) })}>
+            <SpeedDrops count={speedIndex + 1} /><span>{tk(SPEED_KEYS[settings.spinSpeed])}</span>
           </button>
-          <button type="button" className={`${styles.tool} ${styles.areaSound} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label="Ses">
-            <SoundIcon on={!settings.muted} /><span>Ses</span>
+          <button type="button" className={`${styles.tool} ${styles.areaSound} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label={tk('settings.sound')}>
+            <SoundIcon on={!settings.muted} /><span>{tk('settings.sound')}</span>
           </button>
           <div className={styles.areaMsg}>
-            {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">Ses yükleniyor %{soundLoad.percent}</p>}
+            {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">{t('deck.soundLoading', { percent: format.percent(soundLoad.percent / 100) })}</p>}
             {error ? <p className={styles.msgError} role="alert">{error}</p>
-              : outOfCredit ? <p className={styles.msgHint}>DEMO bakiyen bitti. <button type="button" className={styles.inlineLink} onClick={refill}>Bakiyeyi yenile</button></p>
-              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? <>Son tur <strong>+{ebruMoney(lastWin.payout)} DEMO</strong> · {ebruTimes(lastWin.total)}×</> : <>Son tur kazançsız.</>) : settings.spaceToSpin ? <>Boşluk tuşu ile de çevirebilirsin.</> : <>Sonuç dönüşten önce belirlenir.</>}</p>}
+              : outOfCredit ? <p className={styles.msgHint}>{t('msg.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
+              : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? t.rich('msg.lastRound', { b: chunk => <strong key={chunk}>{chunk}</strong> }, { amount: money(lastWin.payout), times: money(lastWin.total) }) : t('msg.lastRoundNoWin')) : settings.spaceToSpin ? t('msg.spaceHint') : t('msg.fixedBefore')}</p>}
           </div>
         </div>
       )}
@@ -907,9 +922,9 @@ export function EbruGame() {
   return (
     <div className={`game-page ${styles.page}`}>
       <EbruSymbolSprites />
-      <GameHeading title="Ebru: Mürekkep Bahçesi" subtitle="Tarak suyu tarar, mürekkep dalga dalga yeniden dizilir; lekeler çarpanla birlikte kayar." mode={mode} setMode={setMode} active={busy || auto !== null}
-        badge={remote ? remote.label : sourcePending ? 'Sunucu kontrol ediliyor' : localRoundSource.label} />
-      <section className={`game-table ${styles.table}`} aria-label="Ebru oyun masası" data-free={free || undefined}>
+      <GameHeading title={gameTitle} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
+        badge={remote ? remote.label : sourcePending ? t('badge.checking') : localRoundSource.label} />
+      <section className={`game-table ${styles.table}`} aria-label={t('table.aria')} data-free={free || undefined}>
         <EbruScene ref={scene} mood={mood} className={styles.scene}>
           <div className={styles.layout}>
             <div ref={stageRef} className={styles.stage} data-phase={phase} data-celebrate={celebrating || undefined} data-combing={combing || undefined}>
@@ -919,35 +934,35 @@ export function EbruGame() {
                 </div>
                 <div className={styles.hud}>
                   {freeInfo ? (
-                    <div className={styles.freeCounter} aria-label={`Bedava dönüş ${freeInfo.number}, kalan dönüş ${freeInfo.left}`} data-testid="ebru-free-counter">
-                      <span className={styles.freeTag}>{freeInfo.number > 0 ? `${freeInfo.number}. dönüş` : 'Lale Ebrusu'}</span>
-                      <span className={styles.freeLeft}><small>Kalan</small><strong key={freeInfo.left}>{freeInfo.left}</strong></span>
+                    <div className={styles.freeCounter} aria-label={t('free.counterAria', { number: freeInfo.number, left: freeInfo.left })} data-testid="ebru-free-counter">
+                      <span className={styles.freeTag}>{freeInfo.number > 0 ? t('free.spinNumber', { n: freeInfo.number }) : t('free.tag')}</span>
+                      <span className={styles.freeLeft}><small>{t('free.left')}</small><strong key={freeInfo.left}>{freeInfo.left}</strong></span>
                     </div>
                   ) : (
-                    <div className={styles.combPips} data-on={busy || undefined} aria-label={busy ? `Tarak geçişi ${combPass} / 3` : 'Dönüş başına en çok 3 tarak geçişi'} data-testid="ebru-comb-pips">
-                      <span>Tarak</span>
+                    <div className={styles.combPips} data-on={busy || undefined} aria-label={busy ? t('comb.passAria', { pass: combPass }) : t('comb.maxAria')} data-testid="ebru-comb-pips">
+                      <span>{t('comb.label')}</span>
                       {[1, 2, 3].map(i => <CombPip key={i} on={combPass >= i} />)}
                     </div>
                   )}
                   {free ? (
-                    <div key={stainPunch} className={styles.stainChip} data-testid="ebru-stains" aria-label={`Lekeli hücre ${stainInfo.cells}, en yüksek leke ×${stainInfo.max}`}>
+                    <div key={stainPunch} className={styles.stainChip} data-testid="ebru-stains" aria-label={t('stain.aria', { cells: stainInfo.cells, max: String(stainInfo.max) })}>
                       <span className={styles.stainChipArt} aria-hidden="true"><EbruStainArt value={Math.max(2, stainInfo.max)} size="100%" /></span>
-                      <span><small>Lekeler</small><strong>{stainInfo.cells}</strong></span>
-                      <span><small>En yüksek</small><strong>{stainInfo.max > 0 ? `×${stainInfo.max}` : '—'}</strong></span>
+                      <span><small>{t('stain.stains')}</small><strong>{stainInfo.cells}</strong></span>
+                      <span><small>{t('stain.highest')}</small><strong>{stainInfo.max > 0 ? `×${stainInfo.max}` : '—'}</strong></span>
                     </div>
                   ) : freeInfo ? null : (
-                    <div className={styles.combPips} data-side="" aria-hidden="true"><span>Azami <strong>10.000×</strong></span></div>
+                    <div className={styles.combPips} data-side="" aria-hidden="true"><span>{t.rich('stain.max', { b: chunk => <strong key={chunk}>{chunk}</strong> }, { n: format.number(EBRU_MAX_WIN_MULTIPLIER, 0) })}</span></div>
                   )}
                 </div>
                 <div className={styles.boardWrap}>{boardElement}</div>
                 {/* One cumulative meter: never resets inside a round (tumbles, comb wins, every free spin add up). */}
                 <div ref={meterRef} className={`${styles.meter} ${free ? styles.meterFree : ''}`} data-testid="ebru-meter">
                   {phase === 'idle' ? (
-                    <div className={styles.meterIdle}><span><strong>5+</strong> komşu aynı renk öder</span><span aria-hidden="true" className={styles.wideOnly}>·</span><span className={styles.wideOnly}>Tarak satırları kaydırır</span><span aria-hidden="true">·</span><span><strong>×256</strong> boya lekesi</span></div>
+                    <div className={styles.meterIdle}><span>{t.rich('meter.idleA', { b: chunk => <strong key={chunk}>{chunk}</strong> })}</span><span aria-hidden="true" className={styles.wideOnly}>·</span><span className={styles.wideOnly}>{t('meter.idleB')}</span><span aria-hidden="true">·</span><span>{t.rich('meter.idleC', { b: chunk => <strong key={chunk}>{chunk}</strong> })}</span></div>
                   ) : (
                     <div className={styles.meterPart}>
-                      <small>{free || phase === 'done' ? 'Toplam kazanç' : 'Kazanç'}</small>
-                      <strong data-testid="ebru-meter-total"><CountUp cents={amountCents(meter.total)} duration={meterDur} /><em> DEMO</em></strong>
+                      <small>{free || phase === 'done' ? t('meter.totalWin') : t('meter.win')}</small>
+                      <strong data-testid="ebru-meter-total"><CountUp cents={amountCents(meter.total)} duration={meterDur} format={money} /><em> DEMO</em></strong>
                     </div>
                   )}
                   {flourish > 0 && phase !== 'idle' && <span key={flourish} className={styles.meterShine} aria-hidden="true" />}
@@ -955,18 +970,18 @@ export function EbruGame() {
               </div>
               <div ref={layerRef} className={styles.fxLayer} aria-hidden="true" />
               {replayInfo && <div className={styles.replayRibbon} data-testid="ebru-replay"><Icon name="history" size={15} /><span>{replayInfo}</span></div>}
-              {auto && !replayInfo && <div className={styles.autoRibbon} aria-hidden="true"><LoopIcon /><span>Otomatik · {auto.spinsRemaining} tur kaldı</span></div>}
+              {auto && !replayInfo && <div className={styles.autoRibbon} aria-hidden="true"><LoopIcon /><span>{t('auto.ribbon', { n: auto.spinsRemaining })}</span></div>}
               {toast && (
                 <div key={`toast-${toast.key}`} className={`${styles.toast} ${toast.tone === 'warn' ? styles.toastWarn : ''}`} data-testid="ebru-toast">
                   <span>{toast.text}</span>
-                  <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label="Bildirimi kapat"><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
+                  <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label={t('toast.close')}><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
                 </div>
               )}
               {banner && <div key={`banner-${banner.key}`} className={`${styles.banner} ${banner.tone === 'ink' ? styles.bannerInk : ''}`} data-testid="ebru-banner" aria-hidden="true">{banner.text}</div>}
               {callout && (
                 <div key={`callout-${callout.key}`} className={styles.callout} data-tier={callout.tier} style={{ left: `${callout.x}px`, top: `${callout.y}px`, animationDuration: `${callout.life}ms` }} aria-hidden="true" data-testid="ebru-callout" data-key={callout.key}>
                   <span className={styles.calloutGlow} />
-                  <span className={styles.calloutTag}>{CALLOUT_TAGS[callout.tier]}</span>
+                  <span className={styles.calloutTag}>{t(`callout.tags.${callout.tier}`)}</span>
                   <span className={styles.calloutText} data-text={`×${callout.value}`}><span className={styles.calloutFill}>×{callout.value}</span></span>
                 </div>
               )}
@@ -983,9 +998,9 @@ export function EbruGame() {
                 <div className={styles.gated}>
                   <div className={styles.gatedCard}>
                     <Icon name="lock" size={26} />
-                    <h2>Zincir üstü Ebru yok.</h2>
-                    <p>Bu oyun yalnız DEMO kredisiyle oynanır; gerçek bahis kabul edilmez.</p>
-                    <button className="text-button" onClick={() => setMode('demo')}>Yerel demoya dön<Icon name="arrow" size={17} /></button>
+                    <h2>{t('gated.title')}</h2>
+                    <p>{t('gated.text')}</p>
+                    <button className="text-button" onClick={() => setMode('demo')}>{t('gated.back')}<Icon name="arrow" size={17} /></button>
                   </div>
                 </div>
               )}
@@ -1001,21 +1016,21 @@ export function EbruGame() {
             <div className={styles.splashCard}>
               <div className={styles.splashLogo}><EbruLogo /></div>
               <ul className={styles.splashFeatures}>
-                <li><span aria-hidden="true"><EbruSymbolArt symbol="c1" size="100%" /></span><strong>5+ küme</strong><small>Yatay ve dikey komşu 5 aynı renk damla öder</small></li>
-                <li><span aria-hidden="true"><EbruSymbolArt symbol="comb" size="100%" /></span><strong>Altın Tarak</strong><small>Tarak suyu tarar, satırlar kayar, yeni kümeler doğar</small></li>
-                <li><span aria-hidden="true"><EbruStainArt value={256} size="100%" /></span><strong>×256 leke · 10.000×</strong><small>Lale Ebrusu’nda lekeler tarakla birlikte kayar</small></li>
+                <li><span aria-hidden="true"><EbruSymbolArt symbol="c1" size="100%" /></span><strong>{t('splash.f1Title')}</strong><small>{t('splash.f1Text')}</small></li>
+                <li><span aria-hidden="true"><EbruSymbolArt symbol="comb" size="100%" /></span><strong>{names.label('comb')}</strong><small>{t('splash.f2Text')}</small></li>
+                <li><span aria-hidden="true"><EbruStainArt value={256} size="100%" /></span><strong>{t('splash.f3Title', { max: format.number(EBRU_MAX_WIN_MULTIPLIER, 0) })}</strong><small>{t('splash.f3Text')}</small></li>
               </ul>
               {boot.phase === 'loading' ? (
-                <div className={styles.loadBar} role="progressbar" aria-label="Oyun yükleniyor" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(boot.progress * 100)}>
+                <div className={styles.loadBar} role="progressbar" aria-label={t('splash.loading')} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(boot.progress * 100)}>
                   <span style={{ transform: `scaleX(${boot.progress})` } as CSSProperties} />
                 </div>
               ) : (
                 <div className={styles.splashActions}>
-                  <button type="button" className={styles.playButton} autoFocus onClick={() => { sound.unlock(); sound.click(); setBoot(b => ({ ...b, phase: 'done' })); }}>Oyna</button>
-                  <button type="button" className={styles.splashSkip} onClick={() => { updateSettings({ introScreen: false }); setBoot(b => ({ ...b, phase: 'done' })); }}>Açılış ekranını bir daha gösterme</button>
+                  <button type="button" className={styles.playButton} autoFocus onClick={() => { sound.unlock(); sound.click(); setBoot(b => ({ ...b, phase: 'done' })); }}>{t('splash.play')}</button>
+                  <button type="button" className={styles.splashSkip} onClick={() => { updateSettings({ introScreen: false }); setBoot(b => ({ ...b, phase: 'done' })); }}>{t('splash.skip')}</button>
                 </div>
               )}
-              <p className={styles.splashNote}>DEMO kredisi değersizdir · Sonuç dönüşten önce belirlenir · Sertifikasız simülasyon RTP ≈ {ebruRtp(EBRU_RTP.standard.rtp)}</p>
+              <p className={styles.splashNote}>{t('splash.note', { rtp: rtpOf(EBRU_RTP.standard.rtp) })}</p>
             </div>
           </div>
         )}
@@ -1025,29 +1040,29 @@ export function EbruGame() {
       <EbruHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <StaticFooter remote={remote !== null} />
 
-      <Modal open={modal === 'settings'} onClose={() => setModal(null)} title="Ayarlar" size="md">
+      <Modal open={modal === 'settings'} onClose={() => setModal(null)} title={tk('settings.title')} size="md">
         <SettingsPanel settings={settings} onChange={updateSettings} onReset={resetSettings} />
-        <p className={styles.modalNote} role="status">{soundLoad.ready ? 'Ses hazır: müzik, efektler ve ortam sesi bu cihazda hazırlandı.' : soundLoad.started ? `Ses yükleniyor %${soundLoad.percent} (bu sırada oyun sessiz sürer).` : 'Ses ilk dokunuşta yüklenir.'}</p>
+        <p className={styles.modalNote} role="status">{soundLoad.ready ? t('settings.soundReady') : soundLoad.started ? t('settings.soundLoading', { percent: format.percent(soundLoad.percent / 100) }) : t('settings.soundOnTouch')}</p>
         <section className={styles.demoBox} aria-labelledby="eb-demo-title">
-          <h3 id="eb-demo-title">DEMO bakiyesi</h3>
-          <p>Bakiye {formatDemo(balance)}{remote ? ' (sunucu)' : ''}. Yenilemek bakiyeyi 1.000 DEMO yapar ve geçmişe "Bakiye yenilendi" satırı ekler; tur veya otomatik oyun sürerken yapılamaz.</p>
-          <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>Bakiyeyi yenile</button>
+          <h3 id="eb-demo-title">{t('settings.demoTitle')}</h3>
+          <p>{t('settings.demoText', { balance: format.demo(balance), server: remote ? 'yes' : 'no', amount: format.demo(DEMO_START_CENTS, { trimZeros: true }), label: t('history.refilled') })}</p>
+          <button type="button" className={`${kit.btn} ${kit.btnGhost}`} onClick={refill} disabled={busy || auto !== null || gated}>{t('deck.refill')}</button>
         </section>
       </Modal>
-      <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title="Ebru · Oyun bilgisi" initialPageId={infoPage} />
-      <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title="Otomatik oyun" size="md">
+      <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title={t('info.windowTitle')} initialPageId={infoPage} />
+      <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title={t('autoplay.title')} size="md">
         <AutoplayPanel onStart={startAutoplay} spinCostCents={spinCost} balanceCents={balance} disabled={busy || gated} />
-        <p className={styles.modalNote}>Tur başı {formatDemo(spinCost)}{ante ? ' (Şans ×2)' : ''} · bonus satın almaz · sekme gizlenince durur.</p>
+        <p className={styles.modalNote}>{t('autoplay.note', { cost: format.demo(spinCost), ante: ante ? 'yes' : 'no' })}</p>
       </Modal>
       <BuyFeatureDialog
         open={modal === 'buy'}
         onClose={() => setModal(null)}
         onConfirm={confirmBuy}
-        featureName={`Lale Ebrusu · 8 bedava dönüş · bahis ${formatDemo(bet)}`}
+        featureName={t('buy.feature', { spins: EBRU_FREE_SPINS_TRIGGER, bet: format.demo(bet) })}
         priceCents={buyPrice}
         balanceCents={balance}
-        rtpText={`Satın alma RTP ${ebruRtp(EBRU_RTP.buy.rtp)} · standart ${ebruRtp(EBRU_RTP.standard.rtp)} (simülasyon, sertifikasız)`}
-        description={<>Bahsin <strong>100 katı</strong>. Tur en az 3 Altın Tarakla başlar ve 8 bedava dönüş garantilidir; patlayan her hücreye boya lekesi düşer, lekeler tarakla kayar ve üstünden geçen kümeyi toplamlarıyla çarpar. Kazançlar {formatDemo(bet)} bahse göre ödenir, azami {formatDemo(bet * 10_000)}.</>}
+        rtpText={t('buy.rtp', { buy: rtpOf(EBRU_RTP.buy.rtp), standard: rtpOf(EBRU_RTP.standard.rtp) })}
+        description={<>{t.rich('buy.description', { b: chunk => <strong key={chunk}>{chunk}</strong> }, { spins: EBRU_FREE_SPINS_TRIGGER, bet: format.demo(bet), max: format.demo(bet * EBRU_MAX_WIN_MULTIPLIER) })}</>}
         disabledReason={buyReason ?? undefined}
       />
       <RealityCheckDialog
@@ -1055,7 +1070,7 @@ export function EbruGame() {
         elapsedMs={session.elapsedMs}
         netCents={session.netCents}
         onContinue={() => session.acknowledge()}
-        onQuit={() => { stopAutoplay('Oturumdan çıkıldı', 'info'); session.acknowledge(); router.push('/games'); }}
+        onQuit={() => { stopAutoplay('quit', 'info'); session.acknowledge(); router.push('/games'); }}
       />
     </div>
   );

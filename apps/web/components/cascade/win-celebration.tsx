@@ -10,7 +10,8 @@
  */
 import { useEffect, useRef, useState, type CSSProperties, type Ref } from 'react';
 import { WIN_TIER_INFO, countUpValueAt, levelAt, type CelebrationLevel, type CountUpSchedule } from '@/lib/slot-kit/win-tiers';
-import { centsFor, moneyText, multiplierText } from '@/lib/cascade-timeline';
+import { useFormat, useT } from '@/lib/i18n/client';
+import { centsFor } from '@/lib/cascade-timeline';
 import c from './celebration.module.css';
 
 const PIPS = [{ level: 1, x: '10×' }, { level: 2, x: '25×' }, { level: 3, x: '50×' }, { level: 4, x: '100×' }] as const;
@@ -99,6 +100,9 @@ export interface WinCelebrationProps {
 }
 
 export function WinCelebration({ schedule, betCents, elapsed, reducedMotion, onLevel, onCountDone, onTap }: WinCelebrationProps) {
+  const t = useT('cascade');
+  const tk = useT('slotKit');
+  const money = useFormat().amount;
   const [level, setLevel] = useState<CelebrationLevel>(() => levelAt(schedule, Math.max(0, elapsed())));
   const [done, setDone] = useState(false);
   const [flash, setFlash] = useState(0);
@@ -114,11 +118,11 @@ export function WinCelebration({ schedule, betCents, elapsed, reducedMotion, onL
     const step = () => {
       const e = Math.max(0, elapsed());
       const value = countUpValueAt(schedule, e);
-      const text = moneyText(centsFor(betCents, value));
+      const text = money(centsFor(betCents, value));
       if (text !== lastText) {
         lastText = text;
         writeAmount(amountRef.current, text);
-        if (multRef.current) multRef.current.textContent = `${multiplierText(value)}×`;
+        if (multRef.current) multRef.current.textContent = `${money(value)}×`;
       }
       const now = levelAt(schedule, e);
       if (now !== shownLevel) {
@@ -145,7 +149,7 @@ export function WinCelebration({ schedule, betCents, elapsed, reducedMotion, onL
     };
     step();
     return () => cancelAnimationFrame(frame);
-  }, [schedule, betCents, elapsed, reducedMotion]);
+  }, [schedule, betCents, elapsed, reducedMotion, money]);
 
   const info = WIN_TIER_INFO[level];
   const initial = countUpValueAt(schedule, Math.max(0, elapsed()));
@@ -167,7 +171,7 @@ export function WinCelebration({ schedule, betCents, elapsed, reducedMotion, onL
         data-testid="cascade-celebration"
         role="dialog"
         aria-modal="false"
-        aria-label={`${info.title}: ${moneyText(centsFor(betCents, schedule.totalHundredths))} DEMO`}
+        aria-label={`${tk(`winTier.${info.id}.title`)}: ${money(centsFor(betCents, schedule.totalHundredths))} DEMO`}
         onClick={onTap}
       >
         <div className={c.column}>
@@ -177,18 +181,18 @@ export function WinCelebration({ schedule, betCents, elapsed, reducedMotion, onL
           <div key={level} className={c.lockup} data-shake>
             <Starburst />
             {level >= 4 && <Crown />}
-            <DisplayWord text={info.word} className={c.tierWord} />
+            <DisplayWord text={tk(`winTier.${info.id}.word`)} className={c.tierWord} />
             {!reducedMotion && <Glints />}
-            <span className={c.ribbon} aria-hidden="true"><span>KAZANÇ</span></span>
+            <span className={c.ribbon} aria-hidden="true"><span>{tk('winWord')}</span></span>
           </div>
           <div ref={plaqueRef} className={c.plaque}>
-            <Amount ref={amountRef} text={moneyText(centsFor(betCents, initial))} testId="cascade-celebration-amount" />
+            <Amount ref={amountRef} text={money(centsFor(betCents, initial))} testId="cascade-celebration-amount" />
             <small className={c.unit}>DEMO</small>
           </div>
-          <span ref={multRef} className={c.mult}>{multiplierText(initial)}×</span>
-          {level === 5 && <p className={c.capNote}>Tur tavana ulaştı · kalan dönüşler oynanmaz</p>}
+          <span ref={multRef} className={c.mult}>{money(initial)}×</span>
+          {level === 5 && <p className={c.capNote}>{t('celebration.capNote')}</p>}
           <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>
-            {done ? 'Devam' : 'Hızlandırmak için dokun'}
+            {done ? t('celebration.continue') : t('celebration.tapToSpeed')}
           </button>
         </div>
       </div>
@@ -213,6 +217,8 @@ export interface FeatureTotalProps {
 
 /** "Bedava Dönüş Toplamı": always ends a free-spin round, whatever the total. */
 export function FeatureTotal({ spins, totalHundredths, multipliers, betCents, celebration, capped, dur, elapsed, reducedMotion, onTap }: FeatureTotalProps) {
+  const t = useT('cascade');
+  const money = useFormat().amount;
   const amountRef = useRef<HTMLSpanElement>(null);
   const countMs = Math.max(1, Math.min(1400, Math.round(dur * 0.5)));
   useEffect(() => {
@@ -221,12 +227,12 @@ export function FeatureTotal({ spins, totalHundredths, multipliers, betCents, ce
       const e = Math.max(0, elapsed());
       const p = reducedMotion ? 1 : Math.min(1, e / countMs);
       const value = p >= 1 ? totalHundredths : Math.floor(totalHundredths * (1 - (1 - p) ** 3));
-      writeAmount(amountRef.current, moneyText(centsFor(betCents, value)));
+      writeAmount(amountRef.current, money(centsFor(betCents, value)));
       if (p < 1) frame = requestAnimationFrame(step);
     };
     step();
     return () => cancelAnimationFrame(frame);
-  }, [elapsed, countMs, totalHundredths, betCents, reducedMotion]);
+  }, [elapsed, countMs, totalHundredths, betCents, reducedMotion, money]);
   const crystalSum = multipliers.reduce((a, b) => a + b, 0);
   const best = multipliers.length ? Math.max(...multipliers) : 0;
   return (
@@ -238,23 +244,23 @@ export function FeatureTotal({ spins, totalHundredths, multipliers, betCents, ce
       </div>
       <div className={c.front} data-level="feature" data-reduced={reducedMotion || undefined} role="dialog" aria-modal="false" aria-labelledby="cc-ft-title" data-testid="cascade-feature-total" onClick={onTap}>
         <div className={`${c.column} ${c.featureColumn}`}>
-          <h2 id="cc-ft-title" className="sr-only">Bedava Dönüş Toplamı</h2>
-          <span className={`${c.ribbon} ${c.ribbonTop}`} aria-hidden="true"><span>BEDAVA DÖNÜŞ</span></span>
+          <h2 id="cc-ft-title" className="sr-only">{t('total.title')}</h2>
+          <span className={`${c.ribbon} ${c.ribbonTop}`} aria-hidden="true"><span>{t('total.ribbon')}</span></span>
           <div className={c.lockup}>
             <Starburst />
-            <DisplayWord text="TOPLAM" className={c.featureWord} />
+            <DisplayWord text={t('total.word')} className={c.featureWord} />
           </div>
           <div className={c.plaque}>
-            <Amount ref={amountRef} text={moneyText(0)} testId="cascade-feature-amount" />
+            <Amount ref={amountRef} text={money(0)} testId="cascade-feature-amount" />
             <small className={c.unit}>DEMO</small>
           </div>
           <dl className={c.stats}>
-            <div><dt>Dönüş</dt><dd>{spins} dönüş</dd></div>
-            <div><dt>Kristal</dt><dd>{crystalSum > 0 ? <>×{crystalSum}<small>{multipliers.length} kez{multipliers.length > 1 ? ` · en yüksek ×${best}` : ''}</small></> : 'Uygulanmadı'}</dd></div>
-            <div><dt>Bahsin</dt><dd>{multiplierText(totalHundredths)}×</dd></div>
+            <div><dt>{t('total.spins')}</dt><dd>{t('total.spinsValue', { n: spins })}</dd></div>
+            <div><dt>{t('total.crystal')}</dt><dd>{crystalSum > 0 ? <>×{crystalSum}<small>{multipliers.length > 1 ? t('total.crystalBest', { n: multipliers.length, best: String(best) }) : t('total.crystalTimes', { n: multipliers.length })}</small></> : t('total.none')}</dd></div>
+            <div><dt>{t('total.betMultiple')}</dt><dd>{money(totalHundredths)}×</dd></div>
           </dl>
-          {capped && <p className={c.capNote}>Azami kazanca ulaşıldı · kalan dönüşler oynanmaz</p>}
-          <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>{celebration ? 'Kutlamaya geç' : 'Devam'}</button>
+          {capped && <p className={c.capNote}>{t('total.capNote')}</p>}
+          <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>{celebration ? t('total.toCelebration') : t('celebration.continue')}</button>
         </div>
       </div>
     </>

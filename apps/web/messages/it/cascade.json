@@ -1,0 +1,306 @@
+{
+  "subtitle": "Fai esplodere otto simboli uguali e crea catene con le caramelle che cadono.",
+  "table": {
+    "aria": "Tavolo di gioco Candy Cascade"
+  },
+  "board": {
+    "label": "Griglia Candy Cascade, 6 colonne, 5 righe",
+    "labelFree": "Griglia dei giri gratis Candy Cascade, 6 colonne, 5 righe"
+  },
+  "badge": {
+    "checking": "Verifica del server in corso"
+  },
+  "symbols": {
+    "crown": "Macaron Corona",
+    "cupcake": "Cupcake alla Menta",
+    "donut": "Ciambella Viola",
+    "gumdrop": "Caramella Gommosa Arancione",
+    "strawberry": "Fragola",
+    "blueberry": "Mirtillo",
+    "kiwi": "Kiwi",
+    "lemon": "Limone",
+    "cherry": "Ciliegia",
+    "star": "Biscotto Stella Dorato",
+    "crystal": "Cristallo Moltiplicatore",
+    "crystalValue": "{name} {value}×"
+  },
+  "callout": {
+    "tags": {
+      "0": "Moltiplicatore",
+      "1": "Grande moltiplicatore",
+      "2": "Mega moltiplicatore",
+      "3": "Super moltiplicatore",
+      "4": "Moltiplicatore epico"
+    }
+  },
+  "error": {
+    "entropy": "La casualità locale sicura non è disponibile. La demo non è stata avviata.",
+    "noCredit": "Non hai abbastanza credito demo oppure è già in corso un round demo.",
+    "insufficientSpin": "Saldo insufficiente: questo giro costa {cost}. Abbassa la puntata o ricarica il saldo.",
+    "insufficientBuy": "Saldo insufficiente: questo acquisto costa {cost}. Abbassa la puntata o ricarica il saldo."
+  },
+  "buyBlock": {
+    "gated": "Disponibile solo con credito DEMO",
+    "autoplay": "Non acquistabile durante il gioco automatico",
+    "busy": "Non acquistabile prima della fine del round",
+    "ante": "Non acquistabile con Chance ×2 attiva",
+    "balance": "Saldo insufficiente (prezzo {price})"
+  },
+  "autoplay": {
+    "title": "Gioco automatico",
+    "serverFailed": "Il server non è riuscito ad avviare il round",
+    "spinFailed": "Non è stato possibile avviare il giro",
+    "quit": "Hai lasciato la sessione",
+    "stopped": "Gioco automatico interrotto: {reason}. {spins, plural, one {# giro} other {# giri}}, netto {net}.",
+    "stoppedShort": "Gioco automatico interrotto: {reason}.",
+    "note": "{cost} per giro{ante, select, yes { (Chance ×2)} other {}} · non acquista mai un bonus · si ferma quando la scheda è nascosta."
+  },
+  "toast": {
+    "autoplay": "Gioco automatico: {spins, plural, one {# giro} other {# giri}}, limite di perdita {limit}.",
+    "refilled": "Saldo ricaricato: {amount}.",
+    "shareCopied": "Link di condivisione copiato: {url}",
+    "shareLink": "Link di condivisione: {url}",
+    "shareFailed": "Impossibile condividere: {reason}",
+    "replayFailed": "Non è stato possibile rivedere questo round.",
+    "replayMismatch": "Replay non verificabile: il record non corrisponde al motore.",
+    "close": "Chiudi la notifica"
+  },
+  "announce": {
+    "replayDone": "Replay terminato: {amount}, {times}×. Saldo invariato.",
+    "roundEnd": "Round terminato. Vincita totale {amount}, {times}×.",
+    "roundEndNoWin": "Round terminato. Nessuna vincita.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{count} {name}, vincita {times}×",
+    "crystals": "I cristalli moltiplicatori vengono raccolti: totale {sum}×.",
+    "multiply": "Moltiplicatore ×{sum}: la vincita di {base}× è stata moltiplicata per {sum}.",
+    "retrigger": "{count} stelle: {awarded, plural, one {# giro gratis aggiunto} other {# giri gratis aggiunti}}.",
+    "trigger": "{count} stelle: giri gratis vinti.",
+    "freeIntro": "Hai vinto {awarded, plural, one {# giro gratis} other {# giri gratis}}.",
+    "freeSpinWin": "Il giro gratis ha fruttato {win}×. Totale {total}×.",
+    "freeSpinNoWin": "Nessuna vincita nel giro gratis.",
+    "noWin": "Nessuna vincita.",
+    "totalWin": "Vincita totale {amount}, {times}×.",
+    "freeOutro": "Totale dei giri gratis: {amount}, {spins, plural, one {# giro} other {# giri}}.",
+    "sent": "Giro inviato al server, {amount}.",
+    "buyStarted": "Bonus acquistato, {amount}. I giri gratis stanno per iniziare.",
+    "spinStarted": "Giro avviato, {amount}.",
+    "recovered": "Un round interrotto è stato recuperato dal server; il pagamento è già stato effettuato lì ({amount}).",
+    "replaying": "Replay in corso: round {id}. Il saldo non cambia.",
+    "refilled": "Saldo DEMO ricaricato a {amount}.",
+    "refilledRemote": "Saldo DEMO del server ricaricato a {amount}.",
+    "speed": "Velocità dei giri: {speed}.",
+    "anteOn": "Chance ×2 attiva: probabilità di giri gratis circa doppia, costo {cost}.",
+    "anteOff": "Chance ×2 disattiva: costo {cost}."
+  },
+  "banner": {
+    "scatterPay": "{count} stelle · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# giro gratis} other {# giri gratis}}"
+  },
+  "deck": {
+    "aria": "Comandi di gioco",
+    "balance": "Saldo",
+    "refill": "Ricarica il saldo",
+    "replay": "Replay",
+    "win": "Vincita",
+    "replayWin": "Vincita del replay",
+    "lastWin": "Ultima vincita",
+    "spin": "Gira",
+    "spinLocked": "Round in corso; bloccato finché non finiscono tutte le cascate, i fulmini e i giri gratis.",
+    "auto": "Auto",
+    "info": "Info",
+    "on": "Attivo",
+    "off": "Disattivo",
+    "anteDesc": "Probabilità di giri gratis circa doppia",
+    "buyDesc": "{spins, plural, one {# giro gratis} other {# giri gratis}} · {rtp}",
+    "speed": "Velocità dei giri: {speed}",
+    "soundLoading": "Caricamento audio {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Il tuo saldo DEMO è esaurito.",
+    "lastRound": "Ultimo round <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "Nessuna vincita nell’ultimo round.",
+    "spaceHint": "Puoi girare anche con la barra spaziatrice.",
+    "fixedBefore": "Il risultato è stabilito prima del giro."
+  },
+  "replay": {
+    "ribbon": "Replay — saldo invariato · round {id}"
+  },
+  "auto": {
+    "ribbon": "Gioco automatico · {n, plural, one {# giro rimasto} other {# giri rimasti}}"
+  },
+  "free": {
+    "long": "Giri gratis",
+    "longN": "Giro gratis {n}",
+    "short": "Gratis",
+    "shortN": "Giro {n}",
+    "left": "Giri rimasti",
+    "counterAria": "Giro gratis {number}, ne restano {left}"
+  },
+  "mult": {
+    "label": "Moltiplicatore"
+  },
+  "meter": {
+    "idleA": "<b>8+</b> caramelle uguali pagano ovunque",
+    "idleB": "<b>4</b> stelle = <b>10</b> giri gratis",
+    "win": "Vincita",
+    "totalWin": "Vincita totale"
+  },
+  "gated": {
+    "title": "Nessun Candy Cascade on-chain.",
+    "text": "Questo gioco si gioca solo con credito DEMO; le puntate reali non sono accettate.",
+    "back": "Torna alla demo locale"
+  },
+  "splash": {
+    "f1Title": "8+ ovunque",
+    "f1Text": "Otto caramelle uguali pagano ovunque nella griglia",
+    "f2Title": "Cristallo 100×",
+    "f2Text": "I moltiplicatori si sommano nei giri gratis",
+    "f3Title": "Vincita massima {max}×",
+    "f3Text": "4 stelle sbloccano {spins, plural, one {# giro gratis} other {# giri gratis}}",
+    "loading": "Caricamento del gioco",
+    "play": "Gioca",
+    "skip": "Non mostrare più questa schermata iniziale",
+    "note": "Il credito DEMO non ha valore · Il risultato è stabilito prima del giro · Simulazione non certificata, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Audio pronto: musica ed effetti sono pronti su questo dispositivo.",
+    "soundLoading": "Caricamento audio {percent} (nel frattempo vengono riprodotti effetti semplici).",
+    "soundOnTouch": "L’audio si carica al primo tocco.",
+    "demoTitle": "Saldo DEMO",
+    "demoText": "Saldo {balance}{server, select, yes { (server)} other {}}. La ricarica porta il saldo a {amount} e aggiunge una riga “{label}” alla cronologia; non è possibile durante un round o il gioco automatico."
+  },
+  "buy": {
+    "feature": "{spins, plural, one {# giro gratis} other {# giri gratis}} · puntata {bet}",
+    "rtp": "RTP dell’acquisto {buy} · standard {standard} (simulazione, non certificata)",
+    "description": "<b>100 volte</b> la tua puntata. Il round inizia con almeno 4 stelle e {spins, plural, one {# giro gratis è garantito} other {# giri gratis sono garantiti}}; le vincite sono pagate su una puntata di {bet}, fino a un massimo di {max}."
+  },
+  "history": {
+    "scope": "Questa sessione · i replay non modificano mai il saldo",
+    "time": "Ora",
+    "mode": "Modalità",
+    "win": "Vincita",
+    "result": "Risultato",
+    "roundId": "ID del round",
+    "replay": "Rivedi",
+    "replayAria": "Rivedi: round {id}, saldo invariato",
+    "share": "Condividi la vincita",
+    "shareAria": "Condividi la vincita: round {id}",
+    "latest": "Ultimo round",
+    "refilled": "Saldo ricaricato",
+    "refilledRemote": "Saldo ricaricato (server)",
+    "emptyTitle": "Il tuo primo round apparirà qui.",
+    "emptyText": "Modalità, puntata, costo, vincita e ID di ogni round vengono registrati; puoi rivedere qualsiasi round.",
+    "capped": "Vincita massima · {times}×",
+    "free": "Giri gratis ×{spins} · {times}×",
+    "none": "Nessuna vincita",
+    "tumbles": "{n, plural, one {# cascata} other {# cascate}} · {times}×"
+  },
+  "celebration": {
+    "capNote": "Il round ha raggiunto il limite · i giri rimanenti non vengono giocati",
+    "continue": "Continua",
+    "tapToSpeed": "Tocca per accelerare"
+  },
+  "intro": {
+    "title": "Giri gratis",
+    "count": "giri gratis",
+    "text": "I cristalli moltiplicatori cadono solo in questo round e vengono raccolti al termine di ogni giro.",
+    "start": "Inizia"
+  },
+  "total": {
+    "title": "Totale dei Giri Gratis",
+    "ribbon": "GIRI GRATIS",
+    "word": "TOTALE",
+    "spins": "Giri",
+    "spinsValue": "{n, plural, one {# giro} other {# giri}}",
+    "crystal": "Cristallo",
+    "crystalTimes": "{n, plural, one {# volta} other {# volte}}",
+    "crystalBest": "{n, plural, one {# volta} other {# volte}} · massimo ×{best}",
+    "none": "Non applicato",
+    "betMultiple": "Della tua puntata",
+    "capNote": "Vincita massima raggiunta · i giri rimanenti non vengono giocati",
+    "toCelebration": "Vai alla celebrazione"
+  },
+  "info": {
+    "windowTitle": "Candy Cascade · Info sul gioco",
+    "how": {
+      "title": "Come si gioca",
+      "s1": "<b>Scegli la puntata.</b> I pulsanti − e + cambiano la puntata di un livello; toccando l’importo si aprono tutti i livelli. “{max}” sceglie il livello più alto coperto dal tuo saldo.",
+      "s2": "<b>Gira.</b> Premi il pulsante grande o usa la barra spaziatrice. L’importo della puntata ({multiple} volte la puntata con Chance ×2 attiva) viene addebitato una sola volta dal saldo.",
+      "s3": "<b>Combina.</b> Nella griglia di 6 colonne × 5 righe vinci con <b>8 o più caramelle uguali ovunque</b>; più sono, più alto è il livello di pagamento.",
+      "s4": "<b>Catena.</b> Le caramelle vincenti scoppiano, quelle sopra cadono e nuove caramelle riempiono gli spazi. Si va avanti finché non ci sono nuove vincite.",
+      "s5": "<b>Risultato.</b> L’intero round viene deciso dal motore prima dell’inizio del giro; l’animazione si limita a riprodurre quel risultato. Il pulsante di gioco resta bloccato finché il round (ogni cascata e ogni giro gratis) non è finito; usa l’impostazione {quick}/{turbo} per velocizzare. Le impostazioni di velocità, un tocco sul contatore della celebrazione, una scheda nascosta o l’uscita dalla pagina non cambiano mai il pagamento; il round si chiude sempre una sola volta, con il pagamento del motore.",
+      "note": "Il credito DEMO non ha valore; non fa guadagnare SOL, token o premi. Il gioco gira nel browser con casualità locale; non esiste una prova VRF."
+    },
+    "pay": {
+      "title": "Tabella dei pagamenti",
+      "lead": "Vinci con <b>8 o più caramelle uguali ovunque</b> nella griglia. La cifra grande è l’importo DEMO lordo con una puntata di <b>{bet}</b>; il moltiplicatore sotto è un multiplo della puntata.",
+      "symbolsAria": "Pagamenti dei simboli",
+      "scatterTitle": "{name} · pagamento scatter",
+      "stars6": "6+ stelle",
+      "stars5": "5 stelle",
+      "stars4": "4 stelle",
+      "scatterText": "Quando il giro base finisce, 4 o più stelle nella griglia pagano e sbloccano <b>{spins} giri gratis</b>. Le stelle non scoppiano.",
+      "crystalText": "Cade solo nei giri gratis e porta un valore da 2× a 100×. Al termine del giro i cristalli sulla griglia vengono <b>sommati</b>; se il giro ha una vincita, viene moltiplicata per il totale.",
+      "maxTitle": "Vincita massima {n}×",
+      "maxText": "Con questa puntata equivale a <b>{amount}</b>. Se il totale del round raggiunge questo limite, il round termina subito; i giri gratis rimanenti non vengono giocati."
+    },
+    "features": {
+      "title": "Funzioni",
+      "tumbleTitle": "Caramelle che cadono (tumble)",
+      "tumbleText": "Dopo ogni vincita le caramelle vincenti scoppiano, le altre scivolano in basso e gli spazi si riempiono dall’alto. Il contatore delle vincite non si azzera mai durante un round: cascate, moltiplicatori e tutti i giri gratis si sommano nello stesso totale.",
+      "starTitle": "Biscotto stella (scatter)",
+      "starText": "Quando un giro base finisce, 4 o più stelle pagano e sbloccano {trigger} giri gratis. Nei giri gratis, 3 o più stelle aggiungono altri {retrigger} giri (senza pagamento). In un singolo round si giocano al massimo {max} giri gratis.",
+      "crystalTitle": "Cristalli moltiplicatori",
+      "crystalText": "Cadono solo nei giri gratis e portano un valore da 2× a 100×. Al termine del giro i valori dei cristalli sulla griglia vengono sommati; se la vincita di quel giro è superiore a zero, viene moltiplicata per il totale. Senza vincita i cristalli non hanno effetto.",
+      "freeTitle": "Giri gratis",
+      "freeText": "I giri gratis si giocano con la stessa puntata nello stesso round; non viene addebitato alcun costo extra. Terminano sempre con la schermata “{screen}”: giri giocati, moltiplicatori dei cristalli applicati e vincita totale.",
+      "tiersTitle": "Livelli di vincita",
+      "tiersText": "Quando il totale del round è almeno <b>10×</b> la puntata base, si apre la schermata di celebrazione e il contatore sale attraverso i livelli: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; un round che raggiunge il limite termina con {max}. Le vincite sotto 10× ricevono una breve evidenziazione sul contatore. I totali del moltiplicatore da 10× in su vengono annunciati a caratteri grandi sopra la griglia. Toccando lo schermo il contatore salta al risultato; il pagamento non cambia mai.",
+      "anteTitle": "Chance ×2 · costo {cost}",
+      "anteText": "Quando è attiva, ogni giro costa <b>{multiple} volte la tua puntata</b> e le stelle sono più probabili nel gioco base: la probabilità di giri gratis è circa doppia ({ante} / {standard}). Le vincite sono comunque pagate sulla puntata base. Con la funzione attiva non si può acquistare il bonus.",
+      "buyTitle": "Acquista bonus · prezzo {price}",
+      "buyText": "Per <b>100 volte</b> la tua puntata il round inizia con almeno 4 stelle; {spins} giri gratis sono garantiti. L’acquisto avviene tramite una finestra di conferma, ha un RTP separato ({rtp}) e non è utilizzabile con il gioco automatico."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Ritorno teorico (RTP)",
+      "caption": "Ritorno teorico per modalità",
+      "mode": "Modalità",
+      "cost": "Costo",
+      "ci": "IC al 95%",
+      "feature": "Funzione",
+      "everyRound": "ogni round",
+      "method": "Una simulazione separata di {millions} milioni di round per ogni modalità (motore <code>candy-cascade-2</code>). L’RTP è calcolato sull’importo pagato. Frequenza di vincita (giro base): standard {hit}, Chance ×2 {hitAnte}.",
+      "note": "La simulazione è una stima e <b>non è certificata</b>; a causa della coda pesante, l’intervallo di confidenza può essere ottimistico. Il risultato di una sessione breve può discostarsi molto dall’RTP. Il credito DEMO <b>non ha valore</b>."
+    },
+    "limits": {
+      "title": "Limiti di puntata e vincita",
+      "range": "Intervallo di puntata",
+      "levels": "Livelli",
+      "current": "Puntata attuale",
+      "currentValue": "{bet} · Chance ×2 {ante} · Acquisto {buy}",
+      "max": "Vincita massima",
+      "maxValue": "{n} volte la puntata · {amount} con questa puntata",
+      "p1": "Un round che raggiunge la vincita massima termina subito; i giri gratis rimanenti non vengono giocati. Il pagamento è sempre calcolato sulla puntata base, con le frazioni di centesimo arrotondate per difetto.",
+      "p2": "I livelli e le modalità che il saldo non copre non possono essere selezionati. Un round è una sola prenotazione e un solo pagamento; si gioca un solo round alla volta."
+    },
+    "keys": {
+      "title": "Tasti",
+      "heading": "Tastiera",
+      "space": "Spazio",
+      "spaceText": "Avvia il giro ({settings} → “{option}”). Durante un round non salta il giro; accelera solo le schede dei giri gratis e il contatore della celebrazione.",
+      "enterText": "Preme il pulsante attivo.",
+      "escText": "Chiude la finestra aperta (tranne il promemoria di sessione).",
+      "tabText": "Si sposta tra i controlli; il focus è sempre visibile.",
+      "arrowsText": "Cambia pagina in questa finestra info; cambia l’opzione nelle scelte delle impostazioni.",
+      "pageText": "Si sposta tra le pagine info.",
+      "note": "Lo screen reader annuncia ogni passaggio (“{example}”, risultato del round); la griglia viene letta come una tabella 6×5. La preferenza per il movimento ridotto disattiva particelle e vibrazioni."
+    },
+    "fault": {
+      "title": "Clausola di malfunzionamento",
+      "p1": "<b>Un malfunzionamento rende nulli tutti i giochi e i pagamenti interessati.</b> In caso di guasto del software, del browser o del dispositivo fa fede il registro del round; un importo mostrato a schermo che non corrisponde al registro del motore non è valido.",
+      "p2": "Questo gioco si gioca solo con credito DEMO. Il DEMO non ha valore e non può essere convertito in denaro o token; in caso di malfunzionamento il saldo DEMO e la cronologia della sessione possono essere corretti o azzerati.",
+      "p3": "Poiché il risultato è stabilito prima del giro, un’animazione interrotta, una scheda nascosta o l’uscita dalla pagina non cambiano il risultato; il round si chiude comunque una sola volta con il pagamento del motore."
+    }
+  }
+}

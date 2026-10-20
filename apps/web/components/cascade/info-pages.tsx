@@ -5,15 +5,28 @@ import {
   CASCADE_MAX_FREE_SPINS, type CascadeMode,
 } from '@sollish/protocol';
 import type { GameInfoPage } from '../slot-kit';
-import { formatAmount, formatDemo } from '@/lib/slot-kit/bet';
-import { CASCADE_MODE_LABELS, cascadeCost, formatRtp, formatRtpRange } from '@/lib/cascade-controls';
+import type { Formatter } from '@/lib/i18n/format';
+import type { Translator } from '@/lib/i18n/translator';
+import { percentOf, percentRange } from '@/lib/slot-kit/percent';
+import { inlineName } from '@/lib/slot-kit/inline-name';
+import { CASCADE_COST_MODES, cascadeCost } from '@/lib/cascade-controls';
 import { PaytableContent } from './paytable';
-import { SymbolArt } from './symbols';
+import { SymbolArt, type CascadeArtSymbol } from './symbols';
 import styles from './info.module.css';
 
+/** Everything the info pages need to speak the current language (they are plain data, built outside React). */
+export interface CascadeInfoContext {
+  t: Translator<'cascade'>;
+  tc: Translator<'common'>;
+  tk: Translator<'slotKit'>;
+  format: Formatter;
+  /** Translated symbol name. */
+  symbol: (symbol: CascadeArtSymbol) => string;
+}
+
 const MODES: CascadeMode[] = ['standard', 'ante', 'buy'];
-const pct = (ratio: number, digits = 1) => `%${(ratio * 100).toFixed(digits).replace('.', ',')}`;
-const int = (n: number) => new Intl.NumberFormat('tr-TR').format(n);
+const bold = (chunk: string) => <strong key={chunk}>{chunk}</strong>;
+const code = (chunk: string) => <code key={chunk}>{chunk}</code>;
 
 function Feature({ art, title, children }: { art?: ReactNode; title: string; children: ReactNode }) {
   return (
@@ -25,126 +38,132 @@ function Feature({ art, title, children }: { art?: ReactNode; title: string; chi
 }
 
 /** Multi-page game information (game-standards §3 "Bilgi"). Amounts follow the current bet. */
-export function cascadeInfoPages(betCents: number): GameInfoPage[] {
+export function cascadeInfoPages(betCents: number, cx: CascadeInfoContext): GameInfoPage[] {
+  const { t, tc, tk, format } = cx;
   const minBet = CASCADE2_BET_LEVELS_CENTS[0]!, maxBet = CASCADE2_BET_LEVELS_CENTS[CASCADE2_BET_LEVELS_CENTS.length - 1]!;
+  const intl = format.intl;
+  const pct = (ratio: number, digits = 1) => percentOf(intl, ratio, digits);
+  const anteFactor = CASCADE_COST_MODES.ante;
+  const multiple = format.number(anteFactor.num / anteFactor.den, 2);
   return [
     {
-      id: 'how', title: 'Nasıl oynanır',
+      id: 'how', title: t('info.how.title'),
       content: (
         <div className={styles.page}>
-          <h3>Nasıl oynanır</h3>
+          <h3>{t('info.how.title')}</h3>
           <ol className={styles.steps}>
-            <li><strong>Bahsini seç.</strong> − ve + düğmeleri bahsi bir basamak değiştirir; bahis tutarına dokununca bütün basamaklar açılır. "Azami bahis" bakiyenin yettiği en yüksek basamağı seçer.</li>
-            <li><strong>Çevir.</strong> Büyük düğmeye bas veya Boşluk tuşunu kullan. Bahis tutarı (Şans ×2 açıksa 1,25 katı) bakiyeden bir kez düşer.</li>
-            <li><strong>Eşleştir.</strong> 6 sütun × 5 satırlık ızgarada aynı şekerden <strong>her yerde 8 veya daha fazla</strong> varsa kazanırsın; sayı arttıkça ödeme kademesi yükselir.</li>
-            <li><strong>Zincir.</strong> Kazanan şekerler patlar, üsttekiler düşer, boşluklar yeni şekerle dolar. Yeni kazanç kalmayana kadar sürer.</li>
-            <li><strong>Sonuç.</strong> Turun tamamı dönüş başlamadan önce motorla belirlenir; animasyon yalnızca bu sonucu oynatır. Çevir düğmesi tur (bütün düşmeler ve bedava dönüşler) bitene kadar kilitlidir; hızlandırmak için Hızlı/Turbo ayarını kullan. Hız ayarı, kutlama sayacına dokunmak, gizli sekme veya sayfadan ayrılma ödemeyi değiştirmez; tur her durumda bir kez, motorun ödemesiyle kapanır.</li>
+            <li>{t.rich('info.how.s1', { b: bold }, { max: tk('bet.max') })}</li>
+            <li>{t.rich('info.how.s2', { b: bold }, { multiple })}</li>
+            <li>{t.rich('info.how.s3', { b: bold })}</li>
+            <li>{t.rich('info.how.s4', { b: bold })}</li>
+            <li>{t.rich('info.how.s5', { b: bold }, { quick: tk('settings.speedQuick'), turbo: tk('settings.speedTurbo') })}</li>
           </ol>
-          <p className={styles.note}>DEMO kredisi değersizdir; SOL, token veya ödül kazandırmaz. Oyun tarayıcıda yerel rastgelelikle çalışır, VRF kanıtı yoktur.</p>
+          <p className={styles.note}>{t('info.how.note')}</p>
         </div>
       ),
     },
-    { id: 'pay', title: 'Ödeme tablosu', content: <><h3 className={styles.pageTitle}>Ödeme tablosu</h3><PaytableContent betCents={betCents} /></> },
+    { id: 'pay', title: t('info.pay.title'), content: <><h3 className={styles.pageTitle}>{t('info.pay.title')}</h3><PaytableContent betCents={betCents} t={t} format={format} symbol={cx.symbol} /></> },
     {
-      id: 'features', title: 'Özellikler',
+      id: 'features', title: t('info.features.title'),
       content: (
         <div className={styles.page}>
-          <h3>Özellikler</h3>
-          <Feature title="Düşen şekerler (tumble)" art={<SymbolArt symbol="strawberry" size="100%" />}>
-            <p>Her kazançtan sonra kazanan şekerler patlar, kalanlar aşağı kayar ve boşluklar üstten dolar. Kazanç göstergesi tur boyunca sıfırlanmaz: düşmeler, çarpanlar ve bütün bedava dönüşler aynı toplamda birikir.</p>
+          <h3>{t('info.features.title')}</h3>
+          <Feature title={t('info.features.tumbleTitle')} art={<SymbolArt symbol="strawberry" size="100%" />}>
+            <p>{t('info.features.tumbleText')}</p>
           </Feature>
-          <Feature title="Yıldız kurabiye (scatter)" art={<SymbolArt symbol="star" size="100%" />}>
-            <p>Temel dönüş bitince ızgarada 4 veya daha fazla yıldız varsa ödeme yapar ve {CASCADE_FREE_SPINS_TRIGGER} bedava dönüş açar. Bedava dönüşte 3 veya daha fazla yıldız {CASCADE_FREE_SPINS_RETRIGGER} dönüş daha ekler (ödemesiz). Bir turda en çok {CASCADE_MAX_FREE_SPINS} bedava dönüş oynanır.</p>
+          <Feature title={t('info.features.starTitle')} art={<SymbolArt symbol="star" size="100%" />}>
+            <p>{t('info.features.starText', { trigger: CASCADE_FREE_SPINS_TRIGGER, retrigger: CASCADE_FREE_SPINS_RETRIGGER, max: CASCADE_MAX_FREE_SPINS })}</p>
           </Feature>
-          <Feature title="Çarpan kristalleri" art={<SymbolArt symbol="crystal" multiplier={25} size="100%" />}>
-            <p>Yalnız bedava dönüşte düşer ve 2× ile 100× arası değer taşır. Dönüş bitince ızgaradaki kristallerin değerleri toplanır; o dönüşün kazancı sıfırdan büyükse bu toplamla çarpılır. Kazanç yoksa kristal etkisizdir.</p>
+          <Feature title={t('info.features.crystalTitle')} art={<SymbolArt symbol="crystal" multiplier={25} size="100%" />}>
+            <p>{t('info.features.crystalText')}</p>
           </Feature>
-          <Feature title="Bedava dönüş">
-            <p>Bedava dönüşler aynı bahisle, aynı tur içinde oynanır; ek ücret alınmaz. Her zaman "Bedava Dönüş Toplamı" ekranıyla biter: oynanan dönüş, uygulanan kristal çarpanları ve toplam kazanç.</p>
+          <Feature title={t('info.features.freeTitle')}>
+            <p>{t('info.features.freeText', { screen: t('total.title') })}</p>
           </Feature>
-          <Feature title="Kazanç kademeleri">
-            <p>Tur toplamı taban bahsin <strong>10 katı</strong> veya üstüyse kutlama ekranı açılır ve sayaç kademeler arasında tırmanır: Büyük Kazanç ≥10×, Mega Kazanç ≥25×, Süper Kazanç ≥50×, Efsane Kazanç ≥100×; tavana ulaşan tur Azami Kazanç ile biter. 10× altındaki kazanç göstergede kısa bir vurguyla gösterilir. 10× ve üstü çarpan toplamları ızgaranın üstünde büyük yazıyla duyurulur. Ekrana dokunmak sayacı hemen sonuca getirir; ödemeyi değiştirmez.</p>
+          <Feature title={t('info.features.tiersTitle')}>
+            <p>{t.rich('info.features.tiersText', { b: bold }, { big: tk('winTier.big.title'), mega: tk('winTier.mega.title'), super: tk('winTier.super.title'), epic: tk('winTier.epic.title'), max: tk('winTier.max.title') })}</p>
           </Feature>
-          <Feature title={`Şans ×2 · maliyet ${formatDemo(cascadeCost(betCents, 'ante'))}`}>
-            <p>Açıkken her dönüş bahsin <strong>1,25 katına</strong> mal olur ve temel oyunda yıldız çıkma olasılığı artar: bedava dönüş şansı yaklaşık 2 katıdır ({pct(CASCADE2_RTP.ante.featureRate, 2)} / {pct(CASCADE2_RTP.standard.featureRate, 2)}). Kazançlar yine taban bahse göre ödenir. Açıkken bonus satın alınamaz.</p>
+          <Feature title={t('info.features.anteTitle', { cost: format.demo(cascadeCost(betCents, 'ante')) })}>
+            <p>{t.rich('info.features.anteText', { b: bold }, { multiple, ante: pct(CASCADE2_RTP.ante.featureRate, 2), standard: pct(CASCADE2_RTP.standard.featureRate, 2) })}</p>
           </Feature>
-          <Feature title={`Bonus satın al · fiyat ${formatDemo(cascadeCost(betCents, 'buy'))}`}>
-            <p>Bahsin <strong>100 katı</strong> karşılığında tur en az 4 yıldızla başlar; {CASCADE_FREE_SPINS_TRIGGER} bedava dönüş garantilidir. Satın alma onay penceresiyle yapılır, ayrı bir RTP ile çalışır ({formatRtp(CASCADE2_RTP.buy.rtp)}) ve otomatik oyunla kullanılamaz.</p>
+          <Feature title={t('info.features.buyTitle', { price: format.demo(cascadeCost(betCents, 'buy')) })}>
+            <p>{t.rich('info.features.buyText', { b: bold }, { spins: CASCADE_FREE_SPINS_TRIGGER, rtp: pct(CASCADE2_RTP.buy.rtp) })}</p>
           </Feature>
         </div>
       ),
     },
     {
-      id: 'rtp', title: 'RTP',
+      id: 'rtp', title: t('info.rtp.title'),
       content: (
         <div className={styles.page}>
-          <h3>Teorik dönüş (RTP)</h3>
+          <h3>{t('info.rtp.heading')}</h3>
           <div className={styles.tableWrap}>
             <table>
-              <caption className="sr-only">Mod başına teorik dönüş</caption>
-              <thead><tr><th scope="col">Mod</th><th scope="col">Maliyet</th><th scope="col">RTP</th><th scope="col">%95 GA</th><th scope="col">Özellik</th></tr></thead>
+              <caption className="sr-only">{t('info.rtp.caption')}</caption>
+              <thead><tr><th scope="col">{t('info.rtp.mode')}</th><th scope="col">{t('info.rtp.cost')}</th><th scope="col">{t('info.rtp.title')}</th><th scope="col">{t('info.rtp.ci')}</th><th scope="col">{t('info.rtp.feature')}</th></tr></thead>
               <tbody>
                 {MODES.map(mode => {
                   const r = CASCADE2_RTP[mode];
+                  const cost = CASCADE_COST_MODES[mode];
                   return (
                     <tr key={mode}>
-                      <th scope="row">{CASCADE_MODE_LABELS[mode]}</th>
-                      <td>{mode === 'standard' ? '×1' : mode === 'ante' ? '×1,25' : '×100'}</td>
-                      <td><strong>{formatRtp(r.rtp)}</strong></td>
-                      <td>{formatRtpRange(r.ciLow, r.ciHigh)}</td>
-                      <td>{r.featureRate >= 1 ? 'her tur' : `1 / ${int(Math.round(1 / r.featureRate))}`}</td>
+                      <th scope="row">{tc(`modes.${mode}`)}</th>
+                      <td>{format.factor(cost.num, cost.den)}</td>
+                      <td><strong>{pct(r.rtp)}</strong></td>
+                      <td>{percentRange(intl, r.ciLow, r.ciHigh)}</td>
+                      <td>{r.featureRate >= 1 ? t('info.rtp.everyRound') : `1 / ${format.number(Math.round(1 / r.featureRate), 0)}`}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
           </div>
-          <p>Her mod için ayrı {int(CASCADE2_RTP.standard.rounds / 1_000_000)} milyon tur simülasyonu (motor <code>candy-cascade-2</code>). RTP, ödenen maliyete göre hesaplanır. Kazanç sıklığı (taban dönüş): standart {pct(CASCADE2_RTP.standard.hitRate)}, Şans ×2 {pct(CASCADE2_RTP.ante.hitRate)}.</p>
-          <p className={styles.note}>Simülasyon tahminidir, <strong>sertifikasızdır</strong>; ağır kuyruk nedeniyle güven aralığı iyimser olabilir. Kısa oturumdaki sonuç RTP'den çok farklı olabilir. DEMO kredisi <strong>değersizdir</strong>.</p>
+          <p>{t.rich('info.rtp.method', { code }, { millions: format.number(CASCADE2_RTP.standard.rounds / 1_000_000, 0), hit: pct(CASCADE2_RTP.standard.hitRate), hitAnte: pct(CASCADE2_RTP.ante.hitRate) })}</p>
+          <p className={styles.note}>{t.rich('info.rtp.note', { b: bold })}</p>
         </div>
       ),
     },
     {
-      id: 'limits', title: 'Bahis ve kazanç sınırları',
+      id: 'limits', title: t('info.limits.title'),
       content: (
         <div className={styles.page}>
-          <h3>Bahis ve kazanç sınırları</h3>
+          <h3>{t('info.limits.title')}</h3>
           <dl className={styles.facts}>
-            <div><dt>Bahis aralığı</dt><dd>{formatDemo(minBet, { trimZeros: true })} – {formatDemo(maxBet, { trimZeros: true })}</dd></div>
-            <div><dt>Basamaklar</dt><dd>{CASCADE2_BET_LEVELS_CENTS.map(c => formatAmount(c, { trimZeros: true })).join(' · ')}</dd></div>
-            <div><dt>Şu anki bahis</dt><dd>{formatDemo(betCents)} · Şans ×2 {formatDemo(cascadeCost(betCents, 'ante'))} · Satın alma {formatDemo(cascadeCost(betCents, 'buy'))}</dd></div>
-            <div><dt>Azami kazanç</dt><dd>Bahsin {int(CASCADE2_MAX_WIN_MULTIPLIER)} katı · bu bahiste {formatDemo(betCents * CASCADE2_MAX_WIN_MULTIPLIER)}</dd></div>
+            <div><dt>{t('info.limits.range')}</dt><dd>{format.demo(minBet, { trimZeros: true })} – {format.demo(maxBet, { trimZeros: true })}</dd></div>
+            <div><dt>{t('info.limits.levels')}</dt><dd>{CASCADE2_BET_LEVELS_CENTS.map(c => format.amount(c, { trimZeros: true })).join(' · ')}</dd></div>
+            <div><dt>{t('info.limits.current')}</dt><dd>{t('info.limits.currentValue', { bet: format.demo(betCents), ante: format.demo(cascadeCost(betCents, 'ante')), buy: format.demo(cascadeCost(betCents, 'buy')) })}</dd></div>
+            <div><dt>{t('info.limits.max')}</dt><dd>{t('info.limits.maxValue', { n: format.number(CASCADE2_MAX_WIN_MULTIPLIER, 0), amount: format.demo(betCents * CASCADE2_MAX_WIN_MULTIPLIER) })}</dd></div>
           </dl>
-          <p>Azami kazanca ulaşan tur hemen biter; kalan bedava dönüşler oynanmaz. Ödeme her zaman taban bahse göre hesaplanır, kuruşun altı aşağı yuvarlanır.</p>
-          <p>Bakiyenin yetmediği basamaklar ve modlar seçilemez. Bir tur tek rezervasyon ve tek ödemedir; aynı anda yalnız bir tur oynanır.</p>
+          <p>{t('info.limits.p1')}</p>
+          <p>{t('info.limits.p2')}</p>
         </div>
       ),
     },
     {
-      id: 'keys', title: 'Tuşlar',
+      id: 'keys', title: t('info.keys.title'),
       content: (
         <div className={styles.page}>
-          <h3>Klavye</h3>
+          <h3>{t('info.keys.heading')}</h3>
           <dl className={styles.keys}>
-            <div><dt><kbd>Boşluk</kbd></dt><dd>Dönüşü başlatır (Ayarlar → "Boşluk tuşuyla döndür"). Tur sürerken dönüşü atlamaz; yalnız bedava dönüş kartlarını ve kutlama sayacını hızlandırır.</dd></div>
-            <div><dt><kbd>Enter</kbd></dt><dd>Odaktaki düğmeye basar.</dd></div>
-            <div><dt><kbd>Esc</kbd></dt><dd>Açık pencereyi kapatır (oturum hatırlatması hariç).</dd></div>
-            <div><dt><kbd>Tab</kbd></dt><dd>Kontroller arasında gezinir; odak her zaman görünür.</dd></div>
-            <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Bu bilgi penceresinde sayfa değiştirir; ayar seçimlerinde seçeneği değiştirir.</dd></div>
-            <div><dt><kbd>PageUp</kbd> <kbd>PageDown</kbd></dt><dd>Bilgi sayfaları arasında gezinir.</dd></div>
+            <div><dt><kbd>{t('info.keys.space')}</kbd></dt><dd>{t('info.keys.spaceText', { settings: tk('settings.title'), option: tk('settings.spaceToSpin') })}</dd></div>
+            <div><dt><kbd>Enter</kbd></dt><dd>{t('info.keys.enterText')}</dd></div>
+            <div><dt><kbd>Esc</kbd></dt><dd>{t('info.keys.escText')}</dd></div>
+            <div><dt><kbd>Tab</kbd></dt><dd>{t('info.keys.tabText')}</dd></div>
+            <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>{t('info.keys.arrowsText')}</dd></div>
+            <div><dt><kbd>PageUp</kbd> <kbd>PageDown</kbd></dt><dd>{t('info.keys.pageText')}</dd></div>
           </dl>
-          <p className={styles.note}>Ekran okuyucu her adımı ("8 çilek, 2,02× kazanç", tur sonucu) duyurur; ızgara 6×5 tablo olarak okunur. Hareketi azalt tercihi parçacık ve sarsıntıyı kapatır.</p>
+          <p className={styles.note}>{t('info.keys.note', { example: t('announce.cluster', { count: 8, name: inlineName(t.locale, cx.symbol('strawberry')), times: format.amount(202) }) })}</p>
         </div>
       ),
     },
     {
-      id: 'fault', title: 'Arıza hükmü',
+      id: 'fault', title: t('info.fault.title'),
       content: (
         <div className={styles.page}>
-          <h3>Arıza hükmü</h3>
-          <p><strong>Arıza, etkilenen bütün oyunları ve ödemeleri geçersiz kılar.</strong> Yazılım, tarayıcı veya cihaz arızasında tur kaydı esas alınır; ekranda görünen ama motor kaydıyla uyuşmayan bir tutar geçerli değildir.</p>
-          <p>Bu oyun yalnız DEMO kredisiyle oynanır. DEMO değersizdir, paraya veya tokene çevrilemez; arıza halinde DEMO bakiyesi ve oturum geçmişi düzeltilebilir veya sıfırlanabilir.</p>
-          <p>Sonuç dönüşten önce belirlendiği için animasyonun yarıda kalması, sekmenin gizlenmesi veya sayfadan ayrılmak sonucu değiştirmez; tur yine motorun ödemesiyle bir kez kapanır.</p>
+          <h3>{t('info.fault.title')}</h3>
+          <p>{t.rich('info.fault.p1', { b: bold })}</p>
+          <p>{t('info.fault.p2')}</p>
+          <p>{t('info.fault.p3')}</p>
         </div>
       ),
     },

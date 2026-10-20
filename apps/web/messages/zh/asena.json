@@ -1,0 +1,404 @@
+{
+  "deck": {
+    "group": "游戏控制",
+    "balance": "余额",
+    "refill": "补充余额",
+    "win": "赢取",
+    "winReplay": "回放",
+    "winReplayLast": "回放奖金",
+    "winLast": "上次赢取",
+    "cost": "费用",
+    "spin": "旋转",
+    "spinCost": "费用 {cost}",
+    "auto": "自动",
+    "info": "信息",
+    "infoAria": "游戏信息",
+    "on": "开",
+    "off": "关",
+    "buy": "购买奖励",
+    "buyDesc": "{spins, plural, other {# 次免费旋转}} · {rtp}",
+    "speedAria": "旋转速度：{speed}",
+    "sound": "声音",
+    "soundLoading": "正在加载声音 {percent}%",
+    "outOfCredit": "你的 DEMO 余额已用完。",
+    "lastWin": "上一轮 <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "上一轮未中奖。",
+    "hintSpace": "也可以按空格键旋转。",
+    "hintFixed": "结果在旋转前就已确定。",
+    "spinLocked": "本轮进行中；所有消除、狼的步伐和免费旋转结束前已锁定。",
+    "anteDesc": "免费旋转几率 ≈2 倍"
+  },
+  "hud": {
+    "freeAria": "免费旋转第 {number} 次，剩余 {left} 次",
+    "freeSpin": "第 {n} 转",
+    "left": "剩余",
+    "free": "Ergenekon",
+    "moonAria": "3 个或更多 Ay Ata 触发 10 次免费旋转",
+    "moonLong": "<b>3+</b> Ay Ata · 10 次免费旋转",
+    "moonShort": "<b>3+</b> Ay Ata · 10 次",
+    "templateChip": "星座 <b>×{multiplier}</b> · 最高 <b>{max}×</b>",
+    "globalAria": "全局倍数 ×{multiplier}，地图上有 {distinct} 个星座",
+    "global": "全局",
+    "map": "地图"
+  },
+  "meter": {
+    "total": "总赢取",
+    "win": "赢取",
+    "idleA": "<b>5+</b> 个相邻的相同符号即可中奖",
+    "idleB": "天狼行走并留下痕迹",
+    "idleC": "星座 <b>×2–×10</b>"
+  },
+  "replay": {
+    "ribbon": "回放 — 余额不变 · 第 {id} 轮"
+  },
+  "auto": {
+    "ribbon": "自动 · 剩余 {spins, plural, other {# 次}}"
+  },
+  "toast": {
+    "close": "关闭通知",
+    "autoplayStopped": "自动游戏已停止：{reason}。{spins, plural, other {# 次}}旋转，净额 {net}。",
+    "autoplayStoppedShort": "自动游戏已停止：{reason}。",
+    "autoplayStarted": "自动游戏：{spins, plural, other {# 次}}旋转，亏损上限 {limit}。",
+    "refilled": "余额已补充：{amount} DEMO。",
+    "shareCopied": "分享链接已复制：{url}",
+    "shareLink": "分享链接：{url}",
+    "shareFailed": "无法分享：{error}",
+    "replayFailed": "无法回放这一轮。",
+    "replayMismatch": "无法验证回放：记录与引擎不一致。"
+  },
+  "banner": {
+    "extraSpins": "+{awarded} 次免费旋转",
+    "constellation": "{name} ×{multiplier}",
+    "mapSpins": "地图 · +{awarded} 次免费旋转",
+    "scatterPay": "{count} 个 Ay Ata · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "旋转已开始，{amount} DEMO。",
+    "sentToServer": "旋转已发送至服务器，{amount} DEMO。",
+    "recovered": "已从服务器恢复未完成的一轮；奖金已在服务器结算（{amount} DEMO）。",
+    "replaying": "正在回放：第 {id} 轮。余额不变。",
+    "replayDone": "回放结束：{amount} DEMO，{times}×。余额未变。",
+    "roundEnd": "本轮结束。总赢取 {amount} DEMO，{times}×。",
+    "roundEndNone": "本轮结束。未中奖。",
+    "noWin": "未中奖。",
+    "totalWin": "总赢取 {amount} DEMO，{times}×。",
+    "celebration": "{title}：{amount} DEMO，{times}×。",
+    "speed": "旋转速度：{speed}。",
+    "anteOn": "机会 ×2 已开启：免费旋转几率约 2 倍，费用 {cost}。",
+    "anteOff": "机会 ×2 已关闭：费用 {cost}。",
+    "refilled": "DEMO 余额已补充至 {amount} DEMO。",
+    "refilledRemote": "服务器 DEMO 余额已补充至 {amount} DEMO。",
+    "bonusBought": "已购买奖励，{amount} DEMO。Ergenekon 开始。",
+    "moonTease": "出现了两个 Ay Ata；第三个将触发免费旋转。",
+    "cluster": "{size} 个{name}{template, select, none {} other {，{templateName} ×{templateMultiplier}}}，赢取 {times}×",
+    "constellation": "星座被点亮：{name}，符号群赔付 ×{multiplier}。",
+    "map": "Ergenekon 地图：已点亮 {distinct} / 6 个星座。",
+    "ergenekon": "Ergenekon：{distinct} 个星座，全局倍数 ×{after}。此后每次奖金均为 ×{after}。",
+    "mapSpins": "Ergenekon 地图增加了 {awarded} 次免费旋转。",
+    "wolfWalk": "天狼行走：第 {fromCol} 列第 {fromRow} 行 → 第 {toCol} 列第 {toRow} 行；身后留下了星迹。",
+    "moons": "{count} 个 Ay Ata。",
+    "retrigger": "{count} 个 Ay Ata：增加 {awarded} 次免费旋转。",
+    "trigger": "{count} 个 Ay Ata：赢得 Ergenekon。",
+    "freeIntro": "Ergenekon 开始：你赢得了 {awarded} 次免费旋转。",
+    "freeSpinWin": "本次免费旋转赢取 {times}×。累计 {total}×。",
+    "freeSpinNone": "本次免费旋转未中奖。",
+    "freeOutro": "Ergenekon 结束。总计：{amount} DEMO，{spins} 转，{constellations} 个星座，全局倍数 ×{multiplier}。"
+  },
+  "autoplay": {
+    "serverFailed": "服务器无法开始本轮",
+    "spinFailed": "无法开始旋转",
+    "quit": "已退出会话",
+    "title": "自动游戏",
+    "note": "每次旋转 {cost}{ante, select, yes {（机会 ×2）} other {}} · 不会购买奖励 · 标签页隐藏时停止。"
+  },
+  "errors": {
+    "entropy": "无法使用安全的本地随机数。演示未启动。",
+    "insufficient": "余额不足：本次{kind, select, buy {购买} other {旋转}}需要 {cost}。请降低投注额或补充余额。",
+    "noCredit": "演示额度不足，或已有演示正在进行。"
+  },
+  "buy": {
+    "block": {
+      "gated": "仅可使用 DEMO 额度购买",
+      "autoplay": "自动游戏进行时无法购买",
+      "busy": "本轮结束前无法购买",
+      "ante": "机会 ×2 开启时无法购买",
+      "balance": "余额不足（价格 {price}）"
+    },
+    "rtp": "购买 RTP {buy} · 标准 {standard}（模拟，未经认证）",
+    "feature": "Ergenekon · 10 次免费旋转 · 投注 {bet}",
+    "text": "<b>80 倍</b>投注额。本轮至少以 3 个 Ay Ata 开始，并保证获得 10 次免费旋转；每点亮一个星座就会解锁 Ergenekon 地图，全局倍数升至 ×2、×3 和 ×5，并在整个特色功能期间乘以每次奖金。奖金按 {bet} 的投注额支付，最高 {max}。"
+  },
+  "gated": {
+    "text": "本游戏仅使用 DEMO 额度进行；不接受真实投注。",
+    "back": "返回本地演示",
+    "title": "没有链上版 Asena。"
+  },
+  "splash": {
+    "max": {
+      "title": "最高 {max}×"
+    },
+    "loading": "游戏加载中",
+    "play": "开始游戏",
+    "skip": "不再显示开场画面",
+    "note": "DEMO 额度没有价值 · 结果在旋转前确定 · 未经认证的模拟 RTP ≈ {rtp}",
+    "constellation": {
+      "title": "星座 ×10",
+      "text": "若符号群包含天空中的图形，会逐星绘出并使赔付倍增"
+    },
+    "wolf": {
+      "title": "天狼行走",
+      "text": "参与中奖的狼每次消除前进一格，并留下星迹"
+    },
+    "ergenekon": {
+      "title": "Ergenekon · {max}×",
+      "text": "随着地图解锁，铁山裂开：全局倍数 ×2、×3、×5"
+    }
+  },
+  "settings": {
+    "soundReady": "声音已就绪：音乐、音效和环境音已在此设备上准备完毕。",
+    "soundIdle": "声音将在首次点击时加载。",
+    "demoTitle": "DEMO 余额",
+    "demoText": "余额 {balance}{remote, select, yes {（服务器）} other {}}。补充会将余额重置为 {start} DEMO，并在记录中添加一行“余额已补充”；本轮或自动游戏进行时无法操作。",
+    "soundLoading": "正在加载声音 {percent}%（加载期间游戏静音）。"
+  },
+  "history": {
+    "title": "你的游戏记录",
+    "scope": "本次会话 · 回放不会改变余额",
+    "time": "时间",
+    "mode": "模式",
+    "bet": "投注",
+    "cost": "费用",
+    "win": "赢取",
+    "result": "结果",
+    "roundId": "轮次编号",
+    "replayColumn": "回放",
+    "latest": "最近一轮",
+    "replay": "回放",
+    "replayAria": "回放：第 {id} 轮，余额不变",
+    "share": "分享我的奖金",
+    "shareAria": "分享我的奖金：第 {id} 轮",
+    "emptyTitle": "你的第一轮将显示在这里。",
+    "emptyText": "每一轮的模式、投注、费用、奖金和轮次编号都会被记录；你可以重新观看任意一轮。",
+    "reset": "余额已补充",
+    "resetRemote": "余额已补充（服务器）",
+    "detail": {
+      "capped": "最高奖 · {times}×",
+      "none": "未中奖",
+      "free": "Ergenekon ×{spins}{multiplier, plural, =0 {} other { · 全局 ×#}} · {times}×",
+      "base": "{clusters, plural, other {# 个符号群}}{stars, plural, =0 {} other { · # 个星座}}{moons, plural, =0 {} other { · # 个 Ay Ata}} · {times}×"
+    },
+    "tableRegion": "游戏记录表"
+  },
+  "celebration": {
+    "aria": "{title}：{money} DEMO",
+    "times": "{times}× 投注额",
+    "capNote": "本轮已达上限 · 剩余旋转不再进行",
+    "speedUp": "点击加速",
+    "continue": "继续"
+  },
+  "intro": {
+    "start": "开始",
+    "word": "ERGENEKON",
+    "srTitle": "Ergenekon 开始",
+    "freeSpins": "次免费\n旋转",
+    "text": "每点亮一个星座，就会解锁<b>Ergenekon 地图</b>的一块碎片。<b>3 个不同</b>的星座可获得 +5 次旋转和 <b>×2</b> 全局倍数，<b>全部六个</b>可获得 +5 次旋转和 <b>×3</b>，全部点亮两次则为 <b>×5</b>。全局倍数在整个特色功能期间保留，并乘以每次奖金。3 个 Ay Ata 增加 3 次旋转。"
+  },
+  "total": {
+    "word": "总计",
+    "sub": "免费旋转",
+    "titleB": "总计",
+    "toCelebration": "进入庆祝画面",
+    "capNote": "已达到最高奖 · 剩余旋转不再进行",
+    "titleA": "Ergenekon",
+    "spins": "旋转",
+    "spinsValue": "{spins, plural, other {# 转}}",
+    "wolfSteps": "{n, plural, other {狼走了 # 步}}",
+    "wolfNone": "狼没有行走",
+    "constellations": "星座",
+    "mapOf": "地图 {distinct}/6",
+    "global": "全局倍数",
+    "ofBet": "{times}× 投注额"
+  },
+  "badge": {
+    "checking": "正在检查服务器"
+  },
+  "rules": {
+    "fixed": "结果在旋转开始前由浏览器使用本地随机数确定；动画只是播放该结果。即使你离开页面，本轮也会按已确定的奖金结算。没有 VRF 证明。",
+    "board": "星域为 6×6。横向或纵向相邻的 5 个或更多相同符号（包括天狼和星迹百搭）组成一个符号群并获得赔付；符号群越大，赔付档位越高。中奖的符号群会化为星星并爆开，上方符号下落，空位被补满。",
+    "features": "若符号群包含六种星座模板之一（狼头 ×10、生命之树 ×8、鹰 ×6、马 ×4、弓 ×3、新月 ×2；可旋转或镜像），该星座会被点亮，符号群赔付乘以模板倍数。参与中奖的天狼每次消除后前进一格，并在身后留下星迹百搭。3 个或更多 Ay Ata 触发 10 次免费旋转（Ergenekon）：每点亮一个星座就解锁地图的一块碎片；3 个不同星座可获得 +5 次旋转和 ×2 全局倍数，6 个不同星座可获得 +5 次旋转和 ×3，全部点亮两次则为 ×5。最高奖金为投注额的 5,000 倍。"
+  },
+  "meta": {
+    "title": "Asena：星狼",
+    "description": "Asena：星狼——原创 DEMO 消除型游戏。符号群会在天空中绘出星座，天狼行走并留下星迹；Ergenekon 地图最高可解锁 ×5 的全局倍数。"
+  },
+  "title": "Asena：星狼",
+  "subtitle": "符号群在天空中绘出星座，天狼行走并留下星迹；在 Ergenekon 中，全局倍数最高可达 ×5。",
+  "table": "Asena 游戏桌",
+  "logo": {
+    "subtitle": "星狼",
+    "label": "Asena：星狼"
+  },
+  "symbols": {
+    "h1": "Asena",
+    "h2": "Kün Ana",
+    "h3": "天鹰",
+    "h4": "草原骏马",
+    "l1": "绿松石星",
+    "l2": "绯红宝石",
+    "l3": "翡翠箭",
+    "l4": "紫水晶塔姆加",
+    "wolf": "天狼（行走百搭）",
+    "trail": "星迹（百搭）",
+    "moon": "Ay Ata（分散符号）"
+  },
+  "templates": {
+    "kurt-basi": "狼头",
+    "yay": "弓",
+    "at": "马",
+    "kartal": "鹰",
+    "hayat-agaci": "生命之树",
+    "hilal": "新月"
+  },
+  "board": {
+    "label": "Asena 星域",
+    "labelPlay": "Asena 星域，6 列 6 行",
+    "labelFree": "Asena 免费旋转星域，6 列 6 行",
+    "cell": "{symbol}，第 {col} 列，第 {row} 行"
+  },
+  "callout": {
+    "tier0": "星座",
+    "tier1": "璀璨星座",
+    "tier2": "天空倍数",
+    "tier3": "腾格里倍数",
+    "tier4": "传奇天空",
+    "tier5": "Kün Ana"
+  },
+  "fx": {
+    "spins": "次旋转",
+    "extraSpins": "额外旋转",
+    "freeSpins": "免费旋转"
+  },
+  "info": {
+    "title": "Asena · 游戏信息",
+    "tab": {
+      "how": "玩法说明",
+      "pay": "赔付表",
+      "features": "特色功能",
+      "rtp": "RTP",
+      "limits": "投注与奖金限额",
+      "keys": "按键",
+      "fault": "故障条款"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>选择投注额。</b>点击 − 和 + 按钮可按档位调整投注额；点按投注金额可展开所有档位。“最大投注”会选择余额允许的最高档位。",
+        "spin": "<b>旋转。</b>点击星星按钮或按空格键。每轮费用（开启机会 ×2 时为投注额的 {factor} 倍）只会从余额中扣除一次。",
+        "cluster": "<b>组成符号群。</b>在 6 × 6 的星域中，横向或纵向相邻的 <b>5 个或更多相同符号</b>即可中奖；符号群越大，赔付档位越高。",
+        "constellation": "<b>星座。</b>若符号群包含天空中六种图形之一，星座会逐星绘出，在天空中回响，狼会嚎叫，符号群赔付乘以该图形的倍数（×2–×10）。",
+        "chain": "<b>连锁。</b>中奖的符号群会化为星星并爆开，上方符号下落，空位被补满；参与中奖的天狼前进一格。如此持续，直到不再出现新的符号群。",
+        "result": "<b>结果。</b>整轮结果在旋转开始前就由引擎确定；动画只是播放该结果。在本轮（包括所有消除、狼的步伐和免费旋转）结束前，旋转按钮保持锁定；可使用“快速/极速”设置加快节奏。速度设置、点击庆祝计数器、隐藏标签页或离开页面都不会改变奖金；本轮始终只会按引擎的奖金结算一次。"
+      },
+      "note": "DEMO 额度没有价值；不会带来 SOL、代币或奖励。游戏在浏览器中使用本地随机数运行，没有 VRF 证明。Gök Tengri、Ay Ata、Kün Ana、Asena 和 Ergenekon 属于公有领域的突厥神话；角色和美术均为原创。"
+    },
+    "pay": {
+      "maxTitle": "最高奖 {max}×",
+      "maxText": "在此投注额下为 <b>{amount}</b>。若本轮总额达到该上限，本轮立即结束；剩余免费旋转不再进行。",
+      "lead": "横向或纵向相邻的 <b>5 个或更多相同符号</b>组成一个符号群；天狼和星迹百搭可替代任何符号。大号数字是投注额为 <b>{bet}</b> 时的 DEMO 总额；其下方的倍数是投注额的倍数。同一棋盘上的所有符号群分别赔付。",
+      "gridAria": "符号群赔付",
+      "fullTable": "所有符号群大小（7 个档位）",
+      "fullCaption": "按符号和符号群大小划分的赔付（投注额的倍数）",
+      "colSymbol": "符号",
+      "moon5": "5+ 个 Ay Ata",
+      "moon4": "4 个 Ay Ata",
+      "moon3": "3 个 Ay Ata",
+      "moonText": "基础旋转最终棋盘上有 3 个或更多 Ay Ata 时赔付，并触发 <b>{spins} 次免费旋转</b>（Ergenekon）。Ay Ata 不会爆开；狼也不会踩上去。",
+      "wolfText": "可替代所有赔付符号，且只会出现在一次旋转的首个棋盘上。若参与中奖，它不会爆开，而是<b>行走</b>：下落后前进一格，并在离开的格子里留下星迹百搭。详情见“特色功能”页面。",
+      "trailText": "狼身后留下的百搭。它会随消除一起下落，参与中奖后即被消耗；旋转结束时清除，不会带入下一转。"
+    },
+    "rtp": {
+      "title": "理论回报率 (RTP)",
+      "caption": "各模式的理论回报率",
+      "colMode": "模式",
+      "colCost": "费用",
+      "colCi": "95% 置信区间",
+      "colFeature": "特色功能",
+      "everyRound": "每轮",
+      "oneIn": "1 / {n}",
+      "note": "该模拟仅为估算，<b>未经认证</b>；由于长尾分布，置信区间可能偏乐观。短时间会话的结果可能与 RTP 相差很大。DEMO 额度<b>没有价值</b>。",
+      "text": "每种模式单独进行 {millions} 百万轮模拟（引擎 <code>asena-stars-1</code>）。RTP 按已支付的费用计算。中奖频率（基础旋转）：标准 {hitStandard}，机会 ×2 {hitAnte}。波动性（以费用为单位的标准差）：标准 {sdStandard}，购买 {sdBuy}。"
+    },
+    "limits": {
+      "title": "投注与奖金限额",
+      "range": "投注范围",
+      "steps": "档位",
+      "current": "当前投注额",
+      "currentValue": "{bet} · 机会 ×2 {ante} · 购买 {buy}",
+      "max": "最高奖",
+      "maxValue": "投注额的 {multiplier} 倍 · 当前投注额下为 {amount}",
+      "text1": "达到最高奖的一轮会立即结束；剩余免费旋转不再进行。奖金始终按基础投注额计算，不足一分的部分向下取整。",
+      "text2": "余额不足的档位和模式无法选择。每一轮对应一次预留和一次结算；同一时间只能进行一轮。"
+    },
+    "keys": {
+      "heading": "键盘",
+      "space": "空格",
+      "spaceText": "开始旋转（设置 →“{option}”）。本轮进行中不会跳过旋转；只会加快免费旋转画面和庆祝计数器。",
+      "enterText": "按下当前聚焦的按钮。",
+      "escText": "关闭已打开的窗口（会话提醒除外）。",
+      "tabText": "在各控件之间切换；焦点始终可见。",
+      "arrowsText": "在此信息窗口中切换页面；在设置选项中切换选项。",
+      "pageText": "在信息页面之间切换。",
+      "note": "屏幕阅读器会播报每一步（“6 asena，狼头 ×10，赢取 12.00×”、狼的步伐、地图和全局倍数、本轮结果）；每个格子都会连同符号、列和行一起朗读。符号除颜色外还以形状区分（狼头、太阳、鹰、马、星、红宝石、箭、印记）。开启“减少动态效果”后，星座会直接绘制完成，并关闭粒子和震动效果；所有步骤仍会显示。"
+    },
+    "fault": {
+      "title": "故障条款",
+      "p1": "<b>故障会使所有受影响的游戏和赔付无效。</b>发生软件、浏览器或设备故障时，以轮次记录为准；屏幕上显示但与引擎记录不符的金额无效。",
+      "p2": "本游戏仅使用 DEMO 额度进行。DEMO 没有价值，不能兑换为金钱或代币；发生故障时，DEMO 余额和会话记录可能会被更正或重置。",
+      "p3": "由于结果在旋转前就已确定，动画中断、标签页隐藏或离开页面都不会改变结果；本轮仍会按引擎的奖金结算一次。"
+    },
+    "features": {
+      "buy": {
+        "title": "购买奖励 · 价格 {price}",
+        "text": "花费<b>投注额的 80 倍</b>，本轮至少以 3 个 Ay Ata 开始；保证获得 {spins} 次免费旋转（Ay Ata 赔付按常规赔付表）。购买需通过确认窗口完成，使用独立的 RTP（{rtp}），且不能与自动游戏同时使用。"
+      },
+      "templates": {
+        "title": "星座模板",
+        "text": "若中奖的符号群完整包含下列图形之一（含旋转或镜像，共 8 种朝向），该星座会被点亮，且<b>符号群赔付乘以模板倍数</b>。百搭算作符号群的格子。若多个模板都能放入，则点亮倍数最高的那个；每个符号群最多点亮一个星座，而同一步骤中的不同符号群可以点亮不同的星座。",
+        "aria": "星座模板",
+        "stars": "{n, plural, other {# 颗星}}"
+      },
+      "wolf": {
+        "title": "天狼行走",
+        "text": "参与中奖的狼不会爆开。下落并补满后，它前进一格（向上、右、下或左；随机，不会走出棋盘，也不会踩上 Ay Ata 或另一只狼）。它会吞掉进入格中的符号，并在离开的格子里留下<b>星迹</b>百搭。多只狼依次行走。星迹参与中奖后即被消耗；旋转结束时清除。"
+      },
+      "ergenekon": {
+        "title": "Ergenekon（免费旋转）",
+        "text": "3 个以上 Ay Ata 触发 {spins} 次免费旋转（免费旋转中 3 个以上 Ay Ata 再 +{retrigger}；一轮最多 {max} 次旋转）。在免费旋转中，每点亮一个星座，就会解锁<b>Ergenekon 地图</b>上属于它的碎片（一块碎片最多计两次）：",
+        "map3": "<bold>3 个不同星座</bold> → +{spins} 次旋转和全局倍数 <b>×{multiplier}</b>",
+        "map6": "<bold>6 个不同星座</bold> → +{spins} 次旋转和全局倍数 <b>×{multiplier}</b>",
+        "mapTwice": "<bold>全部六个，各两次</bold> → 全局倍数 <b>×{multiplier}</b>（铁山裂开）",
+        "after": "全局倍数和地图在整个特色功能期间保留，永不重置，并乘以<b>每次符号群奖金</b>——包括解锁它们的那一步的奖金（先把星座写入地图，再结算该步骤）。基础游戏始终以 ×1 进行。"
+      },
+      "cumulative": {
+        "title": "累计奖金",
+        "text": "获奖显示在一轮中不会重置：符号群、Ay Ata 赔付和所有免费旋转都会累加到同一个总额中。免费旋转轮始终以“Ergenekon — 总计”画面结束。"
+      },
+      "tiers": {
+        "title": "奖金档位与倍数提示",
+        "text": "当本轮总额达到基础投注额的 <b>10 倍</b>或以上时，天门开启，计数器逐档攀升：{big} ≥10×、{mega} ≥25×、{super} ≥50×、{epic} ≥100×；达到上限的一轮以“{max}”收尾。若模板 × 全局倍数达到 ×10 或以上，会以大号文字和专属音效播报，并伴随狼的嚎叫；全局倍数每次提升都会以铁山裂开来展示。点击屏幕会让计数器直接跳到结果；不会改变奖金。"
+      },
+      "ante": {
+        "title": "机会 ×2 · 费用 {cost}",
+        "text": "开启后，每次旋转的费用为投注额的 <b>{factor} 倍</b>，基础游戏中 Ay Ata 更容易出现：免费旋转几率约为原来的 2 倍（{ante} / {standard}）。奖金仍按基础投注额支付。开启时无法购买奖励。"
+      }
+    }
+  },
+  "burst": {
+    "tag": "ERGENEKON · 全局倍数"
+  },
+  "skymap": {
+    "aria": "Ergenekon 地图：已点亮 {distinct} 个星座，全局倍数 ×{multiplier}",
+    "inactive": "免费旋转中开启",
+    "lit": "{distinct}/6 个星座",
+    "pips": "已点亮 {n} 次"
+  }
+}

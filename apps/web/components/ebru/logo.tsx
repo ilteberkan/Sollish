@@ -1,4 +1,5 @@
 import { memo, useId } from 'react';
+import { useT } from '@/lib/i18n/client';
 import { marblePattern } from './water';
 import styles from './art.module.css';
 
@@ -22,6 +23,11 @@ const MARBLE_A = marblePattern({ seed: 77, width: 640, height: 220, style: 'tara
 const MARBLE_B = marblePattern({ seed: 5, width: 640, height: 220, style: 'gelgit', drops: 14, colors: ['#fff6e2', '#ffd768', '#38f0e0'] });
 
 export const EbruLogo = memo(function EbruLogo({ className, subtitle = true }: { className?: string; subtitle?: boolean }) {
+  const t = useT('ebru');
+  const tc = useT('common');
+  const ribbon = subtitle ? t('logo.subtitle') : '';
+  /* Long translations are squeezed to the ribbon instead of overflowing it. */
+  const fit = ribbon.length > 17 ? { textLength: 300, lengthAdjust: 'spacingAndGlyphs' as const } : {};
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const k = (n: string) => `ebl${uid}${n}`;
   const u = (n: string) => `url(#${k(n)})`;
@@ -32,7 +38,7 @@ export const EbruLogo = memo(function EbruLogo({ className, subtitle = true }: {
   );
   const h = subtitle ? 252 : 200;
   return (
-    <svg className={`${styles.logo} ${className ?? ''}`} viewBox={`0 0 490 ${h}`} role="img" aria-label="Ebru: Mürekkep Bahçesi" focusable="false">
+    <svg className={`${styles.logo} ${className ?? ''}`} viewBox={`0 0 490 ${h}`} role="img" aria-label={tc('games.ebru')} focusable="false">
       <defs>
         <linearGradient id={k('gold')} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#fffbe2" /><stop offset=".3" stopColor="#ffd968" /><stop offset=".62" stopColor="#d8961e" /><stop offset="1" stopColor="#7a4406" /></linearGradient>
         <linearGradient id={k('gloss')} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#fff" stopOpacity=".55" /><stop offset=".45" stopColor="#fff" stopOpacity=".05" /><stop offset="1" stopColor="#000" stopOpacity=".25" /></linearGradient>
@@ -72,7 +78,7 @@ export const EbruLogo = memo(function EbruLogo({ className, subtitle = true }: {
           <circle cx="14" cy="227" r="2.6" fill={u('gold')} /><circle cx="476" cy="227" r="2.6" fill={u('gold')} />
           <path d="M70 227Q77 216 82 227Q77 238 70 227ZM420 227Q413 216 408 227Q413 238 420 227Z" fill="#e0283c" stroke="#5a2a04" strokeWidth=".8" />
           <text x="245" y="227" textAnchor="middle" dominantBaseline="central" fontFamily="var(--font-barlow), system-ui, sans-serif" fontWeight={600} fontSize="25" letterSpacing="3.2"
-            fill={u('gold')} stroke="#1a0a02" strokeWidth="3.2" strokeLinejoin="round" style={{ paintOrder: 'stroke fill' }}>MÜREKKEP BAHÇESİ</text>
+            fill={u('gold')} stroke="#1a0a02" strokeWidth="3.2" strokeLinejoin="round" style={{ paintOrder: 'stroke fill' }} {...fit}>{ribbon}</text>
         </g>
       )}
     </svg>

@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "description": "{title} — özgün DEMO küme oyunu. Tarak suyu tarar, mürekkep yeniden dizilir; Lale Ebrusu’nda boya lekeleri çarpanla birlikte kayar."
+  },
+  "subtitle": "Tarak suyu tarar, mürekkep dalga dalga yeniden dizilir; lekeler çarpanla birlikte kayar.",
+  "logo": {
+    "subtitle": "MÜREKKEP BAHÇESİ"
+  },
+  "table": {
+    "aria": "Ebru oyun masası"
+  },
+  "board": {
+    "label": "Ebru ızgarası, 7 sütun, 7 satır",
+    "labelFree": "Ebru bedava dönüş ızgarası, 7 sütun, 7 satır"
+  },
+  "badge": {
+    "checking": "Sunucu kontrol ediliyor"
+  },
+  "symbols": {
+    "c1": "Altın Lale",
+    "c2": "Lal Karanfil",
+    "c3": "Firuze Hatip",
+    "c4": "Zümrüt Yaprak",
+    "c5": "Lacivert Tavus Gözü",
+    "c6": "Safran Papatya",
+    "c7": "Gül Dalgası",
+    "c8": "İs Damlası",
+    "drop": "Usta Damlası (joker)",
+    "comb": "Altın Tarak",
+    "stained": "{name}, leke ×{stain}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Leke çarpanı",
+      "1": "Güçlü leke",
+      "2": "Parlak leke",
+      "3": "Lale çarpanı",
+      "4": "Efsane leke",
+      "5": "Altın varak"
+    }
+  },
+  "error": {
+    "entropy": "Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.",
+    "noCredit": "Yeterli demo kredin yok veya devam eden bir demo var.",
+    "insufficientSpin": "Bakiye yetersiz: bu dönüş {cost}. Bahsi düşür veya bakiyeyi yenile.",
+    "insufficientBuy": "Bakiye yetersiz: bu satın alma {cost}. Bahsi düşür veya bakiyeyi yenile."
+  },
+  "buyBlock": {
+    "gated": "Yalnız DEMO kredisiyle satın alınır",
+    "autoplay": "Otomatik oyun sürerken satın alınamaz",
+    "busy": "Tur bitmeden satın alınamaz",
+    "ante": "Şans ×2 açıkken satın alınamaz",
+    "balance": "Bakiye yetersiz (fiyat {price})"
+  },
+  "autoplay": {
+    "title": "Otomatik oyun",
+    "serverFailed": "Sunucu turu başlatılamadı",
+    "spinFailed": "Dönüş başlatılamadı",
+    "quit": "Oturumdan çıkıldı",
+    "stopped": "Otomatik oyun durdu: {reason}. {spins, plural, other {# tur}}, net {net}.",
+    "stoppedShort": "Otomatik oyun durdu: {reason}.",
+    "note": "Tur başı {cost}{ante, select, yes { (Şans ×2)} other {}} · bonus satın almaz · sekme gizlenince durur."
+  },
+  "toast": {
+    "autoplay": "Otomatik oyun: {spins, plural, other {# tur}}, kayıp limiti {limit}.",
+    "refilled": "Bakiye yenilendi: {amount}.",
+    "shareCopied": "Paylaşım bağlantısı kopyalandı: {url}",
+    "shareLink": "Paylaşım bağlantısı: {url}",
+    "shareFailed": "Paylaşılamadı: {reason}",
+    "replayFailed": "Bu tur tekrar oynatılamadı.",
+    "replayMismatch": "Tekrar doğrulanamadı: kayıt motorla uyuşmuyor.",
+    "close": "Bildirimi kapat"
+  },
+  "announce": {
+    "replayDone": "Tekrar bitti: {amount}, {times}×. Bakiye değişmedi.",
+    "roundEnd": "Tur bitti. Toplam kazanç {amount}, {times}×.",
+    "roundEndNoWin": "Tur bitti. Kazanç yok.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{size} {name}, {times}× kazanç",
+    "clusterStain": "{size} {name}, leke ×{stain}, {times}× kazanç",
+    "bleed": "Usta Damlası mürekkebini yaydı: {n, plural, other {# komşu}} {name} oldu.",
+    "stainMultiplier": "Leke çarpanı ×{best}: küme ödemesi lekelerin toplamıyla çarpılıyor.",
+    "comb": "Tarak geçişi {pass}: satırlar {shifts} kaydı.",
+    "combCluster": "Tarak yeni bir küme kurdu.",
+    "retrigger": "{count} Altın Tarak: {awarded, plural, other {# bedava dönüş eklendi}}.",
+    "trigger": "{count} Altın Tarak: Lale Ebrusu kazanıldı.",
+    "freeIntro": "Lale Ebrusu başlıyor: {awarded, plural, other {# bedava dönüş}} kazandın.",
+    "freeSpinWin": "Bedava dönüş {win}× kazandırdı. Toplam {total}×.",
+    "freeSpinNoWin": "Bedava dönüşte kazanç yok.",
+    "noWin": "Kazanç yok.",
+    "totalWin": "Toplam kazanç {amount}, {times}×.",
+    "freeOutro": "Lale Ebrusu bitti. Toplam: {amount}, {spins, plural, other {# dönüş}}, en büyük leke ×{stain}.",
+    "sent": "Dönüş sunucuya gönderildi, {amount}.",
+    "buyStarted": "Bonus satın alındı, {amount}. Lale Ebrusu başlıyor.",
+    "spinStarted": "Dönüş başladı, {amount}.",
+    "recovered": "Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı ({amount}).",
+    "replaying": "Tekrar oynatılıyor: tur {id}. Bakiye değişmez.",
+    "refilled": "DEMO bakiyesi {amount} olarak yenilendi.",
+    "refilledRemote": "Sunucu DEMO bakiyesi {amount} olarak yenilendi.",
+    "speed": "Dönüş hızı: {speed}.",
+    "anteOn": "Şans ×2 açık: bedava dönüş şansı ≈2 kat, maliyet {cost}.",
+    "anteOff": "Şans ×2 kapalı: maliyet {cost}."
+  },
+  "banner": {
+    "combCluster": "Tarak yeni küme kurdu",
+    "scatterPay": "{count} Altın Tarak · +{amount} DEMO",
+    "retrigger": "+{n, plural, other {# bedava dönüş}}"
+  },
+  "deck": {
+    "aria": "Oyun kontrolleri",
+    "balance": "Bakiye",
+    "refill": "Bakiyeyi yenile",
+    "replay": "Tekrar",
+    "win": "Kazanç",
+    "replayWin": "Tekrar kazancı",
+    "lastWin": "Son kazanç",
+    "spin": "Çevir",
+    "spinLocked": "Tur sürüyor; bütün düşmeler, yıldırımlar ve bedava dönüşler bitene kadar kilitli.",
+    "auto": "Otomatik",
+    "info": "Bilgi",
+    "on": "Açık",
+    "off": "Kapalı",
+    "anteDesc": "Bedava dönüş şansı ≈2 kat",
+    "buyDesc": "{spins, plural, other {# bedava dönüş}} · {rtp}",
+    "speed": "Dönüş hızı: {speed}",
+    "soundLoading": "Ses yükleniyor {percent}"
+  },
+  "msg": {
+    "outOfCredit": "DEMO bakiyen bitti.",
+    "lastRound": "Son tur <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "Son tur kazançsız.",
+    "spaceHint": "Boşluk tuşu ile de çevirebilirsin.",
+    "fixedBefore": "Sonuç dönüşten önce belirlenir."
+  },
+  "replay": {
+    "ribbon": "Tekrar — bakiye değişmez · tur {id}"
+  },
+  "auto": {
+    "ribbon": "Otomatik · {n, plural, other {# tur}} kaldı"
+  },
+  "free": {
+    "tag": "Lale Ebrusu",
+    "spinNumber": "{n}. dönüş",
+    "left": "Kalan",
+    "counterAria": "Bedava dönüş {number}, kalan dönüş {left}"
+  },
+  "comb": {
+    "label": "Tarak",
+    "passAria": "Tarak geçişi {pass} / 3",
+    "maxAria": "Dönüş başına en çok 3 tarak geçişi"
+  },
+  "stain": {
+    "aria": "Lekeli hücre {cells}, en yüksek leke ×{max}",
+    "stains": "Lekeler",
+    "highest": "En yüksek",
+    "max": "Azami <b>{n}×</b>"
+  },
+  "meter": {
+    "idleA": "<b>5+</b> komşu aynı renk öder",
+    "idleB": "Tarak satırları kaydırır",
+    "idleC": "<b>×256</b> boya lekesi",
+    "win": "Kazanç",
+    "totalWin": "Toplam kazanç"
+  },
+  "gated": {
+    "title": "Zincir üstü Ebru yok.",
+    "text": "Bu oyun yalnız DEMO kredisiyle oynanır; gerçek bahis kabul edilmez.",
+    "back": "Yerel demoya dön"
+  },
+  "splash": {
+    "f1Title": "5+ küme",
+    "f1Text": "Yatay ve dikey komşu 5 aynı renk damla öder",
+    "f2Text": "Tarak suyu tarar, satırlar kayar, yeni kümeler doğar",
+    "f3Title": "×256 leke · {max}×",
+    "f3Text": "Lale Ebrusu’nda lekeler tarakla birlikte kayar",
+    "loading": "Oyun yükleniyor",
+    "play": "Oyna",
+    "skip": "Açılış ekranını bir daha gösterme",
+    "note": "DEMO kredisi değersizdir · Sonuç dönüşten önce belirlenir · Sertifikasız simülasyon RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Ses hazır: müzik, efektler ve ortam sesi bu cihazda hazırlandı.",
+    "soundLoading": "Ses yükleniyor {percent} (bu sırada oyun sessiz sürer).",
+    "soundOnTouch": "Ses ilk dokunuşta yüklenir.",
+    "demoTitle": "DEMO bakiyesi",
+    "demoText": "Bakiye {balance}{server, select, yes { (sunucu)} other {}}. Yenilemek bakiyeyi {amount} yapar ve geçmişe \"{label}\" satırı ekler; tur veya otomatik oyun sürerken yapılamaz."
+  },
+  "buy": {
+    "feature": "Lale Ebrusu · {spins, plural, other {# bedava dönüş}} · bahis {bet}",
+    "rtp": "Satın alma RTP {buy} · standart {standard} (simülasyon, sertifikasız)",
+    "description": "Bahsin <b>100 katı</b>. Tur en az 3 Altın Tarakla başlar ve {spins, plural, other {# bedava dönüş}} garantilidir; patlayan her hücreye boya lekesi düşer, lekeler tarakla kayar ve üstünden geçen kümeyi toplamlarıyla çarpar. Kazançlar {bet} bahse göre ödenir, azami {max}."
+  },
+  "history": {
+    "scope": "Bu oturum · tekrar bakiyeyi değiştirmez",
+    "time": "Zaman",
+    "mode": "Mod",
+    "win": "Kazanç",
+    "result": "Sonuç",
+    "roundId": "Tur kimliği",
+    "replay": "Tekrar oynat",
+    "replayAria": "Tekrar oynat: tur {id}, bakiye değişmez",
+    "share": "Kazancını paylaş",
+    "shareAria": "Kazancını paylaş: tur {id}",
+    "latest": "Son tur",
+    "refilled": "Bakiye yenilendi",
+    "refilledRemote": "Bakiye yenilendi (sunucu)",
+    "emptyTitle": "İlk turun burada görünecek.",
+    "emptyText": "Her turun modu, bahsi, maliyeti, kazancı ve tur kimliği kaydedilir; istediğin turu tekrar izleyebilirsin.",
+    "capped": "Azami kazanç · {times}×",
+    "free": "Bedava dönüş ×{spins} · {times}×",
+    "none": "Kazanç yok",
+    "freeStain": "Lale Ebrusu ×{spins} · en büyük leke ×{stain} · {times}×",
+    "clusters": "{n, plural, other {# küme}}",
+    "combWins": "{n, plural, other {# tarak kazancı}}",
+    "combs": "{n, plural, other {# Altın Tarak}}",
+    "clusterRow": "{items} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× bahis",
+    "capNote": "Tur tavana ulaştı · kalan dönüşler oynanmaz",
+    "continue": "Devam",
+    "tapToSpeed": "Hızlandırmak için dokun"
+  },
+  "intro": {
+    "word": "LALE EBRUSU",
+    "title": "Lale Ebrusu Başlıyor",
+    "freeA": "bedava",
+    "freeB": "dönüş",
+    "text": "Patlayan her hücreye <b>boya lekesi</b> düşer: önce ×2, aynı hücrede her seferinde iki katı, ×256’ya kadar. Lekeler özellik boyunca kalır ve <b>tarakla birlikte kayar</b>; üstünden geçen kümenin ödemesi lekelerin toplamıyla çarpılır. 3 Altın Tarak +4 dönüş.",
+    "start": "Başla"
+  },
+  "total": {
+    "titleA": "Lale Ebrusu",
+    "titleB": "Toplam",
+    "word": "TOPLAM",
+    "sub": "BEDAVA DÖNÜŞ",
+    "spins": "Dönüş",
+    "spinsValue": "{n, plural, other {# dönüş}}",
+    "maxStain": "En büyük leke",
+    "none": "Yok",
+    "stainedClusters": "{n, plural, other {# lekeli küme}}",
+    "noStainedClusters": "lekeli küme yok",
+    "betMultiple": "Bahsin",
+    "combWins": "{n, plural, other {# tarak kazancı}}",
+    "noCombWins": "tarak kazancı yok",
+    "capNote": "Azami kazanca ulaşıldı · kalan dönüşler oynanmaz",
+    "toCelebration": "Kutlamaya geç"
+  },
+  "info": {
+    "windowTitle": "Ebru · Oyun bilgisi",
+    "how": {
+      "title": "Nasıl oynanır",
+      "s1": "<b>Bahsini seç.</b> − ve + düğmeleri bahsi bir basamak değiştirir; bahis tutarına dokununca bütün basamaklar açılır. \"{max}\" bakiyenin yettiği en yüksek basamağı seçer.",
+      "s2": "<b>Çevir.</b> Mürekkep düğmesine bas veya Boşluk tuşunu kullan. Tur maliyeti (Şans ×2 açıksa bahsin {multiple} katı) bakiyeden bir kez düşer.",
+      "s3": "<b>Küme kur.</b> 7 × 7 su teknesinde yatay veya dikey komşu <b>5 veya daha fazla aynı renk</b> damla öder; küme büyüdükçe ödeme kademesi yükselir.",
+      "s4": "<b>Zincir.</b> Kazanan kümeler suya dağılır, üsttekiler düşer, boşluklar yeni damlayla dolar; yeni küme kalmayana kadar sürer.",
+      "s5": "<b>Tarak.</b> Zincir bitince — kazanç olmasa bile — Altın Tarak suyu tarar: her satır kendi kadar sağa veya sola kayar ve yeni kümeler doğabilir. Dönüş başına en çok {passes} tarak geçişi.",
+      "s6": "<b>Sonuç.</b> Turun tamamı dönüş başlamadan önce motorla belirlenir; animasyon yalnızca bu sonucu oynatır. Çevir düğmesi tur (bütün düşmeler, tarak geçişleri ve bedava dönüşler) bitene kadar kilitlidir; hızlandırmak için {quick}/{turbo} ayarını kullan. Hız ayarı, kutlama sayacına dokunmak, gizli sekme veya sayfadan ayrılmak ödemeyi değiştirmez; tur her durumda bir kez, motorun ödemesiyle kapanır.",
+      "note": "DEMO kredisi değersizdir; SOL, token veya ödül kazandırmaz. Oyun tarayıcıda yerel rastgelelikle çalışır, VRF kanıtı yoktur."
+    },
+    "pay": {
+      "title": "Ödeme tablosu",
+      "lead": "Yatay veya dikey komşu <b>5 veya daha fazla aynı renk</b> damla bir küme oluşturur. Büyük rakam <b>{bet}</b> bahiste brüt DEMO tutarıdır; altındaki çarpan bahsin katıdır. Aynı ızgaradaki bütün kümeler ayrı ayrı öder.",
+      "clustersAria": "Küme ödemeleri",
+      "fullSummary": "Bütün küme boyları (12 kademe)",
+      "fullCaption": "Renk ve küme boyuna göre ödeme, bahsin katı",
+      "colour": "Renk",
+      "scatterTitle": "{name} · dağınık ödeme",
+      "combs5": "5+ tarak",
+      "combs4": "4 tarak",
+      "combs3": "3 tarak",
+      "scatterText": "Temel dönüşün son ızgarasında 3 veya daha fazla Altın Tarak varsa öder ve <b>{spins} bedava dönüş</b> (Lale Ebrusu) açar. Taraklar dağılmaz; yalnız düşer ve tarakla kayar.",
+      "dropText": "Kendisi kümeye girmez; düştüğü yerde mürekkebini yayar: 4 komşusu arasında en sık görülen rengi seçer, komşularını ve kendini o renge boyar. Ayrıntı \"{features}\" sayfasında.",
+      "maxTitle": "Azami kazanç {n}×",
+      "maxText": "Bu bahiste <b>{amount}</b>. Tur toplamı bu tavana ulaşırsa tur hemen biter; kalan bedava dönüşler oynanmaz."
+    },
+    "features": {
+      "title": "Özellikler",
+      "combTitle": "Tarak geçişi",
+      "combText": "Her düşme zinciri bittiğinde tarak tahtayı bir kez tarar: r. satır <b>round(A · sin(φ + r · k))</b> sütun dairesel kayar (sağdan çıkan soldan girer). A her geçişte 1, 2 veya 3 olur ({weights}); φ ve k da her geçişte yeniden çekilir. Kayma yeni bir küme kurarsa zincir sürer; kurmazsa dönüş biter. Dönüş başına en çok {passes} geçiş. Semboller yalnız yer değiştirir; hiçbiri eklenmez veya silinmez.",
+      "combExample": "Örnek: A = 2, φ = 0, k = 8·2π/64 → satır kaymaları {shifts}.",
+      "combExampleAria": "Örnek tarak geçişi, satır başına kayma",
+      "combRow": "{n}. satır {shift}",
+      "dropTitle": "{name}",
+      "dropText": "Düştüğü anda (dağıtımda veya dolumda) mürekkebini yayar: 4 komşusunun renklerini sayar, en sık rengi seçer (eşitlikte rastgele, renkli komşu yoksa rastgele bir renk), renkli komşularını o renge boyar ve kendisi de o renk olur. Altın Taraklar boyanmaz.",
+      "freeTitle": "Lale Ebrusu (bedava dönüş)",
+      "freeText": "3+ Altın Tarak {trigger} bedava dönüş açar. Bedava dönüşte patlayan her hücreye <b>boya lekesi çarpanı</b> düşer: ilk kez ×2, aynı hücrede her seferinde iki katı, en çok ×{stainMax}. Lekeler özellik boyunca kalır; düşmeler onları taşımaz ama <b>tarak geçişi lekeleri sembollerle aynı kaymayla tarar</b>. Bir küme lekeli hücrelerden geçerse ödemesi altındaki lekelerin <b>toplamıyla</b> çarpılır (önce ödeme, sonra yeni leke). Bedava dönüşte 3+ tarak {retrigger} dönüş ekler; bir turda en çok {max} dönüş. Bedava dönüşte İs Damlası dağıtılmaz (yalnız renkli komşusu olmayan bir Usta Damlası rastgele bu rengi seçebilir).",
+      "stainsAria": "Leke çarpanları",
+      "cumTitle": "Birikimli kazanç",
+      "cumText": "Kazanç göstergesi tur boyunca sıfırlanmaz: kümeler, tarak kazançları, dağınık ödeme ve bütün bedava dönüşler aynı toplamda birikir. Bedava dönüş turu her zaman \"{screen}\" ekranıyla biter.",
+      "tiersTitle": "Kazanç kademeleri ve çarpan anonsu",
+      "tiersText": "Tur toplamı taban bahsin <b>10 katı</b> veya üstüyse kutlama ekranı açılır ve sayaç kademeler arasında tırmanır: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; tavana ulaşan tur {max} ile biter. ×10 ve üstü leke çarpanı ızgaranın üstünde büyük yazıyla ve kendi sesiyle duyurulur. Ekrana dokunmak sayacı hemen sonuca getirir; ödemeyi değiştirmez.",
+      "anteTitle": "Şans ×2 · maliyet {cost}",
+      "anteText": "Açıkken her dönüş bahsin <b>{multiple} katına</b> mal olur ve temel oyunda Altın Tarak çıkma olasılığı artar: bedava dönüş şansı yaklaşık 2 katıdır ({ante} / {standard}). Kazançlar yine taban bahse göre ödenir. Açıkken bonus satın alınamaz.",
+      "buyTitle": "Bonus satın al · fiyat {price}",
+      "buyText": "Bahsin <b>100 katı</b> karşılığında tur en az 3 Altın Tarakla başlar; {spins} bedava dönüş garantilidir. Satın alma onay penceresiyle yapılır, ayrı bir RTP ile çalışır ({rtp}) ve otomatik oyunla kullanılamaz."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Teorik dönüş (RTP)",
+      "caption": "Mod başına teorik dönüş",
+      "mode": "Mod",
+      "cost": "Maliyet",
+      "ci": "%95 GA",
+      "feature": "Özellik",
+      "everyRound": "her tur",
+      "method": "Her mod için ayrı {millions} milyon tur simülasyonu (motor <code>ebru-ink-1</code>). RTP ödenen maliyete göre hesaplanır. Kazanç sıklığı (taban dönüş): standart {hit}, Şans ×2 {hitAnte}. Oynaklık (maliyet biriminde standart sapma): standart {sdStandard}, satın alma {sdBuy}.",
+      "note": "Simülasyon tahminidir, <b>sertifikasızdır</b>; ağır kuyruk nedeniyle güven aralığı iyimser olabilir. Kısa oturumdaki sonuç RTP'den çok farklı olabilir. DEMO kredisi <b>değersizdir</b>."
+    },
+    "limits": {
+      "title": "Bahis ve kazanç sınırları",
+      "range": "Bahis aralığı",
+      "levels": "Basamaklar",
+      "current": "Şu anki bahis",
+      "currentValue": "{bet} · Şans ×2 {ante} · Satın alma {buy}",
+      "max": "Azami kazanç",
+      "maxValue": "Bahsin {n} katı · bu bahiste {amount}",
+      "p1": "Azami kazanca ulaşan tur hemen biter; kalan bedava dönüşler oynanmaz. Ödeme her zaman taban bahse göre hesaplanır, kuruşun altı aşağı yuvarlanır.",
+      "p2": "Bakiyenin yetmediği basamaklar ve modlar seçilemez. Bir tur tek rezervasyon ve tek ödemedir; aynı anda yalnız bir tur oynanır."
+    },
+    "keys": {
+      "title": "Tuşlar",
+      "heading": "Klavye",
+      "space": "Boşluk",
+      "spaceText": "Dönüşü başlatır ({settings} → \"{option}\"). Tur sürerken dönüşü atlamaz; yalnız bedava dönüş ekranlarını ve kutlama sayacını hızlandırır.",
+      "enterText": "Odaktaki düğmeye basar.",
+      "escText": "Açık pencereyi kapatır (oturum hatırlatması hariç).",
+      "tabText": "Kontroller arasında gezinir; odak her zaman görünür.",
+      "arrowsText": "Bu bilgi penceresinde sayfa değiştirir; ayar seçimlerinde seçeneği değiştirir.",
+      "pageText": "Bilgi sayfaları arasında gezinir.",
+      "note": "Ekran okuyucu her adımı (\"{example}\", tarak geçişleri, tur sonucu) duyurur; ızgara 7×7 tablo olarak okunur ve lekeli hücreler çarpanıyla birlikte söylenir. Semboller renk yanında biçimle de ayrılır (lale, karanfil, hatip, yaprak, tavus gözü, papatya, gül, çakıl). Hareketi azalt tercihi tarağı kısa bir kaydırmaya indirir, parçacıkları ve sarsıntıyı kapatır."
+    },
+    "fault": {
+      "title": "Arıza hükmü",
+      "p1": "<b>Arıza, etkilenen bütün oyunları ve ödemeleri geçersiz kılar.</b> Yazılım, tarayıcı veya cihaz arızasında tur kaydı esas alınır; ekranda görünen ama motor kaydıyla uyuşmayan bir tutar geçerli değildir.",
+      "p2": "Bu oyun yalnız DEMO kredisiyle oynanır. DEMO değersizdir, paraya veya tokene çevrilemez; arıza halinde DEMO bakiyesi ve oturum geçmişi düzeltilebilir veya sıfırlanabilir.",
+      "p3": "Sonuç dönüşten önce belirlendiği için animasyonun yarıda kalması, sekmenin gizlenmesi veya sayfadan ayrılmak sonucu değiştirmez; tur yine motorun ödemesiyle bir kez kapanır."
+    }
+  }
+}

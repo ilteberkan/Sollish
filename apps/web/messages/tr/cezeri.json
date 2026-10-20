@@ -138,7 +138,8 @@
     "anteOn": "Şans ×2 açık: bedava dönüş şansı ≈2 kat, maliyet {cost}.",
     "anteOff": "Şans ×2 kapalı: maliyet {cost}.",
     "refilled": "DEMO bakiyesi {amount} DEMO olarak yenilendi.",
-    "refilledRemote": "Sunucu DEMO bakiyesi {amount} DEMO olarak yenilendi."
+    "refilledRemote": "Sunucu DEMO bakiyesi {amount} DEMO olarak yenilendi.",
+    "celebration": "{title}: {amount} DEMO, {times}×."
   },
   "autoplay": {
     "serverFailed": "Sunucu turu başlatılamadı",
@@ -369,5 +370,8 @@
     "board": "Tahta, merkezde bir göbek ve çevresinde 12 dilimli 4 eşmerkezli halkadır. Göbekten dışa uzanan 12 ışının her birinde aynı sembolden içten dışa ardışık 3 veya 4 dilim (halka 1’den ya da halka 2’den başlayarak) öder; Altın Dişli joker her sembolün yerine geçer. Göbek çarpanı (×1–×10) o dönüşün bütün ışın kazançlarını çarpar.",
     "features": "Dişli Kilidi: yeni kazanç varsa kazanan dilimler kilitlenir, dört halka altlarında yeniden döner ve göbek her yeniden dönüşte +1 artar; yeni ödeme gelmeyene kadar, en çok 10 yeniden dönüş. 3 veya daha fazla Su Kabı 10 bedava dönüş (Fil Saati) açar: göbek çarpanı dönüşler arasında korunur ve yalnız artar, her 3 dönüşte otomat şahin kalıcı Altın Dişli jokerleri bırakır. Azami kazanç bahsin 10.000 katıdır.",
     "fixed": "Sonuç, dönüş başlamadan önce tarayıcında yerel rastgelelikle belirlenir; animasyon yalnızca bu sonucu oynatır. Sayfadan ayrılsan bile tur belirlenen ödemeyle kapanır. VRF kanıtı yoktur."
+  },
+  "badge": {
+    "checking": "Sunucu kontrol ediliyor"
   }
 }

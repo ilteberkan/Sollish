@@ -138,7 +138,8 @@
     "anteOn": "Chance ×2 an: Freispiel-Chance ≈2×, Kosten {cost}.",
     "anteOff": "Chance ×2 aus: Kosten {cost}.",
     "refilled": "DEMO-Guthaben auf {amount} DEMO aufgefüllt.",
-    "refilledRemote": "Server-DEMO-Guthaben auf {amount} DEMO aufgefüllt."
+    "refilledRemote": "Server-DEMO-Guthaben auf {amount} DEMO aufgefüllt.",
+    "celebration": "{title}: {amount} DEMO, {times}×."
   },
   "autoplay": {
     "serverFailed": "Der Server konnte die Runde nicht starten",
@@ -369,5 +370,8 @@
     "board": "Das Brett besteht aus einer Nabe in der Mitte und 4 konzentrischen Ringen mit je 12 Segmenten. Auf jeder der 12 Speichen, die von der Nabe nach außen verlaufen, zahlen 3 oder 4 aufeinanderfolgende gleiche Symbole von innen nach außen (beginnend bei Ring 1 oder Ring 2); das Wild Goldzahnrad ersetzt jedes Symbol. Der Nabenmultiplikator (×1–×10) multipliziert alle Speichengewinne dieser Drehung.",
     "features": "Zahnradsperre: Gibt es einen neuen Gewinn, rasten die Gewinnsegmente ein, die vier Ringe drehen sich darunter erneut und die Nabe steigt mit jedem Respin um +1; bis zu 10 Respins, bis keine neue Auszahlung mehr kommt. 3 oder mehr Wassergefäße lösen 10 Freispiele (Elefantenuhr) aus: Der Nabenmultiplikator bleibt zwischen den Drehungen erhalten und steigt nur, und alle 3 Drehungen wirft der Automaten-Falke dauerhafte Goldzahnrad-Wilds ab. Der Maximalgewinn beträgt das 10.000-Fache des Einsatzes.",
     "fixed": "Das Ergebnis wird vor Beginn der Drehung lokal in deinem Browser mit lokalem Zufall bestimmt; die Animation spielt nur dieses Ergebnis ab. Auch wenn du die Seite verlässt, wird die Runde mit der festgelegten Auszahlung abgeschlossen. Es gibt keinen VRF-Nachweis."
+  },
+  "badge": {
+    "checking": "Server wird geprüft"
   }
 }

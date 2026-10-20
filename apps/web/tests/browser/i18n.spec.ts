@@ -30,7 +30,7 @@ test('header switcher: en → 中文 → Türkçe updates text, <html lang>, coo
   await page.goto('/games');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await expect(page.getByRole('button', { name: 'Connect wallet' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Single player' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Instant games' })).toBeVisible();
   await expect(switcher(page)).toHaveAccessibleName('Language');
   await recordLocaleEvents(page);
   await page.evaluate(() => { (window as unknown as { __noReload: boolean }).__noReload = true; });
@@ -40,7 +40,7 @@ test('header switcher: en → 中文 → Türkçe updates text, <html lang>, coo
   await expect(page.getByRole('button', { name: '连接钱包' })).toBeVisible();
   await expect(switcher(page)).toHaveAccessibleName('语言');
   // Server-rendered lobby text follows after router.refresh().
-  await expect(page.getByRole('heading', { name: '单人游戏' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: '即时游戏' })).toBeVisible();
   expect(await page.evaluate(() => (window as unknown as { __noReload?: boolean }).__noReload)).toBe(true);
   expect(await localeEvents(page)).toEqual(['zh']);
   expect((await context.cookies()).find(c => c.name === 'sollish_locale')?.value).toBe('zh');
@@ -55,7 +55,7 @@ test('header switcher: en → 中文 → Türkçe updates text, <html lang>, coo
   await switcher(page).selectOption('tr');
   await expect(page.locator('html')).toHaveAttribute('lang', 'tr');
   await expect(page.getByRole('button', { name: 'Cüzdan bağla' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Tek kişilik' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Anında oyunlar' })).toBeVisible();
   expect(await localeEvents(page)).toEqual(['tr']);
 });
 
@@ -68,7 +68,8 @@ test('slot settings dialog: language chips switch the shared slot-kit labels in 
   if (await page.getByTestId('tarhun-splash').count()) { await play.click(); await expect(page.getByTestId('tarhun-splash')).toHaveCount(0); }
   // The settings opener is per-game (still Turkish until the Tarhun follow-up); the dialog body is the shared kit.
   await page.getByRole('button', { name: /^(Ayarlar|Settings)$/ }).click();
-  const dialog = page.getByRole('dialog', { name: /^(Ayarlar|Settings)$/ });
+  // The dialog is named in the active language (slotKit settings title), so it follows the switch.
+  const dialog = page.getByRole('dialog', { name: /^(Ayarlar|Settings|设置)$/ });
   await expect(dialog.getByRole('switch', { name: 'Mute sound' })).toBeVisible();
   await expect(dialog.getByRole('group', { name: 'Spin speed' })).toBeVisible();
   await expect(dialog.getByRole('radio', { name: 'Quick' })).toBeAttached();

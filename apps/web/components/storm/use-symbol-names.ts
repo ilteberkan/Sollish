@@ -2,6 +2,7 @@
 import { useMemo } from 'react';
 import type { StormSymbol } from '@sollish/protocol';
 import { useT } from '@/lib/i18n/client';
+import { inlineName } from '@/lib/slot-kit/inline-name';
 
 /** Translated symbol names (symbols.tsx keeps the legacy Turkish `STORM_SYMBOL_LABELS` for tests). */
 export function useStormSymbolNames() {
@@ -14,7 +15,7 @@ export function useStormSymbolNames() {
       cell: (cell: { symbol: StormSymbol; multiplier?: number }): string =>
         cell.symbol === 'orb' && cell.multiplier ? t('symbols.orbValue', { name: label('orb'), value: String(cell.multiplier) }) : label(cell.symbol),
       /** Mid-sentence form: lower-cased per language, but not in German (nouns stay capitalised). */
-      inline: (symbol: StormSymbol): string => (t.locale === 'de' ? label(symbol) : label(symbol).toLocaleLowerCase(t.locale === 'tr' ? 'tr-TR' : t.locale)),
+      inline: (symbol: StormSymbol): string => inlineName(t.locale, label(symbol)),
     };
   }, [t]);
 }

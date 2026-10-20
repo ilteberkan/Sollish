@@ -13,6 +13,8 @@ import { useEffect, useId, useRef, useState, type CSSProperties, type Ref } from
 import { ASENA_TEMPLATES } from '@sollish/protocol';
 import { WIN_TIER_INFO, countUpValueAt, levelAt, type CelebrationLevel, type CountUpSchedule } from '@/lib/slot-kit/win-tiers';
 import { asenaCents, asenaMoney, asenaTimes } from '@/lib/asena-timeline';
+import { useFormat, useT } from '@/lib/i18n/client';
+import { richText } from '../game-rich';
 import { AS_WOLF_HEAD, AsenaSymbolUse, asSparkle } from './symbols';
 import { AsenaTemplateGlyph } from './template-glyph';
 import c from './asena-celebration.module.css';
@@ -108,6 +110,11 @@ export interface AsenaCelebrationProps {
 }
 
 export function AsenaCelebration({ schedule, betCents, elapsed, reducedMotion, onLevel, onCountDone, onTap }: AsenaCelebrationProps) {
+  const t = useT('asena');
+  const tk = useT('slotKit');
+  const loc = useFormat().locale;
+  const multText = useRef<(value: number) => string>(() => '');
+  multText.current = (value: number) => t('celebration.times', { times: asenaTimes(value, loc) });
   const [level, setLevel] = useState<CelebrationLevel>(() => levelAt(schedule, Math.max(0, elapsed())));
   const [done, setDone] = useState(false);
   const [flash, setFlash] = useState(0);
@@ -123,11 +130,11 @@ export function AsenaCelebration({ schedule, betCents, elapsed, reducedMotion, o
     const step = () => {
       const e = Math.max(0, elapsed());
       const value = countUpValueAt(schedule, e);
-      const text = asenaMoney(asenaCents(betCents, value));
+      const text = asenaMoney(asenaCents(betCents, value), loc);
       if (text !== lastText) {
         lastText = text;
         writeAmount(amountRef.current, text);
-        if (multRef.current) multRef.current.textContent = `${asenaTimes(value)}× bahis`;
+        if (multRef.current) multRef.current.textContent = multText.current(value);
       }
       const now = levelAt(schedule, e);
       if (now !== shownLevel) {
@@ -151,7 +158,7 @@ export function AsenaCelebration({ schedule, betCents, elapsed, reducedMotion, o
     };
     step();
     return () => cancelAnimationFrame(frame);
-  }, [schedule, betCents, elapsed, reducedMotion]);
+  }, [schedule, betCents, elapsed, reducedMotion, loc]);
 
   const info = WIN_TIER_INFO[level];
   const initial = countUpValueAt(schedule, Math.max(0, elapsed()));
@@ -167,24 +174,24 @@ export function AsenaCelebration({ schedule, betCents, elapsed, reducedMotion, o
       </div>
       <div className={c.front} data-level={level} data-done={done || undefined} data-reduced={reducedMotion || undefined}
         data-testid="asena-celebration" role="dialog" aria-modal="false"
-        aria-label={`${info.title}: ${asenaMoney(asenaCents(betCents, schedule.totalHundredths))} DEMO`} onClick={onTap}>
+        aria-label={t('celebration.aria', { title: tk(`winTier.${info.id}.title`), money: asenaMoney(asenaCents(betCents, schedule.totalHundredths), loc) })} onClick={onTap}>
         <div className={c.column}>
           <ol className={c.pips} aria-hidden="true">
             {PIPS.map(pip => <li key={pip.level} data-on={level >= pip.level || undefined}><span>{pip.x}</span></li>)}
           </ol>
           <div key={level} className={c.lockup} data-shake>
             <Banner />
-            <DisplayWord text={info.word} className={c.tierWord} />
-            <span className={c.sub} aria-hidden="true">KAZANÇ</span>
+            <DisplayWord text={tk(`winTier.${info.id}.word`)} className={c.tierWord} />
+            <span className={c.sub} aria-hidden="true">{tk('winWord')}</span>
           </div>
           <div ref={plaqueRef} className={c.plaque}>
-            <Amount ref={amountRef} text={asenaMoney(asenaCents(betCents, initial))} testId="asena-celebration-amount" />
+            <Amount ref={amountRef} text={asenaMoney(asenaCents(betCents, initial), loc)} testId="asena-celebration-amount" />
             <small className={c.unit}>DEMO</small>
           </div>
-          <span ref={multRef} className={c.mult}>{asenaTimes(initial)}× bahis</span>
-          {level === 5 && <p className={c.capNote}>Tur tavana ulaştı · kalan dönüşler oynanmaz</p>}
+          <span ref={multRef} className={c.mult}>{multText.current(initial)}</span>
+          {level === 5 && <p className={c.capNote}>{t('celebration.capNote')}</p>}
           <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>
-            {done ? 'Devam' : 'Hızlandırmak için dokun'}
+            {done ? t('celebration.continue') : t('celebration.speedUp')}
           </button>
         </div>
       </div>
@@ -193,6 +200,7 @@ export function AsenaCelebration({ schedule, betCents, elapsed, reducedMotion, o
 }
 
 export function AsenaFreeIntro({ awarded, dur, reducedMotion, onTap }: { awarded: number; dur: number; reducedMotion: boolean; onTap: () => void }) {
+  const t = useT('asena');
   return (
     <>
       <div className={c.back} data-level="intro" data-reduced={reducedMotion || undefined} aria-hidden="true">
@@ -205,16 +213,16 @@ export function AsenaFreeIntro({ awarded, dur, reducedMotion, onTap }: { awarded
           <div className={c.seals} aria-hidden="true">
             {[0, 1, 2].map(i => <span key={i} className={c.seal} style={{ '--i': i } as CSSProperties}><AsenaSymbolUse symbol="moon" /></span>)}
           </div>
-          <h2 id="as-intro-title" className={c.introTitle}><DisplayWord text="ERGENEKON" className={c.introWord} /><span className="sr-only">Ergenekon Başlıyor</span></h2>
+          <h2 id="as-intro-title" className={c.introTitle}><DisplayWord text={t('intro.word')} className={c.introWord} /><span className="sr-only">{t('intro.srTitle')}</span></h2>
           <div className={c.introCount}>
             <strong>{awarded}</strong>
-            <span>bedava<br />dönüş</span>
+            <span style={{ whiteSpace: 'pre-line' }}>{t('intro.freeSpins')}</span>
           </div>
           <ul className={c.introGlyphs} aria-hidden="true">
             {ASENA_TEMPLATES.map((t, i) => <li key={t.id} style={{ '--i': i } as CSSProperties}><AsenaTemplateGlyph id={t.id} /><span>×{t.multiplier}</span></li>)}
           </ul>
-          <p className={c.introText}>Yanan her takımyıldız <strong>Ergenekon haritasının</strong> bir parçasını açar. <strong>3 farklı</strong> takımyıldız +5 dönüş ve genel çarpan <strong>×2</strong>, <strong>altısı</strong> +5 dönüş ve <strong>×3</strong>, hepsi iki kez yanınca <strong>×5</strong>. Genel çarpan özellik boyunca kalır ve her kazancı çarpar. 3 Ay Ata +3 dönüş.</p>
-          <button type="button" className={c.go} onClick={event => { event.stopPropagation(); onTap(); }}>Başla</button>
+          <p className={c.introText}>{richText(t, 'intro.text')}</p>
+          <button type="button" className={c.go} onClick={event => { event.stopPropagation(); onTap(); }}>{t('intro.start')}</button>
           <span className={c.timer} style={{ '--hold': `${dur}ms` } as CSSProperties} aria-hidden="true" />
         </div>
       </div>
@@ -228,6 +236,8 @@ export interface AsenaFeatureTotalProps {
 }
 /** "Ergenekon — Toplam": always ends a free-spin round, whatever the total. */
 export function AsenaFeatureTotal({ spins, totalHundredths, constellations, distinct, globalMultiplier, wolfSteps, betCents, celebration, capped, dur, elapsed, reducedMotion, onTap }: AsenaFeatureTotalProps) {
+  const t = useT('asena');
+  const loc = useFormat().locale;
   const amountRef = useRef<HTMLSpanElement>(null);
   const countMs = Math.max(1, Math.min(1500, Math.round(dur * 0.5)));
   useEffect(() => {
@@ -236,12 +246,12 @@ export function AsenaFeatureTotal({ spins, totalHundredths, constellations, dist
       const e = Math.max(0, elapsed());
       const p = reducedMotion ? 1 : Math.min(1, e / countMs);
       const value = p >= 1 ? totalHundredths : Math.floor(totalHundredths * (1 - (1 - p) ** 3));
-      writeAmount(amountRef.current, asenaMoney(asenaCents(betCents, value)));
+      writeAmount(amountRef.current, asenaMoney(asenaCents(betCents, value), loc));
       if (p < 1) frame = requestAnimationFrame(step);
     };
     step();
     return () => cancelAnimationFrame(frame);
-  }, [elapsed, countMs, totalHundredths, betCents, reducedMotion]);
+  }, [elapsed, countMs, totalHundredths, betCents, reducedMotion, loc]);
   return (
     <>
       <div className={c.back} data-level="feature" data-reduced={reducedMotion || undefined} aria-hidden="true">
@@ -251,23 +261,23 @@ export function AsenaFeatureTotal({ spins, totalHundredths, constellations, dist
       </div>
       <div className={c.front} data-level="feature" data-reduced={reducedMotion || undefined} role="dialog" aria-modal="false" aria-labelledby="as-ft-title" data-testid="asena-feature-total" onClick={onTap}>
         <div className={`${c.column} ${c.featureColumn}`}>
-          <h2 id="as-ft-title" className={c.ftTitle}>Ergenekon <span aria-hidden="true">—</span> Toplam</h2>
+          <h2 id="as-ft-title" className={c.ftTitle}>{t('total.titleA')} <span aria-hidden="true">—</span> {t('total.titleB')}</h2>
           <div className={c.lockup}>
             <Banner />
-            <DisplayWord text="TOPLAM" className={c.tierWord} />
-            <span className={c.sub} aria-hidden="true">BEDAVA DÖNÜŞ</span>
+            <DisplayWord text={t('total.word')} className={c.tierWord} />
+            <span className={c.sub} aria-hidden="true">{t('total.sub')}</span>
           </div>
           <div className={c.plaque}>
-            <Amount ref={amountRef} text={asenaMoney(0)} testId="asena-feature-amount" />
+            <Amount ref={amountRef} text={asenaMoney(0, loc)} testId="asena-feature-amount" />
             <small className={c.unit}>DEMO</small>
           </div>
           <dl className={c.stats}>
-            <div><dt>Dönüş</dt><dd>{spins} dönüş<small>{wolfSteps > 0 ? `${wolfSteps} kurt adımı` : 'kurt yürümedi'}</small></dd></div>
-            <div><dt>Takımyıldız</dt><dd>{constellations}<small>harita {distinct}/6</small></dd></div>
-            <div><dt>Genel çarpan</dt><dd>×{globalMultiplier}<small>{asenaTimes(totalHundredths)}× bahis</small></dd></div>
+            <div><dt>{t('total.spins')}</dt><dd>{t('total.spinsValue', { spins })}<small>{wolfSteps > 0 ? t('total.wolfSteps', { n: wolfSteps }) : t('total.wolfNone')}</small></dd></div>
+            <div><dt>{t('total.constellations')}</dt><dd>{constellations}<small>{t('total.mapOf', { distinct })}</small></dd></div>
+            <div><dt>{t('total.global')}</dt><dd>×{globalMultiplier}<small>{t('total.ofBet', { times: asenaTimes(totalHundredths, loc) })}</small></dd></div>
           </dl>
-          {capped && <p className={c.capNote}>Azami kazanca ulaşıldı · kalan dönüşler oynanmaz</p>}
-          <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>{celebration ? 'Kutlamaya geç' : 'Devam'}</button>
+          {capped && <p className={c.capNote}>{t('total.capNote')}</p>}
+          <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>{celebration ? t('total.toCelebration') : t('celebration.continue')}</button>
         </div>
       </div>
     </>
@@ -277,6 +287,7 @@ export function AsenaFeatureTotal({ spins, totalHundredths, constellations, dist
 /** Global multiplier burst over the board: the iron mountain of Ergenekon cracks (level 1 ×2, 2 ×3) or splits open (3 ×5).
  * Two halves move apart (transform), the veins and the cleft light up (opacity). Purely decorative; aria-hidden. */
 export function AsenaErgenekonBurst({ level, multiplier, life, reducedMotion }: { level: 1 | 2 | 3; multiplier: number; life: number; reducedMotion: boolean }) {
+  const t = useT('asena');
   const uid = useId().replace(/[^a-zA-Z0-9]/g, '');
   const k = (n: string) => `aeb${uid}${n}`;
   const u = (n: string) => `url(#${k(n)})`;
@@ -302,7 +313,7 @@ export function AsenaErgenekonBurst({ level, multiplier, life, reducedMotion }: 
           <path d="M230 122L222 150L238 178M170 92L176 130" className={c.ergV2} fill="none" stroke={u('lava')} strokeWidth="2.6" strokeLinecap="round" />
         </g>
       </svg>
-      <span className={c.ergTag}>ERGENEKON · GENEL ÇARPAN</span>
+      <span className={c.ergTag}>{t('burst.tag')}</span>
       <span className={c.ergText} data-text={`×${multiplier}`}><span className={c.ergFill}>×{multiplier}</span></span>
     </div>
   );

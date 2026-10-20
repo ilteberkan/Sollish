@@ -30,6 +30,8 @@ import {
   ASENA_COLS, ASENA_MAX_WIN_MULTIPLIER, ASENA_MAP_MULTIPLIERS, ASENA_ROWS, ASENA_TEMPLATES,
   type AsenaGrid, type AsenaIgnition, type AsenaMapEvent, type AsenaPaySymbol, type AsenaRound, type AsenaWolfWalk,
 } from '@sollish/protocol';
+import { fixed2 } from './slot-format';
+import type { Locale } from './i18n/config';
 import { asenaConstellationPlan, type AsPos, type AsPoint, type AsenaConstellationPlan } from '../components/asena/geometry';
 import { countUpSchedule, roundCelebration, type CelebrationLevel, type CountUpSchedule } from './slot-kit/win-tiers';
 import { multiplierClass, multiplierRank } from './slot-audio/win-tiers';
@@ -409,28 +411,46 @@ export function asenaFinalBoard(round: AsenaRound): AsenaGrid {
 }
 
 /** Fixed two-decimal amount: 3510 -> "35,10". */
-let twoDecimals: Intl.NumberFormat | null = null;
-const fixed2 = () => (twoDecimals ??= new Intl.NumberFormat('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
-export function asenaMoney(cents: number): string { return fixed2().format(cents / 100); }
+/** Fixed two-decimal amount: 3510 -> "35,10" (tr, the default) / "35.10" (en). Pass the active locale for display. */
+export function asenaMoney(cents: number, locale: Locale = 'tr'): string { return fixed2(cents / 100, locale); }
 /** Hundredths of the bet as a multiple: 1240 -> "12,40". */
-export function asenaTimes(hundredths: number): string { return fixed2().format(hundredths / 100); }
+export function asenaTimes(hundredths: number, locale: Locale = 'tr'): string { return fixed2(hundredths / 100, locale); }
 
-/** History row text: "3 küme · 1 takımyıldız · 0,48×", "Ergenekon ×10 · genel ×3 · 89,56×", "Kazanç yok". */
-export function asenaHistoryDetail(round: AsenaRound): string {
-  const total = `${asenaTimes(round.totalHundredths)}×`;
-  if (round.capped) return `Azami kazanç · ${total}`;
+/** What a history row says, as data: the screens turn it into text in the active language (`asena.history.detail.*`). */
+export type AsenaHistorySummary =
+  | { kind: 'capped'; total: number }
+  | { kind: 'free'; spins: number; globalMultiplier: number; total: number }
+  | { kind: 'none'; total: number }
+  | { kind: 'base'; clusters: number; stars: number; moons: number; total: number };
+export function asenaHistorySummary(round: AsenaRound): AsenaHistorySummary {
+  const total = round.totalHundredths;
+  if (round.capped) return { kind: 'capped', total };
   if (round.freeSpinsTriggered) {
     const last = round.spins[round.spins.length - 1]!;
-    return `Ergenekon ×${round.spins.length - 1}${last.globalMultiplierAfter > 1 ? ` · genel ×${last.globalMultiplierAfter}` : ''} · ${total}`;
+    return { kind: 'free', spins: round.spins.length - 1, globalMultiplier: last.globalMultiplierAfter > 1 ? last.globalMultiplierAfter : 0, total };
   }
-  if (round.totalHundredths === 0) return 'Kazanç yok';
+  if (total === 0) return { kind: 'none', total };
   const base = round.spins[0]!;
   const clusters = base.steps.reduce((n, st) => n + st.clusters.length, 0);
   const stars = base.steps.reduce((n, st) => n + st.clusters.filter(c => c.constellation).length, 0);
-  const parts = [`${clusters} küme`];
-  if (stars > 0) parts.push(`${stars} takımyıldız`);
-  if (base.scatterHundredths > 0) parts.push(`${base.scatterCount} Ay Ata`);
-  return `${parts.join(' · ')} · ${total}`;
+  return { kind: 'base', clusters, stars, moons: base.scatterHundredths > 0 ? base.scatterCount : 0, total };
+}
+
+/** History row text (stored with the record, Turkish): "3 küme · 1 takımyıldız · 0,48×", "Ergenekon ×10 · genel ×3 · 89,56×", "Kazanç yok". */
+export function asenaHistoryDetail(round: AsenaRound): string {
+  const s = asenaHistorySummary(round);
+  const total = `${asenaTimes(s.total)}×`;
+  switch (s.kind) {
+    case 'capped': return `Azami kazanç · ${total}`;
+    case 'free': return `Ergenekon ×${s.spins}${s.globalMultiplier > 0 ? ` · genel ×${s.globalMultiplier}` : ''} · ${total}`;
+    case 'none': return 'Kazanç yok';
+    case 'base': {
+      const parts = [`${s.clusters} küme`];
+      if (s.stars > 0) parts.push(`${s.stars} takımyıldız`);
+      if (s.moons > 0) parts.push(`${s.moons} Ay Ata`);
+      return `${parts.join(' · ')} · ${total}`;
+    }
+  }
 }
 
 /** Screen-reader line for one cluster: "6 asena, Kurt Başı ×10, 12,00× kazanç". */

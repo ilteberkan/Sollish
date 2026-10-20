@@ -1,4 +1,5 @@
 import { publicKey } from '@sollish/protocol';
+import { INTL_LOCALE, type Locale } from './i18n/config';
 import { deploymentConfig } from './live';
 
 export function incentiveDeployment(kind: 'stake' | 'rewards') {
@@ -18,14 +19,17 @@ export function parseTokens(value: string, decimals = 6): bigint | null {
   const units = BigInt(whole!) * 10n ** BigInt(decimals) + BigInt(fraction.padEnd(decimals, '0') || '0');
   return units > 0n && units <= 18_446_744_073_709_551_615n ? units : null;
 }
-export function tokenLabel(units: bigint, decimals = 6): string {
+/** Token amount text; Turkish ("1.234,5") unless a locale is given. */
+export function tokenLabel(units: bigint, decimals = 6, locale: Locale = 'tr'): string {
   if (!Number.isInteger(decimals) || decimals < 0 || decimals > 9 || units < 0n) throw new RangeError('Invalid token value');
   const scale = 10n ** BigInt(decimals);
   const fraction = (units % scale).toString().padStart(decimals, '0').replace(/0+$/, '');
-  return `${(units / scale).toLocaleString('tr-TR')}${fraction ? `,${fraction}` : ''}`;
+  const decimal = new Intl.NumberFormat(INTL_LOCALE[locale]).formatToParts(1.5).find(part => part.type === 'decimal')?.value ?? '.';
+  return `${(units / scale).toLocaleString(INTL_LOCALE[locale])}${fraction ? `${decimal}${fraction}` : ''}`;
 }
-export function utcEpochLabel(epoch: bigint): string {
+/** UTC hour epoch as text. `invalid` is the text for an out-of-range epoch (UI: a translated string), Turkish by default. */
+export function utcEpochLabel(epoch: bigint, locale: Locale = 'tr', invalid = 'Geçersiz dönem'): string {
   const seconds = epoch * 3600n;
-  if (seconds < 0n || seconds > 8_640_000_000_000n) return 'Geçersiz dönem';
-  return `${new Date(Number(seconds * 1000n)).toLocaleString('tr-TR', { timeZone: 'UTC', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })} UTC`;
+  if (seconds < 0n || seconds > 8_640_000_000_000n) return invalid;
+  return `${new Date(Number(seconds * 1000n)).toLocaleString(INTL_LOCALE[locale], { timeZone: 'UTC', day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })} UTC`;
 }

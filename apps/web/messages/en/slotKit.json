@@ -150,5 +150,25 @@
       "word": "MAX"
     }
   },
-  "winWord": "WIN"
+  "winWord": "WIN",
+  "rgs": {
+    "source": {
+      "local": "Local demo",
+      "remote": "Server-verified"
+    },
+    "errors": {
+      "INSUFFICIENT_BALANCE": "The server balance is not enough for this round.",
+      "RATE_LIMITED": "You are playing too fast; the server is making you wait a second.",
+      "SESSION_BUSY": "The previous request is still being processed.",
+      "SESSION_EXPIRED": "The server session has expired; refresh the page.",
+      "AUTH_INVALID": "The server session is invalid; refresh the page.",
+      "SESSION_LIMIT": "This session has reached its round limit; refresh the page.",
+      "ROUND_MISMATCH": "The server's round did not match the engine; the round was not shown.",
+      "NETWORK": "The server could not be reached. If the round result is stored on the server, it will be shown when the page is refreshed.",
+      "INVALID_BET": "The bet was rejected by the server.",
+      "INVALID_MODE": "The mode was rejected by the server.",
+      "SERVICE_UNAVAILABLE": "The server is not accepting rounds right now.",
+      "UNKNOWN": "The server did not accept the round."
+    }
+  }
 }

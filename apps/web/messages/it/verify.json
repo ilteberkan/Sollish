@@ -79,5 +79,27 @@
     "play": "Riproduci",
     "forward": "Avanti",
     "noSteps": "Impossibile mostrare i passi di questo round."
+  },
+  "outcome": {
+    "game": "Gioco non riconosciuto.",
+    "serverSeed": "Il seed del server deve essere di 64 caratteri esadecimali (il seed rivelato).",
+    "serverSeedHash": "L’hash del seed deve essere di 64 caratteri esadecimali.",
+    "clientSeed": "Il seed del giocatore deve essere di 1–64 caratteri: lettere, cifre, _ o -.",
+    "nonce": "Il nonce deve essere un numero intero pari o superiore a 0.",
+    "bet": "La puntata deve essere uno dei livelli di puntata di questo gioco.",
+    "mode": "Questa modalità non esiste in questo gioco.",
+    "expectedSeed": "Il seed del round atteso deve essere di 32 caratteri esadecimali.",
+    "expectedPayout": "Il pagamento atteso deve essere un numero intero (centesimi DEMO).",
+    "engineRejected": "Il motore non ha accettato questa combinazione di puntata e modalità.",
+    "match": "Corrispondenza: il risultato è stato ricalcolato da questi seed.",
+    "mismatch": "Non corrisponde: {failed}."
+  },
+  "checks": {
+    "hash": "hash del seed",
+    "engine": "motore",
+    "seed": "seed del round",
+    "payout": "pagamento",
+    "total": "moltiplicatore",
+    "cost": "costo"
   }
 }

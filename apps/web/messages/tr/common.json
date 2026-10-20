@@ -14,7 +14,14 @@
     "liveSuffix": " (canlı)",
     "nav": {
       "rewards": "Ödüller",
-      "stake": "Stake"
+      "stake": "Stake",
+      "lobby": "Lobi",
+      "slots": "Slotlar",
+      "live": "Canlı",
+      "instant": "Anında oyunlar",
+      "new": "Yeni",
+      "fair": "Kanıtlanabilir adil",
+      "favorites": "Favoriler"
     },
     "network": {
       "devnet": "Devnet önizleme",
@@ -30,6 +37,30 @@
       "tagline": "Oyunu anla. Kontrol sende kalsın.",
       "devnet": "Demo ve devnet · Gerçek para kullanılmaz",
       "demo": "Demo · Gerçek varlık kullanılmaz"
+    },
+    "sections": {
+      "casino": "Kumarhane",
+      "games": "Oyunlar",
+      "more": "Diğer"
+    },
+    "collapse": "Menüyü daralt",
+    "expand": "Menüyü genişlet",
+    "menu": "Menü",
+    "closeMenu": "Menüyü kapat",
+    "tabbar": "Hızlı gezinme",
+    "search": {
+      "label": "Oyun ara",
+      "placeholder": "Oyun ara",
+      "open": "Ara",
+      "close": "Aramayı kapat",
+      "clear": "Aramayı temizle",
+      "results": "{count, plural, =0 {Oyun bulunamadı} one {# oyun bulundu} other {# oyun bulundu}}",
+      "seeAll": "Sonuçları lobide göster"
+    },
+    "kind": {
+      "slot": "Slot",
+      "live": "Canlı",
+      "instant": "Anında"
     }
   },
   "chat": {

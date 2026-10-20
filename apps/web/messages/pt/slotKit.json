@@ -150,5 +150,25 @@
       "word": "MÁXIMO"
     }
   },
-  "winWord": "GANHO"
+  "winWord": "GANHO",
+  "rgs": {
+    "source": {
+      "local": "Demo local",
+      "remote": "Verificado pelo servidor"
+    },
+    "errors": {
+      "INSUFFICIENT_BALANCE": "O saldo do servidor não é suficiente para esta rodada.",
+      "RATE_LIMITED": "Você está jogando rápido demais; o servidor está pedindo que aguarde um segundo.",
+      "SESSION_BUSY": "A solicitação anterior ainda está sendo processada.",
+      "SESSION_EXPIRED": "A sessão do servidor expirou; atualize a página.",
+      "AUTH_INVALID": "A sessão do servidor é inválida; atualize a página.",
+      "SESSION_LIMIT": "Esta sessão atingiu o limite de rodadas; atualize a página.",
+      "ROUND_MISMATCH": "A rodada do servidor não correspondeu ao motor; a rodada não foi exibida.",
+      "NETWORK": "Não foi possível alcançar o servidor. Se o resultado da rodada estiver guardado no servidor, ele será exibido quando a página for atualizada.",
+      "INVALID_BET": "A aposta foi recusada pelo servidor.",
+      "INVALID_MODE": "O modo foi recusado pelo servidor.",
+      "SERVICE_UNAVAILABLE": "O servidor não está aceitando rodadas no momento.",
+      "UNKNOWN": "O servidor não aceitou a rodada."
+    }
+  }
 }

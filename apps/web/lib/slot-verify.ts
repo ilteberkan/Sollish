@@ -9,9 +9,23 @@ export interface VerifyFormInput {
   expectedSeedHex?: string; expectedPayoutCents?: string | number;
 }
 export type VerifyStatus = 'match' | 'mismatch' | 'invalid';
-export interface VerifyOutcome { status: VerifyStatus; message: string; result: SlotVerifyResult | null }
+/** `code` names the translated text (`verify.outcome.<code>`); `failed` lists the failed checks of a mismatch (`verify.checks.<name>`).
+ * `message` is the same text in Turkish (tests, legacy callers). */
+export type VerifyCode = 'game' | 'serverSeed' | 'serverSeedHash' | 'clientSeed' | 'nonce' | 'bet' | 'mode' | 'expectedSeed' | 'expectedPayout' | 'engineRejected' | 'match' | 'mismatch';
+export interface VerifyOutcome { status: VerifyStatus; code: VerifyCode; message: string; failed?: string[]; result: SlotVerifyResult | null }
 
-const invalid = (message: string): VerifyOutcome => ({ status: 'invalid', message, result: null });
+const INVALID_TEXT: Readonly<Record<Exclude<VerifyCode, 'match' | 'mismatch' | 'engineRejected'>, string>> = {
+  game: 'Oyun tanınmadı.',
+  serverSeed: 'Sunucu tohumu 64 onaltılık karakter olmalı (açıklanmış tohum).',
+  serverSeedHash: 'Tohum özeti 64 onaltılık karakter olmalı.',
+  clientSeed: 'Oyuncu tohumu 1–64 karakter olmalı: harf, rakam, _ veya -.',
+  nonce: 'Nonce 0 veya daha büyük bir tam sayı olmalı.',
+  bet: 'Bahis bu oyunun bahis basamaklarından biri olmalı.',
+  mode: 'Mod bu oyunda yok.',
+  expectedSeed: 'Beklenen tur tohumu 32 onaltılık karakter olmalı.',
+  expectedPayout: 'Beklenen kazanç tam sayı (DEMO kuruş) olmalı.',
+};
+const invalid = (code: keyof typeof INVALID_TEXT): VerifyOutcome => ({ status: 'invalid', code, message: INVALID_TEXT[code], result: null });
 const hex = (value: string | undefined) => (value ?? '').trim().toLowerCase();
 function integer(value: string | number | undefined): number | null {
   if (value === undefined || value === '') return null;
@@ -21,28 +35,28 @@ function integer(value: string | number | undefined): number | null {
 
 export async function verifyForm(input: VerifyFormInput): Promise<VerifyOutcome> {
   const game = slotGame(input.game.trim());
-  if (!game) return invalid('Oyun tanınmadı.');
+  if (!game) return invalid('game');
   const serverSeed = hex(input.serverSeed);
-  if (!/^[0-9a-f]{64}$/.test(serverSeed)) return invalid('Sunucu tohumu 64 onaltılık karakter olmalı (açıklanmış tohum).');
+  if (!/^[0-9a-f]{64}$/.test(serverSeed)) return invalid('serverSeed');
   const serverSeedHash = hex(input.serverSeedHash);
-  if (serverSeedHash && !/^[0-9a-f]{64}$/.test(serverSeedHash)) return invalid('Tohum özeti 64 onaltılık karakter olmalı.');
+  if (serverSeedHash && !/^[0-9a-f]{64}$/.test(serverSeedHash)) return invalid('serverSeedHash');
   const clientSeed = input.clientSeed.trim();
-  if (!isClientSeed(clientSeed)) return invalid('Oyuncu tohumu 1–64 karakter olmalı: harf, rakam, _ veya -.');
+  if (!isClientSeed(clientSeed)) return invalid('clientSeed');
   const nonce = integer(input.nonce);
-  if (nonce === null || !isSlotNonce(nonce)) return invalid('Nonce 0 veya daha büyük bir tam sayı olmalı.');
+  if (nonce === null || !isSlotNonce(nonce)) return invalid('nonce');
   const betCents = integer(input.betCents);
-  if (betCents === null || !game.betLevels.includes(betCents)) return invalid('Bahis bu oyunun bahis basamaklarından biri olmalı.');
-  if (!game.modes.includes(input.mode)) return invalid('Mod bu oyunda yok.');
+  if (betCents === null || !game.betLevels.includes(betCents)) return invalid('bet');
+  if (!game.modes.includes(input.mode)) return invalid('mode');
   const expectedSeedHex = hex(input.expectedSeedHex);
-  if (expectedSeedHex && !/^[0-9a-f]{32}$/.test(expectedSeedHex)) return invalid('Beklenen tur tohumu 32 onaltılık karakter olmalı.');
+  if (expectedSeedHex && !/^[0-9a-f]{32}$/.test(expectedSeedHex)) return invalid('expectedSeed');
   const expectedPayout = integer(input.expectedPayoutCents);
-  if (Number.isNaN(expectedPayout)) return invalid('Beklenen kazanç tam sayı (DEMO kuruş) olmalı.');
+  if (Number.isNaN(expectedPayout)) return invalid('expectedPayout');
   const result = await verifySlotRound(game, { serverSeed, serverSeedHash: serverSeedHash || undefined, clientSeed, nonce, betCents, mode: input.mode },
     { seedHex: expectedSeedHex || undefined, payoutCents: expectedPayout ?? undefined });
-  if (result.error === 'ENGINE_REJECTED_INPUT') return { status: 'invalid', message: 'Motor bu bahis/mod bileşimini kabul etmedi.', result };
-  if (result.ok) return { status: 'match', message: 'Eşleşti: sonuç bu tohumlardan yeniden hesaplandı.', result };
-  const failed = Object.entries(result.checks).filter(([, ok]) => ok === false).map(([name]) => CHECK_LABELS[name] ?? name);
-  return { status: 'mismatch', message: `Uyuşmuyor: ${failed.join(', ')}.`, result };
+  if (result.error === 'ENGINE_REJECTED_INPUT') return { status: 'invalid', code: 'engineRejected', message: 'Motor bu bahis/mod bileşimini kabul etmedi.', result };
+  if (result.ok) return { status: 'match', code: 'match', message: 'Eşleşti: sonuç bu tohumlardan yeniden hesaplandı.', result };
+  const names = Object.entries(result.checks).filter(([, ok]) => ok === false).map(([name]) => name);
+  return { status: 'mismatch', code: 'mismatch', message: `Uyuşmuyor: ${names.map(name => CHECK_LABELS[name] ?? name).join(', ')}.`, failed: names, result };
 }
 const CHECK_LABELS: Record<string, string> = { hash: 'tohum özeti', engine: 'motor', seed: 'tur tohumu', payout: 'kazanç', total: 'çarpan', cost: 'maliyet' };
 

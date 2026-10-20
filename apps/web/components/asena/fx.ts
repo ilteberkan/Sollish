@@ -181,7 +181,7 @@ export class AsenaFx {
   /** The signature moment: the constellation is traced star to star over its cells (tracers + node flashes, in sync with
    * board.constellation(plan)), echoes large in the sky, then announces its multiplier. Resolves when the trace and the
    * announcement are done. `persist` keeps a faint echo in the sky (Ergenekon feature) until clearEcho(). */
-  constellation(plan: AsenaConstellationPlan, opts: { persist?: boolean; label?: boolean; echo?: boolean } = {}): Promise<void> {
+  constellation(plan: AsenaConstellationPlan, opts: { persist?: boolean; label?: boolean; echo?: boolean; /** Upper-case name under the multiplier in the active language (default: the engine's Turkish name). */ name?: string } = {}): Promise<void> {
     const echo = opts.echo ?? true;
     if (echo && (this.sky || this.echoCanvas)) { this.echoes.push({ plan, born: this.now(), hold: 1.6, persist: !!opts.persist, residual: 0.2, fadeAt: null }); if (this.echoes.length > 8) this.echoes.shift(); this.skyDirty = true; }
     if (this.reduced) { this.kick(); return this.after(60); }
@@ -206,7 +206,7 @@ export class AsenaFx {
       const n = this.now();
       this.addFlash({ x: c.x, y: c.y, born: n, life: 0.7, r: 260 * k, color: '#cfe8ff', alpha: 0.7 });
       this.addRing({ x: c.x, y: c.y, born: n, life: 0.7, r0: 40 * k, r1: 330 * k, color: '#e6f4ff', width: 5 * k + 1, alpha: 0.8 });
-      if (opts.label ?? true) this.texts.push({ text: `×${plan.multiplier}`, sub: plan.name.toLocaleUpperCase('tr'), x: c.x, y: c.y, born: n, life: 1.5, size: (plan.multiplier >= 8 ? 128 : 104) * k, tone: plan.multiplier >= 6 ? 'gold' : 'ice' });
+      if (opts.label ?? true) this.texts.push({ text: `×${plan.multiplier}`, sub: opts.name ?? plan.name.toLocaleUpperCase('tr'), x: c.x, y: c.y, born: n, life: 1.5, size: (plan.multiplier >= 8 ? 128 : 104) * k, tone: plan.multiplier >= 6 ? 'gold' : 'ice' });
       this.pulse(0.4 + plan.multiplier * 0.08);
     });
     this.kick();

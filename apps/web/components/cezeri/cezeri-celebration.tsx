@@ -11,6 +11,8 @@
  */
 import { useEffect, useRef, useState, type CSSProperties, type Ref } from 'react';
 import { WIN_TIER_INFO, countUpValueAt, levelAt, type CelebrationLevel, type CountUpSchedule } from '@/lib/slot-kit/win-tiers';
+import { useFormat, useT } from '@/lib/i18n/client';
+import { richText } from '../game-rich';
 import { cezeriCents, cezeriMoney, cezeriTimes } from '@/lib/cezeri-timeline';
 import { CezeriSymbolUse } from './symbols';
 import c from './cezeri-celebration.module.css';
@@ -103,6 +105,11 @@ export interface CezeriCelebrationProps {
 }
 
 export function CezeriCelebration({ schedule, betCents, elapsed, reducedMotion, onLevel, onCountDone, onTap }: CezeriCelebrationProps) {
+  const t = useT('cezeri');
+  const tk = useT('slotKit');
+  const loc = useFormat().locale;
+  const multText = useRef<(value: number) => string>(() => '');
+  multText.current = (value: number) => t('celebration.times', { times: cezeriTimes(value, loc) });
   const [level, setLevel] = useState<CelebrationLevel>(() => levelAt(schedule, Math.max(0, elapsed())));
   const [done, setDone] = useState(false);
   const [flash, setFlash] = useState(0);
@@ -118,11 +125,11 @@ export function CezeriCelebration({ schedule, betCents, elapsed, reducedMotion, 
     const step = () => {
       const e = Math.max(0, elapsed());
       const value = countUpValueAt(schedule, e);
-      const text = cezeriMoney(cezeriCents(betCents, value));
+      const text = cezeriMoney(cezeriCents(betCents, value), loc);
       if (text !== lastText) {
         lastText = text;
         writeAmount(amountRef.current, text);
-        if (multRef.current) multRef.current.textContent = `${cezeriTimes(value)}× bahis`;
+        if (multRef.current) multRef.current.textContent = multText.current(value);
       }
       const now = levelAt(schedule, e);
       if (now !== shownLevel) {
@@ -146,7 +153,7 @@ export function CezeriCelebration({ schedule, betCents, elapsed, reducedMotion, 
     };
     step();
     return () => cancelAnimationFrame(frame);
-  }, [schedule, betCents, elapsed, reducedMotion]);
+  }, [schedule, betCents, elapsed, reducedMotion, loc]);
 
   const info = WIN_TIER_INFO[level];
   const initial = countUpValueAt(schedule, Math.max(0, elapsed()));
@@ -162,24 +169,24 @@ export function CezeriCelebration({ schedule, betCents, elapsed, reducedMotion, 
       </div>
       <div className={c.front} data-level={level} data-done={done || undefined} data-reduced={reducedMotion || undefined}
         data-testid="cezeri-celebration" role="dialog" aria-modal="false"
-        aria-label={`${info.title}: ${cezeriMoney(cezeriCents(betCents, schedule.totalHundredths))} DEMO`} onClick={onTap}>
+        aria-label={t('celebration.aria', { title: tk(`winTier.${info.id}.title`), money: cezeriMoney(cezeriCents(betCents, schedule.totalHundredths), loc) })} onClick={onTap}>
         <div className={c.column}>
           <ol className={c.pips} aria-hidden="true">
             {PIPS.map(pip => <li key={pip.level} data-on={level >= pip.level || undefined}><span>{pip.x}</span></li>)}
           </ol>
           <div key={level} className={c.lockup} data-shake>
             <Tablet />
-            <DisplayWord text={info.word} className={c.tierWord} />
-            <span className={c.sub} aria-hidden="true">KAZANÇ</span>
+            <DisplayWord text={tk(`winTier.${info.id}.word`)} className={c.tierWord} />
+            <span className={c.sub} aria-hidden="true">{tk('winWord')}</span>
           </div>
           <div ref={plaqueRef} className={c.plaque}>
-            <Amount ref={amountRef} text={cezeriMoney(cezeriCents(betCents, initial))} testId="cezeri-celebration-amount" />
+            <Amount ref={amountRef} text={cezeriMoney(cezeriCents(betCents, initial), loc)} testId="cezeri-celebration-amount" />
             <small className={c.unit}>DEMO</small>
           </div>
-          <span ref={multRef} className={c.mult}>{cezeriTimes(initial)}× bahis</span>
-          {level === 5 && <p className={c.capNote}>Tur tavana ulaştı · kalan dönüşler oynanmaz</p>}
+          <span ref={multRef} className={c.mult}>{multText.current(initial)}</span>
+          {level === 5 && <p className={c.capNote}>{t('celebration.capNote')}</p>}
           <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>
-            {done ? 'Devam' : 'Hızlandırmak için dokun'}
+            {done ? t('celebration.continue') : t('celebration.speedUp')}
           </button>
         </div>
       </div>
@@ -188,6 +195,7 @@ export function CezeriCelebration({ schedule, betCents, elapsed, reducedMotion, 
 }
 
 export function CezeriFreeIntro({ awarded, dur, reducedMotion, onTap }: { awarded: number; dur: number; reducedMotion: boolean; onTap: () => void }) {
+  const t = useT('cezeri');
   return (
     <>
       <div className={c.back} data-level="intro" data-reduced={reducedMotion || undefined} aria-hidden="true">
@@ -200,13 +208,13 @@ export function CezeriFreeIntro({ awarded, dur, reducedMotion, onTap }: { awarde
           <div className={c.seals} aria-hidden="true">
             {[0, 1, 2].map(i => <span key={i} className={c.seal} style={{ '--i': i } as CSSProperties}><CezeriSymbolUse symbol="vessel" /></span>)}
           </div>
-          <h2 id="cz-intro-title" className={c.introTitle}><DisplayWord text="FİL SAATİ" className={c.introWord} /><span className="sr-only">Fil Saati Başlıyor</span></h2>
+          <h2 id="cz-intro-title" className={c.introTitle}><DisplayWord text={t('intro.word')} className={c.introWord} /><span className="sr-only">{t('intro.srTitle')}</span></h2>
           <div className={c.introCount}>
             <strong>{awarded}</strong>
-            <span>bedava<br />dönüş</span>
+            <span style={{ whiteSpace: 'pre-line' }}>{t('intro.freeSpins')}</span>
           </div>
-          <p className={c.introText}>Göbek çarpanı <strong>sıfırlanmaz</strong>, dönüşten dönüşe yalnız artar. Su haznesi her 3 dönüşte dolar ve otomat şahin kalıcı <strong>Altın Dişli</strong> jokerleri bırakır. 2 Su Kabı +4 dönüş verir.</p>
-          <button type="button" className={c.go} onClick={event => { event.stopPropagation(); onTap(); }}>Başla</button>
+          <p className={c.introText}>{richText(t, 'intro.text')}</p>
+          <button type="button" className={c.go} onClick={event => { event.stopPropagation(); onTap(); }}>{t('intro.start')}</button>
           <span className={c.timer} style={{ '--hold': `${dur}ms` } as CSSProperties} aria-hidden="true" />
         </div>
       </div>
@@ -220,6 +228,8 @@ export interface CezeriFeatureTotalProps {
 }
 /** "Fil Saati — Toplam": always ends a free-spin round, whatever the total. */
 export function CezeriFeatureTotal({ spins, totalHundredths, topHub, falconVisits, wilds, betCents, celebration, capped, dur, elapsed, reducedMotion, onTap }: CezeriFeatureTotalProps) {
+  const t = useT('cezeri');
+  const loc = useFormat().locale;
   const amountRef = useRef<HTMLSpanElement>(null);
   const countMs = Math.max(1, Math.min(1500, Math.round(dur * 0.5)));
   useEffect(() => {
@@ -228,12 +238,12 @@ export function CezeriFeatureTotal({ spins, totalHundredths, topHub, falconVisit
       const e = Math.max(0, elapsed());
       const p = reducedMotion ? 1 : Math.min(1, e / countMs);
       const value = p >= 1 ? totalHundredths : Math.floor(totalHundredths * (1 - (1 - p) ** 3));
-      writeAmount(amountRef.current, cezeriMoney(cezeriCents(betCents, value)));
+      writeAmount(amountRef.current, cezeriMoney(cezeriCents(betCents, value), loc));
       if (p < 1) frame = requestAnimationFrame(step);
     };
     step();
     return () => cancelAnimationFrame(frame);
-  }, [elapsed, countMs, totalHundredths, betCents, reducedMotion]);
+  }, [elapsed, countMs, totalHundredths, betCents, reducedMotion, loc]);
   return (
     <>
       <div className={c.back} data-level="feature" data-reduced={reducedMotion || undefined} aria-hidden="true">
@@ -243,24 +253,24 @@ export function CezeriFeatureTotal({ spins, totalHundredths, topHub, falconVisit
       </div>
       <div className={c.front} data-level="feature" data-reduced={reducedMotion || undefined} role="dialog" aria-modal="false" aria-labelledby="cz-ft-title" data-testid="cezeri-feature-total" onClick={onTap}>
         <div className={`${c.column} ${c.featureColumn}`}>
-          <h2 id="cz-ft-title" className={c.ftTitle}>Fil Saati <span aria-hidden="true">—</span> Toplam</h2>
+          <h2 id="cz-ft-title" className={c.ftTitle}>{t('total.titleA')} <span aria-hidden="true">—</span> {t('total.titleB')}</h2>
           <div className={c.lockup}>
             <Tablet />
-            <DisplayWord text="TOPLAM" className={c.tierWord} />
-            <span className={c.sub} aria-hidden="true">BEDAVA DÖNÜŞ</span>
+            <DisplayWord text={t('total.word')} className={c.tierWord} />
+            <span className={c.sub} aria-hidden="true">{t('total.sub')}</span>
           </div>
           <div className={c.plaque}>
-            <Amount ref={amountRef} text={cezeriMoney(0)} testId="cezeri-feature-amount" />
+            <Amount ref={amountRef} text={cezeriMoney(0, loc)} testId="cezeri-feature-amount" />
             <small className={c.unit}>DEMO</small>
           </div>
           <dl className={c.stats}>
-            <div><dt>Dönüş</dt><dd>{spins} dönüş</dd></div>
-            <div><dt>En yüksek göbek</dt><dd>×{topHub}</dd></div>
-            <div><dt>Şahin</dt><dd>{falconVisits > 0 ? `${falconVisits} ziyaret` : 'Gelmedi'}<small>{wilds > 0 ? `${wilds} Altın Dişli` : 'joker yok'}</small></dd></div>
-            <div><dt>Bahsin</dt><dd>{cezeriTimes(totalHundredths)}×</dd></div>
+            <div><dt>{t('total.spins')}</dt><dd>{t('total.spinsValue', { spins })}</dd></div>
+            <div><dt>{t('total.topHub')}</dt><dd>×{topHub}</dd></div>
+            <div><dt>{t('total.falcon')}</dt><dd>{falconVisits > 0 ? t('total.falconVisits', { n: falconVisits }) : t('total.falconNone')}<small>{wilds > 0 ? t('total.wilds', { n: wilds }) : t('total.wildsNone')}</small></dd></div>
+            <div><dt>{t('total.ofBet')}</dt><dd>{cezeriTimes(totalHundredths, loc)}×</dd></div>
           </dl>
-          {capped && <p className={c.capNote}>Azami kazanca ulaşıldı · kalan dönüşler oynanmaz</p>}
-          <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>{celebration ? 'Kutlamaya geç' : 'Devam'}</button>
+          {capped && <p className={c.capNote}>{t('total.capNote')}</p>}
+          <button type="button" className={c.tap} onClick={event => { event.stopPropagation(); onTap(); }}>{celebration ? t('total.toCelebration') : t('celebration.continue')}</button>
         </div>
       </div>
     </>

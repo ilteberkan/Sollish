@@ -79,5 +79,27 @@
     "play": "播放",
     "forward": "前进",
     "noSteps": "无法显示此回合的步骤。"
+  },
+  "outcome": {
+    "game": "无法识别该游戏。",
+    "serverSeed": "服务器种子必须是 64 个十六进制字符（已公开的种子）。",
+    "serverSeedHash": "种子哈希必须是 64 个十六进制字符。",
+    "clientSeed": "玩家种子必须为 1–64 个字符：字母、数字、_ 或 -。",
+    "nonce": "Nonce 必须是不小于 0 的整数。",
+    "bet": "投注额必须是该游戏的投注档位之一。",
+    "mode": "该游戏中没有此模式。",
+    "expectedSeed": "预期的轮次种子必须是 32 个十六进制字符。",
+    "expectedPayout": "预期奖金必须是整数（DEMO 分）。",
+    "engineRejected": "引擎不接受此投注额与模式的组合。",
+    "match": "一致：已根据这些种子重新计算出结果。",
+    "mismatch": "不一致：{failed}。"
+  },
+  "checks": {
+    "hash": "种子哈希",
+    "engine": "引擎",
+    "seed": "轮次种子",
+    "payout": "奖金",
+    "total": "倍数",
+    "cost": "费用"
   }
 }

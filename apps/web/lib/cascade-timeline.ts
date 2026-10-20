@@ -323,14 +323,28 @@ export function finalState(round: CascadeRoundLike): { cells: PlacedCell[]; mete
   };
 }
 
-/** History row text: "3 düşme · 12,40×", "Bedava dönüş ×12 · 183,50×", "Kazanç yok". */
+/** What a history row says about a round, without wording (the translated UI builds the text from this). */
+export type CascadeHistoryParts =
+  | { kind: 'capped'; totalHundredths: number }
+  | { kind: 'free'; spins: number; totalHundredths: number }
+  | { kind: 'none' }
+  | { kind: 'tumbles'; tumbles: number; totalHundredths: number };
+export function cascadeHistoryParts(round: CascadeRoundLike): CascadeHistoryParts {
+  if (round.capped) return { kind: 'capped', totalHundredths: round.totalHundredths };
+  if (round.freeSpinsTriggered) return { kind: 'free', spins: round.spins.length - 1, totalHundredths: round.totalHundredths };
+  if (round.totalHundredths === 0) return { kind: 'none' };
+  return { kind: 'tumbles', tumbles: round.spins[0]!.steps.filter(step => step.wins.length > 0).length, totalHundredths: round.totalHundredths };
+}
+
+/** History row text (Turkish, stored with the record): "3 düşme · 12,40×", "Bedava dönüş ×12 · 183,50×", "Kazanç yok". */
 export function cascadeHistoryDetail(round: CascadeRoundLike): string {
-  const total = `${multiplierText(round.totalHundredths)}×`;
-  if (round.capped) return `Azami kazanç · ${total}`;
-  if (round.freeSpinsTriggered) return `Bedava dönüş ×${round.spins.length - 1} · ${total}`;
-  if (round.totalHundredths === 0) return 'Kazanç yok';
-  const tumbles = round.spins[0]!.steps.filter(step => step.wins.length > 0).length;
-  return `${tumbles} düşme · ${total}`;
+  const parts = cascadeHistoryParts(round);
+  switch (parts.kind) {
+    case 'capped': return `Azami kazanç · ${multiplierText(parts.totalHundredths)}×`;
+    case 'free': return `Bedava dönüş ×${parts.spins} · ${multiplierText(parts.totalHundredths)}×`;
+    case 'none': return 'Kazanç yok';
+    case 'tumbles': return `${parts.tumbles} düşme · ${multiplierText(parts.totalHundredths)}×`;
+  }
 }
 
 /** Screen-reader line for one cluster: "8 çilek, 2,02× kazanç". */

@@ -1,0 +1,327 @@
+{
+  "meta": {
+    "description": "{title} — ein eigenständiges DEMO-Tumble-Spiel. Der Sturmgott schleudert Blitze auf die Steine, und in den Freispielen sammeln sich die Multiplikatoren."
+  },
+  "subtitle": "Der Sturmgott schleudert Blitze auf die Steine; in den Freispielen sammeln sich die Multiplikatoren.",
+  "logo": {
+    "subtitle": "STURMTHRON"
+  },
+  "table": {
+    "aria": "Tarhun-Spieltisch"
+  },
+  "board": {
+    "label": "Tarhun-Raster, 6 Spalten, 5 Zeilen",
+    "labelFree": "Tarhun-Freispiel-Raster, 6 Spalten, 5 Zeilen"
+  },
+  "badge": {
+    "checking": "Server wird geprüft"
+  },
+  "symbols": {
+    "h1": "Goldener Stier-Rhyton",
+    "h2": "Blitzaxt",
+    "h3": "Löwentor-Medaillon",
+    "h4": "Sonnenscheibe",
+    "l1": "Marineblauer Wellenstein",
+    "l2": "Achat-Adlerstein",
+    "l3": "Bernstein-Sonnenstein",
+    "l4": "Malachit-Baumstein",
+    "l5": "Obsidian-Blitzstein",
+    "scatter": "Blitzsiegel",
+    "orb": "Sturmstein",
+    "orbValue": "{name} ×{value}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Multiplikator",
+      "1": "Starker Multiplikator",
+      "2": "Donnernder Multiplikator",
+      "3": "Verheerender Multiplikator",
+      "4": "Legendärer Multiplikator",
+      "5": "Donnerschlag",
+      "6": "Göttlicher Multiplikator"
+    },
+    "total": "Gesamt · {tag}"
+  },
+  "error": {
+    "entropy": "Sichere lokale Zufallszahlen sind nicht verfügbar. Die Demo wurde nicht gestartet.",
+    "noCredit": "Du hast nicht genug Demo-Guthaben, oder es läuft bereits eine Demo-Runde.",
+    "insufficientSpin": "Guthaben reicht nicht: Dieser Spin kostet {cost}. Senke den Einsatz oder fülle dein Guthaben auf.",
+    "insufficientBuy": "Guthaben reicht nicht: Dieser Kauf kostet {cost}. Senke den Einsatz oder fülle dein Guthaben auf."
+  },
+  "buyBlock": {
+    "gated": "Nur mit DEMO-Guthaben verfügbar",
+    "autoplay": "Während des Autoplays nicht kaufbar",
+    "busy": "Erst nach Rundenende kaufbar",
+    "ante": "Nicht kaufbar, solange Chance ×2 aktiv ist",
+    "balance": "Guthaben reicht nicht (Preis {price})"
+  },
+  "autoplay": {
+    "title": "Autoplay",
+    "serverFailed": "Der Server konnte die Runde nicht starten",
+    "spinFailed": "Der Spin konnte nicht gestartet werden",
+    "quit": "Du hast die Sitzung verlassen",
+    "stopped": "Autoplay gestoppt: {reason}. {spins, plural, one {# Spin} other {# Spins}}, netto {net}.",
+    "stoppedShort": "Autoplay gestoppt: {reason}.",
+    "note": "Pro Spin {cost}{ante, select, yes { (Chance ×2)} other {}} · kauft nie einen Bonus · stoppt, wenn der Tab verborgen wird."
+  },
+  "toast": {
+    "autoplay": "Autoplay: {spins, plural, one {# Spin} other {# Spins}}, Verlustlimit {limit}.",
+    "refilled": "Guthaben aufgefüllt: {amount}.",
+    "shareCopied": "Link zum Teilen kopiert: {url}",
+    "shareLink": "Link zum Teilen: {url}",
+    "shareFailed": "Teilen nicht möglich: {reason}",
+    "replayFailed": "Diese Runde konnte nicht wiederholt werden.",
+    "replayMismatch": "Wiederholung nicht verifizierbar: Der Eintrag passt nicht zur Engine.",
+    "close": "Hinweis schließen"
+  },
+  "announce": {
+    "replayDone": "Wiederholung beendet: {amount}, {times}×. Guthaben unverändert.",
+    "roundEnd": "Runde beendet. Gesamtgewinn {amount}, {times}×.",
+    "roundEndNoWin": "Runde beendet. Kein Gewinn.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{count} {name}, {times}× Gewinn",
+    "orbCharge": "Tarhun schleudert Blitze auf die Sturmsteine.",
+    "orbChargeFree": "Tarhun schleudert Blitze auf die Sturmsteine: Ihre Werte werden zum Gesamtmultiplikator addiert.",
+    "orbArrive": "Sturmstein ×{value}: Multiplikator ×{multiplier}.",
+    "orbArriveFree": "Sturmstein ×{value}: Gesamtmultiplikator ×{multiplier}.",
+    "multiply": "Multiplikator ×{multiplier}: Der Gewinn von {base}× wurde mit {multiplier} multipliziert.",
+    "retrigger": "{count} Blitzsiegel: {awarded, plural, one {# Freispiel} other {# Freispiele}} hinzugefügt.",
+    "trigger": "{count} Blitzsiegel: Freispiele gewonnen.",
+    "freeIntro": "Der Sturm beginnt: Du hast {awarded, plural, one {# Freispiel} other {# Freispiele}} gewonnen.",
+    "freeSpinWin": "Das Freispiel brachte {win}×. Gesamt {total}×, Gesamtmultiplikator ×{multiplier}.",
+    "freeSpinNoWin": "Kein Gewinn im Freispiel.",
+    "noWin": "Kein Gewinn.",
+    "totalWin": "Gesamtgewinn {amount}, {times}×.",
+    "freeOutro": "Der Sturm hat sich gelegt. Gesamt: {amount}, {spins, plural, one {# Spin} other {# Spins}}, Gesamtmultiplikator ×{multiplier}.",
+    "sent": "Spin an den Server gesendet, {amount}.",
+    "buyStarted": "Bonus gekauft, {amount}. Die Freispiele beginnen.",
+    "spinStarted": "Spin gestartet, {amount}.",
+    "recovered": "Eine unvollendete Runde wurde vom Server wiederhergestellt; die Auszahlung erfolgte dort bereits ({amount}).",
+    "replaying": "Wiederholung läuft: Runde {id}. Das Guthaben ändert sich nicht.",
+    "refilled": "DEMO-Guthaben auf {amount} aufgefüllt.",
+    "refilledRemote": "DEMO-Guthaben auf dem Server auf {amount} aufgefüllt.",
+    "speed": "Spin-Tempo: {speed}.",
+    "anteOn": "Chance ×2 an: etwa doppelte Chance auf Freispiele, Kosten {cost}.",
+    "anteOff": "Chance ×2 aus: Kosten {cost}."
+  },
+  "banner": {
+    "scatterPay": "{count} Blitzsiegel · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# Freispiel} other {# Freispiele}}"
+  },
+  "deck": {
+    "aria": "Spielsteuerung",
+    "balance": "Guthaben",
+    "refill": "Guthaben auffüllen",
+    "replay": "Wiederholung",
+    "win": "Gewinn",
+    "replayWin": "Wiederholungsgewinn",
+    "lastWin": "Letzter Gewinn",
+    "spin": "Drehen",
+    "spinLocked": "Runde läuft; gesperrt, bis alle Tumbles, Blitze und Freispiele beendet sind.",
+    "auto": "Auto",
+    "info": "Info",
+    "on": "An",
+    "off": "Aus",
+    "anteDesc": "Etwa doppelte Freispiel-Chance",
+    "buyDesc": "{spins, plural, one {# Freispiel} other {# Freispiele}} · {rtp}",
+    "speed": "Spin-Tempo: {speed}",
+    "soundLoading": "Ton wird geladen {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Dein DEMO-Guthaben ist aufgebraucht.",
+    "lastRound": "Letzte Runde <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "Letzte Runde ohne Gewinn.",
+    "spaceHint": "Du kannst auch mit der Leertaste drehen.",
+    "fixedBefore": "Das Ergebnis steht vor dem Spin fest."
+  },
+  "replay": {
+    "ribbon": "Wiederholung — Guthaben unverändert · Runde {id}"
+  },
+  "auto": {
+    "ribbon": "Autoplay · noch {n, plural, one {# Spin} other {# Spins}}"
+  },
+  "free": {
+    "tag": "Freispiel",
+    "spinNumber": "Spin {n}",
+    "left": "Übrig",
+    "counterAria": "Freispiel {number}, noch {left}"
+  },
+  "mult": {
+    "label": "Multiplikator",
+    "total": "Gesamtmultiplikator"
+  },
+  "meter": {
+    "idleA": "<b>8+</b> gleiche Symbole zahlen überall",
+    "idleB": "Sturmsteine bis <b>×500</b>",
+    "win": "Gewinn",
+    "totalWin": "Gesamtgewinn"
+  },
+  "gated": {
+    "title": "Kein On-Chain-Tarhun.",
+    "text": "Dieses Spiel wird nur mit DEMO-Guthaben gespielt; echte Einsätze werden nicht angenommen.",
+    "back": "Zurück zur lokalen Demo"
+  },
+  "splash": {
+    "f1Title": "8+ überall",
+    "f1Text": "Acht gleiche Symbole zahlen überall im Raster",
+    "f2Title": "×500 Sturmstein",
+    "f2Text": "Wird per Blitz eingesammelt; der Multiplikator wächst in den Freispielen",
+    "f3Title": "{max}× Maximalgewinn",
+    "f3Text": "4 Blitzsiegel lösen {spins, plural, one {# Freispiel} other {# Freispiele}} aus",
+    "loading": "Spiel wird geladen",
+    "play": "Spielen",
+    "skip": "Diesen Startbildschirm nicht mehr zeigen",
+    "note": "DEMO-Guthaben hat keinen Wert · Das Ergebnis steht vor dem Spin fest · Nicht zertifizierte Simulation, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Ton bereit: Musik, Effekte und Sprachausgabe sind auf diesem Gerät vorbereitet.",
+    "soundLoading": "Ton wird geladen {percent} (bis dahin bleibt das Spiel stumm oder nutzt einfache Effekte).",
+    "soundOnTouch": "Der Ton wird bei der ersten Berührung geladen.",
+    "demoTitle": "DEMO-Guthaben",
+    "demoText": "Guthaben {balance}{server, select, yes { (Server)} other {}}. Das Auffüllen setzt das Guthaben auf {amount} und fügt dem Verlauf eine Zeile „{label}“ hinzu; während einer Runde oder des Autoplays ist es nicht möglich."
+  },
+  "buy": {
+    "feature": "{spins, plural, one {# Freispiel} other {# Freispiele}} · Einsatz {bet}",
+    "rtp": "Kauf-RTP {buy} · Standard {standard} (Simulation, nicht zertifiziert)",
+    "description": "Das <b>100-Fache</b> deines Einsatzes. Die Runde beginnt mit mindestens 4 Blitzsiegeln und {spins, plural, one {# Freispiel ist} other {# Freispiele sind}} garantiert; der Gesamtmultiplikator startet bei ×0 und wächst mit jedem Gewinn-Spin. Gewinne werden auf Basis eines Einsatzes von {bet} ausgezahlt, maximal {max}."
+  },
+  "history": {
+    "scope": "Diese Sitzung · Wiederholungen ändern dein Guthaben nie",
+    "time": "Zeit",
+    "mode": "Modus",
+    "win": "Gewinn",
+    "result": "Ergebnis",
+    "roundId": "Runden-ID",
+    "replay": "Wiederholen",
+    "replayAria": "Wiederholen: Runde {id}, Guthaben unverändert",
+    "share": "Gewinn teilen",
+    "shareAria": "Gewinn teilen: Runde {id}",
+    "latest": "Letzte Runde",
+    "refilled": "Guthaben aufgefüllt",
+    "refilledRemote": "Guthaben aufgefüllt (Server)",
+    "emptyTitle": "Deine erste Runde erscheint hier.",
+    "emptyText": "Modus, Einsatz, Kosten, Gewinn und Runden-ID jeder Runde werden gespeichert; du kannst jede Runde erneut ansehen.",
+    "capped": "Maximalgewinn · {times}×",
+    "free": "Freispiele ×{spins} · {times}×",
+    "freeTotal": "Freispiele ×{spins} · gesamt ×{multiplier} · {times}×",
+    "none": "Kein Gewinn",
+    "tumbles": "{n, plural, one {# Tumble} other {# Tumbles}} · {times}×",
+    "tumblesMultiplied": "{n, plural, one {# Tumble} other {# Tumbles}} · ×{multiplier} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× Einsatz",
+    "capNote": "Die Runde hat die Obergrenze erreicht · verbleibende Spins entfallen",
+    "continue": "Weiter",
+    "tapToSpeed": "Tippen zum Beschleunigen"
+  },
+  "intro": {
+    "title": "Der Sturm beginnt",
+    "titleCaps": "DER STURM BEGINNT",
+    "freeA": "Frei-",
+    "freeB": "spiele",
+    "text": "Bei jedem Gewinn-Spin werden die Sturmsteine zum <b>Gesamtmultiplikator</b> addiert; der Gesamtmultiplikator bleibt während aller Freispiele erhalten. 3 Blitzsiegel geben +5 Spins.",
+    "start": "Los"
+  },
+  "total": {
+    "titleA": "Der Sturm legt sich",
+    "titleB": "Gesamt",
+    "word": "GESAMT",
+    "sub": "FREISPIELE",
+    "spins": "Spins",
+    "spinsValue": "{n, plural, one {# Spin} other {# Spins}}",
+    "none": "Keiner",
+    "strikes": "{n, plural, one {# Blitzschlag} other {# Blitzschläge}}",
+    "noOrbs": "keine Steine",
+    "betMultiple": "Deines Einsatzes",
+    "capNote": "Maximalgewinn erreicht · verbleibende Spins entfallen",
+    "toCelebration": "Weiter zur Feier"
+  },
+  "info": {
+    "windowTitle": "Tarhun · Spielinfo",
+    "how": {
+      "title": "So wird gespielt",
+      "s1": "<b>Wähle deinen Einsatz.</b> Die Tasten − und + ändern den Einsatz um eine Stufe; ein Tipp auf den Einsatzbetrag öffnet alle Stufen. „{max}“ wählt die höchste Stufe, die dein Guthaben deckt.",
+      "s2": "<b>Drehen.</b> Drücke den Sturm-Button oder nutze die Leertaste. Die Rundenkosten (das {multiple}-Fache des Einsatzes bei aktivem Chance ×2) werden einmal vom Guthaben abgezogen.",
+      "s3": "<b>Kombinieren.</b> Im Raster mit 6 Spalten × 5 Zeilen gewinnst du, wenn <b>8 oder mehr gleiche Symbole irgendwo</b> liegen; je mehr es sind, desto höher die Gewinnstufe.",
+      "s4": "<b>Kette.</b> Gewinnsteine zerspringen, die darüberliegenden fallen herab und neue Steine füllen die Lücken. Das geht weiter, bis es keine neuen Gewinne mehr gibt.",
+      "s5": "<b>Blitz.</b> Endet die Kette mit einem Gewinn, trifft Tarhun jeden Sturmstein im Raster mit einem Blitz; die Steinwerte werden summiert und der Gewinn wird mit dieser Summe multipliziert.",
+      "s6": "<b>Ergebnis.</b> Die gesamte Runde wird von der Engine vor dem Spin entschieden; die Animation spielt nur dieses Ergebnis ab. Der Dreh-Button bleibt gesperrt, bis die Runde (jeder Tumble und jedes Freispiel) beendet ist; zum Beschleunigen nutze die Einstellung {quick}/{turbo}. Tempo-Einstellungen, ein Tipp auf den Feier-Zähler, ein verborgener Tab oder das Verlassen der Seite ändern die Auszahlung nie; die Runde wird immer genau einmal mit der Auszahlung der Engine abgeschlossen.",
+      "note": "DEMO-Guthaben hat keinen Wert; es bringt weder SOL noch Token oder Belohnungen. Das Spiel läuft im Browser mit lokalem Zufall; es gibt keinen VRF-Nachweis."
+    },
+    "pay": {
+      "title": "Gewinntabelle",
+      "lead": "Du gewinnst mit <b>8 oder mehr gleichen Symbolen irgendwo</b> im Raster. Die große Zahl ist der Brutto-DEMO-Betrag bei einem Einsatz von <b>{bet}</b>; der Multiplikator darunter ist ein Vielfaches des Einsatzes.",
+      "symbolsAria": "Symbolgewinne",
+      "scatterTitle": "{name} · Scatter-Gewinn",
+      "seals6": "6+ Siegel",
+      "seals5": "5 Siegel",
+      "seals4": "4 Siegel",
+      "scatterText": "Wenn der Basis-Spin endet, zahlen 4 oder mehr Siegel im Raster und lösen <b>{spins} Freispiele</b> aus. Siegel zerplatzen nicht.",
+      "orbTitle": "{name} · Multiplikator-Kugel",
+      "orbText": "Trägt einen Wert von ×2 bis ×500 und kann sowohl im Basisspiel als auch in den Freispielen fallen. Sie zerplatzt nicht, bleibt an ihrem Platz und rutscht bei Tumbles nach. Details findest du auf der Seite „{features}“.",
+      "maxTitle": "Maximalgewinn {n}×",
+      "maxText": "Bei diesem Einsatz sind das <b>{amount}</b>. Erreicht die Rundensumme diese Obergrenze, endet die Runde sofort; verbleibende Freispiele entfallen."
+    },
+    "features": {
+      "title": "Besonderheiten",
+      "tumbleTitle": "Fallende Steine (Tumble)",
+      "tumbleText": "Nach jedem Gewinn zerspringen die Gewinnsteine, die übrigen rutschen nach unten und die Lücken füllen sich von oben. Die Gewinnanzeige wird während einer Runde nie zurückgesetzt: Tumbles, Multiplikatoren und alle Freispiele addieren sich in derselben Summe.",
+      "orbTitle": "Sturmstein (Multiplikator-Kugel)",
+      "orbText": "Kann im Basisspiel und in den Freispielen fallen; ihr Wert liegt zwischen ×2 und ×500. Endet im Basisspiel die Tumble-Kette eines Spins mit einem Gewinn, werden die Werte der Steine im Raster <b>summiert</b> und der Gewinn dieses Spins wird mit der Summe multipliziert (die Siegel-Auszahlung wird nicht multipliziert). Ohne Gewinn bleiben die Steine wirkungslos.",
+      "orbListAria": "Sturmstein-Werte und Wahrscheinlichkeiten",
+      "totalTitle": "Gesamtmultiplikator (Freispiele)",
+      "totalText": "Freispiele beginnen mit einem <b>Gesamtmultiplikator von ×0</b>. Bei jedem Gewinn-Spin werden die Sturmstein-Werte im Raster zum Gesamtmultiplikator <b>addiert</b>, dann wird der Gewinn dieses Spins mit der neuen Summe multipliziert (×1, solange die Summe noch 0 ist). Bei einem Spin ohne Gewinn werden die Steine nicht addiert. Der Gesamtmultiplikator bleibt über alle Freispiele erhalten, Zusatz-Spins eingeschlossen.",
+      "sealTitle": "Blitzsiegel (Scatter)",
+      "sealText": "Wenn ein Basis-Spin endet, zahlen 4 oder mehr Siegel und lösen {trigger} Freispiele aus. In den Freispielen geben 3 oder mehr Siegel {retrigger} weitere Spins (ohne Auszahlung). In einer Runde werden höchstens {max} Freispiele vergeben.",
+      "freeTitle": "Freispiele",
+      "freeText": "Freispiele werden mit demselben Einsatz in derselben Runde gespielt; es fallen keine Zusatzkosten an. Sie enden immer mit dem Bildschirm „{screen}“: gespielte Spins, finaler Gesamtmultiplikator und Gesamtgewinn.",
+      "tiersTitle": "Gewinnstufen und Multiplikator-Ansagen",
+      "tiersText": "Liegt die Rundensumme beim <b>10-Fachen</b> deines Basiseinsatzes oder darüber, öffnet sich der Feier-Bildschirm und der Zähler steigt durch die Stufen: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; eine Runde, die die Obergrenze erreicht, endet mit {max}. Jeder angewendete Multiplikator wird groß über dem Raster angesagt; bei den Schwellen ×10, ×25, ×50, ×100, ×250 und ×500 wachsen Schrift und Ton. Ein Tipp auf den Bildschirm springt zum Ergebnis; die Auszahlung ändert sich dadurch nie.",
+      "anteTitle": "Chance ×2 · Kosten {cost}",
+      "anteText": "Solange aktiv, kostet jeder Spin das <b>{multiple}-Fache deines Einsatzes</b>, und Siegel erscheinen im Basisspiel häufiger: Die Freispiel-Chance ist etwa doppelt so hoch ({ante} / {standard}). Gewinne werden weiterhin auf Basis des Grundeinsatzes ausgezahlt. Solange es aktiv ist, kann der Bonus nicht gekauft werden.",
+      "buyTitle": "Bonus kaufen · Preis {price}",
+      "buyText": "Für das <b>100-Fache</b> deines Einsatzes beginnt die Runde mit mindestens 4 Siegeln; {spins} Freispiele sind garantiert. Der Kauf erfolgt über ein Bestätigungsfenster, läuft mit eigenem RTP ({rtp}) und ist beim Autoplay nicht nutzbar."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Theoretische Rückzahlung (RTP)",
+      "caption": "Theoretische Rückzahlung je Modus",
+      "mode": "Modus",
+      "cost": "Kosten",
+      "ci": "95 % KI",
+      "feature": "Feature",
+      "everyRound": "jede Runde",
+      "method": "Für jeden Modus eine eigene Simulation mit {millions} Millionen Runden (Engine <code>storm-throne-1</code>). Der RTP wird auf den gezahlten Betrag bezogen. Trefferquote (Basis-Spin): Standard {hit}, Chance ×2 {hitAnte}. Volatilität (Standardabweichung in Kosteneinheiten): Standard {sdStandard}, Kauf {sdBuy}.",
+      "note": "Die Simulation ist eine Schätzung und <b>nicht zertifiziert</b>; wegen der schweren Verteilungsenden kann das Konfidenzintervall zu optimistisch sein. Ergebnisse in einer kurzen Sitzung können stark vom RTP abweichen. DEMO-Guthaben hat <b>keinen Wert</b>."
+    },
+    "limits": {
+      "title": "Einsatz- und Gewinnlimits",
+      "range": "Einsatzspanne",
+      "levels": "Stufen",
+      "current": "Aktueller Einsatz",
+      "currentValue": "{bet} · Chance ×2 {ante} · Kauf {buy}",
+      "max": "Maximalgewinn",
+      "maxValue": "Das {n}-Fache des Einsatzes · {amount} bei diesem Einsatz",
+      "p1": "Eine Runde, die den Maximalgewinn erreicht, endet sofort; verbleibende Freispiele entfallen. Die Auszahlung wird immer auf Basis des Grundeinsatzes berechnet, Bruchteile eines Cents werden abgerundet.",
+      "p2": "Stufen und Modi, die dein Guthaben nicht deckt, sind nicht wählbar. Eine Runde ist eine einzige Reservierung und eine einzige Auszahlung; es wird immer nur eine Runde gleichzeitig gespielt."
+    },
+    "keys": {
+      "title": "Tasten",
+      "heading": "Tastatur",
+      "space": "Leertaste",
+      "spaceText": "Startet den Spin ({settings} → „{option}“). Während einer Runde überspringt sie den Spin nicht; sie beschleunigt nur die Freispiel-Bildschirme und den Feier-Zähler.",
+      "enterText": "Betätigt die fokussierte Schaltfläche.",
+      "escText": "Schließt das geöffnete Fenster (außer der Sitzungserinnerung).",
+      "tabText": "Wechselt zwischen den Bedienelementen; der Fokus ist immer sichtbar.",
+      "arrowsText": "Wechselt in diesem Infofenster die Seite; ändert in Einstellungsauswahlen die Option.",
+      "pageText": "Wechselt zwischen den Infoseiten.",
+      "note": "Der Screenreader sagt jeden Schritt an („{example}“, Multiplikatoren, Rundenergebnis); das Raster wird als 6×5-Tabelle vorgelesen. Symbole unterscheiden sich neben der Farbe auch durch Form und Markierung. Die Einstellung „Bewegung reduzieren“ schaltet Partikel, Blitze und Wackeln ab."
+    },
+    "fault": {
+      "title": "Störungsklausel",
+      "p1": "<b>Eine Störung macht alle betroffenen Spiele und Auszahlungen ungültig.</b> Bei einer Software-, Browser- oder Gerätestörung gilt die Rundenaufzeichnung; ein auf dem Bildschirm angezeigter Betrag, der nicht mit der Engine-Aufzeichnung übereinstimmt, ist ungültig.",
+      "p2": "Dieses Spiel wird nur mit DEMO-Guthaben gespielt. DEMO hat keinen Wert und kann nicht in Geld oder Token umgewandelt werden; bei einer Störung können das DEMO-Guthaben und der Sitzungsverlauf korrigiert oder zurückgesetzt werden.",
+      "p3": "Da das Ergebnis vor dem Spin feststeht, ändern eine abgebrochene Animation, ein verborgener Tab oder das Verlassen der Seite nichts am Ergebnis; die Runde wird weiterhin genau einmal mit der Auszahlung der Engine abgeschlossen."
+    }
+  }
+}

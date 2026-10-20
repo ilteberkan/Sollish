@@ -79,5 +79,27 @@
     "play": "Play",
     "forward": "Forward",
     "noSteps": "The steps of this round cannot be shown."
+  },
+  "outcome": {
+    "game": "Game not recognised.",
+    "serverSeed": "The server seed must be 64 hexadecimal characters (the revealed seed).",
+    "serverSeedHash": "The seed hash must be 64 hexadecimal characters.",
+    "clientSeed": "The player seed must be 1–64 characters: letters, digits, _ or -.",
+    "nonce": "The nonce must be an integer of 0 or more.",
+    "bet": "The bet must be one of this game's bet levels.",
+    "mode": "That mode does not exist in this game.",
+    "expectedSeed": "The expected round seed must be 32 hexadecimal characters.",
+    "expectedPayout": "The expected payout must be a whole number (DEMO cents).",
+    "engineRejected": "The engine did not accept this bet/mode combination.",
+    "match": "Match: the result was recomputed from these seeds.",
+    "mismatch": "Mismatch: {failed}."
+  },
+  "checks": {
+    "hash": "seed hash",
+    "engine": "engine",
+    "seed": "round seed",
+    "payout": "payout",
+    "total": "multiplier",
+    "cost": "cost"
   }
 }

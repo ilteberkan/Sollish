@@ -3,6 +3,7 @@ import { memo, useCallback, useImperativeHandle, useLayoutEffect, useRef, useSta
 import { CASCADE_CRYSTAL_WEIGHTS } from '@sollish/protocol';
 import type { PlacedCell } from '@/lib/cascade-timeline';
 import { SYMBOL_LABELS, SymbolArt, type CascadeArtSymbol } from './symbols';
+import { useSymbolNames } from './use-symbol-names';
 import styles from './cascade-game.module.css';
 
 /* The 6x5 board. Cells are absolutely positioned by an outer transform (col/row in cell units) and
@@ -100,6 +101,7 @@ function fallFrames(dy: number, reduced: boolean, fresh: boolean): Keyframe[] {
 }
 
 export function CascadeBoard({ ref, label, free }: { ref?: Ref<BoardHandle>; label: string; free: boolean }) {
+  const names = useSymbolNames();
   const [cells, setCells] = useState<CellView[]>(IDLE_CELLS);
   const els = useRef(new Map<string, CellEls>());
   const pending = useRef<Array<() => void>>([]);
@@ -237,7 +239,7 @@ export function CascadeBoard({ ref, label, free }: { ref?: Ref<BoardHandle>; lab
       <div role="grid" aria-label={label} aria-rowcount={5} aria-colcount={6} className="sr-only">
         {rows.map((cellsInRow, row) => (
           <div key={row} role="row" aria-rowindex={row + 1}>
-            {cellsInRow.map(c => <span key={c.key} role="gridcell" aria-colindex={c.col + 1}>{cellLabel(c)}</span>)}
+            {cellsInRow.map(c => <span key={c.key} role="gridcell" aria-colindex={c.col + 1}>{names.cell(c)}</span>)}
           </div>
         ))}
       </div>

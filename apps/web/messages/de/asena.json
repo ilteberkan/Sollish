@@ -1,0 +1,404 @@
+{
+  "deck": {
+    "group": "Spielsteuerung",
+    "balance": "Guthaben",
+    "refill": "Guthaben auffüllen",
+    "win": "Gewinn",
+    "winReplay": "Wiederholung",
+    "winReplayLast": "Gewinn der Wiederholung",
+    "winLast": "Letzter Gewinn",
+    "cost": "Kosten",
+    "spin": "Drehen",
+    "spinCost": "Kosten {cost}",
+    "auto": "Autoplay",
+    "info": "Info",
+    "infoAria": "Spielinfo",
+    "on": "An",
+    "off": "Aus",
+    "buy": "Bonus kaufen",
+    "buyDesc": "{spins, plural, one {# Freispiel} other {# Freispiele}} · {rtp}",
+    "speedAria": "Spin-Tempo: {speed}",
+    "sound": "Ton",
+    "soundLoading": "Ton wird geladen {percent} %",
+    "outOfCredit": "Dein DEMO-Guthaben ist aufgebraucht.",
+    "lastWin": "Letzte Runde <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Letzte Runde ohne Gewinn.",
+    "hintSpace": "Du kannst auch mit der Leertaste drehen.",
+    "hintFixed": "Das Ergebnis steht vor der Drehung fest.",
+    "spinLocked": "Runde läuft; gesperrt, bis alle Kaskaden, Wolfsschritte und Freispiele gespielt sind.",
+    "anteDesc": "Freispiel-Chance ≈2×"
+  },
+  "hud": {
+    "freeAria": "Freispiel {number}, noch {left}",
+    "freeSpin": "Spin {n}",
+    "left": "Übrig",
+    "free": "Ergenekon",
+    "moonAria": "3 oder mehr Ay Ata lösen 10 Freispiele aus",
+    "moonLong": "<b>3+</b> Ay Ata · 10 Freispiele",
+    "moonShort": "<b>3+</b> Ay Ata · 10 Spins",
+    "templateChip": "Sternbild <b>×{multiplier}</b> · Max. <b>{max}×</b>",
+    "globalAria": "Globaler Multiplikator ×{multiplier}, {distinct} Sternbilder auf der Karte",
+    "global": "Global",
+    "map": "Karte"
+  },
+  "meter": {
+    "total": "Gesamtgewinn",
+    "win": "Gewinn",
+    "idleA": "<b>5+</b> benachbarte gleiche Symbole zahlen",
+    "idleB": "Der Himmelswolf wandert und hinterlässt eine Spur",
+    "idleC": "Sternbild <b>×2–×10</b>"
+  },
+  "replay": {
+    "ribbon": "Wiederholung — Guthaben unverändert · Runde {id}"
+  },
+  "auto": {
+    "ribbon": "Autoplay · noch {spins, plural, one {# Spin} other {# Spins}}"
+  },
+  "toast": {
+    "close": "Hinweis schließen",
+    "autoplayStopped": "Autoplay gestoppt: {reason}. {spins, plural, one {# Spin} other {# Spins}}, netto {net}.",
+    "autoplayStoppedShort": "Autoplay gestoppt: {reason}.",
+    "autoplayStarted": "Autoplay: {spins, plural, one {# Spin} other {# Spins}}, Verlustlimit {limit}.",
+    "refilled": "Guthaben aufgefüllt: {amount} DEMO.",
+    "shareCopied": "Link zum Teilen kopiert: {url}",
+    "shareLink": "Link zum Teilen: {url}",
+    "shareFailed": "Teilen nicht möglich: {error}",
+    "replayFailed": "Diese Runde konnte nicht wiederholt werden.",
+    "replayMismatch": "Wiederholung nicht verifizierbar: Der Eintrag stimmt nicht mit der Engine überein."
+  },
+  "banner": {
+    "extraSpins": "+{awarded} Freispiele",
+    "constellation": "{name} ×{multiplier}",
+    "mapSpins": "Karte · +{awarded} Freispiele",
+    "scatterPay": "{count} Ay Ata · +{money} DEMO"
+  },
+  "announce": {
+    "spinStarted": "Drehung gestartet, {amount} DEMO.",
+    "sentToServer": "Drehung an den Server gesendet, {amount} DEMO.",
+    "recovered": "Die unterbrochene Runde wurde vom Server wiederhergestellt; sie wurde dort bereits ausgezahlt ({amount} DEMO).",
+    "replaying": "Wiederholung läuft: Runde {id}. Das Guthaben ändert sich nicht.",
+    "replayDone": "Wiederholung beendet: {amount} DEMO, {times}×. Guthaben unverändert.",
+    "roundEnd": "Runde beendet. Gesamtgewinn {amount} DEMO, {times}×.",
+    "roundEndNone": "Runde beendet. Kein Gewinn.",
+    "noWin": "Kein Gewinn.",
+    "totalWin": "Gesamtgewinn {amount} DEMO, {times}×.",
+    "celebration": "{title}: {amount} DEMO, {times}×.",
+    "speed": "Spin-Tempo: {speed}.",
+    "anteOn": "Chance ×2 an: Freispiel-Chance ≈2×, Kosten {cost}.",
+    "anteOff": "Chance ×2 aus: Kosten {cost}.",
+    "refilled": "DEMO-Guthaben auf {amount} DEMO aufgefüllt.",
+    "refilledRemote": "Server-DEMO-Guthaben auf {amount} DEMO aufgefüllt.",
+    "bonusBought": "Bonus gekauft, {amount} DEMO. Ergenekon beginnt.",
+    "moonTease": "Zwei Ay Ata sind erschienen; ein dritter löst die Freispiele aus.",
+    "cluster": "{size} {name}{template, select, none {} other {, {templateName} ×{templateMultiplier}}}, {times}× Gewinn",
+    "constellation": "Sternbild leuchtet auf: {name}, Cluster-Gewinn ×{multiplier}.",
+    "map": "Ergenekon-Karte: {distinct} / 6 Sternbilder leuchten.",
+    "ergenekon": "Ergenekon: {distinct} Sternbilder, globaler Multiplikator ×{after}. Jeder weitere Gewinn zählt ×{after}.",
+    "mapSpins": "Die Ergenekon-Karte hat {awarded} Freispiele hinzugefügt.",
+    "wolfWalk": "Der Himmelswolf ist gewandert: Spalte {fromCol}, Zeile {fromRow} → Spalte {toCol}, Zeile {toRow}; eine Sternenspur blieb zurück.",
+    "moons": "{count} Ay Ata.",
+    "retrigger": "{count} Ay Ata: {awarded} Freispiele hinzugefügt.",
+    "trigger": "{count} Ay Ata: Ergenekon gewonnen.",
+    "freeIntro": "Ergenekon beginnt: Du hast {awarded} Freispiele gewonnen.",
+    "freeSpinWin": "Das Freispiel brachte {times}×. Gesamt {total}×.",
+    "freeSpinNone": "Kein Gewinn im Freispiel.",
+    "freeOutro": "Ergenekon beendet. Gesamt: {amount} DEMO, {spins} Drehungen, {constellations} Sternbilder, globaler Multiplikator ×{multiplier}."
+  },
+  "autoplay": {
+    "serverFailed": "Der Server konnte die Runde nicht starten",
+    "spinFailed": "Die Drehung konnte nicht gestartet werden",
+    "quit": "Du hast die Sitzung verlassen",
+    "title": "Autoplay",
+    "note": "{cost} pro Spin{ante, select, yes { (Chance ×2)} other {}} · kauft nie den Bonus · stoppt, sobald der Tab ausgeblendet wird."
+  },
+  "errors": {
+    "entropy": "Sichere lokale Zufallszahlen sind nicht verfügbar. Die Demo wurde nicht gestartet.",
+    "insufficient": "Guthaben reicht nicht: {kind, select, buy {Dieser Kauf kostet} other {Diese Drehung kostet}} {cost}. Senke den Einsatz oder fülle das Guthaben auf.",
+    "noCredit": "Du hast nicht genug Demo-Guthaben, oder es läuft bereits eine Demo."
+  },
+  "buy": {
+    "block": {
+      "gated": "Nur mit DEMO-Guthaben kaufbar",
+      "autoplay": "Während Autoplay nicht kaufbar",
+      "busy": "Erst nach Rundenende kaufbar",
+      "ante": "Bei aktivem Chance ×2 nicht kaufbar",
+      "balance": "Guthaben nicht ausreichend (Preis {price})"
+    },
+    "rtp": "Kauf-RTP {buy} · Standard {standard} (Simulation, nicht zertifiziert)",
+    "feature": "Ergenekon · 10 Freispiele · Einsatz {bet}",
+    "text": "<b>80×</b> deines Einsatzes. Die Runde beginnt mit mindestens 3 Ay Ata und 10 Freispiele sind garantiert; jedes aufleuchtende Sternbild schaltet die Ergenekon-Karte frei, der globale Multiplikator steigt auf ×2, ×3 und ×5 und multipliziert während des gesamten Features jeden Gewinn. Gewinne werden auf einen Einsatz von {bet} gezahlt, maximal {max}."
+  },
+  "gated": {
+    "text": "Dieses Spiel wird nur mit DEMO-Guthaben gespielt; echte Einsätze werden nicht angenommen.",
+    "back": "Zurück zur lokalen Demo",
+    "title": "Kein On-Chain-Asena."
+  },
+  "splash": {
+    "max": {
+      "title": "{max}× Maximum"
+    },
+    "loading": "Spiel wird geladen",
+    "play": "Spielen",
+    "skip": "Startbildschirm nicht mehr anzeigen",
+    "note": "DEMO-Guthaben hat keinen Wert · Das Ergebnis steht vor der Drehung fest · Nicht zertifizierte Simulation, RTP ≈ {rtp}",
+    "constellation": {
+      "title": "Sternbild ×10",
+      "text": "Enthält ein Cluster eine Form vom Himmel, wird sie Stern für Stern gezeichnet und multipliziert die Auszahlung"
+    },
+    "wolf": {
+      "title": "Der Himmelswolf wandert",
+      "text": "Ein Wolf, der an einem Gewinn beteiligt ist, rückt bei jeder Kaskade eine Zelle vor und hinterlässt eine Sternenspur"
+    },
+    "ergenekon": {
+      "title": "Ergenekon · {max}×",
+      "text": "Je weiter sich die Karte öffnet, desto mehr bricht der eiserne Berg: globaler Multiplikator ×2, ×3, ×5"
+    }
+  },
+  "settings": {
+    "soundReady": "Ton bereit: Musik, Effekte und Umgebungsgeräusche sind auf diesem Gerät vorbereitet.",
+    "soundIdle": "Der Ton wird beim ersten Tippen geladen.",
+    "demoTitle": "DEMO-Guthaben",
+    "demoText": "Guthaben {balance}{remote, select, yes { (Server)} other {}}. Das Auffüllen setzt das Guthaben auf {start} DEMO und fügt dem Verlauf eine Zeile „Guthaben aufgefüllt“ hinzu; während einer Runde oder bei laufendem Autoplay ist es nicht möglich.",
+    "soundLoading": "Ton wird geladen {percent} % (das Spiel läuft währenddessen stumm)."
+  },
+  "history": {
+    "title": "Dein Spielverlauf",
+    "scope": "Diese Sitzung · Wiederholungen ändern das Guthaben nie",
+    "time": "Zeit",
+    "mode": "Modus",
+    "bet": "Einsatz",
+    "cost": "Kosten",
+    "win": "Gewinn",
+    "result": "Ergebnis",
+    "roundId": "Runden-ID",
+    "replayColumn": "Wiederholen",
+    "latest": "Letzte Runde",
+    "replay": "Wiederholen",
+    "replayAria": "Wiederholen: Runde {id}, Guthaben unverändert",
+    "share": "Gewinn teilen",
+    "shareAria": "Gewinn teilen: Runde {id}",
+    "emptyTitle": "Deine erste Runde erscheint hier.",
+    "emptyText": "Modus, Einsatz, Kosten, Gewinn und Runden-ID jeder Runde werden gespeichert; du kannst jede Runde erneut ansehen.",
+    "reset": "Guthaben aufgefüllt",
+    "resetRemote": "Guthaben aufgefüllt (Server)",
+    "detail": {
+      "capped": "Maximalgewinn · {times}×",
+      "none": "Kein Gewinn",
+      "free": "Ergenekon ×{spins}{multiplier, plural, =0 {} other { · global ×#}} · {times}×",
+      "base": "{clusters, plural, one {# Cluster} other {# Cluster}}{stars, plural, =0 {} one { · # Sternbild} other { · # Sternbilder}}{moons, plural, =0 {} other { · # Ay Ata}} · {times}×"
+    },
+    "tableRegion": "Tabelle des Spielverlaufs"
+  },
+  "celebration": {
+    "aria": "{title}: {money} DEMO",
+    "times": "{times}× Einsatz",
+    "capNote": "Die Runde hat das Limit erreicht · übrige Drehungen werden nicht gespielt",
+    "speedUp": "Zum Beschleunigen tippen",
+    "continue": "Weiter"
+  },
+  "intro": {
+    "start": "Start",
+    "word": "ERGENEKON",
+    "srTitle": "Ergenekon beginnt",
+    "freeSpins": "Frei-\nspiele",
+    "text": "Jedes aufleuchtende Sternbild schaltet ein Stück der <b>Ergenekon-Karte</b> frei. <b>3 verschiedene</b> Sternbilder geben +5 Drehungen und einen globalen Multiplikator von <b>×2</b>, <b>alle sechs</b> geben +5 Drehungen und <b>×3</b>, alle zweimal leuchtend ergeben <b>×5</b>. Der globale Multiplikator bleibt das ganze Feature über bestehen und multipliziert jeden Gewinn. 3 Ay Ata geben +3 Drehungen."
+  },
+  "total": {
+    "word": "GESAMT",
+    "sub": "FREISPIELE",
+    "titleB": "Gesamt",
+    "toCelebration": "Weiter zur Feier",
+    "capNote": "Maximalgewinn erreicht · übrige Drehungen werden nicht gespielt",
+    "titleA": "Ergenekon",
+    "spins": "Drehungen",
+    "spinsValue": "{spins, plural, one {# Drehung} other {# Drehungen}}",
+    "wolfSteps": "{n, plural, one {# Wolfsschritt} other {# Wolfsschritte}}",
+    "wolfNone": "der Wolf ist nicht gewandert",
+    "constellations": "Sternbilder",
+    "mapOf": "Karte {distinct}/6",
+    "global": "Globaler Multiplikator",
+    "ofBet": "{times}× Einsatz"
+  },
+  "badge": {
+    "checking": "Server wird geprüft"
+  },
+  "rules": {
+    "fixed": "Das Ergebnis wird vor Beginn der Drehung lokal in deinem Browser mit lokalem Zufall bestimmt; die Animation spielt nur dieses Ergebnis ab. Auch wenn du die Seite verlässt, wird die Runde mit der festgelegten Auszahlung abgeschlossen. Es gibt keinen VRF-Nachweis.",
+    "board": "Das Sternenfeld ist 6×6 groß. 5 oder mehr horizontal oder vertikal benachbarte gleiche Symbole (einschließlich der Wilds Himmelswolf und Sternenspur) bilden einen Cluster und zahlen; die Gewinnstufe steigt mit der Clustergröße. Gewinn-Cluster verwandeln sich in Sterne und zerplatzen, die Symbole darüber fallen nach und die Lücken werden aufgefüllt.",
+    "features": "Enthält ein Cluster eine der sechs Sternbild-Vorlagen (Wolfskopf ×10, Lebensbaum ×8, Adler ×6, Pferd ×4, Bogen ×3, Halbmond ×2; gedreht oder gespiegelt), leuchtet das Sternbild auf und der Cluster-Gewinn wird mit dem Multiplikator der Vorlage multipliziert. Ein Himmelswolf, der an einem Gewinn beteiligt ist, wandert nach jeder Kaskade eine Zelle weiter und hinterlässt ein Wild Sternenspur. 3 oder mehr Ay Ata lösen 10 Freispiele (Ergenekon) aus: Jedes aufleuchtende Sternbild schaltet ein Stück der Karte frei; 3 verschiedene Sternbilder geben +5 Drehungen und einen globalen Multiplikator von ×2, 6 verschiedene +5 und ×3, alle zweimal ×5. Der Maximalgewinn beträgt das 5.000-Fache des Einsatzes."
+  },
+  "meta": {
+    "title": "Asena: Sternenwolf",
+    "description": "Asena: Sternenwolf — ein eigenständiges DEMO-Cluster-Spiel. Cluster zeichnen Sternbilder an den Himmel, der Himmelswolf wandert und hinterlässt eine Sternenspur; die Ergenekon-Karte schaltet einen globalen Multiplikator bis ×5 frei."
+  },
+  "title": "Asena: Sternenwolf",
+  "subtitle": "Cluster zeichnen Sternbilder an den Himmel, der Himmelswolf wandert und hinterlässt eine Sternenspur; in Ergenekon wächst der globale Multiplikator bis ×5.",
+  "table": "Asena-Spieltisch",
+  "logo": {
+    "subtitle": "STERNENWOLF",
+    "label": "Asena: Sternenwolf"
+  },
+  "symbols": {
+    "h1": "Asena",
+    "h2": "Kün Ana",
+    "h3": "Himmelsadler",
+    "h4": "Steppenpferd",
+    "l1": "Türkisstern",
+    "l2": "Purpurrubin",
+    "l3": "Smaragdpfeil",
+    "l4": "Amethyst-Tamga",
+    "wolf": "Himmelswolf (wandernde Wild)",
+    "trail": "Sternenspur (Wild)",
+    "moon": "Ay Ata (Scatter)"
+  },
+  "templates": {
+    "kurt-basi": "Wolfskopf",
+    "yay": "Bogen",
+    "at": "Pferd",
+    "kartal": "Adler",
+    "hayat-agaci": "Lebensbaum",
+    "hilal": "Halbmond"
+  },
+  "board": {
+    "label": "Asena-Sternenfeld",
+    "labelPlay": "Asena-Sternenfeld, 6 Spalten, 6 Zeilen",
+    "labelFree": "Asena-Sternenfeld im Freispiel, 6 Spalten, 6 Zeilen",
+    "cell": "{symbol}, Spalte {col}, Zeile {row}"
+  },
+  "callout": {
+    "tier0": "Sternbild",
+    "tier1": "Leuchtendes Sternbild",
+    "tier2": "Himmelsmultiplikator",
+    "tier3": "Tengri-Multiplikator",
+    "tier4": "Legendärer Himmel",
+    "tier5": "Kün Ana"
+  },
+  "fx": {
+    "spins": "SPINS",
+    "extraSpins": "EXTRA-SPINS",
+    "freeSpins": "FREISPIELE"
+  },
+  "info": {
+    "title": "Asena · Spielinfo",
+    "tab": {
+      "how": "So wird gespielt",
+      "pay": "Gewinntabelle",
+      "features": "Features",
+      "rtp": "RTP",
+      "limits": "Einsatz- und Gewinnlimits",
+      "keys": "Tasten",
+      "fault": "Störungsklausel"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Wähle deinen Einsatz.</b> Die Tasten − und + ändern den Einsatz um eine Stufe; tippe auf den Einsatzbetrag, um alle Stufen zu öffnen. „Max. Einsatz“ wählt die höchste Stufe, die dein Guthaben zulässt.",
+        "spin": "<b>Drehen.</b> Drücke die Stern-Taste oder nutze die Leertaste. Die Rundenkosten (das {factor}-Fache des Einsatzes bei aktivem Chance ×2) werden einmal vom Guthaben abgezogen.",
+        "cluster": "<b>Cluster bilden.</b> Auf dem 6 × 6 großen Sternenfeld zahlen <b>5 oder mehr gleiche Symbole</b>, die horizontal oder vertikal aneinandergrenzen; die Gewinnstufe steigt mit der Clustergröße.",
+        "constellation": "<b>Sternbild.</b> Enthält ein Cluster eine der sechs Formen am Himmel, wird das Sternbild Stern für Stern gezeichnet, hallt über den Himmel, der Wolf heult und der Cluster-Gewinn wird mit dem Multiplikator der Form (×2–×10) multipliziert.",
+        "chain": "<b>Die Kette.</b> Gewinn-Cluster verwandeln sich in Sterne und zerplatzen, die Symbole darüber fallen nach, die Lücken werden gefüllt; ein Himmelswolf, der an einem Gewinn beteiligt ist, wandert eine Zelle weiter. Das geht so weiter, bis kein neuer Cluster mehr entsteht.",
+        "result": "<b>Das Ergebnis.</b> Die gesamte Runde wird vor dem Start der Drehung von der Engine festgelegt; die Animation spielt nur dieses Ergebnis ab. Die Dreh-Taste bleibt gesperrt, bis die Runde (alle Kaskaden, Wolfsschritte und Freispiele) beendet ist; nutze die Einstellung Schnell/Turbo zum Beschleunigen. Die Tempo-Einstellung, ein Tippen auf den Feier-Zähler, ein ausgeblendeter Tab oder das Verlassen der Seite ändern die Auszahlung nicht; die Runde wird immer genau einmal mit der Auszahlung der Engine abgeschlossen."
+      },
+      "note": "DEMO-Guthaben hat keinen Wert; es bringt weder SOL, Token noch Belohnungen. Das Spiel läuft im Browser mit lokalem Zufall; es gibt keinen VRF-Nachweis. Gök Tengri, Ay Ata, Kün Ana, Asena und Ergenekon gehören zur gemeinfreien türkischen Mythologie; Figuren und Grafiken sind eigenständig."
+    },
+    "pay": {
+      "maxTitle": "Maximalgewinn {max}×",
+      "maxText": "Bei diesem Einsatz: <b>{amount}</b>. Erreicht die Rundensumme dieses Limit, endet die Runde sofort; die übrigen Freispiele werden nicht gespielt.",
+      "lead": "<b>5 oder mehr gleiche Symbole</b>, die horizontal oder vertikal aneinandergrenzen, bilden einen Cluster; die Wilds Himmelswolf und Sternenspur ersetzen jedes Symbol. Die große Zahl ist der Brutto-DEMO-Betrag bei einem Einsatz von <b>{bet}</b>; der Multiplikator darunter ist ein Vielfaches des Einsatzes. Alle Cluster auf demselben Brett zahlen getrennt.",
+      "gridAria": "Cluster-Auszahlungen",
+      "fullTable": "Alle Clustergrößen (7 Stufen)",
+      "fullCaption": "Auszahlung nach Symbol und Clustergröße, als Vielfaches des Einsatzes",
+      "colSymbol": "Symbol",
+      "moon5": "5+ Ay Ata",
+      "moon4": "4 Ay Ata",
+      "moon3": "3 Ay Ata",
+      "moonText": "Zahlt, wenn auf dem Endbrett der Basisdrehung 3 oder mehr Ay Ata liegen, und löst <b>{spins} Freispiele</b> (Ergenekon) aus. Ay Ata zerplatzt nicht; der Wolf tritt auch nicht darauf.",
+      "wolfText": "Ersetzt jedes Zahlsymbol und erscheint nur auf dem ersten Brett einer Drehung. Beteiligt er sich an einem Gewinn, zerplatzt er nicht, sondern <b>wandert</b>: Nach dem Nachfallen rückt er eine Zelle vor und hinterlässt in der verlassenen Zelle ein Wild Sternenspur. Details auf der Seite „Features“.",
+      "trailText": "Das vom Wolf zurückgelassene Wild. Es fällt mit den Kaskaden nach und wird verbraucht, wenn es an einem Gewinn beteiligt ist; es verschwindet am Ende der Drehung und wird nicht in die nächste übernommen."
+    },
+    "rtp": {
+      "title": "Theoretische Rückzahlung (RTP)",
+      "caption": "Theoretische Rückzahlung pro Modus",
+      "colMode": "Modus",
+      "colCost": "Kosten",
+      "colCi": "95-%-KI",
+      "colFeature": "Feature",
+      "everyRound": "jede Runde",
+      "oneIn": "1 / {n}",
+      "note": "Die Simulation ist eine Schätzung und <b>nicht zertifiziert</b>; wegen der schweren Verteilungsenden kann das Konfidenzintervall zu optimistisch sein. Ergebnisse in einer kurzen Sitzung können stark vom RTP abweichen. DEMO-Guthaben ist <b>wertlos</b>.",
+      "text": "Pro Modus eine eigene Simulation mit {millions} Millionen Runden (Engine <code>asena-stars-1</code>). Der RTP wird auf die gezahlten Kosten berechnet. Gewinnhäufigkeit (Basisdrehung): Standard {hitStandard}, Chance ×2 {hitAnte}. Volatilität (Standardabweichung in Kosteneinheiten): Standard {sdStandard}, Kauf {sdBuy}."
+    },
+    "limits": {
+      "title": "Einsatz- und Gewinnlimits",
+      "range": "Einsatzbereich",
+      "steps": "Stufen",
+      "current": "Aktueller Einsatz",
+      "currentValue": "{bet} · Chance ×2 {ante} · Kauf {buy}",
+      "max": "Maximalgewinn",
+      "maxValue": "Das {multiplier}-Fache des Einsatzes · bei diesem Einsatz {amount}",
+      "text1": "Eine Runde, die den Maximalgewinn erreicht, endet sofort; die übrigen Freispiele werden nicht gespielt. Die Auszahlung wird immer auf den Basiseinsatz berechnet, Beträge unter einem Cent werden abgerundet.",
+      "text2": "Stufen und Modi, die dein Guthaben nicht deckt, können nicht gewählt werden. Eine Runde ist eine einzige Reservierung und eine einzige Auszahlung; es wird immer nur eine Runde gleichzeitig gespielt."
+    },
+    "keys": {
+      "heading": "Tastatur",
+      "space": "Leertaste",
+      "spaceText": "Startet die Drehung (Einstellungen → „{option}“). Während einer Runde überspringt sie die Drehung nicht; sie beschleunigt nur die Freispiel-Bildschirme und den Feier-Zähler.",
+      "enterText": "Betätigt die fokussierte Schaltfläche.",
+      "escText": "Schließt das geöffnete Fenster (außer der Sitzungserinnerung).",
+      "tabText": "Wechselt zwischen den Bedienelementen; der Fokus ist immer sichtbar.",
+      "arrowsText": "Wechselt in diesem Infofenster die Seite; bei Einstellungsauswahlen ändert sie die Option.",
+      "pageText": "Wechselt zwischen den Infoseiten.",
+      "note": "Der Screenreader sagt jeden Schritt an („6 Asena, Wolfskopf ×10, 12,00× Gewinn“, Wolfsschritte, Karte und globaler Multiplikator, Rundenergebnis); jede Zelle wird mit Symbol, Spalte und Zeile vorgelesen. Symbole unterscheiden sich neben der Farbe auch durch ihre Form (Wolfskopf, Sonne, Adler, Pferd, Stern, Rubin, Pfeil, Siegel). Die Einstellung „Bewegung reduzieren“ zeichnet das Sternbild bereits vollständig und schaltet Partikel und Wackeln aus; alle Schritte werden weiterhin gezeigt."
+    },
+    "fault": {
+      "title": "Störungsklausel",
+      "p1": "<b>Eine Störung macht alle betroffenen Spiele und Auszahlungen ungültig.</b> Bei einem Software-, Browser- oder Geräteausfall gilt die Rundenaufzeichnung; ein auf dem Bildschirm angezeigter Betrag, der nicht mit der Engine-Aufzeichnung übereinstimmt, ist ungültig.",
+      "p2": "Dieses Spiel wird nur mit DEMO-Guthaben gespielt. DEMO ist wertlos und kann nicht in Geld oder Token umgewandelt werden; bei einer Störung können das DEMO-Guthaben und der Sitzungsverlauf korrigiert oder zurückgesetzt werden.",
+      "p3": "Da das Ergebnis vor der Drehung feststeht, ändern eine abgebrochene Animation, ein ausgeblendeter Tab oder das Verlassen der Seite nichts daran; die Runde wird weiterhin einmal mit der Auszahlung der Engine abgeschlossen."
+    },
+    "features": {
+      "buy": {
+        "title": "Bonus kaufen · Preis {price}",
+        "text": "Für das <b>80-Fache des Einsatzes</b> beginnt die Runde mit mindestens 3 Ay Ata; {spins} Freispiele sind garantiert (die Ay-Ata-Auszahlung folgt der normalen Tabelle). Der Kauf läuft über ein Bestätigungsfenster, hat einen eigenen RTP ({rtp}) und ist mit Autoplay nicht nutzbar."
+      },
+      "templates": {
+        "title": "Sternbild-Vorlagen",
+        "text": "Enthält ein Gewinn-Cluster eine der folgenden Formen vollständig — auch gedreht oder gespiegelt, in einer von 8 Ausrichtungen —, leuchtet das Sternbild auf und <b>der Cluster-Gewinn wird mit dem Multiplikator der Vorlage multipliziert</b>. Wilds zählen als Zellen des Clusters. Passen mehrere Vorlagen, leuchtet die mit dem höchsten Multiplikator auf; jeder Cluster bringt höchstens ein Sternbild zum Leuchten, verschiedene Cluster im selben Schritt können aber verschiedene Sternbilder entzünden.",
+        "aria": "Sternbild-Vorlagen",
+        "stars": "{n, plural, one {# Stern} other {# Sterne}}"
+      },
+      "wolf": {
+        "title": "Der Himmelswolf wandert",
+        "text": "Ein Wolf, der an einem Gewinn beteiligt ist, zerplatzt nicht. Nach dem Nachfallen und Auffüllen wandert er eine Zelle weiter (nach oben, rechts, unten oder links; zufällig, nie vom Brett, nie auf ein Ay Ata oder einen anderen Wolf). Er verschluckt das Symbol in der Zelle, die er betritt, und hinterlässt in der verlassenen Zelle ein Wild <b>Sternenspur</b>. Mehrere Wölfe wandern nacheinander. Eine Sternenspur wird verbraucht, wenn sie an einem Gewinn beteiligt ist; am Ende der Drehung verschwindet sie."
+      },
+      "ergenekon": {
+        "title": "Ergenekon (Freispiele)",
+        "text": "3+ Ay Ata lösen {spins} Freispiele aus (im Freispiel geben 3+ Ay Ata +{retrigger}; höchstens {max} Drehungen pro Runde). In den Freispielen schaltet jedes aufleuchtende Sternbild sein eigenes Stück der <b>Ergenekon-Karte</b> frei (ein Stück zählt höchstens zweimal):",
+        "map3": "<bold>3 verschiedene Sternbilder</bold> → +{spins} Drehungen und globaler Multiplikator <b>×{multiplier}</b>",
+        "map6": "<bold>6 verschiedene Sternbilder</bold> → +{spins} Drehungen und globaler Multiplikator <b>×{multiplier}</b>",
+        "mapTwice": "<bold>Alle sechs, zweimal</bold> → globaler Multiplikator <b>×{multiplier}</b> (der eiserne Berg spaltet sich)",
+        "after": "Der globale Multiplikator und die Karte bleiben das ganze Feature über bestehen, werden nie zurückgesetzt und multiplizieren <b>jeden Cluster-Gewinn</b> — auch den des Schritts, in dem sie freigeschaltet werden (zuerst werden die Sternbilder in die Karte eingetragen, dann zahlt der Schritt). Das Basisspiel wird immer mit ×1 gespielt."
+      },
+      "cumulative": {
+        "title": "Kumulierter Gewinn",
+        "text": "Die Gewinnanzeige wird während einer Runde nie zurückgesetzt: Cluster, die Ay-Ata-Auszahlung und alle Freispiele addieren sich in derselben Summe. Eine Freispielrunde endet immer mit dem Bildschirm „Ergenekon — Gesamt“."
+      },
+      "tiers": {
+        "title": "Gewinnstufen und Multiplikator-Ansagen",
+        "text": "Beträgt die Rundensumme das <b>10-Fache</b> des Basiseinsatzes oder mehr, öffnet sich das Himmelstor und der Zähler steigt durch die Stufen: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; eine Runde, die das Limit erreicht, endet mit {max}. Ist Vorlage × globaler Multiplikator ×10 oder mehr, wird das mit großer Schrift und eigenem Sound samt Heulen des Wolfs angesagt; jeder Anstieg des globalen Multiplikators wird durch das Bersten des eisernen Bergs gezeigt. Ein Tippen auf den Bildschirm bringt den Zähler sofort zum Ergebnis; die Auszahlung ändert sich dadurch nicht."
+      },
+      "ante": {
+        "title": "Chance ×2 · Kosten {cost}",
+        "text": "Wenn aktiv, kostet jede Drehung das <b>{factor}-Fache des Einsatzes</b> und Ay Ata erscheint im Basisspiel wahrscheinlicher: Die Freispiel-Chance ist etwa doppelt so hoch ({ante} / {standard}). Gewinne werden weiterhin auf den Basiseinsatz gezahlt. Solange sie aktiv ist, kann der Bonus nicht gekauft werden."
+      }
+    }
+  },
+  "burst": {
+    "tag": "ERGENEKON · GLOBALER MULTIPLIKATOR"
+  },
+  "skymap": {
+    "aria": "Ergenekon-Karte: {distinct} Sternbilder leuchten, globaler Multiplikator ×{multiplier}",
+    "inactive": "öffnet sich in den Freispielen",
+    "lit": "{distinct}/6 Sternbilder",
+    "pips": "{n, plural, one {# Mal} other {# Mal}} geleuchtet"
+  }
+}

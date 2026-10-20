@@ -8,5 +8,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  return <I18nMessages namespaces={['verify']}><ReplayView id={id} /></I18nMessages>;
+  return <I18nMessages namespaces={['verify', 'slotKit']}><ReplayView id={id} /></I18nMessages>;
 }

@@ -138,7 +138,8 @@
     "anteOn": "Chance ×2 on: free-spin chance ≈2×, cost {cost}.",
     "anteOff": "Chance ×2 off: cost {cost}.",
     "refilled": "DEMO balance refilled to {amount} DEMO.",
-    "refilledRemote": "Server DEMO balance refilled to {amount} DEMO."
+    "refilledRemote": "Server DEMO balance refilled to {amount} DEMO.",
+    "celebration": "{title}: {amount} DEMO, {times}×."
   },
   "autoplay": {
     "serverFailed": "The server could not start the round",
@@ -369,5 +370,8 @@
     "board": "The board is a hub with 4 concentric rings of 12 slices around it. On each of the 12 spokes running from the hub outward, 3 or 4 consecutive slices of the same symbol, from the inside out (starting at ring 1 or ring 2), pay; the Golden Gear wild stands in for every symbol. The hub multiplier (×1–×10) multiplies all spoke wins of that spin.",
     "features": "Gear Lock: if there is a new win, the winning slices lock, the four rings spin again beneath them, and the hub rises by +1 with every respin; up to 10 respins, until no new pay arrives. 3 or more Water Vessels trigger 10 free spins (Elephant Clock): the hub multiplier is kept between spins and only rises, and every 3 spins the automaton falcon drops permanent Golden Gear wilds. The maximum win is 10,000 times the bet.",
     "fixed": "The result is determined locally in your browser with local randomness before the spin starts; the animation only plays that result. Even if you leave the page, the round closes with the determined payout. There is no VRF proof."
+  },
+  "badge": {
+    "checking": "Checking the server"
   }
 }

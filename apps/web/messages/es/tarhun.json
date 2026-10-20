@@ -1,0 +1,327 @@
+{
+  "meta": {
+    "description": "{title} — un juego tumble DEMO original. El dios de la tormenta lanza rayos sobre las piedras y los multiplicadores se acumulan en los giros gratis."
+  },
+  "subtitle": "El dios de la tormenta lanza rayos sobre las piedras; los multiplicadores se acumulan en los giros gratis.",
+  "logo": {
+    "subtitle": "TRONO DE LA TORMENTA"
+  },
+  "table": {
+    "aria": "Mesa de juego Tarhun"
+  },
+  "board": {
+    "label": "Cuadrícula de Tarhun, 6 columnas, 5 filas",
+    "labelFree": "Cuadrícula de giros gratis de Tarhun, 6 columnas, 5 filas"
+  },
+  "badge": {
+    "checking": "Comprobando el servidor"
+  },
+  "symbols": {
+    "h1": "Ritón del Toro Dorado",
+    "h2": "Hacha del Relámpago",
+    "h3": "Medallón de la Puerta del León",
+    "h4": "Disco Solar",
+    "l1": "Piedra de la Ola Azul Marino",
+    "l2": "Piedra del Águila de Ágata",
+    "l3": "Piedra del Sol de Ámbar",
+    "l4": "Piedra del Árbol de Malaquita",
+    "l5": "Piedra del Rayo de Obsidiana",
+    "scatter": "Sello del Rayo",
+    "orb": "Piedra de la Tormenta",
+    "orbValue": "{name} ×{value}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Multiplicador",
+      "1": "Multiplicador potente",
+      "2": "Multiplicador atronador",
+      "3": "Multiplicador devastador",
+      "4": "Multiplicador legendario",
+      "5": "Trueno",
+      "6": "Multiplicador divino"
+    },
+    "total": "Total · {tag}"
+  },
+  "error": {
+    "entropy": "No hay aleatoriedad local segura disponible. La demo no se ha iniciado.",
+    "noCredit": "No tienes suficiente crédito demo o ya hay una ronda demo en curso.",
+    "insufficientSpin": "Saldo insuficiente: este giro cuesta {cost}. Baja la apuesta o recarga el saldo.",
+    "insufficientBuy": "Saldo insuficiente: esta compra cuesta {cost}. Baja la apuesta o recarga el saldo."
+  },
+  "buyBlock": {
+    "gated": "Solo disponible con crédito DEMO",
+    "autoplay": "No se puede comprar durante el juego automático",
+    "busy": "No se puede comprar hasta que termine la ronda",
+    "ante": "No se puede comprar con Chance ×2 activa",
+    "balance": "Saldo insuficiente (precio {price})"
+  },
+  "autoplay": {
+    "title": "Juego automático",
+    "serverFailed": "El servidor no pudo iniciar la ronda",
+    "spinFailed": "No se pudo iniciar el giro",
+    "quit": "Has salido de la sesión",
+    "stopped": "Juego automático detenido: {reason}. {spins, plural, one {# giro} other {# giros}}, neto {net}.",
+    "stoppedShort": "Juego automático detenido: {reason}.",
+    "note": "{cost} por giro{ante, select, yes { (Chance ×2)} other {}} · nunca compra bonos · se detiene cuando la pestaña queda oculta."
+  },
+  "toast": {
+    "autoplay": "Juego automático: {spins, plural, one {# giro} other {# giros}}, límite de pérdida {limit}.",
+    "refilled": "Saldo recargado: {amount}.",
+    "shareCopied": "Enlace para compartir copiado: {url}",
+    "shareLink": "Enlace para compartir: {url}",
+    "shareFailed": "No se pudo compartir: {reason}",
+    "replayFailed": "No se pudo reproducir esta ronda.",
+    "replayMismatch": "No se pudo verificar la repetición: el registro no coincide con el motor.",
+    "close": "Cerrar aviso"
+  },
+  "announce": {
+    "replayDone": "Repetición terminada: {amount}, {times}×. Saldo sin cambios.",
+    "roundEnd": "Ronda terminada. Premio total {amount}, {times}×.",
+    "roundEndNoWin": "Ronda terminada. Sin premio.",
+    "bigWin": "{tier}: {amount}, {times}×.",
+    "cluster": "{count} {name}, premio de {times}×",
+    "orbCharge": "Tarhun lanza rayos sobre las Piedras de la Tormenta.",
+    "orbChargeFree": "Tarhun lanza rayos sobre las Piedras de la Tormenta: sus valores se sumarán al multiplicador total.",
+    "orbArrive": "Piedra de la Tormenta ×{value}: multiplicador ×{multiplier}.",
+    "orbArriveFree": "Piedra de la Tormenta ×{value}: multiplicador total ×{multiplier}.",
+    "multiply": "Multiplicador ×{multiplier}: el premio de {base}× se multiplicó por {multiplier}.",
+    "retrigger": "{count} Sellos del Rayo: {awarded, plural, one {# giro gratis añadido} other {# giros gratis añadidos}}.",
+    "trigger": "{count} Sellos del Rayo: giros gratis ganados.",
+    "freeIntro": "Comienza la tormenta: has ganado {awarded, plural, one {# giro gratis} other {# giros gratis}}.",
+    "freeSpinWin": "El giro gratis dio {win}×. Total {total}×, multiplicador total ×{multiplier}.",
+    "freeSpinNoWin": "Sin premio en el giro gratis.",
+    "noWin": "Sin premio.",
+    "totalWin": "Premio total {amount}, {times}×.",
+    "freeOutro": "La tormenta se ha calmado. Total: {amount}, {spins, plural, one {# giro} other {# giros}}, multiplicador total ×{multiplier}.",
+    "sent": "Giro enviado al servidor, {amount}.",
+    "buyStarted": "Bono comprado, {amount}. Los giros gratis están comenzando.",
+    "spinStarted": "Giro iniciado, {amount}.",
+    "recovered": "Se recuperó del servidor una ronda sin terminar; el pago ya se hizo allí ({amount}).",
+    "replaying": "Reproduciendo: ronda {id}. El saldo no cambia.",
+    "refilled": "Saldo DEMO recargado a {amount}.",
+    "refilledRemote": "Saldo DEMO del servidor recargado a {amount}.",
+    "speed": "Velocidad de giro: {speed}.",
+    "anteOn": "Chance ×2 activada: aproximadamente el doble de probabilidad de giros gratis, coste {cost}.",
+    "anteOff": "Chance ×2 desactivada: coste {cost}."
+  },
+  "banner": {
+    "scatterPay": "{count} Sellos del Rayo · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# giro gratis} other {# giros gratis}}"
+  },
+  "deck": {
+    "aria": "Controles del juego",
+    "balance": "Saldo",
+    "refill": "Recargar saldo",
+    "replay": "Repetición",
+    "win": "Premio",
+    "replayWin": "Premio de la repetición",
+    "lastWin": "Último premio",
+    "spin": "Girar",
+    "spinLocked": "Ronda en curso; bloqueado hasta que terminen todas las caídas, rayos y giros gratis.",
+    "auto": "Auto",
+    "info": "Info",
+    "on": "Activado",
+    "off": "Desactivado",
+    "anteDesc": "Aproximadamente el doble de probabilidad de giros gratis",
+    "buyDesc": "{spins, plural, one {# giro gratis} other {# giros gratis}} · {rtp}",
+    "speed": "Velocidad de giro: {speed}",
+    "soundLoading": "Cargando sonido {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Tu saldo DEMO se ha agotado.",
+    "lastRound": "Última ronda <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "La última ronda no tuvo premio.",
+    "spaceHint": "También puedes girar con la barra espaciadora.",
+    "fixedBefore": "El resultado se fija antes del giro."
+  },
+  "replay": {
+    "ribbon": "Repetición — saldo sin cambios · ronda {id}"
+  },
+  "auto": {
+    "ribbon": "Juego automático · {n, plural, one {# giro restante} other {# giros restantes}}"
+  },
+  "free": {
+    "tag": "Giro gratis",
+    "spinNumber": "Giro {n}",
+    "left": "Restantes",
+    "counterAria": "Giro gratis {number}, quedan {left}"
+  },
+  "mult": {
+    "label": "Multiplicador",
+    "total": "Multiplicador total"
+  },
+  "meter": {
+    "idleA": "<b>8+</b> símbolos iguales pagan en cualquier lugar",
+    "idleB": "Piedras de la Tormenta hasta <b>×500</b>",
+    "win": "Premio",
+    "totalWin": "Premio total"
+  },
+  "gated": {
+    "title": "No hay Tarhun on-chain.",
+    "text": "Este juego se juega solo con crédito DEMO; no se aceptan apuestas reales.",
+    "back": "Volver a la demo local"
+  },
+  "splash": {
+    "f1Title": "8+ en cualquier lugar",
+    "f1Text": "Ocho símbolos iguales pagan en cualquier lugar de la cuadrícula",
+    "f2Title": "Piedra de la Tormenta ×500",
+    "f2Text": "Se recoge con rayos; el multiplicador se acumula en los giros gratis",
+    "f3Title": "Premio máximo {max}×",
+    "f3Text": "4 Sellos del Rayo activan {spins, plural, one {# giro gratis} other {# giros gratis}}",
+    "loading": "Cargando el juego",
+    "play": "Jugar",
+    "skip": "No volver a mostrar esta pantalla de inicio",
+    "note": "El crédito DEMO no tiene valor · El resultado se fija antes del giro · Simulación no certificada, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Sonido listo: la música, los efectos y la locución están preparados en este dispositivo.",
+    "soundLoading": "Cargando sonido {percent} (mientras tanto el juego permanece en silencio o usa efectos simples).",
+    "soundOnTouch": "El sonido se carga con el primer toque.",
+    "demoTitle": "Saldo DEMO",
+    "demoText": "Saldo {balance}{server, select, yes { (servidor)} other {}}. Recargar fija el saldo en {amount} y añade una fila «{label}» al historial; no es posible durante una ronda o el juego automático."
+  },
+  "buy": {
+    "feature": "{spins, plural, one {# giro gratis} other {# giros gratis}} · apuesta {bet}",
+    "rtp": "RTP de compra {buy} · estándar {standard} (simulación, no certificada)",
+    "description": "<b>100 veces</b> tu apuesta. La ronda empieza con al menos 4 Sellos del Rayo y {spins, plural, one {# giro gratis está garantizado} other {# giros gratis están garantizados}}; el multiplicador total parte de ×0 y crece con cada giro ganador. Los premios se pagan sobre una apuesta de {bet}, hasta un máximo de {max}."
+  },
+  "history": {
+    "scope": "Esta sesión · las repeticiones nunca cambian tu saldo",
+    "time": "Hora",
+    "mode": "Modo",
+    "win": "Premio",
+    "result": "Resultado",
+    "roundId": "ID de la ronda",
+    "replay": "Repetir",
+    "replayAria": "Repetir: ronda {id}, saldo sin cambios",
+    "share": "Compartir tu premio",
+    "shareAria": "Compartir tu premio: ronda {id}",
+    "latest": "Última ronda",
+    "refilled": "Saldo recargado",
+    "refilledRemote": "Saldo recargado (servidor)",
+    "emptyTitle": "Tu primera ronda aparecerá aquí.",
+    "emptyText": "Se registran el modo, la apuesta, el coste, el premio y el ID de cada ronda; puedes volver a ver cualquier ronda.",
+    "capped": "Premio máximo · {times}×",
+    "free": "Giros gratis ×{spins} · {times}×",
+    "freeTotal": "Giros gratis ×{spins} · total ×{multiplier} · {times}×",
+    "none": "Sin premio",
+    "tumbles": "{n, plural, one {# caída} other {# caídas}} · {times}×",
+    "tumblesMultiplied": "{n, plural, one {# caída} other {# caídas}} · ×{multiplier} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× la apuesta",
+    "capNote": "La ronda alcanzó el límite · los giros restantes no se juegan",
+    "continue": "Continuar",
+    "tapToSpeed": "Toca para acelerar"
+  },
+  "intro": {
+    "title": "Comienza la Tormenta",
+    "titleCaps": "COMIENZA LA TORMENTA",
+    "freeA": "giros",
+    "freeB": "gratis",
+    "text": "En cada giro ganador, las Piedras de la Tormenta se suman al <b>multiplicador total</b>; el multiplicador total se conserva durante todos los giros gratis. 3 Sellos del Rayo dan +5 giros.",
+    "start": "Empezar"
+  },
+  "total": {
+    "titleA": "La Tormenta se Calma",
+    "titleB": "Total",
+    "word": "TOTAL",
+    "sub": "GIROS GRATIS",
+    "spins": "Giros",
+    "spinsValue": "{n, plural, one {# giro} other {# giros}}",
+    "none": "Ninguno",
+    "strikes": "{n, plural, one {# rayo} other {# rayos}}",
+    "noOrbs": "sin piedras",
+    "betMultiple": "De tu apuesta",
+    "capNote": "Premio máximo alcanzado · los giros restantes no se juegan",
+    "toCelebration": "Pasar a la celebración"
+  },
+  "info": {
+    "windowTitle": "Tarhun · Información del juego",
+    "how": {
+      "title": "Cómo jugar",
+      "s1": "<b>Elige tu apuesta.</b> Los botones − y + cambian la apuesta un nivel; al tocar el importe se abren todos los niveles. «{max}» elige el nivel más alto que cubre tu saldo.",
+      "s2": "<b>Gira.</b> Pulsa el botón de la tormenta o usa la barra espaciadora. El coste de la ronda ({multiple} veces la apuesta con Chance ×2 activa) se descuenta una sola vez del saldo.",
+      "s3": "<b>Combina.</b> En la cuadrícula de 6 columnas × 5 filas ganas con <b>8 o más símbolos iguales en cualquier lugar</b>; cuantos más haya, mayor es el nivel de pago.",
+      "s4": "<b>Cadena.</b> Las piedras ganadoras se hacen añicos, las de arriba caen y nuevas piedras llenan los huecos. Continúa hasta que no haya nuevos premios.",
+      "s5": "<b>Rayo.</b> Cuando la cadena termina con premio, Tarhun lanza un rayo sobre cada Piedra de la Tormenta de la cuadrícula; los valores de las piedras se suman y el premio se multiplica por ese total.",
+      "s6": "<b>Resultado.</b> Toda la ronda la decide el motor antes de empezar el giro; la animación solo reproduce ese resultado. El botón de girar permanece bloqueado hasta que termina la ronda (todas las caídas y giros gratis); usa el ajuste {quick}/{turbo} para acelerar. Los ajustes de velocidad, tocar el contador de celebración, una pestaña oculta o salir de la página nunca cambian el pago; la ronda siempre se cierra una vez, con el pago del motor.",
+      "note": "El crédito DEMO no tiene valor; no genera SOL, tokens ni recompensas. El juego funciona en el navegador con aleatoriedad local; no hay prueba VRF."
+    },
+    "pay": {
+      "title": "Tabla de pagos",
+      "lead": "Ganas con <b>8 o más símbolos iguales en cualquier lugar</b> de la cuadrícula. La cifra grande es el importe DEMO bruto con una apuesta de <b>{bet}</b>; el multiplicador de debajo es un múltiplo de la apuesta.",
+      "symbolsAria": "Pagos de los símbolos",
+      "scatterTitle": "{name} · pago scatter",
+      "seals6": "6+ sellos",
+      "seals5": "5 sellos",
+      "seals4": "4 sellos",
+      "scatterText": "Cuando termina el giro base, 4 o más sellos en la cuadrícula pagan y activan <b>{spins} giros gratis</b>. Los sellos no estallan.",
+      "orbTitle": "{name} · esfera multiplicadora",
+      "orbText": "Lleva un valor de ×2 a ×500 y puede caer tanto en el juego base como en los giros gratis. No estalla: se queda en su sitio y se desliza durante las caídas. Los detalles están en la página «{features}».",
+      "maxTitle": "Premio máximo {n}×",
+      "maxText": "Con esta apuesta son <b>{amount}</b>. Si el total de la ronda alcanza este límite, la ronda termina de inmediato; los giros gratis restantes no se juegan."
+    },
+    "features": {
+      "title": "Características",
+      "tumbleTitle": "Piedras que caen (tumble)",
+      "tumbleText": "Después de cada premio, las piedras ganadoras se hacen añicos, las demás se deslizan hacia abajo y los huecos se rellenan desde arriba. El marcador de premios nunca se reinicia durante una ronda: caídas, multiplicadores y todos los giros gratis se suman en el mismo total.",
+      "orbTitle": "Piedra de la Tormenta (esfera multiplicadora)",
+      "orbText": "Puede caer en el juego base y en los giros gratis; su valor va de ×2 a ×500. En el juego base, si la cadena de caídas de un giro termina con premio, los valores de las piedras de la cuadrícula se <b>suman</b> y el premio de ese giro se multiplica por el total (el pago de los sellos no se multiplica). Sin premio, las piedras no tienen efecto.",
+      "orbListAria": "Valores y probabilidades de las Piedras de la Tormenta",
+      "totalTitle": "Multiplicador total (giros gratis)",
+      "totalText": "Los giros gratis empiezan con un <b>multiplicador total de ×0</b>. En cada giro ganador, los valores de las Piedras de la Tormenta de la cuadrícula se <b>suman</b> al multiplicador total y luego el premio de ese giro se multiplica por el nuevo total (×1 si el total sigue en 0). En un giro sin premio, las piedras no se suman. El multiplicador total se conserva durante todos los giros gratis, incluidos los extra.",
+      "sealTitle": "Sello del Rayo (scatter)",
+      "sealText": "Cuando termina un giro base, 4 o más sellos pagan y activan {trigger} giros gratis. En los giros gratis, 3 o más sellos añaden {retrigger} giros más (sin pago). En una sola ronda se conceden como máximo {max} giros gratis.",
+      "freeTitle": "Giros gratis",
+      "freeText": "Los giros gratis se juegan con la misma apuesta dentro de la misma ronda; no se cobra ningún importe adicional. Siempre terminan con la pantalla «{screen}»: giros jugados, multiplicador total final y premio total.",
+      "tiersTitle": "Niveles de premio y anuncios de multiplicador",
+      "tiersText": "Cuando el total de la ronda es <b>10×</b> la apuesta base o más, se abre la pantalla de celebración y el contador sube por los niveles: {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100×; una ronda que alcanza el límite termina con {max}. Cada multiplicador aplicado se anuncia en letras grandes sobre la cuadrícula; en los umbrales ×10, ×25, ×50, ×100, ×250 y ×500 el texto y el sonido crecen. Tocar la pantalla lleva el contador al resultado; nunca cambia el pago.",
+      "anteTitle": "Chance ×2 · coste {cost}",
+      "anteText": "Mientras está activa, cada giro cuesta <b>{multiple} veces tu apuesta</b> y los sellos son más probables en el juego base: la probabilidad de giros gratis es aproximadamente el doble ({ante} / {standard}). Los premios se siguen pagando sobre la apuesta base. Con ella activa no se puede comprar el bono.",
+      "buyTitle": "Comprar bono · precio {price}",
+      "buyText": "Por <b>100 veces</b> tu apuesta, la ronda empieza con al menos 4 sellos; {spins} giros gratis están garantizados. La compra se hace mediante una ventana de confirmación, funciona con un RTP aparte ({rtp}) y no se puede usar con el juego automático."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Retorno teórico (RTP)",
+      "caption": "Retorno teórico por modo",
+      "mode": "Modo",
+      "cost": "Coste",
+      "ci": "IC del 95 %",
+      "feature": "Función",
+      "everyRound": "cada ronda",
+      "method": "Una simulación independiente de {millions} millones de rondas para cada modo (motor <code>storm-throne-1</code>). El RTP se calcula sobre el importe pagado. Frecuencia de premio (giro base): estándar {hit}, Chance ×2 {hitAnte}. Volatilidad (desviación típica en unidades de coste): estándar {sdStandard}, compra {sdBuy}.",
+      "note": "La simulación es una estimación y <b>no está certificada</b>; por la cola pesada, el intervalo de confianza puede ser optimista. El resultado de una sesión corta puede diferir mucho del RTP. El crédito DEMO <b>no tiene valor</b>."
+    },
+    "limits": {
+      "title": "Límites de apuesta y premio",
+      "range": "Rango de apuestas",
+      "levels": "Niveles",
+      "current": "Apuesta actual",
+      "currentValue": "{bet} · Chance ×2 {ante} · Compra {buy}",
+      "max": "Premio máximo",
+      "maxValue": "{n} veces la apuesta · {amount} con esta apuesta",
+      "p1": "Una ronda que alcanza el premio máximo termina de inmediato; los giros gratis restantes no se juegan. El pago siempre se calcula sobre la apuesta base, redondeando hacia abajo las fracciones de céntimo.",
+      "p2": "Los niveles y modos que tu saldo no cubre no se pueden seleccionar. Una ronda es una única reserva y un único pago; solo se juega una ronda a la vez."
+    },
+    "keys": {
+      "title": "Teclas",
+      "heading": "Teclado",
+      "space": "Espacio",
+      "spaceText": "Inicia el giro ({settings} → «{option}»). Durante una ronda no salta el giro; solo acelera las pantallas de giros gratis y el contador de celebración.",
+      "enterText": "Pulsa el botón enfocado.",
+      "escText": "Cierra la ventana abierta (excepto el recordatorio de sesión).",
+      "tabText": "Se mueve entre los controles; el foco siempre es visible.",
+      "arrowsText": "Cambia de página en esta ventana de información; cambia la opción en las selecciones de ajustes.",
+      "pageText": "Se mueve entre las páginas de información.",
+      "note": "El lector de pantalla anuncia cada paso («{example}», multiplicadores, resultado de la ronda); la cuadrícula se lee como una tabla de 6×5. Los símbolos se distinguen por forma y marcas además del color. La preferencia de movimiento reducido desactiva partículas, rayos y temblores."
+    },
+    "fault": {
+      "title": "Cláusula de fallo",
+      "p1": "<b>Un fallo anula todos los juegos y pagos afectados.</b> En caso de fallo del software, del navegador o del dispositivo, prevalece el registro de la ronda; un importe que aparezca en pantalla pero no coincida con el registro del motor no es válido.",
+      "p2": "Este juego se juega solo con crédito DEMO. El DEMO no tiene valor y no se puede convertir en dinero ni en tokens; en caso de fallo, el saldo DEMO y el historial de la sesión pueden corregirse o restablecerse.",
+      "p3": "Como el resultado se fija antes del giro, una animación interrumpida, una pestaña oculta o salir de la página no cambian el resultado; la ronda se cierra igualmente una vez con el pago del motor."
+    }
+  }
+}

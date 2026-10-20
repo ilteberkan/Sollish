@@ -206,7 +206,7 @@ export function StormFreeIntro({ awarded, dur, reducedMotion, onTap }: { awarded
             <strong>{awarded}</strong>
             <span>{t('intro.freeA')}<br />{t('intro.freeB')}</span>
           </div>
-          <p className={c.introText}>{t.rich('intro.text', { b: chunk => <strong>{chunk}</strong> })}</p>
+          <p className={c.introText}>{t.rich('intro.text', { b: chunk => <strong key={chunk}>{chunk}</strong> })}</p>
           <button type="button" className={c.go} onClick={event => { event.stopPropagation(); onTap(); }}>{t('intro.start')}</button>
           <span className={c.timer} style={{ '--hold': `${dur}ms` } as CSSProperties} aria-hidden="true" />
         </div>

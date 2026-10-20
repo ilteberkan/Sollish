@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "description": "{title} — un jeu de grappes DEMO original. Le peigne balaie l’eau et l’encre se réorganise ; dans la Marbrure des Tulipes, les taches de peinture glissent avec leurs multiplicateurs."
+  },
+  "subtitle": "Le peigne balaie l’eau et l’encre se réorganise vague après vague ; les taches glissent avec leurs multiplicateurs.",
+  "logo": {
+    "subtitle": "JARDIN D’ENCRE"
+  },
+  "table": {
+    "aria": "Table de jeu Ebru"
+  },
+  "board": {
+    "label": "Grille Ebru, 7 colonnes, 7 rangées",
+    "labelFree": "Grille des tours gratuits Ebru, 7 colonnes, 7 rangées"
+  },
+  "badge": {
+    "checking": "Vérification du serveur"
+  },
+  "symbols": {
+    "c1": "Tulipe Dorée",
+    "c2": "Œillet Rubis",
+    "c3": "Fleur Hatip Turquoise",
+    "c4": "Feuille d’Émeraude",
+    "c5": "Œil de Paon Bleu Marine",
+    "c6": "Marguerite Safran",
+    "c7": "Vague Rose",
+    "c8": "Goutte de Suie",
+    "drop": "Goutte Maîtresse (joker)",
+    "comb": "Peigne Doré",
+    "stained": "{name}, tache ×{stain}"
+  },
+  "callout": {
+    "tags": {
+      "0": "Multiplicateur de tache",
+      "1": "Tache puissante",
+      "2": "Tache éclatante",
+      "3": "Multiplicateur de tulipe",
+      "4": "Tache légendaire",
+      "5": "Feuille d’or"
+    }
+  },
+  "error": {
+    "entropy": "L’aléatoire local sécurisé n’est pas disponible. La démo n’a pas démarré.",
+    "noCredit": "Vous n’avez pas assez de crédit démo, ou une partie démo est déjà en cours.",
+    "insufficientSpin": "Solde insuffisant : ce tour coûte {cost}. Baissez la mise ou rechargez votre solde.",
+    "insufficientBuy": "Solde insuffisant : cet achat coûte {cost}. Baissez la mise ou rechargez votre solde."
+  },
+  "buyBlock": {
+    "gated": "Disponible uniquement avec le crédit DEMO",
+    "autoplay": "Impossible à acheter pendant le jeu automatique",
+    "busy": "Impossible à acheter avant la fin de la partie",
+    "ante": "Impossible à acheter quand Chance ×2 est activée",
+    "balance": "Solde insuffisant (prix {price})"
+  },
+  "autoplay": {
+    "title": "Jeu automatique",
+    "serverFailed": "Le serveur n’a pas pu démarrer la partie",
+    "spinFailed": "Le tour n’a pas pu être lancé",
+    "quit": "Vous avez quitté la session",
+    "stopped": "Jeu automatique arrêté : {reason}. {spins, plural, one {# tour} other {# tours}}, net {net}.",
+    "stoppedShort": "Jeu automatique arrêté : {reason}.",
+    "note": "{cost} par tour{ante, select, yes { (Chance ×2)} other {}} · n’achète jamais de bonus · s’arrête quand l’onglet est masqué."
+  },
+  "toast": {
+    "autoplay": "Jeu automatique : {spins, plural, one {# tour} other {# tours}}, limite de perte {limit}.",
+    "refilled": "Solde rechargé : {amount}.",
+    "shareCopied": "Lien de partage copié : {url}",
+    "shareLink": "Lien de partage : {url}",
+    "shareFailed": "Partage impossible : {reason}",
+    "replayFailed": "Cette partie n’a pas pu être rejouée.",
+    "replayMismatch": "Relecture non vérifiable : l’entrée ne correspond pas au moteur.",
+    "close": "Fermer la notification"
+  },
+  "announce": {
+    "replayDone": "Relecture terminée : {amount}, {times}×. Solde inchangé.",
+    "roundEnd": "Partie terminée. Gain total {amount}, {times}×.",
+    "roundEndNoWin": "Partie terminée. Aucun gain.",
+    "bigWin": "{tier} : {amount}, {times}×.",
+    "cluster": "{size} {name}, gain de {times}×",
+    "clusterStain": "{size} {name}, tache ×{stain}, gain de {times}×",
+    "bleed": "La Goutte Maîtresse a répandu son encre : {n, plural, one {# voisine est devenue} other {# voisines sont devenues}} {name}.",
+    "stainMultiplier": "Multiplicateur de tache ×{best} : le gain de la grappe est multiplié par la somme des taches.",
+    "comb": "Passage du peigne {pass} : rangées décalées de {shifts}.",
+    "combCluster": "Le peigne a formé une nouvelle grappe.",
+    "retrigger": "{count} Peignes Dorés : {awarded, plural, one {# tour gratuit ajouté} other {# tours gratuits ajoutés}}.",
+    "trigger": "{count} Peignes Dorés : Marbrure des Tulipes gagnée.",
+    "freeIntro": "La Marbrure des Tulipes commence : vous avez gagné {awarded, plural, one {# tour gratuit} other {# tours gratuits}}.",
+    "freeSpinWin": "Le tour gratuit a rapporté {win}×. Total {total}×.",
+    "freeSpinNoWin": "Aucun gain sur ce tour gratuit.",
+    "noWin": "Aucun gain.",
+    "totalWin": "Gain total {amount}, {times}×.",
+    "freeOutro": "La Marbrure des Tulipes est terminée. Total : {amount}, {spins, plural, one {# tour} other {# tours}}, plus grande tache ×{stain}.",
+    "sent": "Tour envoyé au serveur, {amount}.",
+    "buyStarted": "Bonus acheté, {amount}. La Marbrure des Tulipes commence.",
+    "spinStarted": "Tour lancé, {amount}.",
+    "recovered": "Une partie inachevée a été récupérée depuis le serveur ; le gain y a déjà été versé ({amount}).",
+    "replaying": "Relecture en cours : partie {id}. Le solde ne change pas.",
+    "refilled": "Solde DEMO rechargé à {amount}.",
+    "refilledRemote": "Solde DEMO du serveur rechargé à {amount}.",
+    "speed": "Vitesse des tours : {speed}.",
+    "anteOn": "Chance ×2 activée : environ deux fois plus de chances de tours gratuits, coût {cost}.",
+    "anteOff": "Chance ×2 désactivée : coût {cost}."
+  },
+  "banner": {
+    "combCluster": "Le peigne a formé une nouvelle grappe",
+    "scatterPay": "{count} Peignes Dorés · +{amount} DEMO",
+    "retrigger": "+{n, plural, one {# tour gratuit} other {# tours gratuits}}"
+  },
+  "deck": {
+    "aria": "Commandes du jeu",
+    "balance": "Solde",
+    "refill": "Recharger le solde",
+    "replay": "Relecture",
+    "win": "Gain",
+    "replayWin": "Gain de la relecture",
+    "lastWin": "Dernier gain",
+    "spin": "Lancer",
+    "spinLocked": "Partie en cours ; verrouillé jusqu’à la fin de toutes les chutes, éclairs et tours gratuits.",
+    "auto": "Auto",
+    "info": "Infos",
+    "on": "Activé",
+    "off": "Désactivé",
+    "anteDesc": "Environ deux fois plus de chances de tours gratuits",
+    "buyDesc": "{spins, plural, one {# tour gratuit} other {# tours gratuits}} · {rtp}",
+    "speed": "Vitesse des tours : {speed}",
+    "soundLoading": "Chargement du son {percent}"
+  },
+  "msg": {
+    "outOfCredit": "Votre solde DEMO est épuisé.",
+    "lastRound": "Dernière partie <b>+{amount} DEMO</b> · {times}×",
+    "lastRoundNoWin": "Aucun gain à la dernière partie.",
+    "spaceHint": "Vous pouvez aussi lancer avec la barre d’espace.",
+    "fixedBefore": "Le résultat est fixé avant le tour."
+  },
+  "replay": {
+    "ribbon": "Relecture — solde inchangé · partie {id}"
+  },
+  "auto": {
+    "ribbon": "Jeu automatique · {n, plural, one {# tour restant} other {# tours restants}}"
+  },
+  "free": {
+    "tag": "Marbrure des Tulipes",
+    "spinNumber": "Tour {n}",
+    "left": "Restants",
+    "counterAria": "Tour gratuit {number}, {left} restants"
+  },
+  "comb": {
+    "label": "Peigne",
+    "passAria": "Passage du peigne {pass} / 3",
+    "maxAria": "3 passages de peigne maximum par tour"
+  },
+  "stain": {
+    "aria": "Cases tachées {cells}, plus grande tache ×{max}",
+    "stains": "Taches",
+    "highest": "Plus haute",
+    "max": "Max. <b>{n}×</b>"
+  },
+  "meter": {
+    "idleA": "<b>5+</b> gouttes voisines de la même couleur paient",
+    "idleB": "Le peigne décale les rangées",
+    "idleC": "Tache de peinture <b>×256</b>",
+    "win": "Gain",
+    "totalWin": "Gain total"
+  },
+  "gated": {
+    "title": "Pas d’Ebru on-chain.",
+    "text": "Ce jeu se joue uniquement avec du crédit DEMO ; les mises réelles ne sont pas acceptées.",
+    "back": "Retour à la démo locale"
+  },
+  "splash": {
+    "f1Title": "Grappe de 5+",
+    "f1Text": "Cinq gouttes voisines ou plus de la même couleur, à l’horizontale ou à la verticale, paient",
+    "f2Text": "Le peigne balaie l’eau, les rangées glissent, de nouvelles grappes naissent",
+    "f3Title": "Tache ×256 · {max}×",
+    "f3Text": "Dans la Marbrure des Tulipes, les taches glissent avec le peigne",
+    "loading": "Chargement du jeu",
+    "play": "Jouer",
+    "skip": "Ne plus afficher cet écran d’accueil",
+    "note": "Le crédit DEMO n’a aucune valeur · Le résultat est fixé avant le tour · Simulation non certifiée, RTP ≈ {rtp}"
+  },
+  "settings": {
+    "soundReady": "Son prêt : la musique, les effets et l’ambiance sont préparés sur cet appareil.",
+    "soundLoading": "Chargement du son {percent} (le jeu reste silencieux en attendant).",
+    "soundOnTouch": "Le son se charge au premier toucher.",
+    "demoTitle": "Solde DEMO",
+    "demoText": "Solde {balance}{server, select, yes { (serveur)} other {}}. Recharger fixe le solde à {amount} et ajoute une ligne « {label} » à l’historique ; impossible pendant une partie ou le jeu automatique."
+  },
+  "buy": {
+    "feature": "Marbrure des Tulipes · {spins, plural, one {# tour gratuit} other {# tours gratuits}} · mise {bet}",
+    "rtp": "RTP d’achat {buy} · standard {standard} (simulation, non certifiée)",
+    "description": "<b>100 fois</b> votre mise. La partie commence avec au moins 3 Peignes Dorés et {spins, plural, one {# tour gratuit est garanti} other {# tours gratuits sont garantis}} ; chaque case qui éclate reçoit une tache de peinture, les taches glissent avec le peigne et multiplient par leur somme la grappe sous laquelle elles passent. Les gains sont payés sur une mise de {bet}, au maximum {max}."
+  },
+  "history": {
+    "scope": "Cette session · les relectures ne modifient jamais votre solde",
+    "time": "Heure",
+    "mode": "Mode",
+    "win": "Gain",
+    "result": "Résultat",
+    "roundId": "ID de la partie",
+    "replay": "Rejouer",
+    "replayAria": "Rejouer : partie {id}, solde inchangé",
+    "share": "Partager votre gain",
+    "shareAria": "Partager votre gain : partie {id}",
+    "latest": "Dernière partie",
+    "refilled": "Solde rechargé",
+    "refilledRemote": "Solde rechargé (serveur)",
+    "emptyTitle": "Votre première partie apparaîtra ici.",
+    "emptyText": "Le mode, la mise, le coût, le gain et l’ID de chaque partie sont enregistrés ; vous pouvez revoir n’importe quelle partie.",
+    "capped": "Gain max. · {times}×",
+    "free": "Tours gratuits ×{spins} · {times}×",
+    "none": "Aucun gain",
+    "freeStain": "Marbrure des Tulipes ×{spins} · plus grande tache ×{stain} · {times}×",
+    "clusters": "{n, plural, one {# grappe} other {# grappes}}",
+    "combWins": "{n, plural, one {# gain du peigne} other {# gains du peigne}}",
+    "combs": "{n, plural, one {# Peigne Doré} other {# Peignes Dorés}}",
+    "clusterRow": "{items} · {times}×"
+  },
+  "celebration": {
+    "xBet": "{times}× la mise",
+    "capNote": "La partie a atteint le plafond · les tours restants ne sont pas joués",
+    "continue": "Continuer",
+    "tapToSpeed": "Touchez pour accélérer"
+  },
+  "intro": {
+    "word": "MARBRURE DES TULIPES",
+    "title": "La Marbrure des Tulipes Commence",
+    "freeA": "tours",
+    "freeB": "gratuits",
+    "text": "Chaque case qui éclate reçoit une <b>tache de peinture</b> : d’abord ×2, doublée à chaque fois sur la même case, jusqu’à ×256. Les taches restent pendant toute la fonctionnalité et <b>glissent avec le peigne</b> ; le gain d’une grappe qui passe dessus est multiplié par la somme des taches. 3 Peignes Dorés donnent +4 tours.",
+    "start": "Commencer"
+  },
+  "total": {
+    "titleA": "Marbrure des Tulipes",
+    "titleB": "Total",
+    "word": "TOTAL",
+    "sub": "TOURS GRATUITS",
+    "spins": "Tours",
+    "spinsValue": "{n, plural, one {# tour} other {# tours}}",
+    "maxStain": "Plus grande tache",
+    "none": "Aucun",
+    "stainedClusters": "{n, plural, one {# grappe tachée} other {# grappes tachées}}",
+    "noStainedClusters": "aucune grappe tachée",
+    "betMultiple": "De votre mise",
+    "combWins": "{n, plural, one {# gain du peigne} other {# gains du peigne}}",
+    "noCombWins": "aucun gain du peigne",
+    "capNote": "Gain maximum atteint · les tours restants ne sont pas joués",
+    "toCelebration": "Passer à la célébration"
+  },
+  "info": {
+    "windowTitle": "Ebru · Infos du jeu",
+    "how": {
+      "title": "Comment jouer",
+      "s1": "<b>Choisissez votre mise.</b> Les boutons − et + changent la mise d’un palier ; toucher le montant de la mise ouvre tous les paliers. « {max} » choisit le palier le plus élevé que votre solde permet.",
+      "s2": "<b>Lancer.</b> Appuyez sur le bouton d’encre ou utilisez la barre d’espace. Le coût de la partie ({multiple} fois la mise avec Chance ×2 activée) est débité une seule fois du solde.",
+      "s3": "<b>Formez des grappes.</b> Dans le bac d’eau de 7 × 7, <b>5 gouttes voisines ou plus de la même couleur</b>, à l’horizontale ou à la verticale, paient ; plus la grappe est grande, plus le palier de gain est élevé.",
+      "s4": "<b>Enchaînement.</b> Les grappes gagnantes se dissolvent dans l’eau, les gouttes du dessus tombent et de nouvelles gouttes comblent les vides ; cela continue jusqu’à ce qu’il ne reste plus de grappe.",
+      "s5": "<b>Peigne.</b> Quand l’enchaînement se termine — même sans gain — le Peigne Doré balaie l’eau : chaque rangée glisse vers la droite ou la gauche de sa propre valeur et de nouvelles grappes peuvent apparaître. {passes} passages de peigne au maximum par tour.",
+      "s6": "<b>Résultat.</b> Toute la partie est décidée par le moteur avant le début du tour ; l’animation ne fait que rejouer ce résultat. Le bouton de lancement reste verrouillé jusqu’à la fin de la partie (toutes les chutes, tous les passages de peigne et tous les tours gratuits) ; utilisez le réglage {quick}/{turbo} pour accélérer. Les réglages de vitesse, un toucher sur le compteur de célébration, un onglet masqué ou le fait de quitter la page ne modifient jamais le gain ; la partie se clôt toujours une seule fois, avec le gain du moteur.",
+      "note": "Le crédit DEMO n’a aucune valeur ; il ne rapporte ni SOL, ni jetons, ni récompenses. Le jeu fonctionne dans le navigateur avec un aléa local ; il n’y a pas de preuve VRF."
+    },
+    "pay": {
+      "title": "Table des gains",
+      "lead": "<b>5 gouttes voisines ou plus de la même couleur</b>, à l’horizontale ou à la verticale, forment une grappe. Le grand chiffre est le montant DEMO brut pour une mise de <b>{bet}</b> ; le multiplicateur en dessous est un multiple de la mise. Chaque grappe de la même grille paie séparément.",
+      "clustersAria": "Gains des grappes",
+      "fullSummary": "Toutes les tailles de grappe (12 paliers)",
+      "fullCaption": "Gain par couleur et taille de grappe, en multiple de la mise",
+      "colour": "Couleur",
+      "scatterTitle": "{name} · gain scatter",
+      "combs5": "5+ peignes",
+      "combs4": "4 peignes",
+      "combs3": "3 peignes",
+      "scatterText": "Si la grille finale du tour de base contient 3 Peignes Dorés ou plus, ils paient et déclenchent <b>{spins} tours gratuits</b> (Marbrure des Tulipes). Les peignes ne se dissolvent pas ; ils tombent seulement et glissent avec le peigne.",
+      "dropText": "Elle ne fait elle-même partie d’aucune grappe ; là où elle tombe, elle répand son encre : elle choisit la couleur la plus fréquente parmi ses 4 voisines et peint ses voisines et elle-même de cette couleur. Détails sur la page « {features} ».",
+      "maxTitle": "Gain maximum {n}×",
+      "maxText": "Avec cette mise, cela représente <b>{amount}</b>. Si le total de la partie atteint ce plafond, la partie s’arrête immédiatement ; les tours gratuits restants ne sont pas joués."
+    },
+    "features": {
+      "title": "Fonctionnalités",
+      "combTitle": "Passage du peigne",
+      "combText": "Quand chaque enchaînement de chutes se termine, le peigne balaie une fois le plateau : la rangée r glisse cycliquement de <b>round(A · sin(φ + r · k))</b> colonnes (ce qui sort à droite rentre à gauche). A vaut 1, 2 ou 3 à chaque passage ({weights}) ; φ et k sont retirés à chaque passage. Si le décalage forme une nouvelle grappe, l’enchaînement continue ; sinon, le tour se termine. {passes} passages au maximum par tour. Les symboles ne font que changer de place ; aucun n’est ajouté ni retiré.",
+      "combExample": "Exemple : A = 2, φ = 0, k = 8·2π/64 → décalages des rangées {shifts}.",
+      "combExampleAria": "Exemple de passage du peigne, décalage par rangée",
+      "combRow": "Rangée {n} {shift}",
+      "dropTitle": "{name}",
+      "dropText": "Au moment où elle tombe (à la distribution ou au remplissage), elle répand son encre : elle compte les couleurs de ses 4 voisines, choisit la plus fréquente (égalité départagée au hasard ; sans voisine colorée, une couleur au hasard), peint ses voisines colorées de cette couleur et prend elle-même cette couleur. Les Peignes Dorés ne sont pas peints.",
+      "freeTitle": "Marbrure des Tulipes (tours gratuits)",
+      "freeText": "3+ Peignes Dorés déclenchent {trigger} tours gratuits. Pendant les tours gratuits, chaque case qui éclate reçoit un <b>multiplicateur de tache de peinture</b> : ×2 la première fois, doublé à chaque fois sur la même case, jusqu’à ×{stainMax}. Les taches restent pendant toute la fonctionnalité ; les chutes ne les déplacent pas, mais <b>le passage du peigne balaie les taches avec le même décalage que les symboles</b>. Quand une grappe passe sur des cases tachées, son gain est multiplié par la <b>somme</b> des taches en dessous (d’abord le gain, puis la nouvelle tache). Pendant les tours gratuits, 3+ peignes ajoutent {retrigger} tours ; une même partie joue au maximum {max} tours. La Goutte de Suie ne se répand pas pendant les tours gratuits (seule une Goutte Maîtresse sans voisine colorée peut choisir cette couleur au hasard).",
+      "stainsAria": "Multiplicateurs de tache",
+      "cumTitle": "Gain cumulé",
+      "cumText": "Le compteur de gains n’est jamais remis à zéro pendant une partie : grappes, gains du peigne, gain scatter et tous les tours gratuits s’additionnent dans le même total. Une partie de tours gratuits se termine toujours par l’écran « {screen} ».",
+      "tiersTitle": "Paliers de gain et annonces de multiplicateur",
+      "tiersText": "Quand le total de la partie atteint <b>10×</b> la mise de base ou plus, l’écran de célébration s’ouvre et le compteur grimpe par paliers : {big} ≥10×, {mega} ≥25×, {super} ≥50×, {epic} ≥100× ; une partie qui atteint le plafond se termine par {max}. Les multiplicateurs de tache à partir de ×10 sont annoncés en grand au-dessus de la grille avec leur propre son. Toucher l’écran amène le compteur directement au résultat ; cela ne modifie jamais le gain.",
+      "anteTitle": "Chance ×2 · coût {cost}",
+      "anteText": "Lorsqu’elle est activée, chaque tour coûte <b>{multiple} fois votre mise</b> et les Peignes Dorés sont plus probables dans le jeu de base : la chance de tours gratuits est environ doublée ({ante} / {standard}). Les gains sont toujours payés sur la mise de base. Le bonus ne peut pas être acheté tant qu’elle est activée.",
+      "buyTitle": "Acheter le bonus · prix {price}",
+      "buyText": "Pour <b>100 fois</b> votre mise, la partie commence avec au moins 3 Peignes Dorés ; {spins} tours gratuits sont garantis. L’achat se fait via une fenêtre de confirmation, avec un RTP distinct ({rtp}), et n’est pas utilisable avec le jeu automatique."
+    },
+    "rtp": {
+      "title": "RTP",
+      "heading": "Retour théorique (RTP)",
+      "caption": "Retour théorique par mode",
+      "mode": "Mode",
+      "cost": "Coût",
+      "ci": "IC à 95 %",
+      "feature": "Fonctionnalité",
+      "everyRound": "chaque partie",
+      "method": "Une simulation distincte de {millions} millions de parties pour chaque mode (moteur <code>ebru-ink-1</code>). Le RTP est calculé sur le montant payé. Fréquence de gain (tour de base) : standard {hit}, Chance ×2 {hitAnte}. Volatilité (écart type en unités de coût) : standard {sdStandard}, achat {sdBuy}.",
+      "note": "La simulation est une estimation et <b>n’est pas certifiée</b> ; en raison de la queue lourde de la distribution, l’intervalle de confiance peut être optimiste. Le résultat d’une courte session peut s’écarter fortement du RTP. Le crédit DEMO <b>n’a aucune valeur</b>."
+    },
+    "limits": {
+      "title": "Limites de mise et de gain",
+      "range": "Plage de mises",
+      "levels": "Paliers",
+      "current": "Mise actuelle",
+      "currentValue": "{bet} · Chance ×2 {ante} · Achat {buy}",
+      "max": "Gain maximum",
+      "maxValue": "{n} fois la mise · {amount} avec cette mise",
+      "p1": "Une partie qui atteint le gain maximum s’arrête immédiatement ; les tours gratuits restants ne sont pas joués. Le gain est toujours calculé sur la mise de base, les fractions de centime étant arrondies à l’inférieur.",
+      "p2": "Les paliers et modes que votre solde ne couvre pas ne peuvent pas être sélectionnés. Une partie correspond à une seule réservation et un seul paiement ; une seule partie est jouée à la fois."
+    },
+    "keys": {
+      "title": "Touches",
+      "heading": "Clavier",
+      "space": "Espace",
+      "spaceText": "Lance le tour ({settings} → « {option} »). Pendant une partie, elle ne saute pas le tour ; elle accélère seulement les écrans des tours gratuits et le compteur de célébration.",
+      "enterText": "Active le bouton ayant le focus.",
+      "escText": "Ferme la fenêtre ouverte (sauf le rappel de session).",
+      "tabText": "Passe d’une commande à l’autre ; le focus est toujours visible.",
+      "arrowsText": "Change de page dans cette fenêtre d’infos ; change l’option dans les choix de réglage.",
+      "pageText": "Passe d’une page d’infos à l’autre.",
+      "note": "Le lecteur d’écran annonce chaque étape (« {example} », passages du peigne, résultat de la partie) ; la grille est lue comme un tableau 7×7 et les cases tachées sont lues avec leur multiplicateur. Les symboles se distinguent par la forme en plus de la couleur (tulipe, œillet, fleur hatip, feuille, œil de paon, marguerite, rose, galet). La préférence de réduction des animations réduit le peigne à un bref glissement et désactive particules et secousses."
+    },
+    "fault": {
+      "title": "Clause de défaillance",
+      "p1": "<b>Une défaillance annule tous les jeux et paiements concernés.</b> En cas de défaillance du logiciel, du navigateur ou de l’appareil, c’est l’enregistrement de la partie qui fait foi ; un montant affiché à l’écran qui ne correspond pas à l’enregistrement du moteur n’est pas valable.",
+      "p2": "Ce jeu se joue uniquement avec du crédit DEMO. Le DEMO n’a aucune valeur et ne peut être converti ni en argent ni en jetons ; en cas de défaillance, le solde DEMO et l’historique de la session peuvent être corrigés ou réinitialisés.",
+      "p3": "Le résultat étant fixé avant le tour, une animation interrompue, un onglet masqué ou le fait de quitter la page ne change pas le résultat ; la partie se clôt toujours une seule fois avec le gain du moteur."
+    }
+  }
+}
