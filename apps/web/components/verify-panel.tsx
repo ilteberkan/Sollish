@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { DAMLA_ENGINE_ID, SLOT_GAMES, type DamlaRound } from '@sollish/protocol';
+import { DAMLA_ENGINE_ID, GOREME_ENGINE_ID, SLOT_GAMES, type DamlaRound, type GoremeRound } from '@sollish/protocol';
 import { DamlaPathFigure } from './damla/path-figure';
 import { damlaMultiplierText, parseDamlaMode } from '@/lib/damla-controls';
 import { configuredApi } from '@/lib/chat';
@@ -11,7 +11,7 @@ import { useFormat, useT } from '@/lib/i18n/client';
 import type { MessageKey } from '@/lib/i18n/catalog';
 
 const api = configuredApi(process.env.NEXT_PUBLIC_API_URL);
-const GAME_KEYS = new Set(['cascade', 'tarhun', 'ebru', 'cezeri', 'asena', 'damla']);
+const GAME_KEYS = new Set(['cascade', 'tarhun', 'ebru', 'cezeri', 'asena', 'damla', 'goreme']);
 const MODE_KEYS = new Set(['standard', 'ante', 'buy']);
 const STATUS_KEY: Record<RowStatus | 'invalid', MessageKey<'verify'>> = { match: 'verify.statusMatch', mismatch: 'verify.statusMismatch', pending: 'verify.statusPending', invalid: 'verify.statusInvalid' };
 type Form = { game: string; mode: string; betCents: string; serverSeed: string; serverSeedHash: string; clientSeed: string; nonce: string; expectedSeedHex: string; expectedPayoutCents: string };
@@ -109,6 +109,13 @@ export function VerifyPanel() {
                 <dt>{t('verify.factFreeSpins')}</dt><dd>{outcome.result.round.freeSpinsTriggered ? t('verify.triggered') : t('verify.none')}{outcome.result.round.capped ? t('verify.maxWin') : ''}</dd>
               </dl>
             )}
+            {outcome.result?.round && outcome.result.round.engine === GOREME_ENGINE_ID && (() => {
+              const round = outcome.result.round as unknown as GoremeRound;
+              const last = round.spins[round.spins.length - 1]!;
+              return (
+                <p className={styles.meta} data-testid="verify-goreme">{t('goreme.summary', { lifts: round.spins.reduce((n, sp) => n + sp.lifts, 0), free: round.spins.length - 1, sky: last.skyAfter })}</p>
+              );
+            })()}
             {outcome.result?.round && outcome.result.round.engine === DAMLA_ENGINE_ID && (() => {
               const round = outcome.result.round as unknown as DamlaRound;
               const vars = { path: round.path.join(''), pool: round.slot + 1, pools: round.rows + 1, rows: round.rows, multiplier: damlaMultiplierText(round.multiplierHundredths, format.locale) };

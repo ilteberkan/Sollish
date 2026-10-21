@@ -107,5 +107,8 @@
     "pathValue": "{path} → piscina {pool} de {pools}",
     "figure": "Gota do Damla em {rows} terraços: {path}, piscina {pool} de {pools}, ×{multiplier}",
     "mode": "Risco {risk, select, low {baixo} medium {médio} other {alto}} · {rows} terraços"
+  },
+  "goreme": {
+    "summary": "{lifts, plural, one {# subida} other {# subidas}} · {free, plural, =0 {sem giros grátis} one {# giro grátis} other {# giros grátis}} · céu ×{sky}"
   }
 }

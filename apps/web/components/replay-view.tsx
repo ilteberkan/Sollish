@@ -9,6 +9,7 @@ import { StormSymbolArt, type StormSymbol } from './storm/symbols';
 import { EbruStainArt, EbruSymbolArt, type EbruSymbol } from './ebru/symbols';
 import { CezeriSymbolArt, type CezeriSymbol } from './cezeri/symbols';
 import { AsenaSymbolArt, type AsenaSymbol } from './asena/symbols';
+import { GoremeSymbolArt, goremeBalloonTier, type GoremeSymbolId } from './goreme/symbols';
 import { DamlaPathFigure } from './damla/path-figure';
 import { damlaMultiplierText, parseDamlaMode } from '@/lib/damla-controls';
 import type { DamlaRound, SlotRoundSummary } from '@sollish/protocol';
@@ -17,7 +18,7 @@ import { useFormat, useT } from '@/lib/i18n/client';
 import type { MessageKey } from '@/lib/i18n/catalog';
 
 const api = configuredApi(process.env.NEXT_PUBLIC_API_URL);
-const GAME_KEYS = new Set(['cascade', 'tarhun', 'ebru', 'cezeri', 'asena', 'damla']);
+const GAME_KEYS = new Set(['cascade', 'tarhun', 'ebru', 'cezeri', 'asena', 'damla', 'goreme']);
 const MODE_KEYS = new Set(['standard', 'ante', 'buy']);
 /** `message` is a verify-namespace key (`replay.*`) or a slotKit key (`rgs.errors.*`). */
 type State = { phase: 'loading' } | { phase: 'error'; message: string } | { phase: 'ready'; replay: RemoteReplay; round: SlotRoundSummary; frames: ReturnType<typeof replayFrames>; verified: RowStatus };
@@ -29,6 +30,7 @@ function Cell({ game, cell, win }: { game: string; cell: ReplayCell; win: boolea
         : game === 'ebru' ? <EbruSymbolArt symbol={cell.symbol as EbruSymbol} size="100%" />
         : game === 'cezeri' ? <CezeriSymbolArt symbol={cell.symbol as CezeriSymbol} size="100%" />
         : game === 'asena' ? <AsenaSymbolArt symbol={cell.symbol as AsenaSymbol} size="100%" />
+        : game === 'goreme' ? <GoremeSymbolArt symbol={cell.symbol as GoremeSymbolId} tier={goremeBalloonTier(cell.multiplier ?? 1)} px="100%" />
         : <StormSymbolArt symbol={cell.symbol as StormSymbol} multiplier={cell.multiplier} size="100%" />}
       {cell.stain ? <span className={styles.stain}><EbruStainArt value={cell.stain} size="100%" /></span> : null}
       {cell.multiplier ? <span className={styles.mult}>×{cell.multiplier}</span> : null}

@@ -107,5 +107,8 @@
     "pathValue": "{path} → Becken {pool} von {pools}",
     "figure": "Damla-Tropfen über {rows} Terrassen: {path}, Becken {pool} von {pools}, ×{multiplier}",
     "mode": "Risiko {risk, select, low {niedrig} medium {mittel} other {hoch}} · {rows} Terrassen"
+  },
+  "goreme": {
+    "summary": "{lifts, plural, one {# Aufstieg} other {# Aufstiege}} · {free, plural, =0 {keine Freispiele} one {# Freispiel} other {# Freispiele}} · Himmel ×{sky}"
   }
 }

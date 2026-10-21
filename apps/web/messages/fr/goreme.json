@@ -1,375 +1,375 @@
 {
   "meta": {
-    "title": "Göreme: Dawn Balloons · Sollish",
-    "description": "An original 6 × 5, 15,625-ways slot: rising balloon wilds with multipliers, wind, merges and the Dawn Festival free spins with the sky band. DEMO credit only."
+    "title": "Göreme : Ballons de l'aube · Sollish",
+    "description": "Une machine à sous originale 6 × 5 à 15 625 ways : des ballons wild qui montent avec des multiplicateurs, le vent, des fusions et les tours gratuits de la Fête de l'aube avec la bande céleste. Crédit DEMO uniquement."
   },
-  "title": "Göreme: Dawn Balloons",
-  "subtitle": "6 × 5 · 15,625 ways · rising balloon wilds",
-  "logoSub": "DAWN BALLOONS",
-  "table": "Göreme game table",
+  "title": "Göreme : Ballons de l'aube",
+  "subtitle": "6 × 5 · 15 625 ways · ballons wild ascendants",
+  "logoSub": "BALLONS DE L'AUBE",
+  "table": "Table de jeu Göreme",
   "badge": {
-    "checking": "Checking the server"
+    "checking": "Vérification du serveur"
   },
   "symbols": {
-    "h1": "Fairy Chimney",
-    "h2": "Dovecote",
-    "h3": "Avanos Jug",
-    "h4": "Kilim Horse",
-    "l1": "Madder Eye",
-    "l2": "Indigo Eye",
-    "l3": "Green Eye",
-    "l4": "Saffron Ram's Horn",
-    "l5": "Plum Clover",
-    "balloon": "Balloon (wild)",
-    "sun": "Dawn Sun (scatter)"
+    "h1": "Cheminée de fée",
+    "h2": "Pigeonnier",
+    "h3": "Cruche d'Avanos",
+    "h4": "Cheval de kilim",
+    "l1": "Œil garance",
+    "l2": "Œil indigo",
+    "l3": "Œil vert",
+    "l4": "Corne de bélier safran",
+    "l5": "Trèfle prune",
+    "balloon": "Ballon (wild)",
+    "sun": "Soleil de l'aube (scatter)"
   },
   "board": {
-    "labelPlay": "Göreme reel window, 6 reels, 5 rows",
-    "labelFree": "Göreme reel window, Dawn Festival, 6 reels, 5 rows",
-    "cell": "{name}, reel {col}, row {row}",
-    "balloonCell": "Balloon ×{multiplier}, reel {col}, row {row}"
+    "labelPlay": "Fenêtre de rouleaux Göreme, 6 rouleaux, 5 rangées",
+    "labelFree": "Fenêtre de rouleaux Göreme, Fête de l'aube, 6 rouleaux, 5 rangées",
+    "cell": "{name}, rouleau {col}, rangée {row}",
+    "balloonCell": "Ballon ×{multiplier}, rouleau {col}, rangée {row}"
   },
   "facts": {
-    "aria": "Game features",
-    "balloon": "<b>Balloon wilds</b> rise one row after every win and gain +1",
-    "sun": "<b>3+ Dawn Suns</b> start the Dawn Festival",
-    "ways": "<b>15,625 ways</b> · max {max}×"
+    "aria": "Fonctionnalités du jeu",
+    "balloon": "Les <b>ballons wild</b> montent d'une rangée après chaque gain et gagnent +1",
+    "sun": "<b>3+ Soleils de l'aube</b> lancent la Fête de l'aube",
+    "ways": "<b>15 625 ways</b> · max {max}×"
   },
   "hud": {
-    "sunChip": "<b>3+ suns</b> · Dawn Festival",
-    "free": "Dawn Festival",
-    "freeSpin": "Free spin {n}",
-    "left": "Left",
-    "freeAria": "Free spin {number}, {left} spins left"
+    "sunChip": "<b>3+ soleils</b> · Fête de l'aube",
+    "free": "Fête de l'aube",
+    "freeSpin": "Tour gratuit {n}",
+    "left": "Restants",
+    "freeAria": "Tour gratuit {number}, {left} tours restants"
   },
   "wind": {
-    "left": "Wind ←",
-    "calm": "Calm",
-    "right": "Wind →"
+    "left": "Vent ←",
+    "calm": "Calme",
+    "right": "Vent →"
   },
   "sky": {
-    "label": "SKY"
+    "label": "CIEL"
   },
   "meter": {
-    "idleA": "<b>Balloons</b> rise · <b>multipliers</b> multiply along a way",
+    "idleA": "Les <b>ballons</b> montent · les <b>multiplicateurs</b> se multiplient le long d'un way",
     "idleB": "Max <b>{max}×</b>",
-    "win": "Win",
-    "total": "Total win"
+    "win": "Gain",
+    "total": "Gain total"
   },
   "callout": {
-    "tier1": "Balloon multiplier",
-    "tier2": "High winds",
-    "tier3": "Sky high",
-    "tier4": "Legendary dawn",
-    "sky": "Sky multiplier"
+    "tier1": "Multiplicateur de ballon",
+    "tier2": "Grand vent",
+    "tier3": "Au septième ciel",
+    "tier4": "Aube légendaire",
+    "sky": "Multiplicateur céleste"
   },
   "banner": {
-    "ways": "{name} · {length} reels · {ways} {ways, plural, one {way} other {ways}}{more, plural, =0 {} other { · +# more}}{sky, plural, =1 {} other { · SKY ×#}}",
-    "merge": "Merge · ×{multiplier}",
-    "scatter": "{count} suns · +{money} DEMO · {spins} free spins",
-    "retrigger": "{count} suns · +{spins} free spins",
-    "trigger": "Dawn Festival · {spins} free spins"
+    "ways": "{name} · {length} rouleaux · {ways} {ways, plural, one {way} other {ways}}{more, plural, =0 {} other { · +# autres}}{sky, plural, =1 {} other { · CIEL ×#}}",
+    "merge": "Fusion · ×{multiplier}",
+    "scatter": "{count} soleils · +{money} DEMO · {spins} tours gratuits",
+    "retrigger": "{count} soleils · +{spins} tours gratuits",
+    "trigger": "Fête de l'aube · {spins} tours gratuits"
   },
   "deck": {
-    "group": "Game controls",
-    "balance": "Balance",
-    "refill": "Refill balance",
-    "win": "Win",
+    "group": "Commandes du jeu",
+    "balance": "Solde",
+    "refill": "Recharger le solde",
+    "win": "Gain",
     "winReplay": "Replay",
-    "winReplayLast": "Replay win",
-    "winLast": "Last win",
-    "cost": "Cost",
-    "spin": "Spin",
-    "spinCost": "Cost {cost}",
-    "auto": "Autoplay",
-    "info": "Info",
-    "infoAria": "Game info",
-    "on": "On",
-    "off": "Off",
-    "buy": "Buy bonus",
-    "buyDesc": "3+ suns guaranteed · {rtp}",
-    "speedAria": "Spin speed: {speed}",
-    "sound": "Sound",
-    "soundLoading": "Loading sound {percent}%",
-    "outOfCredit": "Your DEMO balance has run out.",
-    "lastWin": "Last round <b>+{money} DEMO</b> · {times}×",
-    "lastNone": "Last round: no win.",
-    "hintSpace": "You can also spin with the space bar.",
-    "hintFixed": "The result is fixed before the spin.",
-    "spinLocked": "Round in progress; locked until every lift, respin and free spin has played.",
-    "anteDesc": "Free-spin chance ≈2×"
+    "winReplayLast": "Gain du replay",
+    "winLast": "Dernier gain",
+    "cost": "Coût",
+    "spin": "Lancer",
+    "spinCost": "Coût {cost}",
+    "auto": "Auto",
+    "info": "Infos",
+    "infoAria": "Infos du jeu",
+    "on": "Activé",
+    "off": "Désactivé",
+    "buy": "Acheter le bonus",
+    "buyDesc": "3+ soleils garantis · {rtp}",
+    "speedAria": "Vitesse des tours : {speed}",
+    "sound": "Son",
+    "soundLoading": "Chargement du son {percent} %",
+    "outOfCredit": "Votre solde DEMO est épuisé.",
+    "lastWin": "Dernier tour <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Dernier tour sans gain.",
+    "hintSpace": "Vous pouvez aussi lancer avec la barre d’espace.",
+    "hintFixed": "Le résultat est déterminé avant le tour.",
+    "spinLocked": "Tour en cours ; verrouillé jusqu'à la fin de chaque ascension, relance et tour gratuit.",
+    "anteDesc": "Chances de tours gratuits ≈2×"
   },
   "auto": {
-    "ribbon": "Autoplay · {spins, plural, one {# spin} other {# spins}} left"
+    "ribbon": "Auto · {spins, plural, one {# tour restant} other {# tours restants}}"
   },
   "toast": {
-    "close": "Dismiss notification",
-    "autoplayStopped": "Autoplay stopped: {reason}. {spins, plural, one {# spin} other {# spins}}, net {net}.",
-    "autoplayStoppedShort": "Autoplay stopped: {reason}.",
-    "autoplayStarted": "Autoplay: {spins, plural, one {# spin} other {# spins}}, loss limit {limit}.",
-    "refilled": "Balance refilled: {amount} DEMO.",
-    "shareCopied": "Share link copied: {url}",
-    "shareLink": "Share link: {url}",
-    "shareFailed": "Could not share: {error}",
-    "replayFailed": "This round could not be replayed.",
-    "replayMismatch": "Replay could not be verified: the record does not match the engine."
+    "close": "Fermer la notification",
+    "autoplayStopped": "Jeu automatique arrêté : {reason}. {spins, plural, one {# tour} other {# tours}}, net {net}.",
+    "autoplayStoppedShort": "Jeu automatique arrêté : {reason}.",
+    "autoplayStarted": "Jeu automatique : {spins, plural, one {# tour} other {# tours}}, limite de perte {limit}.",
+    "refilled": "Solde rechargé : {amount} DEMO.",
+    "shareCopied": "Lien de partage copié : {url}",
+    "shareLink": "Lien de partage : {url}",
+    "shareFailed": "Partage impossible : {error}",
+    "replayFailed": "Ce tour n’a pas pu être rejoué.",
+    "replayMismatch": "Replay non vérifiable : l’enregistrement ne correspond pas au moteur."
   },
   "autoplay": {
-    "serverFailed": "The server could not start the round",
-    "spinFailed": "The spin could not be started",
-    "quit": "You left the session",
-    "title": "Autoplay",
-    "note": "{cost} per spin{ante, select, yes { (Chance ×2)} other {}} · never buys the bonus · stops when the tab is hidden."
+    "serverFailed": "Le serveur n’a pas pu lancer le tour",
+    "spinFailed": "Le tour n’a pas pu être lancé",
+    "quit": "Vous avez quitté la session",
+    "title": "Auto",
+    "note": "{cost} par tour{ante, select, yes { (Chance ×2)} other {}} · n’achète jamais le bonus · s’arrête quand l’onglet est masqué."
   },
   "errors": {
-    "entropy": "Secure local randomness is unavailable. The demo did not start.",
-    "insufficient": "Insufficient balance: this {kind, select, buy {purchase} other {spin}} costs {cost}. Lower the bet or refill the balance.",
-    "noCredit": "You don't have enough demo credit, or a demo is already running."
+    "entropy": "Le hasard local sécurisé est indisponible. La démo n’a pas démarré.",
+    "insufficient": "Solde insuffisant : {kind, select, buy {cet achat coûte} other {ce tour coûte}} {cost}. Baissez la mise ou rechargez le solde.",
+    "noCredit": "Vous n’avez pas assez de crédit démo, ou une démo est déjà en cours."
   },
   "buy": {
     "block": {
-      "gated": "Only bought with DEMO credit",
-      "autoplay": "Cannot be bought while autoplay is running",
-      "busy": "Cannot be bought before the round ends",
-      "ante": "Cannot be bought while Chance ×2 is on",
-      "balance": "Insufficient balance (price {price})"
+      "gated": "Achat possible uniquement avec le crédit DEMO",
+      "autoplay": "Achat impossible pendant le jeu automatique",
+      "busy": "Achat impossible avant la fin du tour",
+      "ante": "Achat impossible avec Chance ×2 activée",
+      "balance": "Solde insuffisant (prix {price})"
     },
-    "rtp": "Purchase RTP {buy} · standard {standard} (simulation, uncertified)",
-    "feature": "Dawn Festival · at least {bet} bet",
-    "text": "<b>100×</b> your bet. The first board holds at least 3 Dawn Suns, so the Dawn Festival with at least <b>{spins} free spins</b> is guaranteed. Balloons stay between free spins; every balloon that leaves the top moors in the sky band and raises the sky multiplier, which multiplies every win until the feature ends. Wins are paid on a bet of {bet}, maximum {max}."
+    "rtp": "RTP d’achat {buy} · standard {standard} (simulation, non certifiée)",
+    "feature": "Fête de l'aube · mise {bet}",
+    "text": "<b>100×</b> votre mise. Le premier plateau contient au moins 3 Soleils de l'aube : la Fête de l'aube avec au moins <b>{spins} tours gratuits</b> est garantie. Les ballons restent entre les tours gratuits ; chaque ballon qui sort par le haut s'amarre à la bande céleste et augmente le multiplicateur du ciel, qui multiplie chaque gain jusqu'à la fin de la fonction. Les gains sont payés sur une mise de {bet}, maximum {max}."
   },
   "replay": {
-    "ribbon": "Replay — balance unchanged · round {id}"
+    "ribbon": "Replay — solde inchangé · tour {id}"
   },
   "gated": {
-    "title": "No on-chain Göreme.",
-    "text": "This game is played with DEMO credit only; real bets are not accepted.",
-    "back": "Back to the local demo"
+    "title": "Pas de Göreme on-chain.",
+    "text": "Ce jeu se joue uniquement avec du crédit DEMO ; les mises réelles ne sont pas acceptées.",
+    "back": "Retour à la démo locale"
   },
   "settings": {
-    "soundReady": "Sound ready: music, effects and ambience are prepared on this device.",
-    "soundIdle": "Sound loads on the first tap.",
-    "soundLoading": "Loading sound {percent}% (the game stays silent meanwhile).",
-    "voiceNote": "Voice lines are not recorded yet: the voice setting is kept and the game plays wordless cues meanwhile.",
-    "demoTitle": "DEMO balance",
-    "demoText": "Balance {balance}{remote, select, yes { (server)} other {}}. Refilling sets the balance to {start} DEMO and adds a “Balance refilled” row to the history; it is not possible while a round or autoplay is running."
+    "soundReady": "Son prêt : la musique, les effets et l’ambiance sont préparés sur cet appareil.",
+    "soundIdle": "Le son se charge au premier toucher.",
+    "soundLoading": "Chargement du son {percent} % (le jeu reste muet en attendant).",
+    "voiceNote": "Les voix ne sont pas encore enregistrées : le réglage de voix est conservé et le jeu joue en attendant des signaux sans paroles.",
+    "demoTitle": "Solde DEMO",
+    "demoText": "Solde {balance}{remote, select, yes { (serveur)} other {}}. Recharger fixe le solde à {start} DEMO et ajoute une ligne « Solde rechargé » à l’historique ; impossible pendant un tour ou le jeu automatique."
   },
   "splash": {
-    "loading": "Loading",
-    "play": "Play",
-    "skip": "Skip intro screens",
-    "note": "DEMO credit only · RTP {rtp} (simulation, uncertified)",
+    "loading": "Chargement",
+    "play": "Jouer",
+    "skip": "Passer les écrans d'introduction",
+    "note": "Crédit DEMO uniquement · RTP {rtp} (simulation, non certifié)",
     "lift": {
-      "title": "Rising balloons",
-      "text": "After every win each balloon rises a row, drifts with the wind and gains +1."
+      "title": "Ballons ascendants",
+      "text": "Après chaque gain, chaque ballon monte d'une rangée, dérive avec le vent et gagne +1."
     },
     "merge": {
-      "title": "Merges",
-      "text": "Two balloons in one cell become one giant balloon: their multipliers add up."
+      "title": "Fusions",
+      "text": "Deux ballons dans une même case deviennent un ballon géant : leurs multiplicateurs s'additionnent."
     },
     "sky": {
-      "title": "Sky band · up to {max}×",
-      "text": "In the Dawn Festival balloons moor in the sky and the sky multiplier only grows."
+      "title": "Bande céleste · jusqu'à {max}×",
+      "text": "Pendant la Fête de l'aube, les ballons s'amarrent au ciel et le multiplicateur du ciel ne fait que croître."
     }
   },
   "intro": {
-    "word": "DAWN FESTIVAL",
-    "srTitle": "Dawn Festival begins",
-    "freeSpins": "free\nspins",
-    "text": "Balloons <b>stay</b> between spins and rise every spin. A balloon that leaves the top <b>moors in the sky band</b>: the sky multiplier grows and multiplies <b>every win</b>.",
-    "start": "Start"
+    "word": "FÊTE DE L'AUBE",
+    "srTitle": "La Fête de l'aube commence",
+    "freeSpins": "tours\ngratuits",
+    "text": "Les ballons <b>restent</b> entre les tours et montent à chaque tour. Un ballon qui sort par le haut <b>s'amarre à la bande céleste</b> : le multiplicateur du ciel grandit et multiplie <b>chaque gain</b>.",
+    "start": "Commencer"
   },
   "total": {
-    "title": "Dawn Festival — Total",
+    "title": "Fête de l'aube — Total",
     "word": "TOTAL",
-    "sub": "WIN",
-    "spins": "Free spins",
-    "spinsValue": "{spins, plural, one {# spin} other {# spins}}",
-    "sky": "Sky multiplier",
-    "moored": "{n, plural, =0 {no balloon moored} one {# balloon moored} other {# balloons moored}}",
-    "ofBetLabel": "Times bet",
-    "capNote": "The round hit the 10,000× cap · remaining spins are not played",
-    "toCelebration": "To the celebration"
+    "sub": "GAIN",
+    "spins": "Tours gratuits",
+    "spinsValue": "{spins, plural, one {# tour} other {# tours}}",
+    "sky": "Multiplicateur céleste",
+    "moored": "{n, plural, =0 {aucun ballon amarré} one {# ballon amarré} other {# ballons amarrés}}",
+    "ofBetLabel": "Fois la mise",
+    "capNote": "Le tour a atteint le plafond de 10 000× · les tours restants ne sont pas joués",
+    "toCelebration": "Vers la célébration"
   },
   "celebration": {
-    "aria": "{title}: {money} DEMO",
-    "times": "{times}× bet",
-    "capNote": "The round hit the cap · remaining spins are not played",
-    "speedUp": "Tap to speed up",
-    "continue": "Continue"
+    "aria": "{title} : {money} DEMO",
+    "times": "{times}× la mise",
+    "capNote": "Le tour a atteint le plafond · les tours restants ne sont pas joués",
+    "speedUp": "Touchez pour accélérer",
+    "continue": "Continuer"
   },
   "announce": {
-    "spinStarted": "Spin started, {amount} DEMO deducted.",
-    "bonusBought": "Bonus bought, {amount} DEMO deducted.",
-    "sentToServer": "Round sent to the server, {amount} DEMO.",
-    "recovered": "Your last server round is shown again; payout {amount} DEMO.",
-    "replaying": "Replaying round {id}; the balance does not change.",
-    "replayDone": "Replay finished: {amount} DEMO, {times}× bet.",
-    "preview": "Preview round, balance unchanged.",
-    "roundEnd": "Round over: you won {amount} DEMO, {times}× bet.",
-    "roundEndNone": "Round over: no win.",
-    "noWin": "No win.",
-    "sunTease": "Two suns are down; the last reels are turning.",
-    "way": "{name}, {length} reels, {ways, plural, one {# way} other {# ways}}{multiplier, plural, =1 {} other {, balloon multiplier ×#}}",
-    "boardWin": "Board win {times}× bet",
-    "scatter": "{count} Dawn Suns: {spins} free spins.",
-    "retrigger": "{count} suns: {spins} more free spins.",
-    "trigger": "{count} Dawn Suns: the Dawn Festival with {spins} free spins.",
-    "lift": "{n, plural, one {# balloon rises} other {# balloons rise}}; {wind}.",
-    "flyAway": "{n, plural, one {# balloon flies away} other {# balloons fly away}}.",
-    "merge": "Two balloons merge: ×{multiplier}.",
-    "sky": "{n, plural, one {# balloon moors} other {# balloons moor}}; sky multiplier ×{after}.",
-    "freeIntro": "Dawn Festival: {spins} free spins.",
-    "freeSpinWin": "Free spin win {times}× bet; total {total}× bet.",
-    "freeSpinNone": "No win this free spin.",
-    "freeOutro": "Dawn Festival over: {amount} DEMO over {spins} free spins, sky ×{sky}.",
-    "totalWin": "Total win {amount} DEMO, {times}× bet.",
-    "celebration": "{title}: {amount} DEMO, {times}× bet.",
-    "refilled": "Balance refilled: {amount} DEMO.",
-    "speed": "Spin speed: {speed}.",
-    "anteOn": "Chance ×2 on; a spin costs {cost}.",
-    "anteOff": "Chance ×2 off; a spin costs {cost}."
+    "spinStarted": "Tour lancé, {amount} DEMO débités.",
+    "bonusBought": "Bonus acheté, {amount} DEMO débités.",
+    "sentToServer": "Tour envoyé au serveur, {amount} DEMO.",
+    "recovered": "Votre dernier tour serveur est affiché à nouveau ; gain {amount} DEMO.",
+    "replaying": "Rejeu du tour {id} ; le solde ne change pas.",
+    "replayDone": "Rejeu terminé : {amount} DEMO, {times}× la mise.",
+    "preview": "Tour d'aperçu, solde inchangé.",
+    "roundEnd": "Tour terminé : vous avez gagné {amount} DEMO, {times}× la mise.",
+    "roundEndNone": "Tour terminé : aucun gain.",
+    "noWin": "Aucun gain.",
+    "sunTease": "Deux soleils sont tombés ; les derniers rouleaux tournent.",
+    "way": "{name}, {length} rouleaux, {ways, plural, one {# way} other {# ways}}{multiplier, plural, =1 {} other {, multiplicateur de ballon ×#}}",
+    "boardWin": "Gain du plateau {times}× la mise",
+    "scatter": "{count} Soleils de l'aube : {spins} tours gratuits.",
+    "retrigger": "{count} soleils : {spins} tours gratuits de plus.",
+    "trigger": "{count} Soleils de l'aube : la Fête de l'aube avec {spins} tours gratuits.",
+    "lift": "{n, plural, one {# ballon monte} other {# ballons montent}} ; {wind}.",
+    "flyAway": "{n, plural, one {# ballon s'envole} other {# ballons s'envolent}}.",
+    "merge": "Deux ballons fusionnent : ×{multiplier}.",
+    "sky": "{n, plural, one {# ballon s'amarre} other {# ballons s'amarrent}} ; multiplicateur du ciel ×{after}.",
+    "freeIntro": "Fête de l'aube : {spins} tours gratuits.",
+    "freeSpinWin": "Gain du tour gratuit {times}× la mise ; total {total}× la mise.",
+    "freeSpinNone": "Aucun gain sur ce tour gratuit.",
+    "freeOutro": "Fête de l'aube terminée : {amount} DEMO en {spins} tours gratuits, ciel ×{sky}.",
+    "totalWin": "Gain total {amount} DEMO, {times}× la mise.",
+    "celebration": "{title} : {amount} DEMO, {times}× la mise.",
+    "refilled": "Solde rechargé : {amount} DEMO.",
+    "speed": "Vitesse des tours : {speed}.",
+    "anteOn": "Chance ×2 activée ; un tour coûte {cost}.",
+    "anteOff": "Chance ×2 désactivée ; un tour coûte {cost}."
   },
   "history": {
-    "title": "Your game history",
-    "scope": "This session · replays never change the balance",
-    "time": "Time",
+    "title": "Votre historique de jeu",
+    "scope": "Cette session · les replays ne modifient jamais le solde",
+    "time": "Heure",
     "mode": "Mode",
-    "bet": "Bet",
-    "cost": "Cost",
-    "win": "Win",
-    "result": "Result",
-    "roundId": "Round ID",
+    "bet": "Mise",
+    "cost": "Coût",
+    "win": "Gain",
+    "result": "Résultat",
+    "roundId": "ID du tour",
     "replayColumn": "Replay",
-    "latest": "Latest round",
+    "latest": "Dernier tour",
     "replay": "Replay",
-    "replayAria": "Replay: round {id}, balance unchanged",
-    "share": "Share my win",
-    "shareAria": "Share my win: round {id}",
-    "emptyTitle": "Your first round will appear here.",
-    "emptyText": "The mode, bet, cost, win and round ID of every round are recorded; you can watch any round again.",
-    "reset": "Balance refilled",
-    "resetRemote": "Balance refilled (server)",
-    "tableRegion": "Game history table",
+    "replayAria": "Rejouer : tour {id}, solde inchangé",
+    "share": "Partager mon gain",
+    "shareAria": "Partager mon gain : tour {id}",
+    "emptyTitle": "Votre premier tour apparaîtra ici.",
+    "emptyText": "Le mode, la mise, le coût, le gain et l’ID de chaque tour sont enregistrés ; vous pouvez revoir n’importe quel tour.",
+    "reset": "Solde rechargé",
+    "resetRemote": "Solde rechargé (serveur)",
+    "tableRegion": "Tableau de l’historique de jeu",
     "detail": {
-      "capped": "Max win · {times}×",
-      "none": "No win",
-      "free": "Dawn Festival ×{spins} · sky ×{sky} · {times}×",
-      "base": "{wins, plural, one {# ways win} other {# ways wins}}{lifts, plural, =0 {} one { · # lift} other { · # lifts}} · {times}×"
+      "capped": "Gain maximum · {times}×",
+      "none": "Aucun gain",
+      "free": "Fête de l'aube ×{spins} · ciel ×{sky} · {times}×",
+      "base": "{wins, plural, one {# gain ways} other {# gains ways}}{lifts, plural, =0 {} one { · # ascension} other { · # ascensions}} · {times}×"
     }
   },
   "rules": {
-    "board": "Göreme is a 6 × 5 ways slot: 3 to 6 matching symbols on adjacent reels from the left pay, on up to 15,625 ways. Balloon wilds substitute and carry multipliers that multiply along a way.",
-    "features": "After a paid board, every balloon rises a row, drifts with the wind, gains +1 and the other cells respin; two balloons in one cell merge. 3+ Dawn Suns start the Dawn Festival, where exiting balloons moor in the sky band and raise the sky multiplier.",
-    "fixed": "The whole round is fixed by the engine before the presentation starts; animation, speed and the sound never change it."
+    "board": "Göreme est une machine à sous ways 6 × 5 : 3 à 6 symboles identiques sur des rouleaux adjacents depuis la gauche paient, sur jusqu'à 15 625 ways. Les ballons wild remplacent les symboles et portent des multiplicateurs qui se multiplient le long d'un way.",
+    "features": "Après un plateau payé, chaque ballon monte d'une rangée, dérive avec le vent, gagne +1 et les autres cases sont relancées ; deux ballons dans une même case fusionnent. 3+ Soleils de l'aube lancent la Fête de l'aube, où les ballons qui sortent s'amarrent à la bande céleste et augmentent le multiplicateur du ciel.",
+    "fixed": "Le tour entier est fixé par le moteur avant le début de la présentation ; l'animation, la vitesse et le son ne le changent jamais."
   },
   "info": {
-    "title": "Göreme · Game info",
+    "title": "Göreme · Infos du jeu",
     "tab": {
-      "how": "How to play",
-      "pay": "Paytable",
-      "features": "Features",
+      "how": "Comment jouer",
+      "pay": "Table des gains",
+      "features": "Fonctionnalités",
       "rtp": "RTP",
-      "limits": "Bet and win limits",
-      "keys": "Keys",
-      "fault": "Malfunction clause"
+      "limits": "Limites de mise et de gain",
+      "keys": "Touches",
+      "fault": "Clause de dysfonctionnement"
     },
     "how": {
       "steps": {
-        "bet": "<b>Choose your bet.</b> The − and + buttons change the bet by one step; tap the bet amount to open every step. “Max bet” picks the highest step your balance allows.",
-        "spin": "<b>Spin.</b> Press the sun button or use the space bar. The round cost ({factor} times the bet when Chance ×2 is on) is deducted from the balance once.",
-        "ways": "<b>Ways.</b> A symbol pays when it appears on <b>3 or more adjacent reels starting from the left reel</b>, in any row. Every combination of one cell per reel is a way; with five rows on six reels there are up to {ways} ways.",
-        "lift": "<b>Rising balloons.</b> After a board pays, every balloon rises one row, drifts one reel with the wind and gains +1; the other cells spin again and the new board pays in full. The chain ends when no balloon is left (at most 20 lifts).",
-        "result": "<b>The result.</b> The whole round is determined by the engine before the spin starts; the animation only plays that result. The spin button stays locked until the round (every lift, respin and free spin) has finished; use the Quick/Turbo setting to speed it up. The speed setting, tapping the celebration counter, a hidden tab or leaving the page does not change the payout; the round always closes once, with the engine's payout."
+        "bet": "<b>Choisissez votre mise.</b> Les boutons − et + modifient la mise d’un cran ; touchez le montant pour ouvrir tous les paliers. « Mise max » choisit le palier le plus élevé que votre solde permet.",
+        "spin": "<b>Lancez.</b> Appuyez sur le bouton soleil ou sur la barre d'espace. Le coût du tour ({factor} fois la mise avec Chance ×2) est débité une seule fois du solde.",
+        "ways": "<b>Ways.</b> Un symbole paie quand il apparaît sur <b>3 rouleaux adjacents ou plus à partir du rouleau de gauche</b>, sur n'importe quelle rangée. Chaque combinaison d'une case par rouleau est un way ; avec cinq rangées sur six rouleaux, il y a jusqu'à {ways} ways.",
+        "lift": "<b>Ballons ascendants.</b> Après un plateau payé, chaque ballon monte d'une rangée, dérive d'un rouleau avec le vent et gagne +1 ; les autres cases sont relancées et le nouveau plateau paie entièrement. La chaîne s'arrête quand il ne reste plus de ballon (20 ascensions au plus).",
+        "result": "<b>Le résultat.</b> Le tour entier est déterminé par le moteur avant le lancement ; l'animation ne fait que jouer ce résultat. Le bouton reste verrouillé jusqu'à la fin du tour (chaque ascension, relance et tour gratuit) ; utilisez Rapide/Turbo pour accélérer. La vitesse, toucher le compteur de célébration, un onglet masqué ou quitter la page ne changent pas le gain ; le tour se clôt toujours une seule fois, avec le gain du moteur."
       },
-      "note": "DEMO credit has no value; it does not earn SOL, tokens or rewards. Göreme and Cappadocia are geography; the fairy chimneys, dovecotes, Avanos pottery and kilim motifs are drawn originally for this game."
+      "note": "Le crédit DEMO n'a aucune valeur ; il ne rapporte ni SOL, ni jetons, ni récompenses. Göreme et la Cappadoce relèvent de la géographie ; cheminées de fée, pigeonniers, poterie d'Avanos et motifs de kilim sont dessinés de façon originale pour ce jeu."
     },
     "pay": {
-      "lead": "Amounts are the gross DEMO pay <b>per way</b> at a bet of <b>{bet}</b>, for a run of 3, 4, 5 or 6 reels from the left. A win is the per-way pay times the number of ways (multiplied by the balloon multipliers on those ways).",
-      "gridAria": "Ways payouts per symbol",
-      "reels": "{n} reels",
-      "example": "Example: {name} on all six reels pays {amount} DEMO per way; with every cell filled that would be up to {ways} ways. The round total never exceeds {max}.",
-      "suns": "{n} suns",
-      "spins": "{spins} free spins",
-      "sunText": "Suns count only on the round's <b>first board</b> and pay a multiple of the bet. In the Dawn Festival, 3 or more suns on a board give <b>+5 free spins</b>.",
-      "balloonText": "Substitutes for every symbol except the sun and pays nothing alone. It lands with <b>{values}</b>; every lift adds +1 (at most ×{max}). On one reel balloon values add up; across reels they <b>multiply</b> along a way.",
-      "maxTitle": "Maximum win {max}×",
-      "maxText": "At this bet: <b>{amount}</b>. If the round total reaches this cap, the round ends immediately; the remaining spins are not played."
+      "lead": "Les montants sont le gain DEMO brut <b>par way</b> pour une mise de <b>{bet}</b>, pour une série de 3, 4, 5 ou 6 rouleaux depuis la gauche. Un gain vaut le gain par way multiplié par le nombre de ways (multiplié par les multiplicateurs des ballons sur ces ways).",
+      "gridAria": "Gains ways par symbole",
+      "reels": "{n} rouleaux",
+      "example": "Exemple : {name} sur les six rouleaux paie {amount} DEMO par way ; avec toutes les cases remplies, cela ferait jusqu'à {ways} ways. Le total du tour ne dépasse jamais {max}.",
+      "suns": "{n} soleils",
+      "spins": "{spins} tours gratuits",
+      "sunText": "Les soleils ne comptent que sur le <b>premier plateau</b> du tour et paient un multiple de la mise. Pendant la Fête de l'aube, 3 soleils ou plus sur un plateau donnent <b>+5 tours gratuits</b>.",
+      "balloonText": "Remplace tous les symboles sauf le soleil et ne paie rien seul. Il arrive avec <b>{values}</b> ; chaque ascension ajoute +1 (au plus ×{max}). Sur un même rouleau, les valeurs des ballons s'additionnent ; d'un rouleau à l'autre, elles se <b>multiplient</b> le long d'un way.",
+      "maxTitle": "Gain maximum {max}×",
+      "maxText": "À cette mise : <b>{amount}</b>. Si le total du tour atteint ce plafond, le tour s'arrête aussitôt ; les tours restants ne sont pas joués."
     },
     "features": {
       "ways": {
-        "title": "How ways are counted",
-        "text": "For each pay symbol the game looks at the reels from the left. A reel continues the run if it holds that symbol or a balloon. The run must be at least 3 reels long and contain at least one real symbol.",
-        "formula": "<b>Win</b> = pay per way × (product over the run of (symbols + balloon values on the reel) − product of the balloon values alone).",
-        "example": "Example: the symbol twice on reel 1, once on reel 2 and once plus a ×3 balloon on reel 3 gives (2) × (1) × (1 + 3) − 0 = <b>8 weighted ways</b>. The subtraction removes ways made only of balloons."
+        "title": "Comment les ways sont comptés",
+        "text": "Pour chaque symbole payant, le jeu regarde les rouleaux depuis la gauche. Un rouleau prolonge la série s'il contient ce symbole ou un ballon. La série doit faire au moins 3 rouleaux et contenir au moins un vrai symbole.",
+        "formula": "<b>Gain</b> = gain par way × (produit sur la série de (symboles + valeurs des ballons du rouleau) − produit des seules valeurs des ballons).",
+        "example": "Exemple : le symbole deux fois sur le rouleau 1, une fois sur le rouleau 2 et une fois plus un ballon ×3 sur le rouleau 3 donne (2) × (1) × (1 + 3) − 0 = <b>8 ways pondérés</b>. La soustraction retire les ways faits uniquement de ballons."
       },
       "lift": {
-        "title": "Rising balloons and the wind",
-        "text": "After a board pays, a <b>lift</b> follows if a balloon is on the board: the wind picks a direction (left, calm or right), every balloon rises one row, drifts one reel with the wind (it stops at the edge) and its multiplier grows by 1 (at most ×{max}). A balloon that leaves the top row flies away. The other cells spin again and the board pays in full. At most {lifts} lifts per spin."
+        "title": "Ballons ascendants et vent",
+        "text": "Après un plateau payé, une <b>ascension</b> suit si un ballon est sur le plateau : le vent choisit une direction (gauche, calme ou droite), chaque ballon monte d'une rangée, dérive d'un rouleau avec le vent (il s'arrête au bord) et son multiplicateur augmente de 1 (au plus ×{max}). Un ballon qui quitte la rangée du haut s'envole. Les autres cases sont relancées et le plateau paie entièrement. Au plus {lifts} ascensions par tour."
       },
       "merge": {
-        "title": "Merges",
-        "text": "When two balloons arrive in the same cell they become <b>one giant balloon</b> whose multiplier is the sum of both (at most ×{max}). Merges are rare: they happen when the wind pushes balloons against the board edge."
+        "title": "Fusions",
+        "text": "Quand deux ballons arrivent dans la même case, ils deviennent <b>un ballon géant</b> dont le multiplicateur est la somme des deux (au plus ×{max}). Les fusions sont rares : elles se produisent quand le vent pousse des ballons contre le bord du plateau."
       },
       "free": {
-        "title": "Dawn Festival (free spins)",
-        "text": "3 / 4 / 5 / 6+ Dawn Suns on the first board award {s3} / {s4} / {s5} / {s6} free spins. In the feature balloons stay on the board between spins and every free spin with balloons is a lift. 3+ suns on a free spin give +{retrigger} spins (at most {max} in total).",
-        "sky": "<b>Sky band:</b> a balloon that leaves the top row during the feature <b>moors</b> in the sky band above the reels. The sky multiplier (×1 until the first mooring, then the sum of all moored balloon values) multiplies every win until the feature ends and never falls."
+        "title": "Fête de l'aube (tours gratuits)",
+        "text": "3 / 4 / 5 / 6+ Soleils de l'aube sur le premier plateau donnent {s3} / {s4} / {s5} / {s6} tours gratuits. Pendant la fonction, les ballons restent sur le plateau entre les tours et chaque tour gratuit avec ballons est une ascension. 3+ soleils sur un tour gratuit donnent +{retrigger} tours ({max} au total au plus).",
+        "sky": "<b>Bande céleste :</b> un ballon qui quitte la rangée du haut pendant la fonction <b>s'amarre</b> à la bande céleste au-dessus des rouleaux. Le multiplicateur du ciel (×1 jusqu'au premier amarrage, puis la somme de tous les ballons amarrés) multiplie chaque gain jusqu'à la fin de la fonction et ne baisse jamais."
       },
       "cumulative": {
-        "title": "Cumulative win",
-        "text": "The win meter never resets during a round: every lift, respin and free spin adds to it. A round with free spins always ends with the total screen."
+        "title": "Gain cumulé",
+        "text": "Le compteur de gains ne revient jamais à zéro pendant un tour : chaque ascension, relance et tour gratuit s'ajoute. Un tour avec tours gratuits se termine toujours par l'écran du total."
       },
       "tiers": {
-        "title": "Win tiers",
-        "text": "Round total / bet: <b>{big}</b> from 10×, <b>{mega}</b> from 25×, <b>{super}</b> from 50×, <b>{epic}</b> from 100×, and <b>{max}</b> for a round that reaches the cap. The counter climbs through the tiers."
+        "title": "Paliers de gain",
+        "text": "Total du tour / mise : <b>{big}</b> dès 10×, <b>{mega}</b> dès 25×, <b>{super}</b> dès 50×, <b>{epic}</b> dès 100× et <b>{max}</b> pour un tour qui atteint le plafond. Le compteur gravit les paliers."
       },
       "ante": {
-        "title": "Chance ×2 · a spin costs {cost}",
-        "text": "The bet costs {factor} times as much and the base board holds more suns: the Dawn Festival comes about twice as often (simulation {ante} of rounds instead of {standard}). Wins are still paid on the base bet."
+        "title": "Chance ×2 · un tour coûte {cost}",
+        "text": "La mise coûte {factor} fois plus et le plateau de base contient plus de soleils : la Fête de l'aube arrive environ deux fois plus souvent (simulation {ante} des tours au lieu de {standard}). Les gains restent payés sur la mise de base."
       },
       "buy": {
-        "title": "Buy bonus · {price}",
-        "text": "Starts a round whose first board holds at least {suns} Dawn Suns, so the Dawn Festival always follows. Purchase RTP {rtp}. Not available with Chance ×2 or during autoplay."
+        "title": "Acheter le bonus · {price}",
+        "text": "Lance un tour dont le premier plateau contient au moins {suns} Soleils de l'aube : la Fête de l'aube suit toujours. RTP de l'achat {rtp}. Indisponible avec Chance ×2 ou en jeu automatique."
       }
     },
     "rtp": {
-      "title": "Return to player (RTP)",
-      "caption": "RTP per mode",
+      "title": "Retour au joueur (RTP)",
+      "caption": "RTP par mode",
       "colMode": "Mode",
-      "colCost": "Cost",
-      "colCi": "95% interval",
-      "colFeature": "Dawn Festival",
-      "everyRound": "every round",
-      "oneIn": "1 in {n}",
-      "text": "Estimates from <b>{millions} million round simulations</b> per mode for standard and Chance ×2 and {buyMillions} million for the purchase, each in its own process. Base-spin hit rate {hit}. Standard deviation per round: {sdStandard} (standard), {sdBuy} (purchase).",
-      "note": "The RTP is a long-run average; a session can end anywhere. This DEMO game is <b>uncertified</b>; the interval is a normal approximation and optimistic for this heavy tail."
+      "colCost": "Coût",
+      "colCi": "Intervalle à 95 %",
+      "colFeature": "Fête de l'aube",
+      "everyRound": "chaque tour",
+      "oneIn": "1 sur {n}",
+      "text": "Estimations issues de <b>{millions} millions de tours simulés</b> par mode pour le standard et Chance ×2 et de {buyMillions} millions pour l'achat, chacun dans son propre processus. Taux de gain du tour de base {hit}. Écart type par tour : {sdStandard} (standard), {sdBuy} (achat).",
+      "note": "Le RTP est une moyenne à long terme ; une session peut se terminer n'importe où. Ce jeu DEMO est <b>non certifié</b> ; l'intervalle est une approximation normale, optimiste pour cette queue lourde."
     },
     "limits": {
-      "title": "Bet and win limits",
-      "range": "Bet range",
-      "steps": "Bet steps",
-      "current": "At this bet",
-      "currentValue": "spin {bet} · Chance ×2 {ante} · buy {buy}",
-      "max": "Maximum win",
-      "maxValue": "{multiplier}× bet = {amount}",
-      "text1": "Wins are always paid on the base bet, in every mode.",
-      "text2": "A round that reaches {times}× bet ends immediately; the remaining spins are not played."
+      "title": "Limites de mise et de gain",
+      "range": "Plage de mise",
+      "steps": "Paliers de mise",
+      "current": "À cette mise",
+      "currentValue": "tour {bet} · Chance ×2 {ante} · achat {buy}",
+      "max": "Gain maximum",
+      "maxValue": "{multiplier}× la mise = {amount}",
+      "text1": "Les gains sont toujours payés sur la mise de base, dans tous les modes.",
+      "text2": "Un tour qui atteint {times}× la mise s'arrête aussitôt ; les tours restants ne sont pas joués."
     },
     "keys": {
-      "heading": "Keyboard",
-      "space": "Space",
-      "spaceText": "Spins (can be turned off: {option}). During a round it only continues a hold screen.",
-      "enterText": "Same as Space outside buttons and dialogs.",
-      "escText": "Closes a dialog (not the session reminder).",
-      "tabText": "Moves between the controls; every control is reachable.",
-      "note": "Screen readers announce every win, lift, merge, mooring and the round result."
+      "heading": "Clavier",
+      "space": "Espace",
+      "spaceText": "Lance un tour (désactivable : {option}). Pendant un tour, elle ne fait qu'avancer un écran d'attente.",
+      "enterText": "Comme Espace en dehors des boutons et des dialogues.",
+      "escText": "Ferme un dialogue (pas le rappel de session).",
+      "tabText": "Passe d'une commande à l'autre ; toutes sont accessibles.",
+      "note": "Les lecteurs d'écran annoncent chaque gain, ascension, fusion, amarrage et le résultat du tour."
     },
     "fault": {
-      "title": "Malfunction clause",
-      "p1": "<b>A malfunction voids all affected games and payouts.</b>",
-      "p2": "If the presentation and the engine result disagree, the engine result (round record) is valid.",
-      "p3": "DEMO credit has no monetary value."
+      "title": "Clause de dysfonctionnement",
+      "p1": "<b>Un dysfonctionnement annule tous les jeux et paiements concernés.</b>",
+      "p2": "Si la présentation et le résultat du moteur divergent, le résultat du moteur (enregistrement du tour) fait foi.",
+      "p3": "Le crédit DEMO n'a aucune valeur monétaire."
     }
   }
 }

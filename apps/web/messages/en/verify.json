@@ -107,5 +107,8 @@
     "pathValue": "{path} → pool {pool} of {pools}",
     "figure": "Damla drop over {rows} terraces: {path}, pool {pool} of {pools}, ×{multiplier}",
     "mode": "{risk, select, low {Low} medium {Medium} other {High}} risk · {rows} terraces"
+  },
+  "goreme": {
+    "summary": "{lifts, plural, one {# lift} other {# lifts}} · {free, plural, =0 {no free spins} one {# free spin} other {# free spins}} · sky ×{sky}"
   }
 }

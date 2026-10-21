@@ -107,5 +107,8 @@
     "pathValue": "{path} → vasca {pool} di {pools}",
     "figure": "Goccia di Damla su {rows} terrazze: {path}, vasca {pool} di {pools}, ×{multiplier}",
     "mode": "Rischio {risk, select, low {basso} medium {medio} other {alto}} · {rows} terrazze"
+  },
+  "goreme": {
+    "summary": "{lifts, plural, one {# salita} other {# salite}} · {free, plural, =0 {nessun giro gratis} one {# giro gratis} other {# giri gratis}} · cielo ×{sky}"
   }
 }

@@ -107,5 +107,8 @@
     "pathValue": "{path} → poza {pool} de {pools}",
     "figure": "Gota de Damla sobre {rows} terrazas: {path}, poza {pool} de {pools}, ×{multiplier}",
     "mode": "Riesgo {risk, select, low {bajo} medium {medio} other {alto}} · {rows} terrazas"
+  },
+  "goreme": {
+    "summary": "{lifts, plural, one {# ascenso} other {# ascensos}} · {free, plural, =0 {sin giros gratis} one {# giro gratis} other {# giros gratis}} · cielo ×{sky}"
   }
 }

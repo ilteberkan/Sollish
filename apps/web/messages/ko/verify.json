@@ -107,5 +107,8 @@
     "pathValue": "{path} → 웅덩이 {pool}/{pools}",
     "figure": "테라스 {rows}단을 지난 Damla 물방울: {path}, 웅덩이 {pool}/{pools}, ×{multiplier}",
     "mode": "위험도 {risk, select, low {낮음} medium {보통} other {높음}} · 테라스 {rows}단"
+  },
+  "goreme": {
+    "summary": "{lifts, plural, other {상승 #회}} · {free, plural, =0 {무료 스핀 없음} other {무료 스핀 #회}} · 하늘 ×{sky}"
   }
 }

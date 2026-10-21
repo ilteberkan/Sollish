@@ -107,5 +107,8 @@
     "pathValue": "{path} → 第 {pool}/{pools} 个水池",
     "figure": "Damla 水滴经过 {rows} 层梯田：{path}，第 {pool}/{pools} 个水池，×{multiplier}",
     "mode": "{risk, select, low {低} medium {中} other {高}}风险 · {rows} 层梯田"
+  },
+  "goreme": {
+    "summary": "{lifts, plural, other {# 次上升}} · {free, plural, =0 {无免费旋转} other {# 次免费旋转}} · 天空 ×{sky}"
   }
 }

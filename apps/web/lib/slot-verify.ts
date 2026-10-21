@@ -1,6 +1,6 @@
 /** Browser-side verification for /verify and /replay: recompute a server round from its revealed seed with the same
  * protocol engine and compare. Pure and testable; the network part lives in rgs-client.ts. */
-import { ASENA_ENGINE_ID, CEZERI_ENGINE_ID, EBRU_ENGINE_ID, SLOT_GAMES, isClientSeed, isSlotNonce, slotGame, verifySlotRound, type AsenaRound, type CezeriRound, type EbruGrid, type EbruRound, type EbruStains, type SlotRoundSummary, type SlotVerifyResult } from '@sollish/protocol';
+import { ASENA_ENGINE_ID, CEZERI_ENGINE_ID, EBRU_ENGINE_ID, GOREME_ENGINE_ID, SLOT_GAMES, isClientSeed, isSlotNonce, slotGame, verifySlotRound, type AsenaRound, type CezeriRound, type EbruGrid, type EbruRound, type EbruStains, type GoremeRound, type SlotRoundSummary, type SlotVerifyResult } from '@sollish/protocol';
 import type { RemoteHistoryRow, RemoteReplay } from './rgs-client';
 
 export interface VerifyFormInput {
@@ -91,6 +91,7 @@ export function replayFrames(round: SlotRoundSummary): ReplayFrame[] {
   if (round.engine === EBRU_ENGINE_ID) return ebruFrames(round as unknown as EbruRound);
   if (round.engine === CEZERI_ENGINE_ID) return cezeriFrames(round as unknown as CezeriRound);
   if (round.engine === ASENA_ENGINE_ID) return asenaFrames(round as unknown as AsenaRound);
+  if (round.engine === GOREME_ENGINE_ID) return goremeFrames(round as unknown as GoremeRound);
   const frames: ReplayFrame[] = [];
   spins.forEach((spin, s) => spin.steps.forEach((step, t) => frames.push({
     spin: s, kind: spin.kind, step: t, steps: spin.steps.length, grid: step.grid, winIds: step.wins.flatMap(w => w.cells), stepHundredths: step.stepHundredths,
@@ -164,5 +165,29 @@ function asenaFrames(round: AsenaRound): ReplayFrame[] {
     winIds: step.clusters.flatMap(c => c.cells), stepHundredths: step.winHundredths, spinWinHundredths: spin.winHundredths,
     totalAfterHundredths: spin.totalHundredthsAfter, last: s === round.spins.length - 1 && t === spin.steps.length - 1,
   })));
+  return frames;
+}
+
+/** Göreme (goreme-balloons-1): one frame per board the player saw (the whole fresh board of a spin, or the board after a
+ * lift and its respin), the ways wins of that board highlighted (sky multiplier applied in the step win). Balloons carry
+ * their multiplier as the cell's `multiplier`. */
+function goremeFrames(round: GoremeRound): ReplayFrame[] {
+  const frames: ReplayFrame[] = [];
+  round.spins.forEach((spin, s) => {
+    const raw: { grid: ReplayCell[][]; winIds: number[]; stepHundredths: number }[] = [];
+    for (const step of spin.steps) {
+      if (step.type === 'spin' || step.type === 'respin') {
+        raw.push({ grid: step.grid.map(column => column.map(cell => (cell.symbol === 'balloon' ? { id: cell.id, symbol: cell.symbol, multiplier: cell.multiplier } : { id: cell.id, symbol: cell.symbol }))), winIds: [], stepHundredths: 0 });
+      } else if (step.type === 'ways' && raw.length) {
+        const last = raw[raw.length - 1]!;
+        last.winIds = [...new Set(step.wins.flatMap(w => w.cells))];
+        last.stepHundredths = step.winHundredths;
+      }
+    }
+    raw.forEach((frame, t) => frames.push({
+      spin: s, kind: spin.kind, step: t, steps: raw.length, grid: frame.grid, winIds: frame.winIds, stepHundredths: frame.stepHundredths,
+      spinWinHundredths: spin.winHundredths, totalAfterHundredths: spin.totalHundredthsAfter, last: s === round.spins.length - 1 && t === raw.length - 1,
+    }));
+  });
   return frames;
 }

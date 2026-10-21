@@ -1,375 +1,375 @@
 {
   "meta": {
-    "title": "Göreme: Dawn Balloons · Sollish",
-    "description": "An original 6 × 5, 15,625-ways slot: rising balloon wilds with multipliers, wind, merges and the Dawn Festival free spins with the sky band. DEMO credit only."
+    "title": "Göreme：黎明热气球 · Sollish",
+    "description": "原创 6 × 5、15,625 路老虎机：带倍数上升的热气球百搭、风、合并，以及带天空带的黎明盛会免费旋转。仅限 DEMO 积分。"
   },
-  "title": "Göreme: Dawn Balloons",
-  "subtitle": "6 × 5 · 15,625 ways · rising balloon wilds",
-  "logoSub": "DAWN BALLOONS",
-  "table": "Göreme game table",
+  "title": "Göreme：黎明热气球",
+  "subtitle": "6 × 5 · 15,625 路 · 上升的热气球百搭",
+  "logoSub": "黎明热气球",
+  "table": "Göreme 游戏桌",
   "badge": {
-    "checking": "Checking the server"
+    "checking": "正在检查服务器"
   },
   "symbols": {
-    "h1": "Fairy Chimney",
-    "h2": "Dovecote",
-    "h3": "Avanos Jug",
-    "h4": "Kilim Horse",
-    "l1": "Madder Eye",
-    "l2": "Indigo Eye",
-    "l3": "Green Eye",
-    "l4": "Saffron Ram's Horn",
-    "l5": "Plum Clover",
-    "balloon": "Balloon (wild)",
-    "sun": "Dawn Sun (scatter)"
+    "h1": "仙女烟囱",
+    "h2": "鸽舍",
+    "h3": "阿瓦诺斯陶罐",
+    "h4": "基里姆马",
+    "l1": "茜红之眼",
+    "l2": "靛蓝之眼",
+    "l3": "翠绿之眼",
+    "l4": "藏红公羊角",
+    "l5": "梅紫三叶",
+    "balloon": "热气球（百搭）",
+    "sun": "黎明太阳（分散）"
   },
   "board": {
-    "labelPlay": "Göreme reel window, 6 reels, 5 rows",
-    "labelFree": "Göreme reel window, Dawn Festival, 6 reels, 5 rows",
-    "cell": "{name}, reel {col}, row {row}",
-    "balloonCell": "Balloon ×{multiplier}, reel {col}, row {row}"
+    "labelPlay": "Göreme 转轴窗口，6 个转轴，5 行",
+    "labelFree": "Göreme 转轴窗口，黎明盛会，6 个转轴，5 行",
+    "cell": "{name}，第 {col} 轴，第 {row} 行",
+    "balloonCell": "热气球 ×{multiplier}，第 {col} 轴，第 {row} 行"
   },
   "facts": {
-    "aria": "Game features",
-    "balloon": "<b>Balloon wilds</b> rise one row after every win and gain +1",
-    "sun": "<b>3+ Dawn Suns</b> start the Dawn Festival",
-    "ways": "<b>15,625 ways</b> · max {max}×"
+    "aria": "游戏特色",
+    "balloon": "<b>热气球百搭</b>在每次中奖后上升一行并 +1",
+    "sun": "<b>3 个以上黎明太阳</b>开启黎明盛会",
+    "ways": "<b>15,625 路</b> · 最高 {max}×"
   },
   "hud": {
-    "sunChip": "<b>3+ suns</b> · Dawn Festival",
-    "free": "Dawn Festival",
-    "freeSpin": "Free spin {n}",
-    "left": "Left",
-    "freeAria": "Free spin {number}, {left} spins left"
+    "sunChip": "<b>3 个以上太阳</b> · 黎明盛会",
+    "free": "黎明盛会",
+    "freeSpin": "免费旋转 {n}",
+    "left": "剩余",
+    "freeAria": "第 {number} 次免费旋转，剩余 {left} 次"
   },
   "wind": {
-    "left": "Wind ←",
-    "calm": "Calm",
-    "right": "Wind →"
+    "left": "风 ←",
+    "calm": "无风",
+    "right": "风 →"
   },
   "sky": {
-    "label": "SKY"
+    "label": "天空"
   },
   "meter": {
-    "idleA": "<b>Balloons</b> rise · <b>multipliers</b> multiply along a way",
-    "idleB": "Max <b>{max}×</b>",
-    "win": "Win",
-    "total": "Total win"
+    "idleA": "<b>热气球</b>上升 · <b>倍数</b>沿一路相乘",
+    "idleB": "最高 <b>{max}×</b>",
+    "win": "赢取",
+    "total": "总赢取"
   },
   "callout": {
-    "tier1": "Balloon multiplier",
-    "tier2": "High winds",
-    "tier3": "Sky high",
-    "tier4": "Legendary dawn",
-    "sky": "Sky multiplier"
+    "tier1": "热气球倍数",
+    "tier2": "强风",
+    "tier3": "直上云霄",
+    "tier4": "传奇黎明",
+    "sky": "天空倍数"
   },
   "banner": {
-    "ways": "{name} · {length} reels · {ways} {ways, plural, one {way} other {ways}}{more, plural, =0 {} other { · +# more}}{sky, plural, =1 {} other { · SKY ×#}}",
-    "merge": "Merge · ×{multiplier}",
-    "scatter": "{count} suns · +{money} DEMO · {spins} free spins",
-    "retrigger": "{count} suns · +{spins} free spins",
-    "trigger": "Dawn Festival · {spins} free spins"
+    "ways": "{name} · {length} 轴 · {ways} 路{more, plural, =0 {} other { · 另有 # 个}}{sky, plural, =1 {} other { · 天空 ×#}}",
+    "merge": "合并 · ×{multiplier}",
+    "scatter": "{count} 个太阳 · +{money} DEMO · {spins} 次免费旋转",
+    "retrigger": "{count} 个太阳 · +{spins} 次免费旋转",
+    "trigger": "黎明盛会 · {spins} 次免费旋转"
   },
   "deck": {
-    "group": "Game controls",
-    "balance": "Balance",
-    "refill": "Refill balance",
-    "win": "Win",
-    "winReplay": "Replay",
-    "winReplayLast": "Replay win",
-    "winLast": "Last win",
-    "cost": "Cost",
-    "spin": "Spin",
-    "spinCost": "Cost {cost}",
-    "auto": "Autoplay",
-    "info": "Info",
-    "infoAria": "Game info",
-    "on": "On",
-    "off": "Off",
-    "buy": "Buy bonus",
-    "buyDesc": "3+ suns guaranteed · {rtp}",
-    "speedAria": "Spin speed: {speed}",
-    "sound": "Sound",
-    "soundLoading": "Loading sound {percent}%",
-    "outOfCredit": "Your DEMO balance has run out.",
-    "lastWin": "Last round <b>+{money} DEMO</b> · {times}×",
-    "lastNone": "Last round: no win.",
-    "hintSpace": "You can also spin with the space bar.",
-    "hintFixed": "The result is fixed before the spin.",
-    "spinLocked": "Round in progress; locked until every lift, respin and free spin has played.",
-    "anteDesc": "Free-spin chance ≈2×"
+    "group": "游戏控制",
+    "balance": "余额",
+    "refill": "补充余额",
+    "win": "赢取",
+    "winReplay": "回放",
+    "winReplayLast": "回放奖金",
+    "winLast": "上次赢取",
+    "cost": "费用",
+    "spin": "旋转",
+    "spinCost": "费用 {cost}",
+    "auto": "自动",
+    "info": "信息",
+    "infoAria": "游戏信息",
+    "on": "开",
+    "off": "关",
+    "buy": "购买奖励",
+    "buyDesc": "保证 3 个以上太阳 · {rtp}",
+    "speedAria": "旋转速度：{speed}",
+    "sound": "声音",
+    "soundLoading": "正在加载声音 {percent}%",
+    "outOfCredit": "你的 DEMO 余额已用完。",
+    "lastWin": "上一轮 <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "上一轮未中奖。",
+    "hintSpace": "也可以按空格键旋转。",
+    "hintFixed": "结果在旋转前就已确定。",
+    "spinLocked": "本局进行中；所有上升、重转和免费旋转结束前保持锁定。",
+    "anteDesc": "免费旋转几率 ≈2 倍"
   },
   "auto": {
-    "ribbon": "Autoplay · {spins, plural, one {# spin} other {# spins}} left"
+    "ribbon": "自动 · 剩余 {spins, plural, other {# 次}}"
   },
   "toast": {
-    "close": "Dismiss notification",
-    "autoplayStopped": "Autoplay stopped: {reason}. {spins, plural, one {# spin} other {# spins}}, net {net}.",
-    "autoplayStoppedShort": "Autoplay stopped: {reason}.",
-    "autoplayStarted": "Autoplay: {spins, plural, one {# spin} other {# spins}}, loss limit {limit}.",
-    "refilled": "Balance refilled: {amount} DEMO.",
-    "shareCopied": "Share link copied: {url}",
-    "shareLink": "Share link: {url}",
-    "shareFailed": "Could not share: {error}",
-    "replayFailed": "This round could not be replayed.",
-    "replayMismatch": "Replay could not be verified: the record does not match the engine."
+    "close": "关闭通知",
+    "autoplayStopped": "自动游戏已停止：{reason}。{spins, plural, other {# 次}}旋转，净额 {net}。",
+    "autoplayStoppedShort": "自动游戏已停止：{reason}。",
+    "autoplayStarted": "自动游戏：{spins, plural, other {# 次}}旋转，亏损上限 {limit}。",
+    "refilled": "余额已补充：{amount} DEMO。",
+    "shareCopied": "分享链接已复制：{url}",
+    "shareLink": "分享链接：{url}",
+    "shareFailed": "无法分享：{error}",
+    "replayFailed": "无法回放这一轮。",
+    "replayMismatch": "无法验证回放：记录与引擎不一致。"
   },
   "autoplay": {
-    "serverFailed": "The server could not start the round",
-    "spinFailed": "The spin could not be started",
-    "quit": "You left the session",
-    "title": "Autoplay",
-    "note": "{cost} per spin{ante, select, yes { (Chance ×2)} other {}} · never buys the bonus · stops when the tab is hidden."
+    "serverFailed": "服务器无法开始本轮",
+    "spinFailed": "无法开始旋转",
+    "quit": "已退出会话",
+    "title": "自动",
+    "note": "每次旋转 {cost}{ante, select, yes {（机会 ×2）} other {}} · 不会购买奖励 · 标签页隐藏时停止。"
   },
   "errors": {
-    "entropy": "Secure local randomness is unavailable. The demo did not start.",
-    "insufficient": "Insufficient balance: this {kind, select, buy {purchase} other {spin}} costs {cost}. Lower the bet or refill the balance.",
-    "noCredit": "You don't have enough demo credit, or a demo is already running."
+    "entropy": "无法使用安全的本地随机数。演示未启动。",
+    "insufficient": "余额不足：本次{kind, select, buy {购买} other {旋转}}需要 {cost}。请降低投注额或补充余额。",
+    "noCredit": "演示额度不足，或已有演示正在进行。"
   },
   "buy": {
     "block": {
-      "gated": "Only bought with DEMO credit",
-      "autoplay": "Cannot be bought while autoplay is running",
-      "busy": "Cannot be bought before the round ends",
-      "ante": "Cannot be bought while Chance ×2 is on",
-      "balance": "Insufficient balance (price {price})"
+      "gated": "仅可使用 DEMO 额度购买",
+      "autoplay": "自动游戏进行时无法购买",
+      "busy": "本轮结束前无法购买",
+      "ante": "机会 ×2 开启时无法购买",
+      "balance": "余额不足（价格 {price}）"
     },
-    "rtp": "Purchase RTP {buy} · standard {standard} (simulation, uncertified)",
-    "feature": "Dawn Festival · at least {bet} bet",
-    "text": "<b>100×</b> your bet. The first board holds at least 3 Dawn Suns, so the Dawn Festival with at least <b>{spins} free spins</b> is guaranteed. Balloons stay between free spins; every balloon that leaves the top moors in the sky band and raises the sky multiplier, which multiplies every win until the feature ends. Wins are paid on a bet of {bet}, maximum {max}."
+    "rtp": "购买 RTP {buy} · 标准 {standard}（模拟，未经认证）",
+    "feature": "黎明盛会 · 投注 {bet}",
+    "text": "投注额的 <b>100 倍</b>。首个盘面至少有 3 个黎明太阳，因此必定进入至少 <b>{spins} 次免费旋转</b>的黎明盛会。热气球在免费旋转之间保留；每个从顶部离开的热气球会停泊在天空带上并提高天空倍数，天空倍数在功能结束前乘以每次中奖。奖金按 {bet} 的投注支付，最高 {max}。"
   },
   "replay": {
-    "ribbon": "Replay — balance unchanged · round {id}"
+    "ribbon": "回放 — 余额不变 · 第 {id} 轮"
   },
   "gated": {
-    "title": "No on-chain Göreme.",
-    "text": "This game is played with DEMO credit only; real bets are not accepted.",
-    "back": "Back to the local demo"
+    "title": "没有链上 Göreme。",
+    "text": "本游戏仅使用 DEMO 额度进行；不接受真实投注。",
+    "back": "返回本地演示"
   },
   "settings": {
-    "soundReady": "Sound ready: music, effects and ambience are prepared on this device.",
-    "soundIdle": "Sound loads on the first tap.",
-    "soundLoading": "Loading sound {percent}% (the game stays silent meanwhile).",
-    "voiceNote": "Voice lines are not recorded yet: the voice setting is kept and the game plays wordless cues meanwhile.",
-    "demoTitle": "DEMO balance",
-    "demoText": "Balance {balance}{remote, select, yes { (server)} other {}}. Refilling sets the balance to {start} DEMO and adds a “Balance refilled” row to the history; it is not possible while a round or autoplay is running."
+    "soundReady": "声音已就绪：音乐、音效和环境音已在此设备上准备完毕。",
+    "soundIdle": "声音将在首次点击时加载。",
+    "soundLoading": "正在加载声音 {percent}%（加载期间游戏静音）。",
+    "voiceNote": "配音尚未录制：语音设置会保留，在此之前游戏播放无语音的提示音。",
+    "demoTitle": "DEMO 余额",
+    "demoText": "余额 {balance}{remote, select, yes {（服务器）} other {}}。补充会将余额重置为 {start} DEMO，并在记录中添加一行“余额已补充”；本轮或自动游戏进行时无法操作。"
   },
   "splash": {
-    "loading": "Loading",
-    "play": "Play",
-    "skip": "Skip intro screens",
-    "note": "DEMO credit only · RTP {rtp} (simulation, uncertified)",
+    "loading": "加载中",
+    "play": "开始游戏",
+    "skip": "跳过介绍画面",
+    "note": "仅限 DEMO 积分 · RTP {rtp}（模拟，未认证）",
     "lift": {
-      "title": "Rising balloons",
-      "text": "After every win each balloon rises a row, drifts with the wind and gains +1."
+      "title": "上升的热气球",
+      "text": "每次中奖后，每个热气球上升一行，随风漂移并 +1。"
     },
     "merge": {
-      "title": "Merges",
-      "text": "Two balloons in one cell become one giant balloon: their multipliers add up."
+      "title": "合并",
+      "text": "同一格中的两个热气球合为一个巨型热气球：倍数相加。"
     },
     "sky": {
-      "title": "Sky band · up to {max}×",
-      "text": "In the Dawn Festival balloons moor in the sky and the sky multiplier only grows."
+      "title": "天空带 · 最高 {max}×",
+      "text": "在黎明盛会中，热气球停泊在天空中，天空倍数只升不降。"
     }
   },
   "intro": {
-    "word": "DAWN FESTIVAL",
-    "srTitle": "Dawn Festival begins",
-    "freeSpins": "free\nspins",
-    "text": "Balloons <b>stay</b> between spins and rise every spin. A balloon that leaves the top <b>moors in the sky band</b>: the sky multiplier grows and multiplies <b>every win</b>.",
-    "start": "Start"
+    "word": "黎明盛会",
+    "srTitle": "黎明盛会开始",
+    "freeSpins": "次免费\n旋转",
+    "text": "热气球在旋转之间<b>保留</b>，并在每次旋转时上升。从顶部离开的热气球会<b>停泊在天空带上</b>：天空倍数增长，并乘以<b>每次中奖</b>。",
+    "start": "开始"
   },
   "total": {
-    "title": "Dawn Festival — Total",
-    "word": "TOTAL",
-    "sub": "WIN",
-    "spins": "Free spins",
-    "spinsValue": "{spins, plural, one {# spin} other {# spins}}",
-    "sky": "Sky multiplier",
-    "moored": "{n, plural, =0 {no balloon moored} one {# balloon moored} other {# balloons moored}}",
-    "ofBetLabel": "Times bet",
-    "capNote": "The round hit the 10,000× cap · remaining spins are not played",
-    "toCelebration": "To the celebration"
+    "title": "黎明盛会 — 总计",
+    "word": "总计",
+    "sub": "奖金",
+    "spins": "免费旋转",
+    "spinsValue": "{spins, plural, other {# 转}}",
+    "sky": "天空倍数",
+    "moored": "{n, plural, =0 {没有热气球停泊} other {# 个热气球已停泊}}",
+    "ofBetLabel": "投注倍数",
+    "capNote": "本局已达到 10,000× 上限 · 剩余旋转不再进行",
+    "toCelebration": "前往庆祝"
   },
   "celebration": {
-    "aria": "{title}: {money} DEMO",
-    "times": "{times}× bet",
-    "capNote": "The round hit the cap · remaining spins are not played",
-    "speedUp": "Tap to speed up",
-    "continue": "Continue"
+    "aria": "{title}：{money} DEMO",
+    "times": "{times}× 投注额",
+    "capNote": "本轮已达上限 · 剩余旋转不再进行",
+    "speedUp": "点击加速",
+    "continue": "继续"
   },
   "announce": {
-    "spinStarted": "Spin started, {amount} DEMO deducted.",
-    "bonusBought": "Bonus bought, {amount} DEMO deducted.",
-    "sentToServer": "Round sent to the server, {amount} DEMO.",
-    "recovered": "Your last server round is shown again; payout {amount} DEMO.",
-    "replaying": "Replaying round {id}; the balance does not change.",
-    "replayDone": "Replay finished: {amount} DEMO, {times}× bet.",
-    "preview": "Preview round, balance unchanged.",
-    "roundEnd": "Round over: you won {amount} DEMO, {times}× bet.",
-    "roundEndNone": "Round over: no win.",
-    "noWin": "No win.",
-    "sunTease": "Two suns are down; the last reels are turning.",
-    "way": "{name}, {length} reels, {ways, plural, one {# way} other {# ways}}{multiplier, plural, =1 {} other {, balloon multiplier ×#}}",
-    "boardWin": "Board win {times}× bet",
-    "scatter": "{count} Dawn Suns: {spins} free spins.",
-    "retrigger": "{count} suns: {spins} more free spins.",
-    "trigger": "{count} Dawn Suns: the Dawn Festival with {spins} free spins.",
-    "lift": "{n, plural, one {# balloon rises} other {# balloons rise}}; {wind}.",
-    "flyAway": "{n, plural, one {# balloon flies away} other {# balloons fly away}}.",
-    "merge": "Two balloons merge: ×{multiplier}.",
-    "sky": "{n, plural, one {# balloon moors} other {# balloons moor}}; sky multiplier ×{after}.",
-    "freeIntro": "Dawn Festival: {spins} free spins.",
-    "freeSpinWin": "Free spin win {times}× bet; total {total}× bet.",
-    "freeSpinNone": "No win this free spin.",
-    "freeOutro": "Dawn Festival over: {amount} DEMO over {spins} free spins, sky ×{sky}.",
-    "totalWin": "Total win {amount} DEMO, {times}× bet.",
-    "celebration": "{title}: {amount} DEMO, {times}× bet.",
-    "refilled": "Balance refilled: {amount} DEMO.",
-    "speed": "Spin speed: {speed}.",
-    "anteOn": "Chance ×2 on; a spin costs {cost}.",
-    "anteOff": "Chance ×2 off; a spin costs {cost}."
+    "spinStarted": "旋转开始，已扣除 {amount} DEMO。",
+    "bonusBought": "已购买奖励，已扣除 {amount} DEMO。",
+    "sentToServer": "本局已发送至服务器，{amount} DEMO。",
+    "recovered": "再次显示你上一局服务器回合；派彩 {amount} DEMO。",
+    "replaying": "正在重播第 {id} 局；余额不变。",
+    "replayDone": "重播结束：{amount} DEMO，投注的 {times}×。",
+    "preview": "预览局，余额不变。",
+    "roundEnd": "本局结束：你赢得 {amount} DEMO，投注的 {times}×。",
+    "roundEndNone": "本局结束：未中奖。",
+    "noWin": "未中奖。",
+    "sunTease": "已落下两个太阳；最后几个转轴仍在转动。",
+    "way": "{name}，{length} 轴，{ways} 路{multiplier, plural, =1 {} other {，热气球倍数 ×#}}",
+    "boardWin": "盘面奖金为投注的 {times}×",
+    "scatter": "{count} 个黎明太阳：{spins} 次免费旋转。",
+    "retrigger": "{count} 个太阳：再加 {spins} 次免费旋转。",
+    "trigger": "{count} 个黎明太阳：进入 {spins} 次免费旋转的黎明盛会。",
+    "lift": "{n} 个热气球上升；{wind}。",
+    "flyAway": "{n} 个热气球飞走了。",
+    "merge": "两个热气球合并：×{multiplier}。",
+    "sky": "{n} 个热气球停泊；天空倍数 ×{after}。",
+    "freeIntro": "黎明盛会：{spins} 次免费旋转。",
+    "freeSpinWin": "免费旋转赢得投注的 {times}×；累计投注的 {total}×。",
+    "freeSpinNone": "本次免费旋转未中奖。",
+    "freeOutro": "黎明盛会结束：{spins} 次免费旋转共 {amount} DEMO，天空 ×{sky}。",
+    "totalWin": "总奖金 {amount} DEMO，投注的 {times}×。",
+    "celebration": "{title}：{amount} DEMO，投注的 {times}×。",
+    "refilled": "余额已补充：{amount} DEMO。",
+    "speed": "旋转速度：{speed}。",
+    "anteOn": "已开启 Chance ×2；每次旋转花费 {cost}。",
+    "anteOff": "已关闭 Chance ×2；每次旋转花费 {cost}。"
   },
   "history": {
-    "title": "Your game history",
-    "scope": "This session · replays never change the balance",
-    "time": "Time",
-    "mode": "Mode",
-    "bet": "Bet",
-    "cost": "Cost",
-    "win": "Win",
-    "result": "Result",
-    "roundId": "Round ID",
-    "replayColumn": "Replay",
-    "latest": "Latest round",
-    "replay": "Replay",
-    "replayAria": "Replay: round {id}, balance unchanged",
-    "share": "Share my win",
-    "shareAria": "Share my win: round {id}",
-    "emptyTitle": "Your first round will appear here.",
-    "emptyText": "The mode, bet, cost, win and round ID of every round are recorded; you can watch any round again.",
-    "reset": "Balance refilled",
-    "resetRemote": "Balance refilled (server)",
-    "tableRegion": "Game history table",
+    "title": "你的游戏记录",
+    "scope": "本次会话 · 回放不会改变余额",
+    "time": "时间",
+    "mode": "模式",
+    "bet": "投注",
+    "cost": "费用",
+    "win": "赢取",
+    "result": "结果",
+    "roundId": "轮次编号",
+    "replayColumn": "回放",
+    "latest": "最近一轮",
+    "replay": "回放",
+    "replayAria": "回放：第 {id} 轮，余额不变",
+    "share": "分享我的奖金",
+    "shareAria": "分享我的奖金：第 {id} 轮",
+    "emptyTitle": "你的第一轮将显示在这里。",
+    "emptyText": "每一轮的模式、投注、费用、奖金和轮次编号都会被记录；你可以重新观看任意一轮。",
+    "reset": "余额已补充",
+    "resetRemote": "余额已补充（服务器）",
+    "tableRegion": "游戏记录表",
     "detail": {
-      "capped": "Max win · {times}×",
-      "none": "No win",
-      "free": "Dawn Festival ×{spins} · sky ×{sky} · {times}×",
-      "base": "{wins, plural, one {# ways win} other {# ways wins}}{lifts, plural, =0 {} one { · # lift} other { · # lifts}} · {times}×"
+      "capped": "最高奖 · {times}×",
+      "none": "未中奖",
+      "free": "黎明盛会 ×{spins} · 天空 ×{sky} · {times}×",
+      "base": "{wins, plural, other {# 次路数中奖}}{lifts, plural, =0 {} other { · # 次上升}} · {times}×"
     }
   },
   "rules": {
-    "board": "Göreme is a 6 × 5 ways slot: 3 to 6 matching symbols on adjacent reels from the left pay, on up to 15,625 ways. Balloon wilds substitute and carry multipliers that multiply along a way.",
-    "features": "After a paid board, every balloon rises a row, drifts with the wind, gains +1 and the other cells respin; two balloons in one cell merge. 3+ Dawn Suns start the Dawn Festival, where exiting balloons moor in the sky band and raise the sky multiplier.",
-    "fixed": "The whole round is fixed by the engine before the presentation starts; animation, speed and the sound never change it."
+    "board": "Göreme 是一款 6 × 5 路数老虎机：从左侧开始相邻转轴上出现 3 到 6 个相同符号即中奖，最多 15,625 路。热气球百搭可替代符号并带有沿一路相乘的倍数。",
+    "features": "盘面派彩后，每个热气球上升一行、随风漂移、+1，其余格子重新旋转；同一格中的两个热气球会合并。3 个以上黎明太阳开启黎明盛会，期间离开的热气球停泊在天空带上并提高天空倍数。",
+    "fixed": "整局结果在展示开始前由引擎确定；动画、速度和声音都不会改变它。"
   },
   "info": {
-    "title": "Göreme · Game info",
+    "title": "Göreme · 游戏信息",
     "tab": {
-      "how": "How to play",
-      "pay": "Paytable",
-      "features": "Features",
+      "how": "玩法说明",
+      "pay": "赔付表",
+      "features": "特色功能",
       "rtp": "RTP",
-      "limits": "Bet and win limits",
-      "keys": "Keys",
-      "fault": "Malfunction clause"
+      "limits": "投注与奖金限额",
+      "keys": "按键",
+      "fault": "故障条款"
     },
     "how": {
       "steps": {
-        "bet": "<b>Choose your bet.</b> The − and + buttons change the bet by one step; tap the bet amount to open every step. “Max bet” picks the highest step your balance allows.",
-        "spin": "<b>Spin.</b> Press the sun button or use the space bar. The round cost ({factor} times the bet when Chance ×2 is on) is deducted from the balance once.",
-        "ways": "<b>Ways.</b> A symbol pays when it appears on <b>3 or more adjacent reels starting from the left reel</b>, in any row. Every combination of one cell per reel is a way; with five rows on six reels there are up to {ways} ways.",
-        "lift": "<b>Rising balloons.</b> After a board pays, every balloon rises one row, drifts one reel with the wind and gains +1; the other cells spin again and the new board pays in full. The chain ends when no balloon is left (at most 20 lifts).",
-        "result": "<b>The result.</b> The whole round is determined by the engine before the spin starts; the animation only plays that result. The spin button stays locked until the round (every lift, respin and free spin) has finished; use the Quick/Turbo setting to speed it up. The speed setting, tapping the celebration counter, a hidden tab or leaving the page does not change the payout; the round always closes once, with the engine's payout."
+        "bet": "<b>选择投注额。</b>点击 − 和 + 按钮可按档位调整投注额；点按投注金额可展开所有档位。“最大投注”会选择余额允许的最高档位。",
+        "spin": "<b>旋转。</b>按下太阳按钮或使用空格键。本局花费（开启 Chance ×2 时为投注的 {factor} 倍）只从余额扣除一次。",
+        "ways": "<b>路数。</b>一个符号<b>从最左侧转轴开始出现在 3 个或更多相邻转轴上</b>（任意行）即中奖。每个转轴各取一格的每种组合就是一路；六个转轴、每轴五行时最多 {ways} 路。",
+        "lift": "<b>上升的热气球。</b>盘面派彩后，每个热气球上升一行、随风漂移一个转轴并 +1；其余格子重新旋转，新盘面再完整派彩。没有热气球剩下时连锁结束（最多 20 次上升）。",
+        "result": "<b>结果。</b>整局在旋转开始前就由引擎确定；动画只是播放这个结果。在本局（每次上升、重转和免费旋转）结束前，旋转按钮保持锁定；想加快请使用快速/极速设置。速度设置、点击庆祝计数器、隐藏标签页或离开页面都不会改变派彩；本局总是以引擎的派彩结算一次。"
       },
-      "note": "DEMO credit has no value; it does not earn SOL, tokens or rewards. Göreme and Cappadocia are geography; the fairy chimneys, dovecotes, Avanos pottery and kilim motifs are drawn originally for this game."
+      "note": "DEMO 积分没有价值；不会获得 SOL、代币或奖励。Göreme 与卡帕多奇亚属于地理；仙女烟囱、鸽舍、阿瓦诺斯陶器和基里姆图案均为本游戏原创绘制。"
     },
     "pay": {
-      "lead": "Amounts are the gross DEMO pay <b>per way</b> at a bet of <b>{bet}</b>, for a run of 3, 4, 5 or 6 reels from the left. A win is the per-way pay times the number of ways (multiplied by the balloon multipliers on those ways).",
-      "gridAria": "Ways payouts per symbol",
-      "reels": "{n} reels",
-      "example": "Example: {name} on all six reels pays {amount} DEMO per way; with every cell filled that would be up to {ways} ways. The round total never exceeds {max}.",
-      "suns": "{n} suns",
-      "spins": "{spins} free spins",
-      "sunText": "Suns count only on the round's <b>first board</b> and pay a multiple of the bet. In the Dawn Festival, 3 or more suns on a board give <b>+5 free spins</b>.",
-      "balloonText": "Substitutes for every symbol except the sun and pays nothing alone. It lands with <b>{values}</b>; every lift adds +1 (at most ×{max}). On one reel balloon values add up; across reels they <b>multiply</b> along a way.",
-      "maxTitle": "Maximum win {max}×",
-      "maxText": "At this bet: <b>{amount}</b>. If the round total reaches this cap, the round ends immediately; the remaining spins are not played."
+      "lead": "金额为投注 <b>{bet}</b> 时<b>每路</b>的 DEMO 毛派彩，适用于从左起 3、4、5 或 6 个转轴的连线。一次中奖等于每路派彩乘以路数（再乘以这些路上的热气球倍数）。",
+      "gridAria": "各符号的路数派彩",
+      "reels": "{n} 轴",
+      "example": "示例：{name} 出现在全部六个转轴上时每路派彩 {amount} DEMO；若所有格子都填满，最多可达 {ways} 路。每局总额永远不超过 {max}。",
+      "suns": "{n} 个太阳",
+      "spins": "{spins} 次免费旋转",
+      "sunText": "太阳只在本局<b>第一个盘面</b>计算，并按投注倍数派彩。在黎明盛会中，一个盘面上出现 3 个或更多太阳可获得 <b>+5 次免费旋转</b>。",
+      "balloonText": "可替代除太阳外的所有符号，单独出现不派彩。落下时带有 <b>{values}</b>；每次上升 +1（最高 ×{max}）。同一转轴上的热气球数值相加；跨转轴时沿一路<b>相乘</b>。",
+      "maxTitle": "最高奖 {max}×",
+      "maxText": "按当前投注：<b>{amount}</b>。若本局总额达到此上限，本局立即结束；剩余旋转不再进行。"
     },
     "features": {
       "ways": {
-        "title": "How ways are counted",
-        "text": "For each pay symbol the game looks at the reels from the left. A reel continues the run if it holds that symbol or a balloon. The run must be at least 3 reels long and contain at least one real symbol.",
-        "formula": "<b>Win</b> = pay per way × (product over the run of (symbols + balloon values on the reel) − product of the balloon values alone).",
-        "example": "Example: the symbol twice on reel 1, once on reel 2 and once plus a ×3 balloon on reel 3 gives (2) × (1) × (1 + 3) − 0 = <b>8 weighted ways</b>. The subtraction removes ways made only of balloons."
+        "title": "路数如何计算",
+        "text": "对每个派彩符号，游戏从左往右查看转轴。若某转轴上有该符号或热气球，连线就继续。连线至少要有 3 个转轴，并且至少包含一个真实符号。",
+        "formula": "<b>奖金</b> = 每路派彩 ×（连线上各转轴（符号数 + 热气球数值）的乘积 − 仅热气球数值的乘积）。",
+        "example": "示例：第 1 轴有两个该符号，第 2 轴有一个，第 3 轴有一个加一个 ×3 热气球，得到 (2) × (1) × (1 + 3) − 0 = <b>8 个加权路</b>。减法去掉了仅由热气球组成的路。"
       },
       "lift": {
-        "title": "Rising balloons and the wind",
-        "text": "After a board pays, a <b>lift</b> follows if a balloon is on the board: the wind picks a direction (left, calm or right), every balloon rises one row, drifts one reel with the wind (it stops at the edge) and its multiplier grows by 1 (at most ×{max}). A balloon that leaves the top row flies away. The other cells spin again and the board pays in full. At most {lifts} lifts per spin."
+        "title": "上升的热气球与风",
+        "text": "盘面派彩后，若盘面上有热气球就会<b>上升</b>：风选择一个方向（左、无风或右），每个热气球上升一行、随风漂移一个转轴（到边缘停止），倍数 +1（最高 ×{max}）。离开最上一行的热气球会飞走。其余格子重新旋转，盘面再完整派彩。每次旋转最多 {lifts} 次上升。"
       },
       "merge": {
-        "title": "Merges",
-        "text": "When two balloons arrive in the same cell they become <b>one giant balloon</b> whose multiplier is the sum of both (at most ×{max}). Merges are rare: they happen when the wind pushes balloons against the board edge."
+        "title": "合并",
+        "text": "两个热气球到达同一格时会变成<b>一个巨型热气球</b>，倍数为两者之和（最高 ×{max}）。合并很少见：当风把热气球推向盘面边缘时才会发生。"
       },
       "free": {
-        "title": "Dawn Festival (free spins)",
-        "text": "3 / 4 / 5 / 6+ Dawn Suns on the first board award {s3} / {s4} / {s5} / {s6} free spins. In the feature balloons stay on the board between spins and every free spin with balloons is a lift. 3+ suns on a free spin give +{retrigger} spins (at most {max} in total).",
-        "sky": "<b>Sky band:</b> a balloon that leaves the top row during the feature <b>moors</b> in the sky band above the reels. The sky multiplier (×1 until the first mooring, then the sum of all moored balloon values) multiplies every win until the feature ends and never falls."
+        "title": "黎明盛会（免费旋转）",
+        "text": "首个盘面上 3 / 4 / 5 / 6 个以上黎明太阳分别奖励 {s3} / {s4} / {s5} / {s6} 次免费旋转。功能期间热气球在旋转之间留在盘面上，每次有热气球的免费旋转都是一次上升。免费旋转中出现 3 个以上太阳奖励 +{retrigger} 次（总计最多 {max} 次）。",
+        "sky": "<b>天空带：</b>功能期间离开最上一行的热气球会<b>停泊</b>在转轴上方的天空带上。天空倍数（首次停泊前为 ×1，之后为所有已停泊热气球数值之和）在功能结束前乘以每次中奖，且永不下降。"
       },
       "cumulative": {
-        "title": "Cumulative win",
-        "text": "The win meter never resets during a round: every lift, respin and free spin adds to it. A round with free spins always ends with the total screen."
+        "title": "累计奖金",
+        "text": "一局之中中奖计数器从不归零：每次上升、重转和免费旋转都会累加。含免费旋转的局总以总计画面结束。"
       },
       "tiers": {
-        "title": "Win tiers",
-        "text": "Round total / bet: <b>{big}</b> from 10×, <b>{mega}</b> from 25×, <b>{super}</b> from 50×, <b>{epic}</b> from 100×, and <b>{max}</b> for a round that reaches the cap. The counter climbs through the tiers."
+        "title": "奖励等级",
+        "text": "本局总额 / 投注：10× 起为<b>{big}</b>，25× 起为<b>{mega}</b>，50× 起为<b>{super}</b>，100× 起为<b>{epic}</b>，达到上限的局为<b>{max}</b>。计数器会逐级攀升。"
       },
       "ante": {
-        "title": "Chance ×2 · a spin costs {cost}",
-        "text": "The bet costs {factor} times as much and the base board holds more suns: the Dawn Festival comes about twice as often (simulation {ante} of rounds instead of {standard}). Wins are still paid on the base bet."
+        "title": "Chance ×2 · 每次旋转 {cost}",
+        "text": "投注花费为 {factor} 倍，基础盘面上的太阳更多：黎明盛会的出现频率约为两倍（模拟中为 {ante} 的局，而非 {standard}）。奖金仍按基础投注支付。"
       },
       "buy": {
-        "title": "Buy bonus · {price}",
-        "text": "Starts a round whose first board holds at least {suns} Dawn Suns, so the Dawn Festival always follows. Purchase RTP {rtp}. Not available with Chance ×2 or during autoplay."
+        "title": "购买奖励 · {price}",
+        "text": "开启一局，首个盘面至少有 {suns} 个黎明太阳，因此必定进入黎明盛会。购买 RTP {rtp}。开启 Chance ×2 或自动游戏期间不可用。"
       }
     },
     "rtp": {
-      "title": "Return to player (RTP)",
-      "caption": "RTP per mode",
-      "colMode": "Mode",
-      "colCost": "Cost",
-      "colCi": "95% interval",
-      "colFeature": "Dawn Festival",
-      "everyRound": "every round",
-      "oneIn": "1 in {n}",
-      "text": "Estimates from <b>{millions} million round simulations</b> per mode for standard and Chance ×2 and {buyMillions} million for the purchase, each in its own process. Base-spin hit rate {hit}. Standard deviation per round: {sdStandard} (standard), {sdBuy} (purchase).",
-      "note": "The RTP is a long-run average; a session can end anywhere. This DEMO game is <b>uncertified</b>; the interval is a normal approximation and optimistic for this heavy tail."
+      "title": "返还率（RTP）",
+      "caption": "各模式的 RTP",
+      "colMode": "模式",
+      "colCost": "费用",
+      "colCi": "95% 区间",
+      "colFeature": "黎明盛会",
+      "everyRound": "每轮",
+      "oneIn": "每 {n} 局 1 次",
+      "text": "估计值来自标准和 Chance ×2 各 <b>{millions} 百万局模拟</b>，以及购买模式 {buyMillions} 百万局，每种在独立进程中运行。基础旋转中奖率 {hit}。每局标准差：{sdStandard}（标准），{sdBuy}（购买）。",
+      "note": "RTP 是长期平均值；单次会话的结果可能相差很大。本 DEMO 游戏<b>未经认证</b>；区间为正态近似，对这种重尾分布偏乐观。"
     },
     "limits": {
-      "title": "Bet and win limits",
-      "range": "Bet range",
-      "steps": "Bet steps",
-      "current": "At this bet",
-      "currentValue": "spin {bet} · Chance ×2 {ante} · buy {buy}",
-      "max": "Maximum win",
-      "maxValue": "{multiplier}× bet = {amount}",
-      "text1": "Wins are always paid on the base bet, in every mode.",
-      "text2": "A round that reaches {times}× bet ends immediately; the remaining spins are not played."
+      "title": "投注与奖金限额",
+      "range": "投注范围",
+      "steps": "投注级别",
+      "current": "当前投注",
+      "currentValue": "旋转 {bet} · Chance ×2 {ante} · 购买 {buy}",
+      "max": "最高奖",
+      "maxValue": "投注的 {multiplier}× = {amount}",
+      "text1": "所有模式下奖金都按基础投注支付。",
+      "text2": "达到投注 {times}× 的局立即结束；剩余旋转不再进行。"
     },
     "keys": {
-      "heading": "Keyboard",
-      "space": "Space",
-      "spaceText": "Spins (can be turned off: {option}). During a round it only continues a hold screen.",
-      "enterText": "Same as Space outside buttons and dialogs.",
-      "escText": "Closes a dialog (not the session reminder).",
-      "tabText": "Moves between the controls; every control is reachable.",
-      "note": "Screen readers announce every win, lift, merge, mooring and the round result."
+      "heading": "键盘",
+      "space": "空格",
+      "spaceText": "开始旋转（可关闭：{option}）。本局进行中只用于推进等待画面。",
+      "enterText": "在按钮和对话框之外与空格键相同。",
+      "escText": "关闭对话框（会话提醒除外）。",
+      "tabText": "在控件之间移动；所有控件都可到达。",
+      "note": "屏幕阅读器会播报每次中奖、上升、合并、停泊以及本局结果。"
     },
     "fault": {
-      "title": "Malfunction clause",
-      "p1": "<b>A malfunction voids all affected games and payouts.</b>",
-      "p2": "If the presentation and the engine result disagree, the engine result (round record) is valid.",
-      "p3": "DEMO credit has no monetary value."
+      "title": "故障条款",
+      "p1": "<b>故障将使所有受影响的游戏和派彩无效。</b>",
+      "p2": "若展示与引擎结果不一致，以引擎结果（回合记录）为准。",
+      "p3": "DEMO 积分没有货币价值。"
     }
   }
 }

@@ -107,5 +107,8 @@
     "pathValue": "{path} → havuz {pool}/{pools}",
     "figure": "{rows} terasta Damla damlası: {path}, havuz {pool}/{pools}, ×{multiplier}",
     "mode": "{risk, select, low {Düşük} medium {Orta} other {Yüksek}} risk · {rows} teras"
+  },
+  "goreme": {
+    "summary": "{lifts, plural, other {# kalkış}} · {free, plural, =0 {bedava dönüş yok} other {# bedava dönüş}} · Gök ×{sky}"
   }
 }
