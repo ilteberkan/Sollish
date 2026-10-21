@@ -6,7 +6,7 @@
  * `test/slot-fair.test.ts` fails when any value drifts from `SLOT_GAMES` (which stays the registry the RGS server uses).
  * A rule change still needs a NEW id/engineId in BOTH places.
  */
-export const SLOT_GAME_IDS = ["cascade", "tarhun", "ebru", "cezeri", "asena", "damla"] as const;
+export const SLOT_GAME_IDS = ["cascade", "tarhun", "ebru", "cezeri", "asena", "damla", "goreme"] as const;
 export type SlotGameId = (typeof SLOT_GAME_IDS)[number];
 
 export interface SlotGameMeta {
@@ -30,6 +30,7 @@ export const SLOT_GAME_META: Readonly<Record<SlotGameId, SlotGameMeta>> = Object
   cezeri: Object.freeze({ id: "cezeri", engineId: "cezeri-gears-1", modes: MODES, betLevels: BET_LEVELS, maxMultiplier: 10000 }),
   asena: Object.freeze({ id: "asena", engineId: "asena-stars-1", modes: MODES, betLevels: BET_LEVELS, maxMultiplier: 5000 }),
   damla: Object.freeze({ id: "damla", engineId: "damla-terraces-1", modes: DAMLA_MODES, betLevels: BET_LEVELS, maxMultiplier: 1000 }),
+  goreme: Object.freeze({ id: "goreme", engineId: "goreme-balloons-1", modes: MODES, betLevels: BET_LEVELS, maxMultiplier: 10000 }),
 });
 
 /** Own-property lookup only ("__proto__", "constructor" and friends are not games). */

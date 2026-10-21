@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHash, createHmac } from "node:crypto";
 import {
-  ASENA_SLOT, CASCADE_SLOT, CEZERI_SLOT, DAMLA_SLOT, EBRU_SLOT, playAsenaRound, playDamlaRound, playCezeriRound, SLOT_GAMES, TARHUN_SLOT, deriveSeedHex, playEbruRound, isClientSeed, playCascade2Round, playStormRound, slotBytesToHex, slotGame, slotHexToBytes,
+  ASENA_SLOT, CASCADE_SLOT, CEZERI_SLOT, DAMLA_SLOT, EBRU_SLOT, GOREME_SLOT, playGoremeRound, playAsenaRound, playDamlaRound, playCezeriRound, SLOT_GAMES, TARHUN_SLOT, deriveSeedHex, playEbruRound, isClientSeed, playCascade2Round, playStormRound, slotBytesToHex, slotGame, slotHexToBytes,
   SLOT_GAME_IDS, SLOT_GAME_META, slotGameMeta,
   slotNonceMessage, slotReceiptMessage, slotReplayMessage, slotServerSeedHash, verifySlotRound,
 } from "../src/index";
@@ -54,7 +54,7 @@ test("engine-free meta registry equals the server registry field for field (the 
 });
 
 test("registry: own ids only, engines and costs are the protocol functions", () => {
-  assert.deepEqual(Object.keys(SLOT_GAMES).sort(), ["asena", "cascade", "cezeri", "damla", "ebru", "tarhun"]);
+  assert.deepEqual(Object.keys(SLOT_GAMES).sort(), ["asena", "cascade", "cezeri", "damla", "ebru", "goreme", "tarhun"]);
   for (const id of ["__proto__", "constructor", "toString", "Cascade", "", "cascade/x"]) assert.equal(slotGame(id), null);
   assert.equal(slotGame("cascade"), CASCADE_SLOT); assert.equal(slotGame("tarhun"), TARHUN_SLOT); assert.equal(slotGame("ebru"), EBRU_SLOT);
   const seed = "0123456789abcdef0123456789abcdef";
@@ -83,6 +83,11 @@ test("registry: own ids only, engines and costs are the protocol functions", () 
   assert.deepEqual(DAMLA_SLOT.play(seed, 1000, "high-16"), playDamlaRound(seed, 1000, "high-16"));
   assert.equal(DAMLA_SLOT.cost(1000, "low-8"), 1000); assert.throws(() => DAMLA_SLOT.cost(1001, "low-8"), RangeError); assert.throws(() => DAMLA_SLOT.cost(1000, "standard"), RangeError);
   for (const mode of DAMLA_SLOT.modes) assert.ok(DAMLA_SLOT.rtp[mode]!.rtp > 0.97 && DAMLA_SLOT.rtp[mode]!.rtp < 1);
+  assert.equal(slotGame("goreme"), GOREME_SLOT); assert.equal(GOREME_SLOT.engineId, "goreme-balloons-1"); assert.equal(GOREME_SLOT.maxMultiplier, 10_000);
+  assert.deepEqual(GOREME_SLOT.play(seed, 1000, "ante"), playGoremeRound(seed, 1000, "ante"));
+  assert.equal(GOREME_SLOT.cost(1000, "standard"), 1000); assert.equal(GOREME_SLOT.cost(1000, "ante"), 1250); assert.equal(GOREME_SLOT.cost(1000, "buy"), 100_000);
+  assert.throws(() => GOREME_SLOT.cost(1001, "standard"), RangeError); assert.throws(() => GOREME_SLOT.cost(1000, "turbo"), RangeError);
+  for (const mode of GOREME_SLOT.modes) assert.ok(GOREME_SLOT.rtp[mode]!.rtp > 0.94 && GOREME_SLOT.rtp[mode]!.rtp < 0.965);
 });
 
 test("verifySlotRound recomputes hash, seed, engine round, payout, total and cost and flags each mismatch", async () => {

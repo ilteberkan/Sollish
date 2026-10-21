@@ -11,6 +11,7 @@ import { EBRU_BET_LEVELS_CENTS, EBRU_ENGINE_ID, EBRU_MAX_WIN_MULTIPLIER, EBRU_MO
 import { CEZERI_BET_LEVELS_CENTS, CEZERI_ENGINE_ID, CEZERI_MAX_WIN_MULTIPLIER, CEZERI_MODES, CEZERI_RTP, cezeriCostCents, playCezeriRound, type CezeriMode, type CezeriRound } from "./cezeri";
 import { ASENA_BET_LEVELS_CENTS, ASENA_ENGINE_ID, ASENA_MAX_WIN_MULTIPLIER, ASENA_MODES, ASENA_RTP, asenaCostCents, playAsenaRound, type AsenaMode, type AsenaRound } from "./asena";
 import { DAMLA_BET_LEVELS_CENTS, DAMLA_ENGINE_ID, DAMLA_MAX_WIN_MULTIPLIER, DAMLA_MODES, DAMLA_RTP, damlaCostCents, playDamlaRound, type DamlaMode, type DamlaRound } from "./damla";
+import { GOREME_BET_LEVELS_CENTS, GOREME_ENGINE_ID, GOREME_MAX_WIN_MULTIPLIER, GOREME_MODES, GOREME_RTP, goremeCostCents, playGoremeRound, type GoremeMode, type GoremeRound } from "./goreme";
 import type { SlotRoundSummary, SlotVerifiableGame } from "./slot-fair";
 
 export interface SlotModeRtp { rtp: number; stdDev: number }
@@ -78,6 +79,13 @@ export const DAMLA_SLOT: SlotGameDefinition<DamlaRound> = Object.freeze({
   rtp: rtpTable(DAMLA_RTP),
 });
 
+export const GOREME_SLOT: SlotGameDefinition<GoremeRound> = Object.freeze({
+  id: "goreme", engineId: GOREME_ENGINE_ID, modes: GOREME_MODES, betLevels: GOREME_BET_LEVELS_CENTS, maxMultiplier: GOREME_MAX_WIN_MULTIPLIER,
+  play: (seedHex: string, betCents: number, mode: string) => playGoremeRound(seedHex, betCents, mode as GoremeMode),
+  cost: (betCents: number, mode: string) => goremeCostCents(betCents, mode as GoremeMode),
+  rtp: rtpTable(GOREME_RTP),
+});
+
 /** id -> game. Frozen; new games are added here (other engines register when they ship). */
 export const SLOT_GAMES: Readonly<Record<string, SlotGameDefinition>> = Object.freeze({
   [CASCADE_SLOT.id]: CASCADE_SLOT as SlotGameDefinition,
@@ -86,6 +94,7 @@ export const SLOT_GAMES: Readonly<Record<string, SlotGameDefinition>> = Object.f
   [CEZERI_SLOT.id]: CEZERI_SLOT as SlotGameDefinition,
   [ASENA_SLOT.id]: ASENA_SLOT as SlotGameDefinition,
   [DAMLA_SLOT.id]: DAMLA_SLOT as SlotGameDefinition,
+  [GOREME_SLOT.id]: GOREME_SLOT as SlotGameDefinition,
 });
 export const SLOT_GAME_ID_PATTERN = /^[a-z][a-z0-9-]{0,31}$/;
 

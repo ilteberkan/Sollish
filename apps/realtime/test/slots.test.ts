@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHmac } from 'node:crypto';
-import { ASENA_SLOT, CASCADE_SLOT, DAMLA_SLOT, EBRU_SLOT, TARHUN_SLOT } from '@sollish/protocol';
+import { ASENA_SLOT, CASCADE_SLOT, DAMLA_SLOT, EBRU_SLOT, GOREME_SLOT, TARHUN_SLOT } from '@sollish/protocol';
 import { SLOT_LIMITS, SlotError, admitBet, bearerToken, handleSlots, mintToken, parseExactObject, parseRoundBody, signText, signingSecret, timingSafeEqualHex, tokenValid } from '../src/slots';
 import { monitorFlushMs, monitorRollupMs, monitorShardCount, monitorTarget, parseDeltas, rtpAlert, rtpDeviation } from '../src/slot-stats';
 import { isReplayRecord } from '../src/slot-records';
@@ -27,6 +27,7 @@ test('bet admission: levels, modes and integer cost come from the game definitio
   assert.equal(admitBet(EBRU_SLOT, 50_000, 'standard'), 50_000, 'Ebru max bet x 10000 fits the exposure cap'); assert.equal(admitBet(EBRU_SLOT, 50_000, 'buy'), 5_000_000);
   assert.equal(admitBet(ASENA_SLOT, 50_000, 'standard'), 50_000, 'Asena max bet x 5000 fits the exposure cap'); assert.equal(admitBet(ASENA_SLOT, 50_000, 'buy'), 4_000_000);
   assert.equal(admitBet(DAMLA_SLOT, 50_000, 'high-16'), 50_000, 'Damla max bet x 1000 fits the exposure cap'); assert.equal(code(() => admitBet(DAMLA_SLOT, 1000, 'standard')), 'INVALID_MODE');
+  assert.equal(admitBet(GOREME_SLOT, 50_000, 'standard'), 50_000, 'Göreme max bet x 10000 fits the exposure cap'); assert.equal(admitBet(GOREME_SLOT, 50_000, 'buy'), 5_000_000); assert.equal(admitBet(GOREME_SLOT, 1000, 'ante'), 1250);
   assert.equal(code(() => admitBet(CASCADE_SLOT, 101, 'standard')), 'INVALID_BET');
   assert.equal(code(() => admitBet(CASCADE_SLOT, 100, 'turbo')), 'INVALID_MODE');
   const greedy = { ...CASCADE_SLOT, maxMultiplier: 1_000_000 };
@@ -93,7 +94,7 @@ test('router without bindings: health reports the flag, default off is 503, orig
   const health = await call('/v1/slots/health', { headers: { Origin: 'http://localhost:3000' } }, on);
   assert.equal(health.status, 200); assert.equal(health.headers.get('Access-Control-Allow-Origin'), 'http://localhost:3000');
   const body = await health.json() as { signature: string; games: { id: string }[] };
-  assert.equal(body.signature, 'dev'); assert.deepEqual(body.games.map(g => g.id), ['cascade', 'tarhun', 'ebru', 'cezeri', 'asena', 'damla']);
+  assert.equal(body.signature, 'dev'); assert.deepEqual(body.games.map(g => g.id), ['cascade', 'tarhun', 'ebru', 'cezeri', 'asena', 'damla', 'goreme']);
   assert.equal((await call('/v1/slots/session', { method: 'POST', headers: { Origin: 'https://evil.invalid' } }, on)).status, 403);
   assert.equal((await call('/v1/slots/session', { method: 'POST' }, on)).status, 403, 'no Origin header is refused');
   assert.equal((await call('/v1/slots/cascade/rounds?token=abc', { method: 'POST', headers: { Origin: 'http://localhost:3000' } }, on)).status, 400);
