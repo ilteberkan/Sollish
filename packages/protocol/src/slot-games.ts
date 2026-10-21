@@ -10,6 +10,7 @@ import { STORM_BET_LEVELS_CENTS, STORM_ENGINE_ID, STORM_MAX_WIN_MULTIPLIER, STOR
 import { EBRU_BET_LEVELS_CENTS, EBRU_ENGINE_ID, EBRU_MAX_WIN_MULTIPLIER, EBRU_MODES, EBRU_RTP, ebruCostCents, playEbruRound, type EbruMode, type EbruRound } from "./ebru";
 import { CEZERI_BET_LEVELS_CENTS, CEZERI_ENGINE_ID, CEZERI_MAX_WIN_MULTIPLIER, CEZERI_MODES, CEZERI_RTP, cezeriCostCents, playCezeriRound, type CezeriMode, type CezeriRound } from "./cezeri";
 import { ASENA_BET_LEVELS_CENTS, ASENA_ENGINE_ID, ASENA_MAX_WIN_MULTIPLIER, ASENA_MODES, ASENA_RTP, asenaCostCents, playAsenaRound, type AsenaMode, type AsenaRound } from "./asena";
+import { DAMLA_BET_LEVELS_CENTS, DAMLA_ENGINE_ID, DAMLA_MAX_WIN_MULTIPLIER, DAMLA_MODES, DAMLA_RTP, damlaCostCents, playDamlaRound, type DamlaMode, type DamlaRound } from "./damla";
 import type { SlotRoundSummary, SlotVerifiableGame } from "./slot-fair";
 
 export interface SlotModeRtp { rtp: number; stdDev: number }
@@ -68,6 +69,15 @@ export const ASENA_SLOT: SlotGameDefinition<AsenaRound> = Object.freeze({
   rtp: rtpTable(ASENA_RTP),
 });
 
+/** Damla is an instant drop game, not a slot, but its rounds have the same shape and fairness, so the RGS serves it as a
+ * "slot" with one mode per risk/terrace pair (`medium-12`). */
+export const DAMLA_SLOT: SlotGameDefinition<DamlaRound> = Object.freeze({
+  id: "damla", engineId: DAMLA_ENGINE_ID, modes: DAMLA_MODES, betLevels: DAMLA_BET_LEVELS_CENTS, maxMultiplier: DAMLA_MAX_WIN_MULTIPLIER,
+  play: (seedHex: string, betCents: number, mode: string) => playDamlaRound(seedHex, betCents, mode as DamlaMode),
+  cost: (betCents: number, mode: string) => damlaCostCents(betCents, mode as DamlaMode),
+  rtp: rtpTable(DAMLA_RTP),
+});
+
 /** id -> game. Frozen; new games are added here (other engines register when they ship). */
 export const SLOT_GAMES: Readonly<Record<string, SlotGameDefinition>> = Object.freeze({
   [CASCADE_SLOT.id]: CASCADE_SLOT as SlotGameDefinition,
@@ -75,6 +85,7 @@ export const SLOT_GAMES: Readonly<Record<string, SlotGameDefinition>> = Object.f
   [EBRU_SLOT.id]: EBRU_SLOT as SlotGameDefinition,
   [CEZERI_SLOT.id]: CEZERI_SLOT as SlotGameDefinition,
   [ASENA_SLOT.id]: ASENA_SLOT as SlotGameDefinition,
+  [DAMLA_SLOT.id]: DAMLA_SLOT as SlotGameDefinition,
 });
 export const SLOT_GAME_ID_PATTERN = /^[a-z][a-z0-9-]{0,31}$/;
 

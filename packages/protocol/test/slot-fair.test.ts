@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createHash, createHmac } from "node:crypto";
 import {
-  ASENA_SLOT, CASCADE_SLOT, CEZERI_SLOT, EBRU_SLOT, playAsenaRound, playCezeriRound, SLOT_GAMES, TARHUN_SLOT, deriveSeedHex, playEbruRound, isClientSeed, playCascade2Round, playStormRound, slotBytesToHex, slotGame, slotHexToBytes,
+  ASENA_SLOT, CASCADE_SLOT, CEZERI_SLOT, DAMLA_SLOT, EBRU_SLOT, playAsenaRound, playDamlaRound, playCezeriRound, SLOT_GAMES, TARHUN_SLOT, deriveSeedHex, playEbruRound, isClientSeed, playCascade2Round, playStormRound, slotBytesToHex, slotGame, slotHexToBytes,
   SLOT_GAME_IDS, SLOT_GAME_META, slotGameMeta,
   slotNonceMessage, slotReceiptMessage, slotReplayMessage, slotServerSeedHash, verifySlotRound,
 } from "../src/index";
@@ -54,7 +54,7 @@ test("engine-free meta registry equals the server registry field for field (the 
 });
 
 test("registry: own ids only, engines and costs are the protocol functions", () => {
-  assert.deepEqual(Object.keys(SLOT_GAMES).sort(), ["asena", "cascade", "cezeri", "ebru", "tarhun"]);
+  assert.deepEqual(Object.keys(SLOT_GAMES).sort(), ["asena", "cascade", "cezeri", "damla", "ebru", "tarhun"]);
   for (const id of ["__proto__", "constructor", "toString", "Cascade", "", "cascade/x"]) assert.equal(slotGame(id), null);
   assert.equal(slotGame("cascade"), CASCADE_SLOT); assert.equal(slotGame("tarhun"), TARHUN_SLOT); assert.equal(slotGame("ebru"), EBRU_SLOT);
   const seed = "0123456789abcdef0123456789abcdef";
@@ -78,6 +78,11 @@ test("registry: own ids only, engines and costs are the protocol functions", () 
   assert.equal(ASENA_SLOT.cost(1000, "standard"), 1000); assert.equal(ASENA_SLOT.cost(1000, "ante"), 1250); assert.equal(ASENA_SLOT.cost(1000, "buy"), 80_000);
   assert.throws(() => ASENA_SLOT.cost(1001, "standard"), RangeError); assert.throws(() => ASENA_SLOT.cost(1000, "turbo"), RangeError);
   for (const mode of ASENA_SLOT.modes) assert.ok(ASENA_SLOT.rtp[mode]!.rtp > 0.9 && ASENA_SLOT.rtp[mode]!.rtp < 1);
+  assert.equal(slotGame("damla"), DAMLA_SLOT); assert.equal(DAMLA_SLOT.engineId, "damla-terraces-1"); assert.equal(DAMLA_SLOT.maxMultiplier, 1000);
+  assert.equal(DAMLA_SLOT.modes.length, 15); assert.ok(DAMLA_SLOT.modes.includes("medium-12"));
+  assert.deepEqual(DAMLA_SLOT.play(seed, 1000, "high-16"), playDamlaRound(seed, 1000, "high-16"));
+  assert.equal(DAMLA_SLOT.cost(1000, "low-8"), 1000); assert.throws(() => DAMLA_SLOT.cost(1001, "low-8"), RangeError); assert.throws(() => DAMLA_SLOT.cost(1000, "standard"), RangeError);
+  for (const mode of DAMLA_SLOT.modes) assert.ok(DAMLA_SLOT.rtp[mode]!.rtp > 0.97 && DAMLA_SLOT.rtp[mode]!.rtp < 1);
 });
 
 test("verifySlotRound recomputes hash, seed, engine round, payout, total and cost and flags each mismatch", async () => {
