@@ -62,3 +62,16 @@ Durum: 21 Ekim 2026, sahip isteği ("iki yeni özgün oyun: üst seviye bir slot
 - 9 dil (en de pt fr it es tr zh ko); Türkçe ses yalnız `tr`'de.
 - Lobi: Göreme `slots`, Damla `instant` + "Sollish Original"; ikisi de `isNew`, `provablyFair`.
 - Kanıt: `ops/evidence/goreme-<tarih>/`, `ops/evidence/damla-<tarih>/`.
+
+---
+
+## Kanıt kaydı
+
+### Damla `damla-terraces-1` (21 Ekim 2026)
+- Tablo formülü: d = |k−R/2|/(R/2), havuz(k) = round(C + (E−C)·d^p) yüzde birlik; C merkez tabanı (low 0,5×, medium 0,3×, high 0,2×), E kenar çarpanı, p her mod için kesin RTP %98,5'e bisection ile; iç dört halka ±0,01 ince ayar (`experiments/damla/generate.ts`).
+- Kesin RTP 15 modda %98,45–98,56; mod başına 20 M tur MC hepsinde kesin değerin 3σ içinde. `ops/evidence/damla-20261021/`. Azami 1.000× (high-16).
+
+### Göreme `goreme-balloons-1` (21 Ekim 2026)
+- RTP (her mod ayrı süreç; standart/ante 100 M, satın alma 20 M tur): standart **%96,29** (GA 95,74–96,85), ante **%95,42** (94,91–95,93), satın alma **%95,86** (95,67–96,04). İsabet %36,4; özellik standartta 1/248, antede 1/128 (1,94×). Tavan 10.000× gözlendi. `ops/evidence/goreme-20261021/`.
+- Yükseliş zinciri: taban dönüşlerin %6,3'ünde balon iner; zincir ort. 2,92 kalkış (en çok 20). Gök çarpanı özellik sonunda ort. ~×8, en çok ×84.
+- Şartnameden sapmalar (motor başlığında belgeli): ödeme tablosu yol başına on binde bir bahis birimi, tahta kazancı `floor(toplam × gök / 100)` yüzde bir (balon çarpanları yüzünden ayar hassasiyeti gerekti); ödeme sembolleri yığınlı gelebilir (hücre üstündekini tekrar eder; isabet %65 küçük kazançtan %36'ya); bedava dönüşler boş tahtayla başlar (taban balonları taşınmaz); taban yeniden dönüşleri güneş vermez; satın alma garantisi ek güneşleri yalnız güneş/balon olmayan hücrelere koyar. **Birleşme seyrek** (balonlar yalnız rüzgâr kenara iterse buluşur): imza anı olarak gök kuşağının dolması öne alındı; birleşme nadir sürpriz olarak kalır.
