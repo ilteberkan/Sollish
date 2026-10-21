@@ -18,6 +18,9 @@ import { CezeriSymbolArt } from '@/components/cezeri/symbols';
 import { AsenaScene } from '@/components/asena/scene';
 import { AsenaLogo } from '@/components/asena/logo';
 import { AsenaSymbolArt } from '@/components/asena/symbols';
+import { GoremeScene } from '@/components/goreme/scene';
+import { GoremeLogo } from '@/components/goreme/logo';
+import { GoremeSymbolArt } from '@/components/goreme/symbols';
 import { CascadeBackdrop } from '@/components/cascade/backdrop';
 import { SymbolArt } from '@/components/cascade/symbols';
 import { BrandMark } from '@/components/icons';
@@ -103,6 +106,22 @@ function Asena({ variant }: { variant: PosterVariant }) {
     <At {...p[3]!}><AsenaSymbolArt symbol="moon" /></At>
     <At {...p[4]!}><AsenaSymbolArt symbol="h1" /></At>
     <At {...p[0]!}><AsenaLogo subtitle={false} /></At>
+  </Frame>;
+}
+
+function Goreme({ variant }: { variant: PosterVariant }) {
+  const p = L({
+    tile: [{ x: 50, y: 82, w: 94, z: 5 }, { x: 52, y: 36, w: 62 }, { x: 18, y: 18, w: 30, r: -8, z: 3 }, { x: 84, y: 16, w: 26, r: 8, z: 3 }, { x: 80, y: 56, w: 24, z: 4 }],
+    wide: [{ x: 77, y: 80, w: 40, z: 5 }, { x: 70, y: 38, w: 21 }, { x: 53, y: 26, w: 12, r: -8, z: 3 }, { x: 90, y: 24, w: 11, r: 8, z: 3 }, { x: 94, y: 58, w: 8, z: 4 }],
+    narrow: [{ x: 50, y: 80, w: 74, z: 5 }, { x: 50, y: 34, w: 34 }, { x: 18, y: 26, w: 22, r: -8, z: 3 }, { x: 82, y: 24, w: 20, r: 8, z: 3 }, { x: 88, y: 58, w: 14, z: 4 }],
+  })[variant]!;
+  return <Frame id="goreme" variant={variant}>
+    <GoremeScene parallax={false} mood="feature" className={styles.scene} />
+    <At {...p[1]!}><GoremeSymbolArt symbol="balloon" tier={3} /></At>
+    <At {...p[2]!}><GoremeSymbolArt symbol="balloon" tier={1} /></At>
+    <At {...p[3]!}><GoremeSymbolArt symbol="sun" /></At>
+    <At {...p[4]!}><GoremeSymbolArt symbol="h1" /></At>
+    <At {...p[0]!}><GoremeLogo subtitle={null} /></At>
   </Frame>;
 }
 
@@ -213,6 +232,7 @@ function Ringside({ variant }: { variant: PosterVariant }) {
 }
 
 const POSTERS: Array<[string, (props: { variant: PosterVariant }) => ReactNode, PosterVariant[]]> = [
+  ['goreme', Goreme, ['tile', 'wide', 'narrow']],
   ['tarhun', Tarhun, ['tile', 'wide', 'narrow']],
   ['ebru', Ebru, ['tile', 'wide', 'narrow']],
   ['cezeri', Cezeri, ['tile', 'wide', 'narrow']],

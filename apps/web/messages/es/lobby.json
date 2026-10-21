@@ -131,6 +131,11 @@
       "tagline": "Una gota. ¿Dónde se detendrá?",
       "text": "Una sola gota de agua desciende por las terrazas de travertino blanco de Pamukkale hasta una poza turquesa. Elige el riesgo y de 8 a 16 terrazas; haz que lluevan hasta 10 gotas a la vez.",
       "type": "Gota · terrazas"
+    },
+    "goreme": {
+      "tagline": "Vuela con los vientos del amanecer sobre Capadocia.",
+      "text": "Los globos wild suben una fila tras cada premio, derivan con el viento y aumentan sus multiplicadores; en la Fiesta del Amanecer amarran en la franja del cielo y el multiplicador del cielo solo sube.",
+      "type": "Ways · wilds que ascienden"
     }
   },
   "liveCard": {

@@ -131,6 +131,11 @@
       "tagline": "Une goutte. Où s'arrêtera-t-elle ?",
       "text": "Une seule goutte d'eau descend les terrasses de travertin blanc de Pamukkale jusqu'à un bassin turquoise. Choisissez le risque et 8 à 16 terrasses ; faites pleuvoir jusqu'à 10 gouttes d'un coup.",
       "type": "Goutte · terrasses"
+    },
+    "goreme": {
+      "tagline": "Laissez-vous porter par les vents de l'aube sur la Cappadoce.",
+      "text": "Les ballons wild montent d'une rangée après chaque gain, dérivent avec le vent et font grandir leurs multiplicateurs ; pendant la Fête de l'aube, ils s'amarrent à la bande céleste et le multiplicateur du ciel ne fait que monter.",
+      "type": "Ways · wilds ascendants"
     }
   },
   "liveCard": {

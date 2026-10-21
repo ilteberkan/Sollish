@@ -131,6 +131,11 @@
       "tagline": "Tek damla. Nerede duracak?",
       "text": "Tek bir su damlası Pamukkale'nin beyaz travertenlerinden turkuaz bir havuza iner. Riski ve 8–16 terası seç; aynı anda 10 damlaya kadar yağmur yağdır.",
       "type": "Damla · teras"
+    },
+    "goreme": {
+      "tagline": "Kapadokya'da şafak rüzgârına bin.",
+      "text": "Balon jokerleri her kazançtan sonra bir sıra yükselir, rüzgârla kayar ve çarpanını büyütür; Şafak Şöleni'nde gök kuşağına demirler ve Gök çarpanı yalnız artar.",
+      "type": "Yollar · yükselen jokerler"
     }
   },
   "liveCard": {

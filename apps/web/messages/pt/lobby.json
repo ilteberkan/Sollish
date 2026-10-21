@@ -131,6 +131,11 @@
       "tagline": "Uma gota. Onde ela vai parar?",
       "text": "Uma única gota d'água desce os terraços de travertino branco de Pamukkale até uma piscina turquesa. Escolha o risco e de 8 a 16 terraços; faça chover até 10 gotas de uma vez.",
       "type": "Gota · terraços"
+    },
+    "goreme": {
+      "tagline": "Voe com os ventos da aurora sobre a Capadócia.",
+      "text": "Os balões wild sobem uma fileira a cada vitória, derivam com o vento e aumentam seus multiplicadores; no Festival da Aurora eles atracam na faixa do céu e o multiplicador do céu só cresce.",
+      "type": "Ways · wilds que sobem"
     }
   },
   "liveCard": {

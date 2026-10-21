@@ -131,6 +131,11 @@
       "tagline": "Ein Tropfen. Wo kommt er zur Ruhe?",
       "text": "Ein einzelner Wassertropfen fällt über die weißen Sinterterrassen von Pamukkale in ein türkises Becken. Wähle Risiko und 8–16 Terrassen; lass bis zu 10 Tropfen auf einmal regnen.",
       "type": "Tropfen · Terrassen"
+    },
+    "goreme": {
+      "tagline": "Reite die Morgenwinde über Kappadokien.",
+      "text": "Ballon-Wilds steigen nach jedem Gewinn eine Reihe auf, treiben mit dem Wind und erhöhen ihre Multiplikatoren; im Morgenfest machen sie im Himmelsband fest und der Himmelsmultiplikator steigt nur.",
+      "type": "Ways · aufsteigende Wilds"
     }
   },
   "liveCard": {

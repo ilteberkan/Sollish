@@ -36,7 +36,7 @@ const MORE_LINKS: ReadonlyArray<{ href: string; icon: string; label: MessageKey<
   { href: '/stake', icon: 'stake', label: 'shell.nav.stake' },
 ];
 /* Sidebar game order: live first, then instant, then the slots. Names are brand names and stay as written. */
-const NAV_GAMES = ['ringside', 'crash', 'coinflip', 'cascade', 'tarhun', 'ebru', 'cezeri', 'asena', 'damla'].map(id => LOBBY_GAMES.find(g => g.id === id)!);
+const NAV_GAMES = ['ringside', 'crash', 'coinflip', 'cascade', 'tarhun', 'ebru', 'cezeri', 'asena', 'goreme', 'damla'].map(id => LOBBY_GAMES.find(g => g.id === id)!);
 
 /** Same-page category switch: on the lobby a category link only rewrites the URL (no server round trip). */
 function lobbyHref(pathname: string, category: LobbyCategory) {

@@ -131,6 +131,11 @@
       "tagline": "One drop. Where will it rest?",
       "text": "A single water drop falls over Pamukkale's white travertine terraces into a turquoise pool. Pick risk and 8–16 terraces; let it rain for up to 10 drops at once.",
       "type": "Drop · terraces"
+    },
+    "goreme": {
+      "tagline": "Ride the dawn winds over Cappadocia.",
+      "text": "Balloon wilds rise a row after every win, drift with the wind and grow their multipliers; in the Dawn Festival they moor in the sky band and the sky multiplier only climbs.",
+      "type": "Ways · rising wilds"
     }
   },
   "liveCard": {

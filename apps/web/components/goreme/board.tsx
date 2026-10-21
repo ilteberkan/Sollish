@@ -119,6 +119,10 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
     burn() { setLit(null); setBalloons(prev => prev.map(b => (b.phase === 'land' || b.phase === 'grow' ? { ...b, phase: 'idle', ms: 0, delay: 0 } : b))); setBurnKey(k => k + 1); },
     move(moves, exits, ms) {
       const to = new Map(moves.map(m => [m.id, m]));
+      // Symbols under a cell a balloon is drifting into give way (the respin deals them again anyway).
+      const targets = new Set(moves.map(m => `${m.to[0]},${m.to[1]}`));
+      const covered = cellsRef.current.filter(c => targets.has(`${c.col},${c.row}`));
+      if (covered.length) { dropOut(covered, Math.round(ms * 0.6)); setCells(prev => prev.filter(c => !targets.has(`${c.col},${c.row}`))); }
       const out = new Map(exits.map(e => [e.id, e]));
       setBalloons(prev => prev.map(b => {
         const m = to.get(b.id);

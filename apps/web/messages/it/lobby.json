@@ -131,6 +131,11 @@
       "tagline": "Una goccia. Dove si fermerà?",
       "text": "Una sola goccia d'acqua scende le terrazze di travertino bianco di Pamukkale fino a una vasca turchese. Scegli il rischio e da 8 a 16 terrazze; fai piovere fino a 10 gocce insieme.",
       "type": "Goccia · terrazze"
+    },
+    "goreme": {
+      "tagline": "Cavalca i venti dell'alba sulla Cappadocia.",
+      "text": "Le mongolfiere wild salgono di una riga dopo ogni vincita, vanno alla deriva con il vento e aumentano i moltiplicatori; nella Festa dell'alba si ormeggiano nella fascia del cielo e il moltiplicatore del cielo cresce soltanto.",
+      "type": "Ways · wild che salgono"
     }
   },
   "liveCard": {

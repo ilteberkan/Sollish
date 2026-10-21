@@ -1,0 +1,375 @@
+{
+  "meta": {
+    "title": "Göreme: Şafak Balonları · Sollish",
+    "description": "Özgün 6 × 5, 15.625 yollu slot: çarpan taşıyan yükselen balon jokerleri, rüzgâr, birleşmeler ve gök kuşağıyla Şafak Şöleni bedava dönüşleri. Yalnız DEMO kredisi."
+  },
+  "title": "Göreme: Şafak Balonları",
+  "subtitle": "6 × 5 · 15.625 yol · yükselen balon jokerleri",
+  "logoSub": "ŞAFAK BALONLARI",
+  "table": "Göreme oyun masası",
+  "badge": {
+    "checking": "Sunucu kontrol ediliyor"
+  },
+  "symbols": {
+    "h1": "Peri Bacası",
+    "h2": "Güvercinlik",
+    "h3": "Avanos Çömleği",
+    "h4": "Kilim Atı",
+    "l1": "Al Göz",
+    "l2": "Çivit Göz",
+    "l3": "Yeşil Göz",
+    "l4": "Sarı Koçboynuzu",
+    "l5": "Mor Yonca",
+    "balloon": "Balon (joker)",
+    "sun": "Şafak Güneşi (dağılım)"
+  },
+  "board": {
+    "labelPlay": "Göreme makara penceresi, 6 makara, 5 sıra",
+    "labelFree": "Göreme makara penceresi, Şafak Şöleni, 6 makara, 5 sıra",
+    "cell": "{name}, makara {col}, sıra {row}",
+    "balloonCell": "Balon ×{multiplier}, makara {col}, sıra {row}"
+  },
+  "facts": {
+    "aria": "Oyun özellikleri",
+    "balloon": "<b>Balon jokerleri</b> her kazançtan sonra bir sıra yükselir ve +1 kazanır",
+    "sun": "<b>3+ Şafak Güneşi</b> Şafak Şöleni'ni başlatır",
+    "ways": "<b>15.625 yol</b> · azami {max}×"
+  },
+  "hud": {
+    "sunChip": "<b>3+ güneş</b> · Şafak Şöleni",
+    "free": "Şafak Şöleni",
+    "freeSpin": "Bedava dönüş {n}",
+    "left": "Kalan",
+    "freeAria": "Bedava dönüş {number}, kalan dönüş {left}"
+  },
+  "wind": {
+    "left": "Rüzgâr ←",
+    "calm": "Durgun",
+    "right": "Rüzgâr →"
+  },
+  "sky": {
+    "label": "GÖK"
+  },
+  "meter": {
+    "idleA": "<b>Balonlar</b> yükselir · <b>çarpanlar</b> yol boyunca çarpılır",
+    "idleB": "Azami <b>{max}×</b>",
+    "win": "Kazanç",
+    "total": "Toplam kazanç"
+  },
+  "callout": {
+    "tier1": "Balon çarpanı",
+    "tier2": "Sert rüzgâr",
+    "tier3": "Göklere",
+    "tier4": "Efsane şafak",
+    "sky": "Gök çarpanı"
+  },
+  "banner": {
+    "ways": "{name} · {length} makara · {ways} yol{more, plural, =0 {} other { · +# daha}}{sky, plural, =1 {} other { · GÖK ×#}}",
+    "merge": "Birleşme · ×{multiplier}",
+    "scatter": "{count} güneş · +{money} DEMO · {spins} bedava dönüş",
+    "retrigger": "{count} güneş · +{spins} bedava dönüş",
+    "trigger": "Şafak Şöleni · {spins} bedava dönüş"
+  },
+  "deck": {
+    "group": "Oyun kontrolleri",
+    "balance": "Bakiye",
+    "refill": "Bakiyeyi yenile",
+    "win": "Kazanç",
+    "winReplay": "Tekrar",
+    "winReplayLast": "Tekrar kazancı",
+    "winLast": "Son kazanç",
+    "cost": "Maliyet",
+    "spin": "Çevir",
+    "spinCost": "Maliyet {cost}",
+    "auto": "Otomatik",
+    "info": "Bilgi",
+    "infoAria": "Oyun bilgisi",
+    "on": "Açık",
+    "off": "Kapalı",
+    "buy": "Bonus satın al",
+    "buyDesc": "3+ güneş garantili · {rtp}",
+    "speedAria": "Dönüş hızı: {speed}",
+    "sound": "Ses",
+    "soundLoading": "Ses yükleniyor %{percent}",
+    "outOfCredit": "DEMO bakiyen bitti.",
+    "lastWin": "Son tur <b>+{money} DEMO</b> · {times}×",
+    "lastNone": "Son tur kazançsız.",
+    "hintSpace": "Boşluk tuşu ile de çevirebilirsin.",
+    "hintFixed": "Sonuç dönüşten önce belirlenir.",
+    "spinLocked": "Tur sürüyor; bütün kalkışlar, yeniden dönüşler ve bedava dönüşler bitene kadar kilitli.",
+    "anteDesc": "Bedava dönüş şansı ≈2 kat"
+  },
+  "auto": {
+    "ribbon": "Otomatik oyun · {spins, plural, other {# tur}} kaldı"
+  },
+  "toast": {
+    "close": "Bildirimi kapat",
+    "autoplayStopped": "Otomatik oyun durdu: {reason}. {spins, plural, other {# tur}}, net {net}.",
+    "autoplayStoppedShort": "Otomatik oyun durdu: {reason}.",
+    "autoplayStarted": "Otomatik oyun: {spins, plural, other {# tur}}, kayıp limiti {limit}.",
+    "refilled": "Bakiye yenilendi: {amount} DEMO.",
+    "shareCopied": "Paylaşım bağlantısı kopyalandı: {url}",
+    "shareLink": "Paylaşım bağlantısı: {url}",
+    "shareFailed": "Paylaşılamadı: {error}",
+    "replayFailed": "Bu tur tekrar oynatılamadı.",
+    "replayMismatch": "Tekrar doğrulanamadı: kayıt motorla uyuşmuyor."
+  },
+  "autoplay": {
+    "serverFailed": "Sunucu turu başlatılamadı",
+    "spinFailed": "Dönüş başlatılamadı",
+    "quit": "Oturumdan çıkıldı",
+    "title": "Otomatik oyun",
+    "note": "Tur başı {cost}{ante, select, yes { (Şans ×2)} other {}} · bonus satın almaz · sekme gizlenince durur."
+  },
+  "errors": {
+    "entropy": "Güvenli yerel rastgelelik kullanılamıyor. Demo başlatılmadı.",
+    "insufficient": "Bakiye yetersiz: bu {kind, select, buy {satın alma} other {dönüş}} {cost}. Bahsi düşür veya bakiyeyi yenile.",
+    "noCredit": "Yeterli demo kredin yok veya devam eden bir demo var."
+  },
+  "buy": {
+    "block": {
+      "gated": "Yalnız DEMO kredisiyle satın alınır",
+      "autoplay": "Otomatik oyun sürerken satın alınamaz",
+      "busy": "Tur bitmeden satın alınamaz",
+      "ante": "Şans ×2 açıkken satın alınamaz",
+      "balance": "Bakiye yetersiz (fiyat {price})"
+    },
+    "rtp": "Satın alma RTP {buy} · standart {standard} (simülasyon, sertifikasız)",
+    "feature": "Şafak Şöleni · bahis {bet}",
+    "text": "Bahsin <b>100 katı</b>. İlk tahtada en az 3 Şafak Güneşi bulunur; en az <b>{spins} bedava dönüşlü</b> Şafak Şöleni garantilidir. Balonlar dönüşler arasında kalır; üstten çıkan her balon gök kuşağına demirler ve Gök çarpanını büyütür, Gök çarpanı özellik sonuna kadar her kazancı çarpar. Kazançlar {bet} bahse göre ödenir, azami {max}."
+  },
+  "replay": {
+    "ribbon": "Tekrar — bakiye değişmez · tur {id}"
+  },
+  "gated": {
+    "title": "Zincir üstü Göreme yok.",
+    "text": "Bu oyun yalnız DEMO kredisiyle oynanır; gerçek bahis kabul edilmez.",
+    "back": "Yerel demoya dön"
+  },
+  "settings": {
+    "soundReady": "Ses hazır: müzik, efektler ve ortam sesi bu cihazda hazırlandı.",
+    "soundIdle": "Ses ilk dokunuşta yüklenir.",
+    "soundLoading": "Ses yükleniyor %{percent} (bu sırada oyun sessiz sürer).",
+    "voiceNote": "Seslendirmeler henüz kaydedilmedi: seslendirme ayarı saklanır, o zamana kadar oyun sözsüz işaret sesleri çalar.",
+    "demoTitle": "DEMO bakiyesi",
+    "demoText": "Bakiye {balance}{remote, select, yes { (sunucu)} other {}}. Yenilemek bakiyeyi {start} DEMO yapar ve geçmişe \"Bakiye yenilendi\" satırı ekler; tur veya otomatik oyun sürerken yapılamaz."
+  },
+  "splash": {
+    "loading": "Yükleniyor",
+    "play": "Oyna",
+    "skip": "Giriş ekranlarını atla",
+    "note": "Yalnız DEMO kredisi · RTP {rtp} (simülasyon, sertifikasız)",
+    "lift": {
+      "title": "Yükselen balonlar",
+      "text": "Her kazançtan sonra balonlar bir sıra yükselir, rüzgârla kayar ve +1 kazanır."
+    },
+    "merge": {
+      "title": "Birleşme",
+      "text": "Aynı hücreye gelen iki balon tek dev balon olur: çarpanları toplanır."
+    },
+    "sky": {
+      "title": "Gök kuşağı · {max}× kadar",
+      "text": "Şafak Şöleni'nde balonlar göğe demirler, Gök çarpanı yalnız büyür."
+    }
+  },
+  "intro": {
+    "word": "ŞAFAK ŞÖLENİ",
+    "srTitle": "Şafak Şöleni başlıyor",
+    "freeSpins": "bedava\ndönüş",
+    "text": "Balonlar dönüşler arasında <b>kalır</b> ve her dönüşte yükselir. Üstten çıkan balon <b>gök kuşağına demirler</b>: Gök çarpanı büyür ve <b>her kazancı</b> çarpar.",
+    "start": "Başla"
+  },
+  "total": {
+    "title": "Şafak Şöleni — Toplam",
+    "word": "TOPLAM",
+    "sub": "KAZANÇ",
+    "spins": "Bedava dönüş",
+    "spinsValue": "{spins, plural, other {# dönüş}}",
+    "sky": "Gök çarpanı",
+    "moored": "{n, plural, =0 {demirleyen balon yok} other {# balon demirledi}}",
+    "ofBetLabel": "Bahis katı",
+    "capNote": "Tur 10.000× tavanına ulaştı · kalan dönüşler oynanmaz",
+    "toCelebration": "Kutlamaya geç"
+  },
+  "celebration": {
+    "aria": "{title}: {money} DEMO",
+    "times": "{times}× bahis",
+    "capNote": "Tur tavana ulaştı · kalan dönüşler oynanmaz",
+    "speedUp": "Hızlandırmak için dokun",
+    "continue": "Devam"
+  },
+  "announce": {
+    "spinStarted": "Dönüş başladı, {amount} DEMO.",
+    "bonusBought": "Bonus satın alındı, {amount} DEMO. Şafak Şöleni başlıyor.",
+    "sentToServer": "Dönüş sunucuya gönderildi, {amount} DEMO.",
+    "recovered": "Yarım kalan tur sunucudan kurtarıldı; ödemesi sunucuda zaten yapıldı ({amount} DEMO).",
+    "replaying": "Tekrar oynatılıyor: tur {id}. Bakiye değişmez.",
+    "replayDone": "Tekrar bitti: {amount} DEMO, {times}×. Bakiye değişmedi.",
+    "preview": "Önizleme turu: bakiye değişmez.",
+    "roundEnd": "Tur bitti. Toplam kazanç {amount} DEMO, {times}×.",
+    "roundEndNone": "Tur bitti. Kazanç yok.",
+    "noWin": "Kazanç yok.",
+    "sunTease": "İki güneş indi; son makaralar dönüyor.",
+    "way": "{name}, {length} makara, {ways} yol{multiplier, plural, =1 {} other {, balon çarpanı ×#}}",
+    "boardWin": "Tahta kazancı {times}× bahis",
+    "scatter": "{count} Şafak Güneşi: {spins} bedava dönüş.",
+    "retrigger": "{count} güneş: {spins} bedava dönüş eklendi.",
+    "trigger": "{count} Şafak Güneşi: {spins} bedava dönüşlü Şafak Şöleni kazanıldı.",
+    "lift": "{n} balon yükseliyor; {wind}.",
+    "flyAway": "{n} balon uçup gitti.",
+    "merge": "İki balon birleşti: ×{multiplier}.",
+    "sky": "{n} balon demirledi; Gök çarpanı ×{after}.",
+    "freeIntro": "Şafak Şöleni başlıyor: {spins} bedava dönüş kazandın.",
+    "freeSpinWin": "Bedava dönüş {times}× kazandırdı. Toplam {total}×.",
+    "freeSpinNone": "Bedava dönüşte kazanç yok.",
+    "freeOutro": "Şafak Şöleni bitti. Toplam: {amount} DEMO, {spins} dönüş, Gök ×{sky}.",
+    "totalWin": "Toplam kazanç {amount} DEMO, {times}×.",
+    "celebration": "{title}: {amount} DEMO, {times}×.",
+    "refilled": "DEMO bakiyesi {amount} DEMO olarak yenilendi.",
+    "speed": "Dönüş hızı: {speed}.",
+    "anteOn": "Şans ×2 açık: bedava dönüş şansı ≈2 kat, maliyet {cost}.",
+    "anteOff": "Şans ×2 kapalı: maliyet {cost}."
+  },
+  "history": {
+    "title": "Oyun geçmişin",
+    "scope": "Bu oturum · tekrar bakiyeyi değiştirmez",
+    "time": "Zaman",
+    "mode": "Mod",
+    "bet": "Bahis",
+    "cost": "Maliyet",
+    "win": "Kazanç",
+    "result": "Sonuç",
+    "roundId": "Tur kimliği",
+    "replayColumn": "Tekrar oynat",
+    "latest": "Son tur",
+    "replay": "Tekrar oynat",
+    "replayAria": "Tekrar oynat: tur {id}, bakiye değişmez",
+    "share": "Kazancını paylaş",
+    "shareAria": "Kazancını paylaş: tur {id}",
+    "emptyTitle": "İlk turun burada görünecek.",
+    "emptyText": "Her turun modu, bahsi, maliyeti, kazancı ve tur kimliği kaydedilir; istediğin turu tekrar izleyebilirsin.",
+    "reset": "Bakiye yenilendi",
+    "resetRemote": "Bakiye yenilendi (sunucu)",
+    "tableRegion": "Oyun geçmişi tablosu",
+    "detail": {
+      "capped": "Azami kazanç · {times}×",
+      "none": "Kazanç yok",
+      "free": "Şafak Şöleni ×{spins} · Gök ×{sky} · {times}×",
+      "base": "{wins, plural, other {# yol kazancı}}{lifts, plural, =0 {} other { · # kalkış}} · {times}×"
+    }
+  },
+  "rules": {
+    "board": "Göreme 6 × 5 yollu bir slottur: soldan bitişik makaralarda 3–6 aynı sembol, 15.625'e kadar yolda öder. Balon jokerleri her sembolün yerine geçer ve yol boyunca çarpılan çarpanlar taşır.",
+    "features": "Ödenen tahtadan sonra her balon bir sıra yükselir, rüzgârla kayar, +1 kazanır ve diğer hücreler yeniden döner; aynı hücreye gelen iki balon birleşir. 3+ Şafak Güneşi Şafak Şöleni'ni başlatır; orada üstten çıkan balonlar gök kuşağına demirler ve Gök çarpanını büyütür.",
+    "fixed": "Turun tamamı sunum başlamadan motor tarafından belirlenir; animasyon, hız ve ses onu değiştirmez."
+  },
+  "info": {
+    "title": "Göreme · Oyun bilgisi",
+    "tab": {
+      "how": "Nasıl oynanır",
+      "pay": "Ödeme tablosu",
+      "features": "Özellikler",
+      "rtp": "RTP",
+      "limits": "Bahis ve kazanç sınırları",
+      "keys": "Tuşlar",
+      "fault": "Arıza hükmü"
+    },
+    "how": {
+      "steps": {
+        "bet": "<b>Bahsini seç.</b> − ve + düğmeleri bahsi bir basamak değiştirir; bahis tutarına dokununca bütün basamaklar açılır. \"Azami bahis\" bakiyenin yettiği en yüksek basamağı seçer.",
+        "spin": "<b>Çevir.</b> Güneş düğmesine bas veya boşluk tuşunu kullan. Tur maliyeti (Şans ×2 açıkken bahsin {factor} katı) bakiyeden bir kez düşülür.",
+        "ways": "<b>Yollar.</b> Bir sembol, <b>soldaki makaradan başlayarak bitişik 3 veya daha fazla makarada</b> herhangi bir sırada görünürse öder. Her makaradan bir hücre alan her bileşim bir yoldur; altı makarada beş sırayla {ways} yola kadar.",
+        "lift": "<b>Yükselen balonlar.</b> Tahta ödendikten sonra her balon bir sıra yükselir, rüzgârla bir makara kayar ve +1 kazanır; diğer hücreler yeniden döner ve yeni tahta baştan ödenir. Zincir tahtada balon kalmayınca biter (en çok 20 kalkış).",
+        "result": "<b>Sonuç.</b> Turun tamamı dönüş başlamadan motor tarafından belirlenir; animasyon yalnız o sonucu oynatır. Çevir düğmesi tur (bütün kalkışlar, yeniden dönüşler ve bedava dönüşler) bitene kadar kilitli kalır; hızlandırmak için Hızlı/Turbo ayarını kullan. Hız ayarı, kutlama sayacına dokunmak, sekmenin gizlenmesi veya sayfadan ayrılmak ödemeyi değiştirmez; tur her zaman motorun ödemesiyle bir kez kapanır."
+      },
+      "note": "DEMO kredisi değersizdir; SOL, token veya ödül kazandırmaz. Göreme ve Kapadokya coğrafyadır; peri bacaları, güvercinlikler, Avanos çömlekçiliği ve kilim motifleri bu oyun için özgün çizildi."
+    },
+    "pay": {
+      "lead": "Tutarlar <b>{bet}</b> bahiste <b>yol başına</b> brüt DEMO ödemesidir; soldan 3, 4, 5 veya 6 makaralık seri için. Kazanç, yol başı ödeme çarpı yol sayısıdır (o yollardaki balon çarpanlarıyla çarpılır).",
+      "gridAria": "Sembol başına yol ödemeleri",
+      "reels": "{n} makara",
+      "example": "Örnek: {name} altı makaranın hepsinde yol başına {amount} DEMO öder; bütün hücreler doluysa bu {ways} yola kadar çıkar. Tur toplamı hiçbir zaman {max} tutarını aşmaz.",
+      "suns": "{n} güneş",
+      "spins": "{spins} bedava dönüş",
+      "sunText": "Güneşler yalnız turun <b>ilk tahtasında</b> sayılır ve bahsin katı olarak öder. Şafak Şöleni'nde bir tahtada 3 veya daha fazla güneş <b>+5 bedava dönüş</b> verir.",
+      "balloonText": "Güneş dışındaki her sembolün yerine geçer, kendi başına ödemez. <b>{values}</b> ile iner; her kalkış +1 ekler (en çok ×{max}). Aynı makaradaki balon değerleri toplanır; makaralar arasında yol boyunca <b>çarpılır</b>.",
+      "maxTitle": "Azami kazanç {max}×",
+      "maxText": "Bu bahiste: <b>{amount}</b>. Tur toplamı bu tavana ulaşırsa tur hemen biter; kalan dönüşler oynanmaz."
+    },
+    "features": {
+      "ways": {
+        "title": "Yollar nasıl sayılır",
+        "text": "Her ödeme sembolü için oyun makaralara soldan bakar. Bir makarada o sembol veya bir balon varsa seri devam eder. Seri en az 3 makara uzunluğunda olmalı ve en az bir gerçek sembol içermelidir.",
+        "formula": "<b>Kazanç</b> = yol başı ödeme × (seri boyunca her makarada (sembol sayısı + balon değerleri) çarpımı − yalnız balon değerlerinin çarpımı).",
+        "example": "Örnek: 1. makarada sembol iki kez, 2. makarada bir kez, 3. makarada bir kez artı ×3 balon: (2) × (1) × (1 + 3) − 0 = <b>8 ağırlıklı yol</b>. Çıkarma, yalnız balonlardan oluşan yolları dışarıda bırakır."
+      },
+      "lift": {
+        "title": "Yükselen balonlar ve rüzgâr",
+        "text": "Tahta ödendikten sonra tahtada balon varsa <b>kalkış</b> gelir: rüzgâr bir yön seçer (sol, durgun veya sağ), her balon bir sıra yükselir, rüzgârla bir makara kayar (kenarda durur) ve çarpanı 1 artar (en çok ×{max}). Üst sıradan çıkan balon uçup gider. Diğer hücreler yeniden döner ve tahta baştan ödenir. Dönüş başına en çok {lifts} kalkış."
+      },
+      "merge": {
+        "title": "Birleşme",
+        "text": "İki balon aynı hücreye gelirse <b>tek dev balona</b> dönüşür; çarpanı ikisinin toplamıdır (en çok ×{max}). Birleşme seyrektir: rüzgâr balonları tahtanın kenarına ittiğinde olur."
+      },
+      "free": {
+        "title": "Şafak Şöleni (bedava dönüş)",
+        "text": "İlk tahtada 3 / 4 / 5 / 6+ Şafak Güneşi {s3} / {s4} / {s5} / {s6} bedava dönüş verir. Özellikte balonlar dönüşler arasında tahtada kalır ve balonlu her bedava dönüş bir kalkıştır. Bedava dönüşte 3+ güneş +{retrigger} dönüş verir (toplam en çok {max}).",
+        "sky": "<b>Gök kuşağı:</b> özellik sırasında üst sıradan çıkan balon makaraların üstündeki gök kuşağına <b>demirler</b>. Gök çarpanı (ilk demirlemeye kadar ×1, sonra demirleyen bütün balon değerlerinin toplamı) özellik sonuna kadar her kazancı çarpar ve hiç düşmez."
+      },
+      "cumulative": {
+        "title": "Birikimli kazanç",
+        "text": "Kazanç göstergesi tur boyunca sıfırlanmaz: her kalkış, yeniden dönüş ve bedava dönüş üstüne eklenir. Bedava dönüşlü tur her zaman toplam ekranıyla biter."
+      },
+      "tiers": {
+        "title": "Kazanç kademeleri",
+        "text": "Tur toplamı / bahis: 10×'ten <b>{big}</b>, 25×'ten <b>{mega}</b>, 50×'den <b>{super}</b>, 100×'den <b>{epic}</b>; tavana ulaşan turda <b>{max}</b>. Sayaç kademeler arasında tırmanır."
+      },
+      "ante": {
+        "title": "Şans ×2 · dönüş {cost}",
+        "text": "Bahis {factor} kat tutar ve taban tahtada daha çok güneş bulunur: Şafak Şöleni yaklaşık iki kat sık gelir (simülasyonda turların {standard} yerine {ante}). Kazançlar yine taban bahse göre ödenir."
+      },
+      "buy": {
+        "title": "Bonus satın al · {price}",
+        "text": "İlk tahtasında en az {suns} Şafak Güneşi olan bir tur başlatır; ardından her zaman Şafak Şöleni gelir. Satın alma RTP {rtp}. Şans ×2 açıkken veya otomatik oyunda kullanılamaz."
+      }
+    },
+    "rtp": {
+      "title": "Teorik dönüş (RTP)",
+      "caption": "Mod başına teorik dönüş",
+      "colMode": "Mod",
+      "colCost": "Maliyet",
+      "colCi": "%95 GA",
+      "colFeature": "Şafak Şöleni",
+      "everyRound": "her tur",
+      "oneIn": "1 / {n}",
+      "text": "Standart ve Şans ×2 için mod başına <b>{millions} milyon tur simülasyonu</b>, satın alma için {buyMillions} milyon; her biri ayrı süreçte. Taban dönüş kazanç sıklığı {hit}. Tur başına standart sapma: {sdStandard} (standart), {sdBuy} (satın alma).",
+      "note": "RTP uzun vadeli ortalamadır; kısa oturumdaki sonuç çok farklı olabilir. Bu DEMO oyun <b>sertifikasızdır</b>; güven aralığı normal yaklaşımdır ve ağır kuyruk nedeniyle iyimserdir."
+    },
+    "limits": {
+      "title": "Bahis ve kazanç sınırları",
+      "range": "Bahis aralığı",
+      "steps": "Basamaklar",
+      "current": "Şu anki bahis",
+      "currentValue": "dönüş {bet} · Şans ×2 {ante} · satın alma {buy}",
+      "max": "Azami kazanç",
+      "maxValue": "Bahsin {multiplier} katı = {amount}",
+      "text1": "Kazançlar her modda taban bahse göre ödenir.",
+      "text2": "Bahsin {times}× katına ulaşan tur hemen biter; kalan dönüşler oynanmaz."
+    },
+    "keys": {
+      "heading": "Klavye",
+      "space": "Boşluk",
+      "spaceText": "Dönüşü başlatır (kapatılabilir: \"{option}\"). Tur sürerken yalnız bekleme ekranını geçer.",
+      "enterText": "Düğme ve pencere dışında Boşluk ile aynıdır.",
+      "escText": "Açık pencereyi kapatır (oturum hatırlatması hariç).",
+      "tabText": "Kontroller arasında gezinir; her kontrole ulaşılır.",
+      "note": "Ekran okuyucu her kazancı, kalkışı, birleşmeyi, demirlemeyi ve tur sonucunu duyurur."
+    },
+    "fault": {
+      "title": "Arıza hükmü",
+      "p1": "<b>Arıza, etkilenen bütün oyunları ve ödemeleri geçersiz kılar.</b>",
+      "p2": "Sunum ile motor sonucu uyuşmazsa motor sonucu (tur kaydı) geçerlidir.",
+      "p3": "DEMO kredisinin parasal değeri yoktur."
+    }
+  }
+}

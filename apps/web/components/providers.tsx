@@ -3,7 +3,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import { WalletConnection, type ConnectedWallet, type StandardWallet } from '@/lib/wallet';
 import { DEMO_START_CENTS, DemoLedger, type DemoReserveLimits } from '@/lib/demo';
 
-export type DemoGame = 'Crash' | 'Coinflip' | 'Ringside' | 'Cascade' | 'Tarhun' | 'Ebru' | 'Cezeri' | 'Asena' | 'Damla';
+export type DemoGame = 'Crash' | 'Coinflip' | 'Ringside' | 'Cascade' | 'Tarhun' | 'Ebru' | 'Cezeri' | 'Asena' | 'Damla' | 'Göreme';
 /** Replay data of a Candy Cascade round: the engine re-plays it exactly from these values. */
 export type CascadeRoundMeta = { engine: string; seedHex: string; betCents: number; mode: 'standard' | 'ante' | 'buy'; costCents: number };
 /** Replay data of a Tarhun: Fırtına Tahtı round (engine storm-throne-1); same shape as the Candy Cascade meta. */
@@ -16,10 +16,12 @@ export type CezeriRoundMeta = { engine: string; seedHex: string; betCents: numbe
 export type AsenaRoundMeta = { engine: string; seedHex: string; betCents: number; mode: 'standard' | 'ante' | 'buy'; costCents: number };
 /** Replay data of a Damla: Pamukkale drop (engine damla-terraces-1); mode is `<risk>-<rows>`, e.g. `medium-12`. */
 export type DamlaRoundMeta = { engine: string; seedHex: string; betCents: number; mode: string; costCents: number };
+/** Replay data of a Göreme: Şafak Balonları round (engine goreme-balloons-1); same shape as the Asena meta. */
+export type GoremeRoundMeta = { engine: string; seedHex: string; betCents: number; mode: 'standard' | 'ante' | 'buy'; costCents: number };
 /** A round the RGS server resolved and settled (lib/rgs-client.ts). The browser only recorded it; it never settled it. */
 export type RemoteRoundMeta = { roundId: string; nonce: number; serverSeedHash: string; clientSeed: string };
 /** `stake` is what the round cost; `kind: 'reset'` marks a DEMO balance refill line (stake and payout 0). */
-export type DemoRecord = { id: string; game: DemoGame; stake: number; payout: number; detail: string; at: number; kind?: 'round' | 'reset'; cascade?: CascadeRoundMeta; storm?: StormRoundMeta; ebru?: EbruRoundMeta; cezeri?: CezeriRoundMeta; asena?: AsenaRoundMeta; damla?: DamlaRoundMeta; remote?: RemoteRoundMeta };
+export type DemoRecord = { id: string; game: DemoGame; stake: number; payout: number; detail: string; at: number; kind?: 'round' | 'reset'; cascade?: CascadeRoundMeta; storm?: StormRoundMeta; ebru?: EbruRoundMeta; cezeri?: CezeriRoundMeta; asena?: AsenaRoundMeta; damla?: DamlaRoundMeta; goreme?: GoremeRoundMeta; remote?: RemoteRoundMeta };
 type ProductContext = {
   wallet: ConnectedWallet | null; connectWallet: (wallet: StandardWallet) => Promise<void>; disconnectWallet: () => void;
   walletOpen: boolean; setWalletOpen: (open: boolean) => void;

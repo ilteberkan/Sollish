@@ -1,6 +1,6 @@
 /**
  * Lobby tile facts (RTP, max win, volatility) without importing any engine. The slot values are literal copies of the
- * standard-mode rows of each engine's evidence constant (CASCADE2_RTP, STORM_RTP, EBRU_RTP, CEZERI_RTP, ASENA_RTP, from
+ * standard-mode rows of each engine's evidence constant (CASCADE2_RTP, STORM_RTP, EBRU_RTP, CEZERI_RTP, ASENA_RTP, GOREME_RTP, from
  * ops/evidence/<game>-2026101x/rtp.json); max win comes from the engine-free SLOT_GAME_META. tests/lobby.test.ts fails
  * when a copy drifts from its engine, the same rule as SLOT_GAME_META. Simulated DEMO estimates, not certified RTPs.
  */
@@ -14,6 +14,7 @@ export const SLOT_STANDARD_RTP = Object.freeze({
   ebru: Object.freeze({ rtp: 0.957, stdDev: 22.114 }),
   cezeri: Object.freeze({ rtp: 0.955, stdDev: 12.445 }),
   asena: Object.freeze({ rtp: 0.952, stdDev: 21.369 }),
+  goreme: Object.freeze({ rtp: 0.963, stdDev: 28.138 }),
 });
 
 /** Local DEMO practice: Crash pays the chosen target while crash point = 0.98 / (1 − u) (lib/demo.ts sampleCrash, cap
