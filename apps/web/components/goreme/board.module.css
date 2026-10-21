@@ -1,0 +1,68 @@
+/* Göreme board: cells and balloons are absolutely placed by --c (reel) and --r (row); lengths come from the timeline
+   (--delay, --dur, --ms, --stop). Only transform / opacity animate. */
+.board { position: absolute; inset: 0; transition: opacity 0.35s ease; }
+.board[data-dim] { opacity: 0.45; }
+
+.cell, .balloon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% / 6);
+  height: 20%;
+  box-sizing: border-box;
+  transform: translate(calc(var(--c) * 100%), calc(var(--r) * 100%));
+}
+.cell { padding: 5%; }
+.cell[data-mode='reel'] > * { animation: reelIn var(--dur, 380ms) cubic-bezier(0.25, 0.9, 0.35, 1.12) var(--delay, 0ms) both; }
+.cell[data-mode='drop'] > * { animation: dropIn var(--dur, 380ms) cubic-bezier(0.3, 0.85, 0.35, 1.1) var(--delay, 0ms) both; }
+.cell[data-leaving] { z-index: 0; pointer-events: none; }
+.cell[data-leaving] > * { animation: dropOut var(--dur, 220ms) ease-in both; }
+@keyframes reelIn { 0% { transform: translateY(-180%) scaleY(1.25); opacity: 0; } 18% { opacity: 1; } 78% { transform: translateY(7%) scaleY(0.94); } 100% { transform: none; opacity: 1; } }
+@keyframes dropIn { 0% { transform: translateY(-120%); opacity: 0; } 30% { opacity: 1; } 80% { transform: translateY(5%) scale(1.03, 0.96); } 100% { transform: none; opacity: 1; } }
+@keyframes dropOut { to { transform: translateY(55%) scale(0.9); opacity: 0; } }
+
+/* spinning reel strip (cosmetic) until each reel stops */
+.reels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: 1.5%; }
+.reel {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--c) * 100% / 6);
+  width: calc(100% / 6);
+  overflow: hidden;
+  animation: reelHide 120ms ease-out var(--stop, 0ms) both;
+}
+.reel[data-tease] { box-shadow: inset 0 0 0 2px rgba(255, 214, 94, 0.85), inset 0 0 26px rgba(255, 190, 80, 0.5); }
+.strip { position: absolute; left: 0; right: 0; top: 0; height: 400%; display: grid; grid-template-rows: repeat(20, 1fr); opacity: 0.6; animation: scroll 0.28s linear infinite; }
+.reel[data-tease] .strip { animation-duration: 0.5s; opacity: 0.75; }
+.stripCell { padding: 6% 10%; }
+@keyframes scroll { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+@keyframes reelHide { to { opacity: 0; } }
+
+/* balloons: one overlay, stable ids, transform transitions between cells */
+.sky { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+.balloon {
+  padding: 1.5%;
+  z-index: 2;
+  transition: transform var(--ms, 0ms) cubic-bezier(0.38, 0.05, 0.25, 1) var(--delay, 0ms), opacity var(--ms, 0ms) ease var(--delay, 0ms);
+  pointer-events: auto;
+}
+.balloonInner { width: 100%; height: 100%; }
+.balloon[data-phase='land'] .balloonInner { animation: balloonIn var(--ms, 600ms) cubic-bezier(0.2, 0.9, 0.3, 1.1) var(--delay, 0ms) both; }
+.balloon[data-phase='grow'] { z-index: 3; }
+.balloon[data-phase='grow'] .balloonInner { animation: grow var(--ms, 600ms) cubic-bezier(0.25, 1.5, 0.4, 1) both; }
+.balloon[data-phase='absorbed'] { opacity: 0; z-index: 1; }
+.balloon[data-phase='absorbed'] .balloonInner { transform: scale(0.55); transition: transform var(--ms, 300ms) ease-in; }
+.balloon[data-phase='exit'] { opacity: 0; transition-timing-function: cubic-bezier(0.5, 0, 0.75, 0.4); }
+.balloon[data-phase='moor'] { opacity: 0; transition: transform var(--ms, 0ms) cubic-bezier(0.5, 0, 0.6, 0.9), opacity calc(var(--ms, 0ms) * 0.5) ease calc(var(--ms, 0ms) * 0.5); }
+.balloon[data-phase='moor'] .balloonInner { transform: scale(0.72); transition: transform var(--ms, 0ms) ease; }
+.sky[data-burn] .balloon[data-phase='idle'] .balloonInner { animation: burn 0.36s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
+@keyframes balloonIn { 0% { transform: translateY(-90%) scale(0.85) rotate(-5deg); opacity: 0; } 40% { opacity: 1; } 75% { transform: translateY(4%) scale(1.02) rotate(1deg); } 100% { transform: none; opacity: 1; } }
+@keyframes grow { 0% { transform: scale(0.7); } 45% { transform: scale(1.22); } 70% { transform: scale(0.96); } 100% { transform: none; } }
+@keyframes burn { 0% { transform: none; } 40% { transform: translateY(-6%) scale(1.04, 1.07); } 100% { transform: translateY(-2%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cell > *, .balloonInner { animation: none !important; }
+  .balloon { transition: opacity calc(var(--ms, 0ms) * 0.6) ease !important; }
+  .strip { animation: none; }
+}
