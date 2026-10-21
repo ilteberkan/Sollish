@@ -19,7 +19,7 @@
 - Yeni lobi, beş slot + Crash/Coinflip/Ringside/Ödüller/Stake/kütüphane çevirileri commit'li ve dalda. Tam yerel doğrulama `ops/evidence/full-verify-20261020/web.json` (ayrıntı STATUS.md). Kalan çeviri yalnız laboratuvar sayfaları (`app/lab/*`, `art-lab.tsx`).
 
 ## Sıradaki işler (öncelik sırasıyla)
-1. Test sayfasını (artifact) yeni lobi + tam çeviriyle güncelle (tarif yukarıda; adresi korumak için önce `read`), sahibe bağlantıyı ver.
+1. (21 Ekim yapıldı) Test sayfası aynı adreste sürüm 6: lobi + beş slot + 9 dil + TR/EN ses, ~10,7 MB. Sunucu bileşeni olan güven/SSS bölümleri ve kabuk (yan menü) sayfada yok; sekme değişince oyun durumu sıfırlanır.
 2. Ringside spec'lerini `NEXT_PUBLIC_API_URL=http://127.0.0.1:8787` ile ayrı bir `build:cloudflare` + yerel realtime üzerinde koş.
 3. Sahip kararlarını bekle (aşağıda); yayın yalnız sahip isterse.
 
