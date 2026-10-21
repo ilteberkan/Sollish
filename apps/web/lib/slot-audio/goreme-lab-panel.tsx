@@ -73,7 +73,7 @@ export function GoremeAudioLab() {
   const roundDemo = (mode: 'standard' | 'buy') => {
     clearTimers();
     const x = s(); if (!x) return;
-    const bytes = new Uint8Array(32); crypto.getRandomValues(bytes);
+    const bytes = new Uint8Array(16); crypto.getRandomValues(bytes);
     const seed = [...bytes].map(b => b.toString(16).padStart(2, '0')).join('');
     const round = playGoremeRound(seed, 100, mode);
     const lines: string[] = [`seed ${seed.slice(0, 12)}… · ${mode} · ${round.spins.length} dönüş · toplam ${(round.totalHundredths / 100).toFixed(2)}× bahis`];

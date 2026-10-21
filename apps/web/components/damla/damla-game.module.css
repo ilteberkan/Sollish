@@ -57,7 +57,7 @@
   background: radial-gradient(120% 90% at 50% 0%, rgba(255, 255, 255, 0.9), transparent 60%);
 }
 .poolLabel {
-  position: relative; font-size: var(--pool-font, 12px); font-weight: 800; color: var(--dm-ink); letter-spacing: -0.3px;
+  position: relative; font-size: var(--pool-font, 12px); max-width: 100%; overflow: hidden; font-weight: 800; color: var(--dm-ink); letter-spacing: -0.3px;
   font-variant-numeric: tabular-nums; white-space: nowrap; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 .pool[data-hit] .poolWater { animation: poolGlow 0.9s ease-out; }
@@ -78,7 +78,7 @@
 .autoRibbon svg { width: 15px; height: 15px; }
 
 .callout {
-  position: absolute; z-index: 6; left: 50%; top: 40%; transform: translate(-50%, -50%);
+  position: absolute; z-index: 6; left: 50%; top: 46%; transform: translate(-50%, -50%);
   display: flex; flex-direction: column; align-items: center; gap: 2px; pointer-events: none;
   animation: callout 1.9s cubic-bezier(.2,.8,.3,1) forwards;
 }
@@ -96,7 +96,7 @@
 @keyframes callout { 0% { opacity: 0; transform: translate(-50%, -40%) scale(0.5); } 12% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); } 22% { transform: translate(-50%, -50%) scale(1); } 80% { opacity: 1; transform: translate(-50%, -54%) scale(1); } 100% { opacity: 0; transform: translate(-50%, -62%) scale(0.96); } }
 
 .goldBanner {
-  position: absolute; z-index: 6; left: 50%; top: 22%; transform: translateX(-50%); pointer-events: none; white-space: nowrap;
+  position: absolute; z-index: 6; left: 50%; top: 13%; transform: translateX(-50%); pointer-events: none; white-space: nowrap;
   font-size: clamp(20px, 3.6vw, 36px); font-weight: 800; letter-spacing: 4px; color: #fff4c6;
   text-shadow: 0 0 18px rgba(255, 200, 60, 0.95), 0 3px 0 #7a4a00; animation: goldBanner 2.6s ease-out forwards;
 }
@@ -118,14 +118,14 @@
 /* ------------------------------------------------------------------ deck */
 .side { position: relative; min-width: 0; min-height: 0; overflow-y: auto; background: linear-gradient(180deg, rgba(10, 44, 58, 0.96), rgba(5, 22, 32, 0.98)); box-shadow: inset 1px 0 0 rgba(159, 240, 238, 0.14); }
 .deck { display: flex; flex-direction: column; gap: 12px; padding: 16px; min-height: 100%; }
-.money { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; align-items: stretch; }
+.money { display: grid; grid-template-columns: 1fr 1fr 34px; gap: 8px; align-items: stretch; }
 .cell { min-width: 0; padding: 8px 10px; border-radius: 12px; background: rgba(255, 255, 255, 0.05); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06); display: grid; gap: 2px; }
 .cellLabel { font-size: 11px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; color: #8fb9c0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 :root:lang(zh) .cellLabel, :root:lang(ko) .cellLabel { letter-spacing: 0; }
-.cellValue { font-size: 17px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cellValue { font-size: 16px; letter-spacing: -0.2px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .cellValue small { font-size: 11px; font-weight: 600; color: #8fb9c0; }
 .cellWin { color: var(--dm-aqua-hi); }
-.refill { width: 40px; display: grid; place-items: center; border-radius: 12px; background: rgba(255, 255, 255, 0.05); color: #cfeff0; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
+.refill { width: 34px; display: grid; place-items: center; border-radius: 12px; background: rgba(255, 255, 255, 0.05); color: #cfeff0; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
 .refill:hover:not(:disabled) { background: rgba(63, 208, 212, 0.18); }
 .refill:disabled { opacity: 0.4; }
 

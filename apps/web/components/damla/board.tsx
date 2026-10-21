@@ -186,7 +186,7 @@ export const DamlaBoard = memo(forwardRef<DamlaBoardHandle, { rows: number; pool
             <li key={`${rows}-${k}`} className={styles.pool} data-testid={`damla-pool-${k}`} data-edge={d >= 0.999 || undefined}
               style={{ '--pool': poolColor(d, goldEdge) } as CSSProperties} aria-label={pool.aria}>
               <span className={styles.poolWater} aria-hidden="true" />
-              <span className={styles.poolLabel} aria-hidden="true">{pool.text}</span>
+              <span className={styles.poolLabel} aria-hidden="true" style={pool.text.length > 3 ? { fontSize: `${Math.max(7, Math.min(14, ((size ? size.w : 300) / (rows + 1)) * 0.36, ((size ? size.w * 0.95 : 300) / (rows + 1) - 4) / (pool.text.length * 0.56)))}px` } : undefined}>{pool.text}</span>
             </li>
           );
         })}
