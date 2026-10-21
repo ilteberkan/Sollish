@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-20",
+  "scope": "Local production-runtime verification (OpenNext build + wrangler dev/workerd preview :3001) after lobby + 9-locale i18n work. Local preview only; no hosted, no GitHub CI, no native/physical-device review, no deploy.",
+  "git_head": "8e6823e",
+  "build_id": "e0-OVrWy75gIO-8e9Rl1m",
+  "commands": [
+    "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck -> exit 0",
+    "bash scripts/use-node.sh pnpm --filter @sollish/web test -> 363/363 pass",
+    "bash scripts/use-node.sh pnpm --filter @sollish/protocol test -> 303/303 pass",
+    "bash scripts/use-node.sh pnpm --filter @sollish/web build:cloudflare -> exit 0 (only the known third-party -0 === esbuild warning)",
+    "bash scripts/use-node.sh pnpm --filter @sollish/web preview:cloudflare (:3001, background)",
+    "PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3001 PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome pnpm --filter @sollish/web test:browser <spec> --workers=1 --output=<per-spec dir>",
+    "bash scripts/use-node.sh pnpm check:readiness -> exit 1"
+  ],
+  "route_first_load_js": {
+    "source": ".next/diagnostics/route-bundle-stats.json (uncompressed) + gzip of the same first-load chunks",
+    "/": { "bytes": 562637, "gzip": 166357 },
+    "/games": { "bytes": 562637, "gzip": 166357 },
+    "/game/ebru": { "bytes": 811110, "gzip": 243744 },
+    "/game/asena": { "bytes": 820204 },
+    "/game/cezeri": { "bytes": 835243 },
+    "/game/cascade": { "bytes": 845192 },
+    "/game/tarhun": { "bytes": 868646 },
+    "/game/coinflip": { "bytes": 559487 },
+    "/game/crash": { "bytes": 548248 },
+    "/live/ringside": { "bytes": 1055783, "gzip": 330633 }
+  },
+  "lobby_bundle_check": {
+    "result": "PASS",
+    "method": "grep of the 9 first-load chunks of / and /games for engine identifiers",
+    "finding": "No engine code: STORM_PAYTABLE, STORM_MODE_TABLES, STORM_ORB_WEIGHTS, payHundredths, stepHundredths absent. Only SLOT_GAME_META-style metadata strings are present (engineId literals storm-throne-1, asena-stars-1, ebru-ink-1, cezeri-gears-1, candy-cascade-2 in the meta table and the word 'tumble' as a search keyword).",
+    "limit": "Minified names are mangled, so the check relies on exported-constant names that survive as strings and on structural fields; it is not a tree-shaking proof."
+  },
+  "browser_specs": {
+    "asena": "17 pass",
+    "cascade": "23 pass",
+    "cezeri": "17 pass",
+    "demo-entropy": "4 pass",
+    "ebru": "16 pass",
+    "i18n": "3 pass",
+    "lobby": "15 pass",
+    "product": "14 pass",
+    "solo-lifecycle": "5 pass",
+    "tarhun": "17 pass",
+    "wallet-reconnect": "4 pass",
+    "rgs-remote": "2 skipped by design (PLAYWRIGHT_RGS_API not set; needs local RGS + NEXT_PUBLIC_API_URL)",
+    "ringside-contact": "7 not run against this build (skipped by design, recorded as failed in the raw run): data-stage stays 'connecting' because lib/use-ringside.ts reads NEXT_PUBLIC_API_URL baked at build time and this build had none. Not a regression; earlier evidence (ops/evidence/i18n-ringside-20261020/web.json) ran them 7/7 on a server built/started with NEXT_PUBLIC_API_URL=http://127.0.0.1:8787.",
+    "ringside-film": "1 not run against this build (same cause as ringside-contact)",
+    "totals": "162 passed, 0 failed among runnable specs; 2 skipped (rgs-remote); 8 ringside tests need an API-URL build (not rerun to keep this build id)"
+  },
+  "fixes": [],
+  "readiness": {
+    "exit_code": 1,
+    "note": "Expected 2. Exit 1 = evidence missing or changed: recovery-local (experiments/vrf-recovery/evidence.json) and coinflip-provider-local (experiments/vrf-recovery/games-provider-evidence.json) report MISSING_STALE_OR_INCONSISTENT / EVIDENCE_CHECK_FAILED. Contracts/VRF evidence, not touched by web work; not investigated further and not bypassed. Status stays BLOCKED, productionApproved false."
+  },
+  "limits": [
+    "Local workerd preview only; no hosted, GitHub CI or native/physical device review.",
+    "Test counts and screenshots are not the user's visual acceptance.",
+    "Ringside specs need a build with NEXT_PUBLIC_API_URL; pending a separate run.",
+    "ringside-film/contact write to .tooling/contact-ui; they failed before writing, so existing evidence there is unchanged."
+  ],
+  "cleanup": "preview stopped; apps/web/next-env.d.ts has no diff"
+}
