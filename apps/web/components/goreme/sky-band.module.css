@@ -1,0 +1,130 @@
+/* Gök kuşağı (sky band). Only transform / opacity animate. */
+.band {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5.8 / 1;
+  min-height: 78px;
+  --medal-w: clamp(84px, 18cqi, 164px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--medal-w) minmax(0, 1fr);
+  align-items: end;
+  isolation: isolate;
+  container-type: inline-size;
+}
+.glass {
+  position: absolute;
+  inset: 4% 1.5% 10%;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 240, 220, 0.2), rgba(255, 210, 190, 0.08) 60%, rgba(255, 255, 255, 0));
+  border: 1px solid rgba(255, 244, 228, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  z-index: -2;
+  opacity: 0.6;
+  transition: opacity 0.8s ease;
+}
+.band[data-active] .glass { opacity: 1; }
+.rope {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  bottom: 16%;
+  height: 3px;
+  border-radius: 2px;
+  background: repeating-linear-gradient(90deg, #8a5a36 0 6px, #c08a58 6px 9px);
+  box-shadow: 0 1px 0 rgba(40, 10, 20, 0.6);
+  z-index: -1;
+}
+.post {
+  position: absolute;
+  bottom: 4%;
+  width: 2.2%;
+  height: 34%;
+  border-radius: 40% 40% 10% 10%;
+  background: linear-gradient(90deg, #fff1e0, #e6bb98 50%, #9a6248);
+  box-shadow: 0 0 0 1.5px #2a1216;
+}
+.postL { left: 2%; }
+.postR { right: 2%; }
+.lane {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 1.5%;
+  padding: 0 5% 0 6%;
+  min-width: 0;
+}
+.lane[data-side='l'] { flex-direction: row-reverse; padding: 0 6% 0 5%; }
+.lane[data-dense] { gap: 0; }
+.lane[data-dense] .moored { margin-inline: -1.6%; }
+.moored {
+  position: relative;
+  flex: 0 1 calc(21% * var(--bs, 1));
+  min-width: 0;
+  aspect-ratio: 1 / 1.3;
+  max-height: 100%;
+  animation: moor 1.1s cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+}
+.balloon { position: absolute; left: 0; right: 0; top: 0; aspect-ratio: 1; }
+.tether {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 1.5px;
+  height: 26%;
+  translate: -50% 0;
+  background: linear-gradient(180deg, rgba(60, 20, 30, 0.85), rgba(60, 20, 30, 0.4));
+}
+@keyframes moor {
+  0% { transform: translateY(120%) scale(0.6); opacity: 0; }
+  50% { opacity: 1; }
+  70% { transform: translateY(-8%) scale(1.04); }
+  100% { transform: none; }
+}
+.peg { flex: 0 1 21%; aspect-ratio: 1 / 1.3; position: relative; opacity: 0.55; transition: opacity 0.8s ease; }
+.peg span {
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: 10%;
+  aspect-ratio: 1 / 1.1;
+  border-radius: 50% 50% 46% 46%;
+  border: 2px dashed rgba(255, 240, 220, 0.55);
+}
+.peg::after { content: ''; position: absolute; left: 50%; bottom: 0; width: 6px; height: 6px; translate: -50% 40%; border-radius: 50%; background: #c08a58; box-shadow: 0 0 0 1.5px #2a1216; }
+.band:not([data-active]) .peg { opacity: 0.35; }
+
+.medal {
+  position: relative;
+  align-self: center;
+  justify-self: center;
+  width: calc(100% - 16px);
+  aspect-ratio: 1.4 / 1;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  border-radius: 46% / 52%;
+  background:
+    radial-gradient(ellipse at 40% 30%, #fff6ea, #f0cfae 45%, #c08664 100%);
+  box-shadow: 0 0 0 2px #2a1216, 0 0 0 5px #bc2c30, 0 0 0 6.5px #ffd65e, 0 0 0 8px #2a1216, 0 10px 24px -8px rgba(30, 8, 20, 0.7);
+  transition: box-shadow 0.6s ease;
+}
+.band[data-active] .medal { box-shadow: 0 0 0 2px #2a1216, 0 0 0 5px #bc2c30, 0 0 0 6.5px #ffd65e, 0 0 0 8px #2a1216, 0 0 34px 6px rgba(255, 214, 110, 0.75); }
+.medalLabel { font: 800 max(9px, 1.8cqi) / 1 var(--font-barlow), system-ui, sans-serif; letter-spacing: 0.3em; color: #76141e; padding-left: 0.3em; }
+.medalValue {
+  display: block;
+  font: 900 max(24px, 5.2cqi) / 0.95 var(--font-barlow), 'Arial Narrow', system-ui, sans-serif;
+  color: #ffd65e;
+  -webkit-text-stroke: 1.5px #3a1604;
+  paint-order: stroke fill;
+  text-shadow: 0 3px 0 #a86210, 0 5px 8px rgba(40, 10, 10, 0.5);
+  animation: bump 0.7s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+}
+.medalValue small { font-size: 0.6em; vertical-align: 0.2em; margin-right: 0.04em; }
+.band:not([data-active]) .medalValue { animation: none; opacity: 0.7; }
+@keyframes bump { 0% { transform: scale(1.7); opacity: 0.2; } 60% { transform: scale(0.92); opacity: 1; } 100% { transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .moored, .medalValue { animation: none !important; }
+}

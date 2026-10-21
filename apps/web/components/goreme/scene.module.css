@@ -1,0 +1,165 @@
+/* Göreme dawn scene. Only transform / opacity animate. The scene fills its parent. */
+.root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  container: grscene / size;
+  background: #3a2d6a;
+  --px: 0;
+  --py: 0;
+}
+.back { position: absolute; inset: 0; pointer-events: none; }
+.full { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.content { position: relative; z-index: 2; width: 100%; height: 100%; }
+
+.sky, .skyFeature { position: absolute; inset: 0; }
+.sky {
+  background: linear-gradient(180deg, #2f2560 0%, #4d3c8a 16%, #7c5fae 32%, #b88ac0 46%, #e59fa8 58%, #f8b994 68%, #ffd590 77%, #ffe7b4 86%, #ffd8a0 100%);
+}
+.skyFeature {
+  opacity: 0;
+  transition: opacity 1.6s ease;
+  background: linear-gradient(180deg, #5a5cb4 0%, #8a82d0 18%, #c4a2d8 34%, #f4b8b4 50%, #ffd09a 62%, #ffe6a8 74%, #fff2cc 86%, #ffe2a8 100%);
+}
+.root[data-mood='feature'] .skyFeature { opacity: 1; }
+.stars {
+  position: absolute;
+  inset: 0 0 55% 0;
+  opacity: 0.75;
+  transition: opacity 1.6s ease;
+  background:
+    radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 28% 8%, #fff, transparent), radial-gradient(1.4px 1.4px at 44% 22%, #fff8e0, transparent),
+    radial-gradient(1px 1px at 58% 6%, #fff, transparent), radial-gradient(1.6px 1.6px at 73% 15%, #fff, transparent), radial-gradient(1px 1px at 86% 9%, #fff, transparent),
+    radial-gradient(1.2px 1.2px at 94% 26%, #fff, transparent), radial-gradient(1px 1px at 6% 34%, #fff, transparent), radial-gradient(1.2px 1.2px at 36% 4%, #fff, transparent);
+  animation: twinkle 5s ease-in-out infinite;
+}
+.root[data-mood='feature'] .stars { opacity: 0; }
+@keyframes twinkle { 0%, 100% { opacity: 0.75; } 50% { opacity: 0.45; } }
+
+/* the sun */
+.sunWrap { position: absolute; left: 72%; top: 60%; width: clamp(60px, 11cqmin, 150px); aspect-ratio: 1; translate: -50% -50%; }
+.sunMove { position: absolute; inset: 0; transition: transform 2.4s cubic-bezier(0.3, 0.6, 0.2, 1); }
+.root[data-mood='feature'] .sunMove { transform: translateY(-26cqh) scale(1.15); }
+.sun {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 46% 44%, #ffffff 0%, #fffbe8 38%, #ffeab0 64%, #ffd27a 86%, rgba(255, 200, 110, 0.6) 100%);
+  box-shadow: 0 0 30px 8px rgba(255, 236, 180, 0.7);
+}
+.sunGlow {
+  position: absolute;
+  inset: -260%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 244, 210, 0.85), rgba(255, 214, 150, 0.45) 22%, rgba(255, 180, 140, 0.16) 50%, transparent 78%);
+  animation: glow 8s ease-in-out infinite;
+}
+@keyframes glow { 0%, 100% { opacity: 0.85; transform: scale(1); } 50% { opacity: 1; transform: scale(1.05); } }
+.shafts {
+  position: absolute;
+  inset: -700%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 236, 190, 0.22) 0deg 3deg, transparent 3deg 11deg, rgba(255, 220, 170, 0.12) 11deg 13deg, transparent 13deg 22deg);
+  mask-image: radial-gradient(closest-side, #000 4%, rgba(0, 0, 0, 0.5) 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(closest-side, #000 4%, rgba(0, 0, 0, 0.5) 30%, transparent 70%);
+  opacity: 0.55;
+  animation: turn 160s linear infinite;
+  transition: opacity 1.6s ease;
+}
+.root[data-mood='feature'] .shafts { opacity: 1; }
+@keyframes turn { to { transform: rotate(360deg); } }
+
+/* clouds */
+.cloud {
+  position: absolute;
+  height: 2.2cqh;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 210, 200, 0.75), rgba(255, 190, 190, 0.3) 60%, transparent);
+  animation: cloud 90s ease-in-out infinite alternate;
+}
+.c1 { left: 6%; top: 30%; width: 34cqw; }
+.c2 { left: 52%; top: 22%; width: 28cqw; height: 1.6cqh; animation-duration: 120s; animation-delay: -40s; }
+.c3 { left: 26%; top: 47%; width: 40cqw; height: 1.8cqh; opacity: 0.8; animation-duration: 140s; animation-delay: -70s; }
+@keyframes cloud { from { transform: translateX(-4cqw); } to { transform: translateX(5cqw); } }
+
+/* balloons */
+.balloons { position: absolute; inset: 0; }
+.balloon { position: absolute; aspect-ratio: 40 / 52; animation: drift var(--dur, 70s) ease-in-out var(--delay, 0s) infinite alternate; }
+.balloon[data-layer='0'] { opacity: 0.62; }
+.balloon[data-layer='1'] { opacity: 0.92; }
+@keyframes drift { from { transform: translate(0, 0); } to { transform: translate(var(--dx, 30px), var(--dy, -30px)); } }
+.featureOnly { position: absolute; inset: 0; opacity: 0; transition: opacity 2s ease; }
+.root[data-mood='feature'] .featureOnly { opacity: 1; }
+
+/* parallax depths */
+.pSun, .pFar, .pMid, .pNear { transition: translate 0.7s cubic-bezier(0.2, 0.7, 0.3, 1); }
+.pSun { translate: calc(-50% + var(--px) * -3px) calc(-50% + var(--py) * -2px); }
+.pFar { translate: calc(var(--px) * -8px) calc(var(--py) * -3px); }
+.pMid { translate: calc(var(--px) * -16px) calc(var(--py) * -5px); }
+.pNear { translate: calc(var(--px) * -28px) calc(var(--py) * -8px); }
+
+.mesas { position: absolute; left: -2%; right: -2%; bottom: 22%; height: 30%; }
+.field { position: absolute; left: -2%; right: -2%; bottom: 9%; height: 36%; }
+.floor { position: absolute; left: -2%; right: -2%; bottom: 0; height: 14%; }
+.haze { position: absolute; left: 0; right: 0; bottom: 18%; height: 24%; background: linear-gradient(180deg, transparent, rgba(255, 214, 180, 0.35) 55%, transparent); }
+.cliff { position: absolute; bottom: 0; width: clamp(200px, 30cqw, 600px); aspect-ratio: 600 / 640; }
+.cliffL { left: -3%; }
+.cliffR { right: -3%; }
+
+/* moods */
+.moodBig, .vignette { position: absolute; inset: 0; }
+.moodBig { opacity: 0; transition: opacity 0.8s ease; background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(255, 214, 120, 0.32), rgba(255, 150, 120, 0.12) 55%, transparent 80%); }
+.root[data-mood='bigwin'] .moodBig { opacity: 1; }
+.vignette { background: radial-gradient(ellipse 90% 80% at 50% 45%, transparent 58%, rgba(40, 14, 40, 0.35) 86%, rgba(30, 8, 30, 0.6) 100%); }
+
+/* portrait phones: the reel window covers the middle, the props sit below and the sun near the top-right */
+@container grscene (max-aspect-ratio: 3 / 4) {
+  .sunWrap { left: 80%; top: 13%; width: 17cqw; }
+  .root[data-mood='feature'] .sunMove { transform: translateY(-4cqh) scale(1.2); }
+  .mesas { bottom: 14%; height: 18%; }
+  .field { bottom: 5%; height: 20%; }
+  .floor { height: 8%; }
+  .cliff { width: 46cqw; }
+  .cliffL { left: -10%; }
+  .cliffR { right: -10%; }
+  .c1 { top: 18%; width: 60cqw; }
+  .c2 { top: 9%; width: 50cqw; }
+  .c3 { top: 66%; width: 70cqw; }
+}
+
+/* ---------------- stage layout ---------------- */
+.stage {
+  --board-w: min(54cqw, calc((100cqh - 250px) * 1.19));
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr var(--board-w) 1fr;
+  align-items: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+.stageLogo { grid-column: 1; align-self: start; justify-self: center; width: min(100%, 24cqw); padding-top: 3cqh; }
+.stageMain { grid-column: 2; display: grid; gap: 1.6cqh; align-content: center; width: var(--board-w); }
+.stageBand { width: 100%; }
+.stageBoard { width: 100%; }
+.stageSide { grid-column: 3; align-self: center; justify-self: center; }
+@container grscene (max-aspect-ratio: 1 / 1) {
+  .stage {
+    --board-w: min(calc(100cqw - 16px), calc((100cqh - 300px) * 1.19));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1cqh;
+    padding: 8px 8px 16px;
+  }
+  .stageLogo { width: min(72cqw, 340px); padding-top: 1cqh; }
+  .stageMain { gap: 1.2cqh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stars, .sunGlow, .shafts, .cloud, .balloon { animation: none !important; }
+  .sunMove { transition: none; }
+}
