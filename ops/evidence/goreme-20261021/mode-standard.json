@@ -1,0 +1,817 @@
+{
+  "kind": "goreme-rtp-simulation",
+  "scope": "DEMO credits only; Monte Carlo estimate, not a certified or guaranteed RTP; RTP is return / cost",
+  "engine": "goreme-balloons-1",
+  "engineSourceSha256": "72ba36639e9fef414a5781f8dc017121521af8cd4fd9fe5f5eac1c5077861ba7",
+  "engineSourceNote": "sha256 of packages/protocol/src/goreme.ts with the GOREME_RTP evidence block (between the @evidence-block markers) removed. The constants were filled after the run; no engine code, tables or RNG changed afterwards.",
+  "seed": "goreme-20261021-evidence",
+  "workers": 2,
+  "chunks": 20,
+  "betCentsSimulated": 100,
+  "betLevelsCents": [
+    100,
+    200,
+    300,
+    400,
+    500,
+    800,
+    1000,
+    1500,
+    2000,
+    2500,
+    4000,
+    5000,
+    7500,
+    10000,
+    15000,
+    20000,
+    25000,
+    40000,
+    50000
+  ],
+  "winTierMeasure": "round total / bet",
+  "tuningOverride": null,
+  "modes": {
+    "standard": {
+      "rounds": 100000000,
+      "costBets": 1,
+      "rtpVsCost": {
+        "pointEstimate": 0.96295,
+        "pointEstimatePct": 96.2948,
+        "ci95": [
+          0.95743,
+          0.96846
+        ],
+        "ci95Pct": [
+          95.7432,
+          96.8463
+        ],
+        "ci95HalfWidthPct": 0.5515
+      },
+      "integerPayoutCheckRtp": 0.96295,
+      "hitRate": 0.36413,
+      "featureRate": 0.004025,
+      "featureOneIn": 248.4,
+      "featureCount": 402505,
+      "avgFreeSpinsPerRound": 0.04291,
+      "avgFreeSpinsPlayedPerTrigger": 10.661,
+      "freeSpinsPlayed": 4291206,
+      "retriggers": 39841,
+      "maxFreeSpinsInOneRound": 35,
+      "freeSpinHitRate": 0.44485,
+      "stdDevPerRoundCostUnits": 28.1383,
+      "stdDevPerRoundBetUnits": 28.1383,
+      "contributionPctOfCost": {
+        "baseGame": 57.7813,
+        "freeSpins": 38.5134,
+        "scatterPayInBase": 0.9325,
+        "baseFirstBoardWays": 32.2057,
+        "baseLiftChainWays": 24.6431
+      },
+      "avgFreeWinPerTriggerBets": 95.68,
+      "winTiersShareOfRounds": {
+        "atLeast10xBet": 0.013143,
+        "atLeast25xBet": 0.0048282,
+        "atLeast50xBet": 0.0021207,
+        "atLeast100xBet": 0.0009357,
+        "atLeast500xBet": 0.00015183,
+        "atLeast1000xBet": 0.00006698,
+        "atLeast2000xBet": 0.00002695,
+        "atLeast5000xBet": 0.00000674,
+        "atLeast10000xBet": 0.0000022
+      },
+      "winTiersRounds": {
+        "atLeast10xBet": 1314322,
+        "atLeast25xBet": 482820,
+        "atLeast50xBet": 212066,
+        "atLeast100xBet": 93570,
+        "atLeast500xBet": 15183,
+        "atLeast1000xBet": 6698,
+        "atLeast2000xBet": 2695,
+        "atLeast5000xBet": 674,
+        "atLeast10000xBet": 220
+      },
+      "maxObservedXBet": 10000,
+      "maxObservedXCost": 10000,
+      "capHits": 220,
+      "capHitShareOfRounds": 0.0000022,
+      "capXBet": 10000,
+      "minSunsOnFirstBoard": 0,
+      "costMismatches": 0,
+      "balloons": {
+        "firstBoardsWithBalloonShare": 0.06286,
+        "balloonsLandedInBase": 6886258,
+        "balloonsLandedInFree": 1146692,
+        "balloonsPerFreeSpin": 0.2672,
+        "maxBalloonMultiplierSeen": 17,
+        "maxWeightedWaysOneWin": 23040,
+        "mergesInBase": 4240,
+        "mergesInFree": 4061,
+        "exitsInBase": 6882018
+      },
+      "liftChain": {
+        "baseSpinsWithLiftShare": 0.06286,
+        "avgLiftsPerBaseSpin": 0.1835,
+        "avgChainLengthWhenLifting": 2.918,
+        "maxLiftsInOneSpin": 19,
+        "chainLengthHistogram": {
+          "0": 93713687,
+          "1": 1723166,
+          "2": 1084704,
+          "3": 1087169,
+          "4": 1102341,
+          "5": 1127994,
+          "6": 68819,
+          "7": 43100,
+          "8": 26552,
+          "9": 14279,
+          "10": 5805,
+          "11": 1227,
+          "12": 687,
+          "13": 277,
+          "14": 138,
+          "15": 39,
+          "16": 12,
+          "17": 1,
+          "18": 2,
+          "19": 1
+        },
+        "windShare": {
+          "left": 0.33331,
+          "calm": 0.3332,
+          "right": 0.33349
+        }
+      },
+      "sky": {
+        "features": 402505,
+        "moorings": 841683,
+        "freeSpinLifts": 1835694,
+        "avgFinalSky": 8.294,
+        "maxFinalSky": 63,
+        "finalSkyAtLeastShare": {
+          "x1": 1,
+          "x2": 0.8705,
+          "x5": 0.6822,
+          "x10": 0.36051,
+          "x20": 0.055597,
+          "x50": 0.000049689,
+          "x100": 0,
+          "x200": 0,
+          "x500": 0
+        }
+      },
+      "method": "normal approximation on the per-round return / cost; heavy tail makes the interval optimistic",
+      "runtimeSeconds": 636.8
+    }
+  },
+  "tables": {
+    "paytableTenThousandthsPerWay": {
+      "h1": [
+        1800,
+        4500,
+        9000,
+        22500
+      ],
+      "h2": [
+        1300,
+        3400,
+        6800,
+        13500
+      ],
+      "h3": [
+        900,
+        2250,
+        4500,
+        9000
+      ],
+      "h4": [
+        700,
+        1800,
+        3600,
+        6800
+      ],
+      "l1": [
+        450,
+        900,
+        1800,
+        3600
+      ],
+      "l2": [
+        360,
+        700,
+        1350,
+        2700
+      ],
+      "l3": [
+        270,
+        540,
+        1100,
+        2250
+      ],
+      "l4": [
+        220,
+        450,
+        900,
+        1800
+      ],
+      "l5": [
+        180,
+        360,
+        720,
+        1440
+      ]
+    },
+    "scatterAwards": {
+      "3": {
+        "spins": 10,
+        "payHundredths": 200
+      },
+      "4": {
+        "spins": 12,
+        "payHundredths": 500
+      },
+      "5": {
+        "spins": 15,
+        "payHundredths": 2000
+      },
+      "6": {
+        "spins": 20,
+        "payHundredths": 10000
+      }
+    },
+    "windWeights": [
+      1,
+      1,
+      1
+    ],
+    "modeTables": {
+      "standard": {
+        "base": [
+          [
+            "h1",
+            6000
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8000
+          ],
+          [
+            "h4",
+            9000
+          ],
+          [
+            "l1",
+            11000
+          ],
+          [
+            "l2",
+            12000
+          ],
+          [
+            "l3",
+            13000
+          ],
+          [
+            "l4",
+            14000
+          ],
+          [
+            "l5",
+            15000
+          ],
+          [
+            "stack",
+            60000
+          ],
+          [
+            "balloon",
+            300
+          ],
+          [
+            "sun",
+            1450
+          ]
+        ],
+        "respin": [
+          [
+            "h1",
+            6000
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8000
+          ],
+          [
+            "h4",
+            9000
+          ],
+          [
+            "l1",
+            11000
+          ],
+          [
+            "l2",
+            12000
+          ],
+          [
+            "l3",
+            13000
+          ],
+          [
+            "l4",
+            14000
+          ],
+          [
+            "l5",
+            15000
+          ],
+          [
+            "stack",
+            60000
+          ],
+          [
+            "balloon",
+            100
+          ],
+          [
+            "sun",
+            0
+          ]
+        ],
+        "free": [
+          [
+            "h1",
+            6000
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8000
+          ],
+          [
+            "h4",
+            9000
+          ],
+          [
+            "l1",
+            11000
+          ],
+          [
+            "l2",
+            12000
+          ],
+          [
+            "l3",
+            13000
+          ],
+          [
+            "l4",
+            14000
+          ],
+          [
+            "l5",
+            15000
+          ],
+          [
+            "stack",
+            60000
+          ],
+          [
+            "balloon",
+            1250
+          ],
+          [
+            "sun",
+            2000
+          ]
+        ],
+        "baseMultipliers": [
+          [
+            1,
+            75
+          ],
+          [
+            2,
+            17
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "freeMultipliers": [
+          [
+            1,
+            75
+          ],
+          [
+            2,
+            17
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            2
+          ]
+        ]
+      },
+      "ante": {
+        "base": [
+          [
+            "h1",
+            6000
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8000
+          ],
+          [
+            "h4",
+            9000
+          ],
+          [
+            "l1",
+            11000
+          ],
+          [
+            "l2",
+            12000
+          ],
+          [
+            "l3",
+            13000
+          ],
+          [
+            "l4",
+            14000
+          ],
+          [
+            "l5",
+            15000
+          ],
+          [
+            "stack",
+            60000
+          ],
+          [
+            "balloon",
+            300
+          ],
+          [
+            "sun",
+            1850
+          ]
+        ],
+        "respin": [
+          [
+            "h1",
+            6000
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8000
+          ],
+          [
+            "h4",
+            9000
+          ],
+          [
+            "l1",
+            11000
+          ],
+          [
+            "l2",
+            12000
+          ],
+          [
+            "l3",
+            13000
+          ],
+          [
+            "l4",
+            14000
+          ],
+          [
+            "l5",
+            15000
+          ],
+          [
+            "stack",
+            60000
+          ],
+          [
+            "balloon",
+            100
+          ],
+          [
+            "sun",
+            0
+          ]
+        ],
+        "free": [
+          [
+            "h1",
+            6000
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8000
+          ],
+          [
+            "h4",
+            9000
+          ],
+          [
+            "l1",
+            11000
+          ],
+          [
+            "l2",
+            12000
+          ],
+          [
+            "l3",
+            13000
+          ],
+          [
+            "l4",
+            14000
+          ],
+          [
+            "l5",
+            15000
+          ],
+          [
+            "stack",
+            60000
+          ],
+          [
+            "balloon",
+            1151
+          ],
+          [
+            "sun",
+            2000
+          ]
+        ],
+        "baseMultipliers": [
+          [
+            1,
+            75
+          ],
+          [
+            2,
+            17
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "freeMultipliers": [
+          [
+            1,
+            75
+          ],
+          [
+            2,
+            17
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            2
+          ]
+        ]
+      },
+      "buy": {
+        "base": [
+          [
+            "h1",
+            6000
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8000
+          ],
+          [
+            "h4",
+            9000
+          ],
+          [
+            "l1",
+            11000
+          ],
+          [
+            "l2",
+            12000
+          ],
+          [
+            "l3",
+            13000
+          ],
+          [
+            "l4",
+            14000
+          ],
+          [
+            "l5",
+            15000
+          ],
+          [
+            "stack",
+            60000
+          ],
+          [
+            "balloon",
+            300
+          ],
+          [
+            "sun",
+            1450
+          ]
+        ],
+        "respin": [
+          [
+            "h1",
+            6000
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8000
+          ],
+          [
+            "h4",
+            9000
+          ],
+          [
+            "l1",
+            11000
+          ],
+          [
+            "l2",
+            12000
+          ],
+          [
+            "l3",
+            13000
+          ],
+          [
+            "l4",
+            14000
+          ],
+          [
+            "l5",
+            15000
+          ],
+          [
+            "stack",
+            60000
+          ],
+          [
+            "balloon",
+            100
+          ],
+          [
+            "sun",
+            0
+          ]
+        ],
+        "free": [
+          [
+            "h1",
+            6000
+          ],
+          [
+            "h2",
+            7000
+          ],
+          [
+            "h3",
+            8000
+          ],
+          [
+            "h4",
+            9000
+          ],
+          [
+            "l1",
+            11000
+          ],
+          [
+            "l2",
+            12000
+          ],
+          [
+            "l3",
+            13000
+          ],
+          [
+            "l4",
+            14000
+          ],
+          [
+            "l5",
+            15000
+          ],
+          [
+            "stack",
+            60000
+          ],
+          [
+            "balloon",
+            1268
+          ],
+          [
+            "sun",
+            2000
+          ]
+        ],
+        "baseMultipliers": [
+          [
+            1,
+            75
+          ],
+          [
+            2,
+            17
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            2
+          ]
+        ],
+        "freeMultipliers": [
+          [
+            1,
+            75
+          ],
+          [
+            2,
+            17
+          ],
+          [
+            3,
+            6
+          ],
+          [
+            5,
+            2
+          ]
+        ]
+      }
+    }
+  },
+  "runtimeSeconds": 636.8,
+  "node": "v24.21.0",
+  "generatedAt": "2026-10-21T18:19:18.946Z"
+}

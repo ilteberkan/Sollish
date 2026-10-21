@@ -171,9 +171,9 @@ export interface GoremeRtp { rtp: number; ciLow: number; ciHigh: number; rounds:
  * simulated rounds. DEMO estimate, not a certified RTP; the 95% interval is a normal approximation and optimistic for this heavy
  * tail. */
 export const GOREME_RTP: Record<GoremeMode, GoremeRtp> = Object.freeze({
-  standard: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
-  ante: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
-  buy: Object.freeze({ rtp: 0, ciLow: 0, ciHigh: 0, rounds: 0, hitRate: 0, featureRate: 0, stdDev: 0 }),
+  standard: Object.freeze({ rtp: 0.963, ciLow: 0.957, ciHigh: 0.968, rounds: 100_000_000, hitRate: 0.364, featureRate: 0.0040, stdDev: 28.138 }),
+  ante: Object.freeze({ rtp: 0.954, ciLow: 0.949, ciHigh: 0.959, rounds: 100_000_000, hitRate: 0.365, featureRate: 0.0078, stdDev: 26.211 }),
+  buy: Object.freeze({ rtp: 0.959, ciLow: 0.957, ciHigh: 0.960, rounds: 20_000_000, hitRate: 1.000, featureRate: 1, stdDev: 4.180 }),
 });
 // @evidence-block-end
 
