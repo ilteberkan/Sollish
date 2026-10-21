@@ -18,7 +18,12 @@
  *     reels 0..L-1, s pays GOREME_PAYTABLE[s][L-3] * (prod(c + w) - prod(w)) over r = 0..L-1 (TEN-THOUSANDTHS of the bet per way). The
  *     subtracted term removes the ways made only of balloons, so every paid way holds at least one real s; balloon multipliers on
  *     different reels multiply along a way. A balloon substitutes for every pay symbol (never for "sun") and pays nothing alone.
- *     Wins of one board are listed in symbol order h1..h4, l1..l5. A single win is clamped at the cap (the round ends there anyway).
+ *     Wins of one board are listed in symbol order h1..h4, l1..l5. The board's win in hundredths of the bet is
+ *     floor(sum of its way pays * sky / 100) (sky = 1 in the base game); a single way pay and a board win are clamped at the cap.
+ *   - Dealing. Every weight table has a "stack" entry: a cell that draws "stack" repeats the pay symbol directly above it on the same
+ *     reel (the cell above as it stands at that moment: already dealt, or a kept balloon). On row 0, or under a balloon or a sun, it
+ *     draws once more from the same table without the stack entry. Stacks give fewer distinct symbols per reel (a lower hit rate and
+ *     bigger way counts); a balloon or a sun is never copied.
  *   - Lift (base chain). After a board is paid, if it holds a balloon, a lift follows: one RNG draw picks the wind (left / calm /
  *     right, GOREME_WIND_WEIGHTS); every balloon rises one row, its multiplier grows by 1 (at most x25) and it drifts one reel with
  *     the wind (it stays put at the board edge). A balloon that rises above row 0 exits (base game: it flies away). Balloons that
@@ -44,7 +49,7 @@
  *
  * RNG and draw order: SplitMix32 expands the seed into xoshiro128**. A whole board (base first board, or a free spin on an empty
  * board) is dealt reel 0..5, row 0..4; a respin deals the non-balloon cells in the same order. Every dealt cell draws one u32 for its
- * symbol; a cell that lands a balloon draws one more u32 for its multiplier (GOREME_LANDING_MULTIPLIERS weights of the phase). A lift
+ * symbol (plus one more when it draws "stack" without a pay symbol above); a cell that lands a balloon draws one more u32 for its multiplier (GOREME_LANDING_MULTIPLIERS weights of the phase). A lift
  * draws one u32 for the wind (only when at least one balloon is on the board). One stream continues across the whole round.
  *
  * Buy guarantee procedure (first board only, right after it is dealt): while fewer than 3 suns are on the board, list the cells that
@@ -150,10 +155,10 @@ const deepFreeze = (tables: Record<GoremeMode, GoremeModeTables>): Record<Goreme
 };
 /** Weight tables per mode. Tuned by Monte Carlo; see ops/evidence/goreme-20261021. */
 export const GOREME_MODE_TABLES: Record<GoremeMode, GoremeModeTables> = deepFreeze({
-  standard: { base: symbols(BASE_PAY, STACK, 300, 1450), respin: symbols(BASE_PAY, STACK, 100, 0), free: symbols(FREE_PAY, STACK, 1253, 2000), baseMultipliers: landing(BASE_MULT), freeMultipliers: landing(FREE_MULT) },
+  standard: { base: symbols(BASE_PAY, STACK, 300, 1450), respin: symbols(BASE_PAY, STACK, 100, 0), free: symbols(FREE_PAY, STACK, 1250, 2000), baseMultipliers: landing(BASE_MULT), freeMultipliers: landing(FREE_MULT) },
   // Ante: base sun weight 1850 instead of 1450 (about 1.95x the feature rate); a milder free table so the higher trigger rate returns
   // about 95.7% of the (5/4) cost.
-  ante: { base: symbols(BASE_PAY, STACK, 300, 1850), respin: symbols(BASE_PAY, STACK, 100, 0), free: symbols(FREE_PAY, STACK, 1153, 2000), baseMultipliers: landing(BASE_MULT), freeMultipliers: landing(FREE_MULT) },
+  ante: { base: symbols(BASE_PAY, STACK, 300, 1850), respin: symbols(BASE_PAY, STACK, 100, 0), free: symbols(FREE_PAY, STACK, 1151, 2000), baseMultipliers: landing(BASE_MULT), freeMultipliers: landing(FREE_MULT) },
   // Buy: base tables as standard (plus the 3-sun guarantee); its own free table for about 95.7% of the 100 x bet cost.
   buy: { base: symbols(BASE_PAY, STACK, 300, 1450), respin: symbols(BASE_PAY, STACK, 100, 0), free: symbols(FREE_PAY, STACK, 1268, 2000), baseMultipliers: landing(BASE_MULT), freeMultipliers: landing(FREE_MULT) },
 });

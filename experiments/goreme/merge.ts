@@ -29,17 +29,19 @@ if (partialDir) {
   const first = files[0]!;
   for (const f of files) {
     if (f.partial) throw new Error("a partial report cannot be merged into evidence");
-    for (const key of ["kind", "engine", "engineSourceSha256", "seed", "workers", "chunks", "betCentsSimulated", "tuningOverride"]) {
+    // workers and chunks may differ per mode (each mode runs in its own process); they are kept in each mode report as "run".
+    for (const key of ["kind", "engine", "engineSourceSha256", "seed", "betCentsSimulated", "tuningOverride"]) {
       if (JSON.stringify(f[key]) !== JSON.stringify(first[key])) throw new Error(`parts disagree on ${key}`);
     }
   }
   const modes: Record<string, unknown> = {};
-  for (const f of files) for (const [mode, report] of Object.entries(f.modes as Record<string, unknown>)) {
+  for (const f of files) for (const [mode, report] of Object.entries(f.modes as Record<string, Record<string, unknown>>)) {
     if (mode in modes) throw new Error(`mode ${mode} appears twice`);
-    modes[mode] = report;
+    modes[mode] = { ...report, run: { workers: f.workers, chunks: f.chunks, generatedAt: f.generatedAt, node: f.node } };
   }
   const result = {
     ...first,
+    workers: "per mode, see modes.<mode>.run", chunks: "per mode, see modes.<mode>.run",
     modes: Object.fromEntries(GOREME_MODES.filter(m => m in modes).map(m => [m, modes[m]])),
     runtimeSeconds: Number(files.reduce((a, f) => a + Number(f.runtimeSeconds), 0).toFixed(1)),
     mergedFrom: parts.length,

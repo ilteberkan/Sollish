@@ -122,7 +122,7 @@ test("RNG and rules are frozen: a fingerprint of 200 fixed seeds across all mode
     const seed = createHash("sha256").update(`goreme-balloons-1-frozen:${i}`).digest("hex").slice(0, 32);
     hash.update(JSON.stringify(playGoremeRound(seed, bets[i % 4]!, MODES[i % 3]!)));
   }
-  assert.equal(hash.digest("hex"), "FINGERPRINT");
+  assert.equal(hash.digest("hex"), "3a21c10412769142184d529f3a6d8e63f200c50b93a3d8e5b47285182cc47c81");
 });
 
 test("input validation throws RangeError for seed, bet level and mode", () => {
@@ -469,7 +469,7 @@ test("sun scatter: first board only; 3 / 4 / 5 / 6+ pay 2x / 5x / 20x / 100x and
   assert.ok(seen.has(3), `sun counts seen ${[...seen]}`);
   assert.ok(retriggers > 0, "retriggers happen");
   // A sunny table reaches every award row (same mapping, tuned weights only).
-  const sunny = tuned({ tables: { standard: { base: GOREME_MODE_TABLES.standard.base.map(([s, w]) => [s, s === "sun" ? 2500 : w] as const) } } });
+  const sunny = tuned({ tables: { standard: { base: GOREME_MODE_TABLES.standard.base.map(([s, w]) => [s, s === "sun" ? 40_000 : w] as const) } } });
   const rows = new Map<number, number>();
   for (const s of seeds(400)) {
     const round = __goremeTest.play(s, 100, "standard", sunny), base = round.spins[0]!;
