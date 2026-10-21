@@ -13,7 +13,7 @@ export const POSTER_VERSIONS: Readonly<Record<string, string>> = Object.freeze({
   "crash-tile": "73c6810ce4",
   "damla-land": "e01724b647",
   "damla-narrow": "7203053de1",
-  "damla-tile": "4381fa50f4",
+  "damla-tile": "f06f2d0af1",
   "damla-wide": "8159ccce8b",
   "ebru-narrow": "ee16281501",
   "ebru-tile": "81b699d322",

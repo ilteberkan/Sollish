@@ -164,5 +164,5 @@ test('a game that was handed only its own engine plays and verifies only that ga
   await assert.rejects(client.play('tarhun', 1000, 'standard'), (e: unknown) => e instanceof RgsError && e.code === 'ENGINE_MISSING');
   assert.equal(server.calls.length, posts, 'refused before any request, so the server never debits a round this page cannot verify');
   await assert.rejects(fetchReplay(API, 'd'.repeat(32), own, async () => new Response('{}', { status: 404 })), RgsError);
-  assert.deepEqual(Object.keys(ALL_SLOT_ENGINES).sort(), ['asena', 'cascade', 'cezeri', 'damla', 'ebru', 'tarhun']);
+  assert.deepEqual(Object.keys(ALL_SLOT_ENGINES).sort(), ['asena', 'cascade', 'cezeri', 'damla', 'ebru', 'goreme', 'tarhun']);
 });
