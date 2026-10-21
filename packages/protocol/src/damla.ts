@@ -72,7 +72,23 @@ export interface DamlaRtp { rtp: number; stdDev: number }
 // @evidence-block-begin (engineSourceSha256 in the evidence is the sha256 of this file with the lines from here to the end marker removed)
 /** Copied from ops/evidence/damla-20261021/rtp.json (a test keeps them equal): Monte Carlo rtp (return / cost as a ratio, 4 decimals)
  * and stdDev of the per-round return in bets (3 decimals). DEMO estimate; the exact RTP is DAMLA_EXACT_RTP. */
-export const DAMLA_RTP: Record<DamlaMode, DamlaRtp> = Object.freeze({} as Record<DamlaMode, DamlaRtp>);
+export const DAMLA_RTP: Record<DamlaMode, DamlaRtp> = Object.freeze({
+  "low-8": Object.freeze({ rtp: 0.985, stdDev: 0.763 }),
+  "low-10": Object.freeze({ rtp: 0.9847, stdDev: 0.829 }),
+  "low-12": Object.freeze({ rtp: 0.9853, stdDev: 0.845 }),
+  "low-14": Object.freeze({ rtp: 0.9857, stdDev: 0.884 }),
+  "low-16": Object.freeze({ rtp: 0.9853, stdDev: 0.909 }),
+  "medium-8": Object.freeze({ rtp: 0.9852, stdDev: 1.566 }),
+  "medium-10": Object.freeze({ rtp: 0.9853, stdDev: 1.775 }),
+  "medium-12": Object.freeze({ rtp: 0.9845, stdDev: 1.9 }),
+  "medium-14": Object.freeze({ rtp: 0.9854, stdDev: 2.165 }),
+  "medium-16": Object.freeze({ rtp: 0.9847, stdDev: 2.681 }),
+  "high-8": Object.freeze({ rtp: 0.9857, stdDev: 2.676 }),
+  "high-10": Object.freeze({ rtp: 0.9831, stdDev: 3.529 }),
+  "high-12": Object.freeze({ rtp: 0.9852, stdDev: 4.697 }),
+  "high-14": Object.freeze({ rtp: 0.9856, stdDev: 6.624 }),
+  "high-16": Object.freeze({ rtp: 0.9864, stdDev: 9.794 }),
+});
 // @evidence-block-end
 
 export interface DamlaRound {

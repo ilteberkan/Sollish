@@ -1,0 +1,32 @@
+{
+  "kind": "damla-mode-simulation",
+  "engine": "damla-terraces-1",
+  "engineSourceSha256": "88c60498f34f21800a3277d0bfc820a6ecdefe3587d98e0b5c806fc67fe9b755",
+  "mode": "low-12",
+  "seed": "damla-20261021-evidence",
+  "chunk": 1000000,
+  "workers": 2,
+  "targetRounds": 20000000,
+  "betCentsSimulated": 100,
+  "chunksDone": 20,
+  "rounds": 20000000,
+  "histogram": [
+    4871,
+    58133,
+    321639,
+    1074420,
+    2417137,
+    3866000,
+    4513504,
+    3867967,
+    2415764,
+    1074947,
+    322302,
+    58267,
+    5049
+  ],
+  "capHits": 9920,
+  "mismatches": 0,
+  "startedAt": "2026-10-21T05:27:57.854Z",
+  "updatedAt": "2026-10-21T05:28:37.779Z"
+}

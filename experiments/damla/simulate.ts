@@ -5,15 +5,13 @@
  * come from per-(chunk, worker) xoshiro streams derived from sha256(seed:mode:chunk:worker), so a (seed, mode, rounds, workers, chunk)
  * tuple reproduces the same numbers. The output keeps the exact slot histogram, from which RTP and variance are computed exactly. */
 import { createHash } from "node:crypto";
+import { engineSha256 } from "./engine-hash.ts";
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { isMainThread, parentPort, workerData, Worker } from "node:worker_threads";
 import { DAMLA_MODES, DAMLA_PAYTABLES, __damlaTest, damlaSeedFromEntropy, playDamlaRound, type DamlaMode } from "../../packages/protocol/src/damla.ts";
 
 const BET_CENTS = 100;
-export const stripEvidenceBlock = (source: string): string => source.replace(/\/\/ @evidence-block-begin[^\n]*\n[\s\S]*?\/\/ @evidence-block-end\n/, "");
-export const engineSha256 = (): string => createHash("sha256").update(stripEvidenceBlock(readFileSync(new URL("../../packages/protocol/src/damla.ts", import.meta.url), "utf8"))).digest("hex");
-
 interface Job { mode: DamlaMode; rounds: number; streamSeed: string }
 interface ChunkResult { histogram: number[]; capHits: number; mismatches: number }
 function runBlock(job: Job): ChunkResult {

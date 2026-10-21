@@ -4,7 +4,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { DAMLA_MODES, DAMLA_PAYTABLES, type DamlaMode } from "../../packages/protocol/src/damla.ts";
 import { exactRow } from "./exact.ts";
-import { engineSha256 } from "./simulate.ts";
+import { engineSha256 } from "./engine-hash.ts";
 
 const i = process.argv.indexOf("--dir");
 if (i < 0) throw new Error("usage: merge.ts --dir <evidence dir>");
