@@ -109,3 +109,4 @@ export function parsePublicEvent(value: unknown): PublicEvent | null {
 export function classifySequence(cursor: number, event: PublicEvent): "next" | "duplicate" | "gap" {
   return event.seq <= cursor ? "duplicate" : event.seq === cursor + 1 ? "next" : "gap";
 }
+export * from "./goreme";

@@ -132,11 +132,11 @@ const symbols = (pay: readonly number[], stack: number, balloon: number, sun: nu
   ...GOREME_PAY_SYMBOLS.map((s, i) => [s, pay[i]!] as const), ["stack", stack], ["balloon", balloon], ["sun", sun],
 ];
 const landing = (weights: readonly number[]): GoremeWeighted<number> => GOREME_LANDING_MULTIPLIERS.map((m, i) => [m, weights[i]!] as const);
-/** Pay-symbol weights h1..h4, l1..l5. */
-const BASE_PAY = [600, 700, 800, 900, 1100, 1200, 1300, 1400, 1500];
-const FREE_PAY = [600, 700, 800, 900, 1100, 1200, 1300, 1400, 1500];
+/** Pay-symbol weights h1..h4, l1..l5 (fine units: one free-table balloon unit moves the feature value by about 0.2%). */
+const BASE_PAY = [6000, 7000, 8000, 9000, 11_000, 12_000, 13_000, 14_000, 15_000];
+const FREE_PAY = BASE_PAY;
 /** Stack weight: the cell repeats the pay symbol above it (fewer distinct symbols per reel, bigger way counts). */
-const STACK = 6000;
+const STACK = 60_000;
 const BASE_MULT = [75, 17, 6, 2];
 const FREE_MULT = [75, 17, 6, 2];
 
@@ -150,9 +150,12 @@ const deepFreeze = (tables: Record<GoremeMode, GoremeModeTables>): Record<Goreme
 };
 /** Weight tables per mode. Tuned by Monte Carlo; see ops/evidence/goreme-20261021. */
 export const GOREME_MODE_TABLES: Record<GoremeMode, GoremeModeTables> = deepFreeze({
-  standard: { base: symbols(BASE_PAY, STACK, 30, 145), respin: symbols(BASE_PAY, STACK, 10, 0), free: symbols(FREE_PAY, STACK, 127, 200), baseMultipliers: landing(BASE_MULT), freeMultipliers: landing(FREE_MULT) },
-  ante: { base: symbols(BASE_PAY, STACK, 30, 185), respin: symbols(BASE_PAY, STACK, 10, 0), free: symbols(FREE_PAY, STACK, 113, 200), baseMultipliers: landing(BASE_MULT), freeMultipliers: landing(FREE_MULT) },
-  buy: { base: symbols(BASE_PAY, STACK, 30, 145), respin: symbols(BASE_PAY, STACK, 10, 0), free: symbols(FREE_PAY, STACK, 128, 200), baseMultipliers: landing(BASE_MULT), freeMultipliers: landing(FREE_MULT) },
+  standard: { base: symbols(BASE_PAY, STACK, 300, 1450), respin: symbols(BASE_PAY, STACK, 100, 0), free: symbols(FREE_PAY, STACK, 1253, 2000), baseMultipliers: landing(BASE_MULT), freeMultipliers: landing(FREE_MULT) },
+  // Ante: base sun weight 1850 instead of 1450 (about 1.95x the feature rate); a milder free table so the higher trigger rate returns
+  // about 95.7% of the (5/4) cost.
+  ante: { base: symbols(BASE_PAY, STACK, 300, 1850), respin: symbols(BASE_PAY, STACK, 100, 0), free: symbols(FREE_PAY, STACK, 1153, 2000), baseMultipliers: landing(BASE_MULT), freeMultipliers: landing(FREE_MULT) },
+  // Buy: base tables as standard (plus the 3-sun guarantee); its own free table for about 95.7% of the 100 x bet cost.
+  buy: { base: symbols(BASE_PAY, STACK, 300, 1450), respin: symbols(BASE_PAY, STACK, 100, 0), free: symbols(FREE_PAY, STACK, 1268, 2000), baseMultipliers: landing(BASE_MULT), freeMultipliers: landing(FREE_MULT) },
 });
 
 export interface GoremeRtp { rtp: number; ciLow: number; ciHigh: number; rounds: number; hitRate: number; featureRate: number; stdDev: number }
@@ -310,7 +313,7 @@ function configFrom(tuning: GoremeTuning): EngineConfig {
   const table = tuning.paytable ?? GOREME_PAYTABLE;
   const paytable = GOREME_PAY_SYMBOLS.map(s => {
     const row = table[s];
-    if (!row || row.length !== 4 || row.some(v => !Number.isSafeInteger(v) || v < 0 || v > 1_000_000)) throw new RangeError("paytable rows need 4 integers 0..1000000");
+    if (!row || row.length !== 4 || row.some(v => !Number.isSafeInteger(v) || v < 0 || v > 100_000_000)) throw new RangeError("paytable rows need 4 integers 0..100000000");
     return row.slice();
   });
   const windWeights = tuning.windWeights ?? GOREME_WIND_WEIGHTS;

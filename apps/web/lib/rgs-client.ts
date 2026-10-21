@@ -12,7 +12,7 @@
  */
 import {
   SLOT_FAIR_VERSION, SLOT_GAME_META, SLOT_HEX64_PATTERN, SLOT_ROUND_ID_PATTERN, SLOT_SEED_HEX_PATTERN, isClientSeed, isSlotNonce, slotBytesToHex, slotGameMeta,
-  type AsenaRound, type Cascade2Round, type CascadeMode, type CezeriRound, type EbruRound, type SlotGameId as ProtocolSlotGameId, type SlotRoundSummary, type StormRound,
+  type AsenaRound, type Cascade2Round, type DamlaRound, type CascadeMode, type CezeriRound, type EbruRound, type SlotGameId as ProtocolSlotGameId, type SlotRoundSummary, type StormRound,
 } from '@sollish/protocol';
 import { configuredApi } from './chat';
 
@@ -21,7 +21,7 @@ import { configuredApi } from './chat';
  * argument (`SlotEngine`, built in lib/slot-engines/<game>.ts); only /verify and /replay load lib/slot-engines/all.ts. */
 export type SlotGameId = ProtocolSlotGameId;
 export type SlotMode = CascadeMode;
-export type RoundOf<G extends SlotGameId> = G extends 'cascade' ? Cascade2Round : G extends 'ebru' ? EbruRound : G extends 'cezeri' ? CezeriRound : G extends 'asena' ? AsenaRound : StormRound;
+export type RoundOf<G extends SlotGameId> = G extends 'cascade' ? Cascade2Round : G extends 'ebru' ? EbruRound : G extends 'cezeri' ? CezeriRound : G extends 'asena' ? AsenaRound : G extends 'damla' ? DamlaRound : StormRound;
 /** Turkish labels (legacy). Translated UI: `useRgsText().source(kind)` (slotKit `rgs.source.<kind>`). */
 export const SOURCE_LABELS = Object.freeze({ local: 'Yerel demo', remote: 'Sunucu doğrulamalı' } as const);
 
