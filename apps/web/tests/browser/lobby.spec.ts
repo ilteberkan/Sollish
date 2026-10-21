@@ -15,10 +15,11 @@ test('/ is the lobby without a redirect; /games serves the same lobby; a tile op
   await expect(page).toHaveURL(/\/$/);
   await expect(page.getByRole('heading', { level: 1, name: 'Sollish kumarhane lobisi' })).toBeAttached();
   await expect(page.getByRole('region', { name: 'Öne çıkan oyunlar' })).toBeVisible();
-  await expect(originals(page).getByRole('listitem')).toHaveCount(5);
+  await expect(originals(page).getByRole('listitem')).toHaveCount(6);
   // Tiles show provider, RTP, max win and volatility from the engine evidence.
   const asena = originals(page).getByRole('link', { name: 'Asena: Yıldız Kurdu' });
   await expect(asena).toHaveAccessibleDescription(/RTP %95,2.*En çok ×5\.000.*Oynaklık: Çok yüksek/);
+  await expect(originals(page).getByRole('link', { name: 'Göreme: Şafak Balonları' })).toHaveAccessibleDescription(/RTP %96,3.*En çok ×10\.000.*Oynaklık: Çok yüksek/);
   await page.goto('/games');
   await expect(originals(page)).toBeVisible();
   await page.goto('/');
@@ -34,13 +35,13 @@ test('category chips filter in place, keep the URL and the Back button', async (
   await expect(chips.getByRole('button', { name: 'Slotlar' })).toHaveAttribute('aria-pressed', 'true');
   const results = page.locator('#lobby-results');
   await expect(results.getByRole('heading', { level: 2 })).toContainText('Slotlar');
-  await expect(results.getByRole('listitem')).toHaveCount(5);
+  await expect(results.getByRole('listitem')).toHaveCount(6);
   await chips.getByRole('button', { name: 'Anında oyunlar' }).click();
   await expect(results.getByRole('listitem')).toHaveCount(3);
   await expect(results.getByRole('link', { name: 'Damla: Pamukkale' })).toBeVisible();
   await page.goBack();
   await expect(page).toHaveURL(/\?c=slots$/);
-  await expect(results.getByRole('listitem')).toHaveCount(5);
+  await expect(results.getByRole('listitem')).toHaveCount(6);
   // Sidebar category links switch the same filter (desktop).
   await page.getByRole('navigation', { name: 'Ana gezinme' }).getByRole('link', { name: 'Canlı', exact: true }).click();
   await expect(page).toHaveURL(/\?c=live$/);
@@ -58,6 +59,8 @@ test('top-bar search filters the lobby instantly and suggests games on other pag
   await search(page).fill('plinko');
   await expect(results.getByRole('link', { name: 'Damla: Pamukkale' })).toBeVisible();
   await expect(results.getByText('Sollish Orijinal').first()).toBeVisible();
+  await search(page).fill('kapadokya');
+  await expect(results.getByRole('link', { name: 'Göreme: Şafak Balonları' })).toBeVisible();
   await search(page).fill('FIRTINA');
   await expect(results.getByRole('link', { name: 'Tarhun: Fırtına Tahtı' })).toBeVisible();
   await search(page).fill('zzz');
@@ -112,7 +115,7 @@ test('rows: arrow keys move between games, scroll buttons page the row', async (
   await page.keyboard.press('ArrowRight');
   await expect(links.nth(1)).toBeFocused();
   await page.keyboard.press('End');
-  await expect(links.nth(4)).toBeFocused();
+  await expect(links.nth(5)).toBeFocused();
   await page.keyboard.press('Home');
   await expect(links.first()).toBeFocused();
   const forward = originals(page).getByRole('button', { name: 'İleri kaydır: Sollish Orijinalleri' });
@@ -230,9 +233,9 @@ test('reduced motion: the hero never rotates on its own and has no pause button'
   await page.goto('/');
   const hero = page.getByRole('region', { name: 'Öne çıkan oyunlar' });
   await expect(hero.getByRole('button', { name: 'Dönüşü duraklat' })).toBeHidden();
-  await expect(hero.getByRole('button', { name: 'Asena: Yıldız Kurdu göster' })).toHaveAttribute('aria-current', 'true');
+  await expect(hero.getByRole('button', { name: 'Göreme: Şafak Balonları göster' })).toHaveAttribute('aria-current', 'true');
   await page.waitForTimeout(8000);
-  await expect(hero.getByRole('button', { name: 'Asena: Yıldız Kurdu göster' })).toHaveAttribute('aria-current', 'true');
+  await expect(hero.getByRole('button', { name: 'Göreme: Şafak Balonları göster' })).toHaveAttribute('aria-current', 'true');
   await hero.getByRole('button', { name: 'Sonraki öne çıkan oyun' }).click();
-  await expect(hero.getByRole('button', { name: 'Cezeri: Zamanın Çarkları göster' })).toHaveAttribute('aria-current', 'true');
+  await expect(hero.getByRole('button', { name: 'Asena: Yıldız Kurdu göster' })).toHaveAttribute('aria-current', 'true');
 });
