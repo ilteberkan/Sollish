@@ -1,0 +1,71 @@
+{
+  "kind": "damla-ui",
+  "date": "2026-10-21",
+  "game": "damla",
+  "engine": "damla-terraces-1",
+  "branch": "claude/sollish-wave3-games",
+  "runtime": "next dev (Turbopack, Next.js 16.3.8) on http://localhost:3031; not build:cloudflare, not hosted, no GitHub CI",
+  "browser": "/opt/pw-browsers/chromium-1194/chrome-linux/chrome (PW_CHROMIUM_PATH)",
+  "commands": [
+    {
+      "cmd": "bash scripts/use-node.sh pnpm --filter @sollish/protocol test",
+      "result": "341/341 pass (includes registry test with damla)"
+    },
+    {
+      "cmd": "bash scripts/use-node.sh pnpm --filter @sollish/realtime exec node --import tsx --test test/slots.test.ts",
+      "result": "7/7 pass (health lists damla, admitBet damla high-16 at max bet)"
+    },
+    {
+      "cmd": "bash scripts/use-node.sh pnpm --filter @sollish/web test",
+      "result": "389/389 pass before the parallel Göreme registry change landed; after it 387/389: the 2 lobby.test.ts failures index SLOT_STANDARD_RTP with 'goreme' (Göreme agent's work in progress, not Damla)"
+    },
+    {
+      "cmd": "tsx --test tests/damla-controls.test.ts tests/damla-timeline.test.ts tests/damla-audio.test.ts",
+      "result": "15/15 pass (8 controls, 5 timeline, 2 audio)"
+    },
+    {
+      "cmd": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck",
+      "result": "clean for Damla files; current tree errors only in lib/goreme-controls.ts (missing ./goreme-timeline) and tests/lobby.test.ts goreme indexing (Göreme agent, in progress)"
+    },
+    {
+      "cmd": "PW_CHROMIUM_PATH=... PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3031 pnpm --filter @sollish/web test:browser tests/browser/damla.spec.ts --workers=1",
+      "result": "6/6 pass (drop + lock in flight + history after landing + Space, rain 10 in order, autobet loss limit stop, history replay, gold signature high-16 x1000 + info RTP table + axe WCAG 2.2 AA clean, /verify damla path)"
+    },
+    {
+      "cmd": "same, tests/browser/lobby.spec.ts",
+      "result": "15/15 pass; phone 390/430 failed once on first run (menu drawer on a cold /game/crash compile), passed on rerun 3/3"
+    }
+  ],
+  "notes": [
+    "Local DEMO: each drop is resolved and settled at admission (DemoLedger reserve+settle, the RGS model); the shown balance holds back payouts of drops not yet landed; history rows appear only after landing; rain drops settle in admission order.",
+    "Remote RGS path (sequential requests, >=280 ms apart) is implemented but not exercised in a browser here (no local workerd run).",
+    "Sound: original synthesized buffers (sfx/damla.ts); unit-tested for length, peak and loop seam; not listened to by the user. User visual and audio acceptance pending.",
+    "Posters: generated from posters/make-posters.mjs (code-drawn SVG, Chromium screenshot, sharp webp)."
+  ],
+  "screenshots": [
+    "1440x900-en-01-splash.png",
+    "1440x900-en-02-idle.png",
+    "1440x900-en-03-rain-in-flight.png",
+    "1440x900-en-04-rain-settled.png",
+    "1440x900-en-05-full-page.png",
+    "1440x900-en-06-high16-idle.png",
+    "1440x900-en-07-gold-signature.png",
+    "1440x900-en-08-info.png",
+    "1440x900-en-08b-paytable.png",
+    "1440x900-en-08c-rtp.png",
+    "1440x900-en-09-verify.png",
+    "1440x900-en-10-lobby-instant.png",
+    "390x844-tr-01-splash.png",
+    "390x844-tr-02-idle.png",
+    "390x844-tr-03-rain-in-flight.png",
+    "390x844-tr-04-rain-settled.png",
+    "390x844-tr-05-full-page.png",
+    "390x844-tr-06-high16-idle.png",
+    "390x844-tr-07-gold-signature.png",
+    "390x844-tr-08-info.png",
+    "390x844-tr-08b-paytable.png",
+    "390x844-tr-08c-rtp.png",
+    "390x844-tr-09-verify.png",
+    "390x844-tr-10-lobby-instant.png"
+  ]
+}
