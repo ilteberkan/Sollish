@@ -15,18 +15,13 @@
 - Ölçek: `docs/architecture/scale.md`; SlotMonitor parçalı (64), Ringside izleyici relay katmanı (varsayılan kapalı, migration v8), oyun başına paket bölme, ses/worker önbellek başlıkları, yük testi `ops/evidence/scale-20261016/`.
 - Test sayfası (artifact, 5 oyun + dil seçici + EN/TR ses): https://claude.ai/artifact/NgZgQZHXnPTi8TDGZvU57N . Kurulum betiği önceki oturumun scratchpad'indeydi; yeniden yazmak gerekirse tarif: esbuild IIFE paket (`minifyWhitespace`+`minifySyntax`, tanımlayıcı küçültme yok, `.module.css` → `local-css`), `banner: var process={env:{NODE_ENV:"production"}}`, `next/navigation` için küçük bir taklit modül, ses worker'ı (`public/workers/slot-audio-render.js`) metin olarak gömülüp Blob URL ile `window.Worker` override, ses dosyaları base64 JSON olarak gömülüp `fetch` override (`/audio/voice/...`), Barlow fontları data URI ve `--font-barlow-face:'Barlow'`, uygulama `I18nProvider` ile sarılır (`loadNamespaces(locale, NAMESPACES)`), üstte dil düğmeleri (`useLocale().setLocale`) ve oyun sekmeleri. Aynı dosya yoluyla yayımlamak aynı adresi korur; yeni oturumda adresi korumak için `Artifact` aracına `url` verilir (önce `read`).
 
-## Yarım kalanlar (WIP commit'lerde, son `b3c814a`)
-1. **Yeni lobi** (Opus): `components/lobby/`, `lib/lobby/`, `app/lab/lobby-posters/`, `components/game-rich.tsx`. Hedef: masaüstü sol kategori menüsü, tablet ikon şeridi, telefonda alt sekme çubuğu; kahraman alanı; satırlar (Sollish Originals, Canlı, Anlık oyunlar, Yeni, Doğrulanabilir); arama, favoriler, son oynananlar; RTP/azami kazanç etiketleri `SLOT_GAME_META`'dan (motor import etme); özgün afişler; `/` lobi olsun (`/games` çalışmaya devam). bet365/888 yalnız düzen referansı, marka/görsel kopyası yok. Son durum: "ana lobi bileşeni (çipler, satırlar, ızgara) yazılıyordu".
-2. **Çeviri — Tarhun, Candy Cascade, Ebru** (Sonnet): Tarhun büyük ölçüde bitti, Cascade kısmen, Ebru oyun ekranı yamasında kaldı. `messages/*/tarhun.json`, `cascade.json`, `ebru.json` var.
-3. **Çeviri — Cezeri, Asena, ortak** (Sonnet): Cezeri büyük ölçüde bitti ("başlangıç turları, tekrar, otomatik oyun" bloğunda kaldı), Asena ve `game-common.tsx` `Rules`, `lib/slot-verify.ts`, `lib/rgs-client.ts` (`rgsErrorMessage`), `lib/demo.ts`, `lib/tokens.ts` kaldı.
-- Kural: Türkçe metin bayt bayt aynı kalır (tarayıcı testleri Türkçe adlara bakar; test ayarı `tr` zorlar). Anahtar eşliği testi (`tests/i18n.test.ts`) geçmeli. Kalan liste `docs/architecture/i18n.md` "Kalan" bölümünde.
+## 20–21 Ekim oturumunda bitenler
+- Yeni lobi, beş slot + Crash/Coinflip/Ringside/Ödüller/Stake/kütüphane çevirileri commit'li ve dalda. Tam yerel doğrulama `ops/evidence/full-verify-20261020/web.json` (ayrıntı STATUS.md). Kalan çeviri yalnız laboratuvar sayfaları (`app/lab/*`, `art-lab.tsx`).
 
 ## Sıradaki işler (öncelik sırasıyla)
-1. Yukarıdaki üç yarım işi bitir (her biri kendi testleri + ekran görüntüsü), commit et.
-2. Kalan çeviriler: Crash, Coinflip, Ringside, Ödüller/Stake, kütüphane mesajları.
-3. Tam doğrulama: `build:cloudflare` (tek başına), `preview:cloudflare` üzerinde bütün tarayıcı testleri (product, i18n, beş slot, lobi), sonuçları `ops/evidence/` altına.
-4. Test sayfasını yeni lobi + tam çeviriyle güncelle, sahibe bağlantıyı ver.
-5. `docs/handoff/STATUS.md` güncelle.
+1. Test sayfasını (artifact) yeni lobi + tam çeviriyle güncelle (tarif yukarıda; adresi korumak için önce `read`), sahibe bağlantıyı ver.
+2. Ringside spec'lerini `NEXT_PUBLIC_API_URL=http://127.0.0.1:8787` ile ayrı bir `build:cloudflare` + yerel realtime üzerinde koş.
+3. Sahip kararlarını bekle (aşağıda); yayın yalnız sahip isterse.
 
 ## Sahibin kararını bekleyenler
 - Devnet yayını (web + realtime migration v7/v8), `SLOT_SIGNING_KEY`, `SLOTS_ENABLED=true`, `LIVE_RELAYS>0`.
