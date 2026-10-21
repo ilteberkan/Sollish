@@ -20,18 +20,18 @@ export interface GoremeSkyBandProps {
   multiplier: number;
   /** Feature running (bright) or not (dimmed, pegs visible). Default true. */
   active?: boolean;
-  /** Empty pegs drawn per side when there are fewer balloons. Default 4. */
+  /** Empty pegs drawn per side when there are fewer balloons. Default 3. */
   pegs?: number;
   className?: string;
   /** Label for the medallion (default "GÖK"). */
   label?: string;
 }
 
-export const GoremeSkyBand = memo(function GoremeSkyBand({ balloons, multiplier, active = true, pegs = 4, className, label = 'GÖK' }: GoremeSkyBandProps) {
+export const GoremeSkyBand = memo(function GoremeSkyBand({ balloons, multiplier, active = true, pegs = 3, className, label = 'GÖK' }: GoremeSkyBandProps) {
   const right: GoremeMooredBalloon[] = [], left: GoremeMooredBalloon[] = [];
   balloons.forEach((b, i) => (i % 2 === 0 ? right : left).push(b));
   const per = Math.max(right.length, left.length);
-  const dense = per > 4;
+  const dense = per > 3;
   const lane = (list: GoremeMooredBalloon[], side: 'l' | 'r') => (
     <div className={styles.lane} data-side={side} data-dense={dense || undefined}>
       {list.map((b) => (

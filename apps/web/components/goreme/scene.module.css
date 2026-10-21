@@ -39,9 +39,9 @@
 @keyframes twinkle { 0%, 100% { opacity: 0.75; } 50% { opacity: 0.45; } }
 
 /* the sun */
-.sunWrap { position: absolute; left: 72%; top: 60%; width: clamp(60px, 11cqmin, 150px); aspect-ratio: 1; translate: -50% -50%; }
+.sunWrap { position: absolute; left: 87%; top: 58%; width: clamp(60px, 11cqmin, 150px); aspect-ratio: 1; translate: -50% -50%; }
 .sunMove { position: absolute; inset: 0; transition: transform 2.4s cubic-bezier(0.3, 0.6, 0.2, 1); }
-.root[data-mood='feature'] .sunMove { transform: translateY(-26cqh) scale(1.15); }
+.root[data-mood='feature'] .sunMove { transform: translateY(-30cqh) scale(1.2); }
 .sun {
   position: absolute;
   inset: 0;
@@ -104,7 +104,7 @@
 .field { position: absolute; left: -2%; right: -2%; bottom: 9%; height: 36%; }
 .floor { position: absolute; left: -2%; right: -2%; bottom: 0; height: 14%; }
 .haze { position: absolute; left: 0; right: 0; bottom: 18%; height: 24%; background: linear-gradient(180deg, transparent, rgba(255, 214, 180, 0.35) 55%, transparent); }
-.cliff { position: absolute; bottom: 0; width: clamp(200px, 30cqw, 600px); aspect-ratio: 600 / 640; }
+.cliff { position: absolute; bottom: 0; width: clamp(120px, 28cqw, 600px); aspect-ratio: 600 / 640; }
 .cliffL { left: -3%; }
 .cliffR { right: -3%; }
 
@@ -131,7 +131,7 @@
 
 /* ---------------- stage layout ---------------- */
 .stage {
-  --board-w: min(54cqw, calc((100cqh - 250px) * 1.19));
+  --board-w: min(54cqw, calc((100cqh - 260px) * 1.19));
   position: absolute;
   inset: 0;
   display: grid;
@@ -141,11 +141,11 @@
   box-sizing: border-box;
 }
 .stageLogo { grid-column: 1; align-self: start; justify-self: center; width: min(100%, 24cqw); padding-top: 3cqh; }
-.stageMain { grid-column: 2; display: grid; gap: 1.6cqh; align-content: center; width: var(--board-w); }
+.stageMain { grid-column: 2; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.6cqh; align-content: center; width: var(--board-w); }
 .stageBand { width: 100%; }
 .stageBoard { width: 100%; }
 .stageSide { grid-column: 3; align-self: center; justify-self: center; }
-@container grscene (max-aspect-ratio: 1 / 1) {
+@container grscene (max-aspect-ratio: 29 / 20) {
   .stage {
     --board-w: min(calc(100cqw - 16px), calc((100cqh - 300px) * 1.19));
     display: flex;
@@ -155,7 +155,7 @@
     gap: 1cqh;
     padding: 8px 8px 16px;
   }
-  .stageLogo { width: min(72cqw, 340px); padding-top: 1cqh; }
+  .stageLogo { align-self: center; width: min(72cqw, 340px); padding-top: 1cqh; }
   .stageMain { gap: 1.2cqh; }
 }
 

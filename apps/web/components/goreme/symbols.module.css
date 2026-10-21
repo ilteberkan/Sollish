@@ -56,18 +56,21 @@
 /* dim */
 .sym[data-state='dim'] .body, .sym[data-state='dim'] .badge { opacity: 0.32; transition: opacity 0.25s ease; }
 
-/* multiplier badge on the basket */
+/* multiplier medal at the lower right (the basket stays visible) */
 .badge {
   position: absolute;
-  left: 50%;
-  bottom: 1%;
-  translate: -50% 0;
-  min-width: 46%;
-  padding: 0.06em 0.34em 0.02em;
+  right: -3%;
+  bottom: 3%;
+  min-width: 40%;
+  height: 34%;
+  box-sizing: border-box;
+  display: grid;
+  grid-auto-flow: column;
+  place-content: center;
+  padding: 0 0.22em;
   border-radius: 999px;
-  font: 800 max(11px, 24cqmin) / 1 var(--font-barlow), 'Arial Narrow', system-ui, sans-serif;
+  font: 800 max(11px, 22cqmin) / 1 var(--font-barlow), 'Arial Narrow', system-ui, sans-serif;
   letter-spacing: 0.01em;
-  text-align: center;
   color: #fff;
   white-space: nowrap;
   text-shadow: 0 1px 0 #2a1216, 0 0 6px rgba(0, 0, 0, 0.5);
@@ -76,7 +79,7 @@
   background: linear-gradient(180deg, #e8574a, #9a1e26);
   pointer-events: none;
 }
-.badge small { font-size: 0.66em; margin-right: 0.02em; vertical-align: 0.12em; }
+.badge small { font-size: 0.66em; margin-right: 0.04em; align-self: center; }
 .badge[data-tier='t1'] { background: linear-gradient(180deg, #3ad2c4, #0c6567); }
 .badge[data-tier='t2'] { background: linear-gradient(180deg, #b26ee6, #4f2382); }
 .badge[data-tier='t3'] { background: linear-gradient(180deg, #ffe17a, #d0780e); color: #3a1604; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6); border-color: #fff; box-shadow: 0 0 0 1.5px #2a1216, 0 0 14px rgba(255, 210, 90, 0.85), inset 0 2px 0 rgba(255, 255, 255, 0.7); }
