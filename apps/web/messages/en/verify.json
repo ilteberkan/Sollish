@@ -101,5 +101,11 @@
     "payout": "payout",
     "total": "multiplier",
     "cost": "cost"
+  },
+  "damla": {
+    "path": "Path of the drop",
+    "pathValue": "{path} → pool {pool} of {pools}",
+    "figure": "Damla drop over {rows} terraces: {path}, pool {pool} of {pools}, ×{multiplier}",
+    "mode": "{risk, select, low {Low} medium {Medium} other {High}} risk · {rows} terraces"
   }
 }

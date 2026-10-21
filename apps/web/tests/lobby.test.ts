@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
-import { ASENA_RTP, CASCADE2_RTP, CEZERI_RTP, EBRU_RTP, SLOT_GAMES, SLOT_GAME_IDS, STORM_RTP } from '@sollish/protocol';
+import { ASENA_RTP, CASCADE2_RTP, CEZERI_RTP, DAMLA_EXACT_RTP, EBRU_RTP, SLOT_GAMES, SLOT_GAME_IDS, STORM_RTP } from '@sollish/protocol';
 import { LOBBY_GAMES, LOBBY_GAME_IDS, foldSearch, gameForPath, inCategory, isLobbyCategory, matchesQuery, pushRecent, searchText, toggleFavorite } from '../lib/lobby/games';
-import { CRASH_DEMO, COINFLIP_DEMO, SLOT_STANDARD_RTP, lobbyStats, volatilityOf } from '../lib/lobby/stats';
+import { CRASH_DEMO, COINFLIP_DEMO, DAMLA_LOBBY, SLOT_STANDARD_RTP, lobbyStats, volatilityOf } from '../lib/lobby/stats';
 import { POSTER_SIZES, poster } from '../lib/lobby/posters';
 import { POSTER_VERSIONS } from '../lib/lobby/posters.generated';
 import { LOBBY_HEAD_SCRIPT } from '../lib/lobby/keys';
@@ -14,11 +14,16 @@ import { grossPayout, sampleCrash } from '../lib/demo';
 test('lobby RTP copies equal each engine’s evidence constant (standard mode) and max win equals the registry', () => {
   const engines = { cascade: CASCADE2_RTP, tarhun: STORM_RTP, ebru: EBRU_RTP, cezeri: CEZERI_RTP, asena: ASENA_RTP } as const;
   for (const id of SLOT_GAME_IDS) {
+    if (id === 'damla') continue; // instant game: no standard mode, checked below
     assert.equal(SLOT_STANDARD_RTP[id].rtp, engines[id].standard.rtp, `${id} rtp`);
     assert.equal(SLOT_STANDARD_RTP[id].stdDev, engines[id].standard.stdDev, `${id} stdDev`);
     assert.equal(lobbyStats(id).maxWin, SLOT_GAMES[id]!.maxMultiplier, `${id} max win`);
     assert.equal(lobbyStats(id).rtp, engines[id].standard.rtp);
   }
+  // Damla: the tile shows the lowest exact mode RTP (medium-12, the default) and the registry cap; volatility is the player's choice.
+  assert.equal(DAMLA_LOBBY.rtp, Math.min(...Object.values(DAMLA_EXACT_RTP)));
+  assert.equal(DAMLA_LOBBY.rtp, DAMLA_EXACT_RTP['medium-12']);
+  assert.deepEqual(lobbyStats('damla'), { rtp: DAMLA_LOBBY.rtp, maxWin: SLOT_GAMES.damla!.maxMultiplier, volatility: 'player', poolFee: null });
 });
 
 test('Crash and Coinflip practice return 98 % as lib/demo.ts plays them', () => {
@@ -40,7 +45,7 @@ test('volatility bands follow the evidence standard deviation', () => {
   assert.equal(volatilityOf(5), 'medium');
   assert.equal(volatilityOf(12.7), 'high');
   assert.equal(volatilityOf(22.1), 'veryHigh');
-  assert.deepEqual(SLOT_GAME_IDS.map(id => lobbyStats(id).volatility), ['high', 'high', 'veryHigh', 'high', 'veryHigh']);
+  assert.deepEqual(SLOT_GAME_IDS.map(id => lobbyStats(id).volatility), ['high', 'high', 'veryHigh', 'high', 'veryHigh', 'player']);
   assert.equal(lobbyStats('crash').volatility, 'player');
 });
 
@@ -53,7 +58,7 @@ test('catalog: every game once, routes exist, categories partition by kind, prov
   }
   assert.equal(LOBBY_GAMES.filter(g => inCategory(g, 'slots')).length, 5);
   assert.deepEqual(LOBBY_GAMES.filter(g => inCategory(g, 'live')).map(g => g.id), ['ringside']);
-  assert.deepEqual(LOBBY_GAMES.filter(g => inCategory(g, 'instant')).map(g => g.id).sort(), ['coinflip', 'crash']);
+  assert.deepEqual(LOBBY_GAMES.filter(g => inCategory(g, 'instant')).map(g => g.id).sort(), ['coinflip', 'crash', 'damla']);
   assert.ok(!inCategory(LOBBY_GAMES.find(g => g.id === 'crash')!, 'fair'));
   assert.deepEqual(LOBBY_GAMES.filter(g => g.hero !== null).sort((a, b) => a.hero! - b.hero!).map(g => g.id), ['asena', 'cezeri', 'ebru', 'tarhun']);
   assert.ok(!isLobbyCategory('__proto__') && isLobbyCategory('favorites'));
@@ -70,6 +75,9 @@ test('search folds case, diacritics and Turkish i; every word must match', () =>
   assert.ok(!matchesQuery(text, 'wolf'));
   assert.ok(matchesQuery(text, ''));
   assert.ok(matchesQuery(searchText(LOBBY_GAMES.find(g => g.id === 'asena')!, 'Asena：星狼'), '星狼'));
+  const damla = LOBBY_GAMES.find(g => g.id === 'damla')!;
+  for (const q of ['plinko', 'drop', 'pamukkale', 'damla']) assert.ok(matchesQuery(searchText(damla, 'Damla: Pamukkale'), q), q);
+  assert.equal(damla.kind, 'instant'); assert.ok(damla.isNew && damla.provablyFair && damla.original);
 });
 
 test('recent and favorites lists stay clean, unique and bounded', () => {
@@ -95,6 +103,7 @@ test('every poster in the manifest exists with its hash and size; each game has 
     assert.deepEqual([tile.width, tile.height], [...POSTER_SIZES.tile]);
     assert.match(tile.src, /^\/images\/lobby\/[a-z]+-tile\.webp\?v=[0-9a-f]{10}$/);
   }
-  for (const id of ['asena', 'cezeri', 'ebru', 'tarhun', 'ringside']) { assert.ok(poster(id, 'wide')); assert.ok(poster(id, 'narrow')); }
+  for (const id of ['asena', 'cezeri', 'ebru', 'tarhun', 'ringside', 'damla']) { assert.ok(poster(id, 'wide')); assert.ok(poster(id, 'narrow')); }
+  assert.ok(poster('damla', 'land'));
   assert.equal(poster('__proto__', 'tile'), null);
 });

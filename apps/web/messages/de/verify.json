@@ -101,5 +101,11 @@
     "payout": "Auszahlung",
     "total": "Multiplikator",
     "cost": "Kosten"
+  },
+  "damla": {
+    "path": "Weg des Tropfens",
+    "pathValue": "{path} → Becken {pool} von {pools}",
+    "figure": "Damla-Tropfen über {rows} Terrassen: {path}, Becken {pool} von {pools}, ×{multiplier}",
+    "mode": "Risiko {risk, select, low {niedrig} medium {mittel} other {hoch}} · {rows} Terrassen"
   }
 }

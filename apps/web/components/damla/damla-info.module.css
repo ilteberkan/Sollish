@@ -1,0 +1,16 @@
+/* Damla game-information pages (inside the slot kit's GameInfo panel). */
+.page { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.page h3 { margin: 0 0 2px; font-size: 18px; color: #9ff0ee; }
+.page h4 { margin: 6px 0 0; font-size: 15px; color: #9ff0ee; }
+.page p { margin: 0; }
+.lead { font-size: 14px; color: #dbe6ee; }
+.note { font-size: 13px; color: #b9c6d2; }
+.steps { margin: 0; padding-left: 22px; display: grid; gap: 8px; }
+.steps li::marker { color: #5fe0e0; font-weight: 600; }
+.tableWrap { overflow-x: auto; border-radius: 12px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08); }
+.table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.table th { text-align: left; font-weight: 500; color: #a9c4cc; padding: 8px 10px; background: rgba(255, 255, 255, 0.04); }
+.table td { padding: 7px 10px; border-top: 1px solid rgba(255, 255, 255, 0.06); }
+.table tr[data-current] td { background: rgba(63, 208, 212, 0.14); color: #fff; font-weight: 600; }
+.num { text-align: right !important; }
+.swatch { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: -1px; }

@@ -1,0 +1,80 @@
+{
+  "meta": { "title": "Damla：棉花堡 · Sollish 原创", "description": "一滴水沿着棉花堡洁白的石灰华梯田一级级落下，最终停在碧绿的水池里。原创即时游戏，DEMO 积分，可证明公平。" },
+  "title": "Damla：棉花堡",
+  "subtitle": "一滴水，白色梯田，碧绿水池。它会停在哪里？",
+  "table": "Damla 游戏桌",
+  "badge": { "checking": "正在检查服务器…" },
+  "logo": { "place": "PAMUKKALE" },
+  "risk": { "low": "低", "medium": "中", "high": "高" },
+  "board": { "label": "{rows} 层石灰华梯田，{pools} 个水池，{risk}风险", "pools": "水池与倍数", "pool": "水池 {n}：×{multiplier}" },
+  "deck": {
+    "group": "Damla 控制", "balance": "余额", "win": "赢得", "winReplay": "回放赢得", "rainWin": "水雨赢得（{count}）", "refill": "重置余额",
+    "risk": "风险", "rows": "梯田", "rowsAria": "{rows} 层梯田", "rowsShort": "{rows} 层", "locked": "水滴下落时锁定", "maxWin": "最高 ×{max}",
+    "drop": "落滴", "dropCost": "花费 {cost} 落下一滴水", "dropLocked": "所有水滴落定前锁定", "rain": "水雨", "rainAria": "水雨：{count} 滴，共 {cost}",
+    "auto": "自动", "info": "信息", "infoAria": "游戏信息、赔付表和 RTP", "speedAria": "下落速度：{speed}", "sound": "声音", "soundLoading": "正在准备声音… {percent}%",
+    "inFlight": "{count, plural, other {# 滴水正在下落}}", "lastWin": "上一滴：<b>×{multiplier}</b> · {money}", "hintSpace": "按 <kbd>空格</kbd> 落下一滴",
+    "hintFixed": "点击落滴，或下一场水雨", "outOfCredit": "DEMO 积分已用完。"
+  },
+  "strip": { "label": "最近结果" },
+  "gold": { "banner": "金色溢流" },
+  "auto": { "ribbon": "自动投注 · 剩余 {drops}" },
+  "replay": { "ribbon": "回放 · 水滴 {id} · 余额不变" },
+  "errors": { "insufficient": "余额不足：{count, plural, other {# 滴需要}} {cost}。", "entropy": "此浏览器无法提供安全随机数。", "noCredit": "DEMO 账本拒绝了这滴水。" },
+  "announce": {
+    "dropped": "已落下 {count, plural, other {# 滴}}，{amount} DEMO。", "sentToServer": "已向服务器发送 {count, plural, other {# 滴}}，{amount} DEMO。",
+    "landed": "水池 {pool}：×{multiplier}，{amount} DEMO。", "gold": "边缘水池！所有梯田变成金色。", "replaying": "正在回放水滴 {id}。", "replayDone": "回放结束：水池 {pool}，×{multiplier}，{amount} DEMO。",
+    "preview": "预览水滴。", "recovered": "再次显示你上一滴服务器水滴（{amount} DEMO 已支付）。", "refilled": "余额已重置为 {amount} DEMO。", "speed": "速度：{speed}。", "mode": "{risk}风险，{rows} 层梯田。"
+  },
+  "toast": {
+    "autoplayStarted": "自动投注：{drops} 滴，止损 {limit}。", "autoplayStopped": "{reason} · {drops} 滴 · 净额 {net}", "autoplayStoppedShort": "自动投注已停止：{reason}",
+    "shareCopied": "链接已复制：{url}", "shareLink": "分享链接：{url}", "shareFailed": "无法分享：{error}", "replayFailed": "这滴水无法回放。",
+    "replayMismatch": "回放与记录不一致，未显示。", "refilled": "余额已重置为 {amount} DEMO。", "close": "关闭"
+  },
+  "autoplay": { "title": "自动投注", "drops": "水滴数", "note": "每滴 {cost}（{mode}）。自动投注期间风险、梯田和投注额保持不变。", "serverFailed": "服务器拒绝了一滴水", "dropFailed": "下一滴无法开始", "quit": "你离开了游戏" },
+  "gated": { "title": "链上游戏已关闭", "text": "Damla 仅使用 DEMO 积分。真实资产游戏在通过验证前保持关闭。", "back": "返回 DEMO" },
+  "splash": {
+    "original": "Sollish 原创", "terraces": { "title": "石灰华梯田", "text": "8 到 16 层梯田；每一层水滴从左或右溢出。" },
+    "rain": { "title": "水雨", "text": "一次落下 5 或 10 滴，每一滴都是独立的可证明公平回合。" },
+    "gold": { "title": "金色溢流，最高 ×{max}", "text": "在高风险下抵达边缘水池，所有梯田都会变成金色。" },
+    "loading": "正在加载 Damla", "play": "开始", "skip": "不再显示", "note": "仅限 DEMO 积分 · RTP {rtp}（精确值，默认模式）· 18+"
+  },
+  "settings": { "soundReady": "声音已就绪。", "soundLoading": "正在合成声音… {percent}%", "soundIdle": "首次点击后开始准备声音。", "demoTitle": "DEMO 积分", "demoText": "余额 {balance}。{remote, select, yes {此余额由服务器保存。} other {此余额只存在于当前标签页。}}重置后恢复为 {start} DEMO。" },
+  "history": {
+    "title": "水滴记录", "scope": "本次会话", "tableRegion": "Damla 水滴记录", "time": "时间", "mode": "模式", "modeValue": "{risk} · {rows}", "bet": "投注", "win": "赢得", "result": "水池", "roundId": "水滴",
+    "replayColumn": "回放", "replay": "回放", "replayAria": "回放水滴 {id}", "share": "分享", "shareAria": "分享水滴 {id}", "detail": "水池 {pool}/{pools} · ×{multiplier}", "detailMax": "水池 {pool}/{pools} · ×{multiplier} · 最高",
+    "reset": "余额已重置", "resetRemote": "余额已重置（服务器）", "latest": "（最新）", "emptyTitle": "还没有水滴", "emptyText": "水滴落定后会显示在这里。"
+  },
+  "rules": {
+    "summary": "Damla 规则与公平",
+    "play": "选择投注额、风险（低、中、高）以及 8 到 16 层梯田。一滴水沿梯田落下，在每个水池以相同概率从左沿或右沿溢出。向右溢出的次数决定水池；按水池倍数乘以投注额赔付。",
+    "pay": "每个模式都有自己的对称赔付表。所有模式的精确 RTP 为 98.4% 至 98.6%（庄家优势至少 1.4%）。最大赢额是高风险 16 层的边缘水池：投注额的 ×{max}。",
+    "fair": "每滴水都是一个拥有独立种子和 nonce 的回合。结果在水滴下落前就已确定，动画只负责呈现。"
+  },
+  "info": {
+    "title": "Damla：游戏信息",
+    "tab": { "how": "玩法", "pay": "赔付表", "rtp": "RTP", "fair": "公平性", "keys": "按键与规则" },
+    "how": {
+      "lead": "一滴水沿着棉花堡洁白的石灰华梯田落下，停在一个碧绿的水池里。",
+      "step1": "用 − 和 + 选择<b>投注额</b>，或打开投注菜单。", "step2": "选择<b>风险</b>：低风险常中小奖，高风险少中大奖。",
+      "step3": "选择 <b>8 到 16 层梯田</b>。层数越多，水池分布越宽。", "step4": "按下<b>落滴</b>。每一层水滴向左或向右溢出（各 50%）；到达的水池按其倍数赔付。",
+      "rainTitle": "水雨", "rain": "水雨会依次落下 5 或 10 滴。每滴都是拥有独立 nonce 的单独回合；水滴可以同时下落，结果按顺序计入余额。",
+      "autoTitle": "自动投注", "auto": "选择水滴数和止损额（必填）。在“高级”中还可以设置单次赢额达到 X 或余额增加 Y 时停止。标签页隐藏时自动投注会停止。",
+      "goldTitle": "金色溢流", "gold": "在高风险下，边缘水池就是金色水池。水滴抵达时水池溢出，所有梯田闪耀金光。",
+      "bets": "投注 {min} 至 {max}。最高赢额为投注额的 ×{maxWin}（高风险，16 层）。"
+    },
+    "pay": { "title": "赔付表：{risk}风险，{rows} 层梯田", "lead": "按你的投注额 <b>{bet}</b> 计算的赔付。概率为通往该水池的路径数占全部路径的比例。", "pool": "水池", "multiplier": "倍数", "payout": "赔付", "chance": "概率", "chanceValue": "{ways} / {total}（{percent}）", "note": "本模式最高 ×{max}。精确 RTP {rtp}。" },
+    "rtp": { "lead": "精确 RTP 是每个水池概率乘以其倍数的二项式求和。模拟值来自每个模式 2000 万滴的模拟。", "mode": "模式", "exact": "精确 RTP", "edge": "庄家优势", "simulated": "模拟", "max": "最高赢额", "note": "来自 Sollish 自有证据的 DEMO 估算；未经测试实验室认证。" },
+    "fair": {
+      "p1": "游戏开始前，服务器公布其秘密种子的<b>哈希</b>。每滴水将服务器种子、你的<b>客户端种子</b>和一个 <b>nonce</b>（每滴一个）合成为回合种子。",
+      "p2": "引擎 <code>damla-terraces-1</code> 将回合种子转换为每层一次的左/右决定。相同的种子、投注额和模式总是得到相同的路径和水池。",
+      "p3": "种子轮换后服务器会公开种子；<b>验证</b>页面会在你的浏览器中重新计算每一滴，包括路径和水池。",
+      "note": "在本地 DEMO 模式下，种子来自本浏览器的安全随机数生成器，不可证明公平。"
+    },
+    "keys": {
+      "space": "<kbd>空格</kbd>或<kbd>回车</kbd>落下一滴（可在设置中关闭）。",
+      "lock": "按下后，落滴和水雨在所有水滴落定前保持锁定；水滴下落时风险、梯田和投注额也被锁定。",
+      "speed": "普通、快速和极速只改变动画，从不改变结果。", "motion": "开启减少动态效果时，水滴仍沿精确路径下落，只是效果更少。",
+      "malfunctionTitle": "故障", "malfunction": "故障将使所有赔付和游戏无效。DEMO 积分没有现金价值。"
+    }
+  }
+}

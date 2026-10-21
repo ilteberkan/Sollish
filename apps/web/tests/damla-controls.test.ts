@@ -11,6 +11,7 @@ import {
 
 const seedOf = (v: number) => damlaSeedFromEntropy(new Uint32Array([v, v, v, v]));
 const idle = { inFlight: 0, autoplay: false, replaying: false, pending: false };
+const codeOf = (d: { continue: boolean }) => ('code' in d ? (d as { code: string }).code : null);
 
 test('bet ladder, default mode and cost follow the engine', () => {
   assert.deepEqual([...DAMLA_BET_LADDER], [...DAMLA_BET_LEVELS_CENTS]);
@@ -86,10 +87,10 @@ test('autobet: loss limit is mandatory and checked before a drop; stops on singl
   }
   assert.equal(drops.length, 3); assert.equal(state.spentCents - state.wonCents, 210);
   const win = damlaAutoplayAfterRound(createAutoplay({ spins: 10, lossLimitCents: 1000, singleWinLimitCents: 500, stopOnAnyWin: false, stopOnFeature: false }, 10_000), { costCents: 100, payoutCents: 600, balanceBeforeCents: 10_000 });
-  assert.equal(damlaAutoplayBeforeDrop(win, { balanceCents: 10_500, betCents: 100, tabHidden: false }).code, 'single-win');
+  assert.equal(codeOf(damlaAutoplayBeforeDrop(win, { balanceCents: 10_500, betCents: 100, tabHidden: false })), 'single-win');
   const up = damlaAutoplayAfterRound(createAutoplay({ spins: 10, lossLimitCents: 1000, balanceIncreaseCents: 300, stopOnAnyWin: false, stopOnFeature: false }, 10_000), { costCents: 100, payoutCents: 450, balanceBeforeCents: 10_000 });
-  assert.equal(damlaAutoplayBeforeDrop(up, { balanceCents: 10_350, betCents: 100, tabHidden: false }).code, 'balance-increase');
-  assert.equal(damlaAutoplayBeforeDrop(up, { balanceCents: 10_350, betCents: 100, tabHidden: true }).code, 'tab-hidden');
+  assert.equal(codeOf(damlaAutoplayBeforeDrop(up, { balanceCents: 10_350, betCents: 100, tabHidden: false })), 'balance-increase');
+  assert.equal(codeOf(damlaAutoplayBeforeDrop(up, { balanceCents: 10_350, betCents: 100, tabHidden: true })), 'tab-hidden');
   assert.equal(win.lastRound?.featureTriggered, false);
 });
 

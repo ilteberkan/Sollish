@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
-import { SLOT_GAMES } from '@sollish/protocol';
+import { DAMLA_ENGINE_ID, SLOT_GAMES, type DamlaRound } from '@sollish/protocol';
+import { DamlaPathFigure } from './damla/path-figure';
+import { damlaMultiplierText, parseDamlaMode } from '@/lib/damla-controls';
 import { configuredApi } from '@/lib/chat';
 import { RgsClient, rgsErrorCode, safeSessionStorage, type RemoteHistoryRow } from '@/lib/rgs-client';
 import { verifyForm, verifyHistoryRow, type RowStatus, type VerifyOutcome } from '@/lib/slot-verify';
@@ -9,7 +11,7 @@ import { useFormat, useT } from '@/lib/i18n/client';
 import type { MessageKey } from '@/lib/i18n/catalog';
 
 const api = configuredApi(process.env.NEXT_PUBLIC_API_URL);
-const GAME_KEYS = new Set(['cascade', 'tarhun', 'ebru', 'cezeri', 'asena']);
+const GAME_KEYS = new Set(['cascade', 'tarhun', 'ebru', 'cezeri', 'asena', 'damla']);
 const MODE_KEYS = new Set(['standard', 'ante', 'buy']);
 const STATUS_KEY: Record<RowStatus | 'invalid', MessageKey<'verify'>> = { match: 'verify.statusMatch', mismatch: 'verify.statusMismatch', pending: 'verify.statusPending', invalid: 'verify.statusInvalid' };
 type Form = { game: string; mode: string; betCents: string; serverSeed: string; serverSeedHash: string; clientSeed: string; nonce: string; expectedSeedHex: string; expectedPayoutCents: string };
@@ -30,7 +32,7 @@ export function VerifyPanel() {
   const kit = useT('slotKit');
   const format = useFormat();
   const gameName = (id: string) => (GAME_KEYS.has(id) ? common(`games.${id}` as MessageKey<'common'>) : id);
-  const modeName = (id: string) => (MODE_KEYS.has(id) ? common(`modes.${id}` as MessageKey<'common'>) : id);
+  const modeName = (id: string) => { const d = parseDamlaMode(id); return d ? t('damla.mode', d) : MODE_KEYS.has(id) ? common(`modes.${id}` as MessageKey<'common'>) : id; };
   const times = (hundredths: number) => format.amount(hundredths);
   const noteText = note.startsWith('verify.') ? t(note as MessageKey<'verify'>) : note.startsWith('rgs.errors.') ? kit(note as MessageKey<'slotKit'>) : note;
   const outcomeText = (o: VerifyOutcome) => (o.code === 'mismatch'
@@ -107,6 +109,16 @@ export function VerifyPanel() {
                 <dt>{t('verify.factFreeSpins')}</dt><dd>{outcome.result.round.freeSpinsTriggered ? t('verify.triggered') : t('verify.none')}{outcome.result.round.capped ? t('verify.maxWin') : ''}</dd>
               </dl>
             )}
+            {outcome.result?.round && outcome.result.round.engine === DAMLA_ENGINE_ID && (() => {
+              const round = outcome.result.round as unknown as DamlaRound;
+              const vars = { path: round.path.join(''), pool: round.slot + 1, pools: round.rows + 1, rows: round.rows, multiplier: damlaMultiplierText(round.multiplierHundredths, format.locale) };
+              return (
+                <div className={styles.facts} data-testid="verify-damla">
+                  <p><strong>{t('damla.path')}</strong>: <code className={styles.mono}>{t('damla.pathValue', vars)}</code></p>
+                  <DamlaPathFigure round={round} locale={format.locale} label={t('damla.figure', vars)} />
+                </div>
+              );
+            })()}
           </div>
         )}
       </section>

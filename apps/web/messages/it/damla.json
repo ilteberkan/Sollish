@@ -1,0 +1,80 @@
+{
+  "meta": { "title": "Damla: Pamukkale · Sollish Original", "description": "Una sola goccia d'acqua scende le terrazze di travertino bianco di Pamukkale fino a una vasca turchese. Gioco istantaneo originale, credito DEMO, equità dimostrabile." },
+  "title": "Damla: Pamukkale",
+  "subtitle": "Una goccia, terrazze bianche, vasche turchesi. Dove si fermerà?",
+  "table": "Tavolo di gioco di Damla",
+  "badge": { "checking": "Verifica del server…" },
+  "logo": { "place": "PAMUKKALE" },
+  "risk": { "low": "Basso", "medium": "Medio", "high": "Alto" },
+  "board": { "label": "{rows} terrazze di travertino, {pools} vasche, rischio {risk}", "pools": "Vasche e moltiplicatori", "pool": "Vasca {n}: ×{multiplier}" },
+  "deck": {
+    "group": "Comandi di Damla", "balance": "Saldo", "win": "Vincita", "winReplay": "Vincita del replay", "rainWin": "Vincita della pioggia ({count})", "refill": "Ricarica il saldo",
+    "risk": "Rischio", "rows": "Terrazze", "rowsAria": "{rows} terrazze", "rowsShort": "{rows} terrazze", "locked": "bloccato mentre le gocce cadono", "maxWin": "max ×{max}",
+    "drop": "Goccia", "dropCost": "Lascia cadere una goccia per {cost}", "dropLocked": "Bloccato finché tutte le gocce non sono arrivate", "rain": "Pioggia", "rainAria": "Pioggia: {count} gocce, {cost} in totale",
+    "auto": "Auto", "info": "Info", "infoAria": "Info di gioco, tabella dei pagamenti e RTP", "speedAria": "Velocità della goccia: {speed}", "sound": "Audio", "soundLoading": "Preparazione audio… {percent}%",
+    "inFlight": "{count, plural, one {# goccia sta cadendo} other {# gocce stanno cadendo}}", "lastWin": "Ultima goccia: <b>×{multiplier}</b> · {money}", "hintSpace": "Premi <kbd>Spazio</kbd> per far cadere una goccia",
+    "hintFixed": "Tocca Goccia o fai piovere", "outOfCredit": "Credito DEMO esaurito."
+  },
+  "strip": { "label": "Risultati recenti" },
+  "gold": { "banner": "TRABOCCO D'ORO" },
+  "auto": { "ribbon": "Puntata automatica · ne restano {drops}" },
+  "replay": { "ribbon": "Replay · goccia {id} · saldo invariato" },
+  "errors": { "insufficient": "Saldo insufficiente: {count, plural, one {questa goccia richiede} other {# gocce richiedono}} {cost}.", "entropy": "In questo browser non è disponibile una casualità sicura.", "noCredit": "Il registro DEMO ha rifiutato la goccia." },
+  "announce": {
+    "dropped": "{count, plural, one {Goccia rilasciata} other {# gocce rilasciate}} per {amount} DEMO.", "sentToServer": "{count, plural, one {Goccia inviata al server} other {# gocce inviate al server}} per {amount} DEMO.",
+    "landed": "Vasca {pool}: ×{multiplier}, {amount} DEMO.", "gold": "Vasca del bordo! Tutte le terrazze diventano d'oro.", "replaying": "Replay della goccia {id}.", "replayDone": "Replay finito: vasca {pool}, ×{multiplier}, {amount} DEMO.",
+    "preview": "Goccia di anteprima.", "recovered": "La tua ultima goccia del server viene mostrata di nuovo ({amount} DEMO già pagati).", "refilled": "Saldo ricaricato a {amount} DEMO.", "speed": "Velocità: {speed}.", "mode": "Rischio {risk}, {rows} terrazze."
+  },
+  "toast": {
+    "autoplayStarted": "Puntata automatica: {drops} gocce, limite di perdita {limit}.", "autoplayStopped": "{reason} · {drops} gocce · netto {net}", "autoplayStoppedShort": "Puntata automatica fermata: {reason}",
+    "shareCopied": "Link copiato: {url}", "shareLink": "Link da condividere: {url}", "shareFailed": "Impossibile condividere: {error}", "replayFailed": "Questa goccia non può essere riprodotta.",
+    "replayMismatch": "Il replay non corrispondeva alla registrazione; non viene mostrato.", "refilled": "Saldo ricaricato a {amount} DEMO.", "close": "Chiudi"
+  },
+  "autoplay": { "title": "Puntata automatica", "drops": "Gocce", "note": "Ogni goccia costa {cost} ({mode}). Rischio, terrazze e puntata restano fissi durante la puntata automatica.", "serverFailed": "Il server ha rifiutato una goccia", "dropFailed": "La goccia successiva non è potuta partire", "quit": "Hai lasciato il gioco" },
+  "gated": { "title": "Il gioco on-chain è chiuso", "text": "Damla funziona solo con credito DEMO. Il gioco con asset reali resta chiuso finché le sue verifiche non sono superate.", "back": "Torna al DEMO" },
+  "splash": {
+    "original": "Sollish Original", "terraces": { "title": "Terrazze di travertino", "text": "Da 8 a 16 terrazze; su ognuna la goccia trabocca a sinistra o a destra." },
+    "rain": { "title": "Pioggia", "text": "Lascia cadere 5 o 10 gocce insieme, ognuna un proprio round dimostrabilmente equo." },
+    "gold": { "title": "Trabocco d'oro fino a ×{max}", "text": "Raggiungi la vasca del bordo con rischio alto e tutte le terrazze diventano d'oro." },
+    "loading": "Caricamento di Damla", "play": "Gioca", "skip": "Non mostrare più", "note": "Solo credito DEMO · RTP {rtp} (esatto, modalità predefinita) · 18+"
+  },
+  "settings": { "soundReady": "Audio pronto.", "soundLoading": "Sintesi audio… {percent}%", "soundIdle": "L'audio si prepara dopo il tuo primo tocco.", "demoTitle": "Credito DEMO", "demoText": "Saldo {balance}. {remote, select, yes {Il server conserva questo saldo.} other {Questo saldo esiste solo in questa scheda.}} La ricarica lo riporta a {start} DEMO." },
+  "history": {
+    "title": "Cronologia delle gocce", "scope": "Questa sessione", "tableRegion": "Cronologia delle gocce di Damla", "time": "Ora", "mode": "Modalità", "modeValue": "{risk} · {rows}", "bet": "Puntata", "win": "Vincita", "result": "Vasca", "roundId": "Goccia",
+    "replayColumn": "Replay", "replay": "Replay", "replayAria": "Replay della goccia {id}", "share": "Condividi", "shareAria": "Condividi la goccia {id}", "detail": "Vasca {pool}/{pools} · ×{multiplier}", "detailMax": "Vasca {pool}/{pools} · ×{multiplier} · max",
+    "reset": "Saldo ricaricato", "resetRemote": "Saldo ricaricato (server)", "latest": "(più recente)", "emptyTitle": "Ancora nessuna goccia", "emptyText": "Le tue gocce compaiono qui quando sono arrivate."
+  },
+  "rules": {
+    "summary": "Regole ed equità di Damla",
+    "play": "Scegli puntata, rischio (basso, medio, alto) e da 8 a 16 terrazze. Una sola goccia d'acqua scende le terrazze e trabocca dal bordo sinistro o destro di ogni vasca con uguale probabilità. Il numero di trabocchi a destra sceglie la vasca; viene pagato il suo moltiplicatore per la puntata.",
+    "pay": "Ogni modalità ha la propria tabella dei pagamenti simmetrica. L'RTP esatto è dal 98,4 al 98,6% in ogni modalità (vantaggio del banco almeno 1,4%). La vincita più alta è la vasca del bordo con rischio alto e 16 terrazze: ×{max} la puntata.",
+    "fair": "Ogni goccia è un round con il proprio seed e nonce. Il risultato è fissato prima che la goccia cada; l'animazione si limita a mostrarlo."
+  },
+  "info": {
+    "title": "Damla: info di gioco",
+    "tab": { "how": "Come si gioca", "pay": "Tabella pagamenti", "rtp": "RTP", "fair": "Equità", "keys": "Tasti e regole" },
+    "how": {
+      "lead": "Una sola goccia d'acqua scende le terrazze di travertino bianco di Pamukkale e si ferma in una vasca turchese.",
+      "step1": "Scegli la <b>puntata</b> con − e +, oppure apri il menu delle puntate.", "step2": "Scegli un <b>rischio</b>: basso paga spesso e poco, alto paga di rado e molto.",
+      "step3": "Scegli <b>da 8 a 16 terrazze</b>. Più terrazze allargano la distribuzione delle vasche.", "step4": "Premi <b>Goccia</b>. Su ogni terrazza la goccia trabocca a sinistra o a destra (50% ciascuno); la vasca raggiunta paga il suo moltiplicatore.",
+      "rainTitle": "Pioggia", "rain": "La pioggia rilascia 5 o 10 gocce una dopo l'altra. Ogni goccia è un round separato con il proprio nonce; le gocce possono cadere insieme e i risultati vengono accreditati in ordine.",
+      "autoTitle": "Puntata automatica", "auto": "Scegli il numero di gocce e un limite di perdita (obbligatorio). In Avanzate puoi anche fermarti su una vincita singola di almeno X o quando il saldo sale di Y. La puntata automatica si ferma quando la scheda è nascosta.",
+      "goldTitle": "Trabocco d'oro", "gold": "Con rischio alto le vasche del bordo sono le vasche d'oro. Quando la goccia ne raggiunge una, trabocca e tutte le terrazze brillano d'oro.",
+      "bets": "Puntate da {min} a {max}. Vincita massima ×{maxWin} la puntata (rischio alto, 16 terrazze)."
+    },
+    "pay": { "title": "Tabella pagamenti: rischio {risk}, {rows} terrazze", "lead": "Pagamenti con la tua puntata di <b>{bet}</b>. La probabilità è il numero di percorsi verso la vasca su tutti i percorsi.", "pool": "Vasca", "multiplier": "Moltiplicatore", "payout": "Pagamento", "chance": "Probabilità", "chanceValue": "{ways} / {total} ({percent})", "note": "Massimo in questa modalità ×{max}. RTP esatto {rtp}." },
+    "rtp": { "lead": "L'RTP esatto è la somma binomiale della probabilità di ogni vasca per il suo moltiplicatore. Il valore simulato viene da 20 milioni di gocce per modalità.", "mode": "Modalità", "exact": "RTP esatto", "edge": "Vantaggio del banco", "simulated": "Simulato", "max": "Vincita max", "note": "Stime DEMO dalle prove interne di Sollish; non certificate da un laboratorio di prova." },
+    "fair": {
+      "p1": "Prima di giocare il server pubblica l'<b>hash</b> del suo seed segreto. Ogni goccia combina il seed del server, il tuo <b>seed client</b> e un <b>nonce</b> (uno per goccia) nel seed del round.",
+      "p2": "Il motore <code>damla-terraces-1</code> trasforma il seed del round in una decisione sinistra/destra per terrazza. Stesso seed, puntata e modalità danno sempre lo stesso percorso e la stessa vasca.",
+      "p3": "Dopo una rotazione il server rivela il seed; la pagina <b>Verifica</b> ricalcola ogni goccia nel tuo browser, percorso e vasca compresi.",
+      "note": "Nella modalità DEMO locale il seed proviene dal generatore casuale sicuro di questo browser e non è dimostrabile."
+    },
+    "keys": {
+      "space": "<kbd>Spazio</kbd> o <kbd>Invio</kbd> fa cadere una goccia (disattivabile nelle impostazioni).",
+      "lock": "Dopo una pressione, Goccia e Pioggia restano bloccati finché tutte le gocce non sono arrivate; rischio, terrazze e puntata sono bloccati mentre le gocce cadono.",
+      "speed": "Le velocità normale, rapida e turbo cambiano solo l'animazione, mai il risultato.", "motion": "Con movimento ridotto la goccia segue comunque il suo percorso esatto, con meno effetti.",
+      "malfunctionTitle": "Malfunzionamento", "malfunction": "Un malfunzionamento annulla tutti i pagamenti e le giocate. Il credito DEMO non ha valore monetario."
+    }
+  }
+}

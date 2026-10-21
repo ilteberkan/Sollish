@@ -1,0 +1,80 @@
+{
+  "meta": { "title": "Damla: Pamukkale · Sollish Original", "description": "Ein einzelner Wassertropfen fällt über die weißen Sinterterrassen von Pamukkale in ein türkisfarbenes Becken. Originelles Sofortspiel, DEMO-Guthaben, nachweislich fair." },
+  "title": "Damla: Pamukkale",
+  "subtitle": "Ein Tropfen, weiße Terrassen, türkise Becken. Wo kommt er zur Ruhe?",
+  "table": "Damla-Spieltisch",
+  "badge": { "checking": "Server wird geprüft…" },
+  "logo": { "place": "PAMUKKALE" },
+  "risk": { "low": "Niedrig", "medium": "Mittel", "high": "Hoch" },
+  "board": { "label": "{rows} Sinterterrassen, {pools} Becken, Risiko {risk}", "pools": "Becken und Multiplikatoren", "pool": "Becken {n}: ×{multiplier}" },
+  "deck": {
+    "group": "Damla-Steuerung", "balance": "Guthaben", "win": "Gewinn", "winReplay": "Wiederholungsgewinn", "rainWin": "Regengewinn ({count})", "refill": "Guthaben auffüllen",
+    "risk": "Risiko", "rows": "Terrassen", "rowsAria": "{rows} Terrassen", "rowsShort": "{rows} Terrassen", "locked": "gesperrt, solange Tropfen fallen", "maxWin": "max. ×{max}",
+    "drop": "Tropfen", "dropCost": "Einen Wassertropfen für {cost} fallen lassen", "dropLocked": "Gesperrt, bis alle Tropfen gelandet sind", "rain": "Regen", "rainAria": "Regen: {count} Tropfen, insgesamt {cost}",
+    "auto": "Auto", "info": "Info", "infoAria": "Spielinfo, Gewinntabelle und RTP", "speedAria": "Tropfengeschwindigkeit: {speed}", "sound": "Ton", "soundLoading": "Ton wird vorbereitet… {percent} %",
+    "inFlight": "{count, plural, one {# Tropfen fällt} other {# Tropfen fallen}}", "lastWin": "Letzter Tropfen: <b>×{multiplier}</b> · {money}", "hintSpace": "<kbd>Leertaste</kbd> lässt einen Tropfen fallen",
+    "hintFixed": "Tippe auf Tropfen oder lass es regnen", "outOfCredit": "Kein DEMO-Guthaben mehr."
+  },
+  "strip": { "label": "Letzte Ergebnisse" },
+  "gold": { "banner": "GOLDENER ÜBERLAUF" },
+  "auto": { "ribbon": "Auto-Einsatz · noch {drops}" },
+  "replay": { "ribbon": "Wiederholung · Tropfen {id} · ohne Guthabenänderung" },
+  "errors": { "insufficient": "Guthaben reicht nicht: {count, plural, one {dieser Tropfen braucht} other {# Tropfen brauchen}} {cost}.", "entropy": "Sicherer Zufall ist in diesem Browser nicht verfügbar.", "noCredit": "Das DEMO-Konto hat den Tropfen abgelehnt." },
+  "announce": {
+    "dropped": "{count, plural, one {Tropfen losgelassen} other {# Tropfen losgelassen}} für {amount} DEMO.", "sentToServer": "{count, plural, one {Tropfen an den Server gesendet} other {# Tropfen an den Server gesendet}} für {amount} DEMO.",
+    "landed": "Becken {pool}: ×{multiplier}, {amount} DEMO.", "gold": "Randbecken! Alle Terrassen werden golden.", "replaying": "Tropfen {id} wird wiederholt.", "replayDone": "Wiederholung beendet: Becken {pool}, ×{multiplier}, {amount} DEMO.",
+    "preview": "Vorschau-Tropfen.", "recovered": "Dein letzter Server-Tropfen wird erneut gezeigt ({amount} DEMO bereits ausgezahlt).", "refilled": "Guthaben auf {amount} DEMO aufgefüllt.", "speed": "Geschwindigkeit: {speed}.", "mode": "Risiko {risk}, {rows} Terrassen."
+  },
+  "toast": {
+    "autoplayStarted": "Auto-Einsatz: {drops} Tropfen, Verlustlimit {limit}.", "autoplayStopped": "{reason} · {drops} Tropfen · netto {net}", "autoplayStoppedShort": "Auto-Einsatz gestoppt: {reason}",
+    "shareCopied": "Link kopiert: {url}", "shareLink": "Link zum Teilen: {url}", "shareFailed": "Teilen fehlgeschlagen: {error}", "replayFailed": "Dieser Tropfen kann nicht wiederholt werden.",
+    "replayMismatch": "Die Wiederholung passte nicht zum Eintrag und wird nicht gezeigt.", "refilled": "Guthaben auf {amount} DEMO aufgefüllt.", "close": "Schließen"
+  },
+  "autoplay": { "title": "Auto-Einsatz", "drops": "Tropfen", "note": "Jeder Tropfen kostet {cost} ({mode}). Risiko, Terrassen und Einsatz bleiben während des Auto-Einsatzes fest.", "serverFailed": "Der Server hat einen Tropfen abgelehnt", "dropFailed": "Der nächste Tropfen konnte nicht starten", "quit": "Du hast das Spiel verlassen" },
+  "gated": { "title": "On-Chain-Spiel ist geschlossen", "text": "Damla läuft nur mit DEMO-Guthaben. Spiel mit echten Werten bleibt geschlossen, bis die Prüfungen bestanden sind.", "back": "Zurück zu DEMO" },
+  "splash": {
+    "original": "Sollish Original", "terraces": { "title": "Sinterterrassen", "text": "8 bis 16 Terrassen; auf jeder läuft der Tropfen links oder rechts über." },
+    "rain": { "title": "Regen", "text": "Lass 5 oder 10 Tropfen auf einmal fallen, jeder eine eigene nachweislich faire Runde." },
+    "gold": { "title": "Goldener Überlauf bis ×{max}", "text": "Erreiche bei hohem Risiko das Randbecken, und alle Terrassen werden golden." },
+    "loading": "Damla wird geladen", "play": "Spielen", "skip": "Nicht mehr anzeigen", "note": "Nur DEMO-Guthaben · RTP {rtp} (exakt, Standardmodus) · 18+"
+  },
+  "settings": { "soundReady": "Ton bereit.", "soundLoading": "Ton wird synthetisiert… {percent} %", "soundIdle": "Der Ton wird nach deinem ersten Tippen vorbereitet.", "demoTitle": "DEMO-Guthaben", "demoText": "Guthaben {balance}. {remote, select, yes {Der Server führt dieses Guthaben.} other {Dieses Guthaben existiert nur in diesem Tab.}} Auffüllen setzt es auf {start} DEMO zurück." },
+  "history": {
+    "title": "Tropfenverlauf", "scope": "Diese Sitzung", "tableRegion": "Damla-Tropfenverlauf", "time": "Zeit", "mode": "Modus", "modeValue": "{risk} · {rows}", "bet": "Einsatz", "win": "Gewinn", "result": "Becken", "roundId": "Tropfen",
+    "replayColumn": "Wiederholen", "replay": "Wiederholen", "replayAria": "Tropfen {id} wiederholen", "share": "Teilen", "shareAria": "Tropfen {id} teilen", "detail": "Becken {pool}/{pools} · ×{multiplier}", "detailMax": "Becken {pool}/{pools} · ×{multiplier} · max.",
+    "reset": "Guthaben aufgefüllt", "resetRemote": "Guthaben aufgefüllt (Server)", "latest": "(neuester)", "emptyTitle": "Noch keine Tropfen", "emptyText": "Deine Tropfen erscheinen hier, sobald sie gelandet sind."
+  },
+  "rules": {
+    "summary": "Damla-Regeln und Fairness",
+    "play": "Wähle Einsatz, Risiko (niedrig, mittel, hoch) und 8 bis 16 Terrassen. Ein einzelner Wassertropfen fällt über die Terrassen und läuft an jedem Becken mit gleicher Wahrscheinlichkeit links oder rechts über. Die Zahl der Überläufe nach rechts bestimmt das Becken; dessen Multiplikator mal Einsatz wird ausgezahlt.",
+    "pay": "Jeder Modus hat seine eigene symmetrische Gewinntabelle. Der exakte RTP liegt in jedem Modus bei 98,4 bis 98,6 % (Hausvorteil mindestens 1,4 %). Der größte Gewinn ist das Randbecken bei hohem Risiko und 16 Terrassen: das ×{max}-Fache des Einsatzes.",
+    "fair": "Jeder Tropfen ist eine Runde mit eigenem Seed und Nonce. Das Ergebnis steht fest, bevor der Tropfen fällt; die Animation zeigt es nur."
+  },
+  "info": {
+    "title": "Damla: Spielinfo",
+    "tab": { "how": "So wird gespielt", "pay": "Gewinntabelle", "rtp": "RTP", "fair": "Fairness", "keys": "Tasten und Regeln" },
+    "how": {
+      "lead": "Ein einzelner Wassertropfen fällt über die weißen Sinterterrassen von Pamukkale und kommt in einem türkisen Becken zur Ruhe.",
+      "step1": "Wähle deinen <b>Einsatz</b> mit − und + oder öffne das Einsatzmenü.", "step2": "Wähle ein <b>Risiko</b>: niedrig zahlt oft und wenig, hoch selten und viel.",
+      "step3": "Wähle <b>8 bis 16 Terrassen</b>. Mehr Terrassen verteilen die Becken breiter.", "step4": "Drücke <b>Tropfen</b>. Auf jeder Terrasse läuft der Tropfen links oder rechts über (je 50 %); das erreichte Becken zahlt seinen Multiplikator.",
+      "rainTitle": "Regen", "rain": "Regen lässt 5 oder 10 Tropfen nacheinander fallen. Jeder Tropfen ist eine eigene Runde mit eigener Nonce; Tropfen können gleichzeitig fallen, ihre Ergebnisse werden der Reihe nach gutgeschrieben.",
+      "autoTitle": "Auto-Einsatz", "auto": "Wähle die Anzahl der Tropfen und ein Verlustlimit (Pflicht). Unter Erweitert kannst du auch bei einem Einzelgewinn ab X oder bei einem Guthabenplus von Y stoppen. Der Auto-Einsatz stoppt, wenn der Tab verborgen wird.",
+      "goldTitle": "Goldener Überlauf", "gold": "Bei hohem Risiko sind die Randbecken die Goldbecken. Erreicht der Tropfen eines, läuft es über und alle Terrassen leuchten golden auf.",
+      "bets": "Einsätze {min} bis {max}. Höchstgewinn das ×{maxWin}-Fache des Einsatzes (hohes Risiko, 16 Terrassen)."
+    },
+    "pay": { "title": "Gewinntabelle: Risiko {risk}, {rows} Terrassen", "lead": "Auszahlungen bei deinem Einsatz von <b>{bet}</b>. Die Chance ist die Zahl der Wege in das Becken von allen Wegen.", "pool": "Becken", "multiplier": "Multiplikator", "payout": "Auszahlung", "chance": "Chance", "chanceValue": "{ways} / {total} ({percent})", "note": "Maximum in diesem Modus ×{max}. Exakter RTP {rtp}." },
+    "rtp": { "lead": "Der exakte RTP ist die Binomialsumme aus der Chance jedes Beckens mal seinem Multiplikator. Der simulierte Wert stammt aus 20 Millionen Tropfen pro Modus.", "mode": "Modus", "exact": "Exakter RTP", "edge": "Hausvorteil", "simulated": "Simuliert", "max": "Höchstgewinn", "note": "DEMO-Schätzungen aus Sollishs eigenen Nachweisen; nicht von einem Prüflabor zertifiziert." },
+    "fair": {
+      "p1": "Vor dem Spiel veröffentlicht der Server den <b>Hash</b> seines geheimen Seeds. Jeder Tropfen verbindet Server-Seed, deinen <b>Client-Seed</b> und eine <b>Nonce</b> (eine pro Tropfen) zum Runden-Seed.",
+      "p2": "Die Engine <code>damla-terraces-1</code> macht aus dem Runden-Seed eine Links/Rechts-Entscheidung pro Terrasse. Gleicher Seed, Einsatz und Modus ergeben immer denselben Weg und dasselbe Becken.",
+      "p3": "Nach einem Seed-Wechsel legt der Server den Seed offen; die Seite <b>Prüfen</b> berechnet jeden Tropfen samt Weg und Becken in deinem Browser neu.",
+      "note": "Im lokalen DEMO-Modus stammt der Seed aus dem sicheren Zufallsgenerator dieses Browsers und ist nicht nachweislich fair."
+    },
+    "keys": {
+      "space": "<kbd>Leertaste</kbd> oder <kbd>Enter</kbd> lässt einen Tropfen fallen (in den Einstellungen abschaltbar).",
+      "lock": "Nach einem Druck bleiben Tropfen und Regen gesperrt, bis alle Tropfen gelandet sind; Risiko, Terrassen und Einsatz sind gesperrt, solange Tropfen fallen.",
+      "speed": "Normal, schnell und Turbo ändern nur die Animation, nie das Ergebnis.", "motion": "Mit reduzierter Bewegung folgt der Tropfen weiter seinem genauen Weg, mit weniger Effekten.",
+      "malfunctionTitle": "Fehlfunktion", "malfunction": "Eine Fehlfunktion macht alle Auszahlungen und Spiele ungültig. DEMO-Guthaben hat keinen Geldwert."
+    }
+  }
+}

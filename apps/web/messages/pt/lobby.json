@@ -83,7 +83,8 @@
     "favAdd": "Adicionar {name} aos favoritos",
     "favRemove": "Remover {name} dos favoritos",
     "play": "Jogar a demo",
-    "watch": "Entrar ao vivo"
+    "watch": "Entrar ao vivo",
+    "sollishOriginal": "Sollish Original"
   },
   "cards": {
     "crash": {
@@ -125,6 +126,11 @@
       "tagline": "Três rounds, três pools, uma luta ao vivo.",
       "text": "Uma luta de três rounds com socos e chutes. Faça sua escolha antes do início e acompanhe seu bilhete round a round. Uma rede treinada controla os lutadores, e Jev passa táticas do corner.",
       "type": "Ao vivo · aposta em pool"
+    },
+    "damla": {
+      "tagline": "Uma gota. Onde ela vai parar?",
+      "text": "Uma única gota d'água desce os terraços de travertino branco de Pamukkale até uma piscina turquesa. Escolha o risco e de 8 a 16 terraços; faça chover até 10 gotas de uma vez.",
+      "type": "Gota · terraços"
     }
   },
   "liveCard": {

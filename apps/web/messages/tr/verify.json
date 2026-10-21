@@ -101,5 +101,11 @@
     "payout": "kazanç",
     "total": "çarpan",
     "cost": "maliyet"
+  },
+  "damla": {
+    "path": "Damlanın yolu",
+    "pathValue": "{path} → havuz {pool}/{pools}",
+    "figure": "{rows} terasta Damla damlası: {path}, havuz {pool}/{pools}, ×{multiplier}",
+    "mode": "{risk, select, low {Düşük} medium {Orta} other {Yüksek}} risk · {rows} teras"
   }
 }

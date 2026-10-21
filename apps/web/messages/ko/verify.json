@@ -101,5 +101,11 @@
     "payout": "지급액",
     "total": "배수",
     "cost": "비용"
+  },
+  "damla": {
+    "path": "물방울 경로",
+    "pathValue": "{path} → 웅덩이 {pool}/{pools}",
+    "figure": "테라스 {rows}단을 지난 Damla 물방울: {path}, 웅덩이 {pool}/{pools}, ×{multiplier}",
+    "mode": "위험도 {risk, select, low {낮음} medium {보통} other {높음}} · 테라스 {rows}단"
   }
 }

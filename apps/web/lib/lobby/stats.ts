@@ -21,6 +21,9 @@ export const SLOT_STANDARD_RTP = Object.freeze({
  * coin is 0.98 cost units. Crash volatility depends on the target the player picks. */
 export const CRASH_DEMO = Object.freeze({ rtp: 0.98, maxMultiplier: 50 });
 export const COINFLIP_DEMO = Object.freeze({ rtp: 0.98, maxMultiplier: 1.96, stdDev: 0.98 });
+/** Damla (instant drop game): every mode has its own exact RTP (DAMLA_EXACT_RTP, 98.45–98.56 %); the tile shows the lowest
+ * (medium-12, the default mode). Volatility is the player's choice (risk and terraces). Max win = the registry cap (high-16). */
+export const DAMLA_LOBBY = Object.freeze({ rtp: 0.984467773 });
 /** Ringside pools: integer pari-mutuel, 2 % fee per settled pool, refunds without fee. No fixed RTP or max win. */
 export const RINGSIDE_POOL_FEE = 0.02;
 
@@ -48,6 +51,7 @@ export function lobbyStats(id: LobbyGameId): LobbyStats {
     case 'crash': return { rtp: CRASH_DEMO.rtp, maxWin: CRASH_DEMO.maxMultiplier, volatility: 'player', poolFee: null };
     case 'coinflip': return { rtp: COINFLIP_DEMO.rtp, maxWin: COINFLIP_DEMO.maxMultiplier, volatility: volatilityOf(COINFLIP_DEMO.stdDev), poolFee: null };
     case 'ringside': return { rtp: null, maxWin: null, volatility: null, poolFee: RINGSIDE_POOL_FEE };
+    case 'damla': return { rtp: DAMLA_LOBBY.rtp, maxWin: SLOT_GAME_META.damla.maxMultiplier, volatility: 'player', poolFee: null };
     default: {
       const row = SLOT_STANDARD_RTP[id];
       return { rtp: row.rtp, maxWin: SLOT_GAME_META[id].maxMultiplier, volatility: volatilityOf(row.stdDev), poolFee: null };

@@ -101,5 +101,11 @@
     "payout": "奖金",
     "total": "倍数",
     "cost": "费用"
+  },
+  "damla": {
+    "path": "水滴路径",
+    "pathValue": "{path} → 第 {pool}/{pools} 个水池",
+    "figure": "Damla 水滴经过 {rows} 层梯田：{path}，第 {pool}/{pools} 个水池，×{multiplier}",
+    "mode": "{risk, select, low {低} medium {中} other {高}}风险 · {rows} 层梯田"
   }
 }

@@ -101,5 +101,11 @@
     "payout": "gain",
     "total": "multiplicateur",
     "cost": "coût"
+  },
+  "damla": {
+    "path": "Chemin de la goutte",
+    "pathValue": "{path} → bassin {pool} sur {pools}",
+    "figure": "Goutte Damla sur {rows} terrasses : {path}, bassin {pool} sur {pools}, ×{multiplier}",
+    "mode": "Risque {risk, select, low {faible} medium {moyen} other {élevé}} · {rows} terrasses"
   }
 }

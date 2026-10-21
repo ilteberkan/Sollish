@@ -1,0 +1,80 @@
+{
+  "meta": { "title": "Damla : Pamukkale · Sollish Original", "description": "Une seule goutte d'eau descend les terrasses de travertin blanc de Pamukkale jusqu'à un bassin turquoise. Jeu instantané original, crédit DEMO, équité vérifiable." },
+  "title": "Damla : Pamukkale",
+  "subtitle": "Une goutte, des terrasses blanches, des bassins turquoise. Où s'arrêtera-t-elle ?",
+  "table": "Table de jeu Damla",
+  "badge": { "checking": "Vérification du serveur…" },
+  "logo": { "place": "PAMUKKALE" },
+  "risk": { "low": "Faible", "medium": "Moyen", "high": "Élevé" },
+  "board": { "label": "{rows} terrasses de travertin, {pools} bassins, risque {risk}", "pools": "Bassins et multiplicateurs", "pool": "Bassin {n} : ×{multiplier}" },
+  "deck": {
+    "group": "Commandes de Damla", "balance": "Solde", "win": "Gain", "winReplay": "Gain rejoué", "rainWin": "Gain de la pluie ({count})", "refill": "Recharger le solde",
+    "risk": "Risque", "rows": "Terrasses", "rowsAria": "{rows} terrasses", "rowsShort": "{rows} terrasses", "locked": "verrouillé pendant la chute", "maxWin": "max ×{max}",
+    "drop": "Goutte", "dropCost": "Lâcher une goutte pour {cost}", "dropLocked": "Verrouillé jusqu'à l'arrivée de toutes les gouttes", "rain": "Pluie", "rainAria": "Pluie : {count} gouttes, {cost} au total",
+    "auto": "Auto", "info": "Infos", "infoAria": "Infos du jeu, table des gains et RTP", "speedAria": "Vitesse des gouttes : {speed}", "sound": "Son", "soundLoading": "Préparation du son… {percent} %",
+    "inFlight": "{count, plural, one {# goutte tombe} other {# gouttes tombent}}", "lastWin": "Dernière goutte : <b>×{multiplier}</b> · {money}", "hintSpace": "<kbd>Espace</kbd> pour lâcher une goutte",
+    "hintFixed": "Touchez Goutte, ou faites pleuvoir", "outOfCredit": "Plus de crédit DEMO."
+  },
+  "strip": { "label": "Derniers résultats" },
+  "gold": { "banner": "DÉBORDEMENT DORÉ" },
+  "auto": { "ribbon": "Mise auto · {drops} restantes" },
+  "replay": { "ribbon": "Rejeu · goutte {id} · solde inchangé" },
+  "errors": { "insufficient": "Solde insuffisant : {count, plural, one {cette goutte demande} other {# gouttes demandent}} {cost}.", "entropy": "L'aléatoire sécurisé n'est pas disponible dans ce navigateur.", "noCredit": "Le registre DEMO a refusé la goutte." },
+  "announce": {
+    "dropped": "{count, plural, one {Goutte lâchée} other {# gouttes lâchées}} pour {amount} DEMO.", "sentToServer": "{count, plural, one {Goutte envoyée au serveur} other {# gouttes envoyées au serveur}} pour {amount} DEMO.",
+    "landed": "Bassin {pool} : ×{multiplier}, {amount} DEMO.", "gold": "Bassin du bord ! Toutes les terrasses deviennent dorées.", "replaying": "Rejeu de la goutte {id}.", "replayDone": "Rejeu terminé : bassin {pool}, ×{multiplier}, {amount} DEMO.",
+    "preview": "Goutte d'aperçu.", "recovered": "Votre dernière goutte serveur est réaffichée ({amount} DEMO déjà payés).", "refilled": "Solde rechargé à {amount} DEMO.", "speed": "Vitesse : {speed}.", "mode": "Risque {risk}, {rows} terrasses."
+  },
+  "toast": {
+    "autoplayStarted": "Mise auto : {drops} gouttes, limite de perte {limit}.", "autoplayStopped": "{reason} · {drops} gouttes · net {net}", "autoplayStoppedShort": "Mise auto arrêtée : {reason}",
+    "shareCopied": "Lien copié : {url}", "shareLink": "Lien de partage : {url}", "shareFailed": "Partage impossible : {error}", "replayFailed": "Cette goutte ne peut pas être rejouée.",
+    "replayMismatch": "Le rejeu ne correspondait pas à l'enregistrement ; il n'est pas affiché.", "refilled": "Solde rechargé à {amount} DEMO.", "close": "Fermer"
+  },
+  "autoplay": { "title": "Mise auto", "drops": "Gouttes", "note": "Chaque goutte coûte {cost} ({mode}). Risque, terrasses et mise restent fixes pendant la mise auto.", "serverFailed": "Le serveur a refusé une goutte", "dropFailed": "La goutte suivante n'a pas pu partir", "quit": "Vous avez quitté le jeu" },
+  "gated": { "title": "Le jeu on-chain est fermé", "text": "Damla fonctionne uniquement avec du crédit DEMO. Le jeu avec des actifs réels reste fermé tant que ses validations ne sont pas réussies.", "back": "Retour au DEMO" },
+  "splash": {
+    "original": "Sollish Original", "terraces": { "title": "Terrasses de travertin", "text": "De 8 à 16 terrasses ; sur chacune, la goutte déborde à gauche ou à droite." },
+    "rain": { "title": "Pluie", "text": "Lâchez 5 ou 10 gouttes d'un coup, chacune sa propre manche vérifiable." },
+    "gold": { "title": "Débordement doré jusqu'à ×{max}", "text": "Atteignez le bassin du bord en risque élevé et toutes les terrasses deviennent dorées." },
+    "loading": "Chargement de Damla", "play": "Jouer", "skip": "Ne plus afficher", "note": "Crédit DEMO uniquement · RTP {rtp} (exact, mode par défaut) · 18+"
+  },
+  "settings": { "soundReady": "Son prêt.", "soundLoading": "Synthèse du son… {percent} %", "soundIdle": "Le son se prépare après votre premier toucher.", "demoTitle": "Crédit DEMO", "demoText": "Solde {balance}. {remote, select, yes {Le serveur conserve ce solde.} other {Ce solde n'existe que dans cet onglet.}} La recharge le remet à {start} DEMO." },
+  "history": {
+    "title": "Historique des gouttes", "scope": "Cette session", "tableRegion": "Historique des gouttes Damla", "time": "Heure", "mode": "Mode", "modeValue": "{risk} · {rows}", "bet": "Mise", "win": "Gain", "result": "Bassin", "roundId": "Goutte",
+    "replayColumn": "Rejouer", "replay": "Rejouer", "replayAria": "Rejouer la goutte {id}", "share": "Partager", "shareAria": "Partager la goutte {id}", "detail": "Bassin {pool}/{pools} · ×{multiplier}", "detailMax": "Bassin {pool}/{pools} · ×{multiplier} · max",
+    "reset": "Solde rechargé", "resetRemote": "Solde rechargé (serveur)", "latest": "(la plus récente)", "emptyTitle": "Pas encore de goutte", "emptyText": "Vos gouttes apparaissent ici une fois arrivées."
+  },
+  "rules": {
+    "summary": "Règles et équité de Damla",
+    "play": "Choisissez une mise, un risque (faible, moyen, élevé) et de 8 à 16 terrasses. Une seule goutte d'eau descend les terrasses et déborde du bord gauche ou droit de chaque bassin avec la même probabilité. Le nombre de débordements à droite choisit le bassin ; son multiplicateur fois la mise est payé.",
+    "pay": "Chaque mode a sa propre table de gains symétrique. Le RTP exact est de 98,4 à 98,6 % dans chaque mode (avantage de la maison d'au moins 1,4 %). Le plus gros gain est le bassin du bord en risque élevé avec 16 terrasses : ×{max} la mise.",
+    "fair": "Chaque goutte est une manche avec sa propre graine et son nonce. Le résultat est fixé avant la chute ; l'animation ne fait que le montrer."
+  },
+  "info": {
+    "title": "Damla : infos du jeu",
+    "tab": { "how": "Comment jouer", "pay": "Table des gains", "rtp": "RTP", "fair": "Équité", "keys": "Touches et règles" },
+    "how": {
+      "lead": "Une seule goutte d'eau descend les terrasses de travertin blanc de Pamukkale et s'arrête dans un bassin turquoise.",
+      "step1": "Choisissez votre <b>mise</b> avec − et +, ou ouvrez le menu des mises.", "step2": "Choisissez un <b>risque</b> : faible paie souvent et peu, élevé paie rarement et beaucoup.",
+      "step3": "Choisissez <b>8 à 16 terrasses</b>. Plus de terrasses étalent davantage les bassins.", "step4": "Appuyez sur <b>Goutte</b>. Sur chaque terrasse la goutte déborde à gauche ou à droite (50 % chacun) ; le bassin atteint paie son multiplicateur.",
+      "rainTitle": "Pluie", "rain": "La pluie lâche 5 ou 10 gouttes l'une après l'autre. Chaque goutte est une manche séparée avec son propre nonce ; les gouttes peuvent tomber en même temps et leurs résultats sont crédités dans l'ordre.",
+      "autoTitle": "Mise auto", "auto": "Choisissez un nombre de gouttes et une limite de perte (obligatoire). Dans Avancé, vous pouvez aussi arrêter sur un gain unique d'au moins X ou quand le solde a augmenté de Y. La mise auto s'arrête quand l'onglet est masqué.",
+      "goldTitle": "Débordement doré", "gold": "En risque élevé, les bassins du bord sont les bassins d'or. Quand la goutte en atteint un, il déborde et toutes les terrasses brillent d'or.",
+      "bets": "Mises de {min} à {max}. Gain maximal ×{maxWin} la mise (risque élevé, 16 terrasses)."
+    },
+    "pay": { "title": "Table des gains : risque {risk}, {rows} terrasses", "lead": "Gains pour votre mise de <b>{bet}</b>. La chance est le nombre de chemins vers le bassin sur tous les chemins.", "pool": "Bassin", "multiplier": "Multiplicateur", "payout": "Gain", "chance": "Chance", "chanceValue": "{ways} / {total} ({percent})", "note": "Maximum dans ce mode ×{max}. RTP exact {rtp}." },
+    "rtp": { "lead": "Le RTP exact est la somme binomiale de la chance de chaque bassin fois son multiplicateur. La valeur simulée provient de 20 millions de gouttes par mode.", "mode": "Mode", "exact": "RTP exact", "edge": "Avantage de la maison", "simulated": "Simulé", "max": "Gain max", "note": "Estimations DEMO issues des propres preuves de Sollish ; non certifiées par un laboratoire d'essai." },
+    "fair": {
+      "p1": "Avant de jouer, le serveur publie le <b>hash</b> de sa graine secrète. Chaque goutte combine la graine serveur, votre <b>graine client</b> et un <b>nonce</b> (un par goutte) en graine de manche.",
+      "p2": "Le moteur <code>damla-terraces-1</code> transforme la graine de manche en une décision gauche/droite par terrasse. La même graine, la même mise et le même mode donnent toujours le même chemin et le même bassin.",
+      "p3": "Après une rotation, le serveur révèle la graine ; la page <b>Vérifier</b> recalcule chaque goutte dans votre navigateur, chemin et bassin compris.",
+      "note": "En mode DEMO local, la graine vient du générateur aléatoire sécurisé de ce navigateur et n'est pas vérifiable."
+    },
+    "keys": {
+      "space": "<kbd>Espace</kbd> ou <kbd>Entrée</kbd> lâche une goutte (désactivable dans les réglages).",
+      "lock": "Après un appui, Goutte et Pluie restent verrouillés jusqu'à l'arrivée de toutes les gouttes ; risque, terrasses et mise sont verrouillés pendant la chute.",
+      "speed": "Les vitesses normale, rapide et turbo ne changent que l'animation, jamais le résultat.", "motion": "Avec les animations réduites, la goutte suit toujours son chemin exact, avec moins d'effets.",
+      "malfunctionTitle": "Dysfonctionnement", "malfunction": "Un dysfonctionnement annule tous les gains et toutes les parties. Le crédit DEMO n'a aucune valeur monétaire."
+    }
+  }
+}

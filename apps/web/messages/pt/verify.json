@@ -101,5 +101,11 @@
     "payout": "pagamento",
     "total": "multiplicador",
     "cost": "custo"
+  },
+  "damla": {
+    "path": "Caminho da gota",
+    "pathValue": "{path} → piscina {pool} de {pools}",
+    "figure": "Gota do Damla em {rows} terraços: {path}, piscina {pool} de {pools}, ×{multiplier}",
+    "mode": "Risco {risk, select, low {baixo} medium {médio} other {alto}} · {rows} terraços"
   }
 }

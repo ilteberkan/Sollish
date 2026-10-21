@@ -9,15 +9,18 @@ import { StormSymbolArt, type StormSymbol } from './storm/symbols';
 import { EbruStainArt, EbruSymbolArt, type EbruSymbol } from './ebru/symbols';
 import { CezeriSymbolArt, type CezeriSymbol } from './cezeri/symbols';
 import { AsenaSymbolArt, type AsenaSymbol } from './asena/symbols';
+import { DamlaPathFigure } from './damla/path-figure';
+import { damlaMultiplierText, parseDamlaMode } from '@/lib/damla-controls';
+import type { DamlaRound, SlotRoundSummary } from '@sollish/protocol';
 import styles from './rgs-pages.module.css';
 import { useFormat, useT } from '@/lib/i18n/client';
 import type { MessageKey } from '@/lib/i18n/catalog';
 
 const api = configuredApi(process.env.NEXT_PUBLIC_API_URL);
-const GAME_KEYS = new Set(['cascade', 'tarhun', 'ebru', 'cezeri', 'asena']);
+const GAME_KEYS = new Set(['cascade', 'tarhun', 'ebru', 'cezeri', 'asena', 'damla']);
 const MODE_KEYS = new Set(['standard', 'ante', 'buy']);
 /** `message` is a verify-namespace key (`replay.*`) or a slotKit key (`rgs.errors.*`). */
-type State = { phase: 'loading' } | { phase: 'error'; message: string } | { phase: 'ready'; replay: RemoteReplay; frames: ReturnType<typeof replayFrames>; verified: RowStatus };
+type State = { phase: 'loading' } | { phase: 'error'; message: string } | { phase: 'ready'; replay: RemoteReplay; round: SlotRoundSummary; frames: ReturnType<typeof replayFrames>; verified: RowStatus };
 
 function Cell({ game, cell, win }: { game: string; cell: ReplayCell; win: boolean }) {
   return (
@@ -44,13 +47,13 @@ export function ReplayView({ id }: { id: string }) {
   const format = useFormat();
   const times = (hundredths: number) => format.amount(hundredths);
   const gameName = (id: string) => (GAME_KEYS.has(id) ? common(`games.${id}` as MessageKey<'common'>) : id);
-  const modeName = (id: string) => (MODE_KEYS.has(id) ? common(`modes.${id}` as MessageKey<'common'>) : id);
+  const modeName = (id: string) => { const d = parseDamlaMode(id); return d ? t('damla.mode', d) : MODE_KEYS.has(id) ? common(`modes.${id}` as MessageKey<'common'>) : id; };
   useEffect(() => {
     let cancelled = false;
     if (!api) { setState({ phase: 'error', message: 'replay.noServer' }); return; }
     fetchReplay(api, id, ALL_SLOT_ENGINES).then(async ({ replay, round }) => {
       const verified = (await verifyReplay(replay)).status;
-      if (!cancelled) setState({ phase: 'ready', replay, frames: replayFrames(round), verified });
+      if (!cancelled) setState({ phase: 'ready', replay, round, frames: replayFrames(round), verified });
     }, (error: unknown) => {
       if (!cancelled) setState({ phase: 'error', message: error instanceof RgsError && error.code === 'NOT_FOUND' ? 'replay.notFound' : `rgs.errors.${rgsErrorCode(error)}` });
     });
@@ -63,6 +66,13 @@ export function ReplayView({ id }: { id: string }) {
     const timer = window.setTimeout(() => setIndex(i => Math.min(frames.length - 1, i + 1)), frames[index]?.winIds.length ? 1300 : 800);
     return () => window.clearTimeout(timer);
   }, [playing, index, frames]);
+  const damla = state.phase === 'ready' && state.replay.game === 'damla' ? state.round as unknown as DamlaRound : null;
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    if (!damla || step >= damla.rows) return;
+    const timer = window.setTimeout(() => setStep(s => s + 1), step === 0 ? 500 : 260);
+    return () => window.clearTimeout(timer);
+  }, [damla, step]);
   const frame = frames[index];
   const winSet = useMemo(() => new Set(frame?.winIds ?? []), [frame]);
 
@@ -89,7 +99,13 @@ export function ReplayView({ id }: { id: string }) {
       </section>
       <section className={`${styles.card} ${styles.player}`} aria-labelledby="replay-player">
         <h2 id="replay-player">{t('replay.player')}</h2>
-        {frame ? (
+        {damla ? (
+          <>
+            <p className={styles.meta} aria-live="polite">{t('damla.path')}: <code className={styles.mono}>{t('damla.pathValue', { path: damla.path.slice(0, step).join(''), pool: damla.slot + 1, pools: damla.rows + 1 })}</code></p>
+            <DamlaPathFigure round={damla} locale={format.locale} upTo={step} label={t('damla.figure', { rows: damla.rows, path: damla.path.join(''), pool: damla.slot + 1, pools: damla.rows + 1, multiplier: damlaMultiplierText(damla.multiplierHundredths, format.locale) })} />
+            <div className={styles.actions}><button type="button" className={styles.button} onClick={() => setStep(0)}>{t('replay.restart')}</button></div>
+          </>
+        ) : frame ? (
           <>
             <p className={styles.meta} aria-live="polite">{frame.kind === 'base' ? t('replay.base') : t('replay.free', { n: frame.spin })} · {t('replay.step', { n: frame.step + 1, total: frame.steps })}{frame.stepHundredths > 0 ? ` · +${times(frame.stepHundredths)}×` : ''}{frame.step === frame.steps - 1 ? ` · ${t('replay.total', { times: times(frame.totalAfterHundredths) })}` : ''}</p>
             <div className={styles.board} role="img" aria-label={t('replay.board', { count: frame.winIds.length, unit: replay.game })}

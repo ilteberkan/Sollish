@@ -83,7 +83,8 @@
     "favAdd": "{name} zu den Favoriten hinzufügen",
     "favRemove": "{name} aus den Favoriten entfernen",
     "play": "Demo spielen",
-    "watch": "Live dabei sein"
+    "watch": "Live dabei sein",
+    "sollishOriginal": "Sollish Original"
   },
   "cards": {
     "crash": {
@@ -125,6 +126,11 @@
       "tagline": "Drei Runden, drei Pools, ein Live-Kampf.",
       "text": "Ein Kampf über drei Runden mit Schlägen und Tritten. Triff deine Wahl vor Kampfbeginn und verfolge deinen Schein Runde für Runde. Ein trainiertes Netz steuert die Kämpfer, Jev gibt aus der Ecke Taktik vor.",
       "type": "Live · Poolwette"
+    },
+    "damla": {
+      "tagline": "Ein Tropfen. Wo kommt er zur Ruhe?",
+      "text": "Ein einzelner Wassertropfen fällt über die weißen Sinterterrassen von Pamukkale in ein türkises Becken. Wähle Risiko und 8–16 Terrassen; lass bis zu 10 Tropfen auf einmal regnen.",
+      "type": "Tropfen · Terrassen"
     }
   },
   "liveCard": {

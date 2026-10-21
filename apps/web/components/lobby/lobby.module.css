@@ -90,6 +90,7 @@
 .badge { display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 7px; border-radius: 6px; background: rgba(8, 10, 14, .82); color: #e8edf3; font-size: 11px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase; }
 :root:lang(zh) .badge, :root:lang(ko) .badge { letter-spacing: 0; }
 .badge[data-tone='new'] { background: var(--accent); color: #1a0c06; }
+.badge[data-tone='original'] { background: linear-gradient(135deg, #3fd0d4, #1d8fa6); color: #04222a; }
 .badge[data-tone='live'] { background: #c42f2f; color: #fff; }
 .badge[data-tone='live'] :global(.live-dot) { background: #fff; width: 6px; height: 6px; }
 .badge[data-tone='demo'] { background: rgba(8, 10, 14, .82); color: #ffd7c6; }

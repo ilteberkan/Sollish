@@ -83,7 +83,8 @@
     "favAdd": "Ajouter {name} aux favoris",
     "favRemove": "Retirer {name} des favoris",
     "play": "Jouer en démo",
-    "watch": "Rejoindre le direct"
+    "watch": "Rejoindre le direct",
+    "sollishOriginal": "Sollish Original"
   },
   "cards": {
     "crash": {
@@ -125,6 +126,11 @@
       "tagline": "Trois rounds, trois pools, un combat en direct.",
       "text": "Un combat en trois rounds avec coups de poing et de pied. Faites votre choix avant le début, puis suivez votre ticket round après round. Un réseau entraîné dirige les combattants et Jev donne la tactique depuis le coin.",
       "type": "Direct · paris mutuels"
+    },
+    "damla": {
+      "tagline": "Une goutte. Où s'arrêtera-t-elle ?",
+      "text": "Une seule goutte d'eau descend les terrasses de travertin blanc de Pamukkale jusqu'à un bassin turquoise. Choisissez le risque et 8 à 16 terrasses ; faites pleuvoir jusqu'à 10 gouttes d'un coup.",
+      "type": "Goutte · terrasses"
     }
   },
   "liveCard": {

@@ -83,7 +83,8 @@
     "favAdd": "{name} oyununu favorilere ekle",
     "favRemove": "{name} oyununu favorilerden çıkar",
     "play": "Demoyu oyna",
-    "watch": "Canlıya katıl"
+    "watch": "Canlıya katıl",
+    "sollishOriginal": "Sollish Orijinal"
   },
   "cards": {
     "crash": {
@@ -125,6 +126,11 @@
       "tagline": "Üç raunt, üç havuz, tek canlı dövüş.",
       "text": "Yumruk ve tekmelerle üç rauntluk dövüş. Maç başlamadan seçimini yap, sonra kuponunu raunt raunt izle. Dövüşçüleri eğitilmiş bir ağ yönetir, köşesinden Jev taktik verir.",
       "type": "Canlı · havuz bahsi"
+    },
+    "damla": {
+      "tagline": "Tek damla. Nerede duracak?",
+      "text": "Tek bir su damlası Pamukkale'nin beyaz travertenlerinden turkuaz bir havuza iner. Riski ve 8–16 terası seç; aynı anda 10 damlaya kadar yağmur yağdır.",
+      "type": "Damla · teras"
     }
   },
   "liveCard": {

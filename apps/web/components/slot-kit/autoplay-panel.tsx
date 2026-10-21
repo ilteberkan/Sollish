@@ -20,6 +20,10 @@ export interface AutoplayPanelProps {
   className?: string;
   /** Open the "Gelişmiş" (optional stop conditions) section initially. Default: closed. */
   defaultAdvancedOpen?: boolean;
+  /** Instant games (no feature, every round pays something): hides "stop on any win" and "stop on free spins" (both off). */
+  instant?: boolean;
+  /** Label of the round count (default: the translated "Spins"). */
+  countLabel?: string;
 }
 
 const SHORTCUTS = [10, 25, 50, 100] as const;
@@ -83,13 +87,13 @@ const optionalCents = (text: string, invalid: string): { cents: number | undefin
  * The optional stop conditions sit in a closed "Gelişmiş" section ("bedava dönüşte dur" on by default). The Start
  * button stays disabled until the config passes `validateAutoplayConfig`.
  */
-export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, initialSpins = 10, startLabel, className, defaultAdvancedOpen = false }: AutoplayPanelProps) {
+export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, initialSpins = 10, startLabel, className, defaultAdvancedOpen = false, instant = false, countLabel }: AutoplayPanelProps) {
   const [spins, setSpins] = useState<AutoplaySpins>(initialSpins);
   const [lossText, setLossText] = useState('');
   const [singleText, setSingleText] = useState('');
   const [increaseText, setIncreaseText] = useState('');
   const [stopOnAnyWin, setStopOnAnyWin] = useState(AUTOPLAY_ADVANCED_DEFAULTS.stopOnAnyWin);
-  const [stopOnFeature, setStopOnFeature] = useState(AUTOPLAY_ADVANCED_DEFAULTS.stopOnFeature);
+  const [stopOnFeature, setStopOnFeature] = useState(instant ? false : AUTOPLAY_ADVANCED_DEFAULTS.stopOnFeature);
   const [advancedOpen, setAdvancedOpen] = useState(defaultAdvancedOpen);
   const t = useT('slotKit');
   const format = useFormat();
@@ -130,7 +134,7 @@ export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, 
       onSubmit={event => { event.preventDefault(); if (parsed.config && !disabled) onStart(parsed.config); }}
     >
       <Segmented
-        label={t('autoplay.spins')}
+        label={countLabel ?? t('autoplay.spins')}
         layout="chips"
         options={AUTOPLAY_SPIN_OPTIONS.map(n => ({ value: n, label: String(n) }))}
         value={spins}
@@ -157,8 +161,8 @@ export function AutoplayPanel({ onStart, spinCostCents, balanceCents, disabled, 
           <span className={styles.advancedState}>{summary.length ? t('autoplay.stopsOn', { list: summary.join(' · ') }) : t('autoplay.noExtra')}</span>
         </summary>
         <div className={styles.advancedBody} role="group" aria-label={t('autoplay.extraGroup')}>
-          <Toggle label={t('autoplay.stopAnyWin')} checked={stopOnAnyWin} onChange={setStopOnAnyWin} disabled={disabled} />
-          <Toggle label={t('autoplay.stopFeature')} checked={stopOnFeature} onChange={setStopOnFeature} disabled={disabled} />
+          {!instant && <Toggle label={t('autoplay.stopAnyWin')} checked={stopOnAnyWin} onChange={setStopOnAnyWin} disabled={disabled} />}
+          {!instant && <Toggle label={t('autoplay.stopFeature')} checked={stopOnFeature} onChange={setStopOnFeature} disabled={disabled} />}
           <AmountField label={t('autoplay.singleWin')} hint={t('autoplay.singleWinHint')} value={singleText} onChange={setSingleText} error={parsed.single.error} disabled={disabled} />
           <AmountField label={t('autoplay.balanceIncrease')} hint={t('autoplay.balanceIncreaseHint')} value={increaseText} onChange={setIncreaseText} error={parsed.increase.error} disabled={disabled} />
         </div>

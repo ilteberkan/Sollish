@@ -83,7 +83,8 @@
     "favAdd": "Add {name} to favorites",
     "favRemove": "Remove {name} from favorites",
     "play": "Play demo",
-    "watch": "Join live"
+    "watch": "Join live",
+    "sollishOriginal": "Sollish Original"
   },
   "cards": {
     "crash": {
@@ -125,6 +126,11 @@
       "tagline": "Three rounds, three pools, one live fight.",
       "text": "A three-round fight with punches and kicks. Make your pick before the match starts, then follow your slip round by round. A trained network controls the fighters, and Jev gives tactics from the corner.",
       "type": "Live · pool betting"
+    },
+    "damla": {
+      "tagline": "One drop. Where will it rest?",
+      "text": "A single water drop falls over Pamukkale's white travertine terraces into a turquoise pool. Pick risk and 8–16 terraces; let it rain for up to 10 drops at once.",
+      "type": "Drop · terraces"
     }
   },
   "liveCard": {

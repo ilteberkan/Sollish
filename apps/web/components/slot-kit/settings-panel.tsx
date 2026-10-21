@@ -15,6 +15,8 @@ export interface SettingsPanelProps {
   onReset?: () => void;
   /** Show the language picker (default true). The choice is site-wide, not per game, and is not reset by onReset. */
   showLanguage?: boolean;
+  /** Show the character voice level (default true; games without voice lines pass false). */
+  showVoice?: boolean;
   className?: string;
 }
 
@@ -40,7 +42,7 @@ const VOICE_KEY = {
 } as const satisfies Record<VoiceLevel, { label: string; hint: string }>;
 
 /** Sound mix, spin speed, comfort options and the site language. Controlled: the parent owns `settings`. */
-export function SettingsPanel({ settings, onChange, onReset, showLanguage = true, className }: SettingsPanelProps) {
+export function SettingsPanel({ settings, onChange, onReset, showLanguage = true, showVoice = true, className }: SettingsPanelProps) {
   const id = useId();
   const t = useT('slotKit');
   const { selected, setLocale } = useLocale();
@@ -55,7 +57,7 @@ export function SettingsPanel({ settings, onChange, onReset, showLanguage = true
           <Slider label={t('settings.sfx')} value={settings.sfx} onChange={sfx => onChange({ sfx })} />
           <Slider label={t('settings.ambience')} value={settings.ambience} onChange={ambience => onChange({ ambience })} />
         </div>
-        <Segmented label={t('settings.voice')} options={VOICE_LEVEL_UI.options.map(({ value }) => ({ value, label: t(VOICE_KEY[value].label), hint: t(VOICE_KEY[value].hint) }))} value={settings.voice} onChange={voice => onChange({ voice })} />
+        {showVoice && <Segmented label={t('settings.voice')} options={VOICE_LEVEL_UI.options.map(({ value }) => ({ value, label: t(VOICE_KEY[value].label), hint: t(VOICE_KEY[value].hint) }))} value={settings.voice} onChange={voice => onChange({ voice })} />}
       </section>
       <section className={styles.group} aria-labelledby={`${id}-play`}>
         <h3 id={`${id}-play`} className={styles.groupTitle}>{t('settings.play')}</h3>

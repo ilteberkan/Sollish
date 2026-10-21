@@ -83,7 +83,8 @@
     "favAdd": "Aggiungi {name} ai preferiti",
     "favRemove": "Rimuovi {name} dai preferiti",
     "play": "Gioca la demo",
-    "watch": "Entra nel live"
+    "watch": "Entra nel live",
+    "sollishOriginal": "Sollish Original"
   },
   "cards": {
     "crash": {
@@ -125,6 +126,11 @@
       "tagline": "Tre round, tre pool, un incontro dal vivo.",
       "text": "Un incontro di tre round con pugni e calci. Fai la tua scelta prima dell’inizio e segui la schedina round dopo round. Una rete addestrata guida i lottatori e Jev dà la tattica dall’angolo.",
       "type": "Live · scommessa a pool"
+    },
+    "damla": {
+      "tagline": "Una goccia. Dove si fermerà?",
+      "text": "Una sola goccia d'acqua scende le terrazze di travertino bianco di Pamukkale fino a una vasca turchese. Scegli il rischio e da 8 a 16 terrazze; fai piovere fino a 10 gocce insieme.",
+      "type": "Goccia · terrazze"
     }
   },
   "liveCard": {

@@ -72,6 +72,7 @@ export function GameTile({ game, favorite, priority = false }: { game: LobbyGame
         {art && <img src={art.src} width={art.width} height={art.height} alt="" loading={priority ? 'eager' : 'lazy'} decoding="async" draggable={false} />}
         <span className={s.badges}>
           {game.kind === 'live' ? <span className={s.badge} data-tone="live"><span className="live-dot" aria-hidden="true" />{t('tile.live')}</span> : game.isNew ? <span className={s.badge} data-tone="new">{t('tile.new')}</span> : <span className={s.badge}>{t('tile.original')}</span>}
+          {game.original && <span className={s.badge} data-tone="original">{t('tile.sollishOriginal')}</span>}
           <span className={s.badge} data-tone="demo">{t('tile.demo')}</span>
         </span>
         <span className={s.preview} aria-hidden="true">
@@ -103,7 +104,7 @@ export function WideTile({ game, favorite }: { game: LobbyGame; favorite: boolea
     <Link href={game.href} prefetch={false} className={s.wideLink} aria-labelledby={`${id}-t`} aria-describedby={`${id}-d`} aria-disabled={activeDemo || undefined}
       onClick={event => { if (activeDemo) event.preventDefault(); }} onPointerEnter={prefetch} onFocus={prefetch} onTouchStart={prefetch}>
       <span className={s.wideArt}>{art && <img src={art.src} width={art.width} height={art.height} alt="" loading="lazy" decoding="async" draggable={false} />}
-        <span className={s.badges}><span className={s.badge}>{t('tile.original')}</span><span className={s.badge} data-tone="demo">{t('tile.demo')}</span></span>
+        <span className={s.badges}>{game.isNew && <span className={s.badge} data-tone="new">{t('tile.new')}</span>}<span className={s.badge} data-tone={game.original ? 'original' : undefined}>{game.original ? t('tile.sollishOriginal') : t('tile.original')}</span><span className={s.badge} data-tone="demo">{t('tile.demo')}</span></span>
       </span>
       <span className={s.wideBody}>
         <b id={`${id}-t`} className={s.tileTitle}>{title}</b>
@@ -142,7 +143,7 @@ export function FeatureTile({ game, favorite }: { game: LobbyGame; favorite: boo
     <Link href={game.href} prefetch={false} className={s.featureLink} aria-labelledby={`${id}-t`} aria-describedby={`${id}-d`} aria-disabled={activeDemo || undefined}
       onClick={event => { if (activeDemo) event.preventDefault(); }} onPointerEnter={prefetch} onFocus={prefetch} onTouchStart={prefetch}>
       <span className={s.featureArt}>{art && <img src={art.src} width={art.width} height={art.height} alt="" loading="lazy" decoding="async" draggable={false} />}
-        <span className={s.badges}>{game.isNew && <span className={s.badge} data-tone="new">{t('tile.new')}</span>}<span className={s.badge} data-tone="demo">{t('tile.demo')}</span></span>
+        <span className={s.badges}>{game.isNew && <span className={s.badge} data-tone="new">{t('tile.new')}</span>}{game.original && <span className={s.badge} data-tone="original">{t('tile.sollishOriginal')}</span>}<span className={s.badge} data-tone="demo">{t('tile.demo')}</span></span>
       </span>
       <span className={s.featureBody}>
         <b id={`${id}-t`} className={s.tileTitle}>{title}</b>

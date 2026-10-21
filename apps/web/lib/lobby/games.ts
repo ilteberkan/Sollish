@@ -3,7 +3,7 @@
  * the lobby share one list without shipping any game code. Display names come from `common.games.<id>`; RTP, max win
  * and volatility are computed on the server from the engines' evidence constants (lib/lobby/stats.ts).
  */
-export const LOBBY_GAME_IDS = ['tarhun', 'ebru', 'cezeri', 'asena', 'cascade', 'ringside', 'crash', 'coinflip'] as const;
+export const LOBBY_GAME_IDS = ['tarhun', 'ebru', 'cezeri', 'asena', 'cascade', 'ringside', 'crash', 'coinflip', 'damla'] as const;
 export type LobbyGameId = (typeof LOBBY_GAME_IDS)[number];
 
 /** Lobby sections. `slots`/`live`/`instant` are kinds; `new`, `fair` and `favorites` are cross-cutting. */
@@ -32,6 +32,8 @@ export interface LobbyGame {
   readonly tone: readonly [string, string];
   /** Extra search words (English/Turkish themes); the localized title and category names are matched too. */
   readonly keywords: string;
+  /** "Sollish Original" label: a game designed in-house from scratch (not a slot-genre title). */
+  readonly original?: boolean;
 }
 
 const game = (g: LobbyGame) => Object.freeze(g);
@@ -44,6 +46,7 @@ export const LOBBY_GAMES: readonly LobbyGame[] = Object.freeze([
   game({ id: 'ringside', href: '/live/ringside', kind: 'live', icon: 'boxing', short: 'Ringside', released: '2026-10-09', isNew: false, provablyFair: true, hero: null, tone: ['#5a2414', '#0e1a26'], keywords: 'boxing fight live boks dovus canli pool' }),
   game({ id: 'crash', href: '/game/crash', kind: 'instant', icon: 'crash', short: 'Crash', released: '2026-10-01', isNew: false, provablyFair: false, hero: null, tone: ['#4a1e14', '#0d0f15'], keywords: 'multiplier cash out carpan cikis' }),
   game({ id: 'coinflip', href: '/game/coinflip', kind: 'instant', icon: 'coin', short: 'Coinflip', released: '2026-10-01', isNew: false, provablyFair: false, hero: null, tone: ['#123a46', '#0a1118'], keywords: 'coin heads tails yazi tura para' }),
+  game({ id: 'damla', href: '/game/damla', kind: 'instant', icon: 'drop', short: 'Damla', released: '2026-10-21', isNew: true, provablyFair: true, hero: null, tone: ['#1d6f7c', '#0a1c26'], keywords: 'plinko drop pamukkale damla water terrace travertine su teras havuz', original: true }),
 ]);
 
 export const LOBBY_GAME_BY_ID: Readonly<Record<LobbyGameId, LobbyGame>> = Object.freeze(Object.fromEntries(LOBBY_GAMES.map(g => [g.id, g])) as Record<LobbyGameId, LobbyGame>);
