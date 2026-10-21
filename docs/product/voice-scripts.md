@@ -141,6 +141,33 @@ Short (one to four words for multipliers, at most six otherwise), confident, pro
 | `feature-end` | free spins total screen | Ergenekon’dan çıktık! | We have left Ergenekon. |
 
 
+## Göreme: Şafak Balonları
+
+**Character:** Warm, unhurried dawn narrator, like a balloon pilot greeting the sunrise. Calm wonder; lifts in energy only for big multipliers and the sky band. Fictional voice, no real person.
+
+**Voice (both languages):** not generated yet. Higgsfield `text2speech_v2` (ElevenLabs preset) after the owner approves the credit spend (36 lines × 0.15 ≈ 5.4 credits). Until then the game plays wordless stingers.
+
+| Stem | When | Turkish | English |
+|---|---|---|---|
+| `x2-9` | balloon multiplier ×2–9 on a win | Yükseliyor! | Rising. |
+| `x10` | way multiplier ≥×10 | On kat! | Ten times. |
+| `x25` | ≥×25 | Yirmi beş kat! | Twenty-five times. |
+| `x50` | ≥×50 | Elli kat! | Fifty times. |
+| `x100` | ≥×100 | Yüz kat! | A hundred times. |
+| `lift` | first lift of a chain (rare, policy-limited) | Balonlar kalkıyor... | The balloons lift... |
+| `wind` | wind drifts balloons (rare) | Rüzgâr döndü. | The wind turns. |
+| `merge` | two balloons merge | Birleştiler! | They join! |
+| `sun-tease` | 2 suns, waiting for the third | Güneş doğmak üzere... | The sun is almost up... |
+| `feature-trigger` | free spins triggered | Şafak söküyor! | Dawn breaks! |
+| `feature-start` | free spins begin | Şafak Şöleni! | The Dawn Festival. |
+| `moor` | first balloon moors in the sky band | Göğe demirledi. | Moored in the sky. |
+| `sky-10` | sky multiplier reaches ≥×10 | Gökyüzü dolu! | The sky is full! |
+| `retrigger` | +5 free spins | Beş dönüş daha! | Five more spins. |
+| `feature-end` | feature summary | Güneş tepede. | The sun is high. |
+| `win-big` | Büyük tier | Güzel uçuş! | A fine flight! |
+| `win-epic` | Efsane / max tier | Vadinin üstündesin! | Above the valley! |
+| `nice` | small pleasant win (rare) | Güzel. | Nice. |
+
 ## Candy Cascade
 
 **Character:** Bright, playful, warm host. Smiling and quick, a little sparkle in the pitch, never childish or squeaky.
