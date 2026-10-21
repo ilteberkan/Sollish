@@ -25,6 +25,7 @@ export * from "./slot-game-meta";
 export * from "./asena";
 export * from "./cezeri";
 export * from "./ebru";
+export * from "./damla";
 export const PROTOCOL_VERSION = 1 as const;
 export const CHAT_STREAM = "lobby" as const;
 export const MAX_FRAME_BYTES = 10_240;
