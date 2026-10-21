@@ -1,48 +1,162 @@
 {
-  "meta": { "title": "Damla: 파묵칼레 · Sollish 오리지널", "description": "물방울 하나가 파묵칼레의 하얀 석회화 테라스를 따라 청록빛 웅덩이로 떨어집니다. 오리지널 즉석 게임, DEMO 크레딧, 증명 가능한 공정성." },
+  "meta": {
+    "title": "Damla: 파묵칼레 · Sollish 오리지널",
+    "description": "물방울 하나가 파묵칼레의 하얀 석회화 테라스를 따라 청록빛 웅덩이로 떨어집니다. 오리지널 즉석 게임, DEMO 크레딧, 증명 가능한 공정성."
+  },
   "title": "Damla: 파묵칼레",
   "subtitle": "물방울 하나, 하얀 테라스, 청록빛 웅덩이. 어디에서 멈출까요?",
   "table": "Damla 게임 테이블",
-  "badge": { "checking": "서버 확인 중…" },
-  "logo": { "place": "PAMUKKALE" },
-  "risk": { "low": "낮음", "medium": "보통", "high": "높음" },
-  "board": { "label": "석회화 테라스 {rows}단, 웅덩이 {pools}개, 위험도 {risk}", "pools": "웅덩이와 배수", "pool": "웅덩이 {n}: ×{multiplier}" },
-  "deck": {
-    "group": "Damla 조작", "balance": "잔액", "win": "당첨금", "winReplay": "다시보기 당첨금", "rainWin": "비 당첨금 ({count})", "refill": "잔액 충전",
-    "risk": "위험도", "rows": "테라스", "rowsAria": "테라스 {rows}단", "rowsShort": "{rows}단", "locked": "물방울이 떨어지는 동안 잠김", "maxWin": "최대 ×{max}",
-    "drop": "떨어뜨리기", "dropCost": "{cost}로 물방울 하나 떨어뜨리기", "dropLocked": "모든 물방울이 도착할 때까지 잠김", "rain": "비", "rainAria": "비: 물방울 {count}개, 총 {cost}",
-    "auto": "자동", "info": "정보", "infoAria": "게임 정보, 배당표, RTP", "speedAria": "낙하 속도: {speed}", "sound": "소리", "soundLoading": "소리 준비 중… {percent}%",
-    "inFlight": "{count, plural, other {물방울 #개가 떨어지는 중}}", "lastWin": "마지막 물방울: <b>×{multiplier}</b> · {money}", "hintSpace": "<kbd>스페이스</kbd>로 떨어뜨리기",
-    "hintFixed": "떨어뜨리기를 누르거나 비를 내리세요", "outOfCredit": "DEMO 크레딧이 없습니다."
+  "badge": {
+    "checking": "서버 확인 중…"
   },
-  "strip": { "label": "최근 결과" },
-  "gold": { "banner": "황금빛 범람" },
-  "auto": { "ribbon": "자동 베팅 · {drops}개 남음" },
-  "replay": { "ribbon": "다시보기 · 물방울 {id} · 잔액 변동 없음" },
-  "errors": { "insufficient": "잔액 부족: {count, plural, other {물방울 #개에}} {cost}이(가) 필요합니다.", "entropy": "이 브라우저에서는 안전한 난수를 사용할 수 없습니다.", "noCredit": "DEMO 원장이 물방울을 거부했습니다." },
+  "logo": {
+    "place": "PAMUKKALE"
+  },
+  "risk": {
+    "low": "낮음",
+    "medium": "보통",
+    "high": "높음"
+  },
+  "board": {
+    "label": "석회화 테라스 {rows}단, 웅덩이 {pools}개, 위험도 {risk}",
+    "pools": "웅덩이와 배수",
+    "pool": "웅덩이 {n}: ×{multiplier}"
+  },
+  "deck": {
+    "group": "Damla 조작",
+    "balance": "잔액",
+    "win": "당첨금",
+    "winReplay": "다시보기 당첨금",
+    "rainWin": "비 당첨금 ({count})",
+    "refill": "잔액 충전",
+    "risk": "위험도",
+    "rows": "테라스",
+    "rowsAria": "테라스 {rows}단",
+    "rowsShort": "{rows}단",
+    "locked": "물방울이 떨어지는 동안 잠김",
+    "maxWin": "최대 ×{max}",
+    "drop": "떨어뜨리기",
+    "dropCost": "{cost}로 물방울 하나 떨어뜨리기",
+    "dropLocked": "모든 물방울이 도착할 때까지 잠김",
+    "rain": "비",
+    "rainAria": "비: 물방울 {count}개, 총 {cost}",
+    "auto": "자동",
+    "info": "정보",
+    "infoAria": "게임 정보, 배당표, RTP",
+    "speedAria": "낙하 속도: {speed}",
+    "sound": "소리",
+    "soundLoading": "소리 준비 중… {percent}%",
+    "inFlight": "{count, plural, other {물방울 #개가 떨어지는 중}}",
+    "lastWin": "마지막 물방울: <b>×{multiplier}</b> · {money}",
+    "hintSpace": "<kbd>스페이스</kbd>로 떨어뜨리기",
+    "hintFixed": "떨어뜨리기를 누르거나 비를 내리세요",
+    "outOfCredit": "DEMO 크레딧이 없습니다.",
+    "facts": "RTP {rtp} · 하우스 에지 {edge} · 최대 ×{max}"
+  },
+  "strip": {
+    "label": "최근 결과"
+  },
+  "gold": {
+    "banner": "황금빛 범람"
+  },
+  "auto": {
+    "ribbon": "자동 베팅 · {drops}개 남음"
+  },
+  "replay": {
+    "ribbon": "다시보기 · 물방울 {id} · 잔액 변동 없음"
+  },
+  "errors": {
+    "insufficient": "잔액 부족: {count, plural, other {물방울 #개에}} {cost}이(가) 필요합니다.",
+    "entropy": "이 브라우저에서는 안전한 난수를 사용할 수 없습니다.",
+    "noCredit": "DEMO 원장이 물방울을 거부했습니다."
+  },
   "announce": {
-    "dropped": "{count, plural, other {물방울 #개}}를 {amount} DEMO에 떨어뜨렸습니다.", "sentToServer": "{count, plural, other {물방울 #개}}를 {amount} DEMO에 서버로 보냈습니다.",
-    "landed": "웅덩이 {pool}: ×{multiplier}, {amount} DEMO.", "gold": "가장자리 웅덩이! 모든 테라스가 황금빛으로 변합니다.", "replaying": "물방울 {id} 다시보기 중.", "replayDone": "다시보기 끝: 웅덩이 {pool}, ×{multiplier}, {amount} DEMO.",
-    "preview": "미리보기 물방울.", "recovered": "마지막 서버 물방울을 다시 보여 줍니다 ({amount} DEMO는 이미 지급됨).", "refilled": "잔액을 {amount} DEMO로 충전했습니다.", "speed": "속도: {speed}.", "mode": "위험도 {risk}, 테라스 {rows}단."
+    "dropped": "{count, plural, other {물방울 #개}}를 {amount} DEMO에 떨어뜨렸습니다.",
+    "sentToServer": "{count, plural, other {물방울 #개}}를 {amount} DEMO에 서버로 보냈습니다.",
+    "landed": "웅덩이 {pool}: ×{multiplier}, {amount} DEMO.",
+    "gold": "가장자리 웅덩이! 모든 테라스가 황금빛으로 변합니다.",
+    "replaying": "물방울 {id} 다시보기 중.",
+    "replayDone": "다시보기 끝: 웅덩이 {pool}, ×{multiplier}, {amount} DEMO.",
+    "preview": "미리보기 물방울.",
+    "recovered": "마지막 서버 물방울을 다시 보여 줍니다 ({amount} DEMO는 이미 지급됨).",
+    "refilled": "잔액을 {amount} DEMO로 충전했습니다.",
+    "speed": "속도: {speed}.",
+    "mode": "위험도 {risk}, 테라스 {rows}단."
   },
   "toast": {
-    "autoplayStarted": "자동 베팅: 물방울 {drops}개, 손실 한도 {limit}.", "autoplayStopped": "{reason} · 물방울 {drops}개 · 순손익 {net}", "autoplayStoppedShort": "자동 베팅 중지: {reason}",
-    "shareCopied": "링크 복사됨: {url}", "shareLink": "공유 링크: {url}", "shareFailed": "공유할 수 없습니다: {error}", "replayFailed": "이 물방울은 다시 볼 수 없습니다.",
-    "replayMismatch": "다시보기가 기록과 일치하지 않아 표시하지 않았습니다.", "refilled": "잔액을 {amount} DEMO로 충전했습니다.", "close": "닫기"
+    "autoplayStarted": "자동 베팅: 물방울 {drops}개, 손실 한도 {limit}.",
+    "autoplayStopped": "{reason} · 물방울 {drops}개 · 순손익 {net}",
+    "autoplayStoppedShort": "자동 베팅 중지: {reason}",
+    "shareCopied": "링크 복사됨: {url}",
+    "shareLink": "공유 링크: {url}",
+    "shareFailed": "공유할 수 없습니다: {error}",
+    "replayFailed": "이 물방울은 다시 볼 수 없습니다.",
+    "replayMismatch": "다시보기가 기록과 일치하지 않아 표시하지 않았습니다.",
+    "refilled": "잔액을 {amount} DEMO로 충전했습니다.",
+    "close": "닫기"
   },
-  "autoplay": { "title": "자동 베팅", "drops": "물방울 수", "note": "물방울 하나에 {cost} ({mode}). 자동 베팅 중에는 위험도, 테라스, 베팅액이 고정됩니다.", "serverFailed": "서버가 물방울을 거부했습니다", "dropFailed": "다음 물방울을 시작할 수 없습니다", "quit": "게임을 나갔습니다" },
-  "gated": { "title": "온체인 플레이가 닫혀 있습니다", "text": "Damla는 DEMO 크레딧으로만 작동합니다. 실제 자산 플레이는 검증을 통과할 때까지 닫혀 있습니다.", "back": "DEMO로 돌아가기" },
+  "autoplay": {
+    "title": "자동 베팅",
+    "drops": "물방울 수",
+    "note": "물방울 하나에 {cost} ({mode}). 자동 베팅 중에는 위험도, 테라스, 베팅액이 고정됩니다.",
+    "serverFailed": "서버가 물방울을 거부했습니다",
+    "dropFailed": "다음 물방울을 시작할 수 없습니다",
+    "quit": "게임을 나갔습니다"
+  },
+  "gated": {
+    "title": "온체인 플레이가 닫혀 있습니다",
+    "text": "Damla는 DEMO 크레딧으로만 작동합니다. 실제 자산 플레이는 검증을 통과할 때까지 닫혀 있습니다.",
+    "back": "DEMO로 돌아가기"
+  },
   "splash": {
-    "original": "Sollish 오리지널", "terraces": { "title": "석회화 테라스", "text": "8~16단 테라스. 단마다 물방울이 왼쪽이나 오른쪽으로 넘칩니다." },
-    "rain": { "title": "비", "text": "물방울 5개나 10개를 한 번에. 하나하나가 증명 가능한 공정한 라운드입니다." },
-    "gold": { "title": "최대 ×{max} 황금빛 범람", "text": "높은 위험도에서 가장자리 웅덩이에 닿으면 모든 테라스가 황금빛으로 변합니다." },
-    "loading": "Damla 불러오는 중", "play": "플레이", "skip": "다시 보지 않기", "note": "DEMO 크레딧 전용 · RTP {rtp} (정확값, 기본 모드) · 18+"
+    "original": "Sollish 오리지널",
+    "terraces": {
+      "title": "석회화 테라스",
+      "text": "8~16단 테라스. 단마다 물방울이 왼쪽이나 오른쪽으로 넘칩니다."
+    },
+    "rain": {
+      "title": "비",
+      "text": "물방울 5개나 10개를 한 번에. 하나하나가 증명 가능한 공정한 라운드입니다."
+    },
+    "gold": {
+      "title": "최대 ×{max} 황금빛 범람",
+      "text": "높은 위험도에서 가장자리 웅덩이에 닿으면 모든 테라스가 황금빛으로 변합니다."
+    },
+    "loading": "Damla 불러오는 중",
+    "play": "플레이",
+    "skip": "다시 보지 않기",
+    "note": "DEMO 크레딧 전용 · RTP {rtp} (정확값, 기본 모드) · 18+"
   },
-  "settings": { "soundReady": "소리 준비 완료.", "soundLoading": "소리 합성 중… {percent}%", "soundIdle": "처음 탭한 뒤 소리를 준비합니다.", "demoTitle": "DEMO 크레딧", "demoText": "잔액 {balance}. {remote, select, yes {이 잔액은 서버가 보관합니다.} other {이 잔액은 이 탭에만 있습니다.}} 충전하면 {start} DEMO로 돌아갑니다." },
+  "settings": {
+    "soundReady": "소리 준비 완료.",
+    "soundLoading": "소리 합성 중… {percent}%",
+    "soundIdle": "처음 탭한 뒤 소리를 준비합니다.",
+    "demoTitle": "DEMO 크레딧",
+    "demoText": "잔액 {balance}. {remote, select, yes {이 잔액은 서버가 보관합니다.} other {이 잔액은 이 탭에만 있습니다.}} 충전하면 {start} DEMO로 돌아갑니다."
+  },
   "history": {
-    "title": "물방울 기록", "scope": "이번 세션", "tableRegion": "Damla 물방울 기록", "time": "시간", "mode": "모드", "modeValue": "{risk} · {rows}단", "bet": "베팅", "win": "당첨금", "result": "웅덩이", "roundId": "물방울",
-    "replayColumn": "다시보기", "replay": "다시보기", "replayAria": "물방울 {id} 다시보기", "share": "공유", "shareAria": "물방울 {id} 공유", "detail": "웅덩이 {pool}/{pools} · ×{multiplier}", "detailMax": "웅덩이 {pool}/{pools} · ×{multiplier} · 최대",
-    "reset": "잔액 충전됨", "resetRemote": "잔액 충전됨 (서버)", "latest": "(최신)", "emptyTitle": "아직 물방울이 없습니다", "emptyText": "물방울이 도착하면 여기에 표시됩니다."
+    "title": "물방울 기록",
+    "scope": "이번 세션",
+    "tableRegion": "Damla 물방울 기록",
+    "time": "시간",
+    "mode": "모드",
+    "modeValue": "{risk} · {rows}단",
+    "bet": "베팅",
+    "win": "당첨금",
+    "result": "웅덩이",
+    "roundId": "물방울",
+    "replayColumn": "다시보기",
+    "replay": "다시보기",
+    "replayAria": "물방울 {id} 다시보기",
+    "share": "공유",
+    "shareAria": "물방울 {id} 공유",
+    "detail": "웅덩이 {pool}/{pools} · ×{multiplier}",
+    "detailMax": "웅덩이 {pool}/{pools} · ×{multiplier} · 최대",
+    "reset": "잔액 충전됨",
+    "resetRemote": "잔액 충전됨 (서버)",
+    "latest": "(최신)",
+    "emptyTitle": "아직 물방울이 없습니다",
+    "emptyText": "물방울이 도착하면 여기에 표시됩니다."
   },
   "rules": {
     "summary": "Damla 규칙과 공정성",
@@ -52,18 +166,46 @@
   },
   "info": {
     "title": "Damla: 게임 정보",
-    "tab": { "how": "게임 방법", "pay": "배당표", "rtp": "RTP", "fair": "공정성", "keys": "키와 규칙" },
+    "tab": {
+      "how": "게임 방법",
+      "pay": "배당표",
+      "rtp": "RTP",
+      "fair": "공정성",
+      "keys": "키와 규칙"
+    },
     "how": {
       "lead": "물방울 하나가 파묵칼레의 하얀 석회화 테라스를 따라 떨어져 청록빛 웅덩이에 멈춥니다.",
-      "step1": "− 와 + 로 <b>베팅액</b>을 고르거나 베팅 메뉴를 여세요.", "step2": "<b>위험도</b>를 고르세요. 낮음은 자주 작게, 높음은 드물게 크게 지급합니다.",
-      "step3": "<b>테라스 8~16단</b>을 고르세요. 단이 많을수록 웅덩이가 넓게 퍼집니다.", "step4": "<b>떨어뜨리기</b>를 누르세요. 단마다 물방울이 왼쪽이나 오른쪽으로 넘치고(각 50%), 도착한 웅덩이가 배수를 지급합니다.",
-      "rainTitle": "비", "rain": "비는 물방울 5개나 10개를 차례로 떨어뜨립니다. 물방울마다 고유한 nonce를 가진 별개의 라운드이며, 동시에 떨어질 수 있고 결과는 순서대로 잔액에 반영됩니다.",
-      "autoTitle": "자동 베팅", "auto": "물방울 수와 손실 한도(필수)를 고르세요. 고급에서 단일 당첨이 X 이상이거나 잔액이 Y만큼 늘면 멈추도록 할 수도 있습니다. 탭이 숨겨지면 자동 베팅이 멈춥니다.",
-      "goldTitle": "황금빛 범람", "gold": "높은 위험도에서는 가장자리 웅덩이가 황금 웅덩이입니다. 물방울이 닿으면 웅덩이가 넘치고 모든 테라스가 황금빛으로 빛납니다.",
+      "step1": "− 와 + 로 <b>베팅액</b>을 고르거나 베팅 메뉴를 여세요.",
+      "step2": "<b>위험도</b>를 고르세요. 낮음은 자주 작게, 높음은 드물게 크게 지급합니다.",
+      "step3": "<b>테라스 8~16단</b>을 고르세요. 단이 많을수록 웅덩이가 넓게 퍼집니다.",
+      "step4": "<b>떨어뜨리기</b>를 누르세요. 단마다 물방울이 왼쪽이나 오른쪽으로 넘치고(각 50%), 도착한 웅덩이가 배수를 지급합니다.",
+      "rainTitle": "비",
+      "rain": "비는 물방울 5개나 10개를 차례로 떨어뜨립니다. 물방울마다 고유한 nonce를 가진 별개의 라운드이며, 동시에 떨어질 수 있고 결과는 순서대로 잔액에 반영됩니다.",
+      "autoTitle": "자동 베팅",
+      "auto": "물방울 수와 손실 한도(필수)를 고르세요. 고급에서 단일 당첨이 X 이상이거나 잔액이 Y만큼 늘면 멈추도록 할 수도 있습니다. 탭이 숨겨지면 자동 베팅이 멈춥니다.",
+      "goldTitle": "황금빛 범람",
+      "gold": "높은 위험도에서는 가장자리 웅덩이가 황금 웅덩이입니다. 물방울이 닿으면 웅덩이가 넘치고 모든 테라스가 황금빛으로 빛납니다.",
       "bets": "베팅 {min} ~ {max}. 최대 당첨은 베팅액의 ×{maxWin}(높은 위험도, 16단)."
     },
-    "pay": { "title": "배당표: 위험도 {risk}, 테라스 {rows}단", "lead": "베팅액 <b>{bet}</b> 기준 지급액. 확률은 전체 경로 중 그 웅덩이로 가는 경로의 수입니다.", "pool": "웅덩이", "multiplier": "배수", "payout": "지급액", "chance": "확률", "chanceValue": "{ways} / {total} ({percent})", "note": "이 모드 최대 ×{max}. 정확한 RTP {rtp}." },
-    "rtp": { "lead": "정확한 RTP는 각 웅덩이의 확률에 배수를 곱한 이항 합입니다. 시뮬레이션 값은 모드마다 물방울 2천만 개에서 나왔습니다.", "mode": "모드", "exact": "정확한 RTP", "edge": "하우스 에지", "simulated": "시뮬레이션", "max": "최대 당첨", "note": "Sollish 자체 증거에 기반한 DEMO 추정치이며, 시험 기관의 인증을 받지 않았습니다." },
+    "pay": {
+      "title": "배당표: 위험도 {risk}, 테라스 {rows}단",
+      "lead": "베팅액 <b>{bet}</b> 기준 지급액. 확률은 전체 경로 중 그 웅덩이로 가는 경로의 수입니다.",
+      "pool": "웅덩이",
+      "multiplier": "배수",
+      "payout": "지급액",
+      "chance": "확률",
+      "chanceValue": "{ways} / {total} ({percent})",
+      "note": "이 모드 최대 ×{max}. 정확한 RTP {rtp}."
+    },
+    "rtp": {
+      "lead": "정확한 RTP는 각 웅덩이의 확률에 배수를 곱한 이항 합입니다. 시뮬레이션 값은 모드마다 물방울 2천만 개에서 나왔습니다.",
+      "mode": "모드",
+      "exact": "정확한 RTP",
+      "edge": "하우스 에지",
+      "simulated": "시뮬레이션",
+      "max": "최대 당첨",
+      "note": "Sollish 자체 증거에 기반한 DEMO 추정치이며, 시험 기관의 인증을 받지 않았습니다."
+    },
     "fair": {
       "p1": "플레이 전에 서버는 비밀 시드의 <b>해시</b>를 공개합니다. 물방울마다 서버 시드, 내 <b>클라이언트 시드</b>, <b>nonce</b>(물방울당 하나)를 합쳐 라운드 시드를 만듭니다.",
       "p2": "엔진 <code>damla-terraces-1</code>은 라운드 시드를 테라스마다 왼쪽/오른쪽 결정 하나로 바꿉니다. 같은 시드, 베팅액, 모드는 언제나 같은 경로와 웅덩이를 만듭니다.",
@@ -73,8 +215,10 @@
     "keys": {
       "space": "<kbd>스페이스</kbd>나 <kbd>엔터</kbd>로 물방울 하나를 떨어뜨립니다(설정에서 끌 수 있음).",
       "lock": "누른 뒤에는 모든 물방울이 도착할 때까지 떨어뜨리기와 비가 잠기며, 물방울이 떨어지는 동안 위험도, 테라스, 베팅액이 잠깁니다.",
-      "speed": "보통, 빠름, 터보는 애니메이션만 바꾸며 결과는 절대 바꾸지 않습니다.", "motion": "동작 줄이기에서도 물방울은 정확한 경로를 따르며 효과만 줄어듭니다.",
-      "malfunctionTitle": "오작동", "malfunction": "오작동 시 모든 지급과 플레이는 무효입니다. DEMO 크레딧은 현금 가치가 없습니다."
+      "speed": "보통, 빠름, 터보는 애니메이션만 바꾸며 결과는 절대 바꾸지 않습니다.",
+      "motion": "동작 줄이기에서도 물방울은 정확한 경로를 따르며 효과만 줄어듭니다.",
+      "malfunctionTitle": "오작동",
+      "malfunction": "오작동 시 모든 지급과 플레이는 무효입니다. DEMO 크레딧은 현금 가치가 없습니다."
     }
   }
 }

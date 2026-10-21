@@ -36,7 +36,8 @@ test('category chips filter in place, keep the URL and the Back button', async (
   await expect(results.getByRole('heading', { level: 2 })).toContainText('Slotlar');
   await expect(results.getByRole('listitem')).toHaveCount(5);
   await chips.getByRole('button', { name: 'Anında oyunlar' }).click();
-  await expect(results.getByRole('listitem')).toHaveCount(2);
+  await expect(results.getByRole('listitem')).toHaveCount(3);
+  await expect(results.getByRole('link', { name: 'Damla: Pamukkale' })).toBeVisible();
   await page.goBack();
   await expect(page).toHaveURL(/\?c=slots$/);
   await expect(results.getByRole('listitem')).toHaveCount(5);
@@ -54,6 +55,9 @@ test('top-bar search filters the lobby instantly and suggests games on other pag
   const results = page.locator('#lobby-results');
   await expect(results.getByRole('status')).toHaveText('“kurt” için 1 oyun');
   await expect(results.getByRole('link', { name: 'Asena: Yıldız Kurdu' })).toBeVisible();
+  await search(page).fill('plinko');
+  await expect(results.getByRole('link', { name: 'Damla: Pamukkale' })).toBeVisible();
+  await expect(results.getByText('Sollish Orijinal').first()).toBeVisible();
   await search(page).fill('FIRTINA');
   await expect(results.getByRole('link', { name: 'Tarhun: Fırtına Tahtı' })).toBeVisible();
   await search(page).fill('zzz');

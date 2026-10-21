@@ -12,6 +12,7 @@ import { baglama, bronze, darbuka, davul, davulRim, frameDrum, horn, hornChord, 
 import { bubbles, glassHarpFast, kanun, kudum, ud, waterBed, waterGlassFast, zil } from './synth/ebru';
 import { chimeRod, courtyard, drip, escapement, gearClank, gearWhirr, handCymbal, kos, naqqara, pipeFast, pour, ratchet, santur } from './synth/cezeri';
 import { KARGYRAA_HARMONICS, anvil, auroraChord, fireCrackle, hoof, kamDavul, khoomeiFast, kilKopuzFast, kopuz, starBell, steppeNight } from './synth/asena';
+import { burnerRoar, dawnValley } from './synth/goreme';
 import { foldLoop, loudness, master } from './synth/master';
 import { HALL, ROOM, makeImpulse, type ImpulseSpec } from './synth/reverb';
 import type { Score, KitHit, PitchedVoice, Track } from './scores/types';
@@ -80,6 +81,8 @@ function pitched(ctx: VoiceCtx, voice: PitchedVoice, freq: number, vel: number, 
     case 'khoomei': return khoomeiFast(ctx, freq, vel, held, { whistle: bright });
     case 'kargyraa': return khoomeiFast(ctx, freq, vel, held, { harmonics: KARGYRAA_HARMONICS, growl: 0.8, whistle: 0.7 * bright });
     case 'starBell': return starBell(ctx, freq, vel, bright);
+    // Göreme voice: the bağlama with its sympathetic strings tuned to F (F2 C3 F3)
+    case 'dawnSaz': return baglama(ctx, freq, vel, held, 0.5 + 0.3 * bright, { drones: [87.31, 130.81, 174.61], sympathy: 0.12 });
   }
 }
 
@@ -234,6 +237,8 @@ async function renderTrack(score: Score, track: Track, st: Stereo, env: RenderEn
         case 'whirr': putStereo(gearWhirr(ctx, dur, f.v, f.density ?? 70), s, 1, pan, track.width ?? 1); break;
         case 'pour': putStereo(pour(ctx, dur, f.v), s, 1, pan, track.width ?? 1); break;
         case 'steppe': putStereo(steppeNight(ctx, dur, f.v, { fire: f.density ?? 0 }), s, 1, pan, track.width ?? 1); break;
+        case 'dawn': putStereo(dawnValley(ctx, dur, f.v), s, 1, pan, track.width ?? 1); break;
+        case 'burner': putStereo(burnerRoar(ctx, dur, f.v, { heat: f.density ?? 0.5 }), s, 1, pan, track.width ?? 1); break;
         case 'fire': putStereo(fireCrackle(ctx, dur, f.v, f.density ?? 1), s, 1, pan, track.width ?? 1); break;
         case 'bubbles': putStereo(bubbles(ctx, dur, Math.max(1, Math.round((f.density ?? 20) * dur)), f.v, 380, 1700, f.shape === 'swell' ? 'swell' : f.shape === 'flat' ? 'flat' : 'decay'), s, 1, pan, track.width ?? 1); break;
         case 'swell': {

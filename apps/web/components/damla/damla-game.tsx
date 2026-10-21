@@ -586,6 +586,7 @@ export function DamlaGame() {
               ))}
             </div>
           </div>
+          <p className={styles.facts} data-testid="damla-facts">{t('deck.facts', { rtp: damlaPercent(facts.exact, loc), edge: damlaPercent(facts.houseEdge, loc), max: damlaMultiplierText(facts.capHundredths, loc) })}</p>
           <div className={styles.tools}>
             <button type="button" className={styles.tool} onClick={() => { sound.click(); setModal('autoplay'); }} disabled={modeLocked} aria-haspopup="dialog"><LoopIcon /><span>{t('deck.auto')}</span></button>
             <button type="button" className={`${styles.tool} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed} aria-label={t('deck.speedAria', { speed: tk(SPEED_KEY[settings.spinSpeed]) })}><SpeedDrops count={speedIndex + 1} /><span>{tk(SPEED_KEY[settings.spinSpeed])}</span></button>

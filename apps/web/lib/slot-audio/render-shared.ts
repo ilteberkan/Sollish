@@ -62,7 +62,7 @@ export function trackCost(track: Track): number {
     case 'pitched': return track.notes.length * (track.voice === 'pluck' ? 0.6 : VOICE_COST[track.voice] ?? 1);
     case 'pad': return track.chords.reduce((s, c) => s + c.ns.length * (c.d + 2), 0) * (track.voice === 'padSaw' ? 1.2 : track.voice === 'padChoir' || track.voice === 'padChoirMale' ? 1.6 : track.voice === 'padHorn' ? 1.3 : 0.6);
     case 'kit': return 4 + track.hits.length * 0.15;
-    case 'fx': return track.fx.reduce((s, f) => s + (f.k === 'room' ? 40 : f.k === 'rain' ? 60 : f.k === 'wind' ? 30 : f.k === 'water' ? 45 : f.k === 'courtyard' ? 70 : f.k === 'steppe' ? 55 : f.k === 'fire' ? 0.6 * f.d : f.k === 'whirr' ? 1.2 * f.d : f.k === 'riser' || f.k === 'rumble' ? 8 : 3) + f.d, 0);
+    case 'fx': return track.fx.reduce((s, f) => s + (f.k === 'room' ? 40 : f.k === 'rain' ? 60 : f.k === 'wind' ? 30 : f.k === 'water' ? 45 : f.k === 'courtyard' ? 70 : f.k === 'steppe' ? 55 : f.k === 'dawn' ? 50 : f.k === 'burner' ? 0.8 * f.d : f.k === 'fire' ? 0.6 * f.d : f.k === 'whirr' ? 1.2 * f.d : f.k === 'riser' || f.k === 'rumble' ? 8 : 3) + f.d, 0);
   }
 }
 

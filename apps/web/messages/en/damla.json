@@ -1,11 +1,22 @@
 {
-  "meta": { "title": "Damla: Pamukkale · Sollish Original", "description": "One water drop falls over the white travertine terraces of Pamukkale into a turquoise pool. Original instant game, DEMO credit, provably fair." },
+  "meta": {
+    "title": "Damla: Pamukkale · Sollish Original",
+    "description": "One water drop falls over the white travertine terraces of Pamukkale into a turquoise pool. Original instant game, DEMO credit, provably fair."
+  },
   "title": "Damla: Pamukkale",
   "subtitle": "One drop, white terraces, turquoise pools. Where will it rest?",
   "table": "Damla game table",
-  "badge": { "checking": "Checking server…" },
-  "logo": { "place": "PAMUKKALE" },
-  "risk": { "low": "Low", "medium": "Medium", "high": "High" },
+  "badge": {
+    "checking": "Checking server…"
+  },
+  "logo": {
+    "place": "PAMUKKALE"
+  },
+  "risk": {
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
+  },
   "board": {
     "label": "{rows} travertine terraces, {pools} pools, {risk} risk",
     "pools": "Pools and multipliers",
@@ -39,12 +50,21 @@
     "lastWin": "Last drop: <b>×{multiplier}</b> · {money}",
     "hintSpace": "Press <kbd>Space</kbd> to drop",
     "hintFixed": "Tap Drop, or let it rain",
-    "outOfCredit": "Out of DEMO credit."
+    "outOfCredit": "Out of DEMO credit.",
+    "facts": "RTP {rtp} · house edge {edge} · max ×{max}"
   },
-  "strip": { "label": "Recent results" },
-  "gold": { "banner": "GOLDEN OVERFLOW" },
-  "auto": { "ribbon": "Autobet · {drops} left" },
-  "replay": { "ribbon": "Replay · drop {id} · no balance change" },
+  "strip": {
+    "label": "Recent results"
+  },
+  "gold": {
+    "banner": "GOLDEN OVERFLOW"
+  },
+  "auto": {
+    "ribbon": "Autobet · {drops} left"
+  },
+  "replay": {
+    "ribbon": "Replay · drop {id} · no balance change"
+  },
   "errors": {
     "insufficient": "Not enough balance: {count, plural, one {this drop needs} other {# drops need}} {cost}.",
     "entropy": "Secure randomness is unavailable in this browser.",
@@ -83,12 +103,25 @@
     "dropFailed": "The next drop could not start",
     "quit": "You left the game"
   },
-  "gated": { "title": "On-chain play is closed", "text": "Damla runs on DEMO credit only. Real-asset play stays closed until its validations pass.", "back": "Back to DEMO" },
+  "gated": {
+    "title": "On-chain play is closed",
+    "text": "Damla runs on DEMO credit only. Real-asset play stays closed until its validations pass.",
+    "back": "Back to DEMO"
+  },
   "splash": {
     "original": "Sollish Original",
-    "terraces": { "title": "Travertine terraces", "text": "8 to 16 terraces; the drop spills left or right on each." },
-    "rain": { "title": "Rain", "text": "Release 5 or 10 drops at once, each its own provably fair round." },
-    "gold": { "title": "Golden overflow up to ×{max}", "text": "Reach the edge pool on high risk and every terrace turns gold." },
+    "terraces": {
+      "title": "Travertine terraces",
+      "text": "8 to 16 terraces; the drop spills left or right on each."
+    },
+    "rain": {
+      "title": "Rain",
+      "text": "Release 5 or 10 drops at once, each its own provably fair round."
+    },
+    "gold": {
+      "title": "Golden overflow up to ×{max}",
+      "text": "Reach the edge pool on high risk and every terrace turns gold."
+    },
     "loading": "Loading Damla",
     "play": "Play",
     "skip": "Don't show again",
@@ -133,7 +166,13 @@
   },
   "info": {
     "title": "Damla: game info",
-    "tab": { "how": "How to play", "pay": "Paytable", "rtp": "RTP", "fair": "Fairness", "keys": "Keys and rules" },
+    "tab": {
+      "how": "How to play",
+      "pay": "Paytable",
+      "rtp": "RTP",
+      "fair": "Fairness",
+      "keys": "Keys and rules"
+    },
     "how": {
       "lead": "A single water drop falls over the white travertine terraces of Pamukkale and comes to rest in a turquoise pool.",
       "step1": "Pick your <b>bet</b> with − and +, or open the bet menu.",

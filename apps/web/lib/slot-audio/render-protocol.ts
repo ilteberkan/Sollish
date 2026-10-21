@@ -10,8 +10,9 @@ import { STORM_SFX } from './sfx/storm';
 import { EBRU_SFX } from './sfx/ebru';
 import { CEZERI_SFX } from './sfx/cezeri';
 import { ASENA_SFX } from './sfx/asena';
+import { GOREME_SFX } from './sfx/goreme';
 
-export const SFX_CATALOGS: Record<string, SfxDef[]> = { cascade: CASCADE_SFX, storm: STORM_SFX, ebru: EBRU_SFX, cezeri: CEZERI_SFX, asena: ASENA_SFX };
+export const SFX_CATALOGS: Record<string, SfxDef[]> = { cascade: CASCADE_SFX, storm: STORM_SFX, ebru: EBRU_SFX, cezeri: CEZERI_SFX, asena: ASENA_SFX, goreme: GOREME_SFX };
 
 export type WorkerRequest =
   | { id: number; type: 'tracks'; score: Score; trackIds: string[]; sampleRate: number }

@@ -17,7 +17,7 @@ export interface TerraceLayout {
 export function terraceLayout(width: number, height: number, rows: number, poolH: number): TerraceLayout {
   const side = Math.max(6, width * 0.025);
   const dx = (width - side * 2) / (rows + 1);
-  const top = Math.max(26, height * 0.075);
+  const top = Math.max(58, height * 0.1);
   const poolY = height - poolH / 2;
   const dy = (poolY - top) / (rows + 0.15);
   return { width, height, rows, cx: width / 2, top, dx, dy, poolY, poolH };

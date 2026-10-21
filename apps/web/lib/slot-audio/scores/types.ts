@@ -8,7 +8,9 @@ export type PitchedVoice = 'celesta' | 'musicBox' | 'glock' | 'marimba' | 'pluck
   // Cezeri (cezeri-gears) voices, synth/cezeri.ts
   | 'santur' | 'santurSoft' | 'pipe' | 'waterOrgan' | 'chimeRod' | 'drip'
   // Asena (asena-stars) voices, synth/asena.ts
-  | 'kopuz' | 'kopuzMute' | 'kilKopuz' | 'khoomei' | 'kargyraa' | 'starBell';
+  | 'kopuz' | 'kopuzMute' | 'kilKopuz' | 'khoomei' | 'kargyraa' | 'starBell'
+  // Göreme (goreme-balloons) voices: a bağlama-like lute whose sympathetic strings are tuned to F (F2 C3 F3), synth/anatolian.ts
+  | 'dawnSaz';
 export type PadVoice = 'padWarm' | 'padSaw' | 'padString' | 'padChoir' | 'padChoirMale' | 'padHorn'
   // Asena: the aurora pad
   | 'padAurora';
@@ -25,7 +27,9 @@ export type FxKind = 'riser' | 'sparkle' | 'crash' | 'impact' | 'whoosh' | 'swel
   // Cezeri: courtyard fountain + water clock bed, gear-train whirr, a vessel filling
   | 'courtyard' | 'whirr' | 'pour'
   // Asena: steppe night wind bed (grass, crickets) and a distant camp fire
-  | 'steppe' | 'fire';
+  | 'steppe' | 'fire'
+  // Göreme: dawn valley bed (breeze, distant birds and burners) and a balloon burner burst
+  | 'dawn' | 'burner';
 
 export interface PadEvent { t: number; d: number; ns: number[]; v: number }
 export interface FxEvent { t: number; d: number; k: FxKind; v: number; notes?: number[]; density?: number; shape?: 'swell' | 'decay' | 'flat' }

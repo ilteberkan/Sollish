@@ -1,48 +1,162 @@
 {
-  "meta": { "title": "Damla: Pamukkale · Sollish Original", "description": "Uma única gota d'água desce pelos terraços de travertino branco de Pamukkale até uma piscina turquesa. Jogo instantâneo original, crédito DEMO, justiça comprovável." },
+  "meta": {
+    "title": "Damla: Pamukkale · Sollish Original",
+    "description": "Uma única gota d'água desce pelos terraços de travertino branco de Pamukkale até uma piscina turquesa. Jogo instantâneo original, crédito DEMO, justiça comprovável."
+  },
   "title": "Damla: Pamukkale",
   "subtitle": "Uma gota, terraços brancos, piscinas turquesa. Onde ela vai parar?",
   "table": "Mesa de jogo do Damla",
-  "badge": { "checking": "Verificando o servidor…" },
-  "logo": { "place": "PAMUKKALE" },
-  "risk": { "low": "Baixo", "medium": "Médio", "high": "Alto" },
-  "board": { "label": "{rows} terraços de travertino, {pools} piscinas, risco {risk}", "pools": "Piscinas e multiplicadores", "pool": "Piscina {n}: ×{multiplier}" },
-  "deck": {
-    "group": "Controles do Damla", "balance": "Saldo", "win": "Ganho", "winReplay": "Ganho do replay", "rainWin": "Ganho da chuva ({count})", "refill": "Recarregar saldo",
-    "risk": "Risco", "rows": "Terraços", "rowsAria": "{rows} terraços", "rowsShort": "{rows} terraços", "locked": "bloqueado enquanto as gotas caem", "maxWin": "máx. ×{max}",
-    "drop": "Gota", "dropCost": "Soltar uma gota por {cost}", "dropLocked": "Bloqueado até todas as gotas caírem", "rain": "Chuva", "rainAria": "Chuva: {count} gotas, {cost} no total",
-    "auto": "Auto", "info": "Info", "infoAria": "Informações do jogo, tabela de pagamentos e RTP", "speedAria": "Velocidade da gota: {speed}", "sound": "Som", "soundLoading": "Preparando o som… {percent}%",
-    "inFlight": "{count, plural, one {# gota caindo} other {# gotas caindo}}", "lastWin": "Última gota: <b>×{multiplier}</b> · {money}", "hintSpace": "Pressione <kbd>Espaço</kbd> para soltar uma gota",
-    "hintFixed": "Toque em Gota ou faça chover", "outOfCredit": "Sem crédito DEMO."
+  "badge": {
+    "checking": "Verificando o servidor…"
   },
-  "strip": { "label": "Resultados recentes" },
-  "gold": { "banner": "TRANSBORDO DOURADO" },
-  "auto": { "ribbon": "Aposta automática · faltam {drops}" },
-  "replay": { "ribbon": "Replay · gota {id} · sem mudança no saldo" },
-  "errors": { "insufficient": "Saldo insuficiente: {count, plural, one {esta gota precisa de} other {# gotas precisam de}} {cost}.", "entropy": "Este navegador não oferece aleatoriedade segura.", "noCredit": "O registro DEMO recusou a gota." },
+  "logo": {
+    "place": "PAMUKKALE"
+  },
+  "risk": {
+    "low": "Baixo",
+    "medium": "Médio",
+    "high": "Alto"
+  },
+  "board": {
+    "label": "{rows} terraços de travertino, {pools} piscinas, risco {risk}",
+    "pools": "Piscinas e multiplicadores",
+    "pool": "Piscina {n}: ×{multiplier}"
+  },
+  "deck": {
+    "group": "Controles do Damla",
+    "balance": "Saldo",
+    "win": "Ganho",
+    "winReplay": "Ganho do replay",
+    "rainWin": "Ganho da chuva ({count})",
+    "refill": "Recarregar saldo",
+    "risk": "Risco",
+    "rows": "Terraços",
+    "rowsAria": "{rows} terraços",
+    "rowsShort": "{rows} terraços",
+    "locked": "bloqueado enquanto as gotas caem",
+    "maxWin": "máx. ×{max}",
+    "drop": "Gota",
+    "dropCost": "Soltar uma gota por {cost}",
+    "dropLocked": "Bloqueado até todas as gotas caírem",
+    "rain": "Chuva",
+    "rainAria": "Chuva: {count} gotas, {cost} no total",
+    "auto": "Auto",
+    "info": "Info",
+    "infoAria": "Informações do jogo, tabela de pagamentos e RTP",
+    "speedAria": "Velocidade da gota: {speed}",
+    "sound": "Som",
+    "soundLoading": "Preparando o som… {percent}%",
+    "inFlight": "{count, plural, one {# gota caindo} other {# gotas caindo}}",
+    "lastWin": "Última gota: <b>×{multiplier}</b> · {money}",
+    "hintSpace": "Pressione <kbd>Espaço</kbd> para soltar uma gota",
+    "hintFixed": "Toque em Gota ou faça chover",
+    "outOfCredit": "Sem crédito DEMO.",
+    "facts": "RTP {rtp} · vantagem da casa {edge} · máx. ×{max}"
+  },
+  "strip": {
+    "label": "Resultados recentes"
+  },
+  "gold": {
+    "banner": "TRANSBORDO DOURADO"
+  },
+  "auto": {
+    "ribbon": "Aposta automática · faltam {drops}"
+  },
+  "replay": {
+    "ribbon": "Replay · gota {id} · sem mudança no saldo"
+  },
+  "errors": {
+    "insufficient": "Saldo insuficiente: {count, plural, one {esta gota precisa de} other {# gotas precisam de}} {cost}.",
+    "entropy": "Este navegador não oferece aleatoriedade segura.",
+    "noCredit": "O registro DEMO recusou a gota."
+  },
   "announce": {
-    "dropped": "{count, plural, one {Gota solta} other {# gotas soltas}} por {amount} DEMO.", "sentToServer": "{count, plural, one {Gota enviada ao servidor} other {# gotas enviadas ao servidor}} por {amount} DEMO.",
-    "landed": "Piscina {pool}: ×{multiplier}, {amount} DEMO.", "gold": "Piscina da borda! Todos os terraços ficam dourados.", "replaying": "Repetindo a gota {id}.", "replayDone": "Replay terminado: piscina {pool}, ×{multiplier}, {amount} DEMO.",
-    "preview": "Gota de prévia.", "recovered": "Sua última gota do servidor é mostrada de novo ({amount} DEMO já pagos).", "refilled": "Saldo recarregado para {amount} DEMO.", "speed": "Velocidade: {speed}.", "mode": "Risco {risk}, {rows} terraços."
+    "dropped": "{count, plural, one {Gota solta} other {# gotas soltas}} por {amount} DEMO.",
+    "sentToServer": "{count, plural, one {Gota enviada ao servidor} other {# gotas enviadas ao servidor}} por {amount} DEMO.",
+    "landed": "Piscina {pool}: ×{multiplier}, {amount} DEMO.",
+    "gold": "Piscina da borda! Todos os terraços ficam dourados.",
+    "replaying": "Repetindo a gota {id}.",
+    "replayDone": "Replay terminado: piscina {pool}, ×{multiplier}, {amount} DEMO.",
+    "preview": "Gota de prévia.",
+    "recovered": "Sua última gota do servidor é mostrada de novo ({amount} DEMO já pagos).",
+    "refilled": "Saldo recarregado para {amount} DEMO.",
+    "speed": "Velocidade: {speed}.",
+    "mode": "Risco {risk}, {rows} terraços."
   },
   "toast": {
-    "autoplayStarted": "Aposta automática: {drops} gotas, limite de perda {limit}.", "autoplayStopped": "{reason} · {drops} gotas · líquido {net}", "autoplayStoppedShort": "Aposta automática parada: {reason}",
-    "shareCopied": "Link copiado: {url}", "shareLink": "Link para compartilhar: {url}", "shareFailed": "Não foi possível compartilhar: {error}", "replayFailed": "Esta gota não pode ser repetida.",
-    "replayMismatch": "O replay não bateu com o registro; não é exibido.", "refilled": "Saldo recarregado para {amount} DEMO.", "close": "Fechar"
+    "autoplayStarted": "Aposta automática: {drops} gotas, limite de perda {limit}.",
+    "autoplayStopped": "{reason} · {drops} gotas · líquido {net}",
+    "autoplayStoppedShort": "Aposta automática parada: {reason}",
+    "shareCopied": "Link copiado: {url}",
+    "shareLink": "Link para compartilhar: {url}",
+    "shareFailed": "Não foi possível compartilhar: {error}",
+    "replayFailed": "Esta gota não pode ser repetida.",
+    "replayMismatch": "O replay não bateu com o registro; não é exibido.",
+    "refilled": "Saldo recarregado para {amount} DEMO.",
+    "close": "Fechar"
   },
-  "autoplay": { "title": "Aposta automática", "drops": "Gotas", "note": "Cada gota custa {cost} ({mode}). Risco, terraços e aposta ficam fixos durante a aposta automática.", "serverFailed": "O servidor recusou uma gota", "dropFailed": "A próxima gota não conseguiu começar", "quit": "Você saiu do jogo" },
-  "gated": { "title": "O jogo on-chain está fechado", "text": "O Damla funciona só com crédito DEMO. O jogo com ativos reais continua fechado até passar nas validações.", "back": "Voltar ao DEMO" },
+  "autoplay": {
+    "title": "Aposta automática",
+    "drops": "Gotas",
+    "note": "Cada gota custa {cost} ({mode}). Risco, terraços e aposta ficam fixos durante a aposta automática.",
+    "serverFailed": "O servidor recusou uma gota",
+    "dropFailed": "A próxima gota não conseguiu começar",
+    "quit": "Você saiu do jogo"
+  },
+  "gated": {
+    "title": "O jogo on-chain está fechado",
+    "text": "O Damla funciona só com crédito DEMO. O jogo com ativos reais continua fechado até passar nas validações.",
+    "back": "Voltar ao DEMO"
+  },
   "splash": {
-    "original": "Sollish Original", "terraces": { "title": "Terraços de travertino", "text": "De 8 a 16 terraços; em cada um a gota transborda para a esquerda ou a direita." },
-    "rain": { "title": "Chuva", "text": "Solte 5 ou 10 gotas de uma vez, cada uma sua própria rodada comprovadamente justa." },
-    "gold": { "title": "Transbordo dourado até ×{max}", "text": "Alcance a piscina da borda no risco alto e todos os terraços ficam dourados." },
-    "loading": "Carregando Damla", "play": "Jogar", "skip": "Não mostrar de novo", "note": "Só crédito DEMO · RTP {rtp} (exato, modo padrão) · 18+"
+    "original": "Sollish Original",
+    "terraces": {
+      "title": "Terraços de travertino",
+      "text": "De 8 a 16 terraços; em cada um a gota transborda para a esquerda ou a direita."
+    },
+    "rain": {
+      "title": "Chuva",
+      "text": "Solte 5 ou 10 gotas de uma vez, cada uma sua própria rodada comprovadamente justa."
+    },
+    "gold": {
+      "title": "Transbordo dourado até ×{max}",
+      "text": "Alcance a piscina da borda no risco alto e todos os terraços ficam dourados."
+    },
+    "loading": "Carregando Damla",
+    "play": "Jogar",
+    "skip": "Não mostrar de novo",
+    "note": "Só crédito DEMO · RTP {rtp} (exato, modo padrão) · 18+"
   },
-  "settings": { "soundReady": "Som pronto.", "soundLoading": "Sintetizando o som… {percent}%", "soundIdle": "O som é preparado depois do seu primeiro toque.", "demoTitle": "Crédito DEMO", "demoText": "Saldo {balance}. {remote, select, yes {O servidor guarda este saldo.} other {Este saldo existe só nesta aba.}} Recarregar o volta a {start} DEMO." },
+  "settings": {
+    "soundReady": "Som pronto.",
+    "soundLoading": "Sintetizando o som… {percent}%",
+    "soundIdle": "O som é preparado depois do seu primeiro toque.",
+    "demoTitle": "Crédito DEMO",
+    "demoText": "Saldo {balance}. {remote, select, yes {O servidor guarda este saldo.} other {Este saldo existe só nesta aba.}} Recarregar o volta a {start} DEMO."
+  },
   "history": {
-    "title": "Histórico de gotas", "scope": "Esta sessão", "tableRegion": "Histórico de gotas do Damla", "time": "Hora", "mode": "Modo", "modeValue": "{risk} · {rows}", "bet": "Aposta", "win": "Ganho", "result": "Piscina", "roundId": "Gota",
-    "replayColumn": "Replay", "replay": "Repetir", "replayAria": "Repetir a gota {id}", "share": "Compartilhar", "shareAria": "Compartilhar a gota {id}", "detail": "Piscina {pool}/{pools} · ×{multiplier}", "detailMax": "Piscina {pool}/{pools} · ×{multiplier} · máx.",
-    "reset": "Saldo recarregado", "resetRemote": "Saldo recarregado (servidor)", "latest": "(mais recente)", "emptyTitle": "Ainda sem gotas", "emptyText": "Suas gotas aparecem aqui depois de caírem."
+    "title": "Histórico de gotas",
+    "scope": "Esta sessão",
+    "tableRegion": "Histórico de gotas do Damla",
+    "time": "Hora",
+    "mode": "Modo",
+    "modeValue": "{risk} · {rows}",
+    "bet": "Aposta",
+    "win": "Ganho",
+    "result": "Piscina",
+    "roundId": "Gota",
+    "replayColumn": "Replay",
+    "replay": "Repetir",
+    "replayAria": "Repetir a gota {id}",
+    "share": "Compartilhar",
+    "shareAria": "Compartilhar a gota {id}",
+    "detail": "Piscina {pool}/{pools} · ×{multiplier}",
+    "detailMax": "Piscina {pool}/{pools} · ×{multiplier} · máx.",
+    "reset": "Saldo recarregado",
+    "resetRemote": "Saldo recarregado (servidor)",
+    "latest": "(mais recente)",
+    "emptyTitle": "Ainda sem gotas",
+    "emptyText": "Suas gotas aparecem aqui depois de caírem."
   },
   "rules": {
     "summary": "Regras e justiça do Damla",
@@ -52,18 +166,46 @@
   },
   "info": {
     "title": "Damla: informações do jogo",
-    "tab": { "how": "Como jogar", "pay": "Tabela de pagamentos", "rtp": "RTP", "fair": "Justiça", "keys": "Teclas e regras" },
+    "tab": {
+      "how": "Como jogar",
+      "pay": "Tabela de pagamentos",
+      "rtp": "RTP",
+      "fair": "Justiça",
+      "keys": "Teclas e regras"
+    },
     "how": {
       "lead": "Uma única gota d'água desce pelos terraços de travertino branco de Pamukkale e para numa piscina turquesa.",
-      "step1": "Escolha sua <b>aposta</b> com − e +, ou abra o menu de apostas.", "step2": "Escolha um <b>risco</b>: baixo paga sempre e pouco, alto paga raramente e muito.",
-      "step3": "Escolha <b>de 8 a 16 terraços</b>. Mais terraços espalham mais as piscinas.", "step4": "Pressione <b>Gota</b>. Em cada terraço a gota transborda para a esquerda ou a direita (50% cada); a piscina alcançada paga seu multiplicador.",
-      "rainTitle": "Chuva", "rain": "A chuva solta 5 ou 10 gotas uma após a outra. Cada gota é uma rodada separada com seu próprio nonce; as gotas podem cair ao mesmo tempo e os resultados entram no saldo em ordem.",
-      "autoTitle": "Aposta automática", "auto": "Escolha o número de gotas e um limite de perda (obrigatório). Em Avançado você também pode parar com um ganho único de pelo menos X ou quando o saldo subir Y. A aposta automática para quando a aba fica oculta.",
-      "goldTitle": "Transbordo dourado", "gold": "No risco alto, as piscinas da borda são as piscinas de ouro. Quando a gota alcança uma, ela transborda e todos os terraços brilham em dourado.",
+      "step1": "Escolha sua <b>aposta</b> com − e +, ou abra o menu de apostas.",
+      "step2": "Escolha um <b>risco</b>: baixo paga sempre e pouco, alto paga raramente e muito.",
+      "step3": "Escolha <b>de 8 a 16 terraços</b>. Mais terraços espalham mais as piscinas.",
+      "step4": "Pressione <b>Gota</b>. Em cada terraço a gota transborda para a esquerda ou a direita (50% cada); a piscina alcançada paga seu multiplicador.",
+      "rainTitle": "Chuva",
+      "rain": "A chuva solta 5 ou 10 gotas uma após a outra. Cada gota é uma rodada separada com seu próprio nonce; as gotas podem cair ao mesmo tempo e os resultados entram no saldo em ordem.",
+      "autoTitle": "Aposta automática",
+      "auto": "Escolha o número de gotas e um limite de perda (obrigatório). Em Avançado você também pode parar com um ganho único de pelo menos X ou quando o saldo subir Y. A aposta automática para quando a aba fica oculta.",
+      "goldTitle": "Transbordo dourado",
+      "gold": "No risco alto, as piscinas da borda são as piscinas de ouro. Quando a gota alcança uma, ela transborda e todos os terraços brilham em dourado.",
       "bets": "Apostas de {min} a {max}. Ganho máximo ×{maxWin} a aposta (risco alto, 16 terraços)."
     },
-    "pay": { "title": "Tabela de pagamentos: risco {risk}, {rows} terraços", "lead": "Pagamentos com sua aposta de <b>{bet}</b>. A chance é o número de caminhos até a piscina entre todos os caminhos.", "pool": "Piscina", "multiplier": "Multiplicador", "payout": "Pagamento", "chance": "Chance", "chanceValue": "{ways} / {total} ({percent})", "note": "Máximo neste modo ×{max}. RTP exato {rtp}." },
-    "rtp": { "lead": "O RTP exato é a soma binomial da chance de cada piscina vezes seu multiplicador. O valor simulado vem de 20 milhões de gotas por modo.", "mode": "Modo", "exact": "RTP exato", "edge": "Vantagem da casa", "simulated": "Simulado", "max": "Ganho máx.", "note": "Estimativas DEMO das próprias evidências da Sollish; não certificadas por um laboratório de testes." },
+    "pay": {
+      "title": "Tabela de pagamentos: risco {risk}, {rows} terraços",
+      "lead": "Pagamentos com sua aposta de <b>{bet}</b>. A chance é o número de caminhos até a piscina entre todos os caminhos.",
+      "pool": "Piscina",
+      "multiplier": "Multiplicador",
+      "payout": "Pagamento",
+      "chance": "Chance",
+      "chanceValue": "{ways} / {total} ({percent})",
+      "note": "Máximo neste modo ×{max}. RTP exato {rtp}."
+    },
+    "rtp": {
+      "lead": "O RTP exato é a soma binomial da chance de cada piscina vezes seu multiplicador. O valor simulado vem de 20 milhões de gotas por modo.",
+      "mode": "Modo",
+      "exact": "RTP exato",
+      "edge": "Vantagem da casa",
+      "simulated": "Simulado",
+      "max": "Ganho máx.",
+      "note": "Estimativas DEMO das próprias evidências da Sollish; não certificadas por um laboratório de testes."
+    },
     "fair": {
       "p1": "Antes de jogar, o servidor publica o <b>hash</b> da sua semente secreta. Cada gota combina a semente do servidor, a sua <b>semente de cliente</b> e um <b>nonce</b> (um por gota) na semente da rodada.",
       "p2": "O motor <code>damla-terraces-1</code> transforma a semente da rodada em uma decisão esquerda/direita por terraço. A mesma semente, aposta e modo sempre dão o mesmo caminho e a mesma piscina.",
@@ -73,8 +215,10 @@
     "keys": {
       "space": "<kbd>Espaço</kbd> ou <kbd>Enter</kbd> solta uma gota (pode ser desligado nas configurações).",
       "lock": "Depois de pressionar, Gota e Chuva ficam bloqueados até todas as gotas caírem; risco, terraços e aposta ficam bloqueados enquanto as gotas caem.",
-      "speed": "As velocidades normal, rápida e turbo mudam só a animação, nunca o resultado.", "motion": "Com movimento reduzido a gota continua seguindo seu caminho exato, com menos efeitos.",
-      "malfunctionTitle": "Falha", "malfunction": "Uma falha anula todos os pagamentos e jogadas. O crédito DEMO não tem valor em dinheiro."
+      "speed": "As velocidades normal, rápida e turbo mudam só a animação, nunca o resultado.",
+      "motion": "Com movimento reduzido a gota continua seguindo seu caminho exato, com menos efeitos.",
+      "malfunctionTitle": "Falha",
+      "malfunction": "Uma falha anula todos os pagamentos e jogadas. O crédito DEMO não tem valor em dinheiro."
     }
   }
 }
