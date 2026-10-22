@@ -22,6 +22,8 @@
 - Sahip 22 Ekim'de onayladı: Göreme seslendirmesi üretilir (≤7 kredi), telefon yerleşimi düzeltilir. Bağlam dolunca bu belge ve STATUS.md güncellenip yeni oturuma geçilir.
 - Göreme ve Damla `claude/sollish-wave3-games` dalında oynanabilir (ayrıntı STATUS.md, `docs/product/games-wave3.md`). Kalan: Göreme seslendirmesi (onay), `build:cloudflare` önizlemesinde tarayıcı testleri, test sayfasına (artifact) iki oyunu eklemek, sahip kabulü.
 
+- Test sayfası (artifact) 22 Ekim sürüm 8: lobi + Göreme + Damla + 5 slot, 9 dil, TR/EN ses, telefon sığdırma; 12,75 MB. Derleme betiği `ops/evidence/testpage-20261022/build.mjs` (+ `verify.mjs`; kendi `src/` taklit modüllerini üretir, betik klasörünü scratchpad'e kopyalayıp oradan çalıştır). Bütün 7 slot telefonda kaydırmasız sığıyor (`ops/evidence/phone-fit-20261022/`).
+
 ## Sıradaki işler (öncelik sırasıyla)
 1. (21 Ekim yapıldı) Test sayfası aynı adreste sürüm 6: lobi + beş slot + 9 dil + TR/EN ses, ~10,7 MB. Sunucu bileşeni olan güven/SSS bölümleri ve kabuk (yan menü) sayfada yok; sekme değişince oyun durumu sıfırlanır.
 2. Ringside spec'lerini `NEXT_PUBLIC_API_URL=http://127.0.0.1:8787` ile ayrı bir `build:cloudflare` + yerel realtime üzerinde koş.
