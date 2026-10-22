@@ -1,15 +1,17 @@
 'use client';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useCallback, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef } from 'react';
 import { Icon } from '@/components/icons';
 import { useT } from '@/lib/i18n/client';
 import type { MessageKey } from '@/lib/i18n/catalog';
-import { LOBBY_GAMES, LOBBY_GAME_BY_ID, inCategory, isLobbyCategory, matchesQuery, searchText, type LobbyCategory, type LobbyGame } from '@/lib/lobby/games';
+import { LOBBY_GAMES, LOBBY_GAME_BY_ID, gamesIn, inCategory, isLobbyCategory, matchesQuery, searchText, type LobbyCategory, type LobbyGame } from '@/lib/lobby/games';
 import { clearRecentGames, setLobbyQuery, useFavorites, useLobbyQuery, useRecent } from '@/lib/lobby/store';
 import { poster } from '@/lib/lobby/posters';
 import { useProduct } from '@/components/providers';
 import { LobbyHero } from './lobby-hero';
+import { CategoryTiles } from './lobby-categories';
+import { Row } from './lobby-row';
 import { FeatureTile, GameTile, MiniTile, WideTile, usePrefetch } from './lobby-tile';
 import s from './lobby.module.css';
 
@@ -22,10 +24,10 @@ const CHIPS: ReadonlyArray<{ category: LobbyCategory; icon: string; label: Messa
   { category: 'fair', icon: 'shield', label: 'shell.nav.fair' },
   { category: 'favorites', icon: 'heart', label: 'shell.nav.favorites' },
 ];
-const SLOTS = LOBBY_GAMES.filter(g => g.kind === 'slot');
-const INSTANT = LOBBY_GAMES.filter(g => g.kind === 'instant');
-const NEW = LOBBY_GAMES.filter(g => g.isNew);
-const FAIR = LOBBY_GAMES.filter(g => g.provablyFair);
+const SLOTS = gamesIn('slots');
+const INSTANT = gamesIn('instant');
+const NEW = gamesIn('new');
+const FAIR = gamesIn('fair');
 
 /** Category in the URL (?c=), so Back, reload and shared links keep it; switching only rewrites history (no fetch). */
 function useCategory(): [LobbyCategory, (next: LobbyCategory) => void] {
@@ -38,61 +40,6 @@ function useCategory(): [LobbyCategory, (next: LobbyCategory) => void] {
     window.history.pushState(null, '', `${url.pathname}${url.search}`);
   }, []);
   return [category, set];
-}
-
-/** Horizontal row: heading, "View all", scroll buttons; arrow keys move between the row's games. */
-function Row({ id, title, subtitle, count, onViewAll, children, wide = false, action }: { id: string; title: string; subtitle?: string; count?: number; onViewAll?: () => void; children: ReactNode; wide?: boolean; action?: ReactNode }) {
-  const t = useT('lobby');
-  const list = useRef<HTMLUListElement>(null);
-  const [edges, setEdges] = useState({ start: true, end: false });
-  const measure = useCallback(() => {
-    const el = list.current;
-    if (!el) return;
-    const left = Math.abs(el.scrollLeft);
-    setEdges({ start: left < 4, end: left + el.clientWidth >= el.scrollWidth - 4 });
-  }, []);
-  useEffect(() => {
-    measure();
-    const el = list.current;
-    if (!el || typeof ResizeObserver === 'undefined') return;
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, [measure]);
-  const page = (direction: 1 | -1) => {
-    const el = list.current;
-    if (!el) return;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    el.scrollBy({ left: direction * el.clientWidth * 0.9 * (document.dir === 'rtl' ? -1 : 1), behavior: reduce ? 'auto' : 'smooth' });
-  };
-  const onKeyDown = (event: KeyboardEvent<HTMLUListElement>) => {
-    if (!['ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
-    const links = Array.from(event.currentTarget.querySelectorAll<HTMLAnchorElement>(':scope > li > * > a, :scope > li > a'));
-    const at = links.findIndex(a => a === document.activeElement || a.contains(document.activeElement));
-    if (at < 0) return;
-    const rtl = document.dir === 'rtl';
-    const next = event.key === 'Home' ? 0 : event.key === 'End' ? links.length - 1 : at + ((event.key === 'ArrowRight') !== rtl ? 1 : -1);
-    if (next < 0 || next >= links.length) return;
-    event.preventDefault();
-    links[next]!.focus();
-    links[next]!.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-  };
-  const titleId = `${id}-title`;
-  return <section className={s.row} aria-labelledby={titleId}>
-    <div className={s.rowHead}>
-      <div className={s.rowTitles}>
-        <h2 id={titleId}>{title}{count !== undefined && <span className={s.count}>{t('row.count', { count })}</span>}</h2>
-        {subtitle && <p>{subtitle}</p>}
-      </div>
-      <div className={s.rowActions}>
-        {action}
-        {onViewAll && <button type="button" className={s.viewAll} onClick={onViewAll} aria-label={t('row.viewAllAria', { title })}>{t('row.viewAll')}<Icon name="arrow" size={16} /></button>}
-        <button type="button" className={s.scrollButton} aria-label={t('row.prev', { title })} aria-controls={`${id}-list`} disabled={edges.start} onClick={() => page(-1)}><Icon name="chevron" size={18} className={s.flip} /></button>
-        <button type="button" className={s.scrollButton} aria-label={t('row.next', { title })} aria-controls={`${id}-list`} disabled={edges.end} onClick={() => page(1)}><Icon name="chevron" size={18} /></button>
-      </div>
-    </div>
-    <ul id={`${id}-list`} ref={list} className={s.rowList} data-wide={wide || undefined} onScroll={measure} onKeyDown={onKeyDown}>{children}</ul>
-  </section>;
 }
 
 /** Ringside feature card in the Live row: the arena art with the pool facts. */
@@ -109,7 +56,9 @@ function LiveCard() {
         {narrow && <img src={narrow.src} width={narrow.width} height={narrow.height} alt="" loading="lazy" decoding="async" draggable={false} />}
       </picture>
       <span className={s.liveCopy}>
-        <span className={s.liveTag}><span className="live-dot" aria-hidden="true" />{t('liveCard.tag')}</span>
+        {/* Status only: the lobby has no public audience feed (the arena's online/participant counts reach only clients
+            connected to the arena socket), so no viewer number is shown here. */}
+        <span className={s.liveTag} data-testid="live-status"><span className="live-dot" aria-hidden="true" />{t('liveCard.tag')}</span>
         <b className={s.liveTitle}>{tc('games.ringside')}</b>
         <span className={s.liveText}>{t('cards.ringside.tagline')}</span>
         <span className={s.facts}>
@@ -148,6 +97,16 @@ export function Lobby() {
   const chipLabel = (c: LobbyCategory) => c === 'all' ? t('chips.all') : tc(CHIPS.find(x => x.category === c)!.label!);
   const tile = (g: LobbyGame, priority = false) => <li key={g.id}><GameTile game={g} favorite={isFav(g)} priority={priority} /></li>;
   const recentGames = recent.map(id => LOBBY_GAME_BY_ID[id]).filter(Boolean);
+  // "View all" and the category tiles open the category grid; when the click came from further down the page, bring
+  // the grid's heading into view (the rows above it are gone).
+  const reveal = useRef(false);
+  const openCategory = useCallback((next: LobbyCategory) => { reveal.current = true; setLobbyQuery(''); setCategory(next); }, [setCategory]);
+  useEffect(() => {
+    if (!reveal.current) return;
+    reveal.current = false;
+    const el = document.getElementById('lobby-results');
+    if (el && el.getBoundingClientRect().top < 0) el.scrollIntoView({ block: 'start' });
+  }, [category]);
 
   return <div className={s.lobby}>
     <h1 className="sr-only">{t('heading')}</h1>
@@ -162,6 +121,8 @@ export function Lobby() {
         </button>)}
       </div>
     </div>
+
+    {!searching && category === 'all' && <CategoryTiles favorites={favorites} onSelect={openCategory} />}
 
     {searching || category !== 'all' ? <section id="lobby-results" className={s.results} aria-labelledby={resultsId}>
       <div className={s.rowHead}>
@@ -186,23 +147,23 @@ export function Lobby() {
           {recentGames.map(g => <li key={g.id}><MiniTile game={g} /></li>)}
         </Row>}
       </div>
-      <Row id="row-originals" title={t('rows.originals.title')} subtitle={t('rows.originals.subtitle')} count={SLOTS.length} onViewAll={() => setCategory('slots')}>
+      <Row id="row-originals" title={t('rows.originals.title')} subtitle={t('rows.originals.subtitle')} count={SLOTS.length} onViewAll={() => openCategory('slots')}>
         {SLOTS.map(g => tile(g, true))}
       </Row>
       <div className={s.deferred}>
         <section className={s.row} aria-labelledby="row-live-title">
           <div className={s.rowHead}><div className={s.rowTitles}><h2 id="row-live-title">{t('rows.live.title')}</h2><p>{t('rows.live.subtitle')}</p></div>
-            <div className={s.rowActions}><button type="button" className={s.viewAll} onClick={() => setCategory('live')} aria-label={t('row.viewAllAria', { title: t('rows.live.title') })}>{t('row.viewAll')}<Icon name="arrow" size={16} /></button></div></div>
+            <div className={s.rowActions}><button type="button" className={s.viewAll} onClick={() => openCategory('live')} aria-label={t('row.viewAllAria', { title: t('rows.live.title') })}>{t('row.viewAll')}<Icon name="arrow" size={16} /></button></div></div>
           <LiveCard />
         </section>
       </div>
       <div className={s.deferred}>
-        <Row id="row-instant" title={t('rows.instant.title')} subtitle={t('rows.instant.subtitle')} count={INSTANT.length} onViewAll={() => setCategory('instant')} wide>
+        <Row id="row-instant" title={t('rows.instant.title')} subtitle={t('rows.instant.subtitle')} count={INSTANT.length} onViewAll={() => openCategory('instant')} wide>
           {INSTANT.map(g => <li key={g.id}><WideTile game={g} favorite={isFav(g)} /></li>)}
         </Row>
       </div>
       <div className={s.deferred}>
-        <Row id="row-new" title={t('rows.new.title')} subtitle={t('rows.new.subtitle')} count={NEW.length} onViewAll={() => setCategory('new')} wide>
+        <Row id="row-new" title={t('rows.new.title')} subtitle={t('rows.new.subtitle')} count={NEW.length} onViewAll={() => openCategory('new')} wide>
           {NEW.map(g => <li key={g.id}><FeatureTile game={g} favorite={isFav(g)} /></li>)}
         </Row>
       </div>
@@ -214,7 +175,7 @@ export function Lobby() {
             <p>{t('rows.fair.subtitle')}</p>
             <div className={s.fairActions}>
               <VerifyLink />
-              <button type="button" className={s.viewAll} onClick={() => setCategory('fair')} aria-label={t('row.viewAllAria', { title: t('rows.fair.title') })}>{t('row.viewAll')}<Icon name="arrow" size={16} /></button>
+              <button type="button" className={s.viewAll} onClick={() => openCategory('fair')} aria-label={t('row.viewAllAria', { title: t('rows.fair.title') })}>{t('row.viewAll')}<Icon name="arrow" size={16} /></button>
             </div>
           </div>
           <ul className={s.fairList}>{FAIR.map(g => <li key={g.id}><MiniTile game={g} /></li>)}</ul>

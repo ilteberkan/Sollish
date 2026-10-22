@@ -1,10 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { ASENA_RTP, CASCADE2_RTP, CEZERI_RTP, EBRU_RTP, SLOT_GAMES, SLOT_GAME_IDS, STORM_RTP } from '@sollish/protocol';
-import { LOBBY_GAMES, LOBBY_GAME_IDS, foldSearch, gameForPath, inCategory, isLobbyCategory, matchesQuery, pushRecent, searchText, toggleFavorite } from '../lib/lobby/games';
+import { LOBBY_CATEGORIES, LOBBY_GAMES, LOBBY_GAME_BY_ID, LOBBY_GAME_IDS, foldSearch, gamesIn, similarGames, gameForPath, inCategory, isLobbyCategory, matchesQuery, pushRecent, searchText, toggleFavorite } from '../lib/lobby/games';
 import { CRASH_DEMO, COINFLIP_DEMO, SLOT_STANDARD_RTP, lobbyStats, volatilityOf } from '../lib/lobby/stats';
 import { POSTER_SIZES, poster } from '../lib/lobby/posters';
 import { POSTER_VERSIONS } from '../lib/lobby/posters.generated';
@@ -97,4 +97,36 @@ test('every poster in the manifest exists with its hash and size; each game has 
   }
   for (const id of ['asena', 'cezeri', 'ebru', 'tarhun', 'ringside']) { assert.ok(poster(id, 'wide')); assert.ok(poster(id, 'narrow')); }
   assert.equal(poster('__proto__', 'tile'), null);
+});
+
+test('registry is complete: every /game/* page is listed, has i18n copy in all 9 locales and an info strip', () => {
+  const pages = readdirSync(join(import.meta.dirname, '../app/game'), { withFileTypes: true }).filter(d => d.isDirectory()).map(d => `/game/${d.name}`);
+  for (const href of pages) assert.ok(LOBBY_GAMES.some(g => g.href === href), `${href} is in lib/lobby/games.ts`);
+  const components = (dir: string): string[] => readdirSync(dir, { withFileTypes: true }).flatMap(d => d.isDirectory() ? components(join(dir, d.name)) : d.name.endsWith('.tsx') ? [readFileSync(join(dir, d.name), 'utf8')] : []);
+  const source = components(join(import.meta.dirname, '../components')).join('\n');
+  for (const game of LOBBY_GAMES) {
+    if (game.href.startsWith('/game/')) assert.ok(source.includes(`<GameInfoStrip id="${game.id}"`), `${game.id} renders <GameInfoStrip id="${game.id}" />`);
+  }
+  for (const locale of ['en', 'de', 'pt', 'fr', 'it', 'es', 'tr', 'zh', 'ko']) {
+    const common = JSON.parse(readFileSync(join(import.meta.dirname, `../messages/${locale}/common.json`), 'utf8'));
+    const lobby = JSON.parse(readFileSync(join(import.meta.dirname, `../messages/${locale}/lobby.json`), 'utf8'));
+    for (const id of LOBBY_GAME_IDS) {
+      assert.equal(typeof common.games[id], 'string', `${locale} common.games.${id}`);
+      for (const key of ['tagline', 'text', 'type']) assert.equal(typeof lobby.cards[id]?.[key], 'string', `${locale} lobby.cards.${id}.${key}`);
+    }
+  }
+});
+
+test('category lists and similar games come from the registry', () => {
+  for (const c of LOBBY_CATEGORIES) if (c !== 'favorites') assert.ok(gamesIn(c).length > 0, c);
+  assert.deepEqual(gamesIn('favorites', ['ebru', 'nope']).map(g => g.id), ['ebru']);
+  for (const id of LOBBY_GAME_IDS) {
+    const list = similarGames(id);
+    assert.ok(!list.some(g => g.id === id), `${id} excludes itself`);
+    assert.equal(new Set(list.map(g => g.id)).size, list.length);
+    assert.ok(list.length <= 6 && list.length > 0);
+    const sameKind = LOBBY_GAMES.filter(g => g.id !== id && g.kind === LOBBY_GAME_BY_ID[id].kind).length;
+    assert.ok(list.slice(0, Math.min(sameKind, 6)).every(g => g.kind === LOBBY_GAME_BY_ID[id].kind), `${id} lists its own kind first`);
+  }
+  assert.deepEqual(similarGames('crash').map(g => g.id).slice(0, 1), ['coinflip']);
 });

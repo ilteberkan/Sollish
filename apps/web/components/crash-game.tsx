@@ -6,6 +6,7 @@ import { AmountControl, DemoBalance, DemoNotice, GameHeading, GameHistory, Rules
 import { Icon, BrandMark } from './icons';
 import { useFormat, useLocale, useT } from '@/lib/i18n/client';
 import type { MessageKey } from '@/lib/i18n/catalog';
+import { GameInfoStrip } from '@/components/game-info-strip';
 type Round = { id: string; stake: number; startAt: number; point: number };
 type Phase = 'ready' | 'countdown' | 'running' | 'won' | 'lost';
 type ErrorKey = Extract<MessageKey<'common'>, `game.errors.${string}`>;
@@ -94,7 +95,7 @@ export function CrashGame() {
       </div>
       <div className="bet-controls"><AmountControl amount={amount} setAmount={setAmount} disabled={active || live} error={error ? tc(error) : ''}/><div className="payout-preview"><span>{phase === 'won' ? t('preview.won') : t('preview.cashout')}</span><strong>{phase === 'won' ? money(payout) : phase === 'running' ? money(grossPayout(stake, multiplier)) : '—'}<small> DEMO</small></strong><span className="small muted">{phase === 'won' ? t('preview.net', { amount: money(payout - stake) }) : t('preview.fee')}</span></div><div className={`action-slot ${active ? 'mobile-sticky-action' : ''}`}><button className={`button primary game-action ${phase === 'running' ? 'cashout-button' : ''}`} disabled={live || phase === 'countdown'} onClick={phase === 'running' ? cashout : start}>{phase === 'running' ? <><span>{t('action.cashout')}</span><strong>{money(grossPayout(stake, multiplier))} <small>DEMO</small></strong></> : phase === 'countdown' ? t('action.starting') : live ? <><Icon name="lock" size={16}/>{t('action.liveClosed')}</> : <><span>{t('action.start')}</span><Icon name="arrow"/></>}</button><p>{phase === 'running' ? t('hint.running') : live ? t('hint.live') : t('hint.default')}</p></div></div>
       <div className="sr-only" role="status" aria-live="polite">{phase === 'running' ? t('sr.running') : phase === 'won' ? t('sr.won', { amount: money(payout) }) : phase === 'lost' ? t('sr.lost', { multiplier: times(multiplier) }) : phase === 'countdown' ? t('sr.countdown') : ''}</div>
-    </section><DemoNotice/><GameHistory game="Crash"/><Rules game="Crash"/>
+    </section><GameInfoStrip id="crash"/><DemoNotice/><GameHistory game="Crash"/><Rules game="Crash"/>
   </div>;
 }
 function CrashChart({ multiplier, elapsed, phase }: { multiplier: number; elapsed: number; phase: Phase }) {

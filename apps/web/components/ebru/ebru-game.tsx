@@ -39,6 +39,7 @@ import { EbruStainArt, EbruSymbolArt, EbruSymbolSprites } from './symbols';
 import { useEbruSymbolNames } from './use-symbol-names';
 import { EbruWater, type EbruMood } from './water';
 import styles from './ebru-game.module.css';
+import { GameInfoStrip } from '@/components/game-info-strip';
 
 /* Lifecycle: entropy -> engine ebru-ink-1 resolves the whole round (bet + mode) -> one reservation of the mode cost ->
    the timeline replays it -> exactly one settlement with the engine payout (at the end, or on unmount).
@@ -1037,6 +1038,7 @@ export function EbruGame() {
         <div className="sr-only" role="status" aria-live="polite">{announce}</div>
       </section>
       <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} />
+      <GameInfoStrip id="ebru" />
       <EbruHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <StaticFooter remote={remote !== null} />
 
