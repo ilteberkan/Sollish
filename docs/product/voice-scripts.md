@@ -145,7 +145,11 @@ Short (one to four words for multipliers, at most six otherwise), confident, pro
 
 **Character:** Warm, unhurried dawn narrator, like a balloon pilot greeting the sunrise. Calm wonder; lifts in energy only for big multipliers and the sky band. Fictional voice, no real person.
 
-**Voice (both languages):** not generated yet. Higgsfield `text2speech_v2` (ElevenLabs preset) after the owner approves the credit spend (36 lines × 0.15 ≈ 5.4 credits). Until then the game plays wordless stingers.
+**Voice (both languages):** Alistair (`d9d5c263-f84e-4752-97b5-3750fcc6fd2f`), Higgsfield `text2speech_v2`, ElevenLabs, preset, `use_unlim` false. Generated 22 Oct 2026 after owner approval (36 lines, 18 Turkish and 18 English, files in `apps/web/public/audio/voice/goreme/<tr|en>/`).
+
+**Audition (same line "Şafak söküyor!", 2 clips):** Alistair (male) 1.52 s, median F0 about 80 Hz; Willow (`f878bf3f-115b-5842-8934-c789c7947733`, female) 1.12 s, median F0 about 163 Hz (16 kHz autocorrelation, 30/50/60 ms windows; the 30 ms window gave an octave-error 400 Hz for Alistair and is ignored). Alistair was chosen: slower delivery and a lower, warmer baseline fit "unhurried dawn narrator", and no other game uses a deep male narrator besides Gideon and Barrett, which are different voices. This is an objective pick, not a listening acceptance; the owner's ear decides.
+
+**Production (22 Oct 2026):** credits 20.45 before, 14.75 after (5.70 = 38 generations x 0.15: 2 auditions + 36 lines). ffmpeg as before (silence trim, `loudnorm I=-16:TP=-1.5:LRA=7`, 44.1 kHz mono, 128 kb/s MP3). ebur128 over all 36 files: highest peak -1.8 dBFS (limit -1.5 met); integrated loudness -18.4 to -16.4 LUFS, so 27 of 36 files fall short of -16 LUFS by 0.4 to 2.4 LU because the short, peaky clips hit the peak limit first (quietest: `en/x2-9` -18.4, `en/x10` -18.3, `tr/x100` -18.3). Pronunciation to check by ear: "Şafak Şöleni", "Rüzgâr". 429 rate limits were retried only for items without a job id; no item with a job id was resubmitted.
 
 | Stem | When | Turkish | English |
 |---|---|---|---|

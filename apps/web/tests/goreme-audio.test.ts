@@ -68,8 +68,8 @@ test('voice bank layout /audio/voice/goreme/<tr|en>/<stem>.mp3; a folder without
   assert.equal(voiceBankFolder(GOREME_VOICE_BANK, voiceLanguageOf('de')), '/audio/voice/goreme/en');
   const plain = goremeVoiceBankUrls('/audio/voice/goreme/tr/');
   for (const l of GOREME_VOICE_LINES) assert.ok(plain[l]!.startsWith(`/audio/voice/goreme/tr/${l}.mp3`), l);
-  const gated = goremeVoiceBankUrls('/audio/voice/goreme/tr', { requireVersion: true });
-  assert.ok(GOREME_VOICE_LINES.every(l => gated[l] === null), 'no generated version yet → no URLs (the mp3 files do not exist)');
+  const gated = goremeVoiceBankUrls('/audio/voice/goreme/xx', { requireVersion: true });
+  assert.ok(GOREME_VOICE_LINES.every(l => gated[l] === null), 'a folder with no generated version → no URLs (the mp3 files do not exist)');
   let calls = 0;
   const none = await loadGoremeVoiceBank(gated, async () => { calls++; return 1; });
   assert.equal(calls, 0); assert.ok([...none.values()].every(v => v === null));

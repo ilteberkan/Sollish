@@ -22,8 +22,8 @@ test('generated voice versions cover every game/language folder and hash its fil
     expected[`/audio/voice/${game}/${lang}`] = sha(files.map(f => `${f}:${sha(readFileSync(join(dir, f)))}`).join('\n')).slice(0, 12);
   }
   assert.deepEqual(VOICE_FOLDER_VERSIONS, expected, 'run `node scripts/build-audio-worker.mjs`: voice files changed since the last generation');
-  assert.equal(Object.keys(expected).length, 10);
-  assert.equal(new Set(Object.values(expected)).size, 10, 'folders with different bytes have different versions');
+  assert.equal(Object.keys(expected).length, 12);
+  assert.equal(new Set(Object.values(expected)).size, 12, 'folders with different bytes have different versions');
 });
 
 test('versionedVoiceUrl: known folder gets ?v=<hash>, anything else is left alone', () => {

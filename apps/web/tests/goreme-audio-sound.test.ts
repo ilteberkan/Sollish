@@ -158,7 +158,7 @@ test('game events: reels, balloons, lift composite, sky ticks, missing voice →
     assert.equal(sound.status().voice.last?.kind, 'placeholder');
 
     // the bank of a folder that has no files yet (no generated version) makes no request at all
-    const none = await sound.setVoiceBank('/audio/voice/goreme/tr', { requireVersion: true });
+    const none = await sound.setVoiceBank('/audio/voice/goreme/xx', { requireVersion: true });
     assert.equal(requested.length, 0); assert.equal(none.missing.length, 18);
     // a folder with a file: the recorded line replaces the placeholder
     const v = await sound.setVoiceBank('/test/goreme/en');
