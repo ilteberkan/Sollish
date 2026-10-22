@@ -1,0 +1,761 @@
+[
+ {
+  "game": "tarhun",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1545,
+  "innerH": 844,
+  "table": [
+   139,
+   1052
+  ],
+  "spin": [
+   817,
+   917
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "tarhun",
+  "size": "390x844",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1545,
+  "innerH": 844,
+  "table": [
+   139,
+   1052
+  ],
+  "spin": [
+   817,
+   917
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "clipped": false
+  },
+  "free": true,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "tarhun",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1568,
+  "innerH": 740,
+  "table": [
+   139,
+   1033
+  ],
+  "spin": [
+   798,
+   898
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "tarhun",
+  "size": "360x740",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1560,
+  "innerH": 740,
+  "table": [
+   139,
+   1026
+  ],
+  "spin": [
+   791,
+   891
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "clipped": false
+  },
+  "free": true,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "tarhun",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1580,
+  "innerH": 932,
+  "table": [
+   139,
+   1086
+  ],
+  "spin": [
+   851,
+   951
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "tarhun",
+  "size": "430x932",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1580,
+  "innerH": 932,
+  "table": [
+   139,
+   1086
+  ],
+  "spin": [
+   851,
+   951
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "clipped": false
+  },
+  "free": true,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "ebru",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1553,
+  "innerH": 844,
+  "table": [
+   139,
+   1060
+  ],
+  "spin": [
+   825,
+   925
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "ebru",
+  "size": "390x844",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1553,
+  "innerH": 844,
+  "table": [
+   139,
+   1060
+  ],
+  "spin": [
+   825,
+   925
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "clipped": false
+  },
+  "free": true,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "ebru",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1561,
+  "innerH": 740,
+  "table": [
+   139,
+   1026
+  ],
+  "spin": [
+   791,
+   891
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "ebru",
+  "size": "360x740",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1561,
+  "innerH": 740,
+  "table": [
+   139,
+   1026
+  ],
+  "spin": [
+   791,
+   891
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "clipped": false
+  },
+  "free": true,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "ebru",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1600,
+  "innerH": 932,
+  "table": [
+   139,
+   1107
+  ],
+  "spin": [
+   872,
+   972
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "ebru",
+  "size": "430x932",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1600,
+  "innerH": 932,
+  "table": [
+   139,
+   1107
+  ],
+  "spin": [
+   872,
+   972
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "clipped": false
+  },
+  "free": true,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "cezeri",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1578,
+  "innerH": 844,
+  "table": [
+   139,
+   1085
+  ],
+  "spin": [
+   850,
+   950
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "cezeri",
+  "size": "390x844",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1578,
+  "innerH": 844,
+  "table": [
+   139,
+   1085
+  ],
+  "spin": [
+   850,
+   950
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "clipped": false
+  },
+  "free": true,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "cezeri",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1583,
+  "innerH": 740,
+  "table": [
+   139,
+   1048
+  ],
+  "spin": [
+   813,
+   913
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "clipped": true
+  },
+  "free": false,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "cezeri",
+  "size": "360x740",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1583,
+  "innerH": 740,
+  "table": [
+   139,
+   1048
+  ],
+  "spin": [
+   813,
+   913
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "clipped": true
+  },
+  "free": true,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "cezeri",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1627,
+  "innerH": 932,
+  "table": [
+   139,
+   1134
+  ],
+  "spin": [
+   899,
+   999
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "cezeri",
+  "size": "430x932",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1627,
+  "innerH": 932,
+  "table": [
+   139,
+   1134
+  ],
+  "spin": [
+   899,
+   999
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "clipped": false
+  },
+  "free": true,
+  "spinInside": false,
+  "tableFits": false
+ },
+ {
+  "game": "cascade",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1318,
+  "innerH": 844,
+  "table": [
+   141,
+   833
+  ],
+  "spin": [
+   640,
+   722
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cascade",
+  "size": "390x844",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1342,
+  "innerH": 844,
+  "table": [
+   141,
+   857
+  ],
+  "spin": [
+   664,
+   746
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": false
+ },
+ {
+  "game": "cascade",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1350,
+  "innerH": 740,
+  "table": [
+   141,
+   824
+  ],
+  "spin": [
+   631,
+   713
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": false
+ },
+ {
+  "game": "cascade",
+  "size": "360x740",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1358,
+  "innerH": 740,
+  "table": [
+   141,
+   832
+  ],
+  "spin": [
+   639,
+   721
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": false
+ },
+ {
+  "game": "cascade",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1352,
+  "innerH": 932,
+  "table": [
+   141,
+   866
+  ],
+  "spin": [
+   673,
+   755
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cascade",
+  "size": "430x932",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1375,
+  "innerH": 932,
+  "table": [
+   141,
+   890
+  ],
+  "spin": [
+   697,
+   779
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   672,
+   748
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "390x844",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   672,
+   748
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "clipped": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   584,
+   660
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "clipped": true
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "360x740",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   584,
+   660
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "clipped": true
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   760,
+   836
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "430x932",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   760,
+   836
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "clipped": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "damla",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1329,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   542,
+   598
+  ],
+  "h1": {
+   "text": "Damla: Pamukkale",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "damla",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1238,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   480,
+   536
+  ],
+  "h1": {
+   "text": "Damla: Pamukkale",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "damla",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1417,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   630,
+   686
+  ],
+  "h1": {
+   "text": "Damla: Pamukkale",
+   "clipped": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ }
+]

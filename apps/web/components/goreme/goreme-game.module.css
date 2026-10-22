@@ -632,7 +632,7 @@
   .wind { flex: none; white-space: nowrap; }
   .hud { min-height: 36px; width: min(100cqw - 12px, 600px); }
   .chip, .freeCounter, .globalChip { min-height: 34px; }
-  .meter { min-height: 38px; width: var(--bw); }
+  .meter { min-height: 38px; width: max(var(--bw), min(100cqw - 24px, 360px)); }
   .meterPart strong { font-size: 18px; }
   .side { padding: 8px 8px 10px; }
   .deck { --sk-stop-size: 76px; gap: 6px; align-items: stretch; }

@@ -1,0 +1,1204 @@
+{
+ "date": "2026-10-22",
+ "branch": "claude/sollish-wave3-games",
+ "runtime": "local next dev on http://localhost:3000 (Playwright Chromium /opt/pw-browsers/chromium-1194); not build:cloudflare preview, not hosted, no CI, not the owner's visual acceptance",
+ "problem": "On phones the Asena, Tarhun, Ebru and Cezeri tables were taller than the screen at 360x740, 390x844 and 430x932 (spin button below the fold in base and free spins). Candy Cascade fitted 390x844 base but overflowed in free spins (table bottom 857 > 844) and at 360x740 (feature/tool row cut). Goreme and Damla already fitted (c269779). Göreme and Cezeri h1 clipped at 360 px (Ebru overlapped the mode switch at 360-390 px; Tarhun in en at 360). On screens <= 760 px tall the Göreme autoplay ribbon covered the HUD chip.",
+ "fix": {
+  "approach": "same as Göreme: slot-kit/use-viewport-top writes --fit-top on the table; phone-only media queries set table height = max(500px, 100svh - --fit-top - 6px), make the stage a size container and scale the board to the height left; compact deck (76 px spin, 44 px targets kept).",
+  "media": "asena/tarhun/ebru/cezeri: (max-width: 760px), (max-aspect-ratio: 4/5) (same as their existing phone blocks); cascade: (max-width: 500px) (its existing phone block). Short phones (<= 760 px tall) drop the logo row (Asena keeps the Ergenekon map in free spins; Tarhun keeps a 40 px logo row with the bust) and the idle hint.",
+  "asena_map": "Ergenekon map row compacted to one line (emblem + medal, six constellations; title visually hidden, section keeps its aria-label).",
+  "title": "GameHeading splits 'Name: subtitle' into span.title-main / span.title-sub (accessible name unchanged, desktop pixel layout unchanged). At <= 380 px Göreme, Cezeri, Ebru and Tarhun hide .title-sub visually; Göreme and Ebru use an 18 px h1 at 381-400 px. Checked in tr and en at 360/375/390/412/430: no overlap with the mode switch (scripts/h1.mjs).",
+  "ribbons": "short phones: replay/autoplay ribbons take a 36 px row above the HUD (:has(.autoRibbon) / [data-replay]) instead of covering it (Göreme, Asena, Ebru, Cezeri; Cascade on all phones; Tarhun ribbon sits over its logo row). Asena free spins: ribbon inside the stage so it does not cover the map. Damla ribbon already sat below its top bar (checked).",
+  "meter": "phone win bar width max(board width, min(100cqw - 24px, 360px)) so 'TOPLAM KAZANÇ 31,58 DEMO' never wraps when the board is small."
+ },
+ "measurements_unscrolled": {
+  "asena": {
+   "390x844 base": {
+    "before": {
+     "page_height": 1549,
+     "table": [
+      139,
+      1055
+     ],
+     "spin": [
+      820,
+      920
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      672,
+      748
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Asena: Yıldız Kurdu"
+    }
+   },
+   "390x844 free": {
+    "before": {
+     "page_height": 1606,
+     "table": [
+      139,
+      1113
+     ],
+     "spin": [
+      878,
+      978
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      672,
+      748
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Asena: Yıldız Kurdu"
+    }
+   },
+   "360x740 base": {
+    "before": {
+     "page_height": 1560,
+     "table": [
+      139,
+      1025
+     ],
+     "spin": [
+      790,
+      890
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      584,
+      660
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Asena: Yıldız Kurdu"
+    }
+   },
+   "360x740 free": {
+    "before": {
+     "page_height": 1617,
+     "table": [
+      139,
+      1083
+     ],
+     "spin": [
+      848,
+      948
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      584,
+      660
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Asena: Yıldız Kurdu"
+    }
+   },
+   "430x932 base": {
+    "before": {
+     "page_height": 1589,
+     "table": [
+      139,
+      1095
+     ],
+     "spin": [
+      860,
+      960
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      760,
+      836
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Asena: Yıldız Kurdu"
+    }
+   },
+   "430x932 free": {
+    "before": {
+     "page_height": 1646,
+     "table": [
+      139,
+      1153
+     ],
+     "spin": [
+      918,
+      1018
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      760,
+      836
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Asena: Yıldız Kurdu"
+    }
+   }
+  },
+  "tarhun": {
+   "390x844 base": {
+    "before": {
+     "page_height": 1545,
+     "table": [
+      139,
+      1052
+     ],
+     "spin": [
+      817,
+      917
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      672,
+      748
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Tarhun: Fırtına Tahtı"
+    }
+   },
+   "390x844 free": {
+    "before": {
+     "page_height": 1545,
+     "table": [
+      139,
+      1052
+     ],
+     "spin": [
+      817,
+      917
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      672,
+      748
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Tarhun: Fırtına Tahtı"
+    }
+   },
+   "360x740 base": {
+    "before": {
+     "page_height": 1568,
+     "table": [
+      139,
+      1033
+     ],
+     "spin": [
+      798,
+      898
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      584,
+      660
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Tarhun"
+    }
+   },
+   "360x740 free": {
+    "before": {
+     "page_height": 1560,
+     "table": [
+      139,
+      1026
+     ],
+     "spin": [
+      791,
+      891
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      584,
+      660
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Tarhun"
+    }
+   },
+   "430x932 base": {
+    "before": {
+     "page_height": 1580,
+     "table": [
+      139,
+      1086
+     ],
+     "spin": [
+      851,
+      951
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      760,
+      836
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Tarhun: Fırtına Tahtı"
+    }
+   },
+   "430x932 free": {
+    "before": {
+     "page_height": 1580,
+     "table": [
+      139,
+      1086
+     ],
+     "spin": [
+      851,
+      951
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      760,
+      836
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Tarhun: Fırtına Tahtı"
+    }
+   }
+  },
+  "ebru": {
+   "390x844 base": {
+    "before": {
+     "page_height": 1553,
+     "table": [
+      139,
+      1060
+     ],
+     "spin": [
+      825,
+      925
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      664,
+      740
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Ebru: Mürekkep Bahçesi"
+    }
+   },
+   "390x844 free": {
+    "before": {
+     "page_height": 1553,
+     "table": [
+      139,
+      1060
+     ],
+     "spin": [
+      825,
+      925
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      664,
+      740
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Ebru: Mürekkep Bahçesi"
+    }
+   },
+   "360x740 base": {
+    "before": {
+     "page_height": 1561,
+     "table": [
+      139,
+      1026
+     ],
+     "spin": [
+      791,
+      891
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      576,
+      652
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Ebru"
+    }
+   },
+   "360x740 free": {
+    "before": {
+     "page_height": 1561,
+     "table": [
+      139,
+      1026
+     ],
+     "spin": [
+      791,
+      891
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      576,
+      652
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Ebru"
+    }
+   },
+   "430x932 base": {
+    "before": {
+     "page_height": 1600,
+     "table": [
+      139,
+      1107
+     ],
+     "spin": [
+      872,
+      972
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      752,
+      828
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Ebru: Mürekkep Bahçesi"
+    }
+   },
+   "430x932 free": {
+    "before": {
+     "page_height": 1600,
+     "table": [
+      139,
+      1107
+     ],
+     "spin": [
+      872,
+      972
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      752,
+      828
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Ebru: Mürekkep Bahçesi"
+    }
+   }
+  },
+  "cezeri": {
+   "390x844 base": {
+    "before": {
+     "page_height": 1578,
+     "table": [
+      139,
+      1085
+     ],
+     "spin": [
+      850,
+      950
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      672,
+      748
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Cezeri: Zamanın Çarkları"
+    }
+   },
+   "390x844 free": {
+    "before": {
+     "page_height": 1578,
+     "table": [
+      139,
+      1085
+     ],
+     "spin": [
+      850,
+      950
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      672,
+      748
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Cezeri: Zamanın Çarkları"
+    }
+   },
+   "360x740 base": {
+    "before": {
+     "page_height": 1583,
+     "table": [
+      139,
+      1048
+     ],
+     "spin": [
+      813,
+      913
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      584,
+      660
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Cezeri"
+    }
+   },
+   "360x740 free": {
+    "before": {
+     "page_height": 1583,
+     "table": [
+      139,
+      1048
+     ],
+     "spin": [
+      813,
+      913
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      584,
+      660
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Cezeri"
+    }
+   },
+   "430x932 base": {
+    "before": {
+     "page_height": 1627,
+     "table": [
+      139,
+      1134
+     ],
+     "spin": [
+      899,
+      999
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      760,
+      836
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Cezeri: Zamanın Çarkları"
+    }
+   },
+   "430x932 free": {
+    "before": {
+     "page_height": 1627,
+     "table": [
+      139,
+      1134
+     ],
+     "spin": [
+      899,
+      999
+     ],
+     "table_fits": false,
+     "spin_inside": false
+    },
+    "after": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      760,
+      836
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Cezeri: Zamanın Çarkları"
+    }
+   }
+  },
+  "cascade": {
+   "390x844 base": {
+    "before": {
+     "page_height": 1318,
+     "table": [
+      141,
+      833
+     ],
+     "spin": [
+      640,
+      722
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1323,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      676,
+      752
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Candy Cascade"
+    }
+   },
+   "390x844 free": {
+    "before": {
+     "page_height": 1342,
+     "table": [
+      141,
+      857
+     ],
+     "spin": [
+      664,
+      746
+     ],
+     "table_fits": false,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1323,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      676,
+      752
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Candy Cascade"
+    }
+   },
+   "360x740 base": {
+    "before": {
+     "page_height": 1350,
+     "table": [
+      141,
+      824
+     ],
+     "spin": [
+      631,
+      713
+     ],
+     "table_fits": false,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1261,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      589,
+      665
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Candy Cascade"
+    }
+   },
+   "360x740 free": {
+    "before": {
+     "page_height": 1358,
+     "table": [
+      141,
+      832
+     ],
+     "spin": [
+      639,
+      721
+     ],
+     "table_fits": false,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1261,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      589,
+      665
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Candy Cascade"
+    }
+   },
+   "430x932 base": {
+    "before": {
+     "page_height": 1352,
+     "table": [
+      141,
+      866
+     ],
+     "spin": [
+      673,
+      755
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1411,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      764,
+      840
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Candy Cascade"
+    }
+   },
+   "430x932 free": {
+    "before": {
+     "page_height": 1375,
+     "table": [
+      141,
+      890
+     ],
+     "spin": [
+      697,
+      779
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1411,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      764,
+      840
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Candy Cascade"
+    }
+   }
+  },
+  "goreme": {
+   "390x844 base": {
+    "before": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      672,
+      748
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      672,
+      748
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Göreme: Şafak Balonları"
+    }
+   },
+   "390x844 free": {
+    "before": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      672,
+      748
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1331,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      672,
+      748
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Göreme: Şafak Balonları"
+    }
+   },
+   "360x740 base": {
+    "before": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      584,
+      660
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      584,
+      660
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Göreme"
+    }
+   },
+   "360x740 free": {
+    "before": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      584,
+      660
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1269,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      584,
+      660
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Göreme"
+    }
+   },
+   "430x932 base": {
+    "before": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      760,
+      836
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      760,
+      836
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Göreme: Şafak Balonları"
+    }
+   },
+   "430x932 free": {
+    "before": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      760,
+      836
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1419,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      760,
+      836
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Göreme: Şafak Balonları"
+    }
+   }
+  },
+  "damla": {
+   "390x844 base": {
+    "before": {
+     "page_height": 1329,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      542,
+      598
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1329,
+     "table": [
+      135,
+      838
+     ],
+     "spin": [
+      542,
+      598
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Damla: Pamukkale"
+    }
+   },
+   "360x740 base": {
+    "before": {
+     "page_height": 1238,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      480,
+      536
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1238,
+     "table": [
+      135,
+      734
+     ],
+     "spin": [
+      480,
+      536
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Damla: Pamukkale"
+    }
+   },
+   "430x932 base": {
+    "before": {
+     "page_height": 1417,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      630,
+      686
+     ],
+     "table_fits": true,
+     "spin_inside": true
+    },
+    "after": {
+     "page_height": 1417,
+     "table": [
+      135,
+      926
+     ],
+     "spin": [
+      630,
+      686
+     ],
+     "table_fits": true,
+     "spin_inside": true,
+     "h1_shown": "Damla: Pamukkale"
+    }
+   }
+  }
+ },
+ "tablet_768x1024_after": "asena/tarhun/ebru/cezeri table 134-1018 (portrait aspect query applies), fits. Candy Cascade 768x1024 still scrolls (table 185-1272): its tablet layout (501-1050 px) was left unchanged (phone queries only).",
+ "autoplay_ribbon_360x740_after": [
+  "goreme 360x740 {\"ribbon\":[79,140,281,173],\"hud\":[7,178,353,214],\"hudKids\":[[13,179,181,213]]}",
+  "asena 360x740 {\"ribbon\":[94,140,266,173],\"hud\":[7,178,353,214],\"hudKids\":[[13,179,164,213],[0,0,0,0]]}",
+  "tarhun 360x740 {\"ribbon\":[94,148,266,181],\"hud\":[4,184,356,220],\"hudKids\":[[10,202,243,202],[263,188,340,216]]}",
+  "ebru 360x740 {\"ribbon\":[94,140,266,173],\"hud\":[7,178,353,214],\"hudKids\":[[13,180,164,212],[243,180,347,212]]}",
+  "cezeri 360x740 {\"ribbon\":[94,140,266,173],\"hud\":[6,178,354,214],\"hudKids\":[[12,196,149,196],[165,181,269,211],[294,179,348,213]]}",
+  "cascade 360x740 {\"ribbon\":[101,144,259,173],\"hud\":[54,183,306,217],\"hudKids\":[[54,191,184,210],[279,189,301,212]]}"
+ ],
+ "autoplay_ribbon_360x740_before": "goreme ribbon [79,140,281,173] over HUD [7,142,353,178] (autoplay/before-goreme-360x740-auto.png)",
+ "desktop_1440x900": "Layout unchanged: element box dump of every node in .game-page (scripts/fit3.mjs DESKTOP=1) before vs after differs only in animated scene elements (motes, gears, smoke, balloons, ink, +-1 px), in the history-time text below the table, and in the two new title spans; same noise level as two runs before the change. Screenshots desktop/before-*.jpg vs after-*.jpg (Ebru tray shows a different ink frame: animated backdrop).",
+ "commands": [
+  {
+   "cmd": "bash scripts/use-node.sh node <scratchpad>/fit3.mjs <out> asena,tarhun,ebru,cezeri,cascade,goreme,damla (SIZES=390x844,360x740,430x932; base + free via DEMO bonus buy)",
+   "result": "before: asena/tarhun/ebru/cezeri 24/24 rows overflowing (spin below the fold), cascade 3/6 (table bottom past the fold); after: 39/39 rows table and spin inside the viewport, scrollY 0"
+  },
+  {
+   "cmd": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck",
+   "result": "pass"
+  },
+  {
+   "cmd": "bash scripts/use-node.sh pnpm --filter @sollish/web test",
+   "result": "405/405 pass"
+  },
+  {
+   "cmd": "PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3000 PW_CHROMIUM_PATH=... test:browser tests/browser/<spec> --workers=1",
+   "result": "goreme 11/11, damla 7/7, lobby 15/15 pass; asena 17/18, tarhun 17/18, ebru 16/17, cezeri 17/18 on the first run: the old 'phone 390x844 full-width board' tests asserted the scrolling layout's board width (>300/330/290 px); updated to a fitted-board floor (260/290/240/235 px) plus board bottom <= 844, then 11/11 phone tests pass. cascade 23/24 first run: 'autoplay requires a loss limit' axe aria-required-children on empty board rows mid-spin at desktop viewport (no phone CSS involved); passed on rerun (flaky)."
+  },
+  {
+   "cmd": "new test per spec: 'phone 390x844 first screen: the whole table and the spin button fit without scrolling the page' (asena, tarhun, ebru, cezeri, cascade, goreme, damla)",
+   "result": "7/7 pass"
+  },
+  {
+   "cmd": "after the win-bar width change: test:browser <7 slot specs> -g 'phone 390x844' --workers=1",
+   "result": "12/12 pass (7 new first-screen tests + 5 older phone tests)"
+  }
+ ],
+ "open": [
+  "Asena free spins at 360x740: the 6x6 field is ~204 px wide (map row + HUD + deck take the rest).",
+  "Ebru tray at 390x844 is 253 px, Cezeri board 249 px (frames are thick); boards are smaller than in the old scrolling layout by design.",
+  "Candy Cascade portrait tablet (768x1024) still scrolls.",
+  "Not checked: build:cloudflare preview, real phones (iOS Safari dynamic toolbar vs svh), hosted, CI."
+ ]
+}

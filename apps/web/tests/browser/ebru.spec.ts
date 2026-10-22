@@ -468,7 +468,7 @@ test('settings persist across reload; sound toggle runs without page errors', as
   expect(errors).toEqual([]);
 });
 
-test('phone 390x844: no horizontal overflow, full-width tray, 44px deck targets', async ({ page }) => {
+test('phone 390x844: no horizontal overflow, fitted tray, 44px deck targets', async ({ page }) => {
   test.setTimeout(60_000);
   await page.setViewportSize({ width: 390, height: 844 });
   await stub(page, COMB_WIN);
@@ -476,7 +476,10 @@ test('phone 390x844: no horizontal overflow, full-width tray, 44px deck targets'
   const overflow = () => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(await overflow()).toBeLessThanOrEqual(0);
   const box = await page.locator('[data-cells]').boundingBox();
-  expect(box!.width).toBeGreaterThan(300);
+  // phone fit (22 Oct 2026): the board scales to the height the deck leaves, so it is no longer full width; it must
+  // stay inside the first screen
+  expect(box!.width).toBeGreaterThan(240);
+  expect(box!.y + box!.height).toBeLessThanOrEqual(844);
   for (const name of ['Oyun bilgisi', 'Bahsi azalt', 'Çevir', 'Bahsi artır', 'Otomatik', 'Ayarlar', 'Ses']) {
     const target = await page.getByRole('button', { name, exact: true }).boundingBox();
     expect(target!.width, name).toBeGreaterThanOrEqual(44);

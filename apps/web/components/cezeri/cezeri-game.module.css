@@ -931,7 +931,7 @@
   .logo { width: calc(var(--cz-top) * 2.44); }
   .hud { min-height: 36px; width: min(100cqw - 10px, 560px); }
   .freeCounter, .chain, .hubPill { min-height: 34px; }
-  .meter { min-height: 38px; width: var(--bw); }
+  .meter { min-height: 38px; width: max(var(--bw), min(100cqw - 24px, 360px)); }
   .meterPart strong { font-size: 18px; }
   .meterIdle { font-size: 11.5px; line-height: 1.25; gap: 4px; }
   .banner { top: calc(var(--cz-top) + 48px); }

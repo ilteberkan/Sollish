@@ -1,0 +1,977 @@
+[
+ {
+  "game": "asena",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   672,
+   748
+  ],
+  "h1": {
+   "text": "Asena: Yıldız Kurdu",
+   "shown": "Asena: Yıldız Kurdu",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "asena",
+  "size": "390x844",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   672,
+   748
+  ],
+  "h1": {
+   "text": "Asena: Yıldız Kurdu",
+   "shown": "Asena: Yıldız Kurdu",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "asena",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   584,
+   660
+  ],
+  "h1": {
+   "text": "Asena: Yıldız Kurdu",
+   "shown": "Asena: Yıldız Kurdu",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "asena",
+  "size": "360x740",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   584,
+   660
+  ],
+  "h1": {
+   "text": "Asena: Yıldız Kurdu",
+   "shown": "Asena: Yıldız Kurdu",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "asena",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   760,
+   836
+  ],
+  "h1": {
+   "text": "Asena: Yıldız Kurdu",
+   "shown": "Asena: Yıldız Kurdu",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "asena",
+  "size": "430x932",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   760,
+   836
+  ],
+  "h1": {
+   "text": "Asena: Yıldız Kurdu",
+   "shown": "Asena: Yıldız Kurdu",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "tarhun",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   672,
+   748
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "shown": "Tarhun: Fırtına Tahtı",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "tarhun",
+  "size": "390x844",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   672,
+   748
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "shown": "Tarhun: Fırtına Tahtı",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "tarhun",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   584,
+   660
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "shown": "Tarhun",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "tarhun",
+  "size": "360x740",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   584,
+   660
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "shown": "Tarhun",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "tarhun",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   760,
+   836
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "shown": "Tarhun: Fırtına Tahtı",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "tarhun",
+  "size": "430x932",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   760,
+   836
+  ],
+  "h1": {
+   "text": "Tarhun: Fırtına Tahtı",
+   "shown": "Tarhun: Fırtına Tahtı",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "ebru",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   664,
+   740
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "shown": "Ebru: Mürekkep Bahçesi",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "ebru",
+  "size": "390x844",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   664,
+   740
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "shown": "Ebru: Mürekkep Bahçesi",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "ebru",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   576,
+   652
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "shown": "Ebru",
+   "clipped": false,
+   "overlapsSwitch": true
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "ebru",
+  "size": "360x740",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   576,
+   652
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "shown": "Ebru",
+   "clipped": false,
+   "overlapsSwitch": true
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "ebru",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   752,
+   828
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "shown": "Ebru: Mürekkep Bahçesi",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "ebru",
+  "size": "430x932",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   752,
+   828
+  ],
+  "h1": {
+   "text": "Ebru: Mürekkep Bahçesi",
+   "shown": "Ebru: Mürekkep Bahçesi",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cezeri",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   672,
+   748
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "shown": "Cezeri: Zamanın Çarkları",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cezeri",
+  "size": "390x844",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   672,
+   748
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "shown": "Cezeri: Zamanın Çarkları",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cezeri",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   584,
+   660
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "shown": "Cezeri",
+   "clipped": false,
+   "overlapsSwitch": true
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cezeri",
+  "size": "360x740",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   584,
+   660
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "shown": "Cezeri",
+   "clipped": false,
+   "overlapsSwitch": true
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cezeri",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   760,
+   836
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "shown": "Cezeri: Zamanın Çarkları",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cezeri",
+  "size": "430x932",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   760,
+   836
+  ],
+  "h1": {
+   "text": "Cezeri: Zamanın Çarkları",
+   "shown": "Cezeri: Zamanın Çarkları",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cascade",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1323,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   676,
+   752
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "shown": "Candy Cascade",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cascade",
+  "size": "390x844",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1323,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   676,
+   752
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "shown": "Candy Cascade",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cascade",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1261,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   589,
+   665
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "shown": "Candy Cascade",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cascade",
+  "size": "360x740",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1261,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   589,
+   665
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "shown": "Candy Cascade",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cascade",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1411,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   764,
+   840
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "shown": "Candy Cascade",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cascade",
+  "size": "430x932",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1411,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   764,
+   840
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "shown": "Candy Cascade",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   672,
+   748
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "shown": "Göreme: Şafak Balonları",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "390x844",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1331,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   672,
+   748
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "shown": "Göreme: Şafak Balonları",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   584,
+   660
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "shown": "Göreme",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "360x740",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1269,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   584,
+   660
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "shown": "Göreme",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   760,
+   836
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "shown": "Göreme: Şafak Balonları",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "goreme",
+  "size": "430x932",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 1419,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   760,
+   836
+  ],
+  "h1": {
+   "text": "Göreme: Şafak Balonları",
+   "shown": "Göreme: Şafak Balonları",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": true,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "damla",
+  "size": "390x844",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1329,
+  "innerH": 844,
+  "table": [
+   135,
+   838
+  ],
+  "spin": [
+   542,
+   598
+  ],
+  "h1": {
+   "text": "Damla: Pamukkale",
+   "shown": "Damla: Pamukkale",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "damla",
+  "size": "360x740",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1238,
+  "innerH": 740,
+  "table": [
+   135,
+   734
+  ],
+  "spin": [
+   480,
+   536
+  ],
+  "h1": {
+   "text": "Damla: Pamukkale",
+   "shown": "Damla: Pamukkale",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "damla",
+  "size": "430x932",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 1417,
+  "innerH": 932,
+  "table": [
+   135,
+   926
+  ],
+  "spin": [
+   630,
+   686
+  ],
+  "h1": {
+   "text": "Damla: Pamukkale",
+   "shown": "Damla: Pamukkale",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ }
+]
