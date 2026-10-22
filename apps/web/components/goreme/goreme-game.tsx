@@ -38,6 +38,7 @@ import { GoremeLogo } from './logo';
 import { GoremeScene, type GoremeMood, type GoremeSceneHandle } from './scene';
 import { GoremeSkyBand } from './sky-band';
 import { GR_PALETTE, GoremeSymbol, GoremeSymbolSprites, useGoremeSymbolLabels } from './symbols-i18n';
+import { GameInfoStrip } from '@/components/game-info-strip';
 import styles from './goreme-game.module.css';
 
 /* Lifecycle: entropy -> engine goreme-balloons-1 resolves the whole round (bet + mode) -> one reservation of the mode cost
@@ -1074,6 +1075,7 @@ export function GoremeGame() {
         <div className="sr-only" role="status" aria-live="polite">{announce}</div>
       </section>
       <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} />
+      <GameInfoStrip id="goreme" />
       <GoremeHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <StaticFooter remote={remote !== null} />
 

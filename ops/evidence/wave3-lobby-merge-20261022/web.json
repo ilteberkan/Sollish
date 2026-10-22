@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-22",
+  "branch": "claude/sollish-wave3-games",
+  "merged": "origin/claude/gifted-gauss-25dzjq @ 08f1cf5 (lobby v2)",
+  "runtime": "local next dev on :3000 (not a Cloudflare preview, not hosted)",
+  "conflicts": ["apps/web/tests/lobby.test.ts (import lines only; both sides kept)"],
+  "registry": {
+    "goreme": { "kind": "slot", "hero": 0, "isNew": true, "provablyFair": true, "strip": "Sollish Original | RTP 96.3% | Max win ×10,000 | Provably fair | DEMO" },
+    "damla": { "kind": "instant", "original": true, "isNew": true, "provablyFair": true, "strip": "Sollish Original | RTP 98.4% | Max win ×1,000 | Provably fair | DEMO", "rtpSource": "DAMLA_LOBBY = min(DAMLA_EXACT_RTP) = medium-12 = 0.984467773, shown at 1 decimal by the shared strip" }
+  },
+  "counts": { "slots": 6, "live": 1, "instant": 3, "new": 6, "fair": 8, "originalsRow": 6 },
+  "checks": {
+    "protocol test": "341/341 pass",
+    "web test": "407/407 pass",
+    "web typecheck": "pass",
+    "browser lobby.spec": "18/18 pass",
+    "browser game-info.spec": "13/13 pass (adds goreme row and damla test)",
+    "browser goreme.spec": "11/11 pass",
+    "browser damla.spec": "7/7 pass",
+    "browser i18n.spec": "3/3 pass"
+  },
+  "screenshots": {
+    "lobby-desktop.png": "1440x900, Göreme first hero slide, category tiles Slots 6 / Instant 3 / New 6 / Fair 8",
+    "lobby-desktop-originals.png": "1440x900, Sollish Originals row",
+    "lobby-desktop-fair-row.png": "1440x900, Provably fair section lists Göreme and Damla",
+    "lobby-phone.png": "390x844 @2x, hero",
+    "lobby-phone-originals.png": "390x844 @2x",
+    "lobby-phone-fair-row.png": "390x844 @2x, Damla: Pamukkale Instant",
+    "goreme-strip-desktop.png": "1440x900, info strip under Göreme",
+    "goreme-strip-phone.png": "390x844 @2x",
+    "damla-strip-desktop.png": "1440x900, info strip under Damla",
+    "damla-strip-phone.png": "390x844 @2x"
+  },
+  "noHorizontalScroll": { "lobby-1440": true, "lobby-390": true, "goreme-390": true, "damla-390": true },
+  "limits": [
+    "The shared strip has no house-edge field and rounds RTP to 1 decimal: Damla shows 98.4% while its own deck says 98.45% (exact, default mode).",
+    "Lobby footnote still says 'standard mode of each DEMO game'; Damla has modes, not a standard mode (copy unchanged).",
+    "Figures are simulated DEMO estimates, not certified. Screenshots are not the owner's visual acceptance."
+  ]
+}

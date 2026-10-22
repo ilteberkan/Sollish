@@ -29,6 +29,7 @@ import { DamlaBoard, type BoardPool, type DamlaBoardHandle } from './board';
 import { DamlaHistory } from './damla-history';
 import { damlaInfoPages } from './damla-info-pages';
 import { DamlaDropGlyph, DamlaLogo } from './logo';
+import { GameInfoStrip } from '@/components/game-info-strip';
 import styles from './damla-game.module.css';
 
 /* Lifecycle (the RGS model, lib/damla-controls.ts): a press admits its drops — each its own engine round (seed, nonce) that
@@ -682,6 +683,7 @@ export function DamlaGame() {
         <div className="sr-only" role="status" aria-live="polite">{announce}</div>
       </section>
       <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} />
+      <GameInfoStrip id="damla" />
       <DamlaHistory hiddenIds={hiddenIds} onReplay={replay} replayDisabled={inFlight > 0 || pending || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <Footer remote={remote !== null} rules={rules} />
 

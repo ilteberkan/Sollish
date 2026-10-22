@@ -54,7 +54,7 @@ test('category tiles near the top open each category grid; they are real ?c= lin
   await page.goto('/');
   const tiles = page.getByRole('navigation', { name: 'Kategoriye göre göz at' });
   await expect(tiles.getByRole('link')).toHaveCount(6);
-  const expected: Array<[string, string, number]> = [['Slotlar', 'slots', 5], ['Canlı', 'live', 1], ['Anında oyunlar', 'instant', 2], ['Yeni', 'new', 4], ['Kanıtlanabilir adil', 'fair', 6]];
+  const expected: Array<[string, string, number]> = [['Slotlar', 'slots', 6], ['Canlı', 'live', 1], ['Anında oyunlar', 'instant', 3], ['Yeni', 'new', 6], ['Kanıtlanabilir adil', 'fair', 8]];
   const results = page.locator('#lobby-results');
   for (const [name, category, count] of expected) {
     const link = tiles.getByRole('link', { name: new RegExp(`^${name}`) });
@@ -68,12 +68,12 @@ test('category tiles near the top open each category grid; they are real ?c= lin
   await expect(tiles.getByRole('link', { name: /^Favoriler/ })).toContainText('Henüz kayıtlı yok');
   // Without JS the link still lands on the filtered grid (server reads ?c=).
   await page.goto('/?c=instant');
-  await expect(results.getByRole('listitem')).toHaveCount(2);
+  await expect(results.getByRole('listitem')).toHaveCount(3);
 });
 
 test('every row "View all" opens that category grid and brings it into view', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  const rows: Array<[string, string, number]> = [['Sollish Orijinalleri', 'slots', 5], ['Canlı', 'live', 1], ['Anında oyunlar', 'instant', 2], ['Yeni', 'new', 4], ['Kanıtlanabilir adil', 'fair', 6]];
+  const rows: Array<[string, string, number]> = [['Sollish Orijinalleri', 'slots', 6], ['Canlı', 'live', 1], ['Anında oyunlar', 'instant', 3], ['Yeni', 'new', 6], ['Kanıtlanabilir adil', 'fair', 8]];
   const results = page.locator('#lobby-results');
   for (const [title, category, count] of rows) {
     await page.goto('/');

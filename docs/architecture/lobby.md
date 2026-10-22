@@ -39,8 +39,8 @@ Categories (`LOBBY_CATEGORIES`): `slots`, `live` and `instant` follow `kind`; `n
    - The game's own namespace, following `docs/architecture/i18n.md`.
 6. **Info strip.** Render `<GameInfoStrip id="<id>" />` directly under the game table (slots: after `<SessionBar>`; see `components/storm/tarhun-game.tsx`). It shows "Sollish Original", the RTP and max win only when `lobbyStats` has them, the pool fee, the provably-fair link to `/verify` (or the "not provably fair" note), DEMO, and the "simulated, not certified" line.
 7. **Tests.**
-   - `tests/lobby.test.ts` already fails if a `/game/*` page is missing from the registry, lacks a `GameInfoStrip`, or is missing `common.games` or `lobby.cards` copy in any locale. Update the category counts it asserts (for example `inCategory(g, 'slots')` = 5) and the hero order.
-   - Browser: `tests/browser/lobby.spec.ts` asserts row and category counts (Originals 5, slots 5, instant 2, new 4, fair 6, live 1), so update them. `tests/browser/game-info.spec.ts` has one row per game.
+   - `tests/lobby.test.ts` already fails if a `/game/*` page is missing from the registry, lacks a `GameInfoStrip`, or is missing `common.games` or `lobby.cards` copy in any locale. Update the category counts it asserts (for example `inCategory(g, 'slots')` = 6) and the hero order.
+   - Browser: `tests/browser/lobby.spec.ts` asserts row and category counts (Originals 6, slots 6, instant 3, new 6, fair 8, live 1), so update them. `tests/browser/game-info.spec.ts` has one row per game.
    - Run `typecheck`, `pnpm --filter @sollish/web test`, and the lobby, game-info and i18n specs on `next dev`, one spec at a time.
 
 ## Live card

@@ -5,6 +5,7 @@ import AxeBuilder from '@axe-core/playwright';
 if (process.env.PW_CHROMIUM_PATH) test.use({ launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } });
 
 const SLOTS: Array<[string, string, string, string]> = [
+  ['goreme', 'Göreme: Şafak Balonları', 'RTP %96,3', 'En yüksek kazanç ×10.000'],
   ['tarhun', 'Tarhun: Fırtına Tahtı', 'RTP %96,5', 'En yüksek kazanç ×5.000'],
   ['ebru', 'Ebru: Mürekkep Bahçesi', 'RTP %95,7', 'En yüksek kazanç ×10.000'],
   ['cezeri', 'Cezeri: Zamanın Çarkları', 'RTP %95,5', 'En yüksek kazanç ×10.000'],
@@ -25,9 +26,24 @@ for (const [id, name, rtp, maxWin] of SLOTS) {
     await expect(similar.getByRole('listitem')).toHaveCount(6);
     await expect(similar.getByRole('link', { name })).toHaveCount(0);
     // Other slots come first.
-    await expect(similar.getByRole('listitem').first().getByRole('link').first()).toHaveAttribute('href', /^\/game\/(tarhun|ebru|cezeri|asena|cascade)$/);
+    await expect(similar.getByRole('listitem').first().getByRole('link').first()).toHaveAttribute('href', /^\/game\/(goreme|tarhun|ebru|cezeri|asena|cascade)$/);
   });
 }
+
+test('damla: instant strip shows the lowest exact mode RTP, the ×1.000 cap, provably fair link; instant games come first', async ({ page }) => {
+  await page.goto('/game/damla');
+  const strip = page.getByRole('region', { name: 'Oyun hakkında' });
+  await expect(strip).toContainText('Sollish Orijinal');
+  await expect(strip).toContainText('RTP %98,4');
+  await expect(strip).toContainText('En yüksek kazanç ×1.000');
+  await expect(strip).toContainText('sertifikalı değildir');
+  await expect(strip.getByRole('link', { name: 'Kanıtlanabilir adil' })).toHaveAttribute('href', '/verify');
+  const similar = page.getByRole('region', { name: 'Benzer oyunlar' });
+  await expect(similar.getByRole('listitem')).toHaveCount(6);
+  await expect(similar.getByRole('link', { name: 'Damla: Pamukkale' })).toHaveCount(0);
+  await expect(similar.getByRole('listitem').nth(0).getByRole('link').first()).toHaveAttribute('href', '/game/crash');
+  await expect(similar.getByRole('listitem').nth(1).getByRole('link').first()).toHaveAttribute('href', '/game/coinflip');
+});
 
 for (const id of ['crash', 'coinflip']) {
   test(`${id}: practice strip says not provably fair (no verify link) and the similar row opens a game`, async ({ page }) => {
