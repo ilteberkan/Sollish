@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Lobby del casino",
-    "description": "Los juegos originales de Sollish en un solo lobby: cinco tragaperras propias, la arena en directo Ringside, Crash y Coinflip. Solo créditos DEMO, sin dinero real."
+    "description": "Los juegos originales de Sollish en un solo lobby: seis tragaperras propias, el juego de caída Damla, la arena en directo Ringside, Crash y Coinflip. Solo créditos DEMO, sin dinero real."
   },
   "heading": "Lobby del casino Sollish",
   "hero": {
@@ -27,7 +27,7 @@
     },
     "originals": {
       "title": "Originales de Sollish",
-      "subtitle": "Cinco tragaperras propias. Cada ronda se puede comprobar en la página de verificación."
+      "subtitle": "Seis tragaperras propias. Cada ronda se puede comprobar en la página de verificación."
     },
     "live": {
       "title": "En directo",

@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Lobby du casino",
-    "description": "Les jeux originaux de Sollish dans un seul lobby : cinq machines à sous maison, l’arène en direct Ringside, Crash et Coinflip. Crédits DEMO uniquement, pas d’argent réel."
+    "description": "Les jeux originaux de Sollish dans un seul lobby : six machines à sous maison, le jeu de chute Damla, l’arène en direct Ringside, Crash et Coinflip. Crédits DEMO uniquement, pas d’argent réel."
   },
   "heading": "Lobby du casino Sollish",
   "hero": {
@@ -27,7 +27,7 @@
     },
     "originals": {
       "title": "Originaux Sollish",
-      "subtitle": "Cinq machines à sous maison. Chaque tour peut être vérifié sur la page de vérification."
+      "subtitle": "Six machines à sous maison. Chaque tour peut être vérifié sur la page de vérification."
     },
     "live": {
       "title": "En direct",

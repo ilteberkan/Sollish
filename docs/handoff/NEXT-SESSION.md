@@ -18,6 +18,9 @@
 ## 20–21 Ekim oturumunda bitenler
 - Yeni lobi, beş slot + Crash/Coinflip/Ringside/Ödüller/Stake/kütüphane çevirileri commit'li ve dalda. Tam yerel doğrulama `ops/evidence/full-verify-20261020/web.json` (ayrıntı STATUS.md). Kalan çeviri yalnız laboratuvar sayfaları (`app/lab/*`, `art-lab.tsx`).
 
+## 22 Ekim: dalga 3
+- Göreme ve Damla `claude/sollish-wave3-games` dalında oynanabilir (ayrıntı STATUS.md, `docs/product/games-wave3.md`). Kalan: Göreme seslendirmesi (onay), `build:cloudflare` önizlemesinde tarayıcı testleri, test sayfasına (artifact) iki oyunu eklemek, sahip kabulü.
+
 ## Sıradaki işler (öncelik sırasıyla)
 1. (21 Ekim yapıldı) Test sayfası aynı adreste sürüm 6: lobi + beş slot + 9 dil + TR/EN ses, ~10,7 MB. Sunucu bileşeni olan güven/SSS bölümleri ve kabuk (yan menü) sayfada yok; sekme değişince oyun durumu sıfırlanır.
 2. Ringside spec'lerini `NEXT_PUBLIC_API_URL=http://127.0.0.1:8787` ile ayrı bir `build:cloudflare` + yerel realtime üzerinde koş.

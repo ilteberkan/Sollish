@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Casino lobby",
-    "description": "Sollish original games in one lobby: five in-house slots, the live Ringside arena, Crash and Coinflip. DEMO credits only, no real money."
+    "description": "Sollish original games in one lobby: six in-house slots, the Damla drop game, the live Ringside arena, Crash and Coinflip. DEMO credits only, no real money."
   },
   "heading": "Sollish casino lobby",
   "hero": {
@@ -27,7 +27,7 @@
     },
     "originals": {
       "title": "Sollish Originals",
-      "subtitle": "Five in-house slots. Every round can be checked on the verify page."
+      "subtitle": "Six in-house slots. Every round can be checked on the verify page."
     },
     "live": {
       "title": "Live",

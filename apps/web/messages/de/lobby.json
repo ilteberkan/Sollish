@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Casino-Lobby",
-    "description": "Die Originalspiele von Sollish in einer Lobby: fünf hauseigene Slots, die Live-Arena Ringside, Crash und Coinflip. Nur DEMO-Guthaben, kein echtes Geld."
+    "description": "Die Originalspiele von Sollish in einer Lobby: sechs hauseigene Slots, das Fallspiel Damla, die Live-Arena Ringside, Crash und Coinflip. Nur DEMO-Guthaben, kein echtes Geld."
   },
   "heading": "Sollish Casino-Lobby",
   "hero": {
@@ -27,7 +27,7 @@
     },
     "originals": {
       "title": "Sollish-Originale",
-      "subtitle": "Fünf hauseigene Slots. Jede Runde lässt sich auf der Prüfseite nachrechnen."
+      "subtitle": "Sechs hauseigene Slots. Jede Runde lässt sich auf der Prüfseite nachrechnen."
     },
     "live": {
       "title": "Live",

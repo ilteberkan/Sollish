@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Lobby do cassino",
-    "description": "Os jogos originais da Sollish em um só lobby: cinco slots próprios, a arena ao vivo Ringside, Crash e Coinflip. Só créditos DEMO, sem dinheiro real."
+    "description": "Os jogos originais da Sollish em um só lobby: seis slots próprios, o jogo de queda Damla, a arena ao vivo Ringside, Crash e Coinflip. Só créditos DEMO, sem dinheiro real."
   },
   "heading": "Lobby do cassino Sollish",
   "hero": {
@@ -27,7 +27,7 @@
     },
     "originals": {
       "title": "Originais Sollish",
-      "subtitle": "Cinco slots próprios. Cada rodada pode ser conferida na página de verificação."
+      "subtitle": "Seis slots próprios. Cada rodada pode ser conferida na página de verificação."
     },
     "live": {
       "title": "Ao vivo",

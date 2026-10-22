@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "娱乐场大厅",
-    "description": "Sollish 原创游戏汇集于一个大厅：五款自研老虎机、Ringside 直播竞技场、Crash 和 Coinflip。仅限 DEMO 积分，不涉及真实资金。"
+    "description": "Sollish 原创游戏汇集于一个大厅：六款自研老虎机、Damla 落珠游戏、Ringside 直播竞技场、Crash 和 Coinflip。仅限 DEMO 积分，不涉及真实资金。"
   },
   "heading": "Sollish 娱乐场大厅",
   "hero": {
@@ -27,7 +27,7 @@
     },
     "originals": {
       "title": "Sollish 原创",
-      "subtitle": "五款自研老虎机，每一局都可在验证页面核对。"
+      "subtitle": "六款自研老虎机，每一局都可在验证页面核对。"
     },
     "live": {
       "title": "直播",

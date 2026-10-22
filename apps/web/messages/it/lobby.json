@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Lobby del casinò",
-    "description": "I giochi originali di Sollish in un’unica lobby: cinque slot della casa, l’arena live Ringside, Crash e Coinflip. Solo crediti DEMO, niente denaro reale."
+    "description": "I giochi originali di Sollish in un’unica lobby: sei slot della casa, il gioco a caduta Damla, l’arena live Ringside, Crash e Coinflip. Solo crediti DEMO, niente denaro reale."
   },
   "heading": "Lobby del casinò Sollish",
   "hero": {
@@ -27,7 +27,7 @@
     },
     "originals": {
       "title": "Originali Sollish",
-      "subtitle": "Cinque slot della casa. Ogni giro si può controllare nella pagina di verifica."
+      "subtitle": "Sei slot della casa. Ogni giro si può controllare nella pagina di verifica."
     },
     "live": {
       "title": "Live",
