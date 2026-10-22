@@ -27,6 +27,7 @@ import {
   AutoplayPanel, AutoplayStopButton, BetSelector, BuyFeatureDialog, GameInfo, Modal, RealityCheckDialog, SessionBar, SettingsPanel, useSession, useSlotSettings,
 } from '../slot-kit';
 import kit from '../slot-kit/kit.module.css';
+import { useViewportTop } from '../slot-kit/use-viewport-top';
 import { StormCharacter, type StormCharacterHandle, type StormPose } from './character';
 import { StormFrame } from './frame';
 import { StormLogo } from './logo';
@@ -213,6 +214,8 @@ export function TarhunGame() {
   const hero = useRef<StormCharacterHandle>(null);
   const board = useRef<StormBoardHandle>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLElement>(null);
+  useViewportTop(tableRef);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const layerRef = useRef<HTMLDivElement>(null);
   const shakeRef = useRef<HTMLDivElement>(null);
@@ -943,7 +946,7 @@ export function TarhunGame() {
       <StormSymbolSprites />
       <GameHeading title={gameTitle} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
         badge={remote ? tk('rgs.source.remote') : sourcePending ? t('badge.checking') : tk('rgs.source.local')} />
-      <section className={`game-table ${styles.table}`} aria-label={t('table.aria')} data-free={free || undefined}>
+      <section ref={tableRef} className={`game-table ${styles.table}`} aria-label={t('table.aria')} data-free={free || undefined}>
         <StormScene ref={scene} mood={sceneMood} className={styles.scene}>
           <div className={styles.layout}>
             <div ref={stageRef} className={styles.stage} data-phase={phase} data-celebrate={celebrating || undefined}>

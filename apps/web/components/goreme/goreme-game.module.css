@@ -663,12 +663,19 @@
   .left { display: none; }
   .msgHint { display: none; }
   .replayRibbon, .autoRibbon { top: 4px; }
-  .stage[data-replay] .column { --gr-fixed: 134px; padding-top: 40px; }
+  /* the ribbon takes a row above the HUD (replay and autoplay alike) instead of covering the HUD */
+  .stage:is([data-replay], :has(.autoRibbon)) .column { --gr-fixed: 134px; padding-top: 40px; }
 }
 @media (max-width: 760px), (max-aspect-ratio: 4 / 5) {
   .meterIdle { font-size: 11.5px; line-height: 1.25; gap: 4px; }
   .meterIdle > span:nth-child(n + 2) { display: none; }
 }
+/* 381–400 px phones: a slightly smaller title still fits beside the Demo / on-chain switch */
+@media (max-width: 400px) {
+  .page :global(.game-heading h1) { font-size: 18px; }
+}
 @media (max-width: 380px) {
   .page :global(.game-heading h1) { font-size: 17px; overflow: hidden; text-overflow: ellipsis; }
+  /* the heading keeps the game's name and drops the subtitle after the colon (still in the h1's accessible name) */
+  .page :global(.game-heading .title-sub) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }

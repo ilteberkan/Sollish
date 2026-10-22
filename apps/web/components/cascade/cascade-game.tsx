@@ -24,6 +24,7 @@ import {
   AutoplayPanel, AutoplayStopButton, BetSelector, BuyFeatureDialog, GameInfo, Modal, RealityCheckDialog, SessionBar, SettingsPanel, useSession, useSlotSettings,
 } from '../slot-kit';
 import kit from '../slot-kit/kit.module.css';
+import { useViewportTop } from '../slot-kit/use-viewport-top';
 import { CascadeBackdrop, BoardFrame } from './backdrop';
 import { CascadeBoard, type BoardHandle } from './cascade-board';
 import { CascadeHistory } from './cascade-history';
@@ -205,6 +206,8 @@ export function CascadeGame() {
 
   const board = useRef<BoardHandle>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLElement>(null);
+  useViewportTop(tableRef);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const layerRef = useRef<HTMLDivElement>(null);
   const shakeRef = useRef<HTMLDivElement>(null);
@@ -907,7 +910,7 @@ export function CascadeGame() {
     <div className={`game-page ${styles.page}`}>
       <GameHeading title={gameTitle} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
         badge={remote ? tk('rgs.source.remote') : sourcePending ? t('badge.checking') : tk('rgs.source.local')} />
-      <section className={`game-table ${styles.table}`} aria-label={t('table.aria')}>
+      <section ref={tableRef} className={`game-table ${styles.table}`} aria-label={t('table.aria')}>
         <div ref={stageRef} className={stageClass} data-phase={phase} data-celebrate={celebrating || undefined}>
           <StaticBackdrop />
           <div className={styles.freeTint} aria-hidden="true" />

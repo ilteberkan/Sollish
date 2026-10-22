@@ -30,6 +30,7 @@ import {
   AutoplayPanel, AutoplayStopButton, BetSelector, BuyFeatureDialog, GameInfo, Modal, RealityCheckDialog, SessionBar, SettingsPanel, useSession, useSlotSettings,
 } from '../slot-kit';
 import kit from '../slot-kit/kit.module.css';
+import { useViewportTop } from '../slot-kit/use-viewport-top';
 import { CezeriBoard, type CezeriBoardHandle } from './board';
 import { CezeriCelebration, CezeriFeatureTotal, CezeriFreeIntro } from './cezeri-celebration';
 import { CezeriHistory } from './cezeri-history';
@@ -226,6 +227,8 @@ export function CezeriGame() {
   const scene = useRef<CezeriSceneHandle>(null);
   const board = useRef<CezeriBoardHandle>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLElement>(null);
+  useViewportTop(tableRef);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const layerRef = useRef<HTMLDivElement>(null);
   const meterRef = useRef<HTMLDivElement>(null);
@@ -944,7 +947,7 @@ export function CezeriGame() {
       <CezeriSymbolSprites />
       <GameHeading title={t('title')} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
         badge={remote ? rgs.source('remote') : sourcePending ? t('badge.checking') : rgs.source('local')} />
-      <section className={`game-table ${styles.table}`} aria-label={t('table')} data-free={free || undefined}>
+      <section ref={tableRef} className={`game-table ${styles.table}`} aria-label={t('table')} data-free={free || undefined}>
         <div className={styles.layout}>
           <div ref={stageRef} className={styles.stage} data-phase={phase} data-celebrate={celebrating || undefined}>
             <MemoScene ref={scene} mood={mood} className={styles.scene} corners />

@@ -28,6 +28,7 @@ import {
   AutoplayPanel, AutoplayStopButton, BetSelector, BuyFeatureDialog, GameInfo, Modal, RealityCheckDialog, SessionBar, SettingsPanel, useSession, useSlotSettings,
 } from '../slot-kit';
 import kit from '../slot-kit/kit.module.css';
+import { useViewportTop } from '../slot-kit/use-viewport-top';
 import { EbruBoard, type EbruBoardHandle } from './ebru-board';
 import { EbruCelebration, EbruFeatureTotal, EbruFreeIntro } from './ebru-celebration';
 import { EbruHistory } from './ebru-history';
@@ -232,6 +233,8 @@ export function EbruGame() {
   const frontRef = useRef<HTMLCanvasElement>(null);
   const water = useRef<EbruWater | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLElement>(null);
+  useViewportTop(tableRef);
   const layerRef = useRef<HTMLDivElement>(null);
   const shakeRef = useRef<HTMLDivElement>(null);
   const meterRef = useRef<HTMLDivElement>(null);
@@ -924,7 +927,7 @@ export function EbruGame() {
       <EbruSymbolSprites />
       <GameHeading title={gameTitle} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
         badge={remote ? tk('rgs.source.remote') : sourcePending ? t('badge.checking') : tk('rgs.source.local')} />
-      <section className={`game-table ${styles.table}`} aria-label={t('table.aria')} data-free={free || undefined}>
+      <section ref={tableRef} className={`game-table ${styles.table}`} aria-label={t('table.aria')} data-free={free || undefined}>
         <EbruScene ref={scene} mood={mood} className={styles.scene}>
           <div className={styles.layout}>
             <div ref={stageRef} className={styles.stage} data-phase={phase} data-celebrate={celebrating || undefined} data-combing={combing || undefined}>

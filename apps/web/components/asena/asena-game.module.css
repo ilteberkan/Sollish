@@ -558,3 +558,76 @@
   .cellValue { font-size: 17px; }
   .cellValue small { font-size: 9.5px; letter-spacing: 0.4px; }
 }
+
+/* Phone / portrait fit (22 Oct 2026, as Göreme): the whole game (compact logo or Ergenekon map row, HUD, 6 × 6 field,
+   win bar, deck and spin button) fits the first screen without page scroll. The table takes the viewport height below
+   its own top (--fit-top, written by useViewportTop); the stage is a size container again, so the square field scales
+   to the height that is left. Presentation only: no game state, result or payout depends on it. */
+@media (max-width: 760px), (max-aspect-ratio: 4 / 5) {
+  .table { height: max(500px, calc(100svh - var(--fit-top, 139px) - 6px)); }
+  .table .scene { position: absolute; inset: 0; height: 100%; }
+  .layout { grid-template-rows: auto minmax(0, 1fr) auto; height: 100%; }
+  .left { padding: 6px 6px 0; }
+  .leftLogo { width: auto; height: 40px; min-height: 0; justify-content: center; }
+  .leftLogo > svg { width: auto; height: 100%; }
+  /* Ergenekon map as one compact row: emblem and medal, then the six constellations (the section keeps its label) */
+  .table[data-free] .mapWrap section[data-orient='row'] { display: flex; align-items: center; gap: 6px; padding: 4px 6px; }
+  .table[data-free] .mapWrap section[data-orient='row'] > header { display: flex; align-items: center; gap: 4px; flex: none; }
+  .table[data-free] .mapWrap section[data-orient='row'] > header > div:nth-child(1) { width: 26px; }
+  .table[data-free] .mapWrap section[data-orient='row'] > header > div:nth-child(2) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .table[data-free] .mapWrap section[data-orient='row'] > header > div:nth-child(3) { min-width: 34px; height: 26px; }
+  .table[data-free] .mapWrap section[data-orient='row'] > header > div:nth-child(3) span { font-size: 14px; }
+  .table[data-free] .mapWrap section[data-orient='row'] > div { flex: 1; min-width: 0; }
+  .table[data-free] .mapWrap section[data-orient='row'] > div > div { padding: 2px 1px 3px; }
+  .table[data-free] .mapWrap section[data-orient='row'] > div > div > svg { width: 28px; height: 28px; }
+  .stage { container-type: size; padding: 0; z-index: 4; }
+  .column {
+    --as-fixed: 98px;
+    --bw: min(100cqw - 12px, 600px, 100cqh - var(--as-fixed));
+    position: absolute; inset: 0; justify-content: center; padding: 4px 3px; gap: 4px;
+  }
+  /* replay / autoplay ribbons sit over the logo row, so the field keeps its size */
+  .stage[data-replay] .column { padding-top: 4px; }
+  .replayRibbon, .autoRibbon { top: -42px; }
+  .hud { min-height: 36px; width: min(100cqw - 12px, 600px); }
+  .chip, .freeCounter, .globalChip { min-height: 34px; }
+  .meter { min-height: 38px; width: var(--bw); }
+  .meterPart strong { font-size: 18px; }
+  .meterIdle { font-size: 11.5px; line-height: 1.25; gap: 4px; }
+  .side { padding: 8px 8px 10px; }
+  .deck { --sk-stop-size: 76px; gap: 6px; align-items: stretch; }
+  .cellBalance, .cellWin { min-height: 0; padding: 4px 8px; }
+  .cellBet { gap: 2px; justify-content: center; }
+  .cellBet > span:first-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .deck .betValue { min-height: 42px; padding: 2px 8px; border-radius: 14px; }
+  .deck .betValue strong { font-size: 20px; }
+  .costLine { font-size: 11px; }
+  .areaSpin { padding: 4px 0; }
+  .spin { width: 76px; height: 76px; }
+  .spin::after { inset: -8px; }
+  .spinning::after { inset: -7px; }
+  .deck .stepBtn { width: 44px; height: 44px; }
+  .areaMinus, .areaPlus { align-self: center; }
+  .tool { min-height: 44px; align-self: center; }
+  .feature { min-height: 44px; padding: 4px 10px; }
+  .featureTitle { font-size: 13px; }
+  .featureState { font-size: 11px; }
+  .areaMsg { min-height: 0; }
+  .msgHint, .msgError { font-size: 12px; line-height: 1.3; }
+  .msgHint { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .page :global(.game-heading) { margin-bottom: 6px; }
+}
+/* the Ergenekon map row takes the logo row's place: ribbons go inside the stage there */
+@media (max-width: 760px), (max-aspect-ratio: 4 / 5) {
+  .table[data-free] .replayRibbon, .table[data-free] .autoRibbon { top: 4px; }
+  .table[data-free] .stage:is([data-replay], :has(.autoRibbon)) .column { --as-fixed: 134px; padding-top: 40px; }
+}
+/* short phones (≤ 760 px tall): the page heading already names the game, so the logo row (the Ergenekon map stays)
+   and the idle hint give their height to the field; ribbons go inside the stage, above the HUD; errors still show */
+@media (max-width: 760px) and (max-height: 760px), (max-aspect-ratio: 4 / 5) and (max-height: 760px) {
+  .leftLogo { display: none; }
+  .table:not([data-free]) .left { display: none; }
+  .msgHint { display: none; }
+  .replayRibbon, .autoRibbon { top: 4px; }
+  .stage:is([data-replay], :has(.autoRibbon)) .column { --as-fixed: 134px; padding-top: 40px; }
+}

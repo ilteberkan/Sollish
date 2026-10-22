@@ -9,9 +9,16 @@ import { AsenaRules } from './asena/asena-rules';
 import { CezeriRules } from './cezeri/cezeri-rules';
 export type Mode = 'demo' | 'live';
 /** `badge` replaces the DEMO label (for example "Sunucu doğrulamalı" when an RGS server resolves the rounds). */
+/** "Name: subtitle" titles keep the subtitle in its own span, so narrow phone layouts can hide it visually while the
+    heading's accessible name stays the full title. */
+function HeadingTitle({ title }: { title: string }) {
+  const cut = title.indexOf(': ');
+  if (cut <= 0) return <>{title}</>;
+  return <><span className="title-main">{title.slice(0, cut)}</span><span className="title-sub">{title.slice(cut)}</span></>;
+}
 export function GameHeading({ title, subtitle, mode, setMode, active, badge }: { title: string; subtitle: string; mode: Mode; setMode: (mode: Mode) => void; active: boolean; badge?: string }) {
   const t = useT('common');
-  return <div className="game-heading"><div><div className="title-line"><h1>{title}</h1><span className={`mode-badge ${mode === 'live' ? 'live-mode' : ''}`} data-testid="round-source">{mode === 'demo' ? (badge ?? t('game.sourceLocal')) : 'Devnet'}</span></div><p>{subtitle}</p></div><div className="mode-switch" aria-label={t('game.environment')}><button aria-pressed={mode === 'demo'} onClick={() => setMode('demo')} disabled={active}>{t('game.demo')}</button><button aria-pressed={mode === 'live'} onClick={() => setMode('live')} disabled={active}>{t('game.onchain')}<Icon name="lock" size={12}/></button></div></div>;
+  return <div className="game-heading"><div><div className="title-line"><h1><HeadingTitle title={title} /></h1><span className={`mode-badge ${mode === 'live' ? 'live-mode' : ''}`} data-testid="round-source">{mode === 'demo' ? (badge ?? t('game.sourceLocal')) : 'Devnet'}</span></div><p>{subtitle}</p></div><div className="mode-switch" aria-label={t('game.environment')}><button aria-pressed={mode === 'demo'} onClick={() => setMode('demo')} disabled={active}>{t('game.demo')}</button><button aria-pressed={mode === 'live'} onClick={() => setMode('live')} disabled={active}>{t('game.onchain')}<Icon name="lock" size={12}/></button></div></div>;
 }
 export function AmountControl({ amount, setAmount, disabled, error, unit = 'DEMO' }: { amount: string; setAmount: (value: string) => void; disabled: boolean; error?: string; unit?: string }) {
   const t = useT('common');
