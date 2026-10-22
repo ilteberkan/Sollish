@@ -161,3 +161,17 @@ test('/verify recomputes a Damla round from revealed seeds and shows its path an
   await expect(damla.getByTestId('damla-path-figure')).toBeVisible();
   await expect(page.getByLabel('Mod', { exact: true }).locator('option:checked')).toHaveText('Yüksek risk · 12 teras');
 });
+
+/* Phone fit (22 Oct 2026): the first screen holds the whole table (board, win bar, deck, spin button) with no page
+   scroll; phone CSS sizes the table to 100svh below its own top (slot-kit/use-viewport-top). */
+test('phone 390x844 first screen: the whole table and the spin button fit without scrolling the page', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openDamla(page);
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  const spinBox = (await drop(page).boundingBox())!;
+  expect(spinBox.y, 'spin button top').toBeGreaterThanOrEqual(0);
+  expect(spinBox.y + spinBox.height, 'spin button bottom').toBeLessThanOrEqual(844);
+  const tableBox = (await page.locator('.game-table').boundingBox())!;
+  expect(tableBox.y + tableBox.height, 'table bottom').toBeLessThanOrEqual(844);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+});

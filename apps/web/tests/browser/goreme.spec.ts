@@ -319,3 +319,19 @@ test.describe('English', () => {
     await expect(page.getByRole('dialog', { name: /Game info/ }).getByRole('tab', { name: 'Paytable' })).toBeVisible();
   });
 });
+
+/* Phone fit (22 Oct 2026): the first screen holds the whole table (board, win bar, deck, spin button) with no page
+   scroll; phone CSS sizes the table to 100svh below its own top (slot-kit/use-viewport-top). */
+test('phone 390x844 first screen: the whole table and the spin button fit without scrolling the page', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await openGoreme(page);
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  const spinBox = (await spin(page).boundingBox())!;
+  expect(spinBox.y, 'spin button top').toBeGreaterThanOrEqual(0);
+  expect(spinBox.y + spinBox.height, 'spin button bottom').toBeLessThanOrEqual(844);
+  const tableBox = (await page.locator('.game-table').boundingBox())!;
+  expect(tableBox.y + tableBox.height, 'table bottom').toBeLessThanOrEqual(844);
+  const buyBox = (await page.getByRole('button', { name: /Bonus satın al/ }).boundingBox())!;
+  expect(buyBox.y + buyBox.height, 'buy button bottom').toBeLessThanOrEqual(844);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+});
