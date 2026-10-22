@@ -24,6 +24,7 @@ import { DemoNotice, GameHeading, type Mode } from '../game-common';
 import { Icon } from '../icons';
 import { AutoplayPanel, AutoplayStopButton, BetSelector, GameInfo, Modal, RealityCheckDialog, SessionBar, SettingsPanel, useSession, useSlotSettings } from '../slot-kit';
 import kit from '../slot-kit/kit.module.css';
+import { useViewportTop } from '../slot-kit/use-viewport-top';
 import { DamlaBoard, type BoardPool, type DamlaBoardHandle } from './board';
 import { DamlaHistory } from './damla-history';
 import { damlaInfoPages } from './damla-info-pages';
@@ -135,6 +136,8 @@ export function DamlaGame() {
   useEffect(() => { if (sourceView.status === 'remote') setRemoteBalance(sourceView.balanceCents); }, [sourceView]);
 
   const board = useRef<DamlaBoardHandle>(null);
+  const tableRef = useRef<HTMLElement>(null);
+  useViewportTop(tableRef);
   const flights = useRef(new Map<number, Flight>());
   const seq = useRef(0);
   const batchRef = useRef(0);
@@ -609,7 +612,7 @@ export function DamlaGame() {
     <div className={`game-page ${styles.page}`}>
       <GameHeading title={t('title')} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={inFlight > 0 || auto !== null || pending}
         badge={remote ? rgs.source('remote') : sourcePending ? t('badge.checking') : rgs.source('local')} />
-      <section className={`game-table ${styles.table}`} aria-label={t('table')} data-risk={risk}>
+      <section ref={tableRef} className={`game-table ${styles.table}`} aria-label={t('table')} data-risk={risk}>
         <div className={styles.layout}>
           <div className={styles.stage} data-replay={replayInfo ? '' : undefined}>
             <div className={styles.stageTop}>

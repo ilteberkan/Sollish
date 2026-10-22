@@ -67,5 +67,30 @@
     "390x844-tr-08c-rtp.png",
     "390x844-tr-09-verify.png",
     "390x844-tr-10-lobby-instant.png"
-  ]
+  ],
+  "phone_fit_20261022": {
+    "date": "2026-10-22",
+    "problem": "On phones the Damla table did not fit the first screen (390x844: page scrollHeight 1605, drop button at y 748-820 with bet, risk, rows and tools below the fold; tall page heading with subtitle and full-width mode switch). 390x844-tr-07-gold-signature.png was scrolled.",
+    "fix": "apps/web/components/damla/damla-game.module.css phone block: table height = 100svh minus its own top (--fit-top, components/slot-kit/use-viewport-top.ts), terraces take the height left by a compact deck (56 px drop and rain buttons, inline bet row, risk and rows side by side, one-line facts, hint and facts hidden on screens <= 760 px tall), compact one-row page heading as in Göreme/Asena. Desktop rules untouched (all changes inside the max-width 860 / portrait media query).",
+    "measured_unscrolled": {
+      "390x844": "table 135-838, drop 542-598",
+      "360x740": "table 135-734, drop 480-536",
+      "430x932": "table 135-926, drop 630-686"
+    },
+    "checks": "typecheck pass; goreme + damla browser specs 16/16 pass (damla 6) on http://localhost:3000",
+    "screenshots_replaced": [
+      "390x844-tr-01-splash.png",
+      "390x844-tr-02-idle.png",
+      "390x844-tr-03-rain-in-flight.png",
+      "390x844-tr-04-rain-settled.png",
+      "390x844-tr-05-full-page.png",
+      "390x844-tr-06-high16-idle.png",
+      "390x844-tr-07-gold-signature.png",
+      "390x844-tr-08-info.png",
+      "390x844-tr-08b-paytable.png",
+      "390x844-tr-08c-rtp.png"
+    ],
+    "screenshot_method": "same scenes and fills as before, on next dev :3000, unscrolled (07 no longer scrollIntoView); 1440x900 and 390x844 09/10 not re-shot",
+    "runtime": "local next dev; not build:cloudflare, not hosted, no CI; not the user's visual acceptance"
+  }
 }

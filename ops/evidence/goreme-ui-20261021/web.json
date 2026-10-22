@@ -6,21 +6,108 @@
   "runtime": "local next dev (16.3.8) on http://localhost:3000; NOT build:cloudflare preview, not hosted, no CI",
   "note": "Browser specs must use http://localhost:3000: next dev blocks cross-origin dev resources from 127.0.0.1, so the page never hydrates there.",
   "commands": [
-    {"cmd": "bash scripts/use-node.sh pnpm --filter @sollish/protocol test", "result": "341/341 pass"},
-    {"cmd": "bash scripts/use-node.sh pnpm --filter @sollish/web test", "result": "405/405 pass (goreme-timeline 10, goreme-controls 6, lobby 7, i18n 8, rgs-client)"},
-    {"cmd": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck", "result": "pass"},
-    {"cmd": "node --import tsx --test apps/realtime/test/slots.test.ts", "result": "7/7 pass (GOREME_SLOT admission, health game list)"},
-    {"cmd": "PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3000 PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome bash scripts/use-node.sh pnpm --filter @sollish/web test:browser goreme.spec.ts lobby.spec.ts damla.spec.ts --workers=1 -g <goreme|lobby|verify>", "result": "28/28 pass: goreme 10, lobby 15, damla 3 (incl. /verify)"},
-    {"cmd": "... test:browser i18n.spec.ts", "result": "3/3 pass"}
+    {
+      "cmd": "bash scripts/use-node.sh pnpm --filter @sollish/protocol test",
+      "result": "341/341 pass"
+    },
+    {
+      "cmd": "bash scripts/use-node.sh pnpm --filter @sollish/web test",
+      "result": "405/405 pass (goreme-timeline 10, goreme-controls 6, lobby 7, i18n 8, rgs-client)"
+    },
+    {
+      "cmd": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck",
+      "result": "pass"
+    },
+    {
+      "cmd": "node --import tsx --test apps/realtime/test/slots.test.ts",
+      "result": "7/7 pass (GOREME_SLOT admission, health game list)"
+    },
+    {
+      "cmd": "PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3000 PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome bash scripts/use-node.sh pnpm --filter @sollish/web test:browser goreme.spec.ts lobby.spec.ts damla.spec.ts --workers=1 -g <goreme|lobby|verify>",
+      "result": "28/28 pass: goreme 10, lobby 15, damla 3 (incl. /verify)"
+    },
+    {
+      "cmd": "... test:browser i18n.spec.ts",
+      "result": "3/3 pass"
+    }
   ],
-  "fixtures": {"LOSS": 2364027904, "LIFT": 1824259072, "CALLOUT": 3852139584, "BUYUK": 3727255296, "MEGA": 3029292032, "FREE_LOW": 245234176, "BUY_SKY": 4139144192, "FREE_BIG": 71414784, "BUY_MERGE": 3650240146, "screenshot_sky8": 475158667},
-  "screenshots": {
-    "base": ["1440x900-base.png", "390x844-base.png"],
-    "lift": ["1440x900-lift.png", "390x844-lift.png"],
-    "merge": ["1440x900-merge.png", "390x844-merge.png"],
-    "free_spins_full_sky_band": ["1440x900-free-spins-sky-band.png", "390x844-free-spins-sky-band.png"],
-    "big_win": ["1440x900-big-win.png", "390x844-big-win.png"]
+  "fixtures": {
+    "LOSS": 2364027904,
+    "LIFT": 1824259072,
+    "CALLOUT": 3852139584,
+    "BUYUK": 3727255296,
+    "MEGA": 3029292032,
+    "FREE_LOW": 245234176,
+    "BUY_SKY": 4139144192,
+    "FREE_BIG": 71414784,
+    "BUY_MERGE": 3650240146,
+    "screenshot_sky8": 475158667
   },
-  "posters": {"tool": "scratch copy of apps/web/scripts/lobby-posters.mjs with POSTER_ONLY=goreme (other posters untouched)", "files": {"goreme-tile.webp": "360x480 21.5 KiB", "goreme-wide.webp": "1320x540 37.7 KiB", "goreme-narrow.webp": "780x520 37.9 KiB"}},
-  "not_done": ["build:cloudflare preview run", "user visual/audio acceptance", "native-speaker review of de/pt/fr/it/es/zh/ko", "voice lines (wordless fallback)", "60 fps measurement on a mid-range phone"]
+  "screenshots": {
+    "base": [
+      "1440x900-base.png",
+      "390x844-base.png"
+    ],
+    "lift": [
+      "1440x900-lift.png",
+      "390x844-lift.png"
+    ],
+    "merge": [
+      "1440x900-merge.png",
+      "390x844-merge.png"
+    ],
+    "free_spins_full_sky_band": [
+      "1440x900-free-spins-sky-band.png",
+      "390x844-free-spins-sky-band.png"
+    ],
+    "big_win": [
+      "1440x900-big-win.png",
+      "390x844-big-win.png"
+    ]
+  },
+  "posters": {
+    "tool": "scratch copy of apps/web/scripts/lobby-posters.mjs with POSTER_ONLY=goreme (other posters untouched)",
+    "files": {
+      "goreme-tile.webp": "360x480 21.5 KiB",
+      "goreme-wide.webp": "1320x540 37.7 KiB",
+      "goreme-narrow.webp": "780x520 37.9 KiB"
+    }
+  },
+  "not_done": [
+    "build:cloudflare preview run",
+    "user visual/audio acceptance",
+    "native-speaker review of de/pt/fr/it/es/zh/ko",
+    "voice lines (wordless fallback)",
+    "60 fps measurement on a mid-range phone"
+  ],
+  "phone_fit_20261022": {
+    "date": "2026-10-22",
+    "problem": "390x844-free-spins-sky-band.png (and the other 390x844 shots) were scrolled: on a phone the table was taller than the screen (page scrollHeight 1590 at 390x844; spin button at y 861-961, below the 844 fold; logo cut off at the top when scrolled to the board). Asena has the same scrolling phone layout (spin at y 820-920 at 390x844), so it was not a fitting reference.",
+    "fix": "apps/web/components/goreme/goreme-game.module.css phone block: table height = 100svh minus its own top (--fit-top from new components/slot-kit/use-viewport-top.ts), stage is a size container again and the board scales to the height left (--bw from cqh), compact 40 px logo (hidden on screens <= 760 px tall, the h1 names the game), compact deck (76 px spin), replay/autoplay ribbon over the logo row, HUD full width, one-line idle meter; sky-band.module.css: band min-height 60 px on phones. Desktop 1440x900 identical to the earlier 1440x900-base.png.",
+    "measured_unscrolled": {
+      "390x844": "table 135-838, spin 672-748",
+      "360x740": "table 135-734, spin 584-660",
+      "430x932": "table 135-926, spin 760-836",
+      "768x1024": "table 134-1018, spin 852-928"
+    },
+    "checks": [
+      {
+        "cmd": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck",
+        "result": "pass"
+      },
+      {
+        "cmd": "PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3000 PW_CHROMIUM_PATH=... test:browser tests/browser/goreme.spec.ts tests/browser/damla.spec.ts --workers=1",
+        "result": "16/16 pass (goreme 10, damla 6; desktop viewport)"
+      }
+    ],
+    "screenshots_replaced": [
+      "390x844-base.png",
+      "390x844-lift.png",
+      "390x844-merge.png",
+      "390x844-free-spins-sky-band.png",
+      "390x844-big-win.png"
+    ],
+    "screenshot_method": "scrollY asserted 0 (no scrollIntoView); scenes via window.__goremePreview.play: lift 6cbbfc00 standard @2.7 s, merge d9923e92 buy at the 'Birleşme' banner, sky band 1c52588b buy @66.5 s, big win 1c52588b buy celebration +4 s",
+    "runtime": "local next dev on http://localhost:3000; not build:cloudflare preview, not hosted, no CI; not the user's visual acceptance"
+  }
 }
