@@ -1,6 +1,8 @@
 /* Göreme board: cells and balloons are absolutely placed by --c (reel) and --r (row); lengths come from the timeline
    (--delay, --dur, --ms, --stop). Only transform / opacity animate. */
 .board { position: absolute; inset: 0; transition: opacity 0.35s ease; }
+/* symbols drop in from above the window: clip them to the well (balloons fly out above it on their own layer) */
+.cells { position: absolute; inset: 0; overflow: hidden; }
 .board[data-dim] { opacity: 0.45; }
 
 .cell, .balloon {

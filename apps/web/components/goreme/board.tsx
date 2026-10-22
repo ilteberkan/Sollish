@@ -161,6 +161,7 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
   const stateOf = (id: number): GoremeSymbolState => (lit ? (lit.has(id) ? 'win' : 'dim') : 'idle');
   return (
     <div ref={root} className={styles.board} role="group" aria-label={label} data-mood={mood} data-dim={dimmed || undefined} data-lit={lit ? '' : undefined}>
+      <div className={styles.cells}>
       {reels && (
         <div key={reels.key} className={styles.reels} aria-hidden="true">
           {reels.stops.map((stop, col) => (
@@ -184,6 +185,7 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
           <GoremeSymbol sprite symbol={c.symbol} state={stateOf(c.id)} label={cellLabel(c.symbol, c.col, c.row, 0)} />
         </div>
       ))}
+      </div>
       <div className={styles.sky} key={`burn-${burnKey}`} data-burn={burnKey > 0 || undefined}>
         {balloons.map(b => (
           <div key={b.id} className={styles.balloon} data-phase={b.phase} data-sym={onBoard(b.phase) ? 'balloon' : undefined}

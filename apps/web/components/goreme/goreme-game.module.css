@@ -601,9 +601,9 @@
   .wind, .wind svg, .sealBalloon { animation: none; }
 }
 /* banners sit just above the meter, so the HUD (free-spin counter, wind) stays readable */
-.banner { top: auto; bottom: 84px; }
+.banner { top: auto; bottom: 40px; font-size: 18px; padding: 7px 20px; }
 @media (max-width: 760px), (max-aspect-ratio: 4 / 5) {
-  .banner { top: auto; bottom: 64px; max-width: calc(100% - 16px); overflow: hidden; text-overflow: ellipsis; }
+  .banner { top: auto; bottom: 34px; font-size: 14px; max-width: calc(100% - 16px); overflow: hidden; text-overflow: ellipsis; }
 }
 /* the dawn scene is a size container on desktop; on phones it must grow with the table content */
 @media (max-width: 760px), (max-aspect-ratio: 4 / 5) {

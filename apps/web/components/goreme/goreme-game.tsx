@@ -429,16 +429,14 @@ export function GoremeGame() {
     setMood('bigwin');
     sound.scene('bigwin');
     board.current?.dim(true);
-    if (!lite) sunRays(Math.min(2.2, 1 + schedule.totalHundredths / 10_000), Math.min(4200, Math.max(1800, schedule.countUp)));
     setAnnounce(t('announce.celebration', { title: tk(`winTier.${WIN_TIER_INFO[schedule.finalLevel].id}.title`), amount: format.number(goremeCents(betCents, schedule.totalHundredths) / 100), times: goremeTimes(schedule.totalHundredths, loc) }));
-  }, [sound, sunRays, t, tk, format, loc]);
+  }, [sound, t, tk, format, loc]);
   const onCelebrationLevel = useCallback((level: CelebrationLevel, first: boolean) => {
     const { reduced, lite } = celebrateFx.current;
     if (level === 5) sound.maxWin(); else sound.bigWin(level as 1 | 2 | 3 | 4);
     if (first) sound.countUp(true);
-    if (!lite && !first) sunRays(1.2 + level * 0.25, 2400);
     if (!lite && !reduced) shake(first ? 5 : 6 + level * 2.2, first ? 380 : 540);
-  }, [shake, sound, sunRays]);
+  }, [shake, sound]);
   const onCelebrationCounted = useCallback(() => { sound.countUp(false); }, [sound]);
 
   const nameOf = useCallback((symbol: EngineSymbol) => symbolLabels[symbol], [symbolLabels]);
@@ -488,7 +486,7 @@ export function GoremeGame() {
         break;
       case 'scatter': {
         b?.highlight(event.cells);
-        if (!lite) sunRays(event.retrigger ? 1.2 : 1.6);
+        if (!lite) sunRays(event.retrigger ? 0.9 : 1.1);
         if (event.payHundredths > 0) { setMeterDur(500); setMeter(event.meter); }
         setBanner({ key: ++keys.current.banner, text: event.retrigger ? t('banner.retrigger', { count: event.count, spins: event.freeSpins }) : t('banner.scatter', { count: event.count, money: goremeMoney(goremeCents(betCents, event.payHundredths), loc), spins: event.freeSpins }), tone: 'gold' });
         if (event.retrigger) sound.retrigger();
@@ -540,7 +538,7 @@ export function GoremeGame() {
         break;
       case 'trigger':
         sound.featureTrigger();
-        if (!lite) sunRays(2.2, 2400);
+        if (!lite) sunRays(1.4, 2000);
         setBanner({ key: ++keys.current.banner, text: t('banner.trigger', { spins: event.awarded }), tone: 'gold' });
         setAnnounce(t('announce.trigger', { count: event.count, spins: event.awarded }));
         break;
