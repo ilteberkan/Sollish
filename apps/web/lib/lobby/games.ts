@@ -1,7 +1,9 @@
 /**
- * The lobby's game catalog: static descriptors only (no engine, no protocol import), so the shell (sidebar, search) and
- * the lobby share one list without shipping any game code. Display names come from `common.games.<id>`; RTP, max win
- * and volatility are computed on the server from the engines' evidence constants (lib/lobby/stats.ts).
+ * THE game registry (one place for every game the shell, lobby and game pages list): static descriptors only (no
+ * engine, no protocol import), so the shell (sidebar, search), the lobby and the game-page info strip share one list
+ * without shipping any game code. Display names come from `common.games.<id>`, card copy from `lobby.cards.<id>`; RTP,
+ * max win and volatility are derived in lib/lobby/stats.ts (engine-free SLOT_GAME_META plus evidence copies); posters in
+ * lib/lobby/posters.ts. How to add a game: docs/architecture/lobby.md.
  */
 export const LOBBY_GAME_IDS = ['tarhun', 'ebru', 'cezeri', 'asena', 'cascade', 'ringside', 'crash', 'coinflip', 'damla', 'goreme'] as const;
 export type LobbyGameId = (typeof LOBBY_GAME_IDS)[number];
@@ -57,6 +59,18 @@ export function isLobbyGameId(value: unknown): value is LobbyGameId {
 }
 export function isLobbyCategory(value: unknown): value is LobbyCategory {
   return typeof value === 'string' && (LOBBY_CATEGORIES as readonly string[]).includes(value);
+}
+
+/** Games of one category in registry order (`favorites` needs the player's list). */
+export function gamesIn(category: LobbyCategory, favorites: readonly string[] = []): LobbyGame[] {
+  return LOBBY_GAMES.filter(g => inCategory(g, category, favorites));
+}
+
+/** "Similar games" under a game page: the other games of the same kind first, then the rest, in registry order. */
+export function similarGames(id: LobbyGameId, limit = 6): LobbyGame[] {
+  const kind = LOBBY_GAME_BY_ID[id].kind;
+  const rest = LOBBY_GAMES.filter(g => g.id !== id);
+  return [...rest.filter(g => g.kind === kind), ...rest.filter(g => g.kind !== kind)].slice(0, limit);
 }
 
 /** The game whose page `pathname` is (exact route match), for "recently played". */

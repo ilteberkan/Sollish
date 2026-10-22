@@ -169,5 +169,20 @@
     "demoQ": "演示与真实投注的界限",
     "demoA": "这里的 DEMO 额度没有货币价值。在合约部署、预言机恢复、Crash 隐私和支付流程完成验证之前，真实 SOL 投注保持关闭。我们不声称已进行独立审计。这些版本没有 VRF 证明。"
   },
-  "footnote": "RTP 和波动性是各 DEMO 游戏标准模式的模拟估计值，并非认证数据。Crash 和 Coinflip 的练习局使用浏览器的随机数，不具备可证公平性。"
+  "footnote": "RTP 和波动性是各 DEMO 游戏标准模式的模拟估计值，并非认证数据。Crash 和 Coinflip 的练习局使用浏览器的随机数，不具备可证公平性。",
+  "categories": {
+    "label": "按类别浏览",
+    "favoritesEmpty": "暂无收藏"
+  },
+  "gameInfo": {
+    "aria": "关于本游戏",
+    "original": "Sollish 原创",
+    "rtp": "RTP {value}",
+    "maxWin": "最高赢取 {value}",
+    "fair": "可证公平",
+    "notFair": "练习局：使用浏览器随机数，不可证公平",
+    "note": "数值为模拟得出的 DEMO 估算，未经认证。",
+    "similar": "相似游戏",
+    "similarSubtitle": "更多 Sollish 原创游戏。"
+  }
 }

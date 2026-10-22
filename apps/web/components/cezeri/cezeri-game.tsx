@@ -43,6 +43,7 @@ import { CezeriReservoir } from './meter';
 import { CezeriScene, type CezeriSceneHandle } from './scene';
 import { CezeriSymbolArt, CezeriSymbolSprites, useCezeriSymbolLabels } from './symbols';
 import styles from './cezeri-game.module.css';
+import { GameInfoStrip } from '@/components/game-info-strip';
 
 /* Lifecycle: entropy -> engine cezeri-gears-1 resolves the whole round (bet + mode) -> one reservation of the mode cost ->
    the timeline replays it -> exactly one settlement with the engine payout (at the end, or on unmount).
@@ -1057,6 +1058,7 @@ export function CezeriGame() {
         <div className="sr-only" role="status" aria-live="polite">{announce}</div>
       </section>
       <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} />
+      <GameInfoStrip id="cezeri" />
       <CezeriHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <StaticFooter remote={remote !== null} />
 

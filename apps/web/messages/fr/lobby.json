@@ -169,5 +169,20 @@
     "demoQ": "La limite entre démo et paris réels",
     "demoA": "Les crédits DEMO n’ont ici aucune valeur monétaire. Les paris réels en SOL restent désactivés tant que le déploiement du contrat, la reprise de l’oracle, la confidentialité de Crash et les flux de paiement ne sont pas validés. Nous ne prétendons pas qu’un audit indépendant a été réalisé. Ces versions n’ont pas de preuve VRF."
   },
-  "footnote": "Le RTP et la volatilité sont des estimations simulées pour le mode standard de chaque jeu DEMO, pas des valeurs certifiées. Les tours d’entraînement de Crash et Coinflip utilisent l’aléatoire de ton navigateur et ne sont pas d’équité prouvable."
+  "footnote": "Le RTP et la volatilité sont des estimations simulées pour le mode standard de chaque jeu DEMO, pas des valeurs certifiées. Les tours d’entraînement de Crash et Coinflip utilisent l’aléatoire de ton navigateur et ne sont pas d’équité prouvable.",
+  "categories": {
+    "label": "Parcourir par catégorie",
+    "favoritesEmpty": "Aucun pour l’instant"
+  },
+  "gameInfo": {
+    "aria": "À propos de ce jeu",
+    "original": "Original Sollish",
+    "rtp": "RTP {value}",
+    "maxWin": "Gain max {value}",
+    "fair": "Équité prouvable",
+    "notFair": "Partie d’entraînement : hasard du navigateur, équité non prouvable",
+    "note": "Les chiffres sont des estimations DEMO simulées, non certifiées.",
+    "similar": "Jeux similaires",
+    "similarSubtitle": "Plus d’originaux Sollish."
+  }
 }

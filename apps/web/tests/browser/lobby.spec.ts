@@ -50,6 +50,49 @@ test('category chips filter in place, keep the URL and the Back button', async (
   await expect(originals(page)).toBeVisible();
 });
 
+test('category tiles near the top open each category grid; they are real ?c= links', async ({ page }) => {
+  await page.goto('/');
+  const tiles = page.getByRole('navigation', { name: 'Kategoriye göre göz at' });
+  await expect(tiles.getByRole('link')).toHaveCount(6);
+  const expected: Array<[string, string, number]> = [['Slotlar', 'slots', 5], ['Canlı', 'live', 1], ['Anında oyunlar', 'instant', 2], ['Yeni', 'new', 4], ['Kanıtlanabilir adil', 'fair', 6]];
+  const results = page.locator('#lobby-results');
+  for (const [name, category, count] of expected) {
+    const link = tiles.getByRole('link', { name: new RegExp(`^${name}`) });
+    await expect(link).toHaveAttribute('href', `/?c=${category}`);
+    await expect(link).toContainText(`${count} oyun`);
+    await link.click();
+    await expect(page).toHaveURL(new RegExp(`\\?c=${category}$`));
+    await expect(results.getByRole('listitem')).toHaveCount(count);
+    await results.getByRole('button', { name: 'Lobiye dön' }).click();
+  }
+  await expect(tiles.getByRole('link', { name: /^Favoriler/ })).toContainText('Henüz kayıtlı yok');
+  // Without JS the link still lands on the filtered grid (server reads ?c=).
+  await page.goto('/?c=instant');
+  await expect(results.getByRole('listitem')).toHaveCount(2);
+});
+
+test('every row "View all" opens that category grid and brings it into view', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  const rows: Array<[string, string, number]> = [['Sollish Orijinalleri', 'slots', 5], ['Canlı', 'live', 1], ['Anında oyunlar', 'instant', 2], ['Yeni', 'new', 4], ['Kanıtlanabilir adil', 'fair', 6]];
+  const results = page.locator('#lobby-results');
+  for (const [title, category, count] of rows) {
+    await page.goto('/');
+    const button = page.getByRole('button', { name: `Tümünü gör: ${title}` });
+    await button.scrollIntoViewIfNeeded();
+    await button.click();
+    await expect(page).toHaveURL(new RegExp(`\\?c=${category}$`));
+    await expect(results.getByRole('listitem')).toHaveCount(count);
+    await expect(results.getByRole('heading', { level: 2 })).toBeInViewport();
+  }
+});
+
+test('live card shows a LIVE status badge and no invented audience number', async ({ page }) => {
+  await page.goto('/');
+  const badge = page.getByTestId('live-status');
+  await expect(badge).toHaveText('CANLI · HERKES AYNI MAÇI İZLER');
+  await expect(badge).not.toHaveText(/\d/);
+});
+
 test('top-bar search filters the lobby instantly and suggests games on other pages', async ({ page }) => {
   await page.goto('/');
   await search(page).fill('kurt');
