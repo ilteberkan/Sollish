@@ -169,7 +169,7 @@
     "demoQ": "La frontera entre demo y apuestas reales",
     "demoA": "Los créditos DEMO de aquí no tienen valor monetario. Las apuestas reales en SOL seguirán desactivadas hasta validar el despliegue del contrato, la recuperación del oráculo, la privacidad de Crash y los flujos de pago. No afirmamos que se haya realizado una auditoría independiente. Estas versiones no tienen prueba VRF."
   },
-  "footnote": "El RTP y la volatilidad son estimaciones simuladas del modo estándar de cada juego DEMO, no cifras certificadas. Las rondas de práctica de Crash y Coinflip usan la aleatoriedad de tu navegador y no son demostrablemente justas.",
+  "footnote": "El RTP y la volatilidad son estimaciones DEMO simuladas del modo predeterminado de cada juego (o de su único modo), no cifras certificadas. Las rondas de práctica de Crash y Coinflip usan la aleatoriedad de tu navegador y no son demostrablemente justas.",
   "categories": {
     "label": "Explorar por categoría",
     "favoritesEmpty": "Ninguno guardado"
@@ -178,6 +178,7 @@
     "aria": "Sobre este juego",
     "original": "Original de Sollish",
     "rtp": "RTP {value}",
+    "houseEdge": "Ventaja de la casa {value}",
     "maxWin": "Premio máx. {value}",
     "fair": "Justo y demostrable",
     "notFair": "Ronda de práctica: azar del navegador, no demostrablemente justa",

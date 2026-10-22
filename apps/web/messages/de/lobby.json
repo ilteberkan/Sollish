@@ -169,7 +169,7 @@
     "demoQ": "Die Grenze zwischen Demo und echten Wetten",
     "demoA": "Die DEMO-Guthaben hier haben keinen Geldwert. Echte SOL-Wetten bleiben gesperrt, bis Vertragsbereitstellung, Oracle-Wiederherstellung, Crash-Datenschutz und Zahlungsabläufe geprüft sind. Wir behaupten nicht, dass eine unabhängige Prüfung stattgefunden hat. Diese Versionen haben keinen VRF-Nachweis."
   },
-  "footnote": "RTP und Volatilität sind simulierte Schätzwerte für den Standardmodus jedes DEMO-Spiels, keine zertifizierten Werte. Übungsrunden von Crash und Coinflip nutzen den Zufall deines Browsers und sind nicht nachweislich fair.",
+  "footnote": "RTP und Volatilität sind simulierte DEMO-Schätzwerte für den Standardmodus jedes Spiels (oder den einzigen Modus), keine zertifizierten Werte. Übungsrunden von Crash und Coinflip nutzen den Zufall deines Browsers und sind nicht nachweislich fair.",
   "categories": {
     "label": "Nach Kategorie stöbern",
     "favoritesEmpty": "Noch keine gespeichert"
@@ -178,6 +178,7 @@
     "aria": "Über dieses Spiel",
     "original": "Sollish Original",
     "rtp": "RTP {value}",
+    "houseEdge": "Hausvorteil {value}",
     "maxWin": "Max. Gewinn {value}",
     "fair": "Nachweislich fair",
     "notFair": "Übungsrunde: Zufall aus dem Browser, nicht nachweislich fair",

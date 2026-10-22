@@ -169,7 +169,7 @@
     "demoQ": "Demo ile gerçek bahis arasındaki sınır",
     "demoA": "Buradaki DEMO kredilerinin parasal değeri yoktur. Gerçek SOL bahisleri; sözleşme dağıtımı, oracle kurtarma, Crash gizliliği ve ödeme akışları doğrulanana kadar kapalıdır. Bağımsız denetim yapılmış gibi bir iddiada bulunmuyoruz. Bu sürümlerin VRF kanıtı yoktur."
   },
-  "footnote": "RTP ve oynaklık, her DEMO oyununun standart modu için simülasyon tahminleridir; sertifikalı değerler değildir. Crash ve Coinflip deneme turları tarayıcının rastgeleliğini kullanır ve kanıtlanabilir adil değildir.",
+  "footnote": "RTP ve oynaklık, her oyunun varsayılan modu (ya da tek modu) için simüle edilmiş DEMO tahminleridir; sertifikalı değerler değildir. Crash ve Coinflip deneme turları tarayıcının rastgeleliğini kullanır ve kanıtlanabilir adil değildir.",
   "categories": {
     "label": "Kategoriye göre göz at",
     "favoritesEmpty": "Henüz kayıtlı yok"
@@ -178,6 +178,7 @@
     "aria": "Oyun hakkında",
     "original": "Sollish Orijinal",
     "rtp": "RTP {value}",
+    "houseEdge": "Kasa avantajı {value}",
     "maxWin": "En yüksek kazanç {value}",
     "fair": "Kanıtlanabilir adil",
     "notFair": "Alıştırma turu: tarayıcı rastgeleliği, kanıtlanabilir adil değil",

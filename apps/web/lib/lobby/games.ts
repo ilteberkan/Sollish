@@ -28,6 +28,9 @@ export interface LobbyGame {
   /** The result can be re-computed by the player: slots via /verify (server seed + client seed), Ringside via the
    * published seed hashes. The local Crash/Coinflip practice uses browser randomness and is NOT provably fair. */
   readonly provablyFair: boolean;
+  /** Optional explicit house edge as a ratio (0.02 = 2 %), for games whose edge is not simply 1 − RTP of the default
+   * mode. When absent, lobbyStats derives 1 − RTP for `instant` games only (lib/lobby/stats.ts); other kinds show none. */
+  readonly houseEdge?: number;
   /** Featured in the hero carousel (order = slide order). */
   readonly hero: number | null;
   /** Scene colours: the tile's placeholder gradient while the poster loads, and the hover glow. */

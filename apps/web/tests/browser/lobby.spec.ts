@@ -18,8 +18,8 @@ test('/ is the lobby without a redirect; /games serves the same lobby; a tile op
   await expect(originals(page).getByRole('listitem')).toHaveCount(6);
   // Tiles show provider, RTP, max win and volatility from the engine evidence.
   const asena = originals(page).getByRole('link', { name: 'Asena: Yıldız Kurdu' });
-  await expect(asena).toHaveAccessibleDescription(/RTP %95,2.*En çok ×5\.000.*Oynaklık: Çok yüksek/);
-  await expect(originals(page).getByRole('link', { name: 'Göreme: Şafak Balonları' })).toHaveAccessibleDescription(/RTP %96,3.*En çok ×10\.000.*Oynaklık: Çok yüksek/);
+  await expect(asena).toHaveAccessibleDescription(/RTP %95,20.*En çok ×5\.000.*Oynaklık: Çok yüksek/);
+  await expect(originals(page).getByRole('link', { name: 'Göreme: Şafak Balonları' })).toHaveAccessibleDescription(/RTP %96,30.*En çok ×10\.000.*Oynaklık: Çok yüksek/);
   await page.goto('/games');
   await expect(originals(page)).toBeVisible();
   await page.goto('/');

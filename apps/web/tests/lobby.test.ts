@@ -23,7 +23,10 @@ test('lobby RTP copies equal each engine’s evidence constant (standard mode) a
   // Damla: the tile shows the lowest exact mode RTP (medium-12, the default) and the registry cap; volatility is the player's choice.
   assert.equal(DAMLA_LOBBY.rtp, Math.min(...Object.values(DAMLA_EXACT_RTP)));
   assert.equal(DAMLA_LOBBY.rtp, DAMLA_EXACT_RTP['medium-12']);
-  assert.deepEqual(lobbyStats('damla'), { rtp: DAMLA_LOBBY.rtp, maxWin: SLOT_GAMES.damla!.maxMultiplier, volatility: 'player', poolFee: null });
+  const damla = lobbyStats('damla');
+  assert.deepEqual({ ...damla, houseEdge: undefined }, { rtp: DAMLA_LOBBY.rtp, maxWin: SLOT_GAMES.damla!.maxMultiplier, volatility: 'player', poolFee: null, houseEdge: undefined });
+  // Instant game: house edge derived as 1 - RTP of the lowest mode (every other mode has a smaller edge).
+  assert.ok(Math.abs(damla.houseEdge! - (1 - DAMLA_LOBBY.rtp)) < 1e-6, `damla house edge ${damla.houseEdge}`);
 });
 
 test('Crash and Coinflip practice return 98 % as lib/demo.ts plays them', () => {
@@ -36,7 +39,11 @@ test('Crash and Coinflip practice return 98 % as lib/demo.ts plays them', () => 
   assert.equal(sampleCrash(0.999999999), CRASH_DEMO.maxMultiplier);
   // Coinflip: 50 % at x1.96 gross.
   assert.equal(grossPayout(10_000, COINFLIP_DEMO.maxMultiplier) * 0.5 / 10_000, COINFLIP_DEMO.rtp);
+  assert.equal(lobbyStats('crash').houseEdge, 0.02);
+  assert.equal(lobbyStats('coinflip').houseEdge, 0.02);
   assert.equal(lobbyStats('ringside').rtp, null);
+  assert.equal(lobbyStats('ringside').houseEdge, null);
+  for (const id of SLOT_GAME_IDS) if (id !== 'damla') assert.equal(lobbyStats(id).houseEdge, null, `${id} shows no derived house edge`);
   assert.equal(lobbyStats('ringside').poolFee, 0.02);
 });
 

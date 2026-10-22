@@ -5,12 +5,12 @@ import AxeBuilder from '@axe-core/playwright';
 if (process.env.PW_CHROMIUM_PATH) test.use({ launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } });
 
 const SLOTS: Array<[string, string, string, string]> = [
-  ['goreme', 'Göreme: Şafak Balonları', 'RTP %96,3', 'En yüksek kazanç ×10.000'],
-  ['tarhun', 'Tarhun: Fırtına Tahtı', 'RTP %96,5', 'En yüksek kazanç ×5.000'],
-  ['ebru', 'Ebru: Mürekkep Bahçesi', 'RTP %95,7', 'En yüksek kazanç ×10.000'],
-  ['cezeri', 'Cezeri: Zamanın Çarkları', 'RTP %95,5', 'En yüksek kazanç ×10.000'],
-  ['asena', 'Asena: Yıldız Kurdu', 'RTP %95,2', 'En yüksek kazanç ×5.000'],
-  ['cascade', 'Candy Cascade', 'RTP %95,7', 'En yüksek kazanç'],
+  ['goreme', 'Göreme: Şafak Balonları', 'RTP %96,30', 'En yüksek kazanç ×10.000'],
+  ['tarhun', 'Tarhun: Fırtına Tahtı', 'RTP %96,50', 'En yüksek kazanç ×5.000'],
+  ['ebru', 'Ebru: Mürekkep Bahçesi', 'RTP %95,70', 'En yüksek kazanç ×10.000'],
+  ['cezeri', 'Cezeri: Zamanın Çarkları', 'RTP %95,50', 'En yüksek kazanç ×10.000'],
+  ['asena', 'Asena: Yıldız Kurdu', 'RTP %95,20', 'En yüksek kazanç ×5.000'],
+  ['cascade', 'Candy Cascade', 'RTP %95,70', 'En yüksek kazanç'],
 ];
 
 for (const [id, name, rtp, maxWin] of SLOTS) {
@@ -34,7 +34,7 @@ test('damla: instant strip shows the lowest exact mode RTP, the ×1.000 cap, pro
   await page.goto('/game/damla');
   const strip = page.getByRole('region', { name: 'Oyun hakkında' });
   await expect(strip).toContainText('Sollish Orijinal');
-  await expect(strip).toContainText('RTP %98,4');
+  await expect(strip).toContainText('RTP %98,45');
   await expect(strip).toContainText('En yüksek kazanç ×1.000');
   await expect(strip).toContainText('sertifikalı değildir');
   await expect(strip.getByRole('link', { name: 'Kanıtlanabilir adil' })).toHaveAttribute('href', '/verify');
@@ -49,7 +49,8 @@ for (const id of ['crash', 'coinflip']) {
   test(`${id}: practice strip says not provably fair (no verify link) and the similar row opens a game`, async ({ page }) => {
     await page.goto(`/game/${id}`);
     const strip = page.getByRole('region', { name: 'Oyun hakkında' });
-    await expect(strip).toContainText('RTP %98,0');
+    await expect(strip).toContainText('RTP %98,00');
+    await expect(strip).toContainText('Kasa avantajı %2,00');
     await expect(strip).toContainText('kanıtlanabilir adil değil');
     await expect(strip.getByRole('link')).toHaveCount(0);
     const similar = page.getByRole('region', { name: 'Benzer oyunlar' });
@@ -81,7 +82,8 @@ test.describe('English browser', () => {
     await page.goto('/game/crash');
     const strip = page.getByRole('region', { name: 'About this game' });
     await expect(strip).toContainText('Sollish Original');
-    await expect(strip).toContainText('RTP 98.0%');
+    await expect(strip).toContainText('RTP 98.00%');
+    await expect(strip).toContainText('House edge 2.00%');
     await expect(page.getByRole('region', { name: 'Similar games' })).toBeVisible();
     const result = await new AxeBuilder({ page }).include('[data-testid="game-info-strip"]').include('#row-similar-list').withTags(['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa']).analyze();
     expect(result.violations.map(v => v.id)).toEqual([]);

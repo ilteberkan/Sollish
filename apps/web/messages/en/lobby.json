@@ -169,7 +169,7 @@
     "demoQ": "The line between demo and real betting",
     "demoA": "The DEMO credits here have no monetary value. Real SOL betting stays disabled until the contract deployment, oracle recovery, Crash privacy and payment flows are validated. We do not claim that an independent audit has been carried out. These versions have no VRF proof."
   },
-  "footnote": "RTP and volatility are simulated estimates for the standard mode of each DEMO game, not certified figures. Crash and Coinflip practice rounds use your browser’s randomness and are not provably fair.",
+  "footnote": "RTP is a simulated DEMO estimate for each game’s default mode (or its only mode), and volatility likewise; neither is a certified figure. Crash and Coinflip practice rounds use your browser’s randomness and are not provably fair.",
   "categories": {
     "label": "Browse by category",
     "favoritesEmpty": "None saved yet"
@@ -178,6 +178,7 @@
     "aria": "About this game",
     "original": "Sollish Original",
     "rtp": "RTP {value}",
+    "houseEdge": "House edge {value}",
     "maxWin": "Max win {value}",
     "fair": "Provably fair",
     "notFair": "Practice round: browser randomness, not provably fair",
