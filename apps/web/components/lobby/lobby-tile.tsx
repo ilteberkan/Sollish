@@ -25,11 +25,13 @@ export function usePrefetch(href: string, enabled = true) {
 }
 
 const percentFormats = new Map<string, Intl.NumberFormat>();
-export function rtpText(f: Formatter, rtp: number) {
+/** RTP and house edge: always exactly two decimals, locale-aware (96.47% / %96,47). */
+export function rtpText(f: Formatter, ratio: number) {
   let nf = percentFormats.get(f.intl);
-  if (!nf) { nf = new Intl.NumberFormat(f.intl, { style: 'percent', minimumFractionDigits: 1, maximumFractionDigits: 1 }); percentFormats.set(f.intl, nf); }
-  return nf.format(rtp);
+  if (!nf) { nf = new Intl.NumberFormat(f.intl, { style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2 }); percentFormats.set(f.intl, nf); }
+  return nf.format(ratio);
 }
+export const houseEdgeText = rtpText;
 export const maxWinText = (f: Formatter, maxWin: number) => `×${f.number(maxWin, 2)}`;
 
 /** RTP / max win / volatility chips (or the pool fee for Ringside). */

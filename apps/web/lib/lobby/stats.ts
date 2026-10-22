@@ -5,7 +5,7 @@
  * when a copy drifts from its engine, the same rule as SLOT_GAME_META. Simulated DEMO estimates, not certified RTPs.
  */
 import { SLOT_GAME_META } from '@sollish/protocol';
-import type { LobbyGameId } from './games';
+import { LOBBY_GAME_BY_ID, type LobbyGameId } from './games';
 
 /** Standard mode: return / cost and the standard deviation of the per-round return in cost units. */
 export const SLOT_STANDARD_RTP = Object.freeze({
@@ -41,9 +41,21 @@ export interface LobbyStats {
   volatility: Volatility | null;
   /** Pool fee as a ratio (Ringside only). */
   poolFee: number | null;
+  /** House edge as a ratio: the registry's explicit `houseEdge`, else 1 − RTP for `instant` games with a known RTP, else null. */
+  houseEdge: number | null;
 }
 
+/** Rounded to 1e-6 so 1 − 0.98 is 0.02, not 0.020000000000000018. */
+export const houseEdgeFromRtp = (rtp: number) => Math.round((1 - rtp) * 1e6) / 1e6;
+
 export function lobbyStats(id: LobbyGameId): LobbyStats {
+  const base = baseStats(id);
+  const game = LOBBY_GAME_BY_ID[id];
+  const houseEdge = game.houseEdge ?? (game.kind === 'instant' && base.rtp !== null ? houseEdgeFromRtp(base.rtp) : null);
+  return { ...base, houseEdge };
+}
+
+function baseStats(id: LobbyGameId): Omit<LobbyStats, 'houseEdge'> {
   switch (id) {
     case 'crash': return { rtp: CRASH_DEMO.rtp, maxWin: CRASH_DEMO.maxMultiplier, volatility: 'player', poolFee: null };
     case 'coinflip': return { rtp: COINFLIP_DEMO.rtp, maxWin: COINFLIP_DEMO.maxMultiplier, volatility: volatilityOf(COINFLIP_DEMO.stdDev), poolFee: null };

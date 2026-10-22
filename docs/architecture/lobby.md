@@ -7,9 +7,13 @@ Status: 21 October 2026. Code: `apps/web/lib/lobby/*`, `apps/web/components/lobb
 `apps/web/lib/lobby/games.ts` is the only list of games. The sidebar, the top-bar search, the lobby rows, the category tiles and grids (`?c=`), "recently played", favorites, the hero carousel, the info strip under each game and the "Similar games" row all read it. It holds static descriptors only. It never imports an engine or `@sollish/protocol`, so the shell ships no game code.
 
 Facts derived from the registry:
-- `lib/lobby/stats.ts` → `lobbyStats(id)`: RTP, max win, volatility, pool fee. Slot max win comes from the engine-free `SLOT_GAME_META` (`@sollish/protocol`). Slot RTP and stdDev are literal copies of each engine's evidence constant (standard mode), and `tests/lobby.test.ts` fails when a copy drifts. These are simulated DEMO estimates, not certified figures, and the UI says so.
+- `lib/lobby/stats.ts` → `lobbyStats(id)`: RTP, max win, volatility, pool fee, house edge. Slot max win comes from the engine-free `SLOT_GAME_META` (`@sollish/protocol`). Slot RTP and stdDev are literal copies of each engine's evidence constant (default mode), and `tests/lobby.test.ts` fails when a copy drifts. These are simulated DEMO estimates, not certified figures, and the UI says so.
 - `lib/lobby/posters.ts` → `poster(id, variant)`: hashed key-art files.
 - Helpers: `gamesIn(category, favorites)`, `similarGames(id)` (same kind first, then registry order, up to 6), `inCategory`, `gameForPath`, `searchText`.
+
+House edge: the optional `houseEdge` field of a registry entry (a ratio, 0.02 = 2 %) wins. Without it, `lobbyStats` derives `1 − RTP` only for `instant` entries that have an RTP (Crash and Coinflip: 98 % RTP, so 2.00 %); both are exactly 1 − RTP because every Crash target and the ×1.96 coin return 0.98. Slots, live and games without an RTP show none unless an explicit value is set; never invent one. The info strip shows it as "House edge 2.00%" (`gameInfo.houseEdge`).
+
+Number format: RTP and house edge are always exactly two decimals and locale-aware (`rtpText` / `houseEdgeText` in `components/lobby/lobby-tile.tsx`: 96.47% in English, %96,47 in Turkish), in the lobby tiles and in the strip. RTP wording: the figure is a simulated DEMO estimate for the game's default mode (or its only mode), not certified (`lobby.footnote`).
 
 Categories (`LOBBY_CATEGORIES`): `slots`, `live` and `instant` follow `kind`; `new` follows `isNew`; `fair` follows `provablyFair`; `favorites` follows the player's list. The tiles and the chips link to `?c=<category>`.
 
@@ -28,6 +32,7 @@ Categories (`LOBBY_CATEGORIES`): `slots`, `live` and `instant` follow `kind`; `n
    | `released` | first evidence date (`ops/evidence/<id>-<date>`) |
    | `isNew` | shows the "New" badge and puts the game in the New row and category |
    | `provablyFair` | `true` only if the player can re-compute the result (for example through `/verify`); browser-random practice games are `false` |
+   | `houseEdge` | optional ratio; only when the edge is not simply 1 − RTP of the default mode (see above) |
    | `hero` | slide index in the hero carousel, or `null` (needs `wide` and `narrow` posters) |
    | `tone` | two placeholder gradient colours shown while the poster loads |
    | `keywords` | extra search words (themes, in English and Turkish without diacritics) |
@@ -37,7 +42,7 @@ Categories (`LOBBY_CATEGORIES`): `slots`, `live` and `instant` follow `kind`; `n
    - `messages/<locale>/common.json`: `games.<id>` (display title).
    - `messages/<locale>/lobby.json`: `cards.<id>.tagline`, `cards.<id>.text`, `cards.<id>.type`.
    - The game's own namespace, following `docs/architecture/i18n.md`.
-6. **Info strip.** Render `<GameInfoStrip id="<id>" />` directly under the game table (slots: after `<SessionBar>`; see `components/storm/tarhun-game.tsx`). It shows "Sollish Original", the RTP and max win only when `lobbyStats` has them, the pool fee, the provably-fair link to `/verify` (or the "not provably fair" note), DEMO, and the "simulated, not certified" line.
+6. **Info strip.** Render `<GameInfoStrip id="<id>" />` directly under the game table (slots: after `<SessionBar>`; see `components/storm/tarhun-game.tsx`). It shows "Sollish Original", the RTP, house edge and max win only when `lobbyStats` has them, the pool fee, the provably-fair link to `/verify` (or the "not provably fair" note), DEMO, and the "simulated, not certified" line.
 7. **Tests.**
    - `tests/lobby.test.ts` already fails if a `/game/*` page is missing from the registry, lacks a `GameInfoStrip`, or is missing `common.games` or `lobby.cards` copy in any locale. Update the category counts it asserts (for example `inCategory(g, 'slots')` = 5) and the hero order.
    - Browser: `tests/browser/lobby.spec.ts` asserts row and category counts (Originals 5, slots 5, instant 2, new 4, fair 6, live 1), so update them. `tests/browser/game-info.spec.ts` has one row per game.

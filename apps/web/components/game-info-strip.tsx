@@ -6,7 +6,7 @@ import { useFormat, useT } from '@/lib/i18n/client';
 import { LOBBY_GAME_BY_ID, gameForPath, similarGames, type LobbyGameId } from '@/lib/lobby/games';
 import { lobbyStats } from '@/lib/lobby/stats';
 import { useFavorites } from '@/lib/lobby/store';
-import { GameTile, maxWinText, rtpText } from '@/components/lobby/lobby-tile';
+import { GameTile, houseEdgeText, maxWinText, rtpText } from '@/components/lobby/lobby-tile';
 import { Row } from '@/components/lobby/lobby-row';
 import s from '@/components/lobby/lobby.module.css';
 
@@ -25,6 +25,7 @@ export function GameInfoStrip({ id }: { id: LobbyGameId }) {
     <ul className={s.infoItems}>
       <li className={s.infoItem} data-kind="original"><Icon name="spark" size={16} />{t('gameInfo.original')}</li>
       {stats.rtp !== null && <li className={s.infoItem}>{t('gameInfo.rtp', { value: rtpText(f, stats.rtp) })}</li>}
+      {stats.houseEdge !== null && <li className={s.infoItem} data-kind="house-edge">{t('gameInfo.houseEdge', { value: houseEdgeText(f, stats.houseEdge) })}</li>}
       {stats.maxWin !== null && <li className={s.infoItem}>{t('gameInfo.maxWin', { value: maxWinText(f, stats.maxWin) })}</li>}
       {stats.poolFee !== null && <li className={s.infoItem}>{t('tile.poolFee', { value: f.percent(stats.poolFee) })}</li>}
       {game.provablyFair

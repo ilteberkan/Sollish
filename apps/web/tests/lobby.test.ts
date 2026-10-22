@@ -31,7 +31,11 @@ test('Crash and Coinflip practice return 98 % as lib/demo.ts plays them', () => 
   assert.equal(sampleCrash(0.999999999), CRASH_DEMO.maxMultiplier);
   // Coinflip: 50 % at x1.96 gross.
   assert.equal(grossPayout(10_000, COINFLIP_DEMO.maxMultiplier) * 0.5 / 10_000, COINFLIP_DEMO.rtp);
+  assert.equal(lobbyStats('crash').houseEdge, 0.02);
+  assert.equal(lobbyStats('coinflip').houseEdge, 0.02);
   assert.equal(lobbyStats('ringside').rtp, null);
+  assert.equal(lobbyStats('ringside').houseEdge, null);
+  for (const id of SLOT_GAME_IDS) assert.equal(lobbyStats(id).houseEdge, null, `${id} shows no derived house edge`);
   assert.equal(lobbyStats('ringside').poolFee, 0.02);
 });
 
