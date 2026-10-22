@@ -19,6 +19,7 @@
 - Yeni lobi, beş slot + Crash/Coinflip/Ringside/Ödüller/Stake/kütüphane çevirileri commit'li ve dalda. Tam yerel doğrulama `ops/evidence/full-verify-20261020/web.json` (ayrıntı STATUS.md). Kalan çeviri yalnız laboratuvar sayfaları (`app/lab/*`, `art-lab.tsx`).
 
 ## 22 Ekim: dalga 3
+- Sahip 22 Ekim'de onayladı: Göreme seslendirmesi üretilir (≤7 kredi), telefon yerleşimi düzeltilir. Bağlam dolunca bu belge ve STATUS.md güncellenip yeni oturuma geçilir.
 - Göreme ve Damla `claude/sollish-wave3-games` dalında oynanabilir (ayrıntı STATUS.md, `docs/product/games-wave3.md`). Kalan: Göreme seslendirmesi (onay), `build:cloudflare` önizlemesinde tarayıcı testleri, test sayfasına (artifact) iki oyunu eklemek, sahip kabulü.
 
 ## Sıradaki işler (öncelik sırasıyla)
