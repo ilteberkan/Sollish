@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-22",
+  "scope": "Lobby v2 presentation: category tiles, row View all, game info strip, Similar games row (no engine/RTP/ledger/settlement change)",
+  "runtime": "local next dev :3036 (not production build, not hosted, not CI)",
+  "unit": {
+    "typecheck": "pass",
+    "web_test": "365/365 pass"
+  },
+  "browser": {
+    "lobby.spec.ts": "18/18",
+    "game-info.spec.ts": "11/11 (new)",
+    "product.spec.ts": "14/14",
+    "i18n.spec.ts": "3/3",
+    "tarhun.spec.ts": "17/17",
+    "ebru.spec.ts": "16/16",
+    "cezeri.spec.ts": "17/17",
+    "asena.spec.ts": "17/17",
+    "cascade.spec.ts": "23/23",
+    "solo-lifecycle.spec.ts": "5/5",
+    "wallet-reconnect.spec.ts": "4/4",
+    "demo-entropy.spec.ts": "4/4"
+  },
+  "axe": "lobby WCAG 2.2 AA at 390 and 1440 (lobby.spec), info strip + similar row (game-info.spec): 0 violations",
+  "no_horizontal_scroll": "lobby 320/390/430/834 px; crash/coinflip game pages 320-430 px; strip and similar row inside viewport on Tarhun too",
+  "live_badge": "LIVE status badge only; no viewer count (RingSnapshot online/participants reach only arena WebSocket clients; no public read-only audience endpoint)",
+  "known_preexisting": "Tarhun game table is 326 px wide at a 320 px viewport (6 px horizontal overflow), outside this change",
+  "screenshots": [
+    {
+      "file": "lobby-en-1440.png",
+      "locale": "en",
+      "width": 1440,
+      "path": "/",
+      "noHorizontalScroll": true
+    },
+    {
+      "file": "tarhun-en-1440.png",
+      "locale": "en",
+      "width": 1440,
+      "path": "/game/tarhun",
+      "noHorizontalScroll": true
+    },
+    {
+      "file": "lobby-en-390.png",
+      "locale": "en",
+      "width": 390,
+      "path": "/",
+      "noHorizontalScroll": true
+    },
+    {
+      "file": "tarhun-en-390.png",
+      "locale": "en",
+      "width": 390,
+      "path": "/game/tarhun",
+      "noHorizontalScroll": true
+    },
+    {
+      "file": "lobby-tr-1440.png",
+      "locale": "tr",
+      "width": 1440,
+      "path": "/",
+      "noHorizontalScroll": true
+    },
+    {
+      "file": "tarhun-tr-1440.png",
+      "locale": "tr",
+      "width": 1440,
+      "path": "/game/tarhun",
+      "noHorizontalScroll": true
+    },
+    {
+      "file": "lobby-tr-390.png",
+      "locale": "tr",
+      "width": 390,
+      "path": "/",
+      "noHorizontalScroll": true
+    },
+    {
+      "file": "tarhun-tr-390.png",
+      "locale": "tr",
+      "width": 390,
+      "path": "/game/tarhun",
+      "noHorizontalScroll": true
+    }
+  ],
+  "limits": [
+    "Translations hand-written, no native-speaker review",
+    "RTP/max win are simulated DEMO estimates, not certified",
+    "Screenshots are not owner visual acceptance"
+  ]
+}
