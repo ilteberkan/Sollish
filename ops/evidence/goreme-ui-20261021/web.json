@@ -1,0 +1,26 @@
+{
+  "game": "goreme",
+  "engine": "goreme-balloons-1",
+  "date": "2026-10-22",
+  "commit": "ff12c8e (+ this evidence commit)",
+  "runtime": "local next dev (16.3.8) on http://localhost:3000; NOT build:cloudflare preview, not hosted, no CI",
+  "note": "Browser specs must use http://localhost:3000: next dev blocks cross-origin dev resources from 127.0.0.1, so the page never hydrates there.",
+  "commands": [
+    {"cmd": "bash scripts/use-node.sh pnpm --filter @sollish/protocol test", "result": "341/341 pass"},
+    {"cmd": "bash scripts/use-node.sh pnpm --filter @sollish/web test", "result": "405/405 pass (goreme-timeline 10, goreme-controls 6, lobby 7, i18n 8, rgs-client)"},
+    {"cmd": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck", "result": "pass"},
+    {"cmd": "node --import tsx --test apps/realtime/test/slots.test.ts", "result": "7/7 pass (GOREME_SLOT admission, health game list)"},
+    {"cmd": "PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3000 PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome bash scripts/use-node.sh pnpm --filter @sollish/web test:browser goreme.spec.ts lobby.spec.ts damla.spec.ts --workers=1 -g <goreme|lobby|verify>", "result": "28/28 pass: goreme 10, lobby 15, damla 3 (incl. /verify)"},
+    {"cmd": "... test:browser i18n.spec.ts", "result": "3/3 pass"}
+  ],
+  "fixtures": {"LOSS": 2364027904, "LIFT": 1824259072, "CALLOUT": 3852139584, "BUYUK": 3727255296, "MEGA": 3029292032, "FREE_LOW": 245234176, "BUY_SKY": 4139144192, "FREE_BIG": 71414784, "BUY_MERGE": 3650240146, "screenshot_sky8": 475158667},
+  "screenshots": {
+    "base": ["1440x900-base.png", "390x844-base.png"],
+    "lift": ["1440x900-lift.png", "390x844-lift.png"],
+    "merge": ["1440x900-merge.png", "390x844-merge.png"],
+    "free_spins_full_sky_band": ["1440x900-free-spins-sky-band.png", "390x844-free-spins-sky-band.png"],
+    "big_win": ["1440x900-big-win.png", "390x844-big-win.png"]
+  },
+  "posters": {"tool": "scratch copy of apps/web/scripts/lobby-posters.mjs with POSTER_ONLY=goreme (other posters untouched)", "files": {"goreme-tile.webp": "360x480 21.5 KiB", "goreme-wide.webp": "1320x540 37.7 KiB", "goreme-narrow.webp": "780x520 37.9 KiB"}},
+  "not_done": ["build:cloudflare preview run", "user visual/audio acceptance", "native-speaker review of de/pt/fr/it/es/zh/ko", "voice lines (wordless fallback)", "60 fps measurement on a mid-range phone"]
+}
