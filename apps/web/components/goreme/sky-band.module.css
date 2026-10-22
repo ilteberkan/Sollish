@@ -128,3 +128,7 @@
 @media (prefers-reduced-motion: reduce) {
   .moored, .medalValue { animation: none !important; }
 }
+/* phones: the band may get shorter so the whole table fits one screen (goreme-game.module.css, phone fit) */
+@media (max-width: 760px), (max-aspect-ratio: 4 / 5) {
+  .band { min-height: 60px; }
+}

@@ -27,6 +27,7 @@ import {
   AutoplayPanel, AutoplayStopButton, BetSelector, BuyFeatureDialog, GameInfo, Modal, RealityCheckDialog, SessionBar, SettingsPanel, useSession, useSlotSettings,
 } from '../slot-kit';
 import kit from '../slot-kit/kit.module.css';
+import { useViewportTop } from '../slot-kit/use-viewport-top';
 import { GoremeBoard, type GoremeBoardHandle } from './board';
 import { GoremeCelebration, GoremeFeatureTotal, GoremeFreeIntro } from './goreme-celebration';
 import { GoremeHistory } from './goreme-history';
@@ -242,6 +243,8 @@ export function GoremeGame() {
   const bandRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const layoutRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLElement>(null);
+  useViewportTop(tableRef);
   const fx = useRef<GoremeFx | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const layerRef = useRef<HTMLDivElement>(null);
@@ -961,7 +964,7 @@ export function GoremeGame() {
       <GoremeSymbolSprites />
       <GameHeading title={t('title')} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={busy || auto !== null}
         badge={remote ? rgs.source('remote') : sourcePending ? t('badge.checking') : rgs.source('local')} />
-      <section className={`game-table ${styles.table}`} aria-label={t('table')} data-free={free || undefined}>
+      <section ref={tableRef} className={`game-table ${styles.table}`} aria-label={t('table')} data-free={free || undefined}>
         <GoremeScene ref={scene} mood={mood} className={styles.scene}>
           <div ref={layoutRef} className={styles.layout}>
             <div className={styles.left}>

@@ -609,3 +609,61 @@
 @media (max-width: 760px), (max-aspect-ratio: 4 / 5) {
   .table .scene { container-type: inline-size; min-height: 100%; }
 }
+/* Phone / portrait fit (22 Oct 2026): the whole game (compact logo, HUD, sky band, 6 × 5 board, win bar, deck and
+   spin button) fits the first screen without page scroll. The table takes the viewport height below its own top
+   (--fit-top, written by useViewportTop); the stage is a size container again, so the board scales to the height
+   that is left, as on desktop. Presentation only: no game state, result or payout depends on it. */
+@media (max-width: 760px), (max-aspect-ratio: 4 / 5) {
+  .table { height: max(500px, calc(100svh - var(--fit-top, 139px) - 6px)); }
+  .table .scene { position: absolute; inset: 0; height: 100%; min-height: 0; container-type: size; }
+  .layout { grid-template-rows: auto minmax(0, 1fr) auto; height: 100%; }
+  .left { padding: 6px 6px 0; }
+  .leftLogo, .table[data-free] .leftLogo { width: auto; height: 40px; min-height: 0; padding: 0; justify-content: center; }
+  .leftLogo > svg { width: auto; height: 100%; }
+  .stage { container-type: size; padding: 0; }
+  .column {
+    --gr-fixed: 98px;
+    --bw: min(100cqw - 12px, 600px, (100cqh - var(--gr-fixed)) / 1.047, (100cqh - var(--gr-fixed) - 60px) / 0.839);
+    position: absolute; inset: 0; justify-content: center; padding: 4px 3px; gap: 4px;
+  }
+  .stage[data-replay] .column { --gr-fixed: 134px; padding-top: 40px; }
+  .hud { min-height: 36px; }
+  .chip, .freeCounter, .globalChip { min-height: 34px; }
+  .meter { min-height: 38px; width: var(--bw); }
+  .meterPart strong { font-size: 18px; }
+  .side { padding: 8px 8px 10px; }
+  .deck { --sk-stop-size: 76px; gap: 6px; align-items: stretch; }
+  .cellBalance, .cellWin { min-height: 0; padding: 4px 8px; }
+  .cellBet { gap: 2px; justify-content: center; }
+  .cellBet > span:first-child { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .deck .betValue { min-height: 42px; padding: 2px 8px; border-radius: 14px; }
+  .deck .betValue strong { font-size: 20px; }
+  .costLine { font-size: 11px; }
+  .areaSpin { padding: 4px 0; }
+  .spin { width: 76px; height: 76px; }
+  .spin::after { inset: -8px; }
+  .spinning::after { inset: -7px; }
+  .deck .stepBtn { width: 44px; height: 44px; }
+  .areaMinus, .areaPlus { align-self: center; }
+  .tool { min-height: 44px; align-self: center; }
+  .feature { min-height: 44px; padding: 4px 10px; }
+  .featureTitle { font-size: 13px; }
+  .featureState { font-size: 11px; }
+  .areaMsg { min-height: 0; }
+  .msgHint, .msgError { font-size: 12px; line-height: 1.3; }
+  .msgHint { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .page :global(.game-heading) { margin-bottom: 6px; }
+}
+/* short phones (≤ 760 px tall): the page heading already names the game, so the logo row and the idle hint give
+   their height to the board; errors still show */
+@media (max-width: 760px) and (max-height: 760px), (max-aspect-ratio: 4 / 5) and (max-height: 760px) {
+  .left { display: none; }
+  .msgHint { display: none; }
+}
+@media (max-width: 760px), (max-aspect-ratio: 4 / 5) {
+  .meterIdle { font-size: 11.5px; line-height: 1.25; gap: 4px; }
+  .meterIdle > span:nth-child(n + 2) { display: none; }
+}
+@media (max-width: 380px) {
+  .page :global(.game-heading h1) { font-size: 17px; overflow: hidden; text-overflow: ellipsis; }
+}
