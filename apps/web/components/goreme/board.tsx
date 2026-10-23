@@ -46,6 +46,8 @@ export interface GoremeBoardHandle {
   /** Places a grid at once without animation (idle board, end of round, recovery). */
   setGrid(grid: GoremeGrid): void;
   dim(on: boolean): void;
+  /** How many balloons a balloon on the board is made of (1, or more after merges); 1 when unknown. */
+  partsOf(id: number): number;
 }
 
 type CellMode = 'still' | 'reel' | 'drop';
@@ -62,6 +64,8 @@ interface BoardBalloon {
   scale: number;
   /** +N chip (a tick of the badge): key and amount. */
   tick: number; plus: number;
+  /** Moor flight: the band already shows it, drop it on arrival. */
+  release?: boolean;
 }
 interface ReelSet { key: number; cols: Array<{ col: number; hideAt: number; tease: boolean }>; kind: 'spin' | 'respin' }
 interface Puff { key: number; col: number; row: number }
@@ -221,7 +225,7 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
       })));
       after(ms, () => {
         setBurn(null);
-        setBalloons(prev => prev.map(b => (b.phase === 'rise' ? { ...b, phase: 'idle', tilt: 0, ms: 0 } : b.phase === 'moor' ? { ...b, phase: 'parked', ms: 0 } : b)));
+        setBalloons(prev => prev.filter(b => !(b.phase === 'moor' && b.release)).map(b => (b.phase === 'rise' ? { ...b, phase: 'idle', tilt: 0, ms: 0 } : b.phase === 'moor' ? { ...b, phase: 'parked', ms: 0 } : b)));
       });
       if (exits.some(e => !e.moored)) after(Math.round(ms * 1.25) + 40, () => setBalloons(prev => prev.filter(b => !(b.phase === 'exit' && out.has(b.id)))));
     },
@@ -252,7 +256,10 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
     },
     releaseParked(ids) {
       const set = ids ? new Set(ids) : null;
-      setBalloons(prev => prev.filter(b => !(b.phase === 'parked' && (!set || set.has(b.id)))));
+      const hit = (b: BoardBalloon) => !set || set.has(b.id);
+      // a balloon still finishing its flight (the sky event can land a frame before the transition ends) completes it
+      // and is dropped on arrival instead of parking
+      setBalloons(prev => prev.filter(b => !(b.phase === 'parked' && hit(b))).map(b => (b.phase === 'moor' && hit(b) ? { ...b, release: true } : b)));
     },
     highlight(ids, pathIds) {
       setLit(ids ? new Set(ids) : null);
@@ -275,6 +282,7 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
       setBalloons(next.balloons.map(b => ({ ...b, phase: 'idle', ms: 0, plus: 0 })));
     },
     dim(on) { setDimmed(on); },
+    partsOf(id) { return balloonsRef.current.find(b => b.id === id)?.parts ?? 1; },
   }), [after, clearTimers, dropOut, showReels]);
 
   const stateOf = (id: number): GoremeSymbolState => (lit ? (lit.has(id) ? 'win' : 'dim') : 'idle');

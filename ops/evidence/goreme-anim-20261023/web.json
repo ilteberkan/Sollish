@@ -60,10 +60,35 @@
   },
   "browser_cmd": "PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3000 bash scripts/use-node.sh pnpm --filter @sollish/web test:browser <spec> --workers=1"
  },
- "console": "only favicon.ico 404 (site-wide) in all 18 scenarios",
+ "console": "before: favicon.ico 404 only; after follow-up: clean",
  "not_done": [
   "build:cloudflare preview of the final commit",
   "owner visual/audio acceptance",
   "real-device fps"
- ]
+ ],
+ "followup": {
+  "fixed": [
+   "#14 drifters masked/clamped",
+   "#15 WIN tab",
+   "#16 band FLIP + parked-duplicate bug",
+   "#17 merged size in band",
+   "#18 favicon (app/icon.svg + app/favicon.ico)"
+  ],
+  "checks": {
+   "typecheck": "pass",
+   "web_unit": "409/409",
+   "goreme.spec.ts": "13/13 (mooring test now asserts slot approach <14 px per id and no lingering board copy)",
+   "game-info.spec.ts": "13/13",
+   "lobby.spec.ts": "18/18",
+   "favicon": "GET /favicon.ico 200 image/x-icon; console clean on /game/goreme"
+  },
+  "frames": [
+   "frames/after-band-flip-no-double.jpg",
+   "frames/after-merged-balloon-moors-big.jpg",
+   "frames/after-celebration-win-tab-and-intro.jpg",
+   "frames/before-after-phone-celebration.jpg",
+   "frames/after-favicon-48.png",
+   "after/free-buy-1440.mp4 (re-recorded)"
+  ]
+ }
 }

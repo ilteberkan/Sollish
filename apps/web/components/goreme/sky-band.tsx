@@ -1,6 +1,6 @@
 'use client';
 
-import { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useLayoutEffect, useRef } from 'react';
 import { GoremeSymbol } from './symbols';
 import styles from './sky-band.module.css';
 
@@ -43,6 +43,26 @@ export const GoremeSkyBand = memo(function GoremeSkyBand({ balloons, multiplier,
   const all = [...balloons];
   for (const b of incoming ?? []) if (!shown.has(String(b.id))) { all.push(b); waiting.add(String(b.id)); }
   all.forEach((b, i) => (i % 2 === 0 ? right : left).push(b));
+  // FLIP: when a slot is reserved or the lanes tighten, the balloons already moored glide to their new places
+  // (transform only) instead of jumping.
+  const root = useRef<HTMLDivElement>(null);
+  const rects = useRef(new Map<string, DOMRect>());
+  const layoutKey = all.map(b => `${b.id}:${b.size ?? 1}`).join(',');
+  useLayoutEffect(() => {
+    const el = root.current; if (!el) return;
+    const reduce = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const next = new Map<string, DOMRect>();
+    for (const node of el.querySelectorAll<HTMLElement>('[data-moor-id]')) {
+      const id = node.dataset.moorId!, r = node.getBoundingClientRect(), before = rects.current.get(id);
+      next.set(id, r);
+      if (reduce || !before || node.dataset.incoming !== undefined || typeof node.animate !== 'function') continue;
+      const dx = before.left + before.width / 2 - (r.left + r.width / 2), dy = before.top + before.height / 2 - (r.top + r.height / 2);
+      const s = r.width > 0 ? before.width / r.width : 1;
+      if (Math.abs(dx) < 1 && Math.abs(dy) < 1 && Math.abs(s - 1) < 0.02) continue;
+      node.animate([{ transform: `translate(${dx}px, ${dy}px) scale(${s})` }, { transform: 'none' }], { duration: 380, easing: 'cubic-bezier(0.2, 0.8, 0.3, 1)' });
+    }
+    rects.current = next;
+  }, [layoutKey]);
   const prev = useRef(multiplier);
   const added = multiplier - prev.current;
   useEffect(() => { prev.current = multiplier; }, [multiplier]);
@@ -60,7 +80,7 @@ export const GoremeSkyBand = memo(function GoremeSkyBand({ balloons, multiplier,
     </div>
   );
   return (
-    <div className={`${styles.band} ${className ?? ''}`} data-active={active || undefined} role="group" aria-label={`${label} ×${multiplier}, ${balloons.length}`} data-count={balloons.length}>
+    <div ref={root} className={`${styles.band} ${className ?? ''}`} data-active={active || undefined} role="group" aria-label={`${label} ×${multiplier}, ${balloons.length}`} data-count={balloons.length}>
       <div className={styles.glass} aria-hidden="true" />
       <div className={styles.rope} aria-hidden="true" />
       <div className={`${styles.post} ${styles.postL}`} aria-hidden="true" />

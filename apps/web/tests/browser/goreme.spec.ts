@@ -154,8 +154,8 @@ test('spin lock: one debit, button and Space locked through every lift, payout a
 /** Samples the board every frame: balloon element positions by stable id, FX elements and the sky band. */
 async function trackAnimation(page: Page) {
   await page.addInitScript(() => {
-    const w = window as unknown as { __anim: { balloons: Record<string, Array<[number, number, string]>>; fx: Record<string, number>; band: number[]; slotHits: number; bandIds: string[] } };
-    w.__anim = { balloons: {}, fx: {}, band: [], slotHits: 0, bandIds: [] };
+    const w = window as unknown as { __anim: { balloons: Record<string, Array<[number, number, string]>>; fx: Record<string, number>; band: number[]; slotDist: Record<string, number>; bandIds: string[]; dupRun: number; dupMax: number } };
+    w.__anim = { balloons: {}, fx: {}, band: [], slotDist: {}, bandIds: [], dupRun: 0, dupMax: 0 };
     const loop = () => {
       for (const el of document.querySelectorAll<HTMLElement>('[data-balloon-id]')) {
         const r = el.getBoundingClientRect(), id = el.dataset.balloonId!, list = (w.__anim.balloons[id] ??= []);
@@ -166,20 +166,26 @@ async function trackAnimation(page: Page) {
       const band = document.querySelector('[data-testid="goreme-sky"] [data-count]');
       const count = Number(band?.getAttribute('data-count') ?? 0);
       if (w.__anim.band.at(-1) !== count) w.__anim.band.push(count);
-      // a parked balloon sits on its reserved band slot (the flight ends exactly where the band shows it)
-      for (const el of document.querySelectorAll<HTMLElement>('[data-balloon-id][data-phase="parked"]')) {
+      // a mooring balloon flies onto its reserved band slot (the flight ends where the band shows it): closest approach per id
+      for (const el of document.querySelectorAll<HTMLElement>('[data-balloon-id]:is([data-phase="moor"], [data-phase="parked"])')) {
         const slot = document.querySelector(`[data-moor-id="${el.dataset.balloonId}"] [data-slot]`);
         if (!slot) continue;
         const a = el.querySelector('svg')!.getBoundingClientRect(), b = slot.getBoundingClientRect();
-        if (Math.abs(a.left + a.width / 2 - (b.left + b.width / 2)) < 6 && Math.abs(a.top + a.height / 2 - (b.top + b.height / 2)) < 6) w.__anim.slotHits++;
+        const d = Math.hypot(a.left + a.width / 2 - (b.left + b.width / 2), a.top + a.height / 2 - (b.top + b.height / 2));
+        w.__anim.slotDist[el.dataset.balloonId!] = Math.min(w.__anim.slotDist[el.dataset.balloonId!] ?? Infinity, d);
       }
-      for (const el of document.querySelectorAll<HTMLElement>('[data-testid="goreme-sky"] [data-moor-id]:not([data-incoming])')) if (!w.__anim.bandIds.includes(el.dataset.moorId!)) w.__anim.bandIds.push(el.dataset.moorId!);
+      const shownIds = [...document.querySelectorAll<HTMLElement>('[data-testid="goreme-sky"] [data-moor-id]:not([data-incoming])')].map(el => el.dataset.moorId!);
+      for (const id of shownIds) if (!w.__anim.bandIds.includes(id)) w.__anim.bandIds.push(id);
+      // a balloon shown by the band must not also stay on the board layer (no double balloon over the band)
+      const dup = shownIds.some(id => document.querySelector(`[data-balloon-id="${id}"]`));
+      w.__anim.dupRun = dup ? w.__anim.dupRun + 1 : 0;
+      w.__anim.dupMax = Math.max(w.__anim.dupMax, w.__anim.dupRun);
       requestAnimationFrame(loop);
     };
     requestAnimationFrame(loop);
   });
 }
-type Anim = { balloons: Record<string, Array<[number, number, string]>>; fx: Record<string, number>; band: number[]; slotHits: number; bandIds: string[] };
+type Anim = { balloons: Record<string, Array<[number, number, string]>>; fx: Record<string, number>; band: number[]; slotDist: Record<string, number>; bandIds: string[]; dupRun: number; dupMax: number };
 
 test('lift animation: balloons keep their element across rows (same id), burner, wind, smoke, +1 tick and the ways path show; the meter note never covers the board', async ({ page }) => {
   test.setTimeout(90_000);
@@ -228,7 +234,8 @@ test('Şafak Şöleni moorings: a balloon flies into its own sky-band slot, the 
   expect(steps.at(-1)).toBe(moored.length);
   // each moored balloon's board element climbed out of the window (same id) and was parked on its slot
   for (const id of moored) expect((anim.balloons[id] ?? []).some(t => t[2] === 'moor' || t[2] === 'parked'), `balloon ${id} flight`).toBe(true);
-  expect(anim.slotHits).toBeGreaterThan(0);
+  for (const id of moored) expect(anim.slotDist[id] ?? Infinity, `balloon ${id} reached its slot`).toBeLessThan(14);
+  expect(anim.dupMax, 'frames with a band balloon still on the board layer').toBeLessThan(8);
   expect(anim.fx['goreme-sky-plus'] ?? 0).toBeGreaterThan(0);
 });
 

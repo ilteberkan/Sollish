@@ -56,13 +56,20 @@
   background: rgba(40, 14, 36, 0.7); box-shadow: inset 0 0 0 1px rgba(255, 220, 190, 0.25); transition: background 0.3s ease, color 0.3s ease;
 }
 .pips li[data-on] { color: var(--c-ink); background: linear-gradient(180deg, var(--c-hi), var(--c-mid)); box-shadow: 0 0 14px var(--c-glow); }
-.lockup { position: relative; width: 100%; aspect-ratio: 520 / 190; display: grid; place-items: center; animation: unfurl 0.75s cubic-bezier(0.2, 1.25, 0.35, 1) both; }
+.lockup { position: relative; width: 100%; margin-bottom: 12px; aspect-ratio: 520 / 190; display: grid; place-items: center; animation: unfurl 0.75s cubic-bezier(0.2, 1.25, 0.35, 1) both; }
 .banner { position: absolute; inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 18px 24px rgba(0, 0, 0, 0.6)); }
-.word { position: relative; display: inline-block; font-size: clamp(44px, 11vw, 86px); font-weight: 800; line-height: 1; letter-spacing: 3px; transform: translateY(4%); }
+.word { position: relative; display: inline-block; font-size: clamp(44px, 11vw, 86px); font-weight: 800; line-height: 1; letter-spacing: 3px; transform: translateY(-2%); }
 .word::before { content: attr(data-text); position: absolute; inset: 0; color: transparent; -webkit-text-stroke: 10px var(--c-ink); text-shadow: 0 6px 0 var(--c-ink), 0 0 28px var(--c-glow); }
 .wordFill { position: relative; background: linear-gradient(180deg, #ffffff 0%, var(--c-hi) 32%, var(--c-mid) 64%, var(--c-lo) 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .tierWord { font-size: clamp(40px, 10vw, 80px); }
-.sub { position: absolute; left: 50%; bottom: 14%; translate: -50% 0; font-size: clamp(11px, 2.6vw, 15px); font-weight: 700; letter-spacing: 7px; color: #fff1e0; text-shadow: 0 2px 0 #000; white-space: nowrap; }
+/* "KAZANÇ" / "WIN" tab: hangs under the kilim band (below the tier word), readable at every width */
+.sub {
+  position: absolute; left: 50%; bottom: -3%; translate: -50% 0; padding: 3px 14px 4px calc(14px + 0.32em); border-radius: 999px;
+  font-size: clamp(12px, 2.9vw, 17px); font-weight: 800; line-height: 1.1; letter-spacing: 0.32em; color: var(--c-hi); white-space: nowrap;
+  background: linear-gradient(180deg, rgba(44, 16, 34, 0.96), rgba(22, 8, 18, 0.98));
+  box-shadow: 0 0 0 1.5px #2a1216, 0 0 0 3px rgba(255, 217, 112, 0.75), 0 6px 14px -4px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 1px 0 #000;
+}
 .plaque {
   display: flex; align-items: baseline; gap: 8px; padding: 6px 28px 8px; border-radius: 999px;
   background: linear-gradient(180deg, rgba(52, 22, 40, 0.92), rgba(26, 10, 22, 0.95));
@@ -112,8 +119,13 @@
 
 
 /* balloons drifting up behind the lockup */
-.drifters { position: absolute; inset: 0; overflow: hidden; }
-.drifter { position: absolute; left: var(--x); bottom: -18%; width: clamp(54px, 9vmin, 96px); aspect-ratio: 1; opacity: 0.85; animation: drift calc(7s + var(--i) * 0.9s) linear calc(var(--i) * -1.3s) infinite; }
+.drifters {
+  position: absolute; inset: 0; overflow: hidden;
+  /* soft edges: a balloon fades in from below and out before the top edge, so the card edge never cuts it */
+  -webkit-mask-image: linear-gradient(to top, transparent 0, #000 14%, #000 74%, transparent 94%);
+  mask-image: linear-gradient(to top, transparent 0, #000 14%, #000 74%, transparent 94%);
+}
+.drifter { position: absolute; left: clamp(4px, calc(var(--x) - clamp(54px, 9vmin, 96px) / 2), calc(100% - clamp(54px, 9vmin, 96px) - 4px)); bottom: -18%; width: clamp(54px, 9vmin, 96px); aspect-ratio: 1; opacity: 0.85; animation: drift calc(7s + var(--i) * 0.9s) linear calc(var(--i) * -1.3s) infinite; }
 .drifter > div { width: 100%; height: 100%; }
 @keyframes drift { from { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-62vh) rotate(3deg); } to { transform: translateY(-125vh) rotate(-2deg); } }
 @media (prefers-reduced-motion: reduce) { .drifter { animation: none; } }

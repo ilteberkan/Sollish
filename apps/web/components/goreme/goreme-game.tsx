@@ -39,6 +39,7 @@ import { GoremeLogo } from './logo';
 import { GoremeScene, type GoremeMood, type GoremeSceneHandle } from './scene';
 import { GoremeSkyBand, goremeBandSlot, type GoremeMooredBalloon } from './sky-band';
 import { GR_PALETTE, GoremeSymbol, GoremeSymbolSprites, useGoremeSymbolLabels } from './symbols-i18n';
+import { goremeMergedSize } from './symbols';
 import { GameInfoStrip } from '@/components/game-info-strip';
 import styles from './goreme-game.module.css';
 
@@ -261,6 +262,8 @@ export function GoremeGame() {
   const timers = useRef(new Set<number>());
   const celebrateFx = useRef({ reduced: false, lite: false });
   const balloonAt = useRef(new Map<number, [number, number]>());
+  /** Visual size of each balloon moored this feature (a merged balloon keeps its bigger size in the band). */
+  const mooredSize = useRef(new Map<number, number>());
   const autoRef = useRef<AutoplayState | null>(null);
   autoRef.current = auto;
   const balanceRef = useRef(balance);
@@ -428,7 +431,8 @@ export function GoremeGame() {
   const moorTargets = useCallback((exits: readonly { id: number; multiplier: number; moored: boolean }[]) => {
     const list = exits.filter(e => e.moored);
     if (!list.length) return undefined;
-    flushSync(() => setIncoming(prev => [...prev, ...list.filter(e => !prev.some(p => p.id === e.id)).map(e => ({ id: e.id, multiplier: e.multiplier }))]));
+    for (const e of list) mooredSize.current.set(e.id, goremeMergedSize(board.current?.partsOf(e.id) ?? 1));
+    flushSync(() => setIncoming(prev => [...prev, ...list.filter(e => !prev.some(p => p.id === e.id)).map(e => ({ id: e.id, multiplier: e.multiplier, size: mooredSize.current.get(e.id) }))]));
     const el = board.current?.element, band = bandRef.current;
     if (!el || !band) return undefined;
     const r = el.getBoundingClientRect(), cw = r.width / 6, ch = r.height / 5, art = Math.min(cw, ch);
@@ -594,7 +598,7 @@ export function GoremeGame() {
         break;
       case 'free-mode':
         setCard(null); b?.dim(false); setFree(event.on); setFreeInfo({ number: 0, left: event.freeSpinsLeft });
-        setSky(1); setMoored([]); setIncoming([]);
+        setSky(1); setMoored([]); setIncoming([]); mooredSize.current.clear();
         sound.scene('feature');
         break;
       case 'spin-end': {
@@ -631,7 +635,7 @@ export function GoremeGame() {
         break;
       case 'end':
         b?.dim(false); b?.highlight(null);
-        setCard(null); setBanner(null); setFree(false); setFreeInfo(null); setSky(1); setMoored([]); setIncoming([]); setWind(null);
+        setCard(null); setBanner(null); setFree(false); setFreeInfo(null); setSky(1); setMoored([]); setIncoming([]); mooredSize.current.clear(); setWind(null);
         player.current = null;
         finishRound(current);
         break;
@@ -644,7 +648,7 @@ export function GoremeGame() {
     live.current = current;
     setError(''); setPhase('playing'); setRoundBet(current.bet);
     setFree(false); setFreeInfo(null); setMeterDur(0); setMeter(ZERO); setCard(null); setBanner(null); setCallout(null); setFlourish(0); setMood('base');
-    setSky(1); setMoored([]); setIncoming([]); setWind(null);
+    setSky(1); setMoored([]); setIncoming([]); mooredSize.current.clear(); setWind(null);
     setAnnounce(text);
     sound.unlock();
     sound.scene('base');
@@ -886,7 +890,7 @@ export function GoremeGame() {
   const deckWin = busy ? amountCents(meter.total) : (lastWin?.payout ?? 0);
   const speedIndex = SPIN_SPEEDS.indexOf(settings.spinSpeed);
   const replayInfo = replaying ? t('replay.ribbon', { id: goremeRoundId(replaying.seed) }) : null;
-  const bandBalloons = useMemo(() => moored.map(m => ({ id: m.id, multiplier: m.multiplier })), [moored]);
+  const bandBalloons = useMemo(() => moored.map(m => ({ id: m.id, multiplier: m.multiplier, size: mooredSize.current.get(m.id) })), [moored]);
 
   const openInfo = (page = 'how') => { setInfoPage(page); setModal('info'); sound.click(); };
   const refill = () => {
