@@ -151,6 +151,87 @@ test('spin lock: one debit, button and Space locked through every lift, payout a
   expect(await shownLabels(page)).toEqual(boardLabels(LIFT));
 });
 
+/** Samples the board every frame: balloon element positions by stable id, FX elements and the sky band. */
+async function trackAnimation(page: Page) {
+  await page.addInitScript(() => {
+    const w = window as unknown as { __anim: { balloons: Record<string, Array<[number, number, string]>>; fx: Record<string, number>; band: number[]; slotHits: number; bandIds: string[] } };
+    w.__anim = { balloons: {}, fx: {}, band: [], slotHits: 0, bandIds: [] };
+    const loop = () => {
+      for (const el of document.querySelectorAll<HTMLElement>('[data-balloon-id]')) {
+        const r = el.getBoundingClientRect(), id = el.dataset.balloonId!, list = (w.__anim.balloons[id] ??= []);
+        const last = list.at(-1);
+        if (!last || Math.abs(last[0] - r.top) > 0.5 || Math.abs(last[1] - r.left) > 0.5 || last[2] !== el.dataset.phase) list.push([Math.round(r.top), Math.round(r.left), el.dataset.phase ?? '']);
+      }
+      for (const id of ['goreme-burner', 'goreme-gust', 'goreme-puff', 'goreme-plus', 'goreme-ways-path', 'goreme-sky-plus', 'goreme-banner']) if (document.querySelector(`[data-testid="${id}"]`)) w.__anim.fx[id] = (w.__anim.fx[id] ?? 0) + 1;
+      const band = document.querySelector('[data-testid="goreme-sky"] [data-count]');
+      const count = Number(band?.getAttribute('data-count') ?? 0);
+      if (w.__anim.band.at(-1) !== count) w.__anim.band.push(count);
+      // a parked balloon sits on its reserved band slot (the flight ends exactly where the band shows it)
+      for (const el of document.querySelectorAll<HTMLElement>('[data-balloon-id][data-phase="parked"]')) {
+        const slot = document.querySelector(`[data-moor-id="${el.dataset.balloonId}"] [data-slot]`);
+        if (!slot) continue;
+        const a = el.querySelector('svg')!.getBoundingClientRect(), b = slot.getBoundingClientRect();
+        if (Math.abs(a.left + a.width / 2 - (b.left + b.width / 2)) < 6 && Math.abs(a.top + a.height / 2 - (b.top + b.height / 2)) < 6) w.__anim.slotHits++;
+      }
+      for (const el of document.querySelectorAll<HTMLElement>('[data-testid="goreme-sky"] [data-moor-id]:not([data-incoming])')) if (!w.__anim.bandIds.includes(el.dataset.moorId!)) w.__anim.bandIds.push(el.dataset.moorId!);
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  });
+}
+type Anim = { balloons: Record<string, Array<[number, number, string]>>; fx: Record<string, number>; band: number[]; slotHits: number; bandIds: string[] };
+
+test('lift animation: balloons keep their element across rows (same id), burner, wind, smoke, +1 tick and the ways path show; the meter note never covers the board', async ({ page }) => {
+  test.setTimeout(90_000);
+  const round = engine(LIFT);
+  const liftIds = new Set(round.spins[0]!.steps.flatMap(st => (st.type === 'lift' ? st.moves.map(m => String(m.id)) : [])));
+  expect(liftIds.size).toBeGreaterThan(0);
+  await trackAnimation(page);
+  await stub(page, LIFT);
+  await openGoreme(page);
+  await spin(page).click();
+  await expect(rows(page)).toHaveCount(1, { timeout: 60_000 });
+  const anim = await recorded<Anim>(page, '__anim');
+  // every lifted balloon id was one element that moved up by whole rows (a transition, sampled mid-way too)
+  for (const id of liftIds) {
+    const track = anim.balloons[id] ?? [];
+    expect(track.length, `balloon ${id} samples`).toBeGreaterThan(3);
+    const tops = track.map(t => t[0]);
+    expect(Math.min(...tops), `balloon ${id} rose`).toBeLessThan(tops[0]!);
+    expect(track.some(t => t[2] === 'rise'), `balloon ${id} rise phase`).toBe(true);
+  }
+  for (const id of ['goreme-burner', 'goreme-gust', 'goreme-puff', 'goreme-plus']) expect(anim.fx[id] ?? 0, id).toBeGreaterThan(0);
+  if (round.spins[0]!.steps.some(st => st.type === 'ways' && st.wins.length)) expect(anim.fx['goreme-banner'] ?? 0).toBeGreaterThan(0);
+  // the win note lives inside the meter, below the reel window
+  await expect(page.locator('[data-testid="goreme-banner"]:not([data-testid="goreme-meter"] *)')).toHaveCount(0);
+});
+
+test('Şafak Şöleni moorings: a balloon flies into its own sky-band slot, the band count and Gök value step up', async ({ page }) => {
+  test.setTimeout(240_000);
+  const round = engine(BUY_SKY, 'buy');
+  const moored = round.spins.flatMap(s => s.steps.flatMap(st => (st.type === 'sky' ? st.moored.map(m => String(m.id)) : [])));
+  expect(moored.length).toBeGreaterThan(1);
+  await trackAnimation(page);
+  await stub(page, BUY_SKY);
+  await openGoreme(page);
+  await setTurbo(page);
+  await page.getByRole('button', { name: /Bonus satın al/ }).click();
+  await page.getByRole('dialog', { name: 'Bonus satın al' }).getByRole('button', { name: 'Satın al', exact: true }).click();
+  await tapIfShown(page.getByRole('dialog', { name: 'Şafak Şöleni başlıyor' }).getByRole('button', { name: 'Başla' }), 30_000);
+  await expect(page.getByTestId('goreme-free-counter')).toBeVisible({ timeout: 30_000 });
+  await expect.poll(async () => (await recorded<Anim>(page, '__anim')).bandIds.length, { timeout: 200_000 }).toBe(moored.length);
+  const anim = await recorded<Anim>(page, '__anim');
+  // the band shows exactly the moored engine balloons (by id), one count step at a time
+  expect([...anim.bandIds].sort()).toEqual([...moored].sort());
+  const steps = anim.band.filter(n => n > 0);
+  for (let i = 1; i < steps.length; i++) expect(steps[i]!).toBeGreaterThan(steps[i - 1]!);
+  expect(steps.at(-1)).toBe(moored.length);
+  // each moored balloon's board element climbed out of the window (same id) and was parked on its slot
+  for (const id of moored) expect((anim.balloons[id] ?? []).some(t => t[2] === 'moor' || t[2] === 'parked'), `balloon ${id} flight`).toBe(true);
+  expect(anim.slotHits).toBeGreaterThan(0);
+  expect(anim.fx['goreme-sky-plus'] ?? 0).toBeGreaterThan(0);
+});
+
 test('Şans ×2 debits bet × 1,25, blocks the buy and settles the ante engine round', async ({ page }) => {
   const round = engine(LOSS, 'ante');
   expect(round.costCents).toBe(1250);

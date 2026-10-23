@@ -1,0 +1,69 @@
+{
+ "date": "2026-10-23",
+ "scope": "Göreme presentation only (engine goreme-balloons-1 untouched)",
+ "runtime": "local next dev http://localhost:3000 (Next 16.3.8, turbopack), headless Chromium 1194 (SwiftShader), 4 vCPU shared",
+ "seeds": {
+  "loss": "3c6ef362×4 standard",
+  "ways": "1dd1b379×4 standard",
+  "lift": "c6ef3620×4 standard (4 lifts, 1 fly-away)",
+  "merge": "3bb0567c×4 standard (merge ×7)",
+  "tease2": "3a5a1869×4 standard",
+  "free": "2a8686f8×4 buy (5 moorings, merge)",
+  "trigger3": "b6c62071×4 standard (109,32×)",
+  "buyuk": "6884d953×4 standard",
+  "celebrations": "__goremePreview.celebrate 3379 / 9109 / 40165 / 1000000 capped",
+  "fps fills": {
+   "lift": 3337565728,
+   "free(buy)": 713459448
+  }
+ },
+ "recording": "scratchpad rec.mjs: CDP screencast frames (sorted by timestamp) + rAF beat/balloon trace; videos in before/ and after/ are re-timed from the sorted frames (real frame timing)",
+ "fps": {
+  "before_dev_load~10": {
+   "lift_1440": [
+    17.1,
+    21.4
+   ],
+   "free_buy_1440": 26.2,
+   "lift_390": 29.8
+  },
+  "before_prod_preview_3001_load~9": {
+   "lift_1440": [
+    26.4,
+    32.9
+   ]
+  },
+  "after_dev_load~2": {
+   "lift_1440": [
+    49.1,
+    50.3
+   ],
+   "free_buy_1440": 42.0,
+   "lift_390": 48.3,
+   "p95_ms_lift": 33.4
+  },
+  "note": "loads differ (another agent ran builds/tests during the before runs); not a strict A/B. 60 fps not demonstrated on this software-raster machine.",
+  "before_trace_round_12s": {
+   "main_RunTask_ms": 8423,
+   "Layerize_ms": 2295,
+   "audio_worker_HandlePostMessage_ms": 20732,
+   "idle_Layerize_ms_per_s": 150
+  }
+ },
+ "commands": {
+  "typecheck": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck -> pass",
+  "unit": "bash scripts/use-node.sh pnpm --filter @sollish/web test -> 409/409 (goreme-timeline 12/12, +2 new timing tests)",
+  "browser": {
+   "goreme.spec.ts": "13/13 (+2 new: lift animation tracking, mooring flight into band slot)",
+   "game-info.spec.ts": "13/13",
+   "lobby.spec.ts": "18/18"
+  },
+  "browser_cmd": "PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3000 bash scripts/use-node.sh pnpm --filter @sollish/web test:browser <spec> --workers=1"
+ },
+ "console": "only favicon.ico 404 (site-wide) in all 18 scenarios",
+ "not_done": [
+  "build:cloudflare preview of the final commit",
+  "owner visual/audio acceptance",
+  "real-device fps"
+ ]
+}
