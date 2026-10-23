@@ -17,10 +17,12 @@
  *                          reels slow down, presentation only)
  *   ways                -> win (cells highlighted, the cumulative meter adds the board win), callout (way multiplier ≥ 10)
  *   scatter             -> scatter (suns flare; base: pay + award, free: +5 spins)
- *   lift                -> lift (burner flames, wind), lift-move (rise one row + drift with the wind; exits fly away or
- *                          head for the sky band), merge (two balloons in one cell become one, ×sum)
+ *   lift                -> lift (burner flames, wind), lift-move (rise one row + drift with the wind; the +1 badge ticks
+ *                          `tickMs` after the move starts; exits fly off the top, or fly into their sky-band slot and stay
+ *                          parked there until the sky event), merge (two balloons in one cell become one, ×sum)
  *   sky                 -> sky (moored balloons join the band, Gök ×N ticks; callout when it reaches ≥ 10)
- *   respin              -> respin (every non-balloon cell drops in fresh), balloon-land per new balloon
+ *   respin              -> respin (the reels spin again behind the balloons and stop left to right: every non-balloon
+ *                          cell lands fresh), balloon-land per new balloon
  *   spin end            -> trigger / free-intro / free-mode (base), spin-end
  *   round end           -> free-outro (always after free spins), total-win (<10×) or big-win (≥10×, Azami when capped), end
  */
@@ -72,11 +74,12 @@ export type GoremeEvent =
   /** Burners flare under every balloon on the board; the wind picks its direction. */
   | At & { type: 'lift'; spin: number; step: number; lift: number; wind: GoremeWind; shift: -1 | 0 | 1; balloons: GoremeBalloon[] }
   /** Balloons rise one row and drift with the wind; exits leave through the top (fly away, or moor in the sky band). */
-  | At & { type: 'lift-move'; spin: number; step: number; moves: GoremeLiftMove[]; exits: GoremeExit[]; ms: number }
+  | At & { type: 'lift-move'; spin: number; step: number; moves: GoremeLiftMove[]; exits: GoremeExit[]; ms: number; tickMs: number }
   | At & { type: 'merge'; spin: number; step: number; merges: GoremeMerge[]; ms: number }
   /** Moored balloons join the sky band; the sky multiplier ticks from `before` to `after`. */
   | At & { type: 'sky'; spin: number; moored: GoremeMoored[]; before: number; after: number }
-  /** Every non-balloon cell is dealt again; column c starts `delays[c]` ms after `at`. */
+  /** Every non-balloon cell is dealt again: the reels spin behind the balloons, column c starts landing `delays[c]` ms
+   * after `at` and is down `dropMs` later. */
   | At & { type: 'respin'; spin: number; step: number; grid: GoremeGrid; drops: number[]; delays: number[]; dropMs: number }
   | At & { type: 'trigger'; spin: number; count: number; awarded: number; freeSpinsLeft: number }
   | At & { type: 'free-intro'; spin: number; awarded: number; hold: true }
@@ -96,16 +99,19 @@ export interface GoremeTimeline { events: GoremeEvent[]; duration: number; speed
 const NORMAL = {
   spinStart: 120, freeSpinStart: 380,
   reelFirst: 420, reelGap: 150, teaseGap: 560, drop: 380, reelTail: 140,
-  respinLead: 60, respinGap: 55, settle: 90,
+  respinLead: 230, respinGap: 85, respinDrop: 320, settle: 90,
   win: 900, winLate: 620, callout: 1300,
   scatter: 1300, retrigger: 1200,
-  burn: 360, move: 760, merge: 720, skyTick: 900, skyCallout: 1300,
+  burn: 420, move: 820, merge: 760, skyTick: 900, skyCallout: 1300,
   trigger: 1300, freeIntro: 3400, freeOutro: 3600, totalWin: 900,
   spinEndWin: 520, spinEndNone: 240, freeSpinEndWin: 600, freeSpinEndNone: 220,
 };
 const REDUCED: typeof NORMAL = {
-  ...NORMAL, reelFirst: 160, reelGap: 40, teaseGap: 200, drop: 160, respinGap: 0, burn: 200, move: 360, merge: 360, callout: 900, scatter: 900, trigger: 900,
+  ...NORMAL, reelFirst: 160, reelGap: 40, teaseGap: 200, drop: 160, respinLead: 60, respinGap: 0, respinDrop: 160, burn: 200, move: 360, merge: 360, callout: 900, scatter: 900, trigger: 900,
 };
+
+/** When the +1 badge of a rising balloon ticks: a little past the middle of the rise (the burner has lifted it). */
+export function goremeTickMs(moveMs: number): number { return Math.round(moveMs * 0.55); }
 
 /** floor(bet × hundredths / 100): the engine's payout rule, used for every displayed amount. */
 export function goremeCents(betCents: number, hundredths: number): number {
@@ -181,7 +187,7 @@ export function buildGoremeTimeline(round: GoremeRound, options: GoremeTimelineO
           const freshByCol = new Array<number>(GOREME_REELS).fill(0);
           for (const dr of step.drops) freshByCol[dr.col]!++;
           const delays = Array.from({ length: GOREME_REELS }, (_, col) => d(T.respinLead + col * T.respinGap));
-          const dropMs = d(T.drop);
+          const dropMs = d(T.respinDrop);
           const dur = delays[GOREME_REELS - 1]! + dropMs + d(T.settle);
           push({ type: 'respin', at: t, dur, spin: s, step: i, grid: step.grid, drops: step.drops.map(dr => dr.id), delays, dropMs });
           for (const b of step.balloons) push({ type: 'balloon-land', at: t + delays[b.col]! + dropMs, dur: 0, spin: s, id: b.id, col: b.col, row: b.row, multiplier: b.multiplier });
@@ -220,7 +226,7 @@ export function buildGoremeTimeline(round: GoremeRound, options: GoremeTimelineO
           const burn = d(T.burn), move = d(T.move);
           push({ type: 'lift', at: t, dur: burn, spin: s, step: i, lift: step.lift, wind: step.wind, shift: step.shift, balloons: liftBalloonsBefore(step.moves, step.exits) });
           t += burn;
-          push({ type: 'lift-move', at: t, dur: move, spin: s, step: i, moves: step.moves.map(m => ({ ...m })), exits: step.exits.map(e => ({ ...e })), ms: move });
+          push({ type: 'lift-move', at: t, dur: move, spin: s, step: i, moves: step.moves.map(m => ({ ...m })), exits: step.exits.map(e => ({ ...e })), ms: move, tickMs: goremeTickMs(move) });
           t += move;
           if (step.merges.length) {
             const ms = d(T.merge);

@@ -1,11 +1,11 @@
 /* Göreme board: cells and balloons are absolutely placed by --c (reel) and --r (row); lengths come from the timeline
-   (--delay, --dur, --ms, --stop). Only transform / opacity animate. */
+   (--delay, --dur, --ms, --stop, --burn). Only transform / opacity animate. */
 .board { position: absolute; inset: 0; transition: opacity 0.35s ease; }
 /* symbols drop in from above the window: clip them to the well (balloons fly out above it on their own layer) */
 .cells { position: absolute; inset: 0; overflow: hidden; }
 .board[data-dim] { opacity: 0.45; }
 
-.cell, .balloon {
+.cell, .balloon, .puff {
   position: absolute;
   left: 0;
   top: 0;
@@ -19,11 +19,22 @@
 .cell[data-mode='drop'] > * { animation: dropIn var(--dur, 380ms) cubic-bezier(0.3, 0.85, 0.35, 1.1) var(--delay, 0ms) both; }
 .cell[data-leaving] { z-index: 0; pointer-events: none; }
 .cell[data-leaving] > * { animation: dropOut var(--dur, 220ms) ease-in both; }
+/* winning cells: a gold frame that draws in, behind the pulsing symbol */
+.cell[data-win]::before {
+  content: '';
+  position: absolute;
+  inset: 4%;
+  border-radius: 18%;
+  background: radial-gradient(closest-side, rgba(255, 226, 140, 0.42), rgba(255, 200, 90, 0.12) 70%, transparent);
+  box-shadow: inset 0 0 0 2px rgba(255, 220, 120, 0.95), 0 0 14px rgba(255, 200, 90, 0.55);
+  animation: winFrame 0.42s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+@keyframes winFrame { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: none; } }
 @keyframes reelIn { 0% { transform: translateY(-180%) scaleY(1.25); opacity: 0; } 18% { opacity: 1; } 78% { transform: translateY(7%) scaleY(0.94); } 100% { transform: none; opacity: 1; } }
 @keyframes dropIn { 0% { transform: translateY(-120%); opacity: 0; } 30% { opacity: 1; } 80% { transform: translateY(5%) scale(1.03, 0.96); } 100% { transform: none; opacity: 1; } }
 @keyframes dropOut { to { transform: translateY(55%) scale(0.9); opacity: 0; } }
 
-/* spinning reel strip (cosmetic) until each reel stops */
+/* spinning reel strip (cosmetic) until each reel stops; a respin spins only the reels that get fresh cells */
 .reels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: 1.5%; }
 .reel {
   position: absolute;
@@ -34,39 +45,165 @@
   overflow: hidden;
   animation: reelHide 120ms ease-out var(--stop, 0ms) both;
 }
+
 .reel[data-tease] { box-shadow: inset 0 0 0 2px rgba(255, 214, 94, 0.85), inset 0 0 26px rgba(255, 190, 80, 0.5); }
 .reel::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(30, 14, 40, 0.75), rgba(30, 14, 40, 0) 22%, rgba(30, 14, 40, 0) 78%, rgba(30, 14, 40, 0.75)); }
-.strip { position: absolute; left: 0; right: 0; top: 0; height: 400%; display: grid; grid-template-rows: repeat(20, 1fr); opacity: 0.5; animation: scroll 0.24s linear infinite; }
+.strip { position: absolute; left: 0; right: 0; top: 0; height: 400%; display: grid; grid-template-rows: repeat(20, 1fr); opacity: 0.62; animation: scroll 0.24s linear infinite; }
 .stripCell > * { transform: scaleY(1.45); }
-.reel[data-tease] .strip { animation-duration: 0.5s; opacity: 0.75; }
+.reel[data-tease] .strip { animation-duration: 0.5s; opacity: 0.8; }
 .stripCell { padding: 5%; }
 @keyframes scroll { from { transform: translateY(-50%); } to { transform: translateY(0); } }
 @keyframes reelHide { to { opacity: 0; } }
+
+/* burner smoke in a cell a balloon just left (until the respin deals it again) */
+.puff { pointer-events: none; }
+.puff span {
+  position: absolute;
+  left: 30%;
+  top: 34%;
+  width: 40%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 238, 220, 0.55), rgba(255, 220, 200, 0.18) 55%, transparent 72%);
+  animation: puff 1.1s ease-out both;
+}
+.puff span:nth-child(2) { left: 14%; top: 46%; animation-delay: 80ms; }
+.puff span:nth-child(3) { left: 46%; top: 50%; animation-delay: 150ms; }
+@keyframes puff { 0% { opacity: 0; transform: translateY(20%) scale(0.4); } 30% { opacity: 1; } 100% { opacity: 0.35; transform: translateY(-40%) scale(1.5); } }
+
+/* wind streaks across the window (direction of the lift's wind; calm: a soft upward shimmer) */
+.gust { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.gust span {
+  position: absolute;
+  left: 0;
+  top: calc(8% + var(--i) * 15%);
+  width: 38%;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 248, 236, 0.75), transparent);
+  opacity: 0;
+  animation: gustR var(--ms, 900ms) ease-in-out calc(var(--i) * 70ms) both;
+}
+.gust[data-dir='left'] span { animation-name: gustL; }
+.gust[data-dir='calm'] span { width: 2px; height: 30%; left: calc(6% + var(--i) * 17%); top: 60%; background: linear-gradient(180deg, transparent, rgba(255, 248, 236, 0.5), transparent); animation-name: gustUp; }
+@keyframes gustR { 0% { opacity: 0; transform: translateX(-40%); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateX(260%); } }
+@keyframes gustL { 0% { opacity: 0; transform: translateX(260%); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateX(-40%); } }
+@keyframes gustUp { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 0.8; } 100% { opacity: 0; transform: translateY(-160%); } }
+
+/* ways path: per-reel counts of the best run along the bottom rim, drawn left to right */
+.path { position: absolute; left: 0; right: 0; bottom: 0; height: 0; pointer-events: none; z-index: 3; }
+.pathLine {
+  position: absolute;
+  left: calc(100% / 12);
+  width: calc((var(--len) - 1) * 100% / 6);
+  top: -1.5px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #fff4c0, #ffd65e, #f2a622);
+  box-shadow: 0 0 8px rgba(255, 210, 100, 0.9);
+  transform-origin: 0 50%;
+  animation: pathLine calc(var(--len) * 70ms + 120ms) ease-out both;
+}
+.pathChip {
+  position: absolute;
+  left: calc((var(--c) + 0.5) * 100% / 6);
+  top: 0;
+  min-width: 26px;
+  padding: 1px 6px;
+  translate: -50% -50%;
+  border-radius: 999px;
+  font: 800 13px / 1.2 var(--font-barlow), 'Arial Narrow', system-ui, sans-serif;
+  text-align: center;
+  color: #3a1604;
+  background: linear-gradient(180deg, #fff8dc, #ffd65e);
+  box-shadow: 0 0 0 1.5px #2a1216, 0 0 10px rgba(255, 210, 100, 0.8);
+  animation: pathChip 0.32s cubic-bezier(0.2, 1.6, 0.4, 1) calc(var(--c) * 70ms) both;
+}
+.pathChip::before { content: '×'; font-size: 0.8em; margin-right: 1px; }
+@keyframes pathLine { from { transform: scaleX(0); } }
+@keyframes pathChip { from { opacity: 0; transform: scale(0.3); } }
 
 /* balloons: one overlay, stable ids, transform transitions between cells */
 .sky { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
 .balloon {
   padding: 0.2%;
   z-index: 2;
+  transform: translate(calc((var(--c) + var(--ox, 0)) * 100%), calc(var(--r) * 100%));
   transition: transform var(--ms, 0ms) cubic-bezier(0.38, 0.05, 0.25, 1) var(--delay, 0ms), opacity var(--ms, 0ms) ease var(--delay, 0ms);
   pointer-events: auto;
 }
-.balloonInner { width: 100%; height: 100%; }
-.balloon[data-phase='land'] .balloonInner { animation: balloonIn var(--ms, 600ms) cubic-bezier(0.2, 0.9, 0.3, 1.1) var(--delay, 0ms) both; }
+.balloonInner { position: relative; width: 100%; height: 100%; transform: scale(var(--s, 1)); transition: transform var(--ms, 0ms) ease var(--delay, 0ms); }
+.lean { position: relative; width: 100%; height: 100%; transform-origin: 50% 85%; transform: rotate(calc(var(--tilt, 0) * 7deg)); transition: transform calc(var(--ms, 0ms) * 0.5) ease; }
+.balloon[data-phase='land'] .lean { animation: balloonIn var(--ms, 600ms) cubic-bezier(0.2, 0.9, 0.3, 1.1) var(--delay, 0ms) both; }
+/* rising: the burner lifts it with a slight overshoot; the lean follows the wind and settles at the end */
+.balloon[data-phase='rise'] { transition-timing-function: cubic-bezier(0.34, 0.08, 0.22, 1.08); }
 .balloon[data-phase='grow'] { z-index: 3; }
-.balloon[data-phase='grow'] .balloonInner { animation: grow var(--ms, 600ms) cubic-bezier(0.25, 1.5, 0.4, 1) both; }
-.balloon[data-phase='absorbed'] { opacity: 0; z-index: 1; }
-.balloon[data-phase='absorbed'] .balloonInner { transform: scale(0.55); transition: transform var(--ms, 300ms) ease-in; }
-.balloon[data-phase='exit'] { opacity: 0; transition-timing-function: cubic-bezier(0.5, 0, 0.75, 0.4); }
-.balloon[data-phase='moor'] { opacity: 0; transition: transform var(--ms, 0ms) cubic-bezier(0.5, 0, 0.6, 0.9), opacity calc(var(--ms, 0ms) * 0.5) ease calc(var(--ms, 0ms) * 0.5); }
-.balloon[data-phase='moor'] .balloonInner { transform: scale(0.72); transition: transform var(--ms, 0ms) ease; }
-.sky[data-burn] .balloon[data-phase='idle'] .balloonInner { animation: burn 0.36s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
+.balloon[data-phase='grow'] .lean { animation: grow var(--ms, 600ms) cubic-bezier(0.25, 1.5, 0.4, 1) both; }
+.balloon[data-phase='absorbed'] { z-index: 1; opacity: 0; transition: transform var(--ms, 300ms) cubic-bezier(0.55, 0, 0.8, 0.4), opacity calc(var(--ms, 300ms) * 0.5) ease-in calc(var(--ms, 300ms) * 0.5); }
+.balloon[data-phase='absorbed'] .balloonInner { transform: scale(0.5); }
+/* base fly-away: up and off the top of the table, shrinking; it fades only near the end */
+.balloon[data-phase='exit'] { opacity: 0; transition: transform var(--ms, 0ms) cubic-bezier(0.45, 0, 0.7, 0.65), opacity calc(var(--ms, 0ms) * 0.4) ease calc(var(--ms, 0ms) * 0.6); }
+.balloon[data-phase='exit'] .lean { transition-duration: var(--ms, 0ms); }
+/* Şafak Şöleni: up into its own sky-band slot (scale to the band size), then parked there until the band takes over */
+.balloon[data-phase='moor'], .balloon[data-phase='parked'] { z-index: 4; }
+.balloon[data-phase='moor'] { transition: transform var(--ms, 0ms) cubic-bezier(0.42, 0.02, 0.3, 1); }
+.balloon[data-phase='parked'] .lean { animation: parked 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
+.sky[data-burn] .balloon:is([data-phase='idle'], [data-phase='rise']) .lean { animation: burn var(--burn, 400ms) cubic-bezier(0.3, 1.6, 0.5, 1) both; }
 @keyframes balloonIn { 0% { transform: translateY(-90%) scale(0.85) rotate(-5deg); opacity: 0; } 40% { opacity: 1; } 75% { transform: translateY(4%) scale(1.02) rotate(1deg); } 100% { transform: none; opacity: 1; } }
-@keyframes grow { 0% { transform: scale(0.7); } 45% { transform: scale(1.22); } 70% { transform: scale(0.96); } 100% { transform: none; } }
-@keyframes burn { 0% { transform: none; } 40% { transform: translateY(-6%) scale(1.04, 1.07); } 100% { transform: translateY(-2%); } }
+@keyframes grow { 0% { transform: scale(0.82); } 45% { transform: scale(1.24); } 70% { transform: scale(0.95); } 100% { transform: none; } }
+@keyframes burn { 0% { transform: none; } 45% { transform: translateY(-5%) scale(1.04, 1.08); } 100% { transform: translateY(-2%); } }
+@keyframes parked { 0% { transform: translateY(-6%) scale(1.05); } 100% { transform: none; } }
+
+/* burner plume: a flame cone over the basket and the envelope lit from inside (transform / opacity only) */
+.plume { position: absolute; left: 50%; top: 52%; width: 30%; height: 34%; translate: -50% 0; pointer-events: none; z-index: 1; }
+.plume::before {
+  content: '';
+  position: absolute;
+  left: -55%;
+  right: -55%;
+  top: -95%;
+  bottom: 10%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 85%, rgba(255, 214, 120, 0.85), rgba(255, 150, 60, 0.35) 40%, transparent 70%);
+  animation: glowIn var(--burn, 400ms) ease-out both;
+}
+.plume i {
+  position: absolute;
+  left: 30%;
+  right: 30%;
+  bottom: 8%;
+  height: 78%;
+  border-radius: 50% 50% 45% 45% / 70% 70% 30% 30%;
+  background: radial-gradient(ellipse at 50% 80%, #fffbe6 0 22%, #ffd65e 42%, rgba(255, 120, 40, 0.9) 66%, transparent 74%);
+  transform-origin: 50% 100%;
+  animation: plume var(--burn, 400ms) cubic-bezier(0.2, 1.4, 0.4, 1) both, flicker 0.16s ease-in-out var(--burn, 400ms) infinite alternate;
+}
+@keyframes plume { 0% { transform: scale(0.2, 0.1); opacity: 0; } 35% { transform: scale(1.15, 1.25); opacity: 1; } 100% { transform: scale(0.85, 0.75); opacity: 0.85; } }
+@keyframes flicker { from { transform: scale(0.85, 0.75); opacity: 0.85; } to { transform: scale(0.75, 0.6); opacity: 0.55; } }
+@keyframes glowIn { 0% { opacity: 0; } 35% { opacity: 1; } 100% { opacity: 0.55; } }
+
+/* +N chip: the badge ticks (rise +1, merge +sum) */
+.plus {
+  position: absolute;
+  right: -6%;
+  bottom: 30%;
+  z-index: 5;
+  font: 900 max(12px, 1.6vmin) / 1 var(--font-barlow), 'Arial Narrow', system-ui, sans-serif;
+  color: #fff6c8;
+  -webkit-text-stroke: 1px #3a1604;
+  paint-order: stroke fill;
+  text-shadow: 0 2px 0 #2a1216, 0 0 10px rgba(255, 200, 100, 0.95);
+  pointer-events: none;
+  animation: plusUp 0.95s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+@keyframes plusUp { 0% { opacity: 0; transform: translateY(30%) scale(0.5); } 22% { opacity: 1; transform: translateY(-10%) scale(1.25); } 70% { opacity: 1; transform: translateY(-60%) scale(1); } 100% { opacity: 0; transform: translateY(-110%) scale(0.95); } }
 
 @media (prefers-reduced-motion: reduce) {
-  .cell > *, .balloonInner { animation: none !important; }
-  .balloon { transition: opacity calc(var(--ms, 0ms) * 0.6) ease !important; }
+  .cell > *, .lean, .plume i, .plume::before, .puff span, .gust span, .pathLine, .pathChip, .cell[data-win]::before { animation: none !important; }
+  .balloon, .balloonInner { transition: opacity calc(var(--ms, 0ms) * 0.6) ease !important; }
+  .lean { transform: none; transition: none; }
   .strip { animation: none; }
+  .gust { display: none; }
+  .plus { animation: plusFade 0.9s ease both; }
+  @keyframes plusFade { 0%, 100% { opacity: 0; } 20%, 80% { opacity: 1; } }
 }

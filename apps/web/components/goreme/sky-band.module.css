@@ -64,8 +64,11 @@
   min-width: 0;
   aspect-ratio: 1 / 1.3;
   max-height: 100%;
-  animation: moor 1.1s cubic-bezier(0.2, 0.9, 0.3, 1.1) both;
+  animation: moor 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) both;
 }
+/* reserved slot: the board's balloon is flying here; it shows when it joins the band */
+.moored[data-incoming] { visibility: hidden; animation: none; }
+.moored[data-incoming] .tether { visibility: hidden; }
 .balloon { position: absolute; left: 0; right: 0; top: 0; aspect-ratio: 1; }
 .tether {
   position: absolute;
@@ -76,12 +79,14 @@
   translate: -50% 0;
   background: linear-gradient(180deg, rgba(60, 20, 30, 0.85), rgba(60, 20, 30, 0.4));
 }
+/* the balloon arrives from the board flight at this exact spot: it only settles on its tether */
 @keyframes moor {
-  0% { transform: translateY(120%) scale(0.6); opacity: 0; }
-  50% { opacity: 1; }
-  70% { transform: translateY(-8%) scale(1.04); }
+  0% { transform: translateY(-5%) scale(1.04); }
+  55% { transform: translateY(3%) scale(0.98); }
   100% { transform: none; }
 }
+.moored .tether { transform-origin: 50% 100%; animation: tether 0.45s ease-out both; }
+@keyframes tether { from { transform: scaleY(0); } }
 .peg { flex: 0 1 30%; aspect-ratio: 1 / 1.3; position: relative; opacity: 0.55; transition: opacity 0.8s ease; }
 .peg span {
   position: absolute;
@@ -121,12 +126,27 @@
   text-shadow: 0 3px 0 #a86210, 0 5px 8px rgba(40, 10, 10, 0.5);
   animation: bump 0.7s cubic-bezier(0.2, 1.6, 0.4, 1) both;
 }
+.medalPlus {
+  position: absolute;
+  right: -6%;
+  top: -14%;
+  font: 900 max(14px, 3.4cqi) / 1 var(--font-barlow), 'Arial Narrow', system-ui, sans-serif;
+  color: #fff6c8;
+  -webkit-text-stroke: 1px #3a1604;
+  paint-order: stroke fill;
+  text-shadow: 0 2px 0 #2a1216, 0 0 12px rgba(255, 210, 100, 0.95);
+  pointer-events: none;
+  animation: medalPlus 1.2s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+@keyframes medalPlus { 0% { opacity: 0; transform: translateY(40%) scale(0.5); } 20% { opacity: 1; transform: scale(1.3); } 70% { opacity: 1; transform: translateY(-50%) scale(1); } 100% { opacity: 0; transform: translateY(-90%); } }
 .medalValue small { font-size: 0.6em; vertical-align: 0.2em; margin-right: 0.04em; }
 .band:not([data-active]) .medalValue { animation: none; opacity: 0.7; }
 @keyframes bump { 0% { transform: scale(1.7); opacity: 0.2; } 60% { transform: scale(0.92); opacity: 1; } 100% { transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
-  .moored, .medalValue { animation: none !important; }
+  .moored, .medalValue, .moored .tether { animation: none !important; }
+  .medalPlus { animation: medalPlusFade 1s ease both; }
+  @keyframes medalPlusFade { 0%, 100% { opacity: 0; } 20%, 80% { opacity: 1; } }
 }
 /* phones: the band may get shorter so the whole table fits one screen (goreme-game.module.css, phone fit) */
 @media (max-width: 760px), (max-aspect-ratio: 4 / 5) {

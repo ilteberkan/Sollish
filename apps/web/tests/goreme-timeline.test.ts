@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { goremeSeedFromEntropy, playGoremeRound, type GoremeMode, type GoremeRound } from '@sollish/protocol';
 import {
-  GOREME_SPEED_FACTOR, buildGoremeTimeline, goremeFinalBoard, goremeHistoryDetail, goremeHistorySummary, goremeWaysCallout, type GoremeEvent,
+  GOREME_SPEED_FACTOR, buildGoremeTimeline, goremeFinalBoard, goremeHistoryDetail, goremeHistorySummary, goremeTickMs, goremeWaysCallout, type GoremeEvent,
 } from '../lib/goreme-timeline';
 import { winTierOf } from '../lib/slot-kit/win-tiers';
 
@@ -133,7 +133,7 @@ test('multiplier callouts: only values of 10 or more, each with its tier; sky ca
 
 test('speeds change timing only: same events and numbers, turbo shorter, reduced motion keeps every step', () => {
   const round = engine(F.BUY_SKY, 'buy');
-  const strip = (e: GoremeEvent) => { const { at: _a, dur: _d, ...rest } = e as GoremeEvent & Record<string, unknown>; delete (rest as Record<string, unknown>).stops; delete (rest as Record<string, unknown>).dropMs; delete (rest as Record<string, unknown>).delays; delete (rest as Record<string, unknown>).ms; delete (rest as Record<string, unknown>).schedule; delete (rest as Record<string, unknown>).countUp; return JSON.stringify(rest); };
+  const strip = (e: GoremeEvent) => { const { at: _a, dur: _d, ...rest } = e as GoremeEvent & Record<string, unknown>; delete (rest as Record<string, unknown>).stops; delete (rest as Record<string, unknown>).dropMs; delete (rest as Record<string, unknown>).delays; delete (rest as Record<string, unknown>).ms; delete (rest as Record<string, unknown>).tickMs; delete (rest as Record<string, unknown>).schedule; delete (rest as Record<string, unknown>).countUp; return JSON.stringify(rest); };
   const normal = buildGoremeTimeline(round), quick = buildGoremeTimeline(round, { speed: 'quick' }), turbo = buildGoremeTimeline(round, { speed: 'turbo' }), reduced = buildGoremeTimeline(round, { reducedMotion: true });
   for (const other of [quick, turbo, reduced]) assert.deepEqual(other.events.map(strip), normal.events.map(strip));
   assert.ok(turbo.duration < quick.duration && quick.duration < normal.duration);
@@ -184,4 +184,50 @@ test('a merge: the survivor keeps the lowest id, its multiplier is the sum of th
   const ev = ofType(tl.events, 'merge')[0]!;
   const move = ofType(tl.events, 'lift-move').find(e => e.step === ev.step && e.spin === ev.spin)!;
   assert.equal(ev.at, move.at + move.dur, 'the merge burst starts when the rise ends');
+});
+
+test('lift presentation timing: burner before the rise, +1 tick inside the rise, merge after it, moorings before the sky tick', () => {
+  for (const [fill, mode] of [[F.LIFT, 'standard'], [F.BUY_MERGE, 'buy'], [F.BUY_SKY, 'buy']] as const) {
+    for (const speed of ['normal', 'quick', 'turbo'] as const) {
+      const tl = buildGoremeTimeline(engine(fill, mode), { speed });
+      const lifts = ofType(tl.events, 'lift'), moves = ofType(tl.events, 'lift-move');
+      assert.equal(lifts.length, moves.length);
+      lifts.forEach((lift, i) => {
+        const move = moves[i]!;
+        // the burner flare plays first and the rise starts when it ends
+        assert.equal(move.at, lift.at + lift.dur);
+        assert.ok(lift.dur >= (speed === 'turbo' ? 140 : 250), `burner readable (${lift.dur} ms)`);
+        // the badge ticks part-way up: after half the rise, before it ends
+        assert.equal(move.tickMs, goremeTickMs(move.ms));
+        assert.ok(move.tickMs > move.ms / 2 && move.tickMs < move.ms);
+        // a merge starts when the rise is over; a sky tick comes after the rise (and after any merge of that lift)
+        const merge = ofType(tl.events, 'merge').find(e => e.spin === move.spin && e.step === move.step);
+        if (merge) assert.equal(merge.at, move.at + move.dur);
+        const sky = ofType(tl.events, 'sky').find(e => e.spin === move.spin && e.at >= move.at);
+        if (move.exits.some(e => e.moored)) {
+          assert.ok(sky, 'moored exits are followed by the sky tick');
+          assert.ok(sky!.at >= move.at + move.ms + (merge ? merge.dur : 0));
+        }
+      });
+    }
+  }
+});
+
+test('respins spin the reels again: every column lands left to right after a visible spin, and the timeline waits for the last landing', () => {
+  for (const speed of ['normal', 'quick', 'turbo'] as const) {
+    const tl = buildGoremeTimeline(engine(F.LIFT), { speed });
+    const respins = ofType(tl.events, 'respin');
+    assert.ok(respins.length >= 2);
+    for (const r of respins) {
+      for (let c = 1; c < 6; c++) assert.ok(r.delays[c]! > r.delays[c - 1]!, 'columns land left to right');
+      // the strips spin before the first column lands (a respin is not an instant swap)
+      assert.ok(r.delays[0]! >= Math.round(200 * GOREME_SPEED_FACTOR[speed]) - 1);
+      assert.ok(r.dur >= r.delays[5]! + r.dropMs);
+      // balloons landing in a respin land when their column does
+      for (const land of ofType(tl.events, 'balloon-land').filter(e => e.at > r.at && e.at <= r.at + r.dur)) assert.equal(land.at, r.at + r.delays[land.col]! + r.dropMs);
+    }
+  }
+  // reduced motion keeps every step but short
+  const reduced = buildGoremeTimeline(engine(F.LIFT), { reducedMotion: true });
+  for (const r of ofType(reduced.events, 'respin')) assert.ok(r.dur <= 400);
 });

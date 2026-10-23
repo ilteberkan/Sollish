@@ -152,6 +152,25 @@
 .meterPart small { font-size: 12px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #f0c9b4; }
 .meterPart strong { font-size: 24px; font-weight: 800; color: #fff7d6; font-variant-numeric: tabular-nums; text-shadow: 0 0 14px rgba(255, 210, 120, 0.35); }
 .meterPart em { font-style: normal; font-size: 13px; color: #e9c98a; }
+/* the win line / merge / scatter note sits inside the meter (left), the cumulative amount stays readable (right) */
+.meter[data-note] { justify-content: space-between; gap: 12px; }
+.meter[data-note] .meterPart small { display: none; }
+.meterNote {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: #ffe08a;
+  text-shadow: 0 1px 0 #2a1216;
+  animation: noteIn 0.38s cubic-bezier(0.2, 1, 0.3, 1) both;
+}
+.meterNote[data-tone='rose'] { color: #ffc4b4; }
+.meterNote[data-tone='sky'] { color: #9ff4e6; }
+@keyframes noteIn { from { opacity: 0; transform: translateX(-12px); } }
 .meterShine { position: absolute; inset: 0; background: linear-gradient(100deg, transparent 30%, rgba(230, 244, 255, 0.5) 50%, transparent 70%); transform: translateX(-100%); animation: shine 0.9s ease-out forwards; pointer-events: none; }
 
 /* effect layer: floating amounts */
@@ -161,16 +180,6 @@
 .floatSpin { font-size: 20px; color: #d8fff0; text-shadow: 0 2px 0 #021a1c, 0 0 12px rgba(109, 255, 180, 0.8); }
 .sparkLabel { font-size: 26px; color: #ffffff; text-shadow: 0 0 12px rgba(220, 220, 255, 0.95); }
 
-/* banner (constellation name, +5 spins, Ay Ata pay) */
-.banner {
-  position: absolute; left: 50%; top: 9%; z-index: 8; padding: 9px 24px; border-radius: 999px;
-  font-size: 21px; font-weight: 800; letter-spacing: 0.5px; white-space: nowrap; color: #2a1406;
-  background: linear-gradient(180deg, #fff7d6, #ffd970 60%, #b0560e);
-  box-shadow: 0 0 0 3px rgba(42, 18, 22, 0.85), 0 0 30px -4px rgba(255, 200, 100, 0.8);
-  transform: translateX(-50%); animation: bannerIn 2.1s cubic-bezier(0.2, 1, 0.3, 1) both; pointer-events: none;
-}
-.bannerSky { color: #04302e; background: linear-gradient(180deg, #ffffff, #d6fff6 50%, #62e2d2); box-shadow: 0 0 0 3px rgba(42, 18, 22, 0.9), 0 0 0 4.5px #ffd970, 0 0 34px -2px rgba(98, 226, 210, 0.85); }
-.bannerRose { color: #3a0c14; background: linear-gradient(180deg, #fff4ef, #f3bfae 50%, #d78f7c); box-shadow: 0 0 0 3px rgba(42, 18, 22, 0.9), 0 0 0 4.5px #ffd970, 0 0 34px -2px rgba(240, 140, 120, 0.85); }
 
 /* multiplier callout (template × global ≥ 10) */
 .callout {
@@ -436,13 +445,6 @@
 @keyframes popIn { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 @keyframes punch { 0% { transform: scale(1.12); } 45% { transform: scale(0.97); } 100% { transform: scale(1); } }
 @keyframes shine { to { transform: translateX(100%); } }
-@keyframes bannerIn {
-  0% { transform: translate(-50%, -30px) scale(0.6); opacity: 0; }
-  14% { transform: translate(-50%, 0) scale(1.08); opacity: 1; }
-  24% { transform: translate(-50%, 0) scale(1); }
-  82% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-  100% { transform: translate(-50%, -14px) scale(0.96); opacity: 0; }
-}
 @keyframes calloutIn {
   0% { transform: translate(-50%, -50%) scale(2.6); opacity: 0; }
   14% { transform: translate(-50%, -50%) scale(0.9); opacity: 1; }
@@ -510,7 +512,6 @@
   .meter { min-height: 44px; width: calc(100% - 12px); }
   .meterIdle { font-size: 12.5px; gap: 6px; }
   .meterPart strong { font-size: 20px; }
-  .banner { font-size: 16px; top: 52px; padding: 7px 16px; }
   .floatLabel { font-size: 17px; }
   .side { overflow: visible; border-left: 0; border-top: 1px solid rgba(255, 217, 112, 0.3); padding: 12px 10px 14px; box-shadow: none; background: linear-gradient(180deg, rgba(56, 22, 46, 0.97), rgba(28, 10, 26, 0.98)); }
   .deck {
@@ -551,7 +552,7 @@
 @media (prefers-reduced-motion: reduce) {
   .spin::after, .spinning .sealRays, .spin:hover:not(:disabled) .sealRays { animation: none; }
   .freeCounter, .freeLeft strong, .globalChip, .meterShine { animation: none; }
-  .banner { animation: none; }
+  .meterNote { animation: none; }
   .callout { animation: none; opacity: 1; }
 }
 @media (max-width: 420px) {
@@ -600,10 +601,9 @@
 @media (prefers-reduced-motion: reduce) {
   .wind, .wind svg, .sealBalloon { animation: none; }
 }
-/* banners sit just above the meter, so the HUD (free-spin counter, wind) stays readable */
-.banner { top: auto; bottom: 40px; font-size: 18px; padding: 7px 20px; }
 @media (max-width: 760px), (max-aspect-ratio: 4 / 5) {
-  .banner { top: auto; bottom: 34px; font-size: 14px; max-width: calc(100% - 16px); overflow: hidden; text-overflow: ellipsis; }
+  .meterNote { font-size: 12.5px; }
+  .meter[data-note] { padding: 4px 14px; gap: 8px; }
 }
 /* the dawn scene is a size container on desktop; on phones it must grow with the table content */
 @media (max-width: 760px), (max-aspect-ratio: 4 / 5) {

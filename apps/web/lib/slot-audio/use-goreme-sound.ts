@@ -158,7 +158,9 @@ export function useGoremeSound(settings: SlotSettings): { sound: GoremeSoundCont
   };
   const startLoad = () => {
     const e = engine.current;
-    if (loadStarted.current || !e || !unlocked.current) return;
+    // Muted (the default): the bank is not rendered at all, so its workers never compete with the reels for the CPU;
+    // it starts the moment the sound is switched on.
+    if (loadStarted.current || !e || !unlocked.current || settingsRef.current.muted) return;
     loadStarted.current = true;
     voiceLang.current = voiceLanguage();
     call(e, 'setVoiceBank', voiceBankFolder(GOREME_VOICE_BANK, voiceLang.current), { requireVersion: true });
@@ -194,6 +196,7 @@ export function useGoremeSound(settings: SlotSettings): { sound: GoremeSoundCont
 
   useEffect(() => {
     applyMix();
+    if (!settings.muted && unlocked.current) startLoad();
     document.addEventListener('visibilitychange', applyMix);
     return () => document.removeEventListener('visibilitychange', applyMix);
     // eslint-disable-next-line react-hooks/exhaustive-deps

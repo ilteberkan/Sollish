@@ -2,30 +2,47 @@
 /**
  * Göreme board: the 6 × 5 reel window's contents. Imperative (the game drives it from timeline events) but rendered by
  * React: non-balloon cells are absolutely placed by (col, row) and keyed by their engine cell id, so a fresh id mounts
- * and plays its own drop-in; balloons live on an overlay layer keyed by their STABLE engine id, so a lift is a CSS
- * transform transition from the old cell to the new one (rise + wind drift), a merge shrinks the absorbed balloon into
- * the survivor, and an exit leaves through the top (fly away, or up into the sky band). Every length comes from the
- * timeline event (stops, dropMs, ms), so the board ends exactly when the timeline moves on. Only transform / opacity
- * animate. Presentation only: the board never decides anything, it re-draws engine grids.
+ * and plays its own landing; balloons live on an overlay layer keyed by their STABLE engine id (`data-balloon-id`), so a
+ * lift is a CSS transform transition from the old cell to the new one (rise + wind drift + a lean into the wind), the
+ * +1 badge ticks part-way up, two balloons heading for one cell meet side by side and then merge (the absorbed one is
+ * pulled into the survivor, which swells), and an exit leaves through the top: in the base game it flies off the top of
+ * the table, in Şafak Şöleni it flies into its own sky-band slot (a target the game measures) and stays parked there
+ * until the sky band takes it over, so the flight never breaks. Respins spin the reels again behind the balloons and
+ * stop them left to right; a burner flare lights each envelope from inside; the wind draws streaks across the window;
+ * a winning ways run gets gold cell frames and a per-reel count path along the bottom rim.
+ * Every length comes from the timeline event (stops, delays, dropMs, ms, tickMs), so the board ends exactly when the
+ * timeline moves on. Only transform / opacity animate. Presentation only: the board never decides anything, it re-draws
+ * engine grids.
  */
 import { memo, useCallback, useImperativeHandle, useMemo, useRef, useState, type CSSProperties, type Ref } from 'react';
 import { GOREME_REELS, GOREME_ROWS, type GoremeExit, type GoremeGrid, type GoremeLiftMove, type GoremeMerge, type GoremeSymbol as EngineSymbol } from '@sollish/protocol';
 import { GoremeSymbol, goremeMergedSize, type GoremeSymbolState } from './symbols';
 import styles from './board.module.css';
 
+/** Where a mooring balloon flies to, in board cell units (col, row may be fractional and outside 0..5 / 0..4) and its scale there. */
+export interface GoremeMoorTarget { col: number; row: number; scale: number }
+export type GoremeWindDir = 'left' | 'calm' | 'right';
+
 export interface GoremeBoardHandle {
   readonly element: HTMLDivElement | null;
   /** Whole fresh board: the old symbols drop out, reel c stops `stops[c]` ms from now. */
   spin(grid: GoremeGrid, opts: { stops: number[]; dropMs: number; teaseFrom: number | null }): void;
-  /** Respin: balloons stay, every other cell drops in fresh (`drops` are the fresh ids), column c after `delays[c]` ms. */
+  /** Respin: balloons stay, the reels spin behind them and every other cell lands fresh (`drops` are the fresh ids),
+   * column c starting to land after `delays[c]` ms, down `dropMs` later. */
   respin(grid: GoremeGrid, opts: { drops: number[]; delays: number[]; dropMs: number }): void;
-  /** Burner flare: balloons bounce on their flames. */
-  burn(): void;
-  /** Rise + wind drift (`ms` long); exits leave through the top (moored: towards the sky band). */
-  move(moves: readonly GoremeLiftMove[], exits: readonly GoremeExit[], ms: number): void;
+  /** Burner flare (`ms` long): every balloon's envelope lights up from inside and bounces on its flame. */
+  burn(ms: number): void;
+  /** Wind streaks across the window for `ms`. */
+  wind(dir: GoremeWindDir, ms: number): void;
+  /** Rise + wind drift (`ms` long); the +1 badges tick after `tickMs`. Exits leave through the top: moored exits fly to
+   * `moorTargets` (by id) and stay parked there until `releaseParked`. */
+  move(moves: readonly GoremeLiftMove[], exits: readonly GoremeExit[], ms: number, opts?: { tickMs?: number; moorTargets?: ReadonlyMap<number, GoremeMoorTarget> }): void;
   merge(merges: readonly GoremeMerge[], ms: number): void;
-  /** Cells (by id) that glow; every other cell dims. null clears. */
-  highlight(ids: readonly number[] | null): void;
+  /** The sky band now shows these balloons: drop the parked copies (all parked balloons when omitted). */
+  releaseParked(ids?: readonly number[]): void;
+  /** Cells (by id) that glow; every other cell dims. `path` = cell ids of the run to trace along the bottom rim
+   * (per-reel counts). null clears. */
+  highlight(ids: readonly number[] | null, path?: readonly number[] | null): void;
   /** Places a grid at once without animation (idle board, end of round, recovery). */
   setGrid(grid: GoremeGrid): void;
   dim(on: boolean): void;
@@ -34,10 +51,23 @@ export interface GoremeBoardHandle {
 type CellMode = 'still' | 'reel' | 'drop';
 interface BoardCell { id: number; symbol: Exclude<EngineSymbol, 'balloon'>; col: number; row: number; mode: CellMode; delay: number; dur: number }
 interface Leaving { id: number; symbol: Exclude<EngineSymbol, 'balloon'>; col: number; row: number; key: string; dur: number }
-type BalloonPhase = 'idle' | 'land' | 'grow' | 'exit' | 'moor' | 'absorbed';
-interface BoardBalloon { id: number; col: number; row: number; multiplier: number; parts: number; phase: BalloonPhase; ms: number; delay: number }
+type BalloonPhase = 'idle' | 'land' | 'rise' | 'grow' | 'exit' | 'moor' | 'parked' | 'absorbed';
+interface BoardBalloon {
+  id: number; col: number; row: number; multiplier: number; parts: number; phase: BalloonPhase; ms: number; delay: number;
+  /** Horizontal offset in cells (two balloons meeting in one cell sit side by side until they merge). */
+  ox: number;
+  /** Lean while drifting: -1 left, 0, 1 right. */
+  tilt: number;
+  /** Scale of the whole balloon (moor flight shrinks it to its sky-band size). */
+  scale: number;
+  /** +N chip (a tick of the badge): key and amount. */
+  tick: number; plus: number;
+}
+interface ReelSet { key: number; cols: Array<{ col: number; hideAt: number; tease: boolean }>; kind: 'spin' | 'respin' }
+interface Puff { key: number; col: number; row: number }
+interface WaysPath { key: number; counts: number[] }
 
-const onBoard = (p: BalloonPhase) => p === 'idle' || p === 'land' || p === 'grow';
+const onBoard = (p: BalloonPhase) => p === 'idle' || p === 'land' || p === 'grow' || p === 'rise';
 export type GoremeCellLabel = (symbol: EngineSymbol, col: number, row: number, multiplier: number) => string;
 
 /** A pleasant, symbol-only idle board (ids are negative: they never collide with engine ids). */
@@ -52,6 +82,14 @@ const IDLE: EngineSymbol[][] = [
 export const GOREME_IDLE_GRID: GoremeGrid = IDLE.map((column, col) => column.map((symbol, row) => ({ id: -1 - (col * GOREME_ROWS + row), symbol, multiplier: 0 })));
 /** Symbols shown in the spinning blur strip of a reel (cosmetic only). */
 const STRIP: Exclude<EngineSymbol, 'balloon'>[] = ['l1', 'h2', 'l4', 'h1', 'l3', 'h4', 'l5', 'h3', 'l2', 'l1'];
+/** Base-game fly-away: the balloon climbs this many rows above the window (off the top of the table) while it fades. */
+const FLY_AWAY_ROW = -7;
+/** Two balloons meeting in one cell sit this far apart (cells) until they merge. */
+const MEET_OFFSET = 0.2;
+
+function balloonOf(id: number, col: number, row: number, multiplier: number, parts: number, phase: BalloonPhase, ms: number, delay: number): BoardBalloon {
+  return { id, col, row, multiplier, parts, phase, ms, delay, ox: 0, tilt: 0, scale: 1, tick: 0, plus: 0 };
+}
 
 function split(grid: GoremeGrid, prev: ReadonlyMap<number, BoardBalloon>, mode: (id: number, col: number) => { mode: CellMode; delay: number; dur: number }, landBalloon: (id: number, col: number) => { phase: BalloonPhase; delay: number; ms: number }) {
   const cells: BoardCell[] = [], balloons: BoardBalloon[] = [];
@@ -59,8 +97,8 @@ function split(grid: GoremeGrid, prev: ReadonlyMap<number, BoardBalloon>, mode: 
     const cell = grid[col]![row]!;
     if (cell.symbol === 'balloon') {
       const old = prev.get(cell.id);
-      const land = old ? { phase: 'idle' as BalloonPhase, delay: 0, ms: 0 } : landBalloon(cell.id, col);
-      balloons.push({ id: cell.id, col, row, multiplier: cell.multiplier, parts: old?.parts ?? 1, ...land });
+      if (old) balloons.push({ ...old, col, row, multiplier: cell.multiplier, phase: 'idle', ms: 0, delay: 0, ox: 0, tilt: 0, scale: 1 });
+      else { const land = landBalloon(cell.id, col); balloons.push(balloonOf(cell.id, col, row, cell.multiplier, 1, land.phase, land.ms, land.delay)); }
     } else cells.push({ id: cell.id, symbol: cell.symbol, col, row, ...mode(cell.id, col) });
   }
   return { cells, balloons };
@@ -73,126 +111,222 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
   const [balloons, setBalloons] = useState<BoardBalloon[]>(initial.balloons);
   const [leaving, setLeaving] = useState<Leaving[]>([]);
   const [lit, setLit] = useState<ReadonlySet<number> | null>(null);
-  const [reels, setReels] = useState<{ key: number; stops: number[]; dropMs: number; teaseFrom: number | null } | null>(null);
-  const [burnKey, setBurnKey] = useState(0);
+  const [path, setPath] = useState<WaysPath | null>(null);
+  const [reels, setReels] = useState<ReelSet | null>(null);
+  const [burn, setBurn] = useState<{ key: number; ms: number } | null>(null);
+  const [gust, setGust] = useState<{ key: number; dir: GoremeWindDir; ms: number } | null>(null);
+  const [puffs, setPuffs] = useState<Puff[]>([]);
   const [dimmed, setDimmed] = useState(false);
   const cellsRef = useRef(cells); cellsRef.current = cells;
   const balloonsRef = useRef(balloons); balloonsRef.current = balloons;
   const timers = useRef(new Set<number>());
-  const leaveKey = useRef(0);
+  const keySeq = useRef(0);
   const after = useCallback((ms: number, fn: () => void) => {
     const id = window.setTimeout(() => { timers.current.delete(id); fn(); }, Math.max(0, ms));
     timers.current.add(id);
   }, []);
+  const clearTimers = useCallback(() => { for (const id of timers.current) window.clearTimeout(id); timers.current.clear(); }, []);
 
   const dropOut = useCallback((list: readonly BoardCell[], dur: number) => {
     if (!list.length) return;
-    const key = ++leaveKey.current;
+    const key = ++keySeq.current;
     setLeaving(prev => [...prev, ...list.map(c => ({ id: c.id, symbol: c.symbol, col: c.col, row: c.row, key: `${key}:${c.id}`, dur }))]);
     after(dur + 40, () => setLeaving(prev => prev.filter(l => !l.key.startsWith(`${key}:`))));
+  }, [after]);
+  const showReels = useCallback((cols: ReelSet['cols'], kind: ReelSet['kind']) => {
+    if (!cols.length) { setReels(null); return; }
+    const key = ++keySeq.current;
+    setReels({ key, cols, kind });
+    after(Math.max(...cols.map(c => c.hideAt)) + 160, () => setReels(r => (r?.key === key ? null : r)));
   }, [after]);
 
   useImperativeHandle(ref, () => ({
     get element() { return root.current; },
     spin(grid, { stops, dropMs, teaseFrom }) {
-      setLit(null);
+      clearTimers();
+      setLit(null); setPath(null); setPuffs([]); setBurn(null); setGust(null);
       dropOut(cellsRef.current, Math.min(260, Math.max(120, stops[0]! - dropMs)));
-      const gone = balloonsRef.current;
-      const prev = new Map<number, BoardBalloon>();
-      const next = split(grid, prev, (_, col) => ({ mode: 'reel', delay: Math.max(0, stops[col]! - dropMs), dur: dropMs }), (_, col) => ({ phase: 'land', delay: Math.max(0, stops[col]! - dropMs), ms: dropMs }));
+      // Balloons of the previous board (base balloons never carry into free spins) float away upwards.
+      const gone = balloonsRef.current.filter(b => onBoard(b.phase));
+      const next = split(grid, new Map(), (_, col) => ({ mode: 'reel', delay: Math.max(0, stops[col]! - dropMs), dur: dropMs }), (_, col) => ({ phase: 'land', delay: Math.max(0, stops[col]! - dropMs), ms: dropMs }));
       setCells(next.cells);
-      // Balloons of the previous board (base balloons never carry into free spins) drift away upwards.
-      setBalloons([...gone.map(b => ({ ...b, row: -1.8, phase: 'exit' as BalloonPhase, ms: 420, delay: 0 })), ...next.balloons]);
-      if (gone.length) after(460, () => setBalloons(list => list.filter(b => !gone.some(g => g.id === b.id && b.phase === 'exit'))));
-      setReels({ key: Date.now(), stops, dropMs, teaseFrom });
-      after(stops[stops.length - 1]! + 40, () => setReels(null));
+      setBalloons([...gone.map(b => ({ ...b, row: b.row - 2.5, phase: 'exit' as BalloonPhase, ms: 520, delay: 0, plus: 0 })), ...next.balloons]);
+      if (gone.length) after(560, () => setBalloons(list => list.filter(b => !(b.phase === 'exit' && gone.some(g => g.id === b.id)))));
+      showReels(stops.map((stop, col) => ({ col, hideAt: Math.max(0, stop - dropMs * 0.6), tease: teaseFrom !== null && col >= teaseFrom })), 'spin');
     },
     respin(grid, { drops, delays, dropMs }) {
-      setLit(null);
+      setLit(null); setPath(null);
       const fresh = new Set(drops);
-      const keep = new Map(balloonsRef.current.filter(b => b.phase !== 'exit' && b.phase !== 'moor' && b.phase !== 'absorbed').map(b => [b.id, b]));
-      dropOut(cellsRef.current, Math.min(240, dropMs));
-      const next = split(grid, keep, (id, col) => (fresh.has(id) ? { mode: 'drop', delay: delays[col]!, dur: dropMs } : { mode: 'still', delay: 0, dur: 0 }), (_, col) => ({ phase: 'land', delay: delays[col]!, ms: dropMs }));
+      const keep = new Map(balloonsRef.current.filter(b => onBoard(b.phase)).map(b => [b.id, b]));
+      // Every non-balloon cell is dealt again: the old symbols blur away under the spinning strips.
+      dropOut(cellsRef.current, 240);
+      const next = split(grid, keep, (id, col) => (fresh.has(id) ? { mode: 'reel', delay: delays[col]!, dur: dropMs } : { mode: 'still', delay: 0, dur: 0 }), (_, col) => ({ phase: 'land', delay: delays[col]!, ms: dropMs }));
       setCells(next.cells);
-      setBalloons(prev => [...prev.filter(b => b.phase === 'exit' || b.phase === 'moor'), ...next.balloons]);
+      setBalloons(prev => [...prev.filter(b => b.phase === 'exit' || b.phase === 'moor' || b.phase === 'parked'), ...next.balloons]);
+      const freshCols = new Set<number>();
+      for (const c of next.cells) if (fresh.has(c.id)) freshCols.add(c.col);
+      for (const b of next.balloons) if (b.phase === 'land') freshCols.add(b.col);
+      showReels([...freshCols].sort((a, b) => a - b).map(col => ({ col, hideAt: delays[col]! + dropMs * 0.4, tease: false })), 'respin');
+      after(Math.max(...delays) + dropMs, () => setPuffs([]));
     },
-    burn() { setLit(null); setBalloons(prev => prev.map(b => (b.phase === 'land' || b.phase === 'grow' ? { ...b, phase: 'idle', ms: 0, delay: 0 } : b))); setBurnKey(k => k + 1); },
-    move(moves, exits, ms) {
+    burn(ms) {
+      setLit(null); setPath(null);
+      setBalloons(prev => prev.map(b => (b.phase === 'land' || b.phase === 'grow' || b.phase === 'rise' ? { ...b, phase: 'idle', ms: 0, delay: 0 } : b)));
+      setBurn({ key: ++keySeq.current, ms });
+    },
+    wind(dir, ms) { setGust({ key: ++keySeq.current, dir, ms }); },
+    move(moves, exits, ms, opts = {}) {
+      const tickMs = opts.tickMs ?? Math.round(ms * 0.55);
       const to = new Map(moves.map(m => [m.id, m]));
+      // Two (or more) balloons heading for one cell meet side by side; the merge then pulls them together.
+      const byCell = new Map<string, number[]>();
+      for (const m of moves) { const k = `${m.to[0]},${m.to[1]}`; byCell.set(k, [...(byCell.get(k) ?? []), m.id]); }
+      const offsetOf = new Map<number, number>();
+      for (const ids of byCell.values()) if (ids.length > 1) {
+        const order = [...ids].sort((a, b) => (to.get(a)!.from[0] - to.get(b)!.from[0]) || a - b);
+        order.forEach((id, i) => offsetOf.set(id, (i - (order.length - 1) / 2) * 2 * MEET_OFFSET));
+      }
       // Symbols under a cell a balloon is drifting into give way (the respin deals them again anyway).
       const targets = new Set(moves.map(m => `${m.to[0]},${m.to[1]}`));
       const covered = cellsRef.current.filter(c => targets.has(`${c.col},${c.row}`));
-      if (covered.length) { dropOut(covered, Math.round(ms * 0.6)); setCells(prev => prev.filter(c => !targets.has(`${c.col},${c.row}`))); }
+      if (covered.length) { dropOut(covered, Math.round(ms * 0.5)); setCells(prev => prev.filter(c => !targets.has(`${c.col},${c.row}`))); }
+      // The cells the balloons leave get a puff of burner smoke until the respin fills them.
+      const vacated = [...moves.map(m => m.from), ...exits.map(e => e.from)].filter(([c, r]) => !targets.has(`${c},${r}`));
+      if (vacated.length) { const base = ++keySeq.current * 100; setPuffs(prev => [...prev, ...vacated.map(([col, row], i) => ({ key: base + i, col, row }))]); }
       const out = new Map(exits.map(e => [e.id, e]));
+      const moorTargets = opts.moorTargets;
       setBalloons(prev => prev.map(b => {
         const m = to.get(b.id);
-        if (m) return { ...b, col: m.to[0], row: m.to[1], multiplier: m.multiplierAfter, phase: 'idle', ms, delay: 0 };
+        if (m) return { ...b, col: m.to[0], row: m.to[1], phase: 'rise', ms, delay: 0, ox: offsetOf.get(b.id) ?? 0, tilt: Math.sign(m.to[0] - m.from[0]), scale: 1 };
         const e = out.get(b.id);
-        if (e) return { ...b, row: e.moored ? -2.2 : -1.9, col: b.col, multiplier: e.multiplier, phase: e.moored ? 'moor' : 'exit', ms, delay: 0 };
+        if (e) {
+          const shift = moves.length ? Math.sign(moves[0]!.to[0] - moves[0]!.from[0]) : 0;
+          if (e.moored) {
+            const target = moorTargets?.get(e.id);
+            return target
+              ? { ...b, col: target.col, row: target.row, scale: target.scale, phase: 'moor', ms, delay: 0, ox: 0, tilt: 0 }
+              : { ...b, row: -2.2, scale: 0.72, phase: 'moor', ms, delay: 0, ox: 0, tilt: 0 };
+          }
+          return { ...b, row: FLY_AWAY_ROW, col: b.col + shift * 0.8, scale: 0.62, phase: 'exit', ms: Math.round(ms * 1.25), delay: 0, ox: 0, tilt: shift };
+        }
         return b;
       }));
-      if (exits.length) after(ms + 30, () => setBalloons(prev => prev.filter(b => !out.has(b.id))));
+      // The +1 tick lands when the burner has lifted the balloon most of the way.
+      after(tickMs, () => setBalloons(prev => prev.map(b => {
+        const m = to.get(b.id);
+        if (m && b.phase === 'rise') return { ...b, multiplier: m.multiplierAfter, tick: b.tick + 1, plus: m.multiplierAfter - m.multiplierBefore };
+        const e = out.get(b.id);
+        if (e && (b.phase === 'moor' || b.phase === 'exit')) return { ...b, multiplier: e.multiplier, tick: b.tick + 1, plus: 1 };
+        return b;
+      })));
+      after(ms, () => {
+        setBurn(null);
+        setBalloons(prev => prev.map(b => (b.phase === 'rise' ? { ...b, phase: 'idle', tilt: 0, ms: 0 } : b.phase === 'moor' ? { ...b, phase: 'parked', ms: 0 } : b)));
+      });
+      if (exits.some(e => !e.moored)) after(Math.round(ms * 1.25) + 40, () => setBalloons(prev => prev.filter(b => !(b.phase === 'exit' && out.has(b.id)))));
     },
     merge(merges, ms) {
       const absorbed = new Map<number, number>();
       for (const m of merges) for (const id of m.absorbed) absorbed.set(id, m.id);
+      const pull = Math.round(ms * 0.42);
       setBalloons(prev => {
         const partsOf = new Map(prev.map(b => [b.id, b.parts]));
         return prev.map(b => {
           const merge = merges.find(m => m.id === b.id);
-          if (merge) return { ...b, multiplier: merge.multiplier, parts: b.parts + merge.absorbed.reduce((n, id) => n + (partsOf.get(id) ?? 1), 0), phase: 'grow', ms, delay: 0 };
-          if (absorbed.has(b.id)) return { ...b, phase: 'absorbed', ms: Math.round(ms * 0.6), delay: 0 };
+          if (merge) return { ...b, ox: 0, ms: pull, delay: 0 };
+          const into = absorbed.get(b.id);
+          if (into !== undefined) return { ...b, ox: 0, phase: 'absorbed', ms: pull, delay: 0, parts: partsOf.get(b.id) ?? 1 };
           return b;
         });
       });
-      after(Math.round(ms * 0.6) + 30, () => setBalloons(prev => prev.filter(b => !absorbed.has(b.id))));
+      // The parts meet: the survivor swells to its merged size, its badge ticks to the sum.
+      after(pull, () => setBalloons(prev => {
+        const partsOf = new Map(prev.map(b => [b.id, b.parts]));
+        return prev.filter(b => !absorbed.has(b.id)).map(b => {
+          const merge = merges.find(m => m.id === b.id);
+          if (!merge) return b;
+          return { ...b, multiplier: merge.multiplier, parts: b.parts + merge.absorbed.reduce((n, id) => n + (partsOf.get(id) ?? 1), 0), phase: 'grow', ms: ms - pull, delay: 0, tick: b.tick + 1, plus: merge.multiplier - (merge.parts[0] ?? merge.multiplier) };
+        });
+      }));
+      after(ms, () => setBalloons(prev => prev.map(b => (b.phase === 'grow' ? { ...b, phase: 'idle', ms: 0 } : b))));
     },
-    highlight(ids) { setLit(ids ? new Set(ids) : null); },
+    releaseParked(ids) {
+      const set = ids ? new Set(ids) : null;
+      setBalloons(prev => prev.filter(b => !(b.phase === 'parked' && (!set || set.has(b.id)))));
+    },
+    highlight(ids, pathIds) {
+      setLit(ids ? new Set(ids) : null);
+      if (!ids || !pathIds?.length) { setPath(null); return; }
+      const colOf = new Map<number, number>();
+      for (const c of cellsRef.current) colOf.set(c.id, c.col);
+      for (const b of balloonsRef.current) if (onBoard(b.phase)) colOf.set(b.id, b.col);
+      const counts = new Array<number>(GOREME_REELS).fill(0);
+      for (const id of pathIds) { const col = colOf.get(id); if (col !== undefined) counts[col]!++; }
+      let length = 0;
+      while (length < GOREME_REELS && counts[length]! > 0) length++;
+      setPath(length >= 3 ? { key: ++keySeq.current, counts: counts.slice(0, length) } : null);
+    },
     setGrid(grid) {
-      setLit(null); setReels(null); setLeaving([]);
-      const prev = new Map(balloonsRef.current.map(b => [b.id, b]));
+      clearTimers();
+      setLit(null); setPath(null); setReels(null); setLeaving([]); setPuffs([]); setBurn(null); setGust(null);
+      const prev = new Map(balloonsRef.current.filter(b => onBoard(b.phase)).map(b => [b.id, b]));
       const next = split(grid, prev, () => ({ mode: 'still', delay: 0, dur: 0 }), () => ({ phase: 'idle', delay: 0, ms: 0 }));
       setCells(next.cells);
-      setBalloons(next.balloons.map(b => ({ ...b, phase: 'idle', ms: 0 })));
+      setBalloons(next.balloons.map(b => ({ ...b, phase: 'idle', ms: 0, plus: 0 })));
     },
     dim(on) { setDimmed(on); },
-  }), [after, dropOut]);
+  }), [after, clearTimers, dropOut, showReels]);
 
   const stateOf = (id: number): GoremeSymbolState => (lit ? (lit.has(id) ? 'win' : 'dim') : 'idle');
   return (
     <div ref={root} className={styles.board} role="group" aria-label={label} data-mood={mood} data-dim={dimmed || undefined} data-lit={lit ? '' : undefined}>
       <div className={styles.cells}>
-      {reels && (
-        <div key={reels.key} className={styles.reels} aria-hidden="true">
-          {reels.stops.map((stop, col) => (
-            <div key={col} className={styles.reel} data-tease={reels.teaseFrom !== null && col >= reels.teaseFrom ? '' : undefined}
-              style={{ '--c': col, '--stop': `${Math.max(0, stop - reels.dropMs * 0.6)}ms` } as CSSProperties}>
-              <div className={styles.strip}>
-                {[...STRIP, ...STRIP].map((s, i) => <div key={i} className={styles.stripCell}><GoremeSymbol sprite symbol={s} label={null} /></div>)}
+        {reels && (
+          <div key={reels.key} className={styles.reels} data-kind={reels.kind} aria-hidden="true">
+            {reels.cols.map(({ col, hideAt, tease }) => (
+              <div key={col} className={styles.reel} data-tease={tease || undefined} style={{ '--c': col, '--stop': `${hideAt}ms` } as CSSProperties}>
+                <div className={styles.strip}>
+                  {[...STRIP, ...STRIP].map((s, i) => <div key={i} className={styles.stripCell}><GoremeSymbol sprite symbol={s} label={null} /></div>)}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        )}
+        {leaving.map(l => (
+          <div key={l.key} className={styles.cell} data-leaving="" style={{ '--c': l.col, '--r': l.row, '--dur': `${l.dur}ms` } as CSSProperties} aria-hidden="true">
+            <GoremeSymbol sprite symbol={l.symbol} label={null} />
+          </div>
+        ))}
+        {puffs.map(p => <div key={p.key} className={styles.puff} style={{ '--c': p.col, '--r': p.row } as CSSProperties} aria-hidden="true" data-testid="goreme-puff"><span /><span /><span /></div>)}
+        {cells.map(c => (
+          <div key={c.id} className={styles.cell} data-mode={c.mode} data-sym={c.symbol} data-win={lit?.has(c.id) || undefined}
+            style={{ '--c': c.col, '--r': c.row, '--delay': `${c.delay + (c.mode === 'reel' ? (GOREME_ROWS - 1 - c.row) * 14 : 0)}ms`, '--dur': `${c.dur}ms` } as CSSProperties}>
+            <GoremeSymbol sprite symbol={c.symbol} state={stateOf(c.id)} label={cellLabel(c.symbol, c.col, c.row, 0)} />
+          </div>
+        ))}
+        {gust && (
+          <div key={gust.key} className={styles.gust} data-dir={gust.dir} style={{ '--ms': `${gust.ms}ms` } as CSSProperties} aria-hidden="true" data-testid="goreme-gust">
+            {[0, 1, 2, 3, 4, 5].map(i => <span key={i} style={{ '--i': i } as CSSProperties} />)}
+          </div>
+        )}
+      </div>
+      {path && (
+        <div key={path.key} className={styles.path} aria-hidden="true" data-testid="goreme-ways-path" style={{ '--len': path.counts.length } as CSSProperties}>
+          <span className={styles.pathLine} />
+          {path.counts.map((n, col) => <span key={col} className={styles.pathChip} style={{ '--c': col } as CSSProperties}>{n}</span>)}
         </div>
       )}
-      {leaving.map(l => (
-        <div key={l.key} className={styles.cell} data-leaving="" style={{ '--c': l.col, '--r': l.row, '--dur': `${l.dur}ms` } as CSSProperties} aria-hidden="true">
-          <GoremeSymbol sprite symbol={l.symbol} label={null} />
-        </div>
-      ))}
-      {cells.map(c => (
-        <div key={c.id} className={styles.cell} data-mode={c.mode} data-sym={c.symbol}
-          style={{ '--c': c.col, '--r': c.row, '--delay': `${c.delay + (c.mode === 'reel' ? (GOREME_ROWS - 1 - c.row) * 14 : 0)}ms`, '--dur': `${c.dur}ms` } as CSSProperties}>
-          <GoremeSymbol sprite symbol={c.symbol} state={stateOf(c.id)} label={cellLabel(c.symbol, c.col, c.row, 0)} />
-        </div>
-      ))}
-      </div>
-      <div className={styles.sky} key={`burn-${burnKey}`} data-burn={burnKey > 0 || undefined}>
+      <div className={styles.sky} data-burn={burn ? '' : undefined} style={burn ? ({ '--burn': `${burn.ms}ms` } as CSSProperties) : undefined}>
         {balloons.map(b => (
-          <div key={b.id} className={styles.balloon} data-phase={b.phase} data-sym={onBoard(b.phase) ? 'balloon' : undefined}
-            style={{ '--c': b.col, '--r': b.row, '--ms': `${b.ms}ms`, '--delay': `${b.delay}ms` } as CSSProperties}>
+          <div key={b.id} className={styles.balloon} data-phase={b.phase} data-balloon-id={b.id} data-mult={b.multiplier} data-sym={onBoard(b.phase) ? 'balloon' : undefined}
+            style={{ '--c': b.col, '--r': b.row, '--ox': b.ox, '--s': b.scale, '--tilt': b.tilt, '--ms': `${b.ms}ms`, '--delay': `${b.delay}ms` } as CSSProperties}>
             <div className={styles.balloonInner}>
-              <GoremeSymbol sprite symbol="balloon" multiplier={b.multiplier} size={goremeMergedSize(b.parts)} state={onBoard(b.phase) ? stateOf(b.id) : 'idle'}
-                label={onBoard(b.phase) ? cellLabel('balloon', b.col, b.row, b.multiplier) : null} />
+              <div className={styles.lean}>
+                {burn && onBoard(b.phase) && <span key={burn.key} className={styles.plume} aria-hidden="true" data-testid="goreme-burner"><i /></span>}
+                <GoremeSymbol sprite symbol="balloon" multiplier={b.multiplier} size={goremeMergedSize(b.parts)} state={onBoard(b.phase) ? stateOf(b.id) : 'idle'}
+                  label={onBoard(b.phase) ? cellLabel('balloon', b.col, b.row, b.multiplier) : null} />
+              </div>
+              {b.tick > 0 && b.plus > 0 && <span key={b.tick} className={styles.plus} aria-hidden="true" data-testid="goreme-plus">+{b.plus}</span>}
             </div>
           </div>
         ))}

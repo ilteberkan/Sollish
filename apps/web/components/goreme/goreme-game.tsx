@@ -1,5 +1,6 @@
 'use client';
 import { memo, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { flushSync } from 'react-dom';
 import { useRouter } from 'next/navigation';
 import { GOREME_MAX_WIN_MULTIPLIER, GOREME_RTP, GOREME_SCATTER_AWARDS, playGoremeRound, type GoremeMode, type GoremeRound, type GoremeSymbol as EngineSymbol } from '@sollish/protocol';
 import { DEMO_START_CENTS } from '@/lib/demo';
@@ -28,7 +29,7 @@ import {
 } from '../slot-kit';
 import kit from '../slot-kit/kit.module.css';
 import { useViewportTop } from '../slot-kit/use-viewport-top';
-import { GoremeBoard, type GoremeBoardHandle } from './board';
+import { GoremeBoard, type GoremeBoardHandle, type GoremeMoorTarget } from './board';
 import { GoremeCelebration, GoremeFeatureTotal, GoremeFreeIntro } from './goreme-celebration';
 import { GoremeHistory } from './goreme-history';
 import { goremeInfoPages } from './goreme-info-pages';
@@ -36,7 +37,7 @@ import { GoremeFrame, GOREME_FRAME_INSET } from './frame';
 import { GoremeFx, goremePointOf } from './fx';
 import { GoremeLogo } from './logo';
 import { GoremeScene, type GoremeMood, type GoremeSceneHandle } from './scene';
-import { GoremeSkyBand } from './sky-band';
+import { GoremeSkyBand, goremeBandSlot, type GoremeMooredBalloon } from './sky-band';
 import { GR_PALETTE, GoremeSymbol, GoremeSymbolSprites, useGoremeSymbolLabels } from './symbols-i18n';
 import { GameInfoStrip } from '@/components/game-info-strip';
 import styles from './goreme-game.module.css';
@@ -204,6 +205,7 @@ export function GoremeGame() {
   const [freeInfo, setFreeInfo] = useState<{ number: number; left: number } | null>(null);
   const [sky, setSky] = useState(1);
   const [moored, setMoored] = useState<GoremeMoored[]>([]);
+  const [incoming, setIncoming] = useState<GoremeMooredBalloon[]>([]);
   const [meter, setMeter] = useState<GoremeMeter>(ZERO);
   const [meterDur, setMeterDur] = useState(0);
   const [roundBet, setRoundBet] = useState<number | null>(null);
@@ -414,11 +416,29 @@ export function GoremeGame() {
     ];
     shakeRef.current?.animate(frames, { duration, easing: 'ease-out' });
   }, []);
+  /** Dawn rays from the board (scatter, trigger): they fan out from the middle of the reel window, where the suns are. */
   const sunRays = useCallback((intensity: number, duration = 1800) => {
-    const root = layoutRef.current, sceneRoot = scene.current?.element, p = scene.current?.sunPoint();
-    if (!root || !sceneRoot || !p) return;
-    const a = sceneRoot.getBoundingClientRect(), b = root.getBoundingClientRect();
-    void fx.current?.sunRays(p.x + a.left - b.left, p.y + a.top - b.top, { intensity, duration });
+    const root = layoutRef.current, el = board.current?.element;
+    if (!root || !el) return;
+    const p = goremePointOf(root, el, 0.5, 0.5);
+    void fx.current?.sunRays(p.x, p.y, { intensity, duration });
+  }, []);
+  /** Sky-band slots for balloons that moor in this lift: reserve them (invisible) in the band, then measure them in
+   * board cell units so the board flies each balloon exactly into its slot. Presentation only. */
+  const moorTargets = useCallback((exits: readonly { id: number; multiplier: number; moored: boolean }[]) => {
+    const list = exits.filter(e => e.moored);
+    if (!list.length) return undefined;
+    flushSync(() => setIncoming(prev => [...prev, ...list.filter(e => !prev.some(p => p.id === e.id)).map(e => ({ id: e.id, multiplier: e.multiplier }))]));
+    const el = board.current?.element, band = bandRef.current;
+    if (!el || !band) return undefined;
+    const r = el.getBoundingClientRect(), cw = r.width / 6, ch = r.height / 5, art = Math.min(cw, ch);
+    const out = new Map<number, GoremeMoorTarget>();
+    for (const e of list) {
+      const slot = goremeBandSlot(band, e.id); if (!slot) continue;
+      const s = slot.getBoundingClientRect();
+      out.set(e.id, { col: (s.left + s.width / 2 - r.left) / cw - 0.5, row: (s.top + s.height / 2 - r.top) / ch - 0.5, scale: Math.max(0.2, s.width / art) });
+    }
+    return out;
   }, []);
 
   const showCallout = useCallback((value: number, tier: WinTier, source: 'ways' | 'sky', reduced: boolean, life = 1500) => {
@@ -469,13 +489,18 @@ export function GoremeGame() {
         floatLabel(p.x, p.y, `×${event.multiplier}`, styles.multLabel, reduced ? 700 : 1100, reduced);
         break;
       }
-      case 'sun-land': sound.sunLand(event.n); break;
+      case 'sun-land': {
+        sound.sunLand(event.n);
+        if (f) { const p = cellPoint(event.col, event.row, 0.5); void f.moorSparkle(p.x, p.y, { scale: p.cell / 110 }); }
+        break;
+      }
       case 'sun-tease':
         sound.sunTease(event.on);
         if (event.on) setAnnounce(t('announce.sunTease'));
         break;
       case 'win': {
-        b?.highlight(event.cells);
+        const bestWin = event.wins.reduce((m, w) => (w.payTenThousandths > m.payTenThousandths ? w : m));
+        b?.highlight(event.cells, bestWin.cells);
         sound.waysWin(event.best, event.stepHundredths / 100);
         setMeterDur(Math.min(600, event.dur)); setMeter(event.meter);
         const p = cellPoint(2.5, 2);
@@ -498,20 +523,25 @@ export function GoremeGame() {
         break;
       }
       case 'lift': {
-        b?.burn();
+        b?.burn(event.dur);
+        if (!reduced) b?.wind(event.wind, Math.round(event.dur * 2.8));
         sound.burner(Math.min(2, 1 + event.balloons.length * 0.15));
         sound.wind(event.wind);
         setWind({ key: ++keys.current.wind, dir: event.wind });
-        if (f) for (const bl of event.balloons) { const p = cellPoint(bl.col, bl.row, 0.8); void f.flame(p.x, p.y, { power: bl.multiplier >= 6 ? 1.6 : 1 }); }
+        if (f) for (const bl of event.balloons) { const p = cellPoint(bl.col, bl.row, 0.66); void f.flame(p.x, p.y, { power: bl.multiplier >= 6 ? 1.4 : 1, scale: p.cell / 90 }); }
         setAnnounce(t('announce.lift', { n: event.balloons.length, wind: t(WIND_KEY[event.wind]) }));
         break;
       }
       case 'lift-move': {
-        b?.move(event.moves, event.exits, event.ms);
+        b?.move(event.moves, event.exits, event.ms, { tickMs: event.tickMs, moorTargets: moorTargets(event.exits) });
         for (const m of event.moves) balloonAt.current.set(m.id, m.to);
+        // the +1 badges tick together part-way up (one tick sound)
+        if (event.moves.length || event.exits.length) later(event.tickMs, () => { if (live.current === current) sound.symbolLand(); });
         if (event.exits.length) {
           const moorings = event.exits.filter(e => e.moored);
-          later(Math.round(event.ms * 0.5), () => { if (live.current !== current) return; if (moorings.length) sound.moor(); if (moorings.length < event.exits.length) sound.flyAway(); });
+          // fly-away leaves the window early in the climb; a mooring is heard when the balloon reaches its slot
+          if (moorings.length < event.exits.length) later(Math.round(event.ms * 0.35), () => { if (live.current === current) sound.flyAway(); });
+          if (moorings.length) later(event.ms, () => { if (live.current === current) sound.moor(); });
           if (moorings.length < event.exits.length) setAnnounce(t('announce.flyAway', { n: event.exits.length - moorings.length }));
         }
         break;
@@ -521,18 +551,28 @@ export function GoremeGame() {
         for (const m of event.merges) {
           sound.merge(m.multiplier);
           const p = cellPoint(m.at[0], m.at[1], 0.45);
-          void f?.mergeBurst(p.x, p.y, { multiplier: m.multiplier, scale: p.cell / 70 });
+          // the parts meet a little before the end of the pull (board: 42 % of the merge)
+          later(Math.round(event.ms * 0.4), () => { if (live.current === current) void f?.mergeBurst(p.x, p.y, { multiplier: m.multiplier, scale: p.cell / 70, popOffset: p.cell * 0.75 }); });
           setBanner({ key: ++keys.current.banner, text: t('banner.merge', { multiplier: m.multiplier }), tone: 'rose' });
           setAnnounce(t('announce.merge', { multiplier: m.multiplier }));
         }
         break;
       }
       case 'sky': {
-        setMoored(list => [...list, ...event.moored]);
-        setSky(event.after);
+        // the band takes over the parked balloons in the same frame (they sit exactly in their reserved slots)
+        flushSync(() => {
+          setMoored(list => [...list, ...event.moored]);
+          setIncoming(list => list.filter(x => !event.moored.some(m => m.id === x.id)));
+          setSky(event.after);
+        });
+        b?.releaseParked(event.moored.map(m => m.id));
         sound.skyMultiplier(event.before, event.after);
         const band = bandRef.current, root = layoutRef.current;
-        if (f && band && root) { const p = goremePointOf(root, band, 0.5, 0.5); void f.moorSparkle(p.x, p.y, { scale: 1.4 }); }
+        if (f && band && root) {
+          for (const m of event.moored) { const slot = goremeBandSlot(band, m.id); if (slot) { const p = goremePointOf(root, slot, 0.5, 0.45); void f.moorSparkle(p.x, p.y, { scale: 0.9 }); } }
+          const medal = band.querySelector('[aria-live]');
+          if (medal) { const p = goremePointOf(root, medal, 0.5, 0.5); void f.moorSparkle(p.x, p.y, { scale: 1.2 }); }
+        }
         setAnnounce(t('announce.sky', { n: event.moored.length, after: event.after }));
         break;
       }
@@ -554,7 +594,7 @@ export function GoremeGame() {
         break;
       case 'free-mode':
         setCard(null); b?.dim(false); setFree(event.on); setFreeInfo({ number: 0, left: event.freeSpinsLeft });
-        setSky(1); setMoored([]);
+        setSky(1); setMoored([]); setIncoming([]);
         sound.scene('feature');
         break;
       case 'spin-end': {
@@ -591,12 +631,12 @@ export function GoremeGame() {
         break;
       case 'end':
         b?.dim(false); b?.highlight(null);
-        setCard(null); setBanner(null); setFree(false); setFreeInfo(null); setSky(1); setMoored([]); setWind(null);
+        setCard(null); setBanner(null); setFree(false); setFreeInfo(null); setSky(1); setMoored([]); setIncoming([]); setWind(null);
         player.current = null;
         finishRound(current);
         break;
     }
-  }, [cellPoint, finishRound, floatLabel, later, nameOf, openCelebration, showCallout, sound, sunRays, t, format, loc]);
+  }, [cellPoint, finishRound, floatLabel, later, moorTargets, nameOf, openCelebration, showCallout, sound, sunRays, t, format, loc]);
 
   /* ---------------------------------------------------------------- starting rounds */
   const begin = useCallback((current: LiveRound, text: string) => {
@@ -604,7 +644,7 @@ export function GoremeGame() {
     live.current = current;
     setError(''); setPhase('playing'); setRoundBet(current.bet);
     setFree(false); setFreeInfo(null); setMeterDur(0); setMeter(ZERO); setCard(null); setBanner(null); setCallout(null); setFlourish(0); setMood('base');
-    setSky(1); setMoored([]); setWind(null);
+    setSky(1); setMoored([]); setIncoming([]); setWind(null);
     setAnnounce(text);
     sound.unlock();
     sound.scene('base');
@@ -990,11 +1030,14 @@ export function GoremeGame() {
                   {wind && <div key={wind.key} className={styles.wind} data-dir={wind.dir} aria-hidden="true"><WindArrow dir={wind.dir} /><span>{t(WIND_KEY[wind.dir])}</span></div>}
                 </div>
                 <div ref={bandRef} className={styles.band} data-active={free || undefined} data-testid="goreme-sky">
-                  <GoremeSkyBand balloons={bandBalloons} multiplier={sky} active={free} label={t('sky.label')} />
+                  <GoremeSkyBand balloons={bandBalloons} incoming={incoming} multiplier={sky} active={free} label={t('sky.label')} />
                 </div>
                 <div className={styles.boardWrap} style={{ '--inset-x': `${GOREME_FRAME_INSET.x * 100}%` } as CSSProperties}>{boardElement}</div>
                 {/* One cumulative meter: never resets inside a round (lifts, respins, every free spin add up). */}
-                <div ref={meterRef} className={`${styles.meter} ${free ? styles.meterFree : ''}`} data-testid="goreme-meter">
+                <div ref={meterRef} className={`${styles.meter} ${free ? styles.meterFree : ''}`} data-testid="goreme-meter" data-note={banner && phase !== 'idle' ? '' : undefined}>
+                  {banner && phase !== 'idle' && (
+                    <span key={`banner-${banner.key}`} className={styles.meterNote} data-tone={banner.tone} data-testid="goreme-banner" data-key={banner.key} aria-hidden="true">{banner.text}</span>
+                  )}
                   {phase === 'idle' ? (
                     <div className={styles.meterIdle}><span>{richText(t, 'meter.idleA')}</span><span aria-hidden="true">·</span><span>{richText(t, 'meter.idleB', { max: format.number(GOREME_MAX_WIN_MULTIPLIER, 0) })}</span></div>
                   ) : (
@@ -1015,7 +1058,6 @@ export function GoremeGame() {
                   <button type="button" className={styles.toastClose} onClick={() => setToast(null)} aria-label={t('toast.close')}><svg {...svg} width={16} height={16}><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg></button>
                 </div>
               )}
-              {banner && <div key={`banner-${banner.key}`} className={`${styles.banner} ${banner.tone === 'rose' ? styles.bannerRose : banner.tone === 'sky' ? styles.bannerSky : ''}`} data-testid="goreme-banner" data-key={banner.key} aria-hidden="true">{banner.text}</div>}
               {callout && (
                 <div key={`callout-${callout.key}`} className={styles.callout} data-tier={callout.tier} style={{ animationDuration: `${callout.life}ms` }} aria-hidden="true" data-testid="goreme-callout" data-key={callout.key}>
                   <span className={styles.calloutGlow} />

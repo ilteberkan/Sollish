@@ -2,7 +2,7 @@
 
    One canvas over the board (or the whole scene). Coordinates are CSS px relative to `root`; use goremePointOf() to
    turn an element (a cell, the sky band medallion, the scene sun) into a point. Effects:
-     flame(x, y)          burner puff: a hot flash, rising fire motes and a few embers (a balloon lifts / lands)
+     flame(x, y)          burner puff: a warm glow, rising fire motes and a few embers (a balloon lifts)
      mergeBurst(x, y)     two balloons become one: shock ring, kilim-diamond confetti, sparks, a ×N pop
      moorSparkle(x, y)    a balloon moors in the sky band: gold four-point sparkles and a soft ring
      sunRays(x, y)        the dawn sun (scatter / feature start): rays fan out and turn, with a flash
@@ -77,20 +77,21 @@ export class GoremeFx {
   }
   get particleCount() { return this.parts.length; }
 
-  /** Burner puff under a balloon (x, y = the throat of the envelope). `power` 1 = normal lift, 2 = big. */
-  flame(x: number, y: number, { power = 1 }: { power?: number } = {}): Promise<void> {
+  /** Burner puff in a balloon's throat (x, y). `power` 1 = normal lift; `scale` ≈ cell size / 90. A warm glow (no white
+   * flash) and fire motes that rise into the envelope, with a few embers falling below the basket. */
+  flame(x: number, y: number, { power = 1, scale = 1 }: { power?: number; scale?: number } = {}): Promise<void> {
     if (this.reduced) return Promise.resolve();
-    const now = performance.now();
-    this.flashes.push({ x, y, born: now, life: 260 + 120 * power, r: 26 * power, color: '#ffd27a', alpha: 0.9 });
-    const n = Math.round(22 * power);
-    for (let i = 0; i < n; i++) this.add({ kind: 'fire', x: x + rand(-4, 4), y, vx: rand(-0.04, 0.04), vy: rand(-0.26, -0.12) * power, born: now + rand(0, 120), life: rand(380, 700), size: rand(3, 7) * power, color: pick(FIRE), g: 0, drag: 0.996, rot: 0, vr: 0 });
-    for (let i = 0; i < 6 * power; i++) this.add({ kind: 'ember', x, y, vx: rand(-0.08, 0.08), vy: rand(-0.3, -0.16), born: now, life: rand(700, 1100), size: rand(1, 2), color: pick(FIRE), g: 0.00012, drag: 0.995, rot: 0, vr: 0 });
+    const now = performance.now(), k = Math.max(0.5, Math.min(1.6, scale));
+    this.flashes.push({ x, y: y - 6 * k, born: now, life: 320 + 120 * power, r: 22 * power * k, color: '#ffb84a', alpha: 0.55 });
+    const n = Math.round(16 * power);
+    for (let i = 0; i < n; i++) this.add({ kind: 'fire', x: x + rand(-3, 3) * k, y, vx: rand(-0.025, 0.025) * k, vy: rand(-0.2, -0.1) * power * k, born: now + rand(0, 160), life: rand(300, 520), size: rand(2.4, 5) * power * k, color: pick(FIRE), g: 0, drag: 0.994, rot: 0, vr: 0 });
+    for (let i = 0; i < 4 * power; i++) this.add({ kind: 'ember', x: x + rand(-4, 4) * k, y: y + 6 * k, vx: rand(-0.05, 0.05), vy: rand(0.02, 0.08), born: now + rand(60, 200), life: rand(600, 900), size: rand(1, 1.8), color: pick(FIRE), g: 0.0002, drag: 0.995, rot: 0, vr: 0 });
     this.kick();
     return wait(900);
   }
 
   /** Two balloons merge at (x, y). `scale` ≈ cell size / 100. */
-  mergeBurst(x: number, y: number, { multiplier, scale = 1 }: { multiplier?: number; scale?: number } = {}): Promise<void> {
+  mergeBurst(x: number, y: number, { multiplier, scale = 1, popOffset = 0 }: { multiplier?: number; scale?: number; popOffset?: number } = {}): Promise<void> {
     if (this.reduced) return Promise.resolve();
     const now = performance.now();
     this.flashes.push({ x, y, born: now, life: 420, r: 80 * scale, color: '#fff2c0', alpha: 1 });
@@ -104,7 +105,7 @@ export class GoremeFx {
       const a = rand(0, Math.PI * 2), s = rand(0.35, 0.8) * scale;
       this.add({ kind: 'spark', x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s, born: now, life: rand(300, 560), size: rand(1.4, 2.6) * scale, color: pick(GOLD), g: 0, drag: 0.97, rot: 0, vr: 0 });
     }
-    if (multiplier !== undefined) this.pops.push({ x, y, born: now + 120, life: 1100, text: `×${multiplier}`, size: 40 * scale });
+    if (multiplier !== undefined) this.pops.push({ x, y: y - popOffset, born: now + 120, life: 1100, text: `×${multiplier}`, size: 40 * scale });
     this.kick();
     return wait(1400);
   }
