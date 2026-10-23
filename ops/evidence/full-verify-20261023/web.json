@@ -1,0 +1,58 @@
+{
+ "date": "2026-10-23",
+ "scope": "Local production-runtime verification (OpenNext build + wrangler dev/workerd preview :3001) of the wave-3 branch. Local preview only; no hosted, no GitHub CI, no physical-device review, no deploy.",
+ "branch": "claude/sollish-wave3-games",
+ "git_head": "56e2eb6 (Cascade tablet fit) on top of 26f7d38; working tree also held another agent's uncommitted Goreme edits (components/goreme, lib/goreme-timeline.ts, lib/slot-audio/use-goreme-sound.ts, tests/goreme-timeline.test.ts), which were part of this build",
+ "build_id": "4oV_VtzBUA9nM3QOFXFNu",
+ "commands": [
+  "bash scripts/use-node.sh pnpm --filter @sollish/web build:cloudflare -> exit 0 (only the known third-party -0 === esbuild warning)",
+  "bash scripts/use-node.sh pnpm --filter @sollish/web preview:cloudflare (:3001, background)",
+  "PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3001 PW_CHROMIUM_PATH=/opt/pw-browsers/chromium-1194/chrome-linux/chrome pnpm --filter @sollish/web test:browser <spec>.spec.ts --workers=1 --output=<per-spec dir>",
+  "bash scripts/use-node.sh pnpm --filter @sollish/protocol test -> 341/341 pass",
+  "bash scripts/use-node.sh pnpm --filter @sollish/web test -> 409/409 pass",
+  "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck -> exit 2 (see typecheck)"
+ ],
+ "browser_specs": {
+  "goreme": "11 pass",
+  "damla": "7 pass",
+  "lobby": "18 pass",
+  "game-info": "13 pass",
+  "i18n": "3 pass",
+  "asena": "18 pass",
+  "cascade": "25 pass (includes the new 768x1024 tablet test)",
+  "cezeri": "18 pass",
+  "ebru": "17 pass",
+  "tarhun": "17 pass first run, 1 failed then passed on isolated rerun (21 s)",
+  "product": "14 pass",
+  "demo-entropy": "4 pass",
+  "solo-lifecycle": "5 pass",
+  "wallet-reconnect": "4 pass",
+  "totals": "185 pass (incl. the tarhun rerun), 0 failing after rerun; 1 transient failure"
+ },
+ "failures": [
+  {
+   "test": "tarhun.spec.ts:124 labelled 6x5 board and deck; info pages navigable, bet-scaled and axe-clean",
+   "first_run": "frame.evaluate: Test timeout of 30000ms exceeded inside axe(page) (line 159)",
+   "cause": "test env, not a code bug: axe scan on an animated page timed out under load on the 8 GB machine (spec ran after ~25 min of continuous runs); isolated rerun passed in 20.7 s with no axe violations.",
+   "fix": "none needed"
+  }
+ ],
+ "typecheck": {
+  "exit_code": 2,
+  "error": "tests/goreme-timeline.test.ts(204,77): TS2339 Property 'spin' does not exist on type 'GoremeEvent' (free-mode variant)",
+  "cause": "another agent's uncommitted in-progress edits to lib/goreme-timeline.ts / tests/goreme-timeline.test.ts; not touched by this run. It is the only error reported. Reported, not edited."
+ },
+ "not_run": {
+  "rgs-remote": "needs PLAYWRIGHT_RGS_API / local RGS",
+  "ringside-contact, ringside-film": "need a build with NEXT_PUBLIC_API_URL; not part of this task"
+ },
+ "fixes": [
+  "Cascade portrait tablet fit (commit 56e2eb6), see ops/evidence/phone-fit-20261022/web.json"
+ ],
+ "limits": [
+  "Local workerd preview only; no hosted, GitHub CI or physical device review.",
+  "Test counts and screenshots are not the user's visual acceptance.",
+  "Build included uncommitted Goreme work from another agent; Goreme specs 11/11 reflect that tree, not a committed revision."
+ ],
+ "cleanup": "preview stopped (:3001 closed); dev server stopped; apps/web/next-env.d.ts not committed"
+}
