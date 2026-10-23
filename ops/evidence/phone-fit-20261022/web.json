@@ -1198,7 +1198,14 @@
  "open": [
   "Asena free spins at 360x740: the 6x6 field is ~204 px wide (map row + HUD + deck take the rest).",
   "Ebru tray at 390x844 is 253 px, Cezeri board 249 px (frames are thick); boards are smaller than in the old scrolling layout by design.",
-  "Candy Cascade portrait tablet (768x1024) still scrolls.",
   "Not checked: build:cloudflare preview, real phones (iOS Safari dynamic toolbar vs svh), hosted, CI."
- ]
+ ],
+ "tablet_768x1024_cascade_23oct": {
+  "before": "table 185-1272 (base) / 185-1280 (free) at 768x1024; spin 1017-1117, i.e. below the fold (tablet-before/cascade-768x1024-*.png).",
+  "after": "table 185-1018, spin 823-899, buy row inside the viewport; board 440 px wide (tablet-after/cascade-768x1024-base.png). Free spins asserted by the spec (aria 'Bedava dönüş' counter visible, same fit checks).",
+  "fix": "apps/web/components/cascade/cascade-game.module.css: new @media (min-width: 501px) and (max-width: 1050px) and (max-aspect-ratio: 4/5) block, same as the phone block: table height max(560px, 100svh - --fit-top - 6px), stage size container, board scaled to the height left, 76 px compact deck. useViewportTop already wired in cascade-game.tsx.",
+  "unchanged": "Phone (<=500) and desktop (>1050) cannot match the new query. Re-measured on dev: 1440x900 table 195-854 (screenshot desktop/after-cascade-tablet-fix-1440x900.png), 390x844 table 135-838, spin inside.",
+  "test": "tests/browser/cascade.spec.ts 'tablet 768x1024 portrait first screen...' passes on next dev :3000.",
+  "limit": "Landscape tablets (e.g. 1024x768) keep the old scrolling layout (query is portrait only). next dev, not preview; not the owner's visual acceptance."
+ }
 }

@@ -615,3 +615,34 @@ test('phone 390x844 first screen: the whole table and the spin button fit withou
   expect(buyBox.y + buyBox.height, 'buy button bottom').toBeLessThanOrEqual(844);
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
 });
+
+/* Portrait tablet fit (23 Oct 2026): at 768x1024 the whole table (board, win bar, deck, spin, feature row) fits the
+   first screen, in the base game and in free spins; tablet CSS only, same fit approach as the phone block. */
+test('tablet 768x1024 portrait first screen: the whole table fits without scrolling the page, base and free spins', async ({ page }) => {
+  test.setTimeout(120_000);
+  await page.setViewportSize({ width: 768, height: 1024 });
+  await stub(page, FREE);
+  await openCascade(page);
+  await setQuick(page);
+  const fits = async (label: string) => {
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const spinBox = (await spin(page).boundingBox())!;
+    expect(spinBox.y, `${label} spin top`).toBeGreaterThanOrEqual(0);
+    expect(spinBox.y + spinBox.height, `${label} spin bottom`).toBeLessThanOrEqual(1024);
+    const tableBox = (await page.locator('.game-table').boundingBox())!;
+    expect(tableBox.y + tableBox.height, `${label} table bottom`).toBeLessThanOrEqual(1024);
+    const buyBox = (await page.getByRole('button', { name: /Bonus satın al/ }).boundingBox())!;
+    expect(buyBox.y + buyBox.height, `${label} buy bottom`).toBeLessThanOrEqual(1024);
+    const cells = (await page.locator('[data-cells]').boundingBox())!;
+    expect(cells.width, `${label} board width`).toBeGreaterThan(380);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), `${label} h-overflow`).toBeLessThanOrEqual(0);
+  };
+  await fits('base');
+  await page.getByRole('button', { name: /Bonus satın al/ }).click();
+  await page.getByRole('dialog', { name: 'Bonus satın al' }).getByRole('button', { name: 'Satın al', exact: true }).click();
+  const intro = page.getByRole('dialog', { name: 'Bedava dönüş' });
+  await expect(intro).toBeVisible({ timeout: 15_000 });
+  await tapIfShown(intro.getByRole('button', { name: 'Başla' }), 5000);
+  await expect(page.locator('[aria-label^="Bedava dönüş"]').first()).toBeVisible({ timeout: 15_000 });
+  await fits('free spins');
+});

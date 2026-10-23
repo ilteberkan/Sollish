@@ -1,0 +1,52 @@
+[
+ {
+  "game": "cascade",
+  "size": "768x1024",
+  "tag": "base",
+  "scrollY": 0,
+  "scrollH": 2005,
+  "innerH": 1024,
+  "table": [
+   185,
+   1018
+  ],
+  "spin": [
+   823,
+   899
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "shown": "Candy Cascade",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ },
+ {
+  "game": "cascade",
+  "size": "768x1024",
+  "tag": "free",
+  "scrollY": 0,
+  "scrollH": 2005,
+  "innerH": 1024,
+  "table": [
+   185,
+   1018
+  ],
+  "spin": [
+   823,
+   899
+  ],
+  "h1": {
+   "text": "Candy Cascade",
+   "shown": "Candy Cascade",
+   "clipped": false,
+   "overlapsSwitch": false
+  },
+  "free": false,
+  "spinInside": true,
+  "tableFits": true
+ }
+]
