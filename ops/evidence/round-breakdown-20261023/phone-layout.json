@@ -1,0 +1,450 @@
+{
+ "cascade@390": {
+  "tableHeightBefore": 703,
+  "docWidthBefore": 390,
+  "tableHeightAfter": 703,
+  "button": {
+   "top": 797,
+   "bottom": 829,
+   "left": 138.9375,
+   "right": 251.0625
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 390,
+  "docWidthAfter": 390,
+  "wideAfter": [
+   "SPAN.art-module__7mEGYq__dust:397",
+   "SPAN.:421",
+   "SPAN.:444",
+   "SPAN.:487",
+   "SPAN.:425",
+   "SPAN.:395"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 123.1875,
+   "width": 390,
+   "height": 720.8125
+  },
+  "viewport": {
+   "width": 390,
+   "height": 844
+  }
+ },
+ "tarhun@390": {
+  "tableHeightBefore": 703,
+  "docWidthBefore": 390,
+  "tableHeightAfter": 703,
+  "button": {
+   "top": 795,
+   "bottom": 827,
+   "left": 138.9375,
+   "right": 251.0625
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 390,
+  "docWidthAfter": 390,
+  "wideAfter": [
+   "DIV.scene-module__BCc_hW__track:3604",
+   "DIV.scene-module__BCc_hW__track:3222",
+   "DIV.scene-module__BCc_hW__layer scene-module__BCc_hW__:401",
+   "DIV.scene-module__BCc_hW__layer scene-module__BCc_hW__:401",
+   "DIV.scene-module__BCc_hW__gate:438",
+   "DIV.scene-module__BCc_hW__flame:411"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 123.1875,
+   "width": 390,
+   "height": 720.8125
+  },
+  "viewport": {
+   "width": 390,
+   "height": 844
+  }
+ },
+ "ebru@390": {
+  "tableHeightBefore": 703,
+  "docWidthBefore": 390,
+  "tableHeightAfter": 703,
+  "button": {
+   "top": 795,
+   "bottom": 827,
+   "left": 138.9375,
+   "right": 251.0625
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 390,
+  "docWidthAfter": 390,
+  "wideAfter": [
+   "DIV.scene-module__p4t1Qa__stage:945",
+   "DIV.scene-module__p4t1Qa__layer scene-module__p4t1Qa__:945",
+   "DIV.scene-module__p4t1Qa__lampFlash:866",
+   "DIV.scene-module__p4t1Qa__lampGlow:876",
+   "DIV.scene-module__p4t1Qa__layer scene-module__p4t1Qa__:945",
+   "DIV.scene-module__p4t1Qa__sheet:424"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 222.203125,
+   "width": 390,
+   "height": 621.796875
+  },
+  "viewport": {
+   "width": 390,
+   "height": 844
+  }
+ },
+ "cezeri@390": {
+  "tableHeightBefore": 703,
+  "docWidthBefore": 390,
+  "tableHeightAfter": 703,
+  "button": {
+   "top": 795,
+   "bottom": 827,
+   "left": 139.4375,
+   "right": 251.5625
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 390,
+  "docWidthAfter": 390,
+  "wideAfter": [
+   "DIV.scene-module__lJ5gTa__stage:570",
+   "DIV.scene-module__lJ5gTa__layer scene-module__lJ5gTa__:570",
+   "DIV.scene-module__lJ5gTa__wallGear:490",
+   "DIV.scene-module__lJ5gTa__layer scene-module__lJ5gTa__:570",
+   "SPAN.scene-module__lJ5gTa__lampGlow:456",
+   "SPAN.scene-module__lJ5gTa__lampGlow:560"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 274.4375,
+   "width": 390,
+   "height": 569.5625
+  },
+  "viewport": {
+   "width": 390,
+   "height": 844
+  }
+ },
+ "asena@390": {
+  "tableHeightBefore": 703,
+  "docWidthBefore": 390,
+  "tableHeightAfter": 703,
+  "button": {
+   "top": 795,
+   "bottom": 827,
+   "left": 138.9375,
+   "right": 251.0625
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 390,
+  "docWidthAfter": 390,
+  "wideAfter": [
+   "DIV.scene-module__cu6XxG__moonHalo:426",
+   "DIV.scene-module__cu6XxG__iron scene-module__cu6XxG__p:420",
+   "DIV.scene-module__cu6XxG__camp scene-module__cu6XxG__p:412",
+   "SPAN.asena-game-module__76_Q-a__meterShine:735",
+   "TABLE.history-table asena-game-module__76_Q-a__historyTa:888",
+   "THEAD.:888"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 387.84375,
+   "width": 390,
+   "height": 456.15625
+  },
+  "viewport": {
+   "width": 390,
+   "height": 844
+  }
+ },
+ "goreme@390": {
+  "tableHeightBefore": 703,
+  "docWidthBefore": 390,
+  "tableHeightAfter": 703,
+  "button": {
+   "top": 795,
+   "bottom": 827,
+   "left": 138.9375,
+   "right": 251.0625
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 390,
+  "docWidthAfter": 390,
+  "wideAfter": [
+   "DIV.scene-module__DAiOta__shafts:959",
+   "DIV.scene-module__DAiOta__sunGlow:522",
+   "DIV.scene-module__DAiOta__cloud scene-module__DAiOta__:394",
+   "DIV.scene-module__DAiOta__mesas scene-module__DAiOta__:397",
+   "DIV.scene-module__DAiOta__field scene-module__DAiOta__:397",
+   "DIV.scene-module__DAiOta__floor scene-module__DAiOta__:397"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 200.4375,
+   "width": 390,
+   "height": 643.5625
+  },
+  "viewport": {
+   "width": 390,
+   "height": 844
+  }
+ },
+ "damla@390": {
+  "tableHeightBefore": 703,
+  "docWidthBefore": 390,
+  "tableHeightAfter": 703,
+  "button": {
+   "top": 795,
+   "bottom": 827,
+   "left": 31,
+   "right": 143.125
+  },
+  "horizontalOverflow": true,
+  "docWidthWithoutBreakdownButtons": 501,
+  "docWidthAfter": 501,
+  "wideAfter": [
+   "TABLE.history-table:741",
+   "THEAD.:741",
+   "TR.:741",
+   "TH.:400",
+   "TH.:489",
+   "TH.:741"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 428.8125,
+   "width": 390,
+   "height": 415.1875
+  },
+  "viewport": {
+   "width": 390,
+   "height": 844
+  }
+ },
+ "cascade@360": {
+  "tableHeightBefore": 599,
+  "docWidthBefore": 360,
+  "tableHeightAfter": 599,
+  "button": {
+   "top": 693,
+   "bottom": 725,
+   "left": 123.921875,
+   "right": 236.046875
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 360,
+  "docWidthAfter": 360,
+  "wideAfter": [
+   "SPAN.art-module__7mEGYq__dust:374",
+   "SPAN.:375",
+   "SPAN.:457",
+   "SPAN.:418",
+   "SPAN.:480",
+   "SPAN.:523"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 88.8125,
+   "width": 360,
+   "height": 651.1875
+  },
+  "viewport": {
+   "width": 360,
+   "height": 740
+  }
+ },
+ "tarhun@360": {
+  "tableHeightBefore": 599,
+  "docWidthBefore": 360,
+  "tableHeightAfter": 599,
+  "button": {
+   "top": 691,
+   "bottom": 723,
+   "left": 123.9375,
+   "right": 236.0625
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 360,
+  "docWidthAfter": 360,
+  "wideAfter": [
+   "DIV.scene-module__BCc_hW__track:3073",
+   "DIV.scene-module__BCc_hW__track:2750",
+   "DIV.scene-module__BCc_hW__layer scene-module__BCc_hW__:370",
+   "DIV.scene-module__BCc_hW__layer scene-module__BCc_hW__:370",
+   "DIV.scene-module__BCc_hW__gate:404",
+   "DIV.scene-module__BCc_hW__flame:379"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 88.8125,
+   "width": 360,
+   "height": 651.1875
+  },
+  "viewport": {
+   "width": 360,
+   "height": 740
+  }
+ },
+ "ebru@360": {
+  "tableHeightBefore": 599,
+  "docWidthBefore": 360,
+  "tableHeightAfter": 599,
+  "button": {
+   "top": 691,
+   "bottom": 723,
+   "left": 123.9375,
+   "right": 236.0625
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 360,
+  "docWidthAfter": 360,
+  "wideAfter": [
+   "DIV.scene-module__p4t1Qa__stage:838",
+   "DIV.scene-module__p4t1Qa__layer scene-module__p4t1Qa__:838",
+   "DIV.scene-module__p4t1Qa__lampFlash:769",
+   "DIV.scene-module__p4t1Qa__lampGlow:774",
+   "DIV.scene-module__p4t1Qa__layer scene-module__p4t1Qa__:838",
+   "DIV.scene-module__p4t1Qa__sheet:381"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 88.8125,
+   "width": 360,
+   "height": 651.1875
+  },
+  "viewport": {
+   "width": 360,
+   "height": 740
+  }
+ },
+ "cezeri@360": {
+  "tableHeightBefore": 599,
+  "docWidthBefore": 360,
+  "tableHeightAfter": 599,
+  "button": {
+   "top": 691,
+   "bottom": 723,
+   "left": 124.4375,
+   "right": 236.5625
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 360,
+  "docWidthAfter": 360,
+  "wideAfter": [
+   "DIV.scene-module__lJ5gTa__stage:478",
+   "DIV.scene-module__lJ5gTa__layer scene-module__lJ5gTa__:478",
+   "DIV.scene-module__lJ5gTa__wallGear:412",
+   "DIV.scene-module__lJ5gTa__layer scene-module__lJ5gTa__:478",
+   "SPAN.scene-module__lJ5gTa__lampGlow:387",
+   "SPAN.scene-module__lJ5gTa__lampGlow:470"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 152.4375,
+   "width": 360,
+   "height": 587.5625
+  },
+  "viewport": {
+   "width": 360,
+   "height": 740
+  }
+ },
+ "asena@360": {
+  "tableHeightBefore": 599,
+  "docWidthBefore": 360,
+  "tableHeightAfter": 599,
+  "button": {
+   "top": 691,
+   "bottom": 723,
+   "left": 123.9375,
+   "right": 236.0625
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 360,
+  "docWidthAfter": 360,
+  "wideAfter": [
+   "DIV.scene-module__cu6XxG__moonHalo:396",
+   "DIV.scene-module__cu6XxG__iron scene-module__cu6XxG__p:388",
+   "DIV.scene-module__cu6XxG__camp scene-module__cu6XxG__p:380",
+   "SPAN.asena-game-module__76_Q-a__meterShine:544",
+   "TABLE.history-table asena-game-module__76_Q-a__historyTa:888",
+   "THEAD.:888"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 246.34375,
+   "width": 360,
+   "height": 493.65625
+  },
+  "viewport": {
+   "width": 360,
+   "height": 740
+  }
+ },
+ "goreme@360": {
+  "tableHeightBefore": 599,
+  "docWidthBefore": 360,
+  "tableHeightAfter": 599,
+  "button": {
+   "top": 691,
+   "bottom": 723,
+   "left": 123.9375,
+   "right": 236.0625
+  },
+  "horizontalOverflow": false,
+  "docWidthWithoutBreakdownButtons": 360,
+  "docWidthAfter": 360,
+  "wideAfter": [
+   "DIV.scene-module__DAiOta__shafts:884",
+   "DIV.scene-module__DAiOta__sunGlow:481",
+   "DIV.scene-module__DAiOta__cloud scene-module__DAiOta__:363",
+   "DIV.scene-module__DAiOta__mesas scene-module__DAiOta__:366",
+   "DIV.scene-module__DAiOta__field scene-module__DAiOta__:366",
+   "DIV.scene-module__DAiOta__floor scene-module__DAiOta__:366"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 88.8125,
+   "width": 360,
+   "height": 651.1875
+  },
+  "viewport": {
+   "width": 360,
+   "height": 740
+  }
+ },
+ "damla@360": {
+  "tableHeightBefore": 599,
+  "docWidthBefore": 360,
+  "tableHeightAfter": 599,
+  "button": {
+   "top": 691,
+   "bottom": 723,
+   "left": 31,
+   "right": 143.125
+  },
+  "horizontalOverflow": true,
+  "docWidthWithoutBreakdownButtons": 501,
+  "docWidthAfter": 501,
+  "wideAfter": [
+   "TABLE.history-table:741",
+   "THEAD.:741",
+   "TR.:741",
+   "TH.:400",
+   "TH.:489",
+   "TH.:741"
+  ],
+  "dialog": {
+   "x": 0,
+   "y": 306.8125,
+   "width": 360,
+   "height": 433.1875
+  },
+  "viewport": {
+   "width": 360,
+   "height": 740
+  }
+ }
+}

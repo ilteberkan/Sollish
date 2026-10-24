@@ -1,0 +1,18 @@
+# 2026-10-24T09:21:49Z (apps/web) RTP_PLAYER_PATH_ROUNDS=200000 RTP_PLAYER_PATH_OUT=../../ops/evidence/rtp-audit-20261023/player-path.json bash scripts/use-node.sh pnpm --filter @sollish/web exec tsx --test tests/rtp-player-path.test.ts
+✔ player path cascade: ledger and session follow the engine exactly in every mode (200000 rounds per mode) (29696.236762ms)
+✔ player path tarhun: ledger and session follow the engine exactly in every mode (200000 rounds per mode) (39028.109649ms)
+✔ player path ebru: ledger and session follow the engine exactly in every mode (200000 rounds per mode) (70792.683984ms)
+✔ player path cezeri: ledger and session follow the engine exactly in every mode (200000 rounds per mode) (45173.847015ms)
+✔ player path asena: ledger and session follow the engine exactly in every mode (200000 rounds per mode) (116050.898235ms)
+✔ player path damla: ledger and session follow the engine exactly in every mode (200000 rounds per mode) (28379.44801ms)
+✔ player path goreme: ledger and session follow the engine exactly in every mode (200000 rounds per mode) (36062.094184ms)
+✔ the ledger cap never clamps a capped engine win at any ladder bet in any mode (2.311525ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 365569.627306
+exit 0

@@ -1,0 +1,9 @@
+# 2026-10-24T09:06:24Z bash scripts/use-node.sh node --import tsx ops/rtp-audit/resim.ts --rounds 20000000 --workers 2 --namespace sollish-rtp-audit-20261023/confirm --games asena --modes standard --out ops/evidence/rtp-audit-20261023/confirm-asena-standard.json
+{"game":"asena","mode":"standard","rtp":0.949224,"ci95":[0.939945,0.958502],"claimed":0.95154,"z":-0.344,"verdict":"PASS","sec":648.2}
+wrote /home/user/sollish/ops/evidence/rtp-audit-20261023/confirm-asena-standard.json
+exit 0
+# 2026-10-24T09:17:20Z bash scripts/use-node.sh node --import tsx ops/rtp-audit/resim.ts --rounds 20000000 --workers 2 --namespace sollish-rtp-audit-20261023/confirm --games damla --modes low-12 --out ops/evidence/rtp-audit-20261023/confirm-damla-low-12.json
+{"game":"damla","mode":"low-12","rtp":0.985781,"ci95":[0.98541,0.986152],"claimed":0.985507812,"z":1.441,"verdict":"PASS","sec":256.8}
+wrote /home/user/sollish/ops/evidence/rtp-audit-20261023/confirm-damla-low-12.json
+exit 0
+# 2026-10-24T09:33:13Z bash scripts/use-node.sh node --import tsx ops/rtp-audit/resim.ts --rounds 20000000 --workers 2 --namespace sollish-rtp-audit-20261023/confirm --games goreme --modes buy --parts ops/evidence/rtp-audit-20261023/confirm-parts --out ops/evidence/rtp-audit-20261023/confirm-goreme-buy.json

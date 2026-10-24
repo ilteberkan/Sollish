@@ -24,6 +24,8 @@ import { DemoNotice, GameHeading, type Mode } from '../game-common';
 import { Icon } from '../icons';
 import { AutoplayPanel, AutoplayStopButton, BetSelector, GameInfo, Modal, RealityCheckDialog, SessionBar, SettingsPanel, useSession, useSlotSettings } from '../slot-kit';
 import kit from '../slot-kit/kit.module.css';
+import { RoundBreakdownLauncher } from '../slot-kit/round-breakdown';
+import { damlaBreakdown } from '@/lib/round-breakdown/damla';
 import { useViewportTop } from '../slot-kit/use-viewport-top';
 import { DamlaBoard, type BoardPool, type DamlaBoardHandle } from './board';
 import { DamlaHistory } from './damla-history';
@@ -122,6 +124,9 @@ export function DamlaGame() {
   const [callout, setCallout] = useState<Callout | null>(null);
   const [goldBanner, setGoldBanner] = useState(0);
   const [lastWin, setLastWin] = useState<{ payout: number; hundredths: number; batchTotal: number; batchCount: number; replay: boolean } | null>(null);
+  /** Last landed drop, for the round breakdown ("Tur ayrıntısı"). */
+  const [doneRound, setDoneRound] = useState<DamlaRound | null>(null);
+  const doneBreakdown = useMemo(() => (doneRound ? damlaBreakdown(doneRound) : null), [doneRound]);
   const [announce, setAnnounce] = useState('');
   const [auto, setAuto] = useState<AutoplayState | null>(null);
   const [toast, setToast] = useState<Toast | null>(null);
@@ -235,6 +240,7 @@ export function DamlaGame() {
     f.settled = true;
     const { round } = f;
     const hundredths = round.multiplierHundredths;
+    setDoneRound(round);
     if (f.replay) {
       setReplaying(null);
       setLastWin({ payout: round.payoutCents, hundredths, batchTotal: round.payoutCents, batchCount: 1, replay: true });
@@ -247,7 +253,7 @@ export function DamlaGame() {
         recordRemote(record);
         markRoundShown('damla', receipt.roundId);
       }
-      recordSession({ costCents: f.cost, payoutCents: round.payoutCents });
+      recordSession({ costCents: f.cost, payoutCents: round.payoutCents, game: 'damla', mode: f.mode });
       setStrip(s => [{ key: ++stripKey.current, hundredths, tier: damlaTier(hundredths), edge: round.slot === 0 || round.slot === round.rows }, ...s].slice(0, STRIP_MAX));
       if (batchSum.current.batch !== f.batch) batchSum.current = { batch: f.batch, total: 0, count: 0 };
       batchSum.current.total += round.payoutCents; batchSum.current.count++;
@@ -603,6 +609,7 @@ export function DamlaGame() {
             {error ? <p className={styles.msgError} role="alert">{error}</p>
               : outOfCredit ? <p className={styles.msgHint}>{t('deck.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
               : <p className={styles.msgHint}>{inFlight > 0 ? t('deck.inFlight', { count: inFlight }) : lastWin && !lastWin.replay ? richText(t, 'deck.lastWin', { multiplier: damlaMultiplierText(lastWin.hundredths, loc), money: format.demo(lastWin.payout) }) : settings.spaceToSpin ? richText(t, 'deck.hintSpace') : t('deck.hintFixed')}</p>}
+            {doneBreakdown && <RoundBreakdownLauncher breakdown={doneBreakdown} modeLabel={t('history.modeValue', { risk: t(`risk.${doneBreakdown.mode.split('-')[0] as DamlaRisk}`), rows: Number(doneBreakdown.mode.split('-')[1]) })} />}
           </div>
         </div>
       )}
@@ -682,7 +689,7 @@ export function DamlaGame() {
         )}
         <div className="sr-only" role="status" aria-live="polite">{announce}</div>
       </section>
-      <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} />
+      <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} stats={session.stats} />
       <GameInfoStrip id="damla" />
       <DamlaHistory hiddenIds={hiddenIds} onReplay={replay} replayDisabled={inFlight > 0 || pending || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <Footer remote={remote !== null} rules={rules} />

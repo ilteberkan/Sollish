@@ -42,8 +42,8 @@ export const EVIDENCE: Readonly<Record<string, { dir: string; engineFile: string
   damla: { dir: "ops/evidence/damla-20261021", engineFile: "packages/protocol/src/damla.ts" },
 };
 
-export function serverSeedOf(game: string, mode: string): Buffer {
-  return createHash("sha256").update(`${AUDIT_NAMESPACE}/${game}/${mode}`).digest();
+export function serverSeedOf(game: string, mode: string, namespace: string = AUDIT_NAMESPACE): Buffer {
+  return createHash("sha256").update(`${namespace}/${game}/${mode}`).digest();
 }
 /** Synchronous twin of slot-fair deriveSeedHex (checked against it before every run). */
 export function seedHexOf(serverSeed: Buffer, nonce: number): string {
@@ -55,9 +55,9 @@ interface Part {
   hits: number; capped: number; features: number; maxPayoutCents: number; maxTotalHundredths: number; maxSeedHex: string; costMismatches: number; firstSeeds: string[];
 }
 
-function runPart(game: string, mode: string, from: number, to: number): Part {
+function runPart(game: string, mode: string, from: number, to: number, namespace: string): Part {
   const def = SLOT_GAMES[game]!;
-  const serverSeed = serverSeedOf(game, mode);
+  const serverSeed = serverSeedOf(game, mode, namespace);
   const expectedCost = def.cost(BET_CENTS, mode);
   let sumPayout = 0, sumCost = 0, sumTotal = 0, sumSq = 0n, hits = 0, capped = 0, features = 0, maxPayout = -1, maxTotal = 0, maxSeed = "", costMismatches = 0;
   const firstSeeds: string[] = [];
@@ -82,8 +82,8 @@ function runPart(game: string, mode: string, from: number, to: number): Part {
 }
 
 if (!isMainThread) {
-  const { game, mode, from, to } = workerData as { game: string; mode: string; from: number; to: number };
-  parentPort!.postMessage(runPart(game, mode, from, to));
+  const { game, mode, from, to, namespace } = workerData as { game: string; mode: string; from: number; to: number; namespace: string };
+  parentPort!.postMessage(runPart(game, mode, from, to, namespace));
 }
 
 /* ------------------------------------------------------------------ claimed values from the original evidence */
@@ -107,15 +107,15 @@ export function claimOf(game: string, mode: string): Claim {
 function writeAtomic(path: string, text: string): void { mkdirSync(dirname(path), { recursive: true }); writeFileSync(`${path}.tmp`, text); renameSync(`${path}.tmp`, path); }
 const r6 = (x: number) => Math.round(x * 1e6) / 1e6;
 
-async function runMode(game: string, mode: string, rounds: number, workers: number) {
-  const serverSeed = serverSeedOf(game, mode);
+async function runMode(game: string, mode: string, rounds: number, workers: number, namespace: string) {
+  const serverSeed = serverSeedOf(game, mode, namespace);
   for (const nonce of [0, 1, rounds - 1]) {
     if (seedHexOf(serverSeed, nonce) !== await deriveSeedHex(serverSeed.toString("hex"), AUDIT_CLIENT_SEED, nonce)) throw new Error("seed derivation differs from slot-fair deriveSeedHex");
   }
   const started = Date.now();
   const blocks = Array.from({ length: workers }, (_, w) => [Math.floor((rounds * w) / workers), Math.floor((rounds * (w + 1)) / workers)] as const);
   const parts = await Promise.all(blocks.map(([from, to]) => new Promise<Part>((ok, fail) => {
-    const worker = new Worker(fileURLToPath(import.meta.url), { workerData: { game, mode, from, to }, execArgv: process.execArgv });
+    const worker = new Worker(fileURLToPath(import.meta.url), { workerData: { game, mode, from, to, namespace }, execArgv: process.execArgv });
     worker.once("message", ok); worker.once("error", fail);
   })));
   const n = BigInt(rounds);
@@ -136,7 +136,7 @@ async function runMode(game: string, mode: string, rounds: number, workers: numb
   const newInsideOriginal = rtp >= claim.originalCi95[0] && rtp <= claim.originalCi95[1];
   return {
     game, mode, engineId: SLOT_GAMES[game]!.engineId, rounds, betCents: BET_CENTS, costCentsPerRound: costPerRound,
-    seed: { serverSeedText: `${AUDIT_NAMESPACE}/${game}/${mode}`, serverSeedHex: serverSeed.toString("hex"), clientSeed: AUDIT_CLIENT_SEED, nonces: [0, rounds - 1],
+    seed: { serverSeedText: `${namespace}/${game}/${mode}`, serverSeedHex: serverSeed.toString("hex"), clientSeed: AUDIT_CLIENT_SEED, nonces: [0, rounds - 1],
       firstSeedHex: parts[0]!.firstSeeds[0] },
     sumPayoutCents: String(sum), sumCostCents: String(cost), sumTotalHundredths: String(total),
     rtp: r6(rtp), rtpFromBetUnits: r6(Number((total * BigInt(BET_CENTS) * 1_000_000_000_000n) / (cost * 100n)) / 1e12),
@@ -159,6 +159,8 @@ async function main() {
   const partsDir = resolve(args.get("parts") ?? `${dirname(out)}/resim-parts`);
   const games = (args.get("games") ?? Object.keys(EVIDENCE).join(",")).split(",");
   const onlyModes = args.get("modes")?.split(",");
+  const namespace = args.get("namespace") ?? AUDIT_NAMESPACE;
+  if (!namespace.startsWith("sollish-rtp-audit-")) throw new Error("--namespace must start with sollish-rtp-audit- (never an evidence seed)");
   if (!Number.isSafeInteger(rounds) || rounds < 2 || !Number.isSafeInteger(workers) || workers < 1 || workers > 4) throw new Error("bad --rounds/--workers");
   const engineSha = Object.fromEntries(Object.entries(EVIDENCE).map(([g, e]) => [g, createHash("sha256").update(readFileSync(resolve(ROOT, e.engineFile))).digest("hex")]));
   const results: unknown[] = [];
@@ -170,9 +172,9 @@ async function main() {
       const partFile = resolve(partsDir, `${game}-${mode}.json`);
       if (existsSync(partFile)) {
         const saved = JSON.parse(readFileSync(partFile, "utf8"));
-        if (saved.rounds === rounds && saved.engineSourceSha256 === engineSha[game]) { results.push(saved); console.log(`${game}/${mode}: reused ${partFile}`); continue; }
+        if (saved.rounds === rounds && saved.engineSourceSha256 === engineSha[game] && saved.seed?.serverSeedText === `${namespace}/${game}/${mode}`) { results.push(saved); console.log(`${game}/${mode}: reused ${partFile}`); continue; }
       }
-      const r = { ...(await runMode(game, mode, rounds, workers)), engineSourceSha256: engineSha[game] };
+      const r = { ...(await runMode(game, mode, rounds, workers, namespace)), engineSourceSha256: engineSha[game] };
       writeAtomic(partFile, JSON.stringify(r, null, 2));
       results.push(r);
       console.log(JSON.stringify({ game, mode, rtp: r.rtp, ci95: r.ci95, claimed: r.claim.claimedRtp, z: r.zVsOriginal, verdict: r.verdict, sec: r.runtimeSeconds }));
@@ -180,15 +182,15 @@ async function main() {
   }
   writeAtomic(out, JSON.stringify({
     kind: "rtp-audit-resim", date: "2026-10-23", scope: "DEMO credits only; independent Monte Carlo re-simulation, not a certification",
-    command: `bash scripts/use-node.sh node --import tsx ops/rtp-audit/resim.ts --rounds ${rounds} --workers ${workers} --out ${args.get("out") ?? "ops/evidence/rtp-audit-20261023/resim.json"}`,
+    command: `bash scripts/use-node.sh node --import tsx ops/rtp-audit/resim.ts --rounds ${rounds} --workers ${workers}${namespace === AUDIT_NAMESPACE ? "" : ` --namespace ${namespace}`}${args.get("games") ? ` --games ${args.get("games")}` : ""}${onlyModes ? ` --modes ${onlyModes.join(",")}` : ""} --out ${args.get("out") ?? "ops/evidence/rtp-audit-20261023/resim.json"}`,
     node: process.version, method: {
-      seeds: `serverSeed = sha256("${AUDIT_NAMESPACE}/<game>/<mode>"), clientSeed = "${AUDIT_CLIENT_SEED}", seedHex = HMAC-SHA256(serverSeed, "<clientSeed>:<nonce>")[0..16], nonce 0..rounds-1 (slot-fair deriveSeedHex rule)`,
+      seeds: `serverSeed = sha256("${namespace}/<game>/<mode>"), clientSeed = "${AUDIT_CLIENT_SEED}", seedHex = HMAC-SHA256(serverSeed, "<clientSeed>:<nonce>")[0..16], nonce 0..rounds-1 (slot-fair deriveSeedHex rule)`,
       engine: "SLOT_GAMES[game].play / .cost (public registry; same functions as the RGS server and the browser)",
       rtp: "sum(payoutCents) / sum(costCents) at bet 100 cents", ci: "normal approximation, mean +- 1.96 sd/sqrt(n)",
       verdict: "PASS when the claimed RTP lies inside the new 95% interval and every round cost equals the registry cost; else FAIL",
       zVsOriginal: "(new - original) / sqrt(seNew^2 + seOriginal^2); Damla: (new - exact) / seNew",
     },
-    engineSourceSha256: engineSha, rounds, workers, results,
+    namespace, engineSourceSha256: engineSha, rounds, workers, results,
   }, null, 2));
   console.log(`wrote ${out}`);
 }

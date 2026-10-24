@@ -5,6 +5,7 @@ import {
   ASENA_MAX_FREE_SPINS, ASENA_MAX_WIN_MULTIPLIER, ASENA_PAY_SYMBOLS, ASENA_PAYTABLE, ASENA_RTP, ASENA_SCATTER_PAY, ASENA_TEMPLATES,
   type AsenaMode, type AsenaPaySymbol,
 } from '@sollish/protocol';
+import { ASENA_TIER_LABELS } from '@/lib/paytable-labels';
 import type { GameInfoPage } from '../slot-kit';
 import type { Translator } from '@/lib/i18n/translator';
 import type { Formatter } from '@/lib/i18n/format';
@@ -22,7 +23,7 @@ export interface AsenaInfoContext { t: Translator<'asena'>; tk: Translator<'slot
 const MODES: AsenaMode[] = ['standard', 'ante', 'buy'];
 const HIGH = new Set<AsenaPaySymbol>(['h1', 'h2', 'h3', 'h4']);
 /** Cluster-size tiers of the engine (asenaTier): 5, 6, 7, 8–9, 10–12, 13–17, 18+. */
-const TIER_LABELS = ['5', '6', '7', '8–9', '10–12', '13–17', '18+'] as const;
+const TIER_LABELS = ASENA_TIER_LABELS;
 /** Tiers shown on the cards (18+, 13–17, 10–12, 8–9, 5); the full table lists all seven. */
 const CARD_TIERS = [6, 5, 4, 3, 0];
 const BY_MULTIPLIER = [...ASENA_TEMPLATES].sort((a, b) => b.multiplier - a.multiplier);

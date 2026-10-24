@@ -1,10 +1,13 @@
 'use client';
-import { memo } from 'react';
-import { playGoremeRound } from '@sollish/protocol';
+import { memo, useState } from 'react';
+import { playGoremeRound, type GoremeMode } from '@sollish/protocol';
 import { useFormat, useT } from '@/lib/i18n/client';
 import { goremeRoundId } from '@/lib/goreme-controls';
 import { goremeHistorySummary, goremeTimes, type GoremeHistorySummary } from '@/lib/goreme-timeline';
 import { Icon } from '../icons';
+import { RoundBreakdownButton, RoundBreakdownDialog } from '../slot-kit/round-breakdown';
+import { goremeBreakdown } from '@/lib/round-breakdown/goreme';
+import type { RoundBreakdown } from '@/lib/round-breakdown/types';
 import { useProduct, type DemoRecord } from '../providers';
 import styles from './goreme-game.module.css';
 
@@ -40,6 +43,11 @@ export const GoremeHistory = memo(function GoremeHistory({ onReplay, replayDisab
   const format = useFormat();
   const loc = format.locale;
   const relevant = records.filter(record => record.game === 'Göreme');
+  const tBreakdown = useT('slotKit');
+  const [breakdown, setBreakdown] = useState<RoundBreakdown | null>(null);
+  const openBreakdown = (meta: NonNullable<DemoRecord['goreme']>) => {
+    try { setBreakdown(goremeBreakdown(playGoremeRound(meta.seedHex, meta.betCents, meta.mode as GoremeMode))); } catch { setBreakdown(null); }
+  };
   const time = (at: number) => format.time(at);
   const detail = (record: DemoRecord) => {
     const s = summaryOf(record);
@@ -89,6 +97,10 @@ export const GoremeHistory = memo(function GoremeHistory({ onReplay, replayDisab
                         <Icon name="history" size={15} /><span>{t('history.replay')}</span>
                       </button>
                     )}
+                    {record.goreme && (
+                      <RoundBreakdownButton compact onClick={() => openBreakdown(record.goreme!)} className={styles.replayButton} testId="history-breakdown"
+                        label={tBreakdown('breakdown.historyAria', { id: record.goreme.seedHex.slice(0, 8) })} />
+                    )}
                     {onShare && record.remote && (
                       <button type="button" className={styles.replayButton} onClick={() => onShare(record)} data-testid="share-round"
                         aria-label={t('history.shareAria', { id: goremeRoundId(record.remote.roundId) })}>
@@ -104,6 +116,8 @@ export const GoremeHistory = memo(function GoremeHistory({ onReplay, replayDisab
       ) : (
         <div className="empty-history"><Icon name="history" size={24} /><div><strong>{t('history.emptyTitle')}</strong><p>{t('history.emptyText')}</p></div></div>
       )}
+      <RoundBreakdownDialog open={breakdown !== null} onClose={() => setBreakdown(null)} breakdown={breakdown ?? undefined}
+        modeLabel={breakdown ? tc(`modes.${breakdown.mode as GoremeMode}`) : undefined} />
     </section>
   );
 });

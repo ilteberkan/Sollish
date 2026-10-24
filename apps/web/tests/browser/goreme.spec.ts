@@ -5,6 +5,8 @@ import { GOREME_RTP, goremeSeedFromEntropy, playGoremeRound, type GoremeMode } f
 import { goremeFinalBoard, goremeHistoryDetail } from '../../lib/goreme-timeline';
 import { formatAmount } from '../../lib/slot-kit/bet';
 import tr from '../../messages/tr/goreme.json';
+import { goremeBreakdown } from '../../lib/round-breakdown/goreme';
+import { allLines } from '../../lib/round-breakdown/types';
 
 // Opt-in override for machines whose installed Chromium build differs from the Playwright pin.
 if (process.env.PW_CHROMIUM_PATH) test.use({ launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } });
@@ -410,6 +412,104 @@ test.describe('English', () => {
 
 /* Phone fit (22 Oct 2026): the first screen holds the whole table (board, win bar, deck, spin button) with no page
    scroll; phone CSS sizes the table to 100svh below its own top (slot-kit/use-viewport-top). */
+/** Samples the win presentation every frame: summary labels (text + cents), dimmed cells, way traces, sparks, bursts. */
+async function trackWins(page: Page) {
+  await page.addInitScript(() => {
+    const w = window as unknown as { __wins: { summaries: Array<Array<{ text: string; cents: number }>>; ways: string[]; dimMax: number; litMax: number; trace: number; sparks: number; burst: number } };
+    w.__wins = { summaries: [], ways: [], dimMax: 0, litMax: 0, trace: 0, sparks: 0, burst: 0 };
+    let lastKey = '';
+    const loop = () => {
+      const list = document.querySelector('[data-testid="goreme-win-labels"]');
+      if (list) {
+        const labels = [...list.querySelectorAll<HTMLElement>('[data-testid="goreme-win-label"]')].map(el => ({ text: el.textContent ?? '', cents: Number(el.dataset.cents) }));
+        const key = `${list.getAttribute('data-mode')}:${labels.map(l => l.text).join('|')}`;
+        if (key !== lastKey) {
+          lastKey = key;
+          if (list.getAttribute('data-mode') === 'all') w.__wins.summaries.push(labels);
+          else w.__wins.ways.push(labels[0]?.text ?? '');
+        }
+        w.__wins.dimMax = Math.max(w.__wins.dimMax, document.querySelectorAll('[data-sym] [data-state="dim"]').length);
+        w.__wins.litMax = Math.max(w.__wins.litMax, document.querySelectorAll('[data-sym] [data-state="win"]').length);
+      }
+      if (document.querySelector('[data-testid="goreme-way-trace"]')) w.__wins.trace++;
+      if (document.querySelector('[data-testid="goreme-win-spark"]')) w.__wins.sparks++;
+      if (document.querySelector('[role="group"][data-burst]')) w.__wins.burst++;
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  });
+}
+type Wins = { summaries: Array<Array<{ text: string; cents: number }>>; ways: string[]; dimMax: number; litMax: number; trace: number; sparks: number; burst: number };
+const MULTI = 1_839_862_647;  // base: one board, three ways, 0,78x, no lift
+const BIG = 1_753_536_851;    // base: one board, two ways, 12,32x (the winning symbols burst)
+const wayLabel = (w: { symbol: string; length: number; ways: number; multiplierProduct: number }, cents: number) =>
+  `${symbolName(w.symbol)} ${w.length}× · ${w.ways} yol${w.multiplierProduct > 1 ? ` · ×${w.multiplierProduct}` : ''} = ${demoText(cents)}`;
+
+test('win presentation: one label per way with amounts that sum to the payout, the rest dims, then every way is traced reel by reel', async ({ page }) => {
+  test.setTimeout(90_000);
+  const round = engine(MULTI);
+  const step = round.spins[0]!.steps.find(s => s.type === 'ways')!;
+  if (step.type !== 'ways') throw new Error('no ways step');
+  expect(step.wins.length).toBeGreaterThanOrEqual(3);
+  await trackWins(page);
+  await stub(page, MULTI);
+  await openGoreme(page);
+  await spin(page).click();
+  await expect(rows(page)).toHaveCount(1, { timeout: 60_000 });
+  const wins = await recorded<Wins>(page, '__wins');
+  expect(wins.summaries.length).toBe(1);
+  const labels = wins.summaries[0]!;
+  expect(labels.length).toBe(step.wins.length);
+  expect(labels.reduce((n, l) => n + l.cents, 0)).toBe(round.payoutCents);
+  labels.forEach((l, i) => expect(l.text).toBe(wayLabel(step.wins[i]!, l.cents)));
+  // every way gets its own highlight (biggest first), traced across its reels
+  expect([...wins.ways].sort()).toEqual(labels.map(l => l.text).sort());
+  expect(wins.ways[0]).toBe([...labels].sort((a, b) => b.cents - a.cents)[0]!.text);
+  expect(wins.trace).toBeGreaterThan(0);
+  expect(wins.sparks).toBeGreaterThan(0);
+  expect(wins.dimMax).toBeGreaterThan(0);
+  expect(wins.litMax).toBeGreaterThan(0);
+  expect(wins.burst).toBe(0);
+  await expect(balance(page)).toContainText(formatAmount(START - 1000 + round.payoutCents));
+  // the board is the engine board again once the presentation ends
+  await expect(page.getByTestId('goreme-win-labels')).toHaveCount(0);
+  expect(await shownLabels(page)).toEqual(boardLabels(MULTI));
+});
+
+test('win presentation, reduced motion: static highlight and labels (sum = payout), no sparks, no burst', async ({ page }) => {
+  test.setTimeout(90_000);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  const round = engine(BIG);
+  await trackWins(page);
+  await stub(page, BIG);
+  await openGoreme(page);
+  await spin(page).click();
+  await expect(rows(page)).toHaveCount(1, { timeout: 60_000 });
+  const wins = await recorded<Wins>(page, '__wins');
+  expect(wins.summaries.length).toBe(1);
+  expect(wins.summaries[0]!.reduce((n, l) => n + l.cents, 0)).toBe(round.payoutCents);
+  expect(wins.ways.length).toBe(wins.summaries[0]!.length);
+  expect(wins.sparks).toBe(0);
+  expect(wins.burst).toBe(0);
+  expect(wins.dimMax).toBeGreaterThan(0);
+  await expect(balance(page)).toContainText(formatAmount(START - 1000 + round.payoutCents));
+});
+
+test('win presentation: a big board bursts its winning symbols, the payout is unchanged', async ({ page }) => {
+  test.setTimeout(90_000);
+  const round = engine(BIG);
+  await trackWins(page);
+  await stub(page, BIG);
+  await openGoreme(page);
+  await spin(page).click();
+  await tapIfShown(page.getByTestId('goreme-celebration'), 30_000);
+  await expect(rows(page)).toHaveCount(1, { timeout: 60_000 });
+  const wins = await recorded<Wins>(page, '__wins');
+  expect(wins.burst).toBeGreaterThan(0);
+  expect(wins.summaries[0]!.reduce((n, l) => n + l.cents, 0)).toBe(round.payoutCents);
+  await expect(balance(page)).toContainText(formatAmount(START - 1000 + round.payoutCents));
+});
+
 test('phone 390x844 first screen: the whole table and the spin button fit without scrolling the page', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openGoreme(page);
@@ -422,4 +522,29 @@ test('phone 390x844 first screen: the whole table and the spin button fit withou
   const buyBox = (await page.getByRole('button', { name: /Bonus satın al/ }).boundingBox())!;
   expect(buyBox.y + buyBox.height, 'buy button bottom').toBeLessThanOrEqual(844);
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+});
+
+test('round breakdown ("Tur ayrıntısı"): lists the wins and its total equals the shown win and the engine payout; also from history', async ({ page }) => {
+  test.setTimeout(120_000); // a dev-server round can be slow on a busy machine
+  const round = engine(LIFT);
+  expect(round.payoutCents).toBeGreaterThan(0);
+  await stub(page, LIFT);
+  await openGoreme(page);
+  await setTurbo(page);
+  await spin(page).click();
+  await expect(rows(page)).toHaveCount(1, { timeout: 60_000 });
+  await expect(page.getByTestId('goreme-meter-total')).toContainText(demoText(round.payoutCents));
+  const shown = (await page.getByTestId('goreme-meter-total').textContent())!.replace(/\s*DEMO\s*$/, '').trim();
+  await page.getByTestId('round-breakdown-open').click();
+  const dialog = page.getByRole('dialog', { name: 'Tur ayrıntısı' });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByTestId('round-breakdown-line')).toHaveCount(allLines(goremeBreakdown(round)).length);
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(shown);
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(demoText(round.payoutCents));
+  await expect(dialog.getByTestId('round-breakdown-check')).toContainText('✓');
+  if (process.env.BREAKDOWN_SHOTS) await page.screenshot({ path: `${process.env.BREAKDOWN_SHOTS}/goreme.png` });
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await rows(page).first().getByTestId('history-breakdown').click();
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(demoText(round.payoutCents));
 });

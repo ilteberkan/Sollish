@@ -1,0 +1,89 @@
+{
+  "kind": "rtp-audit-resim",
+  "date": "2026-10-23",
+  "scope": "DEMO credits only; independent Monte Carlo re-simulation, not a certification",
+  "command": "bash scripts/use-node.sh node --import tsx ops/rtp-audit/resim.ts --rounds 20000000 --workers 2 --namespace sollish-rtp-audit-20261023/confirm --games damla --modes low-12 --out ops/evidence/rtp-audit-20261023/confirm-damla-low-12.json",
+  "node": "v24.21.0",
+  "method": {
+    "seeds": "serverSeed = sha256(\"sollish-rtp-audit-20261023/confirm/<game>/<mode>\"), clientSeed = \"rtp-audit-20261023\", seedHex = HMAC-SHA256(serverSeed, \"<clientSeed>:<nonce>\")[0..16], nonce 0..rounds-1 (slot-fair deriveSeedHex rule)",
+    "engine": "SLOT_GAMES[game].play / .cost (public registry; same functions as the RGS server and the browser)",
+    "rtp": "sum(payoutCents) / sum(costCents) at bet 100 cents",
+    "ci": "normal approximation, mean +- 1.96 sd/sqrt(n)",
+    "verdict": "PASS when the claimed RTP lies inside the new 95% interval and every round cost equals the registry cost; else FAIL",
+    "zVsOriginal": "(new - original) / sqrt(seNew^2 + seOriginal^2); Damla: (new - exact) / seNew"
+  },
+  "namespace": "sollish-rtp-audit-20261023/confirm",
+  "engineSourceSha256": {
+    "cascade": "3110322c57f1a893fc7d526d2e060bc3423c5c6d5bc20832caaa5a916389f0de",
+    "tarhun": "543c7baab0ae4556e23ba480eb4e66c66b563801d2bc737e9f9168b1bc791ed9",
+    "ebru": "68ba5c86a726e6245ff7ae743c014c50da1415fc2ee48d346b9d103fd1f75d33",
+    "cezeri": "2b2c2f720fcebc21222bf9616d9bf5cb6d5d410fd32e0d9f3ec0d0351cd91dc4",
+    "asena": "044d52f9fd6008ae3627e826dc9ae3182dc4e1a4815e3383c674db0568829473",
+    "goreme": "7cfb99f0fdd0d279de9c1ce0f718f8209e0e186943095cff26b4f6d41ad8295e",
+    "damla": "14f8efe4ffa5d6bb2ebd2b484bf800a83079e0612a03f0d0f514e6dc37a43f27"
+  },
+  "rounds": 20000000,
+  "workers": 2,
+  "results": [
+    {
+      "game": "damla",
+      "mode": "low-12",
+      "engineId": "damla-terraces-1",
+      "rounds": 20000000,
+      "betCents": 100,
+      "costCentsPerRound": 100,
+      "seed": {
+        "serverSeedText": "sollish-rtp-audit-20261023/confirm/damla/low-12",
+        "serverSeedHex": "3342aa319c8bde959041a9c66549eef5bd5ad5cf29d07f17403e493c848a2329",
+        "clientSeed": "rtp-audit-20261023",
+        "nonces": [
+          0,
+          19999999
+        ],
+        "firstSeedHex": "0cfa76741a10bfff5ada5686b433df8d"
+      },
+      "sumPayoutCents": "1971561370",
+      "sumCostCents": "2000000000",
+      "sumTotalHundredths": "1971561370",
+      "rtp": 0.985781,
+      "rtpFromBetUnits": 0.985781,
+      "stdDevPerRoundCostUnits": 0.8468,
+      "ci95": [
+        0.98541,
+        0.986152
+      ],
+      "ci95HalfWidth": 0.000371,
+      "hitFrequency": 1,
+      "featureRate": 0,
+      "cappedRounds": 9883,
+      "costMismatches": 0,
+      "maxWin": {
+        "payoutCents": 1000,
+        "xBet": 10,
+        "xCost": 10,
+        "seedHex": "4172286ed2a67be0b5794acd32c9e3d5",
+        "capXBet": 1000
+      },
+      "claim": {
+        "claimedRtp": 0.985507812,
+        "claimedSource": "exact binomial RTP (modes.<mode>.exactRtp)",
+        "originalPoint": 0.9852901655,
+        "originalCi95": [
+          0.984919637901146,
+          0.9856606930988541
+        ],
+        "originalRounds": 20000000,
+        "originalStdDev": 0.8454335699769572,
+        "originalHitRate": null,
+        "originalSeed": "damla-20261021-evidence",
+        "codeConstantRtp": 0.9853
+      },
+      "claimedInsideNewCi95": true,
+      "newInsideOriginalCi95": false,
+      "zVsOriginal": 1.441,
+      "verdict": "PASS",
+      "runtimeSeconds": 256.8,
+      "engineSourceSha256": "14f8efe4ffa5d6bb2ebd2b484bf800a83079e0612a03f0d0f514e6dc37a43f27"
+    }
+  ]
+}

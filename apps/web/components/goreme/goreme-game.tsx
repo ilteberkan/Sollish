@@ -29,6 +29,8 @@ import {
   AutoplayPanel, AutoplayStopButton, BetSelector, BuyFeatureDialog, GameInfo, Modal, RealityCheckDialog, SessionBar, SettingsPanel, useSession, useSlotSettings,
 } from '../slot-kit';
 import kit from '../slot-kit/kit.module.css';
+import { RoundBreakdownLauncher } from '../slot-kit/round-breakdown';
+import { goremeBreakdown } from '@/lib/round-breakdown/goreme';
 import { useViewportTop } from '../slot-kit/use-viewport-top';
 import { GoremeBoard, type GoremeBoardHandle, type GoremeMoorTarget } from './board';
 import { GoremeCelebration, GoremeFeatureTotal, GoremeFreeIntro } from './goreme-celebration';
@@ -218,6 +220,9 @@ export function GoremeGame() {
   const [banner, setBanner] = useState<Banner | null>(null);
   const [announce, setAnnounce] = useState('');
   const [lastWin, setLastWin] = useState<{ payout: number; total: number; replay: boolean } | null>(null);
+  /** Last finished round, for the round breakdown ("Tur ayrıntısı"). */
+  const [doneRound, setDoneRound] = useState<GoremeRound | null>(null);
+  const doneBreakdown = useMemo(() => (doneRound ? goremeBreakdown(doneRound) : null), [doneRound]);
   const [auto, setAuto] = useState<AutoplayState | null>(null);
   const [toast, setToast] = useState<Toast | null>(null);
   const [modal, setModal] = useState<ModalId>(null);
@@ -345,7 +350,7 @@ export function GoremeGame() {
       recordRemote({ ...record, at: receipt.at, remote: { roundId: receipt.roundId, nonce: receipt.fair.nonce, serverSeedHash: receipt.fair.serverSeedHash, clientSeed: receipt.fair.clientSeed } });
       setRemoteBalance(current.remote.balanceAfter);
     } else settleDemo(record);
-    recordSession({ costCents: current.cost, payoutCents: round.payoutCents });
+    recordSession({ costCents: current.cost, payoutCents: round.payoutCents, game: 'goreme', mode: current.mode });
     setActiveDemo(false);
   }, [settleDemo, recordRemote, setActiveDemo, recordSession]);
 
@@ -378,6 +383,7 @@ export function GoremeGame() {
     setMood('base');
     const { round } = current;
     setLastWin({ payout: round.payoutCents, total: round.totalHundredths, replay: current.id === null });
+    setDoneRound(round);
     sound.scene('base');
     if (current.id === null) {
       setReplaying(null);
@@ -1006,6 +1012,7 @@ export function GoremeGame() {
             {error ? <p className={styles.msgError} role="alert">{error}</p>
               : outOfCredit ? <p className={styles.msgHint}>{t('deck.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
               : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? richText(t, 'deck.lastWin', { money: goremeMoney(lastWin.payout, loc), times: goremeTimes(lastWin.total, loc) }) : t('deck.lastNone')) : settings.spaceToSpin ? t('deck.hintSpace') : t('deck.hintFixed')}</p>}
+            {!busy && doneBreakdown && <RoundBreakdownLauncher breakdown={doneBreakdown} modeLabel={tc(`modes.${doneBreakdown.mode as GoremeMode}`)} />}
           </div>
         </div>
       )}
@@ -1128,7 +1135,7 @@ export function GoremeGame() {
         )}
         <div className="sr-only" role="status" aria-live="polite">{announce}</div>
       </section>
-      <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} />
+      <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} stats={session.stats} />
       <GameInfoStrip id="goreme" />
       <GoremeHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <StaticFooter remote={remote !== null} />

@@ -4,6 +4,8 @@ import { EBRU_RTP, ebruSeedFromEntropy, playEbruRound, type EbruMode } from '@so
 import { EBRU_SYMBOL_LABELS, ebruCellLabel } from '../../components/ebru/symbols';
 import { buildEbruTimeline, ebruCalloutTier, ebruFinalBoard } from '../../lib/ebru-timeline';
 import { formatAmount } from '../../lib/slot-kit/bet';
+import { ebruBreakdown } from '../../lib/round-breakdown/ebru';
+import { allLines } from '../../lib/round-breakdown/types';
 
 // Opt-in override for machines whose installed Chromium build differs from the Playwright pin.
 if (process.env.PW_CHROMIUM_PATH) test.use({ launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } });
@@ -516,4 +518,29 @@ test('phone 390x844 first screen: the whole table and the spin button fit withou
   const buyBox = (await page.getByRole('button', { name: /Bonus satın al/ }).boundingBox())!;
   expect(buyBox.y + buyBox.height, 'buy button bottom').toBeLessThanOrEqual(844);
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+});
+
+test('round breakdown ("Tur ayrıntısı"): lists the wins and its total equals the shown win and the engine payout; also from history', async ({ page }) => {
+  test.setTimeout(120_000); // a dev-server round can be slow on a busy machine
+  const round = engine(COMB_WIN);
+  expect(round.payoutCents).toBeGreaterThan(0);
+  await stub(page, COMB_WIN);
+  await openEbru(page);
+  await setTurbo(page);
+  await spin(page).click();
+  await expect(rows(page)).toHaveCount(1, { timeout: 60_000 });
+  await expect(page.getByTestId('ebru-meter-total')).toContainText(demoText(round.payoutCents));
+  const shown = (await page.getByTestId('ebru-meter-total').textContent())!.replace(/\s*DEMO\s*$/, '').trim();
+  await page.getByTestId('round-breakdown-open').click();
+  const dialog = page.getByRole('dialog', { name: 'Tur ayrıntısı' });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByTestId('round-breakdown-line')).toHaveCount(allLines(ebruBreakdown(round)).length);
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(shown);
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(demoText(round.payoutCents));
+  await expect(dialog.getByTestId('round-breakdown-check')).toContainText('✓');
+  if (process.env.BREAKDOWN_SHOTS) await page.screenshot({ path: `${process.env.BREAKDOWN_SHOTS}/ebru.png` });
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await rows(page).first().getByTestId('history-breakdown').click();
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(demoText(round.payoutCents));
 });

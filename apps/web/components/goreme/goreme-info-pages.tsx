@@ -5,6 +5,7 @@ import {
   GOREME_MAX_LIFTS, GOREME_MAX_WIN_MULTIPLIER, GOREME_PAY_SYMBOLS, GOREME_PAYTABLE, GOREME_RTP, GOREME_SCATTER_AWARDS, GOREME_WAYS,
   type GoremeMode, type GoremePaySymbol, type GoremeSymbol as EngineSymbol,
 } from '@sollish/protocol';
+import { GOREME_LENGTHS } from '@/lib/paytable-labels';
 import type { GameInfoPage } from '../slot-kit';
 import type { Translator } from '@/lib/i18n/translator';
 import type { Formatter } from '@/lib/i18n/format';
@@ -20,7 +21,7 @@ export interface GoremeInfoContext { t: Translator<'goreme'>; tk: Translator<'sl
 
 const MODES: GoremeMode[] = ['standard', 'ante', 'buy'];
 const HIGH = new Set<GoremePaySymbol>(['h1', 'h2', 'h3', 'h4']);
-const LENGTHS = [3, 4, 5, 6] as const;
+const LENGTHS = GOREME_LENGTHS;
 
 function Feature({ art, title, children }: { art?: ReactNode; title: string; children: ReactNode }) {
   return (

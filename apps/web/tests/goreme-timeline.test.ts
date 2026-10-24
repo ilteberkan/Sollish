@@ -133,7 +133,7 @@ test('multiplier callouts: only values of 10 or more, each with its tier; sky ca
 
 test('speeds change timing only: same events and numbers, turbo shorter, reduced motion keeps every step', () => {
   const round = engine(F.BUY_SKY, 'buy');
-  const strip = (e: GoremeEvent) => { const { at: _a, dur: _d, ...rest } = e as GoremeEvent & Record<string, unknown>; delete (rest as Record<string, unknown>).stops; delete (rest as Record<string, unknown>).dropMs; delete (rest as Record<string, unknown>).delays; delete (rest as Record<string, unknown>).ms; delete (rest as Record<string, unknown>).tickMs; delete (rest as Record<string, unknown>).schedule; delete (rest as Record<string, unknown>).countUp; return JSON.stringify(rest); };
+  const strip = (e: GoremeEvent) => { const { at: _a, dur: _d, ...rest } = e as GoremeEvent & Record<string, unknown>; delete (rest as Record<string, unknown>).stops; delete (rest as Record<string, unknown>).dropMs; delete (rest as Record<string, unknown>).delays; delete (rest as Record<string, unknown>).ms; delete (rest as Record<string, unknown>).tickMs; delete (rest as Record<string, unknown>).schedule; delete (rest as Record<string, unknown>).countUp; delete (rest as Record<string, unknown>).summaryMs; return JSON.stringify(rest); };
   const normal = buildGoremeTimeline(round), quick = buildGoremeTimeline(round, { speed: 'quick' }), turbo = buildGoremeTimeline(round, { speed: 'turbo' }), reduced = buildGoremeTimeline(round, { reducedMotion: true });
   for (const other of [quick, turbo, reduced]) assert.deepEqual(other.events.map(strip), normal.events.map(strip));
   assert.ok(turbo.duration < quick.duration && quick.duration < normal.duration);

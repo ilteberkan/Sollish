@@ -61,7 +61,7 @@ export function RoundBreakdownPanel({ breakdown: b, modeLabel }: RoundBreakdownP
       case 'ways': return t('breakdown.line.ways', { count: l.count, ways: l.ways ?? 0 });
       case 'spoke': return t('breakdown.line.spoke', { spoke: l.spoke ?? 0, count: l.count, rotation: l.rotation ?? 1 });
       case 'scatter': return t('breakdown.line.scatter', { count: l.count });
-      case 'pool': return t('breakdown.line.pool', { rows: l.count, slot: l.slot ?? 0 });
+      case 'pool': return t('breakdown.line.pool', { rows: l.count, slot: (l.slot ?? 0) + 1 });
     }
   };
   const lineCalc = (l: BreakdownLine): string => {

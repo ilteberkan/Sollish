@@ -1,10 +1,13 @@
 'use client';
-import { memo } from 'react';
-import { playAsenaRound } from '@sollish/protocol';
+import { memo, useState } from 'react';
+import { playAsenaRound, type AsenaMode } from '@sollish/protocol';
 import { useFormat, useT } from '@/lib/i18n/client';
 import { asenaRoundId } from '@/lib/asena-controls';
 import { asenaHistorySummary, asenaTimes, type AsenaHistorySummary } from '@/lib/asena-timeline';
 import { Icon } from '../icons';
+import { RoundBreakdownButton, RoundBreakdownDialog } from '../slot-kit/round-breakdown';
+import { asenaBreakdown } from '@/lib/round-breakdown/asena';
+import type { RoundBreakdown } from '@/lib/round-breakdown/types';
 import { useProduct, type DemoRecord } from '../providers';
 import styles from './asena-game.module.css';
 
@@ -40,6 +43,11 @@ export const AsenaHistory = memo(function AsenaHistory({ onReplay, replayDisable
   const format = useFormat();
   const loc = format.locale;
   const relevant = records.filter(record => record.game === 'Asena');
+  const tBreakdown = useT('slotKit');
+  const [breakdown, setBreakdown] = useState<RoundBreakdown | null>(null);
+  const openBreakdown = (meta: NonNullable<DemoRecord['asena']>) => {
+    try { setBreakdown(asenaBreakdown(playAsenaRound(meta.seedHex, meta.betCents, meta.mode as AsenaMode))); } catch { setBreakdown(null); }
+  };
   const time = (at: number) => format.time(at);
   const detail = (record: DemoRecord) => {
     const s = summaryOf(record);
@@ -89,6 +97,10 @@ export const AsenaHistory = memo(function AsenaHistory({ onReplay, replayDisable
                         <Icon name="history" size={15} /><span>{t('history.replay')}</span>
                       </button>
                     )}
+                    {record.asena && (
+                      <RoundBreakdownButton compact onClick={() => openBreakdown(record.asena!)} className={styles.replayButton} testId="history-breakdown"
+                        label={tBreakdown('breakdown.historyAria', { id: record.asena.seedHex.slice(0, 8) })} />
+                    )}
                     {onShare && record.remote && (
                       <button type="button" className={styles.replayButton} onClick={() => onShare(record)} data-testid="share-round"
                         aria-label={t('history.shareAria', { id: asenaRoundId(record.remote.roundId) })}>
@@ -104,6 +116,8 @@ export const AsenaHistory = memo(function AsenaHistory({ onReplay, replayDisable
       ) : (
         <div className="empty-history"><Icon name="history" size={24} /><div><strong>{t('history.emptyTitle')}</strong><p>{t('history.emptyText')}</p></div></div>
       )}
+      <RoundBreakdownDialog open={breakdown !== null} onClose={() => setBreakdown(null)} breakdown={breakdown ?? undefined}
+        modeLabel={breakdown ? tc(`modes.${breakdown.mode as AsenaMode}`) : undefined} />
     </section>
   );
 });

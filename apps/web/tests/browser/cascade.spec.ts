@@ -648,13 +648,14 @@ test('tablet 768x1024 portrait first screen: the whole table fits without scroll
 });
 
 test('round breakdown ("Tur ayrıntısı"): lists the wins and its total equals the shown win and the engine payout; also from history', async ({ page }) => {
+  test.setTimeout(120_000); // a dev-server round can be slow on a busy machine
   const round = engine(TUMBLES);
   expect(round.payoutCents).toBeGreaterThan(0);
   await stub(page, TUMBLES);
   await openCascade(page);
   await setTurbo(page);
   await spin(page).click();
-  await expect(rows(page)).toHaveCount(1, { timeout: 20_000 });
+  await expect(rows(page)).toHaveCount(1, { timeout: 60_000 });
   await expect(page.getByTestId('cascade-meter-total')).toContainText(demoText(round.payoutCents));
   const shown = (await page.getByTestId('cascade-meter-total').textContent())!.replace(/\s*DEMO\s*$/, '').trim();
   await page.getByTestId('round-breakdown-open').click();

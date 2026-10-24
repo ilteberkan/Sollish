@@ -4,6 +4,7 @@ import {
   STORM_BET_LEVELS_CENTS, STORM_FREE_SPINS_RETRIGGER, STORM_FREE_SPINS_TRIGGER, STORM_MAX_FREE_SPINS, STORM_MAX_WIN_MULTIPLIER,
   STORM_ORB_WEIGHTS, STORM_PAYTABLE, STORM_RTP, STORM_SCATTER_PAY, type StormMode, type StormPaySymbol,
 } from '@sollish/protocol';
+import { TUMBLE8_TIER_LABELS } from '@/lib/paytable-labels';
 import type { GameInfoPage } from '../slot-kit';
 import type { Formatter } from '@/lib/i18n/format';
 import type { Translator } from '@/lib/i18n/translator';
@@ -27,7 +28,8 @@ export interface StormInfoContext {
 const MODES: StormMode[] = ['standard', 'ante', 'buy'];
 const ORDER: StormPaySymbol[] = ['h1', 'h2', 'h3', 'h4', 'l1', 'l2', 'l3', 'l4', 'l5'];
 const HIGH = new Set<StormPaySymbol>(['h1', 'h2', 'h3', 'h4']);
-const TIERS = ['12+', '10–11', '8–9'] as const;
+/** Highest tier first, matching [t12, t10, t8] below. */
+const TIERS = [...TUMBLE8_TIER_LABELS].reverse();
 const ORB_TOTAL = STORM_ORB_WEIGHTS.reduce((sum, [, w]) => sum + w, 0);
 const bold = (chunk: string) => <strong key={chunk}>{chunk}</strong>;
 const code = (chunk: string) => <code key={chunk}>{chunk}</code>;
@@ -226,7 +228,7 @@ export function stormInfoPages(betCents: number, cx: StormInfoContext): GameInfo
             <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>{t('info.keys.arrowsText')}</dd></div>
             <div><dt><kbd>PageUp</kbd> <kbd>PageDown</kbd></dt><dd>{t('info.keys.pageText')}</dd></div>
           </dl>
-          <p className={styles.note}>{t('info.keys.note', { example: t('announce.cluster', { count: 8, name: inlineName(t.locale, cx.symbol('h1')), times: format.amount(960) }) })}</p>
+          <p className={styles.note}>{t('info.keys.note', { example: t('announce.cluster', { count: 8, name: inlineName(t.locale, cx.symbol('h1')), times: format.amount(STORM_PAYTABLE.h1[0]) }) })}</p>
         </div>
       ),
     },

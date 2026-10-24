@@ -1,10 +1,11 @@
 'use client';
 import type { CSSProperties, ReactNode } from 'react';
 import {
-  EBRU_BET_LEVELS_CENTS, EBRU_CLUSTER_TIER_STARTS, EBRU_COLOURS, EBRU_COMB_AMPLITUDE_WEIGHTS, EBRU_FREE_SPINS_RETRIGGER, EBRU_FREE_SPINS_TRIGGER,
+  EBRU_BET_LEVELS_CENTS, EBRU_COLOURS, EBRU_COMB_AMPLITUDE_WEIGHTS, EBRU_FREE_SPINS_RETRIGGER, EBRU_FREE_SPINS_TRIGGER,
   EBRU_MAX_COMB_PASSES, EBRU_MAX_FREE_SPINS, EBRU_MAX_WIN_MULTIPLIER, EBRU_PAYTABLE, EBRU_RTP, EBRU_SCATTER_PAY, EBRU_SIN_TABLE, EBRU_STAIN_MAX,
   type EbruColour, type EbruMode,
 } from '@sollish/protocol';
+import { EBRU_TIER_LABELS } from '@/lib/paytable-labels';
 import type { GameInfoPage } from '../slot-kit';
 import type { Formatter } from '@/lib/i18n/format';
 import type { Translator } from '@/lib/i18n/translator';
@@ -19,11 +20,7 @@ import styles from './ebru-info.module.css';
 const MODES: EbruMode[] = ['standard', 'ante', 'buy'];
 const HIGH = new Set<EbruColour>(['c1', 'c2', 'c3']);
 /** Labels of EBRU_CLUSTER_TIER_STARTS: 5, 6, 7, 8, 9, 10–11, 12–13, …, 33+. */
-const TIER_LABELS = EBRU_CLUSTER_TIER_STARTS.map((start, i) => {
-  const next = EBRU_CLUSTER_TIER_STARTS[i + 1];
-  if (next === undefined) return `${start}+`;
-  return next - 1 === start ? `${start}` : `${start}–${next - 1}`;
-});
+const TIER_LABELS = EBRU_TIER_LABELS;
 /** Tiers shown on the cards (5, 8, 12–13, 17–20, 26–32, 33+); the full table lists all twelve. */
 const CARD_TIERS = [11, 9, 6, 3, 0];
 const bold = (chunk: string) => <strong key={chunk}>{chunk}</strong>;

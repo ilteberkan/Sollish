@@ -1,0 +1,15 @@
+# 2026-10-24T09:28:20Z (apps/web) RTP_PLAYER_PATH_ROUNDS=1000000 RTP_PLAYER_PATH_NAMESPACE=sollish-rtp-audit-20261023/player-confirm RTP_PLAYER_PATH_GAMES=cezeri RTP_PLAYER_PATH_OUT=../../ops/evidence/rtp-audit-20261023/player-path-confirm-cezeri.json npx tsx --test tests/rtp-player-path.test.ts
+# 2026-10-24T09:28:20Z (apps/web) RTP_PLAYER_PATH_ROUNDS=1000000 RTP_PLAYER_PATH_NAMESPACE=sollish-rtp-audit-20261023/player-confirm RTP_PLAYER_PATH_GAMES=goreme RTP_PLAYER_PATH_OUT=../../ops/evidence/rtp-audit-20261023/player-path-confirm-goreme.json npx tsx --test tests/rtp-player-path.test.ts
+# 2026-10-24T09:28:20Z (apps/web) RTP_PLAYER_PATH_ROUNDS=1000000 RTP_PLAYER_PATH_NAMESPACE=sollish-rtp-audit-20261023/player-confirm RTP_PLAYER_PATH_GAMES=damla RTP_PLAYER_PATH_OUT=../../ops/evidence/rtp-audit-20261023/player-path-confirm-damla.json npx tsx --test tests/rtp-player-path.test.ts
+✔ player path damla: ledger and session follow the engine exactly in every mode (1000000 rounds per mode) (195068.799935ms)
+✔ the ledger cap never clamps a capped engine win at any ladder bet in any mode (10.463149ms)
+ℹ pass 2
+ℹ fail 0
+✔ player path goreme: ledger and session follow the engine exactly in every mode (1000000 rounds per mode) (232125.509724ms)
+✔ the ledger cap never clamps a capped engine win at any ladder bet in any mode (3.745932ms)
+ℹ pass 2
+ℹ fail 0
+✔ player path cezeri: ledger and session follow the engine exactly in every mode (1000000 rounds per mode) (275941.025521ms)
+✔ the ledger cap never clamps a capped engine win at any ladder bet in any mode (5.12614ms)
+ℹ pass 2
+ℹ fail 0

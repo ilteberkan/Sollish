@@ -1,10 +1,13 @@
 'use client';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { playStormRound, type StormMode } from '@sollish/protocol';
 import { useFormat, useT } from '@/lib/i18n/client';
 import { stormRoundId } from '@/lib/storm-controls';
 import { stormHistoryParts, type StormHistoryParts } from '@/lib/storm-timeline';
 import { Icon } from '../icons';
+import { RoundBreakdownButton, RoundBreakdownDialog } from '../slot-kit/round-breakdown';
+import { tarhunBreakdown } from '@/lib/round-breakdown/tarhun';
+import type { RoundBreakdown } from '@/lib/round-breakdown/types';
 import { useProduct, type DemoRecord } from '../providers';
 import styles from './tarhun-game.module.css';
 
@@ -38,6 +41,11 @@ export const StormHistory = memo(function StormHistory({ onReplay, replayDisable
   const tk = useT('slotKit');
   const format = useFormat();
   const relevant = records.filter(record => record.game === 'Tarhun');
+  const tBreakdown = useT('slotKit');
+  const [breakdown, setBreakdown] = useState<RoundBreakdown | null>(null);
+  const openBreakdown = (meta: NonNullable<DemoRecord['storm']>) => {
+    try { setBreakdown(tarhunBreakdown(playStormRound(meta.seedHex, meta.betCents, meta.mode as StormMode))); } catch { setBreakdown(null); }
+  };
   const detail = useMemo(() => (record: DemoRecord): string => {
     const parts = record.storm ? partsOf(record.storm.seedHex, record.storm.betCents, record.storm.mode) : null;
     if (!parts) return record.detail;
@@ -86,6 +94,10 @@ export const StormHistory = memo(function StormHistory({ onReplay, replayDisable
                         <Icon name="history" size={15} /><span>{t('history.replay')}</span>
                       </button>
                     )}
+                    {record.storm && (
+                      <RoundBreakdownButton compact onClick={() => openBreakdown(record.storm!)} className={styles.replayButton} testId="history-breakdown"
+                        label={tBreakdown('breakdown.historyAria', { id: record.storm.seedHex.slice(0, 8) })} />
+                    )}
                     {onShare && record.remote && (
                       <button type="button" className={styles.replayButton} onClick={() => onShare(record)} data-testid="share-round"
                         aria-label={t('history.shareAria', { id: stormRoundId(record.remote.roundId) })}>
@@ -101,6 +113,8 @@ export const StormHistory = memo(function StormHistory({ onReplay, replayDisable
       ) : (
         <div className="empty-history"><Icon name="history" size={24} /><div><strong>{t('history.emptyTitle')}</strong><p>{t('history.emptyText')}</p></div></div>
       )}
+      <RoundBreakdownDialog open={breakdown !== null} onClose={() => setBreakdown(null)} breakdown={breakdown ?? undefined}
+        modeLabel={breakdown ? tc(`modes.${breakdown.mode as StormMode}`) : undefined} />
     </section>
   );
 });

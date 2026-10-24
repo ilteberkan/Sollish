@@ -3,11 +3,13 @@ import { CASCADE2_MAX_WIN_MULTIPLIER, CASCADE2_PAYTABLE, CASCADE2_SCATTER_PAY, C
 import type { Formatter } from '@/lib/i18n/format';
 import type { Translator } from '@/lib/i18n/translator';
 import { centsFor } from '@/lib/cascade-timeline';
+import { TUMBLE8_TIER_LABELS } from '@/lib/paytable-labels';
 import { SymbolArt, type CascadeArtSymbol } from './symbols';
 import styles from './info.module.css';
 
 const ORDER: CascadePaySymbol[] = ['crown', 'cupcake', 'donut', 'gumdrop', 'strawberry', 'blueberry', 'kiwi', 'lemon', 'cherry'];
-const TIERS = ['12+', '10–11', '8–9'] as const;
+/** Highest tier first, matching [t12, t10, t8] below. */
+const TIERS = [...TUMBLE8_TIER_LABELS].reverse();
 const HIGH = new Set<CascadePaySymbol>(['crown', 'cupcake', 'donut', 'gumdrop']);
 
 const bold = (chunk: string) => <strong key={chunk}>{chunk}</strong>;

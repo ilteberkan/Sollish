@@ -21,7 +21,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { SLOT_GAME_META, SLOT_GAMES, DAMLA_EXACT_RTP, DAMLA_PAYTABLES, type SlotGameId } from '@sollish/protocol';
+import { SLOT_GAME_META, SLOT_GAMES, DAMLA_EXACT_RTP, DAMLA_PAYTABLES, type DamlaMode, type SlotGameId } from '@sollish/protocol';
 import { createLocalSource, slotEnginesOf, type SlotEngine, type SlotMode } from '../lib/rgs-client';
 import { DemoLedger, DEMO_START_CENTS } from '../lib/demo';
 import { createSession, recordSessionRound } from '../lib/slot-kit/session';
@@ -38,7 +38,7 @@ import { EBRU_BET_LADDER, ebruCost, ebruLedgerLimits } from '../lib/ebru-control
 import { CEZERI_BET_LADDER, cezeriCost, cezeriLedgerLimits } from '../lib/cezeri-controls';
 import { ASENA_BET_LADDER, asenaCost, asenaLedgerLimits } from '../lib/asena-controls';
 import { GOREME_BET_LADDER, goremeCost, goremeLedgerLimits } from '../lib/goreme-controls';
-import { DAMLA_BET_LADDER, damlaCost, damlaLedgerLimits, type DamlaMode } from '../lib/damla-controls';
+import { DAMLA_BET_LADDER, damlaCost, damlaLedgerLimits } from '../lib/damla-controls';
 
 type Limits = { maxMultiplier: number; maxStakeCents: number };
 interface PlayerGame { engine: SlotEngine; ladder: readonly number[]; cost(bet: number, mode: string): number; limits(bet: number, mode: string): Limits }
@@ -56,7 +56,8 @@ const GAMES: Record<SlotGameId, PlayerGame> = {
 const ROUNDS = Number(process.env.RTP_PLAYER_PATH_ROUNDS ?? 300);
 const OUT = process.env.RTP_PLAYER_PATH_OUT;
 const ONLY = process.env.RTP_PLAYER_PATH_GAMES?.split(',');
-const NAMESPACE = 'sollish-rtp-audit-20261023/player';
+const NAMESPACE = process.env.RTP_PLAYER_PATH_NAMESPACE ?? 'sollish-rtp-audit-20261023/player';
+if (!NAMESPACE.startsWith('sollish-rtp-audit-')) throw new Error('RTP_PLAYER_PATH_NAMESPACE must start with sollish-rtp-audit-');
 
 /** Expected RTP of a mode as the game shows it: Damla's exact binomial value, otherwise the registry's simulated value. */
 export function expectedRtp(game: SlotGameId, mode: string): number {
@@ -164,7 +165,7 @@ test.after(() => {
   mkdirSync(dirname(path), { recursive: true });
   writeFileSync(path, JSON.stringify({
     kind: 'rtp-audit-player-path', date: '2026-10-23', scope: 'DEMO ledger (lib/demo.ts) driven by the web client local round source; not the remote RGS',
-    command: `RTP_PLAYER_PATH_ROUNDS=${ROUNDS} RTP_PLAYER_PATH_OUT=${OUT} bash scripts/use-node.sh pnpm --filter @sollish/web exec tsx --test tests/rtp-player-path.test.ts`,
+    command: `RTP_PLAYER_PATH_ROUNDS=${ROUNDS}${process.env.RTP_PLAYER_PATH_NAMESPACE ? ` RTP_PLAYER_PATH_NAMESPACE=${NAMESPACE}` : ''}${ONLY ? ` RTP_PLAYER_PATH_GAMES=${ONLY.join(',')}` : ''} RTP_PLAYER_PATH_OUT=${OUT} bash scripts/use-node.sh pnpm --filter @sollish/web exec tsx --test tests/rtp-player-path.test.ts`,
     node: process.version, roundsPerMode: ROUNDS, entropy: `sha256("${NAMESPACE}/<game>/<mode>/<draw index>") -> 4 big-endian words`,
     bets: 'round i uses playable[i mod playable.length], playable = ladder levels whose cost fits the 1000 DEMO start balance (all 19 levels for standard/ante/Damla; buy: see betsCents)',
     rtp: 'rtpWeighted = sum(payout)/sum(cost) (what the balance sees); rtpPerRoundMean = mean(payout/cost) (bet-size neutral); 95% intervals by normal approximation',

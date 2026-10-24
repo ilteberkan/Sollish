@@ -2,6 +2,7 @@ import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { createHash, createHmac } from 'node:crypto';
 import { damlaSeedFromEntropy, playDamlaRound, type DamlaMode } from '@sollish/protocol';
+import { damlaBreakdown } from '../../lib/round-breakdown/damla';
 
 // Opt-in override for machines whose installed Chromium build differs from the Playwright pin.
 if (process.env.PW_CHROMIUM_PATH) test.use({ launchOptions: { executablePath: process.env.PW_CHROMIUM_PATH } });
@@ -174,4 +175,33 @@ test('phone 390x844 first screen: the whole table and the spin button fit withou
   const tableBox = (await page.locator('.game-table').boundingBox())!;
   expect(tableBox.y + tableBox.height, 'table bottom').toBeLessThanOrEqual(844);
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+});
+
+test('round breakdown ("Tur ayrıntısı"): path, pool, multiplier and bet × multiplier = the shown win; also from history', async ({ page }) => {
+  test.setTimeout(120_000); // a dev-server round can be slow on a busy machine
+  const WIN = 56_433; // medium-12: pool 4 of 13 (3 right spills), x2.5
+  const round = engine(WIN);
+  expect(round.multiplierHundredths).toBe(250);
+  await stub(page, WIN);
+  await openDamla(page);
+  await turbo(page);
+  await drop(page).click();
+  await expect(rows(page)).toHaveCount(1, { timeout: 60_000 });
+  await expect(page.getByTestId('damla-win')).toContainText(tr(round.payoutCents));
+  const shown = (await page.getByTestId('damla-win').textContent())!.replace(/\s*DEMO\s*$/, '').trim();
+  await page.getByTestId('round-breakdown-open').click();
+  const dialog = page.getByRole('dialog', { name: 'Tur ayrıntısı' });
+  await expect(dialog).toBeVisible();
+  await expect(dialog.getByTestId('round-breakdown-line')).toHaveCount(1);
+  await expect(dialog.getByTestId('round-breakdown-line')).toContainText('havuz 4');
+  await expect(dialog.getByTestId('round-breakdown-line')).toContainText('2,50×');
+  await expect(dialog).toContainText(`bahis ${tr(round.betCents)} × 2,50×`);
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(shown);
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(tr(damlaBreakdown(round).payoutCents));
+  await expect(dialog.getByTestId('round-breakdown-check')).toContainText('✓');
+  if (process.env.BREAKDOWN_SHOTS) await page.screenshot({ path: `${process.env.BREAKDOWN_SHOTS}/damla.png` });
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await rows(page).first().getByTestId('history-breakdown').click();
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(tr(round.payoutCents));
 });

@@ -1,10 +1,13 @@
 'use client';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { playDamlaRound, type DamlaMode } from '@sollish/protocol';
 import { useFormat, useT } from '@/lib/i18n/client';
 import { damlaMultiplierText, damlaRoundId, parseDamlaMode } from '@/lib/damla-controls';
 import { damlaHistorySummary, type DamlaHistorySummary } from '@/lib/damla-timeline';
 import { Icon } from '../icons';
+import { RoundBreakdownButton, RoundBreakdownDialog } from '../slot-kit/round-breakdown';
+import { damlaBreakdown } from '@/lib/round-breakdown/damla';
+import type { RoundBreakdown } from '@/lib/round-breakdown/types';
 import { useProduct, type DemoRecord } from '../providers';
 import styles from './damla-game.module.css';
 
@@ -38,6 +41,11 @@ export const DamlaHistory = memo(function DamlaHistory({ hiddenIds, onReplay, re
   const format = useFormat();
   const loc = format.locale;
   const relevant = records.filter(record => record.game === 'Damla' && !hiddenIds.has(record.id));
+  const tBreakdown = useT('slotKit');
+  const [breakdown, setBreakdown] = useState<RoundBreakdown | null>(null);
+  const openBreakdown = (meta: NonNullable<DemoRecord['damla']>) => {
+    try { setBreakdown(damlaBreakdown(playDamlaRound(meta.seedHex, meta.betCents, meta.mode as DamlaMode))); } catch { setBreakdown(null); }
+  };
   const modeText = (mode: string) => {
     const p = parseDamlaMode(mode);
     return p ? t('history.modeValue', { risk: t(`risk.${p.risk}`), rows: p.rows }) : mode;
@@ -84,6 +92,10 @@ export const DamlaHistory = memo(function DamlaHistory({ hiddenIds, onReplay, re
                         <Icon name="history" size={15} /><span>{t('history.replay')}</span>
                       </button>
                     )}
+                    {record.damla && (
+                      <RoundBreakdownButton compact onClick={() => openBreakdown(record.damla!)} className={styles.replayButton} testId="history-breakdown"
+                        label={tBreakdown('breakdown.historyAria', { id: record.damla.seedHex.slice(0, 8) })} />
+                    )}
                     {onShare && record.remote && (
                       <button type="button" className={styles.replayButton} onClick={() => onShare(record)} data-testid="share-round"
                         aria-label={t('history.shareAria', { id: damlaRoundId(record.remote.roundId) })}>
@@ -99,6 +111,8 @@ export const DamlaHistory = memo(function DamlaHistory({ hiddenIds, onReplay, re
       ) : (
         <div className="empty-history"><Icon name="history" size={24} /><div><strong>{t('history.emptyTitle')}</strong><p>{t('history.emptyText')}</p></div></div>
       )}
+      <RoundBreakdownDialog open={breakdown !== null} onClose={() => setBreakdown(null)} breakdown={breakdown ?? undefined}
+        modeLabel={breakdown ? modeText(breakdown.mode) : undefined} />
     </section>
   );
 });

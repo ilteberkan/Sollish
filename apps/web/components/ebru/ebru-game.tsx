@@ -326,7 +326,7 @@ export function EbruGame() {
       recordRemote({ ...record, at: receipt.at, remote: { roundId: receipt.roundId, nonce: receipt.fair.nonce, serverSeedHash: receipt.fair.serverSeedHash, clientSeed: receipt.fair.clientSeed } });
       setRemoteBalance(current.remote.balanceAfter);
     } else settleDemo(record);
-    recordSession({ costCents: current.cost, payoutCents: round.payoutCents });
+    recordSession({ costCents: current.cost, payoutCents: round.payoutCents, game: 'ebru', mode: current.mode });
     setActiveDemo(false);
   }, [settleDemo, recordRemote, setActiveDemo, recordSession]);
 
@@ -1047,7 +1047,7 @@ export function EbruGame() {
         )}
         <div className="sr-only" role="status" aria-live="polite">{announce}</div>
       </section>
-      <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} />
+      <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} stats={session.stats} />
       <GameInfoStrip id="ebru" />
       <EbruHistory onReplay={replay} replayDisabled={busy || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <StaticFooter remote={remote !== null} />

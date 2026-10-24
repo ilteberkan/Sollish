@@ -1,10 +1,13 @@
 'use client';
-import { memo } from 'react';
-import { playCezeriRound } from '@sollish/protocol';
+import { memo, useState } from 'react';
+import { playCezeriRound, type CezeriMode } from '@sollish/protocol';
 import { useFormat, useT } from '@/lib/i18n/client';
 import { cezeriRoundId } from '@/lib/cezeri-controls';
 import { cezeriHistorySummary, cezeriTimes, type CezeriHistorySummary } from '@/lib/cezeri-timeline';
 import { Icon } from '../icons';
+import { RoundBreakdownButton, RoundBreakdownDialog } from '../slot-kit/round-breakdown';
+import { cezeriBreakdown } from '@/lib/round-breakdown/cezeri';
+import type { RoundBreakdown } from '@/lib/round-breakdown/types';
 import { useProduct, type DemoRecord } from '../providers';
 import styles from './cezeri-game.module.css';
 
@@ -40,6 +43,11 @@ export const CezeriHistory = memo(function CezeriHistory({ onReplay, replayDisab
   const format = useFormat();
   const loc = format.locale;
   const relevant = records.filter(record => record.game === 'Cezeri');
+  const tBreakdown = useT('slotKit');
+  const [breakdown, setBreakdown] = useState<RoundBreakdown | null>(null);
+  const openBreakdown = (meta: NonNullable<DemoRecord['cezeri']>) => {
+    try { setBreakdown(cezeriBreakdown(playCezeriRound(meta.seedHex, meta.betCents, meta.mode as CezeriMode))); } catch { setBreakdown(null); }
+  };
   const time = (at: number) => format.time(at);
   const detail = (record: DemoRecord) => {
     const s = summaryOf(record);
@@ -89,6 +97,10 @@ export const CezeriHistory = memo(function CezeriHistory({ onReplay, replayDisab
                         <Icon name="history" size={15} /><span>{t('history.replay')}</span>
                       </button>
                     )}
+                    {record.cezeri && (
+                      <RoundBreakdownButton compact onClick={() => openBreakdown(record.cezeri!)} className={styles.replayButton} testId="history-breakdown"
+                        label={tBreakdown('breakdown.historyAria', { id: record.cezeri.seedHex.slice(0, 8) })} />
+                    )}
                     {onShare && record.remote && (
                       <button type="button" className={styles.replayButton} onClick={() => onShare(record)} data-testid="share-round"
                         aria-label={t('history.shareAria', { id: cezeriRoundId(record.remote.roundId) })}>
@@ -104,6 +116,8 @@ export const CezeriHistory = memo(function CezeriHistory({ onReplay, replayDisab
       ) : (
         <div className="empty-history"><Icon name="history" size={24} /><div><strong>{t('history.emptyTitle')}</strong><p>{t('history.emptyText')}</p></div></div>
       )}
+      <RoundBreakdownDialog open={breakdown !== null} onClose={() => setBreakdown(null)} breakdown={breakdown ?? undefined}
+        modeLabel={breakdown ? tc(`modes.${breakdown.mode as CezeriMode}`) : undefined} />
     </section>
   );
 });

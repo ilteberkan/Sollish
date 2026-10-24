@@ -1,10 +1,13 @@
 'use client';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { playEbruRound, type EbruMode } from '@sollish/protocol';
 import { useFormat, useT } from '@/lib/i18n/client';
 import { ebruRoundId } from '@/lib/ebru-controls';
 import { ebruHistoryParts, type EbruHistoryParts } from '@/lib/ebru-timeline';
 import { Icon } from '../icons';
+import { RoundBreakdownButton, RoundBreakdownDialog } from '../slot-kit/round-breakdown';
+import { ebruBreakdown } from '@/lib/round-breakdown/ebru';
+import type { RoundBreakdown } from '@/lib/round-breakdown/types';
 import { useProduct, type DemoRecord } from '../providers';
 import styles from './ebru-game.module.css';
 
@@ -38,6 +41,11 @@ export const EbruHistory = memo(function EbruHistory({ onReplay, replayDisabled,
   const tk = useT('slotKit');
   const format = useFormat();
   const relevant = records.filter(record => record.game === 'Ebru');
+  const tBreakdown = useT('slotKit');
+  const [breakdown, setBreakdown] = useState<RoundBreakdown | null>(null);
+  const openBreakdown = (meta: NonNullable<DemoRecord['ebru']>) => {
+    try { setBreakdown(ebruBreakdown(playEbruRound(meta.seedHex, meta.betCents, meta.mode as EbruMode))); } catch { setBreakdown(null); }
+  };
   const detail = useMemo(() => (record: DemoRecord): string => {
     const parts = record.ebru ? partsOf(record.ebru.seedHex, record.ebru.betCents, record.ebru.mode) : null;
     if (!parts) return record.detail;
@@ -92,6 +100,10 @@ export const EbruHistory = memo(function EbruHistory({ onReplay, replayDisabled,
                         <Icon name="history" size={15} /><span>{t('history.replay')}</span>
                       </button>
                     )}
+                    {record.ebru && (
+                      <RoundBreakdownButton compact onClick={() => openBreakdown(record.ebru!)} className={styles.replayButton} testId="history-breakdown"
+                        label={tBreakdown('breakdown.historyAria', { id: record.ebru.seedHex.slice(0, 8) })} />
+                    )}
                     {onShare && record.remote && (
                       <button type="button" className={styles.replayButton} onClick={() => onShare(record)} data-testid="share-round"
                         aria-label={t('history.shareAria', { id: ebruRoundId(record.remote.roundId) })}>
@@ -107,6 +119,8 @@ export const EbruHistory = memo(function EbruHistory({ onReplay, replayDisabled,
       ) : (
         <div className="empty-history"><Icon name="history" size={24} /><div><strong>{t('history.emptyTitle')}</strong><p>{t('history.emptyText')}</p></div></div>
       )}
+      <RoundBreakdownDialog open={breakdown !== null} onClose={() => setBreakdown(null)} breakdown={breakdown ?? undefined}
+        modeLabel={breakdown ? tc(`modes.${breakdown.mode as EbruMode}`) : undefined} />
     </section>
   );
 });
