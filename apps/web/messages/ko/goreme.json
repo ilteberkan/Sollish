@@ -63,6 +63,9 @@
     "tier4": "전설의 새벽",
     "sky": "하늘 배수"
   },
+  "winLine": {
+    "label": "{name} {reels}× · {ways} 웨이{multiplier, plural, =1 {} other { · ×#}} = {amount}"
+  },
   "banner": {
     "ways": "{name} · 릴 {length}개 · {ways} 웨이{more, plural, =0 {} other { · 외 #개}}{sky, plural, =1 {} other { · 하늘 ×#}}",
     "merge": "합체 · ×{multiplier}",

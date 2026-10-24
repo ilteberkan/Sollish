@@ -94,7 +94,18 @@
     "aria": "会话信息",
     "clock": "时间",
     "session": "会话",
-    "net": "净额"
+    "net": "净额",
+    "stats": {
+      "toggle": "本局统计",
+      "title": "会话统计",
+      "rounds": "回合",
+      "spent": "总投注",
+      "won": "总赢取",
+      "sessionRtp": "会话 RTP",
+      "expectedRtp": "预期 RTP",
+      "partial": "仅含有标明 RTP 的回合",
+      "note": "预期 RTP 是所玩模式按投注加权的平均值，对应数百万回合。短时间会话可能与之相差很大，这并非故障。"
+    }
   },
   "settings": {
     "title": "设置",
@@ -170,5 +181,54 @@
       "SERVICE_UNAVAILABLE": "服务器目前不接受新的一轮。",
       "UNKNOWN": "服务器未接受本轮。"
     }
+  },
+  "breakdown": {
+    "open": "本局明细",
+    "title": "本局明细",
+    "historyAria": "第 {id} 局明细",
+    "meta": "投注 {bet} · {mode} · 局号 {id}",
+    "base": "基础旋转",
+    "free": "免费旋转 {n}",
+    "quietFree": "{n} 次免费旋转未中奖",
+    "step": {
+      "tumble": "消除 {n}",
+      "board": "盘面 {n}",
+      "chain": "齿轮锁连锁",
+      "drop": "水滴"
+    },
+    "line": {
+      "cluster": "{count} 个符号",
+      "ways": "{count} 轴 · {ways} 路",
+      "spoke": "辐条 {spoke} · {count} 格 · 第 {rotation} 转",
+      "scatter": "{count} 个分散符号",
+      "pool": "{rows} 层梯田 · 第 {slot} 池"
+    },
+    "factor": {
+      "crystals": "水晶 ×{value}",
+      "orbs": "风暴石 ×{value}",
+      "total": "总倍数 ×{value}",
+      "stain": "墨渍 ×{value}",
+      "hub": "轮毂 ×{value}",
+      "template": "星座 ×{value}",
+      "global": "全局 ×{value}",
+      "sky": "天空 ×{value}",
+      "ways": "{value} 加权路"
+    },
+    "deduct": "− 已支付 {amount}",
+    "clamped": "封顶",
+    "pool": "水池",
+    "pathAria": "路径 {path}（L = 左，R = 右）",
+    "groupSum": "合计 {sum}",
+    "floor": "向下取整到 0.01×",
+    "spinSum": "消除奖金 {sum}",
+    "spinWin": "本次旋转奖金",
+    "sumSpins": "所有旋转合计",
+    "cap": "已达最高奖金 {cap}",
+    "total": "本局合计",
+    "payout": "派彩 = 投注 {bet} × {times}",
+    "checkOk": "✓ 与引擎派彩一致 {amount}（{engine}）",
+    "checkBad": "✗ 明细得出 {amount}，引擎派彩 {engine}",
+    "note": "所有金额均取自引擎的本局结果；倍数按所示应用，合计即派彩。× = 投注的倍数。",
+    "noWin": "本局未中奖。"
   }
 }

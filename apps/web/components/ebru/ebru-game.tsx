@@ -28,6 +28,8 @@ import {
   AutoplayPanel, AutoplayStopButton, BetSelector, BuyFeatureDialog, GameInfo, Modal, RealityCheckDialog, SessionBar, SettingsPanel, useSession, useSlotSettings,
 } from '../slot-kit';
 import kit from '../slot-kit/kit.module.css';
+import { RoundBreakdownLauncher } from '../slot-kit/round-breakdown';
+import { ebruBreakdown } from '@/lib/round-breakdown/ebru';
 import { useViewportTop } from '../slot-kit/use-viewport-top';
 import { EbruBoard, type EbruBoardHandle } from './ebru-board';
 import { EbruCelebration, EbruFeatureTotal, EbruFreeIntro } from './ebru-celebration';
@@ -209,6 +211,9 @@ export function EbruGame() {
   const [banner, setBanner] = useState<Banner | null>(null);
   const [announce, setAnnounce] = useState('');
   const [lastWin, setLastWin] = useState<{ payout: number; total: number; replay: boolean } | null>(null);
+  /** Last finished round, for the round breakdown ("Tur ayrıntısı"). */
+  const [doneRound, setDoneRound] = useState<EbruRound | null>(null);
+  const doneBreakdown = useMemo(() => (doneRound ? ebruBreakdown(doneRound) : null), [doneRound]);
   const [auto, setAuto] = useState<AutoplayState | null>(null);
   const [toast, setToast] = useState<Toast | null>(null);
   const [modal, setModal] = useState<ModalId>(null);
@@ -353,6 +358,7 @@ export function EbruGame() {
     setMood('base');
     const { round } = current;
     setLastWin({ payout: round.payoutCents, total: round.totalHundredths, replay: current.id === null });
+    setDoneRound(round);
     sound.scene('base');
     if (current.id === null) {
       setReplaying(null);
@@ -917,6 +923,7 @@ export function EbruGame() {
             {error ? <p className={styles.msgError} role="alert">{error}</p>
               : outOfCredit ? <p className={styles.msgHint}>{t('msg.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
               : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? t.rich('msg.lastRound', { b: chunk => <strong key={chunk}>{chunk}</strong> }, { amount: money(lastWin.payout), times: money(lastWin.total) }) : t('msg.lastRoundNoWin')) : settings.spaceToSpin ? t('msg.spaceHint') : t('msg.fixedBefore')}</p>}
+            {!busy && doneBreakdown && <RoundBreakdownLauncher breakdown={doneBreakdown} modeLabel={tc(`modes.${doneBreakdown.mode as EbruMode}`)} />}
           </div>
         </div>
       )}

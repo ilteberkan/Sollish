@@ -1,0 +1,60 @@
+{
+  "game": "ebru",
+  "mode": "ante",
+  "engineId": "ebru-ink-1",
+  "rounds": 2000000,
+  "betCents": 100,
+  "costCentsPerRound": 125,
+  "seed": {
+    "serverSeedText": "sollish-rtp-audit-20261023/resim/ebru/ante",
+    "serverSeedHex": "5b5fc76075d8c30a6f11286f1d877586f26a8a3dc9fa1bc03da8d5c179965bdc",
+    "clientSeed": "rtp-audit-20261023",
+    "nonces": [
+      0,
+      1999999
+    ],
+    "firstSeedHex": "bffd4a41ef3878f0b1f91c76930f1c89"
+  },
+  "sumPayoutCents": "234541212",
+  "sumCostCents": "250000000",
+  "sumTotalHundredths": "234541212",
+  "rtp": 0.938165,
+  "rtpFromBetUnits": 0.938165,
+  "stdDevPerRoundCostUnits": 18.8163,
+  "ci95": [
+    0.912087,
+    0.964243
+  ],
+  "ci95HalfWidth": 0.026078,
+  "hitFrequency": 0.279055,
+  "featureRate": 0.005785,
+  "cappedRounds": 2,
+  "costMismatches": 0,
+  "maxWin": {
+    "payoutCents": 1000000,
+    "xBet": 10000,
+    "xCost": 8000,
+    "seedHex": "6bde9dff0ac01610d70b345c6ad4814d",
+    "capXBet": 10000
+  },
+  "claim": {
+    "claimedRtp": 0.9503,
+    "claimedSource": "Monte Carlo point estimate (modes.<mode>.rtpVsCost.pointEstimate)",
+    "originalPoint": 0.9503,
+    "originalCi95": [
+      0.94203,
+      0.95858
+    ],
+    "originalRounds": 20000000,
+    "originalStdDev": 18.8816,
+    "originalHitRate": 0.2786,
+    "originalSeed": "ebru-20261012-evidence",
+    "codeConstantRtp": 0.95
+  },
+  "claimedInsideNewCi95": true,
+  "newInsideOriginalCi95": false,
+  "zVsOriginal": -0.869,
+  "verdict": "PASS",
+  "runtimeSeconds": 39.7,
+  "engineSourceSha256": "68ba5c86a726e6245ff7ae743c014c50da1415fc2ee48d346b9d103fd1f75d33"
+}

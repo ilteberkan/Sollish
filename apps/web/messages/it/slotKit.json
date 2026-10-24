@@ -94,7 +94,18 @@
     "aria": "Info sessione",
     "clock": "Ora",
     "session": "Sessione",
-    "net": "Netto"
+    "net": "Netto",
+    "stats": {
+      "toggle": "Statistiche sessione",
+      "title": "Statistiche della sessione",
+      "rounds": "Giri",
+      "spent": "Puntata totale",
+      "won": "Vincita totale",
+      "sessionRtp": "RTP della sessione",
+      "expectedRtp": "RTP atteso",
+      "partial": "solo giri con RTP dichiarato",
+      "note": "L'RTP atteso è la media ponderata per puntata delle modalità giocate e descrive milioni di giri. Una sessione breve può discostarsene molto; non è un errore."
+    }
   },
   "settings": {
     "title": "Impostazioni",
@@ -170,5 +181,54 @@
       "SERVICE_UNAVAILABLE": "Il server al momento non accetta round.",
       "UNKNOWN": "Il server non ha accettato il round."
     }
+  },
+  "breakdown": {
+    "open": "Dettaglio del giro",
+    "title": "Dettaglio del giro",
+    "historyAria": "Dettaglio del giro {id}",
+    "meta": "Puntata {bet} · {mode} · giro {id}",
+    "base": "Giro base",
+    "free": "Giro gratis {n}",
+    "quietFree": "{n, plural, one {# giro gratis} other {# giri gratis}} senza vincita",
+    "step": {
+      "tumble": "Cascata {n}",
+      "board": "Griglia {n}",
+      "chain": "Catena di blocco",
+      "drop": "Goccia"
+    },
+    "line": {
+      "cluster": "{count} simboli",
+      "ways": "{count} rulli · {ways, plural, one {# via} other {# vie}}",
+      "spoke": "Raggio {spoke} · {count} settori · rotazione {rotation}",
+      "scatter": "{count} scatter",
+      "pool": "{rows} terrazze · vasca {slot}"
+    },
+    "factor": {
+      "crystals": "cristalli ×{value}",
+      "orbs": "pietre della tempesta ×{value}",
+      "total": "moltiplicatore totale ×{value}",
+      "stain": "macchia ×{value}",
+      "hub": "mozzo ×{value}",
+      "template": "costellazione ×{value}",
+      "global": "globale ×{value}",
+      "sky": "cielo ×{value}",
+      "ways": "{value} vie ponderate"
+    },
+    "deduct": "− {amount} già pagato",
+    "clamped": "limite",
+    "pool": "Vasca",
+    "pathAria": "Percorso {path} (L = sinistra, R = destra)",
+    "groupSum": "Somma {sum}",
+    "floor": "arrotondato per difetto a 0,01×",
+    "spinSum": "Vincite a cascata {sum}",
+    "spinWin": "Vincita del giro",
+    "sumSpins": "Somma di tutti i giri",
+    "cap": "Vincita massima {cap} raggiunta",
+    "total": "Totale del giro",
+    "payout": "Pagamento = puntata {bet} × {times}",
+    "checkOk": "✓ Uguale al pagamento del motore {amount} ({engine})",
+    "checkBad": "✗ Il dettaglio dà {amount}, il motore ha pagato {engine}",
+    "note": "Ogni importo proviene dal risultato del giro del motore; i moltiplicatori si applicano come mostrato e la somma è il pagamento. × = volte la puntata.",
+    "noWin": "Nessuna vincita in questo giro."
   }
 }

@@ -443,6 +443,14 @@
 .sbItem svg { color: var(--_accent); }
 .sbItem strong { font-weight: 600; font-variant-numeric: tabular-nums; }
 .sbLabel { color: var(--_muted); }
+.sbStatsToggle { min-height: 32px; padding: 4px 12px; border: 0; border-radius: 999px; font: inherit; font-size: 13px; color: inherit; background: rgba(255, 255, 255, 0.08); box-shadow: inset 0 0 0 1px var(--_hair); cursor: pointer; }
+.sbStatsToggle[aria-expanded="true"] { background: rgba(255, 255, 255, 0.16); }
+.sbStatsToggle:focus-visible { outline: 2px solid var(--_accent); outline-offset: 2px; }
+.sbStats { flex-basis: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 4px 16px; margin: 4px 0 2px; }
+.sbStats > div { display: flex; flex-direction: column; gap: 1px; }
+.sbStats dt { color: var(--_muted); font-size: 12px; }
+.sbStats dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.sbStatsNote { grid-column: 1 / -1; margin: 2px 0 0; color: var(--_muted); font-size: 12px; line-height: 1.35; }
 
 /* ------------------------------------------------------------------ motion preferences */
 @media (prefers-reduced-motion: reduce) {

@@ -63,6 +63,9 @@
     "tier4": "Legendäres Morgenrot",
     "sky": "Himmelsmultiplikator"
   },
+  "winLine": {
+    "label": "{name} {reels}× · {ways, plural, one {# Way} other {# Ways}}{multiplier, plural, =1 {} other { · ×#}} = {amount}"
+  },
   "banner": {
     "ways": "{name} · {length} Walzen · {ways} {ways, plural, one {Way} other {Ways}}{more, plural, =0 {} other { · +# weitere}}{sky, plural, =1 {} other { · HIMMEL ×#}}",
     "merge": "Verschmelzung · ×{multiplier}",

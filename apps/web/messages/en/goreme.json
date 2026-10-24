@@ -63,6 +63,9 @@
     "tier4": "Legendary dawn",
     "sky": "Sky multiplier"
   },
+  "winLine": {
+    "label": "{name} {reels}× · {ways, plural, one {# way} other {# ways}}{multiplier, plural, =1 {} other { · ×#}} = {amount}"
+  },
   "banner": {
     "ways": "{name} · {length} reels · {ways} {ways, plural, one {way} other {ways}}{more, plural, =0 {} other { · +# more}}{sky, plural, =1 {} other { · SKY ×#}}",
     "merge": "Merge · ×{multiplier}",

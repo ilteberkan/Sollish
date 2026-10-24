@@ -63,6 +63,9 @@
     "tier4": "Alba leggendaria",
     "sky": "Moltiplicatore celeste"
   },
+  "winLine": {
+    "label": "{name} {reels}× · {ways, plural, one {# way} other {# ways}}{multiplier, plural, =1 {} other { · ×#}} = {amount}"
+  },
   "banner": {
     "ways": "{name} · {length} rulli · {ways} {ways, plural, one {way} other {ways}}{more, plural, =0 {} other { · +# altri}}{sky, plural, =1 {} other { · CIELO ×#}}",
     "merge": "Fusione · ×{multiplier}",

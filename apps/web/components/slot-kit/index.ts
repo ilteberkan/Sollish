@@ -9,3 +9,4 @@ export { SessionBar, type SessionBarProps } from './session-bar';
 export { SettingsPanel, type SettingsPanelProps } from './settings-panel';
 export { useSession, type UseSession } from './use-session';
 export { useSlotSettings, type UseSlotSettings } from './use-slot-settings';
+export { RoundBreakdownButton, RoundBreakdownDialog, RoundBreakdownLauncher, RoundBreakdownPanel, type RoundBreakdownButtonProps, type RoundBreakdownDialogProps, type RoundBreakdownLauncherProps, type RoundBreakdownPanelProps } from './round-breakdown';

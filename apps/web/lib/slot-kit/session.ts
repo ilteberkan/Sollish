@@ -3,6 +3,7 @@
  * reality-check schedule. Pure functions on timestamps (ms); callers pass `Date.now()`.
  * Wall-clock time is intentional: a hidden tab or a sleeping laptop still counts as session time.
  */
+import { slotGameMeta } from '@sollish/protocol';
 
 export const DEFAULT_REALITY_INTERVAL_MS = 30 * 60 * 1000;
 const MIN_REALITY_INTERVAL_MS = 1000;
@@ -12,6 +13,10 @@ export interface SessionState {
   readonly spentCents: number;
   readonly wonCents: number;
   readonly rounds: number;
+  /** Sum of cost x expected RTP over the rounds whose mode has a stated RTP (cents, fractional). */
+  readonly expectedReturnCents: number;
+  /** Cost of those rounds (cents); the weighted expected RTP is expectedReturnCents / ratedCostCents. */
+  readonly ratedCostCents: number;
 }
 
 const isTime = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v) && v >= 0;
@@ -19,15 +24,52 @@ const isCents = (v: unknown): v is number => typeof v === 'number' && Number.isS
 
 export function createSession(startedAtMs: number): SessionState {
   if (!isTime(startedAtMs)) throw new RangeError('Başlangıç zamanı geçersiz');
-  return Object.freeze({ startedAtMs, spentCents: 0, wonCents: 0, rounds: 0 });
+  return Object.freeze({ startedAtMs, spentCents: 0, wonCents: 0, rounds: 0, expectedReturnCents: 0, ratedCostCents: 0 });
 }
 
-export function recordSessionRound(session: SessionState, round: { costCents: number; payoutCents: number }): SessionState {
+/** A finished round. `game` + `mode` (or an explicit `expectedRtp`) let the session weigh the stated RTP of every mode played. */
+export interface SessionRound { costCents: number; payoutCents: number; game?: string; mode?: string; expectedRtp?: number }
+
+/** Stated RTP of a game mode from the engine-free registry (SLOT_GAME_META.expectedRtp); null when unknown. */
+export function slotModeExpectedRtp(game: string | undefined, mode: string | undefined): number | null {
+  const meta = slotGameMeta(game);
+  if (!meta || typeof mode !== 'string' || !Object.hasOwn(meta.expectedRtp, mode)) return null;
+  return meta.expectedRtp[mode] ?? null;
+}
+
+export function recordSessionRound(session: SessionState, round: SessionRound): SessionState {
   if (!isCents(round.costCents) || !isCents(round.payoutCents)) throw new RangeError('Tur kaydı geçersiz');
   const spent = session.spentCents + round.costCents;
   const won = session.wonCents + round.payoutCents;
   if (!Number.isSafeInteger(spent) || !Number.isSafeInteger(won)) throw new RangeError('Oturum toplamı çok büyük');
-  return Object.freeze({ ...session, spentCents: spent, wonCents: won, rounds: session.rounds + 1 });
+  const rtp = round.expectedRtp ?? slotModeExpectedRtp(round.game, round.mode);
+  const rated = typeof rtp === 'number' && Number.isFinite(rtp) && rtp >= 0;
+  return Object.freeze({
+    ...session, spentCents: spent, wonCents: won, rounds: session.rounds + 1,
+    expectedReturnCents: (session.expectedReturnCents ?? 0) + (rated ? round.costCents * rtp : 0),
+    ratedCostCents: (session.ratedCostCents ?? 0) + (rated ? round.costCents : 0),
+  });
+}
+
+export interface SessionStats {
+  rounds: number; spentCents: number; wonCents: number;
+  /** won / spent; null before anything was staked. */
+  sessionRtp: number | null;
+  /** Cost-weighted stated RTP of the modes played; null when no played mode has one. */
+  expectedRtp: number | null;
+  /** True when every staked round had a stated RTP (otherwise expectedRtp covers only part of the session). */
+  expectedCoversAll: boolean;
+}
+
+/** Session statistics for the in-game panel ("Oturum istatistiği"). Pure. */
+export function sessionStats(session: SessionState): SessionStats {
+  const rated = session.ratedCostCents ?? 0;
+  return {
+    rounds: session.rounds, spentCents: session.spentCents, wonCents: session.wonCents,
+    sessionRtp: session.spentCents > 0 ? session.wonCents / session.spentCents : null,
+    expectedRtp: rated > 0 ? (session.expectedReturnCents ?? 0) / rated : null,
+    expectedCoversAll: rated === session.spentCents,
+  };
 }
 
 /** Never negative, even if the system clock moves back. */

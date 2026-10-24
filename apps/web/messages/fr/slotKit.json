@@ -94,7 +94,18 @@
     "aria": "Infos de session",
     "clock": "Heure",
     "session": "Session",
-    "net": "Net"
+    "net": "Net",
+    "stats": {
+      "toggle": "Statistiques de session",
+      "title": "Statistiques de la session",
+      "rounds": "Tours",
+      "spent": "Mise totale",
+      "won": "Gain total",
+      "sessionRtp": "RTP de la session",
+      "expectedRtp": "RTP attendu",
+      "partial": "seulement les tours avec un RTP indiqué",
+      "note": "Le RTP attendu est la moyenne pondérée par la mise des modes joués et décrit des millions de tours. Une session courte peut s'en écarter fortement ; ce n'est pas une erreur."
+    }
   },
   "settings": {
     "title": "Paramètres",
@@ -170,5 +181,54 @@
       "SERVICE_UNAVAILABLE": "Le serveur n’accepte pas de tours pour le moment.",
       "UNKNOWN": "Le serveur n’a pas accepté le tour."
     }
+  },
+  "breakdown": {
+    "open": "Détail du tour",
+    "title": "Détail du tour",
+    "historyAria": "Détail du tour {id}",
+    "meta": "Mise {bet} · {mode} · tour {id}",
+    "base": "Tour de base",
+    "free": "Tour gratuit {n}",
+    "quietFree": "{n, plural, one {# tour gratuit} other {# tours gratuits}} sans gain",
+    "step": {
+      "tumble": "Cascade {n}",
+      "board": "Plateau {n}",
+      "chain": "Chaîne de verrouillage",
+      "drop": "Goutte"
+    },
+    "line": {
+      "cluster": "{count} symboles",
+      "ways": "{count} rouleaux · {ways, plural, one {# voie} other {# voies}}",
+      "spoke": "Rayon {spoke} · {count} secteurs · rotation {rotation}",
+      "scatter": "{count} scatters",
+      "pool": "{rows} terrasses · bassin {slot}"
+    },
+    "factor": {
+      "crystals": "cristaux ×{value}",
+      "orbs": "pierres d’orage ×{value}",
+      "total": "multiplicateur total ×{value}",
+      "stain": "tache ×{value}",
+      "hub": "moyeu ×{value}",
+      "template": "constellation ×{value}",
+      "global": "global ×{value}",
+      "sky": "ciel ×{value}",
+      "ways": "{value} voies pondérées"
+    },
+    "deduct": "− {amount} déjà payé",
+    "clamped": "plafonné",
+    "pool": "Bassin",
+    "pathAria": "Chemin {path} (L = gauche, R = droite)",
+    "groupSum": "Somme {sum}",
+    "floor": "arrondi à 0,01× inférieur",
+    "spinSum": "Gains des cascades {sum}",
+    "spinWin": "Gain du tour",
+    "sumSpins": "Somme de tous les tours",
+    "cap": "Gain maximal {cap} atteint",
+    "total": "Total du tour",
+    "payout": "Paiement = mise {bet} × {times}",
+    "checkOk": "✓ Égal au paiement du moteur {amount} ({engine})",
+    "checkBad": "✗ Le détail donne {amount}, le moteur a payé {engine}",
+    "note": "Chaque montant provient du résultat du tour calculé par le moteur ; les multiplicateurs s’appliquent comme indiqué et la somme est le paiement. × = fois la mise.",
+    "noWin": "Aucun gain dans ce tour."
   }
 }

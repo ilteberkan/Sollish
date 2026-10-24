@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
   DEFAULT_REALITY_INTERVAL_MS, acknowledgeRealityCheck, createRealityCheck, createSession, realityCheckDue, rebaseRealityCheck, recordSessionRound,
-  sessionElapsedMs, sessionNetCents, type RealityCheckState, type SessionState,
+  sessionElapsedMs, sessionNetCents, sessionStats, type RealityCheckState, type SessionRound, type SessionState, type SessionStats,
 } from '@/lib/slot-kit/session';
 
 export interface UseSession {
@@ -13,13 +13,17 @@ export interface UseSession {
   rounds: number;
   /** True when a reality check is due; keep it showing until `acknowledge`. */
   realityDue: boolean;
-  recordRound: (round: { costCents: number; payoutCents: number }) => void;
+  /** Rounds, stakes, wins, session RTP and the stated RTP of the modes played ("Oturum istatistiği"). */
+  stats: SessionStats;
+  /** Pass `game` and `mode` so the stats can weigh the stated RTP of the mode played. */
+  recordRound: (round: SessionRound) => void;
   acknowledge: () => void;
   /** Start a fresh session (e.g. after the player leaves and returns). */
   restart: () => void;
 }
 
 interface Live { session: SessionState; reality: RealityCheckState }
+const EMPTY_STATS: SessionStats = Object.freeze({ rounds: 0, spentCents: 0, wonCents: 0, sessionRtp: null, expectedRtp: null, expectedCoversAll: true });
 
 /** Session clock + net result + reality-check schedule. Ticks once per second and on tab focus. */
 export function useSession(options: { realityIntervalMs?: number; tickMs?: number } = {}): UseSession {
@@ -41,7 +45,7 @@ export function useSession(options: { realityIntervalMs?: number; tickMs?: numbe
     return () => { window.clearInterval(timer); document.removeEventListener('visibilitychange', tick); };
   }, [realityIntervalMs, tickMs]);
 
-  const recordRound = useCallback((round: { costCents: number; payoutCents: number }) => {
+  const recordRound = useCallback((round: SessionRound) => {
     setLive(prev => (prev ? { ...prev, session: recordSessionRound(prev.session, round) } : prev));
   }, []);
   const acknowledge = useCallback(() => {
@@ -58,6 +62,7 @@ export function useSession(options: { realityIntervalMs?: number; tickMs?: numbe
     elapsedMs: live && nowMs !== null ? sessionElapsedMs(live.session, nowMs) : 0,
     netCents: live ? sessionNetCents(live.session) : 0,
     rounds: live?.session.rounds ?? 0,
+    stats: live ? sessionStats(live.session) : EMPTY_STATS,
     realityDue: live !== null && nowMs !== null && realityCheckDue(live.reality, nowMs),
     recordRound,
     acknowledge,

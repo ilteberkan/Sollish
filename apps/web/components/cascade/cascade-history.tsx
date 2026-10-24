@@ -1,10 +1,13 @@
 'use client';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { playCascade2Round, type CascadeMode } from '@sollish/protocol';
 import { useFormat, useT } from '@/lib/i18n/client';
 import { shortRoundId } from '@/lib/cascade-controls';
 import { cascadeHistoryParts, type CascadeHistoryParts } from '@/lib/cascade-timeline';
 import { Icon } from '../icons';
+import { RoundBreakdownButton, RoundBreakdownDialog } from '../slot-kit/round-breakdown';
+import { cascadeBreakdown } from '@/lib/round-breakdown/cascade';
+import type { RoundBreakdown } from '@/lib/round-breakdown/types';
 import { useProduct, type DemoRecord } from '../providers';
 import styles from './cascade-game.module.css';
 
@@ -38,6 +41,10 @@ export const CascadeHistory = memo(function CascadeHistory({ onReplay, replayDis
   const tk = useT('slotKit');
   const format = useFormat();
   const relevant = records.filter(record => record.game === 'Cascade');
+  const [breakdown, setBreakdown] = useState<RoundBreakdown | null>(null);
+  const openBreakdown = (meta: NonNullable<DemoRecord['cascade']>) => {
+    try { setBreakdown(cascadeBreakdown(playCascade2Round(meta.seedHex, meta.betCents, meta.mode))); } catch { setBreakdown(null); }
+  };
   const detail = useMemo(() => (record: DemoRecord): string => {
     const parts = record.cascade ? partsOf(record.cascade.seedHex, record.cascade.betCents, record.cascade.mode) : null;
     if (!parts) return record.detail;
@@ -86,6 +93,10 @@ export const CascadeHistory = memo(function CascadeHistory({ onReplay, replayDis
                         <Icon name="history" size={15} /><span>{t('history.replay')}</span>
                       </button>
                     )}
+                    {record.cascade && (
+                      <RoundBreakdownButton compact onClick={() => openBreakdown(record.cascade!)} className={styles.replayButton} testId="history-breakdown"
+                        label={tk('breakdown.historyAria', { id: shortRoundId(record.cascade.seedHex) })} />
+                    )}
                     {onShare && record.remote && (
                       <button type="button" className={styles.replayButton} onClick={() => onShare(record)} data-testid="share-round"
                         aria-label={t('history.shareAria', { id: shortRoundId(record.remote.roundId) })}>
@@ -101,6 +112,8 @@ export const CascadeHistory = memo(function CascadeHistory({ onReplay, replayDis
       ) : (
         <div className="empty-history"><Icon name="history" size={24} /><div><strong>{t('history.emptyTitle')}</strong><p>{t('history.emptyText')}</p></div></div>
       )}
+      <RoundBreakdownDialog open={breakdown !== null} onClose={() => setBreakdown(null)} breakdown={breakdown ?? undefined}
+        modeLabel={breakdown ? tc(`modes.${breakdown.mode as CascadeMode}`) : undefined} />
     </section>
   );
 });

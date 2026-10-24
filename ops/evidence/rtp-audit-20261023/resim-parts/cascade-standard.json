@@ -1,0 +1,60 @@
+{
+  "game": "cascade",
+  "mode": "standard",
+  "engineId": "candy-cascade-2",
+  "rounds": 2000000,
+  "betCents": 100,
+  "costCentsPerRound": 100,
+  "seed": {
+    "serverSeedText": "sollish-rtp-audit-20261023/resim/cascade/standard",
+    "serverSeedHex": "ad1b1712268e3e6d1f4c0e29b3f56ddd06e72501e176de9b05e7122682e9f33c",
+    "clientSeed": "rtp-audit-20261023",
+    "nonces": [
+      0,
+      1999999
+    ],
+    "firstSeedHex": "ff7689f0e27aaa0fddd7b5ecc463554d"
+  },
+  "sumPayoutCents": "194716781",
+  "sumCostCents": "200000000",
+  "sumTotalHundredths": "194716781",
+  "rtp": 0.973584,
+  "rtpFromBetUnits": 0.973584,
+  "stdDevPerRoundCostUnits": 14.5915,
+  "ci95": [
+    0.953361,
+    0.993807
+  ],
+  "ci95HalfWidth": 0.020223,
+  "hitFrequency": 0.265819,
+  "featureRate": 0.002091,
+  "cappedRounds": 0,
+  "costMismatches": 0,
+  "maxWin": {
+    "payoutCents": 428900,
+    "xBet": 4289,
+    "xCost": 4289,
+    "seedHex": "5f2776759385ceef722a147ba93b46f7",
+    "capXBet": 5000
+  },
+  "claim": {
+    "claimedRtp": 0.95736,
+    "claimedSource": "Monte Carlo point estimate (modes.<mode>.rtpVsCost.pointEstimate)",
+    "originalPoint": 0.95736,
+    "originalCi95": [
+      0.95128,
+      0.96344
+    ],
+    "originalRounds": 20000000,
+    "originalStdDev": 13.8739,
+    "originalHitRate": 0.26527,
+    "originalSeed": "candy-cascade-2-20261011-evidence",
+    "codeConstantRtp": 0.957
+  },
+  "claimedInsideNewCi95": true,
+  "newInsideOriginalCi95": false,
+  "zVsOriginal": 1.506,
+  "verdict": "PASS",
+  "runtimeSeconds": 34,
+  "engineSourceSha256": "3110322c57f1a893fc7d526d2e060bc3423c5c6d5bc20832caaa5a916389f0de"
+}

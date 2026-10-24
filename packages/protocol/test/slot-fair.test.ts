@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { createHash, createHmac } from "node:crypto";
 import {
   ASENA_SLOT, CASCADE_SLOT, CEZERI_SLOT, DAMLA_SLOT, EBRU_SLOT, GOREME_SLOT, playGoremeRound, playAsenaRound, playDamlaRound, playCezeriRound, SLOT_GAMES, TARHUN_SLOT, deriveSeedHex, playEbruRound, isClientSeed, playCascade2Round, playStormRound, slotBytesToHex, slotGame, slotHexToBytes,
-  SLOT_GAME_IDS, SLOT_GAME_META, slotGameMeta,
+  SLOT_GAME_IDS, SLOT_GAME_META, slotGameMeta, DAMLA_EXACT_RTP,
   slotNonceMessage, slotReceiptMessage, slotReplayMessage, slotServerSeedHash, verifySlotRound,
 } from "../src/index";
 
@@ -48,6 +48,8 @@ test("engine-free meta registry equals the server registry field for field (the 
     const meta = SLOT_GAME_META[id as keyof typeof SLOT_GAME_META];
     assert.deepEqual({ id: meta.id, engineId: meta.engineId, modes: [...meta.modes], betLevels: [...meta.betLevels], maxMultiplier: meta.maxMultiplier },
       { id: game.id, engineId: game.engineId, modes: [...game.modes], betLevels: [...game.betLevels], maxMultiplier: game.maxMultiplier }, `${id} meta drifted from the registry`);
+    const expected = Object.fromEntries(game.modes.map(mode => [mode, id === "damla" ? DAMLA_EXACT_RTP[mode as keyof typeof DAMLA_EXACT_RTP] : game.rtp[mode]!.rtp]));
+    assert.deepEqual({ ...meta.expectedRtp }, expected, `${id} expected RTP in the meta drifted from the engine`);
   }
   for (const id of ["__proto__", "constructor", "toString", "Cascade", "", "cascade/x", 1, null]) assert.equal(slotGameMeta(id), null);
   assert.equal(slotGameMeta("asena"), SLOT_GAME_META.asena);

@@ -1,0 +1,60 @@
+{
+  "game": "damla",
+  "mode": "high-12",
+  "engineId": "damla-terraces-1",
+  "rounds": 2000000,
+  "betCents": 100,
+  "costCentsPerRound": 100,
+  "seed": {
+    "serverSeedText": "sollish-rtp-audit-20261023/resim/damla/high-12",
+    "serverSeedHex": "6b01a8c5c8940bbbe6cc7af39fc6d64f94052cefc9650f0d7ba085a5f054f8ea",
+    "clientSeed": "rtp-audit-20261023",
+    "nonces": [
+      0,
+      1999999
+    ],
+    "firstSeedHex": "b416469827f56b2e3164a69589321e76"
+  },
+  "sumPayoutCents": "197186820",
+  "sumCostCents": "200000000",
+  "sumTotalHundredths": "197186820",
+  "rtp": 0.985934,
+  "rtpFromBetUnits": 0.985934,
+  "stdDevPerRoundCostUnits": 4.7007,
+  "ci95": [
+    0.979419,
+    0.992449
+  ],
+  "ci95HalfWidth": 0.006515,
+  "hitFrequency": 1,
+  "featureRate": 0,
+  "cappedRounds": 971,
+  "costMismatches": 0,
+  "maxWin": {
+    "payoutCents": 14000,
+    "xBet": 140,
+    "xCost": 140,
+    "seedHex": "63c1725c1d487711d2e0adea283f336e",
+    "capXBet": 1000
+  },
+  "claim": {
+    "claimedRtp": 0.984526367,
+    "claimedSource": "exact binomial RTP (modes.<mode>.exactRtp)",
+    "originalPoint": 0.985186417,
+    "originalCi95": [
+      0.9831278139367413,
+      0.9872450200632586
+    ],
+    "originalRounds": 20000000,
+    "originalStdDev": 4.697118763403657,
+    "originalHitRate": null,
+    "originalSeed": "damla-20261021-evidence",
+    "codeConstantRtp": 0.9852
+  },
+  "claimedInsideNewCi95": true,
+  "newInsideOriginalCi95": true,
+  "zVsOriginal": 0.424,
+  "verdict": "PASS",
+  "runtimeSeconds": 19.6,
+  "engineSourceSha256": "14f8efe4ffa5d6bb2ebd2b484bf800a83079e0612a03f0d0f514e6dc37a43f27"
+}

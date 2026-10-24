@@ -63,6 +63,9 @@
     "tier4": "Efsane şafak",
     "sky": "Gök çarpanı"
   },
+  "winLine": {
+    "label": "{name} {reels}× · {ways} yol{multiplier, plural, =1 {} other { · ×#}} = {amount}"
+  },
   "banner": {
     "ways": "{name} · {length} makara · {ways} yol{more, plural, =0 {} other { · +# daha}}{sky, plural, =1 {} other { · GÖK ×#}}",
     "merge": "Birleşme · ×{multiplier}",

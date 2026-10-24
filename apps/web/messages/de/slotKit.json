@@ -94,7 +94,18 @@
     "aria": "Sitzungsinfo",
     "clock": "Uhrzeit",
     "session": "Sitzung",
-    "net": "Netto"
+    "net": "Netto",
+    "stats": {
+      "toggle": "Sitzungsstatistik",
+      "title": "Sitzungsstatistik",
+      "rounds": "Runden",
+      "spent": "Gesamteinsatz",
+      "won": "Gesamtgewinn",
+      "sessionRtp": "Sitzungs-RTP",
+      "expectedRtp": "Erwarteter RTP",
+      "partial": "nur Runden mit angegebenem RTP",
+      "note": "Der erwartete RTP ist der einsatzgewichtete Durchschnitt der gespielten Modi und beschreibt Millionen von Runden. Eine kurze Sitzung kann stark davon abweichen; das ist kein Fehler."
+    }
   },
   "settings": {
     "title": "Einstellungen",
@@ -170,5 +181,54 @@
       "SERVICE_UNAVAILABLE": "Der Server nimmt gerade keine Runden an.",
       "UNKNOWN": "Der Server hat die Runde nicht akzeptiert."
     }
+  },
+  "breakdown": {
+    "open": "Rundendetails",
+    "title": "Rundendetails",
+    "historyAria": "Details der Runde {id}",
+    "meta": "Einsatz {bet} · {mode} · Runde {id}",
+    "base": "Basis-Spin",
+    "free": "Freispiel {n}",
+    "quietFree": "{n, plural, one {# Freispiel} other {# Freispiele}} ohne Gewinn",
+    "step": {
+      "tumble": "Kaskade {n}",
+      "board": "Brett {n}",
+      "chain": "Zahnradsperre-Kette",
+      "drop": "Tropfen"
+    },
+    "line": {
+      "cluster": "{count} Symbole",
+      "ways": "{count} Walzen · {ways, plural, one {# Weg} other {# Wege}}",
+      "spoke": "Speiche {spoke} · {count} Segmente · Drehung {rotation}",
+      "scatter": "{count} Scatter",
+      "pool": "{rows} Terrassen · Becken {slot}"
+    },
+    "factor": {
+      "crystals": "Kristalle ×{value}",
+      "orbs": "Sturmsteine ×{value}",
+      "total": "Gesamtmultiplikator ×{value}",
+      "stain": "Fleck ×{value}",
+      "hub": "Nabe ×{value}",
+      "template": "Sternbild ×{value}",
+      "global": "global ×{value}",
+      "sky": "Himmel ×{value}",
+      "ways": "{value} gewichtete Wege"
+    },
+    "deduct": "− {amount} bereits bezahlt",
+    "clamped": "gedeckelt",
+    "pool": "Becken",
+    "pathAria": "Pfad {path} (L = links, R = rechts)",
+    "groupSum": "Summe {sum}",
+    "floor": "auf 0,01× abgerundet",
+    "spinSum": "Kaskadengewinne {sum}",
+    "spinWin": "Spin-Gewinn",
+    "sumSpins": "Summe aller Spins",
+    "cap": "Maximalgewinn {cap} erreicht",
+    "total": "Rundensumme",
+    "payout": "Auszahlung = Einsatz {bet} × {times}",
+    "checkOk": "✓ Entspricht der Auszahlung der Engine {amount} ({engine})",
+    "checkBad": "✗ Die Aufschlüsselung ergibt {amount}, die Engine zahlte {engine}",
+    "note": "Jeder Betrag stammt aus dem Rundenergebnis der Engine; Multiplikatoren gelten genau wie gezeigt und die Summe ist die Auszahlung. × = mal Einsatz.",
+    "noWin": "Kein Gewinn in dieser Runde."
   }
 }

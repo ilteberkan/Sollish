@@ -24,6 +24,8 @@ import {
   AutoplayPanel, AutoplayStopButton, BetSelector, BuyFeatureDialog, GameInfo, Modal, RealityCheckDialog, SessionBar, SettingsPanel, useSession, useSlotSettings,
 } from '../slot-kit';
 import kit from '../slot-kit/kit.module.css';
+import { RoundBreakdownLauncher } from '../slot-kit/round-breakdown';
+import { cascadeBreakdown } from '@/lib/round-breakdown/cascade';
 import { useViewportTop } from '../slot-kit/use-viewport-top';
 import { CascadeBackdrop, BoardFrame } from './backdrop';
 import { CascadeBoard, type BoardHandle } from './cascade-board';
@@ -187,6 +189,9 @@ export function CascadeGame() {
   const [banner, setBanner] = useState<Banner | null>(null);
   const [announce, setAnnounce] = useState('');
   const [lastWin, setLastWin] = useState<{ payout: number; total: number; replay: boolean } | null>(null);
+  /** Last finished round, for the round breakdown ("Tur ayrıntısı"). */
+  const [doneRound, setDoneRound] = useState<Cascade2Round | null>(null);
+  const doneBreakdown = useMemo(() => (doneRound ? cascadeBreakdown(doneRound) : null), [doneRound]);
   const [auto, setAuto] = useState<AutoplayState | null>(null);
   const [toast, setToast] = useState<Toast | null>(null);
   const [modal, setModal] = useState<ModalId>(null);
@@ -330,6 +335,7 @@ export function CascadeGame() {
     sound.countUp(false);
     const { round } = current;
     setLastWin({ payout: round.payoutCents, total: round.totalHundredths, replay: current.id === null });
+    setDoneRound(round);
     if (current.id === null) {
       setReplaying(null);
       setAnnounce(t('announce.replayDone', { amount: format.demo(round.payoutCents), times: money(round.totalHundredths) }));
@@ -901,6 +907,7 @@ export function CascadeGame() {
             {error ? <p className={styles.msgError} role="alert">{error}</p>
               : outOfCredit ? <p className={styles.msgHint}>{t('msg.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
               : <p className={styles.msgHint}>{lastWin && !busy ? (lastWin.payout > 0 ? t.rich('msg.lastRound', { b: chunk => <strong key={chunk}>{chunk}</strong> }, { amount: money(lastWin.payout), times: money(lastWin.total) }) : t('msg.lastRoundNoWin')) : settings.spaceToSpin ? t('msg.spaceHint') : t('msg.fixedBefore')}</p>}
+            {!busy && doneBreakdown && <RoundBreakdownLauncher breakdown={doneBreakdown} modeLabel={tc(`modes.${doneBreakdown.mode as CascadeMode}`)} />}
           </div>
         </div>
       )}

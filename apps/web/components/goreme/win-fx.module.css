@@ -1,0 +1,111 @@
+/* Göreme win overlay (win-fx.tsx). Cells are placed like the board's: --c (reel), --r (row). Only transform / opacity
+   animate. Kilim colours: madder, saffron, turquoise, indigo (the symbol palette). */
+.layer { position: absolute; inset: 0; pointer-events: none; z-index: 3; container-type: size; }
+
+.spark, .node {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% / 6);
+  height: 20%;
+  transform: translate(calc(var(--c) * 100%), calc(var(--r) * 100%));
+}
+
+/* spark burst: a flash ring and eight kilim diamonds thrown out from the cell centre (long / short rays alternate) */
+.spark b, .spark i { position: absolute; left: 50%; top: 50%; }
+.spark b {
+  width: 76%;
+  aspect-ratio: 1;
+  margin: -38% 0 0 -38%;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 236, 170, 0.95);
+  box-shadow: 0 0 12px rgba(255, 210, 100, 0.8), inset 0 0 10px rgba(255, 210, 100, 0.6);
+  opacity: 0;
+  animation: ring 0.62s cubic-bezier(0.2, 0.8, 0.3, 1) calc(var(--i) * 60ms) both;
+}
+.spark i {
+  width: 13%;
+  aspect-ratio: 1;
+  margin: -6.5% 0 0 -6.5%;
+  background: linear-gradient(135deg, #fff6c8 0 30%, #ffd65e 30% 62%, #bc2c30 62%);
+  box-shadow: 0 0 0 1px #3a1604;
+  opacity: 0;
+  animation: ray 0.72s cubic-bezier(0.15, 0.7, 0.3, 1) calc(var(--i) * 60ms) both;
+}
+.spark i:nth-child(even) { background: linear-gradient(135deg, #d6fff6 0 30%, #62e2d2 30% 62%, #2f429a 62%); }
+@keyframes ring { 0% { opacity: 0; transform: scale(0.3); } 25% { opacity: 1; } 100% { opacity: 0; transform: scale(1.35); } }
+@keyframes ray {
+  0% { opacity: 0; transform: rotate(var(--a)) translateX(0) rotate(45deg) scale(0.4); }
+  18% { opacity: 1; }
+  100% { opacity: 0; transform: rotate(var(--a)) translateX(calc(var(--k) * 70% + 160%)) rotate(45deg) scale(0.75); }
+}
+/* big board: the symbols shatter (board.module.css) and the shards fly much further, with a white flash */
+.layer[data-burst] .spark i { width: 17%; margin: -8.5% 0 0 -8.5%; animation-name: shard; animation-duration: 0.95s; animation-delay: calc(var(--ms) * 0.3 + var(--i) * 40ms); }
+.layer[data-burst] .spark b { animation-delay: calc(var(--ms) * 0.3 + var(--i) * 40ms); border-width: 3px; }
+@keyframes shard {
+  0% { opacity: 0; transform: rotate(var(--a)) translateX(0) rotate(45deg) scale(0.6); }
+  12% { opacity: 1; }
+  100% { opacity: 0; transform: rotate(calc(var(--a) + 25deg)) translateX(calc(var(--k) * 140% + 300%)) rotate(200deg) scale(0.5); }
+}
+
+/* the focused way traced reel by reel: each reel-to-reel bundle fades in after the one before */
+.ways { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ways line { stroke: #ffe28a; stroke-width: 3.5px; stroke-linecap: round; filter: drop-shadow(0 0 3px rgba(255, 190, 70, 0.95)); }
+.seg { opacity: 0; animation: seg 0.26s ease-out calc(var(--i) * 95ms) both; }
+@keyframes seg { from { opacity: 0; } to { opacity: 0.92; } }
+.node::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 16%;
+  aspect-ratio: 1;
+  margin: -8% 0 0 -8%;
+  background: linear-gradient(135deg, #fff8dc, #ffd65e 55%, #bc2c30 56%);
+  box-shadow: 0 0 0 1.5px #3a1604, 0 0 10px rgba(255, 210, 100, 0.9);
+  transform: rotate(45deg);
+  animation: node 0.3s cubic-bezier(0.2, 1.6, 0.4, 1) calc(var(--i) * 95ms) both;
+}
+@keyframes node { from { opacity: 0; transform: rotate(45deg) scale(0.2); } }
+
+/* labels: the summary lists every way above the bottom rim; a focused way shows its own label, larger */
+.labels {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  bottom: 7%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.label {
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 2px 10px 3px;
+  border-radius: 999px;
+  font: 800 clamp(11px, 2.9cqw, 15px) / 1.2 var(--font-barlow), 'Arial Narrow', system-ui, sans-serif;
+  color: #fff8e2;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 0 #2a1216;
+  background: linear-gradient(180deg, rgba(92, 34, 58, 0.94), rgba(46, 14, 34, 0.94));
+  box-shadow: 0 0 0 1.5px #ffd65e, 0 4px 10px -3px rgba(20, 4, 12, 0.8);
+  animation: label 0.34s cubic-bezier(0.2, 1.4, 0.4, 1) calc(var(--n) * 70ms + 120ms) both;
+}
+.labels[data-mode='way'] { bottom: 41%; }
+.labels[data-mode='way'] .label { font-size: clamp(13px, 3.8cqw, 19px); padding: 4px 14px 5px; background: linear-gradient(180deg, rgba(120, 40, 50, 0.96), rgba(56, 12, 24, 0.96)); box-shadow: 0 0 0 2px #ffe28a, 0 0 16px rgba(255, 200, 90, 0.7), 0 6px 14px -4px rgba(20, 4, 12, 0.85); }
+@keyframes label { from { opacity: 0; transform: translateY(40%) scale(0.8); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .spark, .seg, .node::before, .label { animation: none !important; }
+  .spark { display: none; }
+  .seg { opacity: 0.92; }
+}
+.layer:not([data-fx]) .seg, .layer:not([data-fx]) .node::before, .layer:not([data-fx]) .label { animation: none; }
+.layer:not([data-fx]) .seg { opacity: 0.92; }

@@ -63,6 +63,9 @@
     "tier4": "传奇黎明",
     "sky": "天空倍数"
   },
+  "winLine": {
+    "label": "{name} {reels}× · {ways} 路{multiplier, plural, =1 {} other { · ×#}} = {amount}"
+  },
   "banner": {
     "ways": "{name} · {length} 轴 · {ways} 路{more, plural, =0 {} other { · 另有 # 个}}{sky, plural, =1 {} other { · 天空 ×#}}",
     "merge": "合并 · ×{multiplier}",

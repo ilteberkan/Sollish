@@ -94,7 +94,18 @@
     "aria": "세션 정보",
     "clock": "시각",
     "session": "세션",
-    "net": "순"
+    "net": "순",
+    "stats": {
+      "toggle": "세션 통계",
+      "title": "세션 통계",
+      "rounds": "라운드",
+      "spent": "총 베팅",
+      "won": "총 당첨",
+      "sessionRtp": "세션 RTP",
+      "expectedRtp": "기대 RTP",
+      "partial": "RTP가 명시된 라운드만",
+      "note": "기대 RTP는 플레이한 모드의 베팅 가중 평균이며 수백만 라운드를 기준으로 합니다. 짧은 세션은 크게 다를 수 있으며 이는 오류가 아닙니다."
+    }
   },
   "settings": {
     "title": "설정",
@@ -170,5 +181,54 @@
       "SERVICE_UNAVAILABLE": "서버가 현재 라운드를 받지 않습니다.",
       "UNKNOWN": "서버가 라운드를 받아들이지 않았습니다."
     }
+  },
+  "breakdown": {
+    "open": "라운드 상세",
+    "title": "라운드 상세",
+    "historyAria": "라운드 {id} 상세",
+    "meta": "베팅 {bet} · {mode} · 라운드 {id}",
+    "base": "기본 스핀",
+    "free": "프리 스핀 {n}",
+    "quietFree": "당첨 없는 프리 스핀 {n}회",
+    "step": {
+      "tumble": "텀블 {n}",
+      "board": "보드 {n}",
+      "chain": "기어 잠금 연쇄",
+      "drop": "물방울"
+    },
+    "line": {
+      "cluster": "심볼 {count}개",
+      "ways": "릴 {count}개 · {ways}웨이",
+      "spoke": "살 {spoke} · {count}칸 · 회전 {rotation}",
+      "scatter": "스캐터 {count}개",
+      "pool": "테라스 {rows}단 · 웅덩이 {slot}"
+    },
+    "factor": {
+      "crystals": "크리스탈 ×{value}",
+      "orbs": "폭풍석 ×{value}",
+      "total": "총 배수 ×{value}",
+      "stain": "얼룩 ×{value}",
+      "hub": "허브 ×{value}",
+      "template": "별자리 ×{value}",
+      "global": "전체 ×{value}",
+      "sky": "하늘 ×{value}",
+      "ways": "가중 웨이 {value}"
+    },
+    "deduct": "− 이미 지급된 {amount}",
+    "clamped": "상한",
+    "pool": "웅덩이",
+    "pathAria": "경로 {path} (L = 왼쪽, R = 오른쪽)",
+    "groupSum": "합계 {sum}",
+    "floor": "0.01× 단위로 내림",
+    "spinSum": "텀블 당첨 {sum}",
+    "spinWin": "스핀 당첨",
+    "sumSpins": "모든 스핀의 합계",
+    "cap": "최대 당첨 {cap} 도달",
+    "total": "라운드 합계",
+    "payout": "지급 = 베팅 {bet} × {times}",
+    "checkOk": "✓ 엔진 지급액과 일치 {amount} ({engine})",
+    "checkBad": "✗ 상세 합계 {amount}, 엔진 지급 {engine}",
+    "note": "모든 금액은 엔진의 라운드 결과에서 가져옵니다. 배수는 표시된 그대로 적용되며 합계가 지급액입니다. × = 베팅의 배수.",
+    "noWin": "이 라운드에는 당첨이 없습니다."
   }
 }

@@ -1,0 +1,36 @@
+# 2026-10-23T23:46:19Z bash scripts/use-node.sh node --import tsx ops/rtp-audit/resim.ts --rounds 2000000 --workers 2 --out ops/evidence/rtp-audit-20261023/resim.json
+{"game":"cascade","mode":"standard","rtp":0.973584,"ci95":[0.953361,0.993807],"claimed":0.95736,"z":1.506,"verdict":"PASS","sec":34}
+{"game":"cascade","mode":"ante","rtp":0.951527,"ci95":[0.93416,0.968895],"claimed":0.96278,"z":-1.209,"verdict":"PASS","sec":30.6}
+{"game":"cascade","mode":"buy","rtp":0.961708,"ci95":[0.959878,0.963537],"claimed":0.96184,"z":-0.135,"verdict":"PASS","sec":112}
+{"game":"tarhun","mode":"standard","rtp":0.960235,"ci95":[0.942985,0.977486],"claimed":0.96469,"z":-0.482,"verdict":"PASS","sec":29.8}
+{"game":"tarhun","mode":"ante","rtp":0.977671,"ci95":[0.960527,0.994814],"claimed":0.96646,"z":1.225,"verdict":"PASS","sec":32.7}
+{"game":"tarhun","mode":"buy","rtp":0.962118,"ci95":[0.960249,0.963986],"claimed":0.96227,"z":-0.152,"verdict":"PASS","sec":162.3}
+{"game":"ebru","mode":"standard","rtp":0.944689,"ci95":[0.917237,0.972141],"claimed":0.95695,"z":-0.825,"verdict":"PASS","sec":39.1}
+{"game":"ebru","mode":"ante","rtp":0.938165,"ci95":[0.912087,0.964243],"claimed":0.9503,"z":-0.869,"verdict":"PASS","sec":39.7}
+{"game":"ebru","mode":"buy","rtp":0.951436,"ci95":[0.948286,0.954586],"claimed":0.95377,"z":-1.384,"verdict":"PASS","sec":252.4}
+{"game":"cezeri","mode":"standard","rtp":0.944459,"ci95":[0.927903,0.961014],"claimed":0.95548,"z":-1.239,"verdict":"PASS","sec":27.9}
+{"game":"cezeri","mode":"ante","rtp":0.959837,"ci95":[0.943894,0.975779],"claimed":0.95346,"z":0.749,"verdict":"PASS","sec":28.3}
+{"game":"cezeri","mode":"buy","rtp":0.956804,"ci95":[0.955167,0.958441],"claimed":0.95742,"z":-0.703,"verdict":"PASS","sec":166.1}
+{"game":"asena","mode":"standard","rtp":0.923298,"ci95":[0.896036,0.950559],"claimed":0.95154,"z":-1.92,"verdict":"FAIL","sec":34.9}
+{"game":"asena","mode":"ante","rtp":0.942417,"ci95":[0.916106,0.968727],"claimed":0.94264,"z":-0.016,"verdict":"PASS","sec":36.6}
+{"game":"asena","mode":"buy","rtp":0.958176,"ci95":[0.954608,0.961745],"claimed":0.95836,"z":-0.096,"verdict":"PASS","sec":447}
+{"game":"goreme","mode":"standard","rtp":0.965497,"ci95":[0.929423,1.00157],"claimed":0.96295,"z":0.137,"verdict":"PASS","sec":27.7}
+{"game":"goreme","mode":"ante","rtp":0.950396,"ci95":[0.916855,0.983937],"claimed":0.95421,"z":-0.22,"verdict":"PASS","sec":28.8}
+{"game":"goreme","mode":"buy","rtp":0.963819,"ci95":[0.957976,0.969662],"claimed":0.95858,"z":1.677,"verdict":"PASS","sec":116.6}
+{"game":"damla","mode":"low-8","rtp":0.985843,"ci95":[0.984784,0.986903],"claimed":0.98515625,"z":1.271,"verdict":"PASS","sec":18.9}
+{"game":"damla","mode":"low-10","rtp":0.985267,"ci95":[0.984117,0.986418],"claimed":0.984863281,"z":0.688,"verdict":"PASS","sec":20.4}
+{"game":"damla","mode":"low-12","rtp":0.98677,"ci95":[0.985595,0.987945],"claimed":0.985507812,"z":2.106,"verdict":"FAIL","sec":20}
+{"game":"damla","mode":"low-14","rtp":0.984597,"ci95":[0.983373,0.985821],"claimed":0.985544433,"z":-1.517,"verdict":"PASS","sec":20.1}
+{"game":"damla","mode":"low-16","rtp":0.98587,"ci95":[0.984608,0.987132],"claimed":0.98545227,"z":0.649,"verdict":"PASS","sec":20.6}
+{"game":"damla","mode":"medium-8","rtp":0.985128,"ci95":[0.982957,0.987299],"claimed":0.98484375,"z":0.257,"verdict":"PASS","sec":19.6}
+{"game":"damla","mode":"medium-10","rtp":0.985947,"ci95":[0.983483,0.988411],"claimed":0.98515625,"z":0.629,"verdict":"PASS","sec":19.6}
+{"game":"damla","mode":"medium-12","rtp":0.983876,"ci95":[0.981251,0.9865],"claimed":0.984467773,"z":-0.442,"verdict":"PASS","sec":19.5}
+{"game":"damla","mode":"medium-14","rtp":0.983691,"ci95":[0.980705,0.986678],"claimed":0.984990234,"z":-0.852,"verdict":"PASS","sec":20.2}
+{"game":"damla","mode":"medium-16","rtp":0.983978,"ci95":[0.980253,0.987704],"claimed":0.985117797,"z":-0.6,"verdict":"PASS","sec":19.2}
+{"game":"damla","mode":"high-8","rtp":0.985461,"ci95":[0.981754,0.989169],"claimed":0.985,"z":0.244,"verdict":"PASS","sec":19.2}
+{"game":"damla","mode":"high-10","rtp":0.983892,"ci95":[0.979004,0.98878],"claimed":0.984570312,"z":-0.272,"verdict":"PASS","sec":19.7}
+{"game":"damla","mode":"high-12","rtp":0.985934,"ci95":[0.979419,0.992449],"claimed":0.984526367,"z":0.424,"verdict":"PASS","sec":19.6}
+{"game":"damla","mode":"high-14","rtp":0.987453,"ci95":[0.978281,0.996626],"claimed":0.984876708,"z":0.551,"verdict":"PASS","sec":19.7}
+{"game":"damla","mode":"high-16","rtp":0.984791,"ci95":[0.971492,0.99809],"claimed":0.984908447,"z":-0.017,"verdict":"PASS","sec":20.3}
+wrote /home/user/sollish/ops/evidence/rtp-audit-20261023/resim.json
+exit 0

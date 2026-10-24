@@ -94,7 +94,18 @@
     "aria": "Informações da sessão",
     "clock": "Hora",
     "session": "Sessão",
-    "net": "Líquido"
+    "net": "Líquido",
+    "stats": {
+      "toggle": "Estatísticas da sessão",
+      "title": "Estatísticas da sessão",
+      "rounds": "Rodadas",
+      "spent": "Aposta total",
+      "won": "Ganho total",
+      "sessionRtp": "RTP da sessão",
+      "expectedRtp": "RTP esperado",
+      "partial": "apenas rodadas com RTP declarado",
+      "note": "O RTP esperado é a média ponderada pela aposta dos modos jogados e descreve milhões de rodadas. Uma sessão curta pode desviar muito dele; isso não é um erro."
+    }
   },
   "settings": {
     "title": "Configurações",
@@ -170,5 +181,54 @@
       "SERVICE_UNAVAILABLE": "O servidor não está aceitando rodadas no momento.",
       "UNKNOWN": "O servidor não aceitou a rodada."
     }
+  },
+  "breakdown": {
+    "open": "Detalhe da rodada",
+    "title": "Detalhe da rodada",
+    "historyAria": "Detalhe da rodada {id}",
+    "meta": "Aposta {bet} · {mode} · rodada {id}",
+    "base": "Giro base",
+    "free": "Giro grátis {n}",
+    "quietFree": "{n, plural, one {# giro grátis} other {# giros grátis}} sem ganho",
+    "step": {
+      "tumble": "Cascata {n}",
+      "board": "Tabuleiro {n}",
+      "chain": "Cadeia de travamento",
+      "drop": "Gota"
+    },
+    "line": {
+      "cluster": "{count} símbolos",
+      "ways": "{count} rolos · {ways, plural, one {# via} other {# vias}}",
+      "spoke": "Raio {spoke} · {count} setores · rotação {rotation}",
+      "scatter": "{count} scatters",
+      "pool": "{rows} terraços · piscina {slot}"
+    },
+    "factor": {
+      "crystals": "cristais ×{value}",
+      "orbs": "pedras da tempestade ×{value}",
+      "total": "multiplicador total ×{value}",
+      "stain": "mancha ×{value}",
+      "hub": "eixo ×{value}",
+      "template": "constelação ×{value}",
+      "global": "global ×{value}",
+      "sky": "céu ×{value}",
+      "ways": "{value} vias ponderadas"
+    },
+    "deduct": "− {amount} já pago",
+    "clamped": "limite",
+    "pool": "Piscina",
+    "pathAria": "Caminho {path} (L = esquerda, R = direita)",
+    "groupSum": "Soma {sum}",
+    "floor": "arredondado para baixo a 0,01×",
+    "spinSum": "Ganhos das cascatas {sum}",
+    "spinWin": "Ganho do giro",
+    "sumSpins": "Soma de todos os giros",
+    "cap": "Ganho máximo {cap} atingido",
+    "total": "Total da rodada",
+    "payout": "Pagamento = aposta {bet} × {times}",
+    "checkOk": "✓ Igual ao pagamento do motor {amount} ({engine})",
+    "checkBad": "✗ O detalhe dá {amount}, o motor pagou {engine}",
+    "note": "Cada valor vem do resultado da rodada do motor; os multiplicadores se aplicam como mostrado e a soma é o pagamento. × = vezes a aposta.",
+    "noWin": "Sem ganho nesta rodada."
   }
 }

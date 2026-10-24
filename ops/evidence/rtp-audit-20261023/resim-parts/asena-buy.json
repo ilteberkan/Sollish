@@ -1,0 +1,60 @@
+{
+  "game": "asena",
+  "mode": "buy",
+  "engineId": "asena-stars-1",
+  "rounds": 2000000,
+  "betCents": 100,
+  "costCentsPerRound": 8000,
+  "seed": {
+    "serverSeedText": "sollish-rtp-audit-20261023/resim/asena/buy",
+    "serverSeedHex": "d25c30739f2a37aba9ea1e312432e6e25ef76ec14f7aa3304343d0b9fa6f93f1",
+    "clientSeed": "rtp-audit-20261023",
+    "nonces": [
+      0,
+      1999999
+    ],
+    "firstSeedHex": "758b51f0f1815a48df6f6ff2cc850108"
+  },
+  "sumPayoutCents": "15330823244",
+  "sumCostCents": "16000000000",
+  "sumTotalHundredths": "15330823244",
+  "rtp": 0.958176,
+  "rtpFromBetUnits": 0.958176,
+  "stdDevPerRoundCostUnits": 2.5745,
+  "ci95": [
+    0.954608,
+    0.961745
+  ],
+  "ci95HalfWidth": 0.003568,
+  "hitFrequency": 1,
+  "featureRate": 1,
+  "cappedRounds": 546,
+  "costMismatches": 0,
+  "maxWin": {
+    "payoutCents": 500000,
+    "xBet": 5000,
+    "xCost": 62.5,
+    "seedHex": "91670cd7a44448e264b0f2b2f4eb9428",
+    "capXBet": 5000
+  },
+  "claim": {
+    "claimedRtp": 0.95836,
+    "claimedSource": "Monte Carlo point estimate (modes.<mode>.rtpVsCost.pointEstimate)",
+    "originalPoint": 0.95836,
+    "originalCi95": [
+      0.95723,
+      0.9595
+    ],
+    "originalRounds": 20000000,
+    "originalStdDev": 2.5874,
+    "originalHitRate": 1,
+    "originalSeed": "asena-20261012-evidence",
+    "codeConstantRtp": 0.958
+  },
+  "claimedInsideNewCi95": true,
+  "newInsideOriginalCi95": true,
+  "zVsOriginal": -0.096,
+  "verdict": "PASS",
+  "runtimeSeconds": 447,
+  "engineSourceSha256": "044d52f9fd6008ae3627e826dc9ae3182dc4e1a4815e3383c674db0568829473"
+}

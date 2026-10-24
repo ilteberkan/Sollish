@@ -646,3 +646,28 @@ test('tablet 768x1024 portrait first screen: the whole table fits without scroll
   await expect(page.locator('[aria-label^="Bedava dönüş"]').first()).toBeVisible({ timeout: 15_000 });
   await fits('free spins');
 });
+
+test('round breakdown ("Tur ayrıntısı"): lists the wins and its total equals the shown win and the engine payout; also from history', async ({ page }) => {
+  const round = engine(TUMBLES);
+  expect(round.payoutCents).toBeGreaterThan(0);
+  await stub(page, TUMBLES);
+  await openCascade(page);
+  await setTurbo(page);
+  await spin(page).click();
+  await expect(rows(page)).toHaveCount(1, { timeout: 20_000 });
+  await expect(page.getByTestId('cascade-meter-total')).toContainText(demoText(round.payoutCents));
+  const shown = (await page.getByTestId('cascade-meter-total').textContent())!.replace(/\s*DEMO\s*$/, '').trim();
+  await page.getByTestId('round-breakdown-open').click();
+  const dialog = page.getByRole('dialog', { name: 'Tur ayrıntısı' });
+  await expect(dialog).toBeVisible();
+  const wins = round.spins.flatMap(s => s.steps.flatMap(st => st.wins));
+  await expect(dialog.getByTestId('round-breakdown-line')).toHaveCount(wins.length);
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(shown);
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(demoText(round.payoutCents));
+  await expect(dialog.getByTestId('round-breakdown-check')).toContainText('✓');
+  if (process.env.BREAKDOWN_SHOTS) await page.screenshot({ path: `${process.env.BREAKDOWN_SHOTS}/cascade.png` });
+  await page.keyboard.press('Escape');
+  await expect(dialog).toBeHidden();
+  await rows(page).first().getByTestId('history-breakdown').click();
+  await expect(dialog.getByTestId('round-breakdown-total')).toHaveText(demoText(round.payoutCents));
+});

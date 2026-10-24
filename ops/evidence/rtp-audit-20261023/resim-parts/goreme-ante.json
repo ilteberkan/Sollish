@@ -1,0 +1,60 @@
+{
+  "game": "goreme",
+  "mode": "ante",
+  "engineId": "goreme-balloons-1",
+  "rounds": 2000000,
+  "betCents": 100,
+  "costCentsPerRound": 125,
+  "seed": {
+    "serverSeedText": "sollish-rtp-audit-20261023/resim/goreme/ante",
+    "serverSeedHex": "c89c2d6a5bbe35ad3623f8efac1039be2a5ae368877fb0187a04bc3a0879c77d",
+    "clientSeed": "rtp-audit-20261023",
+    "nonces": [
+      0,
+      1999999
+    ],
+    "firstSeedHex": "dd418d46e54dd737f62f5c66ef7405f9"
+  },
+  "sumPayoutCents": "237599002",
+  "sumCostCents": "250000000",
+  "sumTotalHundredths": "237599002",
+  "rtp": 0.950396,
+  "rtpFromBetUnits": 0.950396,
+  "stdDevPerRoundCostUnits": 24.2011,
+  "ci95": [
+    0.916855,
+    0.983937
+  ],
+  "ci95HalfWidth": 0.033541,
+  "hitFrequency": 0.365808,
+  "featureRate": 0.007864,
+  "cappedRounds": 2,
+  "costMismatches": 0,
+  "maxWin": {
+    "payoutCents": 1000000,
+    "xBet": 10000,
+    "xCost": 8000,
+    "seedHex": "affe925a2612fc1cadded07a3268ed27",
+    "capXBet": 10000
+  },
+  "claim": {
+    "claimedRtp": 0.95421,
+    "claimedSource": "Monte Carlo point estimate (modes.<mode>.rtpVsCost.pointEstimate)",
+    "originalPoint": 0.95421,
+    "originalCi95": [
+      0.94907,
+      0.95935
+    ],
+    "originalRounds": 100000000,
+    "originalStdDev": 26.2107,
+    "originalHitRate": 0.36547,
+    "originalSeed": "goreme-20261021-evidence",
+    "codeConstantRtp": 0.954
+  },
+  "claimedInsideNewCi95": true,
+  "newInsideOriginalCi95": true,
+  "zVsOriginal": -0.22,
+  "verdict": "PASS",
+  "runtimeSeconds": 28.8,
+  "engineSourceSha256": "7cfb99f0fdd0d279de9c1ce0f718f8209e0e186943095cff26b4f6d41ad8295e"
+}

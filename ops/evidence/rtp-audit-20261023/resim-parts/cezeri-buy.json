@@ -1,0 +1,60 @@
+{
+  "game": "cezeri",
+  "mode": "buy",
+  "engineId": "cezeri-gears-1",
+  "rounds": 2000000,
+  "betCents": 100,
+  "costCentsPerRound": 10000,
+  "seed": {
+    "serverSeedText": "sollish-rtp-audit-20261023/resim/cezeri/buy",
+    "serverSeedHex": "e5d87af6238737d1970da2c6d026ff394c412f02cd2a0a25860365fae5b276b0",
+    "clientSeed": "rtp-audit-20261023",
+    "nonces": [
+      0,
+      1999999
+    ],
+    "firstSeedHex": "24a1edea827bee9b42864b2e81ea7eca"
+  },
+  "sumPayoutCents": "19136079663",
+  "sumCostCents": "20000000000",
+  "sumTotalHundredths": "19136079663",
+  "rtp": 0.956804,
+  "rtpFromBetUnits": 0.956804,
+  "stdDevPerRoundCostUnits": 1.1813,
+  "ci95": [
+    0.955167,
+    0.958441
+  ],
+  "ci95HalfWidth": 0.001637,
+  "hitFrequency": 1,
+  "featureRate": 1,
+  "cappedRounds": 0,
+  "costMismatches": 0,
+  "maxWin": {
+    "payoutCents": 474597,
+    "xBet": 4745.97,
+    "xCost": 47.4597,
+    "seedHex": "24f64221b9d9788aff37ee7c88518a6f",
+    "capXBet": 10000
+  },
+  "claim": {
+    "claimedRtp": 0.95742,
+    "claimedSource": "Monte Carlo point estimate (modes.<mode>.rtpVsCost.pointEstimate)",
+    "originalPoint": 0.95742,
+    "originalCi95": [
+      0.9569,
+      0.95794
+    ],
+    "originalRounds": 20000000,
+    "originalStdDev": 1.1848,
+    "originalHitRate": 1,
+    "originalSeed": "cezeri-20261012-evidence",
+    "codeConstantRtp": 0.957
+  },
+  "claimedInsideNewCi95": true,
+  "newInsideOriginalCi95": false,
+  "zVsOriginal": -0.703,
+  "verdict": "PASS",
+  "runtimeSeconds": 166.1,
+  "engineSourceSha256": "2b2c2f720fcebc21222bf9616d9bf5cb6d5d410fd32e0d9f3ec0d0351cd91dc4"
+}

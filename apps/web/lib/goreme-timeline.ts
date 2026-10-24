@@ -15,7 +15,9 @@
  *   spin (whole board)  -> spin (reels drop in and stop one by one), reel-stop per reel, balloon-land per landed balloon,
  *                          sun-land per sun (n-th of the board), sun-tease (two suns down, reels still turning: the later
  *                          reels slow down, presentation only)
- *   ways                -> win (cells highlighted, the cumulative meter adds the board win), callout (way multiplier ≥ 10)
+ *   ways                -> win (all-wins summary: every winning cell bounces and sparks, the rest dims, one label per way
+ *                          with its share of the payout, lib/goreme-wins.ts; a big board bursts), win-line per way when a
+ *                          board has 2+ ways (the way is traced reel by reel, biggest first), callout (way multiplier ≥ 10)
  *   scatter             -> scatter (suns flare; base: pay + award, free: +5 spins)
  *   lift                -> lift (burner flames, wind), lift-move (rise one row + drift with the wind; the +1 badge ticks
  *                          `tickMs` after the move starts; exits fly off the top, or fly into their sky-band slot and stay
@@ -31,6 +33,7 @@ import {
   type GoremeBalloon, type GoremeExit, type GoremeGrid, type GoremeLiftMove, type GoremeMerge, type GoremePaySymbol, type GoremeRound, type GoremeWind,
 } from '@sollish/protocol';
 import { fixed2 } from './slot-format';
+import { goremeLineOrder, goremeRoundWins, type GoremeWinLine } from './goreme-wins';
 import type { Locale } from './i18n/config';
 import { countUpSchedule, multiplierCalloutTier, roundCelebration, type CelebrationLevel, type CountUpSchedule, type WinTier } from './slot-kit/win-tiers';
 
@@ -67,7 +70,15 @@ export type GoremeEvent =
   /** Two suns are down and reels are still turning: the remaining reels slow down. */
   | At & { type: 'sun-tease'; spin: number; on: boolean }
   /** Ways wins of one board: their cells glow, the meter adds the board win (sky applied). */
-  | At & { type: 'win'; spin: number; step: number; wins: GoremeTimelineWin[]; cells: number[]; stepHundredths: number; sky: number; meter: GoremeMeter; best: GoremePaySymbol }
+  | At & { type: 'win'; spin: number; step: number; wins: GoremeTimelineWin[]; cells: number[]; stepHundredths: number; sky: number; meter: GoremeMeter; best: GoremePaySymbol;
+      /** Labels: one per way (engine order), cents that sum to the board's share of the payout. */
+      lines: GoremeWinLine[]; cents: number;
+      /** Big board (≥ 5× bet or a way callout): the winning symbols burst. */
+      burst: boolean;
+      /** Length of the all-wins summary; the win-line events follow it. */
+      summaryMs: number }
+  /** Per-way highlight after the summary of a board with 2+ ways: `index` into the win's lines, `n` of `count`. */
+  | At & { type: 'win-line'; spin: number; step: number; index: number; n: number; count: number; line: GoremeWinLine }
   /** A big way multiplier (balloons × sky ≥ 10) or a sky value ≥ 10 gets its own big text and sound. */
   | At & { type: 'callout'; spin: number; value: number; tier: WinTier; source: 'ways' | 'sky' }
   | At & { type: 'scatter'; spin: number; count: number; cells: number[]; payHundredths: number; freeSpins: number; retrigger: boolean; meter: GoremeMeter }
@@ -100,15 +111,20 @@ const NORMAL = {
   spinStart: 120, freeSpinStart: 380,
   reelFirst: 420, reelGap: 150, teaseGap: 560, drop: 380, reelTail: 140,
   respinLead: 230, respinGap: 85, respinDrop: 320, settle: 90,
-  win: 900, winLate: 620, callout: 1300,
+  win: 900, winLate: 620, winBurst: 1250, winLine: 720, callout: 1300,
   scatter: 1300, retrigger: 1200,
   burn: 420, move: 820, merge: 760, skyTick: 900, skyCallout: 1300,
   trigger: 1300, freeIntro: 3400, freeOutro: 3600, totalWin: 900,
   spinEndWin: 520, spinEndNone: 240, freeSpinEndWin: 600, freeSpinEndNone: 220,
 };
 const REDUCED: typeof NORMAL = {
-  ...NORMAL, reelFirst: 160, reelGap: 40, teaseGap: 200, drop: 160, respinLead: 60, respinGap: 0, respinDrop: 160, burn: 200, move: 360, merge: 360, callout: 900, scatter: 900, trigger: 900,
+  ...NORMAL, winBurst: 900, winLine: 900, reelFirst: 160, reelGap: 40, teaseGap: 200, drop: 160, respinLead: 60, respinGap: 0, respinDrop: 160, burn: 200, move: 360, merge: 360, callout: 900, scatter: 900, trigger: 900,
 };
+
+/** At most this many ways get their own highlight after the summary (the summary labels list every way). */
+export const GOREME_MAX_LINE_CYCLE = 6;
+/** A board at or above this win (hundredths of the bet) bursts its winning symbols. */
+export const GOREME_BURST_HUNDREDTHS = 500;
 
 /** When the +1 badge of a rising balloon ticks: a little past the middle of the rise (the burner has lifted it). */
 export function goremeTickMs(moveMs: number): number { return Math.round(moveMs * 0.55); }
@@ -145,6 +161,7 @@ export function buildGoremeTimeline(round: GoremeRound, options: GoremeTimelineO
   const events: GoremeEvent[] = [];
   const push = (event: GoremeEvent) => { events.push(event); };
   let t = 0, prevTotal = 0, freeNumber = 0, freeLeft = 0, mooredCount = 0, skyShown = 1;
+  const boards = new Map(goremeRoundWins(round).boards.map(b => [`${b.spin}:${b.step}`, b]));
 
   for (const spin of round.spins) {
     const s = spin.index, free = spin.kind === 'free';
@@ -202,15 +219,23 @@ export function buildGoremeTimeline(round: GoremeRound, options: GoremeTimelineO
           const wins: GoremeTimelineWin[] = step.wins.map(w => ({ symbol: w.symbol, length: w.length, ways: w.ways, multiplierProduct: w.multiplierProduct, payTenThousandths: w.payTenThousandths, cells: w.cells.slice() }));
           const cells = [...new Set(wins.flatMap(w => w.cells))];
           const best = step.wins.reduce((m, w) => (w.payTenThousandths > m.payTenThousandths ? w : m)).symbol;
-          // Long lift chains tighten after the 6th board of a spin (the hold, never a board animation).
-          const winDur = d(waysIndex > 6 ? T.winLate : T.win);
-          push({ type: 'win', at: t, dur: winDur, spin: s, step: i, wins, cells, stepHundredths: step.winHundredths, sky: step.skyMultiplier, meter: meter(), best });
-          t += winDur;
+          const board = boards.get(`${s}:${i}`)!;
           const value = goremeWaysCallout(step.wins, step.skyMultiplier, free);
+          const late = waysIndex > 6;
+          const burst = !late && (step.winHundredths >= GOREME_BURST_HUNDREDTHS || value > 0);
+          // Long lift chains tighten after the 6th board of a spin (the hold, never a board animation): no burst, no cycle.
+          const winDur = d(late ? T.winLate : burst ? T.winBurst : T.win);
+          const order = late || board.lines.length < 2 ? [] : goremeLineOrder(board.lines).slice(0, GOREME_MAX_LINE_CYCLE);
+          const lineDur = d(T.winLine);
+          const total = winDur + order.length * lineDur;
+          push({ type: 'win', at: t, dur: total, spin: s, step: i, wins, cells, stepHundredths: step.winHundredths, sky: step.skyMultiplier, meter: meter(), best, lines: board.lines, cents: board.cents, burst, summaryMs: winDur });
+          order.forEach((index, n) => push({ type: 'win-line', at: t + winDur + n * lineDur, dur: lineDur, spin: s, step: i, index, n: n + 1, count: order.length, line: board.lines[index]! }));
+          const winAt = t;
+          t += total;
           if (value > 0) {
             const dur = d(T.callout);
-            push({ type: 'callout', at: t - Math.round(winDur * 0.5), dur, spin: s, value, tier: multiplierCalloutTier(value), source: 'ways' });
-            t += Math.round(dur * 0.6);
+            push({ type: 'callout', at: winAt + Math.round(winDur * 0.5), dur, spin: s, value, tier: multiplierCalloutTier(value), source: 'ways' });
+            t = Math.max(t, winAt + winDur + Math.round(dur * 0.6));
           }
           break;
         }

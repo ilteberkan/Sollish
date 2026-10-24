@@ -9,6 +9,7 @@ import type { Locale } from '@/lib/i18n/config';
 import { useRgsText } from '@/lib/use-rgs-text';
 import { richText } from '../game-rich';
 import { buildGoremeTimeline, goremeCents, goremeHistoryDetail, goremeMoney, goremeTimes, type GoremeEvent, type GoremeMeter, type GoremeMoored, type GoremeTimeline } from '@/lib/goreme-timeline';
+import type { GoremeWinLine } from '@/lib/goreme-wins';
 import { WIN_TIER_INFO, countUpSchedule, type CelebrationLevel, type CountUpSchedule, type WinTier } from '@/lib/slot-kit/win-tiers';
 import { TimelinePlayer } from '@/lib/slot-kit/timeline-player';
 import { autoplayNetLossCents, createAutoplay, type AutoplayConfig, type AutoplayState, type AutoplayStopCode } from '@/lib/slot-kit/autoplay';
@@ -468,6 +469,8 @@ export function GoremeGame() {
   const onCelebrationCounted = useCallback(() => { sound.countUp(false); }, [sound]);
 
   const nameOf = useCallback((symbol: EngineSymbol) => symbolLabels[symbol], [symbolLabels]);
+  /** "Avanos Çömleği 3× · 9 yol · ×6 = 4,80" (lib/goreme-wins.ts amounts: the labels sum to the payout). */
+  const winLineText = useCallback((line: GoremeWinLine) => t('winLine.label', { name: symbolLabels[line.symbol], reels: line.reels, ways: line.ways, multiplier: line.multiplier, amount: goremeMoney(line.amountCents, loc) }), [symbolLabels, t, loc]);
 
   /* ---------------------------------------------------------------- timeline events */
   const handle = useCallback((event: GoremeEvent) => {
@@ -503,17 +506,22 @@ export function GoremeGame() {
         if (event.on) setAnnounce(t('announce.sunTease'));
         break;
       case 'win': {
-        const bestWin = event.wins.reduce((m, w) => (w.payTenThousandths > m.payTenThousandths ? w : m));
-        b?.highlight(event.cells, bestWin.cells);
+        // win presentation (win-fx.tsx): all-wins summary with one label per way, then the win-line events
+        b?.showWins(event.lines.map(line => ({ symbol: line.symbol, cells: line.cells, amountCents: line.amountCents, text: winLineText(line) })), { ms: event.summaryMs, burst: event.burst, fx: !lite });
         sound.waysWin(event.best, event.stepHundredths / 100);
         setMeterDur(Math.min(600, event.dur)); setMeter(event.meter);
-        const p = cellPoint(2.5, 2);
-        floatLabel(p.x, p.y, `+${goremeMoney(goremeCents(betCents, event.stepHundredths), loc)}`, styles.floatLabel, reduced ? 800 : 1300, reduced);
+        const p = cellPoint(2.5, 1.2);
+        floatLabel(p.x, p.y, `+${goremeMoney(event.cents, loc)}`, styles.floatLabel, reduced ? 800 : 1300, reduced);
         const top = event.wins.reduce((m, w) => (w.payTenThousandths > m.payTenThousandths ? w : m));
         setBanner({ key: ++keys.current.banner, text: t('banner.ways', { name: nameOf(top.symbol), length: top.length, ways: format.number(top.ways, 0), more: event.wins.length - 1, sky: event.sky }), tone: event.sky > 1 ? 'sky' : 'gold' });
         setAnnounce(event.wins.map(w => t('announce.way', { name: nameOf(w.symbol), length: w.length, ways: w.ways, multiplier: w.multiplierProduct })).join('; ') + '. ' + t('announce.boardWin', { times: goremeTimes(event.stepHundredths, loc) }));
         break;
       }
+      case 'win-line':
+        b?.focusWin(event.index, event.dur);
+        sound.waysWin(event.line.symbol, 0);
+        setAnnounce(winLineText(event.line));
+        break;
       case 'callout':
         showCallout(event.value, event.tier, event.source, reduced, Math.max(1100, event.dur));
         break;
@@ -640,7 +648,7 @@ export function GoremeGame() {
         finishRound(current);
         break;
     }
-  }, [cellPoint, finishRound, floatLabel, later, moorTargets, nameOf, openCelebration, showCallout, sound, sunRays, t, format, loc]);
+  }, [cellPoint, finishRound, floatLabel, later, moorTargets, nameOf, openCelebration, showCallout, sound, sunRays, t, format, loc, winLineText]);
 
   /* ---------------------------------------------------------------- starting rounds */
   const begin = useCallback((current: LiveRound, text: string) => {

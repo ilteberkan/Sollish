@@ -1,0 +1,60 @@
+{
+  "game": "tarhun",
+  "mode": "ante",
+  "engineId": "storm-throne-1",
+  "rounds": 2000000,
+  "betCents": 100,
+  "costCentsPerRound": 125,
+  "seed": {
+    "serverSeedText": "sollish-rtp-audit-20261023/resim/tarhun/ante",
+    "serverSeedHex": "cf857ea7df738a8defc0f54f6e15b56a8c609bf0fb5d02918430d7d2b15ee322",
+    "clientSeed": "rtp-audit-20261023",
+    "nonces": [
+      0,
+      1999999
+    ],
+    "firstSeedHex": "e6aa42c38a79a9ad1efe8f0026807fef"
+  },
+  "sumPayoutCents": "244417628",
+  "sumCostCents": "250000000",
+  "sumTotalHundredths": "244417628",
+  "rtp": 0.977671,
+  "rtpFromBetUnits": 0.977671,
+  "stdDevPerRoundCostUnits": 12.3697,
+  "ci95": [
+    0.960527,
+    0.994814
+  ],
+  "ci95HalfWidth": 0.017144,
+  "hitFrequency": 0.264207,
+  "featureRate": 0.004965,
+  "cappedRounds": 0,
+  "costMismatches": 0,
+  "maxWin": {
+    "payoutCents": 498460,
+    "xBet": 4984.6,
+    "xCost": 3987.68,
+    "seedHex": "06cced61a250c73efcae96bcd888f2ff",
+    "capXBet": 5000
+  },
+  "claim": {
+    "claimedRtp": 0.96646,
+    "claimedSource": "Monte Carlo point estimate (modes.<mode>.rtpVsCost.pointEstimate)",
+    "originalPoint": 0.96646,
+    "originalCi95": [
+      0.96117,
+      0.97176
+    ],
+    "originalRounds": 20000000,
+    "originalStdDev": 12.0768,
+    "originalHitRate": 0.26442,
+    "originalSeed": "storm-throne-20261012-evidence",
+    "codeConstantRtp": 0.966
+  },
+  "claimedInsideNewCi95": true,
+  "newInsideOriginalCi95": false,
+  "zVsOriginal": 1.225,
+  "verdict": "PASS",
+  "runtimeSeconds": 32.7,
+  "engineSourceSha256": "543c7baab0ae4556e23ba480eb4e66c66b563801d2bc737e9f9168b1bc791ed9"
+}

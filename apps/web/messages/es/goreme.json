@@ -63,6 +63,9 @@
     "tier4": "Amanecer legendario",
     "sky": "Multiplicador celeste"
   },
+  "winLine": {
+    "label": "{name} {reels}× · {ways, plural, one {# way} other {# ways}}{multiplier, plural, =1 {} other { · ×#}} = {amount}"
+  },
   "banner": {
     "ways": "{name} · {length} rodillos · {ways} {ways, plural, one {way} other {ways}}{more, plural, =0 {} other { · +# más}}{sky, plural, =1 {} other { · CIELO ×#}}",
     "merge": "Fusión · ×{multiplier}",

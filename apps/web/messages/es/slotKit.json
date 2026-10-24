@@ -94,7 +94,18 @@
     "aria": "Información de la sesión",
     "clock": "Hora",
     "session": "Sesión",
-    "net": "Neto"
+    "net": "Neto",
+    "stats": {
+      "toggle": "Estadísticas de sesión",
+      "title": "Estadísticas de la sesión",
+      "rounds": "Rondas",
+      "spent": "Apuesta total",
+      "won": "Ganancia total",
+      "sessionRtp": "RTP de la sesión",
+      "expectedRtp": "RTP esperado",
+      "partial": "solo rondas con RTP indicado",
+      "note": "El RTP esperado es la media ponderada por apuesta de los modos jugados y describe millones de rondas. Una sesión corta puede desviarse mucho; no es un error."
+    }
   },
   "settings": {
     "title": "Ajustes",
@@ -170,5 +181,54 @@
       "SERVICE_UNAVAILABLE": "El servidor no acepta rondas en este momento.",
       "UNKNOWN": "El servidor no aceptó la ronda."
     }
+  },
+  "breakdown": {
+    "open": "Detalle de la ronda",
+    "title": "Detalle de la ronda",
+    "historyAria": "Detalle de la ronda {id}",
+    "meta": "Apuesta {bet} · {mode} · ronda {id}",
+    "base": "Giro base",
+    "free": "Giro gratis {n}",
+    "quietFree": "{n, plural, one {# giro gratis} other {# giros gratis}} sin premio",
+    "step": {
+      "tumble": "Cascada {n}",
+      "board": "Tablero {n}",
+      "chain": "Cadena de bloqueo",
+      "drop": "Gota"
+    },
+    "line": {
+      "cluster": "{count} símbolos",
+      "ways": "{count} rodillos · {ways, plural, one {# vía} other {# vías}}",
+      "spoke": "Radio {spoke} · {count} sectores · giro {rotation}",
+      "scatter": "{count} scatters",
+      "pool": "{rows} terrazas · poza {slot}"
+    },
+    "factor": {
+      "crystals": "cristales ×{value}",
+      "orbs": "piedras de tormenta ×{value}",
+      "total": "multiplicador total ×{value}",
+      "stain": "mancha ×{value}",
+      "hub": "eje ×{value}",
+      "template": "constelación ×{value}",
+      "global": "global ×{value}",
+      "sky": "cielo ×{value}",
+      "ways": "{value} vías ponderadas"
+    },
+    "deduct": "− {amount} ya pagado",
+    "clamped": "tope",
+    "pool": "Poza",
+    "pathAria": "Camino {path} (L = izquierda, R = derecha)",
+    "groupSum": "Suma {sum}",
+    "floor": "redondeado a la baja a 0,01×",
+    "spinSum": "Premios de cascada {sum}",
+    "spinWin": "Premio del giro",
+    "sumSpins": "Suma de todos los giros",
+    "cap": "Premio máximo {cap} alcanzado",
+    "total": "Total de la ronda",
+    "payout": "Pago = apuesta {bet} × {times}",
+    "checkOk": "✓ Igual al pago del motor {amount} ({engine})",
+    "checkBad": "✗ El detalle da {amount}, el motor pagó {engine}",
+    "note": "Cada importe procede del resultado de la ronda del motor; los multiplicadores se aplican tal como se muestran y la suma es el pago. × = veces la apuesta.",
+    "noWin": "Sin premio en esta ronda."
   }
 }

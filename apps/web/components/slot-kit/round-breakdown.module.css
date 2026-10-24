@@ -1,0 +1,57 @@
+/* Round breakdown ("Tur ayrıntısı"): rows of wins with their calculation and amount. Inherits the kit theme variables
+   (--_accent, --_hair, --_muted ...) from the Modal. Static layout; nothing animates. */
+.modal { max-height: min(88dvh, 760px); }
+.panel { display: flex; flex-direction: column; gap: 12px; text-align: left; font-variant-numeric: tabular-nums; }
+.meta { margin: 0; color: var(--_muted); font-size: 13px; }
+.empty, .quiet { margin: 0; color: var(--_muted); font-size: 14px; }
+.spin { display: flex; flex-direction: column; gap: 6px; padding: 10px 12px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); box-shadow: inset 0 0 0 1px var(--_hair); }
+.spinTitle { margin: 0; font-size: 15px; font-weight: 600; color: var(--_accent-hi); }
+.group { display: flex; flex-direction: column; gap: 4px; }
+.groupTitle { margin: 2px 0 0; font-size: 12px; letter-spacing: 0.4px; text-transform: uppercase; color: var(--_muted); }
+.lines { display: flex; flex-direction: column; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.line {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.25fr) auto; align-items: center; gap: 4px 10px;
+  padding: 5px 0; border-bottom: 1px solid var(--_hair); font-size: 13px;
+}
+.line:last-child { border-bottom: 0; }
+.lineName { display: flex; flex-direction: column; min-width: 0; }
+.lineName strong { font-weight: 600; overflow-wrap: anywhere; }
+.lineName small, .lineAmount small { color: var(--_muted); font-size: 11.5px; }
+.path { letter-spacing: -1px; overflow-wrap: anywhere; }
+.lineCalc { color: var(--_text); opacity: 0.86; overflow-wrap: anywhere; }
+.lineAmount { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
+.lineAmount strong { color: var(--_accent-hi); font-weight: 600; }
+.sumRow { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 0; font-size: 13px; }
+.sumRow > span { color: var(--_muted); overflow-wrap: anywhere; }
+.sumRow > strong { white-space: nowrap; }
+.spinTotal { padding-top: 4px; border-top: 1px solid var(--_line); font-size: 14px; }
+.spinTotal > span { color: var(--_text); }
+.total { display: flex; flex-direction: column; gap: 6px; padding: 12px; border-radius: 12px; background: rgba(0, 0, 0, 0.22); box-shadow: inset 0 0 0 1px var(--_line); }
+.cap > strong { color: var(--_neg); }
+.payout { font-size: 15px; }
+.payout > span { color: var(--_text); }
+.payout > strong { font-size: 18px; color: var(--_accent-hi); }
+.payout small { font-size: 12px; color: var(--_muted); }
+.check { margin: 0; padding: 6px 10px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+.checkOk { color: var(--_pos); background: rgba(145, 201, 176, 0.1); }
+.checkBad { color: var(--_neg); background: rgba(230, 151, 141, 0.12); }
+.note { margin: 0; color: var(--_muted); font-size: 12px; }
+
+.button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; padding: 0 12px;
+  border: 0; border-radius: 999px; color: inherit; font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  background: rgba(255, 255, 255, 0.08); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+  transition: transform 0.12s ease, opacity 0.2s ease;
+}
+.button:hover:not(:disabled) { background: rgba(255, 255, 255, 0.14); }
+.button:active:not(:disabled) { transform: scale(0.97); }
+.button:disabled { opacity: 0.45; cursor: not-allowed; }
+.button:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.buttonCompact { min-height: 28px; padding: 0 9px; font-size: 12px; }
+
+@media (max-width: 420px) {
+  .line { grid-template-columns: minmax(0, 1fr) auto; }
+  .lineCalc { grid-column: 1 / -1; grid-row: 2; font-size: 12px; }
+  .spin { padding: 8px 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .button { transition: none; } }

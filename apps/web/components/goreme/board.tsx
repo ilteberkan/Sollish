@@ -9,7 +9,9 @@
  * the table, in Şafak Şöleni it flies into its own sky-band slot (a target the game measures) and stays parked there
  * until the sky band takes it over, so the flight never breaks. Respins spin the reels again behind the balloons and
  * stop them left to right; a burner flare lights each envelope from inside; the wind draws streaks across the window;
- * a winning ways run gets gold cell frames and a per-reel count path along the bottom rim.
+ * a winning ways run gets gold cell frames and a per-reel count path along the bottom rim; `showWins` / `focusWin` add the
+ * win presentation (win-fx.tsx: bouncing cells with kilim spark bursts, a burst on big boards, per-way labels, then each
+ * way traced reel by reel) while every other symbol dims.
  * Every length comes from the timeline event (stops, delays, dropMs, ms, tickMs), so the board ends exactly when the
  * timeline moves on. Only transform / opacity animate. Presentation only: the board never decides anything, it re-draws
  * engine grids.
@@ -17,6 +19,7 @@
 import { memo, useCallback, useImperativeHandle, useMemo, useRef, useState, type CSSProperties, type Ref } from 'react';
 import { GOREME_REELS, GOREME_ROWS, type GoremeExit, type GoremeGrid, type GoremeLiftMove, type GoremeMerge, type GoremeSymbol as EngineSymbol } from '@sollish/protocol';
 import { GoremeSymbol, goremeMergedSize, type GoremeSymbolState } from './symbols';
+import { GoremeWinFx, type GoremeWinShow, type GoremeWinShowLine, type GoremeWinSpot } from './win-fx';
 import styles from './board.module.css';
 
 /** Where a mooring balloon flies to, in board cell units (col, row may be fractional and outside 0..5 / 0..4) and its scale there. */
@@ -46,6 +49,10 @@ export interface GoremeBoardHandle {
   /** Places a grid at once without animation (idle board, end of round, recovery). */
   setGrid(grid: GoremeGrid): void;
   dim(on: boolean): void;
+  /** All-wins summary of a board (`ms` long): every way's cells glow and bounce, the rest dims, labels list each way. */
+  showWins(lines: readonly GoremeWinShowLine[], opts: { ms: number; burst: boolean; fx: boolean }): void;
+  /** After showWins: one way (index into its lines) is highlighted and traced reel by reel for `ms`. */
+  focusWin(index: number, ms: number): void;
   /** How many balloons a balloon on the board is made of (1, or more after merges); 1 when unknown. */
   partsOf(id: number): number;
 }
@@ -121,6 +128,8 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
   const [gust, setGust] = useState<{ key: number; dir: GoremeWindDir; ms: number } | null>(null);
   const [puffs, setPuffs] = useState<Puff[]>([]);
   const [dimmed, setDimmed] = useState(false);
+  const [win, setWin] = useState<GoremeWinShow | null>(null);
+  const winRef = useRef(win); winRef.current = win;
   const cellsRef = useRef(cells); cellsRef.current = cells;
   const balloonsRef = useRef(balloons); balloonsRef.current = balloons;
   const timers = useRef(new Set<number>());
@@ -144,11 +153,24 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
     after(Math.max(...cols.map(c => c.hideAt)) + 160, () => setReels(r => (r?.key === key ? null : r)));
   }, [after]);
 
+  /** Per-reel counts of a run's cells along the bottom rim (null clears). */
+  const tracePath = useCallback((pathIds: readonly number[] | null) => {
+    if (!pathIds?.length) { setPath(null); return; }
+    const colOf = new Map<number, number>();
+    for (const c of cellsRef.current) colOf.set(c.id, c.col);
+    for (const b of balloonsRef.current) if (onBoard(b.phase)) colOf.set(b.id, b.col);
+    const counts = new Array<number>(GOREME_REELS).fill(0);
+    for (const id of pathIds) { const col = colOf.get(id); if (col !== undefined) counts[col]!++; }
+    let length = 0;
+    while (length < GOREME_REELS && counts[length]! > 0) length++;
+    setPath(length >= 3 ? { key: ++keySeq.current, counts: counts.slice(0, length) } : null);
+  }, []);
+
   useImperativeHandle(ref, () => ({
     get element() { return root.current; },
     spin(grid, { stops, dropMs, teaseFrom }) {
       clearTimers();
-      setLit(null); setPath(null); setPuffs([]); setBurn(null); setGust(null);
+      setLit(null); setPath(null); setWin(null); setPuffs([]); setBurn(null); setGust(null);
       dropOut(cellsRef.current, Math.min(260, Math.max(120, stops[0]! - dropMs)));
       // Balloons of the previous board (base balloons never carry into free spins) float away upwards.
       const gone = balloonsRef.current.filter(b => onBoard(b.phase));
@@ -159,7 +181,7 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
       showReels(stops.map((stop, col) => ({ col, hideAt: Math.max(0, stop - dropMs * 0.6), tease: teaseFrom !== null && col >= teaseFrom })), 'spin');
     },
     respin(grid, { drops, delays, dropMs }) {
-      setLit(null); setPath(null);
+      setLit(null); setPath(null); setWin(null);
       const fresh = new Set(drops);
       const keep = new Map(balloonsRef.current.filter(b => onBoard(b.phase)).map(b => [b.id, b]));
       // Every non-balloon cell is dealt again: the old symbols blur away under the spinning strips.
@@ -174,7 +196,7 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
       after(Math.max(...delays) + dropMs, () => setPuffs([]));
     },
     burn(ms) {
-      setLit(null); setPath(null);
+      setLit(null); setPath(null); setWin(null);
       setBalloons(prev => prev.map(b => (b.phase === 'land' || b.phase === 'grow' || b.phase === 'rise' ? { ...b, phase: 'idle', ms: 0, delay: 0 } : b)));
       setBurn({ key: ++keySeq.current, ms });
     },
@@ -262,20 +284,27 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
       setBalloons(prev => prev.filter(b => !(b.phase === 'parked' && hit(b))).map(b => (b.phase === 'moor' && hit(b) ? { ...b, release: true } : b)));
     },
     highlight(ids, pathIds) {
+      setWin(null);
       setLit(ids ? new Set(ids) : null);
-      if (!ids || !pathIds?.length) { setPath(null); return; }
-      const colOf = new Map<number, number>();
-      for (const c of cellsRef.current) colOf.set(c.id, c.col);
-      for (const b of balloonsRef.current) if (onBoard(b.phase)) colOf.set(b.id, b.col);
-      const counts = new Array<number>(GOREME_REELS).fill(0);
-      for (const id of pathIds) { const col = colOf.get(id); if (col !== undefined) counts[col]!++; }
-      let length = 0;
-      while (length < GOREME_REELS && counts[length]! > 0) length++;
-      setPath(length >= 3 ? { key: ++keySeq.current, counts: counts.slice(0, length) } : null);
+      tracePath(ids && pathIds?.length ? pathIds : null);
+    },
+    showWins(lines, { ms, burst, fx }) {
+      const all = [...new Set(lines.flatMap(l => l.cells))];
+      setLit(new Set(all));
+      const best = lines.reduce<GoremeWinShowLine | null>((m, l) => (!m || l.amountCents > m.amountCents ? l : m), null);
+      tracePath(best?.cells ?? null);
+      setWin({ key: ++keySeq.current, lines, focus: null, burst, fx, ms });
+    },
+    focusWin(index, ms) {
+      const show = winRef.current, line = show?.lines[index];
+      if (!show || !line) return;
+      setLit(new Set(line.cells));
+      tracePath(line.cells);
+      setWin({ ...show, key: ++keySeq.current, focus: index, ms });
     },
     setGrid(grid) {
       clearTimers();
-      setLit(null); setPath(null); setReels(null); setLeaving([]); setPuffs([]); setBurn(null); setGust(null);
+      setLit(null); setPath(null); setWin(null); setReels(null); setLeaving([]); setPuffs([]); setBurn(null); setGust(null);
       const prev = new Map(balloonsRef.current.filter(b => onBoard(b.phase)).map(b => [b.id, b]));
       const next = split(grid, prev, () => ({ mode: 'still', delay: 0, dur: 0 }), () => ({ phase: 'idle', delay: 0, ms: 0 }));
       setCells(next.cells);
@@ -283,11 +312,20 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
     },
     dim(on) { setDimmed(on); },
     partsOf(id) { return balloonsRef.current.find(b => b.id === id)?.parts ?? 1; },
-  }), [after, clearTimers, dropOut, showReels]);
+  }), [after, clearTimers, dropOut, showReels, tracePath]);
 
   const stateOf = (id: number): GoremeSymbolState => (lit ? (lit.has(id) ? 'win' : 'dim') : 'idle');
+  const spots = useMemo(() => {
+    if (!win) return null;
+    const map = new Map<number, GoremeWinSpot>();
+    for (const c of cells) map.set(c.id, { id: c.id, col: c.col, row: c.row });
+    for (const b of balloons) if (onBoard(b.phase)) map.set(b.id, { id: b.id, col: b.col, row: b.row });
+    return map;
+  }, [win, cells, balloons]);
+  const bursting = !!win && win.burst && win.fx && win.focus === null;
   return (
-    <div ref={root} className={styles.board} role="group" aria-label={label} data-mood={mood} data-dim={dimmed || undefined} data-lit={lit ? '' : undefined}>
+    <div ref={root} className={styles.board} role="group" aria-label={label} data-mood={mood} data-dim={dimmed || undefined} data-lit={lit ? '' : undefined}
+      data-burst={bursting || undefined} style={win ? ({ '--win-ms': `${win.ms}ms` } as CSSProperties) : undefined}>
       <div className={styles.cells}>
         {reels && (
           <div key={reels.key} className={styles.reels} data-kind={reels.kind} aria-hidden="true">
@@ -309,7 +347,7 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
         {cells.map(c => (
           <div key={c.id} className={styles.cell} data-mode={c.mode} data-sym={c.symbol} data-win={lit?.has(c.id) || undefined}
             style={{ '--c': c.col, '--r': c.row, '--delay': `${c.delay + (c.mode === 'reel' ? (GOREME_ROWS - 1 - c.row) * 14 : 0)}ms`, '--dur': `${c.dur}ms` } as CSSProperties}>
-            <GoremeSymbol sprite symbol={c.symbol} state={stateOf(c.id)} label={cellLabel(c.symbol, c.col, c.row, 0)} />
+            <div className={styles.fx}><GoremeSymbol sprite symbol={c.symbol} state={stateOf(c.id)} label={cellLabel(c.symbol, c.col, c.row, 0)} /></div>
           </div>
         ))}
         {gust && (
@@ -318,6 +356,7 @@ export const GoremeBoard = memo(function GoremeBoard({ ref, label, cellLabel, mo
           </div>
         )}
       </div>
+      {win && spots && <GoremeWinFx show={win} spots={spots} />}
       {path && (
         <div key={path.key} className={styles.path} aria-hidden="true" data-testid="goreme-ways-path" style={{ '--len': path.counts.length } as CSSProperties}>
           <span className={styles.pathLine} />

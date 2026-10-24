@@ -94,7 +94,18 @@
     "aria": "Session info",
     "clock": "Time",
     "session": "Session",
-    "net": "Net"
+    "net": "Net",
+    "stats": {
+      "toggle": "Session stats",
+      "title": "Session statistics",
+      "rounds": "Rounds",
+      "spent": "Total bet",
+      "won": "Total win",
+      "sessionRtp": "Session RTP",
+      "expectedRtp": "Expected RTP",
+      "partial": "only rounds with a stated RTP",
+      "note": "Expected RTP is the bet-weighted average of the modes you played and describes millions of rounds. A short session can differ from it a lot; that is not a fault."
+    }
   },
   "settings": {
     "title": "Settings",
@@ -170,5 +181,54 @@
       "SERVICE_UNAVAILABLE": "The server is not accepting rounds right now.",
       "UNKNOWN": "The server did not accept the round."
     }
+  },
+  "breakdown": {
+    "open": "Round breakdown",
+    "title": "Round breakdown",
+    "historyAria": "Round breakdown of round {id}",
+    "meta": "Bet {bet} · {mode} · round {id}",
+    "base": "Base spin",
+    "free": "Free spin {n}",
+    "quietFree": "{n, plural, one {# free spin} other {# free spins}} without a win",
+    "step": {
+      "tumble": "Tumble {n}",
+      "board": "Board {n}",
+      "chain": "Gear-lock chain",
+      "drop": "Drop"
+    },
+    "line": {
+      "cluster": "{count} symbols",
+      "ways": "{count} reels · {ways, plural, one {# way} other {# ways}}",
+      "spoke": "Spoke {spoke} · {count} slices · rotation {rotation}",
+      "scatter": "{count} scatters",
+      "pool": "{rows} terraces · pool {slot}"
+    },
+    "factor": {
+      "crystals": "crystals ×{value}",
+      "orbs": "storm stones ×{value}",
+      "total": "total multiplier ×{value}",
+      "stain": "stain ×{value}",
+      "hub": "hub ×{value}",
+      "template": "constellation ×{value}",
+      "global": "global ×{value}",
+      "sky": "sky ×{value}",
+      "ways": "{value} weighted ways"
+    },
+    "deduct": "− {amount} already paid",
+    "clamped": "capped",
+    "pool": "Pool",
+    "pathAria": "Path {path} (L = left, R = right)",
+    "groupSum": "Sum {sum}",
+    "floor": "rounded down to 0.01×",
+    "spinSum": "Tumble wins {sum}",
+    "spinWin": "Spin win",
+    "sumSpins": "Sum of all spins",
+    "cap": "Max win {cap} reached",
+    "total": "Round total",
+    "payout": "Payout = bet {bet} × {times}",
+    "checkOk": "✓ Equals the engine payout {amount} ({engine})",
+    "checkBad": "✗ The breakdown gives {amount}, the engine paid {engine}",
+    "note": "Every amount is taken from the engine's round result; multipliers apply exactly as shown and the sum is the payout. × = times the bet.",
+    "noWin": "No win in this round."
   }
 }

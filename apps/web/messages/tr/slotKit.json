@@ -94,7 +94,18 @@
     "aria": "Oturum bilgisi",
     "clock": "Saat",
     "session": "Oturum",
-    "net": "Net"
+    "net": "Net",
+    "stats": {
+      "toggle": "Oturum istatistiği",
+      "title": "Oturum istatistiği",
+      "rounds": "Tur",
+      "spent": "Toplam bahis",
+      "won": "Toplam kazanç",
+      "sessionRtp": "Oturum RTP",
+      "expectedRtp": "Beklenen RTP",
+      "partial": "yalnızca RTP'si belli turlar",
+      "note": "Beklenen RTP, oynadığın modların bahis ağırlıklı ortalamasıdır ve milyonlarca turun sonucudur. Kısa oturumlarda oturum RTP'si ondan çok sapabilir; bu bir hata değildir."
+    }
   },
   "settings": {
     "title": "Ayarlar",
@@ -170,5 +181,54 @@
       "SERVICE_UNAVAILABLE": "Sunucu şu an turu kabul etmiyor.",
       "UNKNOWN": "Sunucu turu kabul etmedi."
     }
+  },
+  "breakdown": {
+    "open": "Tur ayrıntısı",
+    "title": "Tur ayrıntısı",
+    "historyAria": "{id} turunun ayrıntısı",
+    "meta": "Bahis {bet} · {mode} · tur {id}",
+    "base": "Ana dönüş",
+    "free": "Bedava dönüş {n}",
+    "quietFree": "Kazançsız {n} bedava dönüş",
+    "step": {
+      "tumble": "Düşme {n}",
+      "board": "Tahta {n}",
+      "chain": "Dişli Kilidi zinciri",
+      "drop": "Damla"
+    },
+    "line": {
+      "cluster": "{count} sembol",
+      "ways": "{count} makara · {ways} yol",
+      "spoke": "Kol {spoke} · {count} dilim · dönüş {rotation}",
+      "scatter": "{count} dağınık",
+      "pool": "{rows} teras · havuz {slot}"
+    },
+    "factor": {
+      "crystals": "kristaller ×{value}",
+      "orbs": "fırtına taşları ×{value}",
+      "total": "toplam çarpan ×{value}",
+      "stain": "leke ×{value}",
+      "hub": "göbek ×{value}",
+      "template": "takımyıldız ×{value}",
+      "global": "genel ×{value}",
+      "sky": "gök ×{value}",
+      "ways": "{value} ağırlıklı yol"
+    },
+    "deduct": "− {amount} önceden ödendi",
+    "clamped": "tavan",
+    "pool": "Havuz",
+    "pathAria": "Yol {path} (L = sol, R = sağ)",
+    "groupSum": "Toplam {sum}",
+    "floor": "0,01×'e aşağı yuvarlanır",
+    "spinSum": "Düşme kazançları {sum}",
+    "spinWin": "Dönüş kazancı",
+    "sumSpins": "Bütün dönüşlerin toplamı",
+    "cap": "Azami kazanç {cap} doldu",
+    "total": "Tur toplamı",
+    "payout": "Ödeme = bahis {bet} × {times}",
+    "checkOk": "✓ Motorun ödemesine eşit: {amount} ({engine})",
+    "checkBad": "✗ Ayrıntı {amount} veriyor, motor {engine} ödedi",
+    "note": "Her tutar motorun tur sonucundan alınır; çarpanlar gösterildiği gibi uygulanır ve toplam ödemedir. × = bahsin katı.",
+    "noWin": "Bu turda kazanç yok."
   }
 }

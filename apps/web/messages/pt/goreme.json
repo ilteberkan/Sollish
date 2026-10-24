@@ -63,6 +63,9 @@
     "tier4": "Aurora lendária",
     "sky": "Multiplicador do céu"
   },
+  "winLine": {
+    "label": "{name} {reels}× · {ways, plural, one {# way} other {# ways}}{multiplier, plural, =1 {} other { · ×#}} = {amount}"
+  },
   "banner": {
     "ways": "{name} · {length} rolos · {ways} {ways, plural, one {way} other {ways}}{more, plural, =0 {} other { · +# mais}}{sky, plural, =1 {} other { · CÉU ×#}}",
     "merge": "Fusão · ×{multiplier}",
