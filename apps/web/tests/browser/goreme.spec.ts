@@ -236,6 +236,7 @@ test('Şafak Şöleni moorings: a balloon flies into its own sky-band slot, the 
   expect(steps.at(-1)).toBe(moored.length);
   // each moored balloon's board element climbed out of the window (same id) and was parked on its slot
   for (const id of moored) expect((anim.balloons[id] ?? []).some(t => t[2] === 'moor' || t[2] === 'parked'), `balloon ${id} flight`).toBe(true);
+  console.log('DBG', JSON.stringify(anim.slotDist), JSON.stringify(Object.fromEntries(moored.map(id => [id, (anim.balloons[id] ?? []).slice(-6)]))));
   for (const id of moored) expect(anim.slotDist[id] ?? Infinity, `balloon ${id} reached its slot`).toBeLessThan(14);
   expect(anim.dupMax, 'frames with a band balloon still on the board layer').toBeLessThan(8);
   expect(anim.fx['goreme-sky-plus'] ?? 0).toBeGreaterThan(0);
