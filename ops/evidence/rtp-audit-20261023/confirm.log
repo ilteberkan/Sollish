@@ -7,3 +7,6 @@ exit 0
 wrote /home/user/sollish/ops/evidence/rtp-audit-20261023/confirm-damla-low-12.json
 exit 0
 # 2026-10-24T09:33:13Z bash scripts/use-node.sh node --import tsx ops/rtp-audit/resim.ts --rounds 20000000 --workers 2 --namespace sollish-rtp-audit-20261023/confirm --games goreme --modes buy --parts ops/evidence/rtp-audit-20261023/confirm-parts --out ops/evidence/rtp-audit-20261023/confirm-goreme-buy.json
+{"game":"goreme","mode":"buy","rtp":0.958339,"ci95":[0.956509,0.960169],"claimed":0.95858,"z":-0.182,"verdict":"PASS","sec":1460.1}
+wrote /home/user/sollish/ops/evidence/rtp-audit-20261023/confirm-goreme-buy.json
+exit 0
