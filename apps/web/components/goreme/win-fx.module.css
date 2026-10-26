@@ -11,7 +11,7 @@
   transform: translate(calc(var(--c) * 100%), calc(var(--r) * 100%));
 }
 
-/* spark burst: a flash ring and eight kilim diamonds thrown out from the cell centre (long / short rays alternate) */
+/* spark burst: a flash ring and six kilim diamonds thrown out from the cell centre (long / short rays alternate) */
 .spark b, .spark i { position: absolute; left: 50%; top: 50%; }
 .spark b {
   width: 76%;
@@ -19,7 +19,7 @@
   margin: -38% 0 0 -38%;
   border-radius: 50%;
   border: 2px solid rgba(255, 236, 170, 0.95);
-  box-shadow: 0 0 12px rgba(255, 210, 100, 0.8), inset 0 0 10px rgba(255, 210, 100, 0.6);
+  background: radial-gradient(closest-side, transparent 62%, rgba(255, 210, 100, 0.45) 86%, transparent);
   opacity: 0;
   animation: ring 0.62s cubic-bezier(0.2, 0.8, 0.3, 1) calc(var(--i) * 60ms) both;
 }
@@ -28,7 +28,7 @@
   aspect-ratio: 1;
   margin: -6.5% 0 0 -6.5%;
   background: linear-gradient(135deg, #fff6c8 0 30%, #ffd65e 30% 62%, #bc2c30 62%);
-  box-shadow: 0 0 0 1px #3a1604;
+  outline: 1px solid #3a1604;
   opacity: 0;
   animation: ray 0.72s cubic-bezier(0.15, 0.7, 0.3, 1) calc(var(--i) * 60ms) both;
 }
@@ -50,7 +50,8 @@
 
 /* the focused way traced reel by reel: each reel-to-reel bundle fades in after the one before */
 .ways { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.ways line { stroke: #ffe28a; stroke-width: 3.5px; stroke-linecap: round; filter: drop-shadow(0 0 3px rgba(255, 190, 70, 0.95)); }
+.ways line { stroke: #ffe28a; stroke-width: 3.5px; stroke-linecap: round; }
+.ways line.glow { stroke: rgba(255, 180, 60, 0.45); stroke-width: 9px; }
 .seg { opacity: 0; animation: seg 0.26s ease-out calc(var(--i) * 95ms) both; }
 @keyframes seg { from { opacity: 0; } to { opacity: 0.92; } }
 .node::before {
@@ -62,7 +63,7 @@
   aspect-ratio: 1;
   margin: -8% 0 0 -8%;
   background: linear-gradient(135deg, #fff8dc, #ffd65e 55%, #bc2c30 56%);
-  box-shadow: 0 0 0 1.5px #3a1604, 0 0 10px rgba(255, 210, 100, 0.9);
+  outline: 1.5px solid #3a1604;
   transform: rotate(45deg);
   animation: node 0.3s cubic-bezier(0.2, 1.6, 0.4, 1) calc(var(--i) * 95ms) both;
 }

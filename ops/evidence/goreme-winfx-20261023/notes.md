@@ -49,23 +49,32 @@ Tohumlar spec dosyalarındaki sabitler (Cascade `TUMBLES`, Asena `CONST_WALK`, E
   patlama, telefon). Kareler `frames/after-multi-01-summary.jpg` … `04-way3.jpg`, `frames/after-big-phone-01-swell.jpg`
   … `04-way-trace.jpg`, tabakalar `frames/*-sheet.jpg`. Etiketler: Al Göz 1,34 + Çivit Göz 0,72 + Mor Yonca 5,74 =
   7,80 = ödeme.
-- fps (`requestAnimationFrame` aralıkları, spin anından itibaren, ekran görüntüsüz koşu `NOSHOT`):
+- fps (`requestAnimationFrame` aralıkları). Bu ölçümler sırasında başka bir ajanın Playwright paketi aynı makinede
+  koşuyordu (3–4 süreç); next dev + yazılım çizimli headless Chromium. Mutlak sayılar güvenilir değil; aynı koşu
+  içindeki **dönüş evresi (kazançtan önceki 3 s)** ile **kazanç dizisi** kıyaslandı.
 
-| Koşu | Pencere | ort. fps | p95 kare | >50 ms kare |
+| Koşu (3 tekrar) | Dönüş evresi fps | Kazanç dizisi fps | p95 kare | Dosya |
 |---|---|---|---|---|
-| Önce, MULTI, 1280×800 | 7,3 s | 19,1 | 183 ms | 32 |
-| Sonra, BIG (patlama), 390×844 | 9,3 s | 32,6 | 83 ms | 32 |
-| Sonra, MULTI, kazanç dizisi | bkz. `fps-after.json` | | | |
+| MULTI, 1280×800, ilk sürüm (8 ışın, SVG drop-shadow) | 12–23 | 6,5–11,6 | 333–433 ms | (yalnız burada) |
+| MULTI, 1280×800, son sürüm (6 ışın, filtre/box-shadow yok) | 22–29 | 15,2–17,3 | 150–200 ms | `fps-after-multi-desktop.json` |
+| MULTI, azaltılmış hareket | 42–43 | 48–50 | 50 ms | `fps-after-multi-desktop-reduced-motion.json` |
+| BIG (patlama), 390×844 | 21–43 | 8,9–24,4 | 117–283 ms | `fps-after-big-phone.json` |
+| Önce (eski vurgu), MULTI, bütün pencere | — | 19,1 (tüm 7 s) | 183 ms | `goreme-before-multi.webm` koşusu |
 
-  Not: next dev + yazılım çizimli headless Chromium + aynı anda koşan diğer ajan testleri; sayılar arasında 2× oynama
-  var, yalnız kıyas için. Önceki animasyon denetimi bu makinede 42–50 fps ölçmüştü. 60 fps iddiası yok; gerçek
-  telefonda ölçülmeli.
+  Ayrıştırma (CSS ile kapatarak, 2'şer koşu): kıvılcımlar, sembol nabzı/halesi, hücre zıplaması ve etiketlerin her biri
+  ~2 fps; hepsi kapalıyken kazanç dizisi ~25 fps (dönüş evresi ~30) — kalan maliyet sayaç, şerit, yol çipleri ve
+  mevcut sahne. Sonuç: FX bu yüklü yazılım çizicide dizi süresince fps'i yaklaşık üçte bir düşürüyor. 60 fps iddiası
+  yok; gerçek telefonda ve üretim derlemesinde ölçülmeli. Videolar ilk sürümle (8 ışın) kaydedildi; görünüm farkı
+  ışın sayısı ve çizgi parıltısı (filtre yerine ikinci geniş çizgi).
 
 ## 4. Testler
 
 - Birim: `apps/web/tests/goreme-wins.test.ts` (bölme, 3 mod × 4 bahis × 120 tohum: tahtalar + dağılım = ödeme;
   zaman çizelgesi: win-line sırası/zamanı, turbo kısalır, azaltılmış hareket etiketleri korur, büyük tahta patlar,
   kalkış zinciri toplamı). `goreme-timeline.test.ts` hız testi `summaryMs`'i zamanlama alanı olarak ayıklar.
+- Sonuçlar (26 Ekim, next dev): `pnpm --filter @sollish/web test` 447/447; `typecheck` temiz; goreme.spec +
+  game-info.spec 28/30 geçti — `Şafak Şöleni moorings` kırmızı (aşağıda), `game-info crash` yük altında URL
+  zaman aşımı, tek başına tekrar koşunca geçti. CSS son düzeltmesinden sonra 3 yeni test + 390×844 testi 4/4 geçti.
 - Tarayıcı (`tests/browser/goreme.spec.ts`, 3 yeni test): etiketler motor yollarıyla birebir, tutarlar ödemeye
   eşit, kararma, yol izi, kıvılcım, son tahta = motor tahtası; azaltılmış hareket: etiketler + kararma var, kıvılcım ve
   patlama yok; büyük tahta patlar, ödeme değişmez.
@@ -79,3 +88,6 @@ Tohumlar spec dosyalarındaki sabitler (Cascade `TUMBLES`, Asena `CONST_WALK`, E
 - Patlama yalnız ≥5× tahtalarda; küçük kazançlarda zıplama + kıvılcım. Balon wild'ları patlamaz.
 - Etiket listesi çok yollu tahtada (9 yola kadar) alt satırları kapatır; telefonda yazı 11 px.
 - Üretim önizlemesi (`build:cloudflare`) bu değişiklikle koşulmadı; yalnız next dev.
+- Telefon: kazanç katmanı tahtanın içinde mutlak konumlu, yerleşimi değiştirmez; 390×844 testi geçti, 360×740 ayrıca
+  ölçülmedi (katman sayfa yüksekliğine eklenmez).
+- `docs/handoff/STATUS.md` güncellenmedi (koordinatöre bırakıldı).

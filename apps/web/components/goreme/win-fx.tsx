@@ -35,8 +35,8 @@ export interface GoremeWinShow {
 }
 export interface GoremeWinSpot { id: number; col: number; row: number }
 
-/** Kilim spark directions (deg): eight rays, alternating long and short like a woven star. */
-const RAYS = [0, 45, 90, 135, 180, 225, 270, 315];
+/** Kilim spark directions (deg): six rays, alternating long and short like a woven star (kept low: software rasterisers). */
+const RAYS = [0, 60, 120, 180, 240, 300];
 
 export const GoremeWinFx = memo(function GoremeWinFx({ show, spots }: { show: GoremeWinShow; spots: ReadonlyMap<number, GoremeWinSpot> }) {
   const focusLine = show.focus === null ? null : show.lines[show.focus] ?? null;
@@ -55,7 +55,10 @@ export const GoremeWinFx = memo(function GoremeWinFx({ show, spots }: { show: Go
           {cols.slice(0, -1).map((col, i) => (
             <g key={col} className={styles.seg} style={{ '--i': i } as CSSProperties}>
               {byCol.get(col)!.flatMap(a => (byCol.get(cols[i + 1]!) ?? []).map(b => (
-                <line key={`${a.id}-${b.id}`} x1={a.col * 100 + 50} y1={a.row * 100 + 50} x2={b.col * 100 + 50} y2={b.row * 100 + 50} vectorEffect="non-scaling-stroke" />
+                <g key={`${a.id}-${b.id}`}>
+                  <line className={styles.glow} x1={a.col * 100 + 50} y1={a.row * 100 + 50} x2={b.col * 100 + 50} y2={b.row * 100 + 50} vectorEffect="non-scaling-stroke" />
+                  <line x1={a.col * 100 + 50} y1={a.row * 100 + 50} x2={b.col * 100 + 50} y2={b.row * 100 + 50} vectorEffect="non-scaling-stroke" />
+                </g>
               )))}
             </g>
           ))}

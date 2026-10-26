@@ -6,30 +6,33 @@
   "results": [
     {
       "run": 0,
-      "winFrames": 35,
-      "winSeconds": 3.27,
-      "avgFps": 10.7,
-      "p95FrameMs": 299.9,
-      "maxFrameMs": 433.4,
-      "over50ms": 18
+      "spinPhaseFps3sBeforeWin": 21.8,
+      "winFrames": 52,
+      "winSeconds": 3,
+      "avgFps": 17.3,
+      "p95FrameMs": 183.3,
+      "maxFrameMs": 199.9,
+      "over50ms": 16
     },
     {
       "run": 1,
-      "winFrames": 23,
-      "winSeconds": 3.53,
-      "avgFps": 6.5,
-      "p95FrameMs": 366.6,
-      "maxFrameMs": 500,
-      "over50ms": 19
+      "spinPhaseFps3sBeforeWin": 25.1,
+      "winFrames": 51,
+      "winSeconds": 3.05,
+      "avgFps": 16.7,
+      "p95FrameMs": 150,
+      "maxFrameMs": 233.3,
+      "over50ms": 18
     },
     {
       "run": 2,
-      "winFrames": 42,
-      "winSeconds": 2.98,
-      "avgFps": 14.1,
-      "p95FrameMs": 150,
-      "maxFrameMs": 216.7,
-      "over50ms": 23
+      "spinPhaseFps3sBeforeWin": 29.2,
+      "winFrames": 46,
+      "winSeconds": 3.03,
+      "avgFps": 15.2,
+      "p95FrameMs": 200.1,
+      "maxFrameMs": 233.3,
+      "over50ms": 18
     }
   ]
 }
