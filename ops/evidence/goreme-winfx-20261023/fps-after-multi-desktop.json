@@ -1,0 +1,35 @@
+{
+  "fill": 1839862647,
+  "viewport": "1280x800",
+  "window": "frames while [data-testid=goreme-win-fx] is mounted (summary + every way)",
+  "server": "next dev :3000",
+  "results": [
+    {
+      "run": 0,
+      "winFrames": 35,
+      "winSeconds": 3.27,
+      "avgFps": 10.7,
+      "p95FrameMs": 299.9,
+      "maxFrameMs": 433.4,
+      "over50ms": 18
+    },
+    {
+      "run": 1,
+      "winFrames": 23,
+      "winSeconds": 3.53,
+      "avgFps": 6.5,
+      "p95FrameMs": 366.6,
+      "maxFrameMs": 500,
+      "over50ms": 19
+    },
+    {
+      "run": 2,
+      "winFrames": 42,
+      "winSeconds": 2.98,
+      "avgFps": 14.1,
+      "p95FrameMs": 150,
+      "maxFrameMs": 216.7,
+      "over50ms": 23
+    }
+  ]
+}
