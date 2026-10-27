@@ -5,7 +5,7 @@
   },
   "heading": "Sollish 娱乐场大厅",
   "hero": {
-    "region": "精选游戏",
+    "region": "橱窗",
     "slide": "第 {index} 张，共 {total} 张",
     "prev": "上一个精选游戏",
     "next": "下一个精选游戏",
@@ -185,5 +185,48 @@
     "note": "数值为模拟得出的 DEMO 估算，未经认证。",
     "similar": "相似游戏",
     "similarSubtitle": "更多 Sollish 原创游戏。"
+  },
+  "sx": {
+    "cat": {
+      "live": "直播",
+      "slots": "老虎机",
+      "new": "新游戏",
+      "fair": "可证公平",
+      "exclusive": "Sollish 独家",
+      "instant": "即时游戏"
+    },
+    "exclusive": {
+      "title": "Sollish 独有",
+      "badge": "独家"
+    },
+    "featured": {
+      "title": "精选游戏"
+    },
+    "favorites": {
+      "title": "你的收藏"
+    },
+    "info": {
+      "open": "{name}：游戏信息",
+      "title": "游戏信息",
+      "play": "开始游戏",
+      "close": "关闭"
+    },
+    "live": {
+      "title": "直播游戏",
+      "tabs": "直播桌类型",
+      "featured": "精选",
+      "exclusive": "Sollish 独家",
+      "new": "最新",
+      "pool": "彩池投注",
+      "range": "{min}–{max} DEMO",
+      "rangeAria": "投注范围 {min}–{max} DEMO 积分",
+      "host": "Jev",
+      "hostAria": "角落教练 Jev",
+      "shared": "共享比赛",
+      "results": "最近结果",
+      "resultsEmpty": "结果见竞技场",
+      "empty": "此标签下暂无直播桌。",
+      "status": "直播"
+    }
   }
 }

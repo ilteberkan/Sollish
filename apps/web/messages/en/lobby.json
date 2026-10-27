@@ -5,7 +5,7 @@
   },
   "heading": "Sollish casino lobby",
   "hero": {
-    "region": "Featured games",
+    "region": "Showcase",
     "slide": "{index} of {total}",
     "prev": "Previous featured game",
     "next": "Next featured game",
@@ -185,5 +185,48 @@
     "note": "Figures are simulated DEMO estimates, not certified.",
     "similar": "Similar games",
     "similarSubtitle": "More Sollish originals."
+  },
+  "sx": {
+    "cat": {
+      "live": "Live",
+      "slots": "Slots",
+      "new": "New games",
+      "fair": "Provably fair",
+      "exclusive": "Sollish Exclusive",
+      "instant": "Instant games"
+    },
+    "exclusive": {
+      "title": "Only at Sollish",
+      "badge": "EXCLUSIVE"
+    },
+    "featured": {
+      "title": "Featured games"
+    },
+    "favorites": {
+      "title": "Your favorites"
+    },
+    "info": {
+      "open": "{name}: game info",
+      "title": "Game info",
+      "play": "Play",
+      "close": "Close"
+    },
+    "live": {
+      "title": "Live casino",
+      "tabs": "Live table types",
+      "featured": "Featured",
+      "exclusive": "Sollish Exclusive",
+      "new": "New",
+      "pool": "Pool betting",
+      "range": "{min}–{max} DEMO",
+      "rangeAria": "Bet range {min}–{max} DEMO credits",
+      "host": "Jev",
+      "hostAria": "Corner coach Jev",
+      "shared": "Shared match",
+      "results": "Recent results",
+      "resultsEmpty": "Results in the arena",
+      "empty": "No live tables in this tab yet.",
+      "status": "Live"
+    }
   }
 }

@@ -5,7 +5,7 @@
   },
   "heading": "Lobby do cassino Sollish",
   "hero": {
-    "region": "Jogos em destaque",
+    "region": "Vitrine",
     "slide": "{index} de {total}",
     "prev": "Jogo em destaque anterior",
     "next": "Próximo jogo em destaque",
@@ -185,5 +185,48 @@
     "note": "Os valores são estimativas simuladas de DEMO, não certificadas.",
     "similar": "Jogos parecidos",
     "similarSubtitle": "Mais originais Sollish."
+  },
+  "sx": {
+    "cat": {
+      "live": "Ao vivo",
+      "slots": "Slots",
+      "new": "Jogos novos",
+      "fair": "Comprovadamente justo",
+      "exclusive": "Exclusivo Sollish",
+      "instant": "Jogos instantâneos"
+    },
+    "exclusive": {
+      "title": "Só na Sollish",
+      "badge": "EXCLUSIVO"
+    },
+    "featured": {
+      "title": "Jogos em destaque"
+    },
+    "favorites": {
+      "title": "Seus favoritos"
+    },
+    "info": {
+      "open": "{name}: informações do jogo",
+      "title": "Informações do jogo",
+      "play": "Jogar",
+      "close": "Fechar"
+    },
+    "live": {
+      "title": "Cassino ao vivo",
+      "tabs": "Tipos de mesas ao vivo",
+      "featured": "Destaques",
+      "exclusive": "Exclusivo Sollish",
+      "new": "Novos",
+      "pool": "Apostas em pool",
+      "range": "{min}–{max} DEMO",
+      "rangeAria": "Faixa de aposta {min}–{max} créditos DEMO",
+      "host": "Jev",
+      "hostAria": "Treinador de corner Jev",
+      "shared": "Luta compartilhada",
+      "results": "Resultados recentes",
+      "resultsEmpty": "Resultados na arena",
+      "empty": "Ainda não há mesas ao vivo nesta aba.",
+      "status": "Ao vivo"
+    }
   }
 }

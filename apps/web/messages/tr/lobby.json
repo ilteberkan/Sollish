@@ -5,7 +5,7 @@
   },
   "heading": "Sollish kumarhane lobisi",
   "hero": {
-    "region": "Öne çıkan oyunlar",
+    "region": "Vitrin",
     "slide": "{index} / {total}",
     "prev": "Önceki öne çıkan oyun",
     "next": "Sonraki öne çıkan oyun",
@@ -185,5 +185,48 @@
     "note": "Değerler simülasyonla bulunmuş DEMO tahminleridir, sertifikalı değildir.",
     "similar": "Benzer oyunlar",
     "similarSubtitle": "Diğer Sollish orijinalleri."
+  },
+  "sx": {
+    "cat": {
+      "live": "Canlı",
+      "slots": "Slotlar",
+      "new": "Yeni oyunlar",
+      "fair": "Kanıtlanabilir adil",
+      "exclusive": "Sollish Özel",
+      "instant": "Anında oyunlar"
+    },
+    "exclusive": {
+      "title": "Sadece Sollish'te",
+      "badge": "ÖZEL"
+    },
+    "featured": {
+      "title": "Öne çıkan oyunlar"
+    },
+    "favorites": {
+      "title": "Favorilerin"
+    },
+    "info": {
+      "open": "{name}: oyun bilgisi",
+      "title": "Oyun bilgisi",
+      "play": "Oyna",
+      "close": "Kapat"
+    },
+    "live": {
+      "title": "Canlı casino",
+      "tabs": "Canlı masa türleri",
+      "featured": "Öne çıkan",
+      "exclusive": "Sollish Özel",
+      "new": "Yeni",
+      "pool": "Havuz bahsi",
+      "range": "{min}–{max} DEMO",
+      "rangeAria": "Bahis aralığı {min}–{max} DEMO kredisi",
+      "host": "Jev",
+      "hostAria": "Köşe antrenörü Jev",
+      "shared": "Ortak maç",
+      "results": "Son sonuçlar",
+      "resultsEmpty": "Sonuçlar arenada",
+      "empty": "Bu sekmede henüz canlı masa yok.",
+      "status": "Canlı"
+    }
   }
 }

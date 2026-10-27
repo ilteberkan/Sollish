@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Icon } from '@/components/icons';
+import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import { useT } from '@/lib/i18n/client';
 import { poster } from '@/lib/lobby/posters';
 import { lobbyStats } from '@/lib/lobby/stats';
@@ -12,6 +12,15 @@ import s from './lobby.module.css';
 
 const SLIDES = LOBBY_GAMES.filter(g => g.hero !== null).sort((a, b) => a.hero! - b.hero!);
 const ROTATE_MS = 7000;
+
+/** 888 promo headline: the brand word in the accent italic, the rest plain ("Göreme: Şafak Balonları" → *Göreme*
+ * Şafak Balonları). Names without a colon accent their first word. */
+export function splitHeadline(title: string): [string, string] {
+  const at = title.search(/[:：]/);
+  if (at > 0) return [title.slice(0, at).trim(), title.slice(at + 1).trim()];
+  const space = title.indexOf(' ');
+  return space > 0 ? [title.slice(0, space), title.slice(space + 1)] : [title, ''];
+}
 
 /**
  * Featured carousel (WAI-ARIA APG "auto-rotating carousel"): a scroll-snap strip (native swipe), previous/next and one
@@ -87,18 +96,17 @@ export function LobbyHero() {
         return <div key={slide.id} className={s.slide} role="group" aria-roledescription="slide" aria-label={t('hero.slide', { index: i + 1, total: SLIDES.length })} inert={i !== index ? true : undefined}
           style={{ '--tone-a': slide.tone[0], '--tone-b': slide.tone[1] } as React.CSSProperties}>
           <picture className={s.slideArt}>
-            {wide && <source media="(min-width: 1200px)" srcSet={wide.src} width={wide.width} height={wide.height} />}
+            {wide && <source media="(min-width: 800px)" srcSet={wide.src} width={wide.width} height={wide.height} />}
             {narrow && <img src={narrow.src} width={narrow.width} height={narrow.height} alt="" loading={i === 0 ? 'eager' : 'lazy'} fetchPriority={i === 0 ? 'high' : 'low'} decoding="async" draggable={false} />}
           </picture>
           <div className={s.slideCopy}>
-            <span className={s.eyebrow}><Icon name="spark" size={14} />{t('hero.eyebrow')}</span>
-            <h2 className={s.slideTitle}>{title}</h2>
+            <h2 className={s.slideTitle}>{(() => { const [accent, rest] = splitHeadline(title); return <><em className="accent">{accent}</em>{rest && <> {rest}</>}</>; })()}</h2>
             <p className={s.slideText}>{t(`cards.${slide.id}.tagline`)}</p>
             <StatChips stats={lobbyStats(slide.id)} />
             <div className={s.slideActions}>
-              <Link href={slide.href} prefetch={false} className={`button primary ${s.cta}`} aria-disabled={activeDemo || undefined} onClick={event => { if (activeDemo) event.preventDefault(); }}
+              <Link href={slide.href} prefetch={false} className={s.limeCta} aria-disabled={activeDemo || undefined} onClick={event => { if (activeDemo) event.preventDefault(); }}
                 onPointerEnter={i === index ? prefetch : undefined} onFocus={i === index ? prefetch : undefined}>
-                <Icon name="play" size={16} />{t('hero.play')}<span className="sr-only">: {title}</span>
+                {t('hero.play')}<span className="sr-only">: {title}</span>
               </Link>
               <span className={s.demoNote}>{t('tile.demo')} · {t('tile.provider')}</span>
             </div>
@@ -106,11 +114,11 @@ export function LobbyHero() {
         </div>;
       })}
     </div>
+    <button type="button" className={s.heroArrow} data-side="prev" aria-label={t('hero.prev')} onClick={() => goTo(index - 1)}><ChevronLeft size={22} className={s.dirIcon} aria-hidden="true" /></button>
+    <button type="button" className={s.heroArrow} data-side="next" aria-label={t('hero.next')} onClick={() => goTo(index + 1)}><ChevronRight size={22} className={s.dirIcon} aria-hidden="true" /></button>
     <div className={s.heroControls}>
-      <button type="button" className={s.heroButton} aria-label={paused ? t('hero.resume') : t('hero.pause')} onClick={() => setPaused(p => !p)} hidden={reduced}><Icon name={paused ? 'play' : 'pause'} size={16} /></button>
-      <button type="button" className={s.heroButton} aria-label={t('hero.prev')} onClick={() => goTo(index - 1)}><Icon name="chevron" size={18} className={s.flip} /></button>
       <div className={s.dots}>{SLIDES.map((slide, i) => <button key={slide.id} type="button" className={s.dot} aria-current={i === index ? 'true' : undefined} aria-label={t('hero.goTo', { name: tc(`games.${slide.id}`) })} onClick={() => goTo(i)}><span /></button>)}</div>
-      <button type="button" className={s.heroButton} aria-label={t('hero.next')} onClick={() => goTo(index + 1)}><Icon name="chevron" size={18} /></button>
+      <button type="button" className={s.heroPause} aria-label={paused ? t('hero.resume') : t('hero.pause')} onClick={() => setPaused(p => !p)} hidden={reduced}>{paused ? <Play size={14} aria-hidden="true" /> : <Pause size={14} aria-hidden="true" />}</button>
     </div>
   </section>;
 }

@@ -5,7 +5,7 @@
   },
   "heading": "Sollish Casino-Lobby",
   "hero": {
-    "region": "Empfohlene Spiele",
+    "region": "Schaufenster",
     "slide": "{index} von {total}",
     "prev": "Vorheriges empfohlenes Spiel",
     "next": "Nächstes empfohlenes Spiel",
@@ -185,5 +185,48 @@
     "note": "Die Werte sind simulierte DEMO-Schätzungen, nicht zertifiziert.",
     "similar": "Ähnliche Spiele",
     "similarSubtitle": "Weitere Sollish-Originale."
+  },
+  "sx": {
+    "cat": {
+      "live": "Live",
+      "slots": "Slots",
+      "new": "Neue Spiele",
+      "fair": "Nachweislich fair",
+      "exclusive": "Sollish Exklusiv",
+      "instant": "Sofortspiele"
+    },
+    "exclusive": {
+      "title": "Nur bei Sollish",
+      "badge": "EXKLUSIV"
+    },
+    "featured": {
+      "title": "Empfohlene Spiele"
+    },
+    "favorites": {
+      "title": "Deine Favoriten"
+    },
+    "info": {
+      "open": "{name}: Spielinfo",
+      "title": "Spielinfo",
+      "play": "Spielen",
+      "close": "Schließen"
+    },
+    "live": {
+      "title": "Live-Casino",
+      "tabs": "Arten von Live-Tischen",
+      "featured": "Empfohlen",
+      "exclusive": "Sollish Exklusiv",
+      "new": "Neu",
+      "pool": "Poolwetten",
+      "range": "{min}–{max} DEMO",
+      "rangeAria": "Einsatzbereich {min}–{max} DEMO-Credits",
+      "host": "Jev",
+      "hostAria": "Eckcoach Jev",
+      "shared": "Gemeinsames Match",
+      "results": "Letzte Ergebnisse",
+      "resultsEmpty": "Ergebnisse in der Arena",
+      "empty": "In diesem Tab gibt es noch keine Live-Tische.",
+      "status": "Live"
+    }
   }
 }

@@ -2,32 +2,33 @@
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useId, useMemo, useRef } from 'react';
-import { Icon } from '@/components/icons';
+import { ArrowLeft, Gem, Grid2x2, Heart, Radio, Search, ShieldCheck, Sparkles, Star, Zap, type LucideIcon } from 'lucide-react';
 import { useT } from '@/lib/i18n/client';
-import type { MessageKey } from '@/lib/i18n/catalog';
 import { LOBBY_GAMES, LOBBY_GAME_BY_ID, gamesIn, inCategory, isLobbyCategory, matchesQuery, searchText, type LobbyCategory, type LobbyGame } from '@/lib/lobby/games';
 import { clearRecentGames, setLobbyQuery, useFavorites, useLobbyQuery, useRecent } from '@/lib/lobby/store';
-import { poster } from '@/lib/lobby/posters';
-import { useProduct } from '@/components/providers';
 import { LobbyHero } from './lobby-hero';
 import { CategoryTiles } from './lobby-categories';
 import { Row } from './lobby-row';
-import { FeatureTile, GameTile, MiniTile, WideTile, usePrefetch } from './lobby-tile';
+import { GameTile, MiniTile } from './lobby-tile';
+import { BandTile, ExclusiveTile, RoundTile } from './lobby-cards';
+import { LiveGrid } from './lobby-live';
 import s from './lobby.module.css';
 
-const CHIPS: ReadonlyArray<{ category: LobbyCategory; icon: string; label: MessageKey<'common'> | null }> = [
-  { category: 'all', icon: 'grid', label: null },
-  { category: 'slots', icon: 'slots', label: 'shell.nav.slots' },
-  { category: 'live', icon: 'broadcast', label: 'shell.nav.live' },
-  { category: 'instant', icon: 'bolt', label: 'shell.nav.instant' },
-  { category: 'new', icon: 'spark', label: 'shell.nav.new' },
-  { category: 'fair', icon: 'shield', label: 'shell.nav.fair' },
-  { category: 'favorites', icon: 'heart', label: 'shell.nav.favorites' },
+/* Category filter bar of the grid view (888 Live Casino tab pattern): every category plus favorites. */
+const FILTERS: ReadonlyArray<{ category: LobbyCategory; Icon: LucideIcon }> = [
+  { category: 'all', Icon: Grid2x2 },
+  { category: 'live', Icon: Radio },
+  { category: 'slots', Icon: Star },
+  { category: 'new', Icon: Sparkles },
+  { category: 'fair', Icon: ShieldCheck },
+  { category: 'exclusive', Icon: Gem },
+  { category: 'instant', Icon: Zap },
+  { category: 'favorites', Icon: Heart },
 ];
-const SLOTS = gamesIn('slots');
+const EXCLUSIVE = gamesIn('exclusive');
+/* Featured: the hero order first, then the other slots (888 round "Featured games" row). */
+const FEATURED = [...LOBBY_GAMES.filter(g => g.hero !== null).sort((a, b) => a.hero! - b.hero!), ...gamesIn('slots').filter(g => g.hero === null)];
 const INSTANT = gamesIn('instant');
-const NEW = gamesIn('new');
-const FAIR = gamesIn('fair');
 
 /** Category in the URL (?c=), so Back, reload and shared links keep it; switching only rewrites history (no fetch). */
 function useCategory(): [LobbyCategory, (next: LobbyCategory) => void] {
@@ -42,44 +43,6 @@ function useCategory(): [LobbyCategory, (next: LobbyCategory) => void] {
   return [category, set];
 }
 
-/** Ringside feature card in the Live row: the arena art with the pool facts. */
-function LiveCard() {
-  const t = useT('lobby');
-  const tc = useT('common');
-  const { activeDemo } = useProduct();
-  const game = LOBBY_GAME_BY_ID.ringside;
-  const wide = poster('ringside', 'wide'), narrow = poster('ringside', 'narrow');
-  return <article className={s.live}>
-    <Link href={game.href} prefetch={false} className={s.liveLink} aria-label={t('liveCard.aria')} aria-disabled={activeDemo || undefined} onClick={event => { if (activeDemo) event.preventDefault(); }}>
-      <picture className={s.liveArt}>
-        {wide && <source media="(min-width: 1200px)" srcSet={wide.src} width={wide.width} height={wide.height} />}
-        {narrow && <img src={narrow.src} width={narrow.width} height={narrow.height} alt="" loading="lazy" decoding="async" draggable={false} />}
-      </picture>
-      <span className={s.liveCopy}>
-        {/* Status only: the lobby has no public audience feed (the arena's online/participant counts reach only clients
-            connected to the arena socket), so no viewer number is shown here. */}
-        <span className={s.liveTag} data-testid="live-status"><span className="live-dot" aria-hidden="true" />{t('liveCard.tag')}</span>
-        <b className={s.liveTitle}>{tc('games.ringside')}</b>
-        <span className={s.liveText}>{t('cards.ringside.tagline')}</span>
-        <span className={s.facts}>
-          <span><b>{t('liveCard.factWindowValue')}</b>{t('liveCard.factWindow')}</span>
-          <span><b>{t('liveCard.factRoundsValue')}</b>{t('liveCard.factRounds')}</span>
-          <span><b>{t('liveCard.factMarketsValue')}</b>{t('liveCard.factMarkets')}</span>
-          <span><b>{t('liveCard.factFeeValue')}</b>{t('liveCard.factFee')}</span>
-        </span>
-        <span className={`button primary ${s.cta}`}>{t('liveCard.cta')}<Icon name="arrow" size={16} /></span>
-      </span>
-    </Link>
-  </article>;
-}
-
-/** The way into the verifier from the provably-fair panel. */
-function VerifyLink() {
-  const t = useT('lobby');
-  const prefetch = usePrefetch('/verify');
-  return <Link href="/verify" prefetch={false} className={`button primary ${s.cta}`} onPointerEnter={prefetch} onFocus={prefetch}><Icon name="shield" size={16} />{t('rows.fair.cta')}</Link>;
-}
-
 export function Lobby() {
   const t = useT('lobby');
   const tc = useT('common');
@@ -89,15 +52,16 @@ export function Lobby() {
   const recent = useRecent();
   const resultsId = useId();
   const isFav = (g: LobbyGame) => favorites.includes(g.id);
+  const title = (g: LobbyGame) => tc(`games.${g.id}`);
   const filtered = useMemo(() => {
     const q = query.trim();
     return LOBBY_GAMES.filter(g => inCategory(g, q ? 'all' : category, favorites) && (!q || matchesQuery(searchText(g, tc(`games.${g.id}`), [tc(`shell.kind.${g.kind}`), t(`cards.${g.id}.type`)]), q)));
   }, [query, category, favorites, t, tc]);
   const searching = query.trim().length > 0;
-  const chipLabel = (c: LobbyCategory) => c === 'all' ? t('chips.all') : tc(CHIPS.find(x => x.category === c)!.label!);
-  const tile = (g: LobbyGame, priority = false) => <li key={g.id}><GameTile game={g} favorite={isFav(g)} priority={priority} /></li>;
+  const label = (c: LobbyCategory) => c === 'all' ? t('chips.all') : c === 'favorites' ? tc('shell.nav.favorites') : t(`sx.cat.${c}`);
   const recentGames = recent.map(id => LOBBY_GAME_BY_ID[id]).filter(Boolean);
-  // "View all" and the category tiles open the category grid; when the click came from further down the page, bring
+  const favoriteGames = favorites.map(id => LOBBY_GAME_BY_ID[id]).filter(Boolean);
+  // "View all" and the category squares open the category grid; when the click came from further down the page, bring
   // the grid's heading into view (the rows above it are gone).
   const reveal = useRef(false);
   const openCategory = useCallback((next: LobbyCategory) => { reveal.current = true; setLobbyQuery(''); setCategory(next); }, [setCategory]);
@@ -110,76 +74,59 @@ export function Lobby() {
 
   return <div className={s.lobby}>
     <h1 className="sr-only">{t('heading')}</h1>
-    {!searching && category === 'all' && <LobbyHero />}
-
-    <div className={s.toolbar}>
-      <div className={s.chipRow} role="group" aria-label={t('chips.label')}>
-        {CHIPS.map(chip => <button key={chip.category} type="button" className={s.chip} aria-pressed={!searching && category === chip.category}
-          onClick={() => { setLobbyQuery(''); setCategory(chip.category); }}>
-          <Icon name={chip.icon} size={16} />{chipLabel(chip.category)}
-          {chip.category === 'favorites' && favorites.length > 0 && <span className={s.chipCount}>{favorites.length}</span>}
-        </button>)}
-      </div>
-    </div>
-
-    {!searching && category === 'all' && <CategoryTiles favorites={favorites} onSelect={openCategory} />}
+    {!searching && category === 'all' && <>
+      <LobbyHero />
+      <CategoryTiles onSelect={openCategory} />
+    </>}
 
     {searching || category !== 'all' ? <section id="lobby-results" className={s.results} aria-labelledby={resultsId}>
+      <div className={s.toolbar}>
+        <div className={s.chipRow} role="group" aria-label={t('chips.label')}>
+          {FILTERS.map(({ category: c, Icon }) => <button key={c} type="button" className={s.chip} aria-pressed={!searching && category === c}
+            onClick={() => { setLobbyQuery(''); setCategory(c); }}>
+            <Icon size={15} aria-hidden="true" />{label(c)}
+            {c === 'favorites' && favorites.length > 0 && <span className={s.chipCount}>{favorites.length}</span>}
+          </button>)}
+        </div>
+      </div>
       <div className={s.rowHead}>
         <div className={s.rowTitles}>
-          <h2 id={resultsId}>{searching ? t('grid.results') : chipLabel(category)}{!searching && <span className={s.count}>{t('row.count', { count: filtered.length })}</span>}</h2>
+          <h2 id={resultsId}><span className={s.rowTitleText}>{searching ? t('grid.results') : label(category)}</span>{!searching && <span className={s.count}>{t('row.count', { count: filtered.length })}</span>}</h2>
           {searching && <p role="status">{t('grid.resultsCount', { count: filtered.length, query: query.trim() })}</p>}
         </div>
-        <div className={s.rowActions}><button type="button" className={s.viewAll} onClick={() => { setLobbyQuery(''); setCategory('all'); }}><Icon name="arrow" size={16} className={s.flip} />{t('grid.back')}</button></div>
+        <div className={s.rowActions}><button type="button" className={s.viewAll} onClick={() => { setLobbyQuery(''); setCategory('all'); }}><ArrowLeft size={15} className={s.dirIcon} aria-hidden="true" />{t('grid.back')}</button></div>
       </div>
       {filtered.length > 0
-        ? <ul className={s.grid}>{filtered.map(g => tile(g))}</ul>
+        ? <ul className={s.grid}>{filtered.map(g => <li key={g.id}><GameTile game={g} favorite={isFav(g)} /></li>)}</ul>
         : <div className={s.empty}>
-          <Icon name={category === 'favorites' && !searching ? 'heart' : 'search'} size={28} />
+          {category === 'favorites' && !searching ? <Heart size={28} aria-hidden="true" /> : <Search size={28} aria-hidden="true" />}
           <p>{category === 'favorites' && !searching ? t('grid.favoritesEmpty') : t('grid.empty', { query: query.trim() })}</p>
-          <button type="button" className="button" onClick={() => { setLobbyQuery(''); setCategory('all'); }}>{t('grid.reset')}</button>
+          <button type="button" className={s.ghostPill} onClick={() => { setLobbyQuery(''); setCategory('all'); }}>{t('grid.reset')}</button>
         </div>}
-      {category === 'fair' && !searching && <p className={s.fairNote}><Link href="/verify" className="text-button">{t('rows.fair.cta')}<Icon name="arrow" size={16} /></Link></p>}
+      {category === 'fair' && !searching && <p className={s.fairNote}><Link href="/verify" className={s.limePill}><ShieldCheck size={15} aria-hidden="true" />{t('rows.fair.cta')}</Link></p>}
     </section> : <>
       {/* Reserved before hydration when this browser has a list (html[data-recent], set by the head script). */}
       <div className={s.recentSlot}>
-        {recentGames.length > 0 && <Row id="row-recent" title={t('rows.recent.title')} subtitle={t('rows.recent.subtitle')} action={<button type="button" className={s.viewAll} onClick={clearRecentGames}>{t('rows.recent.clear')}</button>}>
+        {recentGames.length > 0 && <Row id="row-recent" variant="mini" title={t('rows.recent.title')} action={<button type="button" className={s.viewAll} onClick={clearRecentGames}>{t('rows.recent.clear')}</button>}>
           {recentGames.map(g => <li key={g.id}><MiniTile game={g} /></li>)}
         </Row>}
       </div>
-      <Row id="row-originals" title={t('rows.originals.title')} subtitle={t('rows.originals.subtitle')} count={SLOTS.length} onViewAll={() => openCategory('slots')}>
-        {SLOTS.map(g => tile(g, true))}
+      <Row id="row-exclusive" variant="square" title={t('sx.exclusive.title')} onViewAll={() => openCategory('exclusive')}>
+        {EXCLUSIVE.map((g, i) => <li key={g.id}><ExclusiveTile game={g} favorite={isFav(g)} title={title(g)} priority={i < 4} /></li>)}
+      </Row>
+      {favoriteGames.length > 0 && <Row id="row-favorites" variant="square" title={t('sx.favorites.title')} onViewAll={() => openCategory('favorites')}>
+        {favoriteGames.map(g => <li key={g.id}><ExclusiveTile game={g} favorite title={title(g)} badge={g.exclusive === true} /></li>)}
+      </Row>}
+      <Row id="row-featured" variant="round" title={t('sx.featured.title')} icon={<Star size={18} className={s.rowIcon} aria-hidden="true" />} onViewAll={() => openCategory('slots')}>
+        {FEATURED.map(g => <li key={g.id}><RoundTile game={g} title={title(g)} /></li>)}
       </Row>
       <div className={s.deferred}>
-        <section className={s.row} aria-labelledby="row-live-title">
-          <div className={s.rowHead}><div className={s.rowTitles}><h2 id="row-live-title">{t('rows.live.title')}</h2><p>{t('rows.live.subtitle')}</p></div>
-            <div className={s.rowActions}><button type="button" className={s.viewAll} onClick={() => openCategory('live')} aria-label={t('row.viewAllAria', { title: t('rows.live.title') })}>{t('row.viewAll')}<Icon name="arrow" size={16} /></button></div></div>
-          <LiveCard />
-        </section>
+        <LiveGrid onViewAll={() => openCategory('live')} />
       </div>
       <div className={s.deferred}>
-        <Row id="row-instant" title={t('rows.instant.title')} subtitle={t('rows.instant.subtitle')} count={INSTANT.length} onViewAll={() => openCategory('instant')} wide>
-          {INSTANT.map(g => <li key={g.id}><WideTile game={g} favorite={isFav(g)} /></li>)}
+        <Row id="row-instant" variant="band" title={t('rows.instant.title')} icon={<Zap size={18} className={s.rowIcon} aria-hidden="true" />} onViewAll={() => openCategory('instant')}>
+          {INSTANT.map(g => <li key={g.id}><BandTile game={g} title={title(g)} /></li>)}
         </Row>
-      </div>
-      <div className={s.deferred}>
-        <Row id="row-new" title={t('rows.new.title')} subtitle={t('rows.new.subtitle')} count={NEW.length} onViewAll={() => openCategory('new')} wide>
-          {NEW.map(g => <li key={g.id}><FeatureTile game={g} favorite={isFav(g)} /></li>)}
-        </Row>
-      </div>
-      <div className={s.deferred}>
-        <section className={s.fairPanel} aria-labelledby="row-fair-title">
-          <div className={s.fairCopy}>
-            <span className={s.verifyIcon}><Icon name="shield" size={26} /></span>
-            <h2 id="row-fair-title">{t('rows.fair.title')}<span className={s.count}>{t('row.count', { count: FAIR.length })}</span></h2>
-            <p>{t('rows.fair.subtitle')}</p>
-            <div className={s.fairActions}>
-              <VerifyLink />
-              <button type="button" className={s.viewAll} onClick={() => openCategory('fair')} aria-label={t('row.viewAllAria', { title: t('rows.fair.title') })}>{t('row.viewAll')}<Icon name="arrow" size={16} /></button>
-            </div>
-          </div>
-          <ul className={s.fairList}>{FAIR.map(g => <li key={g.id}><MiniTile game={g} /></li>)}</ul>
-        </section>
       </div>
     </>}
     <p className={s.footnote}>{t('footnote')}</p>

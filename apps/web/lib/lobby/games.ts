@@ -8,8 +8,8 @@
 export const LOBBY_GAME_IDS = ['tarhun', 'ebru', 'cezeri', 'asena', 'cascade', 'ringside', 'crash', 'coinflip', 'damla', 'goreme'] as const;
 export type LobbyGameId = (typeof LOBBY_GAME_IDS)[number];
 
-/** Lobby sections. `slots`/`live`/`instant` are kinds; `new`, `fair` and `favorites` are cross-cutting. */
-export const LOBBY_CATEGORIES = ['all', 'slots', 'live', 'instant', 'new', 'fair', 'favorites'] as const;
+/** Lobby sections. `slots`/`live`/`instant` are kinds; `new`, `fair`, `exclusive` and `favorites` are cross-cutting. */
+export const LOBBY_CATEGORIES = ['all', 'slots', 'live', 'instant', 'new', 'fair', 'exclusive', 'favorites'] as const;
 export type LobbyCategory = (typeof LOBBY_CATEGORIES)[number];
 export type LobbyKind = 'slot' | 'live' | 'instant';
 
@@ -39,20 +39,23 @@ export interface LobbyGame {
   readonly keywords: string;
   /** "Sollish Original" label: a game designed in-house from scratch (not a slot-genre title). */
   readonly original?: boolean;
+  /** "Sollish Exclusive" (lobby "Only at Sollish" row and category): a title with its own world, characters and art, made
+   * for Sollish (not a generic genre game such as Crash, Coinflip or the Candy Cascade practice slot). */
+  readonly exclusive?: boolean;
 }
 
 const game = (g: LobbyGame) => Object.freeze(g);
 export const LOBBY_GAMES: readonly LobbyGame[] = Object.freeze([
-  game({ id: 'goreme', href: '/game/goreme', kind: 'slot', icon: 'balloon', short: 'Göreme', released: '2026-10-21', isNew: true, provablyFair: true, hero: 0, tone: ['#b8708a', '#2c2357'], keywords: 'balloon cappadocia kapadokya balon ways sky gok safak dawn' }),
-  game({ id: 'asena', href: '/game/asena', kind: 'slot', icon: 'stars', short: 'Asena', released: '2026-10-12', isNew: true, provablyFair: true, hero: 1, tone: ['#1b2a5c', '#0a1024'], keywords: 'wolf star constellation kurt yildiz cluster' }),
-  game({ id: 'cezeri', href: '/game/cezeri', kind: 'slot', icon: 'gears', short: 'Cezeri', released: '2026-10-12', isNew: true, provablyFair: true, hero: 2, tone: ['#13505a', '#0b1a22'], keywords: 'wheel gear clock elephant cark disli saat' }),
-  game({ id: 'ebru', href: '/game/ebru', kind: 'slot', icon: 'ink', short: 'Ebru', released: '2026-10-12', isNew: true, provablyFair: true, hero: 3, tone: ['#5a2a3a', '#1a0f18'], keywords: 'ink marbling flower murekkep cicek cluster' }),
-  game({ id: 'tarhun', href: '/game/tarhun', kind: 'slot', icon: 'storm', short: 'Tarhun', released: '2026-10-12', isNew: true, provablyFair: true, hero: 4, tone: ['#24406a', '#0a1222'], keywords: 'storm lightning god firtina simsek tumble' }),
+  game({ id: 'goreme', href: '/game/goreme', kind: 'slot', icon: 'balloon', short: 'Göreme', released: '2026-10-21', isNew: true, provablyFair: true, hero: 0, tone: ['#b8708a', '#2c2357'], keywords: 'balloon cappadocia kapadokya balon ways sky gok safak dawn', exclusive: true }),
+  game({ id: 'asena', href: '/game/asena', kind: 'slot', icon: 'stars', short: 'Asena', released: '2026-10-12', isNew: true, provablyFair: true, hero: 1, tone: ['#1b2a5c', '#0a1024'], keywords: 'wolf star constellation kurt yildiz cluster', exclusive: true }),
+  game({ id: 'cezeri', href: '/game/cezeri', kind: 'slot', icon: 'gears', short: 'Cezeri', released: '2026-10-12', isNew: true, provablyFair: true, hero: 2, tone: ['#13505a', '#0b1a22'], keywords: 'wheel gear clock elephant cark disli saat', exclusive: true }),
+  game({ id: 'ebru', href: '/game/ebru', kind: 'slot', icon: 'ink', short: 'Ebru', released: '2026-10-12', isNew: true, provablyFair: true, hero: 3, tone: ['#5a2a3a', '#1a0f18'], keywords: 'ink marbling flower murekkep cicek cluster', exclusive: true }),
+  game({ id: 'tarhun', href: '/game/tarhun', kind: 'slot', icon: 'storm', short: 'Tarhun', released: '2026-10-12', isNew: true, provablyFair: true, hero: 4, tone: ['#24406a', '#0a1222'], keywords: 'storm lightning god firtina simsek tumble', exclusive: true }),
   game({ id: 'cascade', href: '/game/cascade', kind: 'slot', icon: 'candy', short: 'Candy Cascade', released: '2026-10-11', isNew: false, provablyFair: true, hero: null, tone: ['#4a2a6a', '#160f2a'], keywords: 'candy sweet tumble seker' }),
-  game({ id: 'ringside', href: '/live/ringside', kind: 'live', icon: 'boxing', short: 'Ringside', released: '2026-10-09', isNew: false, provablyFair: true, hero: null, tone: ['#5a2414', '#0e1a26'], keywords: 'boxing fight live boks dovus canli pool' }),
+  game({ id: 'ringside', href: '/live/ringside', kind: 'live', icon: 'boxing', short: 'Ringside', released: '2026-10-09', isNew: false, provablyFair: true, hero: null, tone: ['#5a2414', '#0e1a26'], keywords: 'boxing fight live boks dovus canli pool', exclusive: true }),
   game({ id: 'crash', href: '/game/crash', kind: 'instant', icon: 'crash', short: 'Crash', released: '2026-10-01', isNew: false, provablyFair: false, hero: null, tone: ['#4a1e14', '#0d0f15'], keywords: 'multiplier cash out carpan cikis' }),
   game({ id: 'coinflip', href: '/game/coinflip', kind: 'instant', icon: 'coin', short: 'Coinflip', released: '2026-10-01', isNew: false, provablyFair: false, hero: null, tone: ['#123a46', '#0a1118'], keywords: 'coin heads tails yazi tura para' }),
-  game({ id: 'damla', href: '/game/damla', kind: 'instant', icon: 'drop', short: 'Damla', released: '2026-10-21', isNew: true, provablyFair: true, hero: null, tone: ['#1d6f7c', '#0a1c26'], keywords: 'plinko drop pamukkale damla water terrace travertine su teras havuz', original: true }),
+  game({ id: 'damla', href: '/game/damla', kind: 'instant', icon: 'drop', short: 'Damla', released: '2026-10-21', isNew: true, provablyFair: true, hero: null, tone: ['#1d6f7c', '#0a1c26'], keywords: 'plinko drop pamukkale damla water terrace travertine su teras havuz', original: true, exclusive: true }),
 ]);
 
 export const LOBBY_GAME_BY_ID: Readonly<Record<LobbyGameId, LobbyGame>> = Object.freeze(Object.fromEntries(LOBBY_GAMES.map(g => [g.id, g])) as Record<LobbyGameId, LobbyGame>);
@@ -90,6 +93,7 @@ export function inCategory(game: LobbyGame, category: LobbyCategory, favorites: 
     case 'instant': return game.kind === 'instant';
     case 'new': return game.isNew;
     case 'fair': return game.provablyFair;
+    case 'exclusive': return game.exclusive === true;
     case 'favorites': return favorites.includes(game.id);
   }
 }

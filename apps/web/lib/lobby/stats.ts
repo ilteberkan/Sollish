@@ -4,7 +4,7 @@
  * ops/evidence/<game>-2026101x/rtp.json); max win comes from the engine-free SLOT_GAME_META. tests/lobby.test.ts fails
  * when a copy drifts from its engine, the same rule as SLOT_GAME_META. Simulated DEMO estimates, not certified RTPs.
  */
-import { SLOT_GAME_META } from '@sollish/protocol';
+import { LIVE_MAX_BET_CENTS, LIVE_MIN_BET_CENTS, SLOT_GAME_META } from '@sollish/protocol';
 import { LOBBY_GAME_BY_ID, type LobbyGameId } from './games';
 
 /** Standard mode: return / cost and the standard deviation of the per-round return in cost units. */
@@ -27,6 +27,9 @@ export const COINFLIP_DEMO = Object.freeze({ rtp: 0.98, maxMultiplier: 1.96, std
 export const DAMLA_LOBBY = Object.freeze({ rtp: 0.984467773 });
 /** Ringside pools: integer pari-mutuel, 2 % fee per settled pool, refunds without fee. No fixed RTP or max win. */
 export const RINGSIDE_POOL_FEE = 0.02;
+/** Ringside admission range per ticket in DEMO credit cents: the protocol's LIVE limits, which the Ringside tape
+ * validator (packages/protocol/src/ringside.ts `stake`, 100..50 000) enforces too. tests/lobby.test.ts pins both. */
+export const RINGSIDE_STAKE_CENTS = Object.freeze({ min: LIVE_MIN_BET_CENTS, max: LIVE_MAX_BET_CENTS });
 
 export type Volatility = 'low' | 'medium' | 'high' | 'veryHigh' | 'player';
 /** Bands on the standard deviation of one round's return in cost units (evidence `stdDev`). */

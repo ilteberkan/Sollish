@@ -149,3 +149,30 @@ test('category lists and similar games come from the registry', () => {
   }
   assert.deepEqual(similarGames('crash').map(g => g.id).slice(0, 1), ['coinflip']);
 });
+
+test('exclusive category, live tables and the Ringside admission range come from the registry and protocol', async () => {
+  const { LIVE_MIN_BET_CENTS, LIVE_MAX_BET_CENTS, parseRingServer } = await import('@sollish/protocol');
+  const { RINGSIDE_STAKE_CENTS } = await import('../lib/lobby/stats');
+  const { LIVE_TABLES, LIVE_TABS, inLiveTab } = await import('../lib/lobby/live');
+  assert.deepEqual(gamesIn('exclusive').map(g => g.id), ['goreme', 'asena', 'cezeri', 'ebru', 'tarhun', 'ringside', 'damla']);
+  assert.ok(!inCategory(LOBBY_GAME_BY_ID.crash, 'exclusive') && !inCategory(LOBBY_GAME_BY_ID.cascade, 'exclusive'));
+  assert.ok(isLobbyCategory('exclusive'));
+  assert.deepEqual(RINGSIDE_STAKE_CENTS, { min: LIVE_MIN_BET_CENTS, max: LIVE_MAX_BET_CENTS });
+  assert.deepEqual(RINGSIDE_STAKE_CENTS, { min: 100, max: 50_000 });
+  // The Ringside tape validator accepts exactly this range (packages/protocol/src/ringside.ts `stake`).
+  assert.equal(typeof parseRingServer, 'function');
+  assert.deepEqual(LIVE_TABLES.map(t => t.game.id), ['ringside']);
+  const ringside = LIVE_TABLES[0]!;
+  assert.deepEqual(ringside.results, [], 'no public results feed: the lobby never invents results');
+  assert.deepEqual(LIVE_TABS.filter(tab => inLiveTab(ringside, tab)), ['featured', 'exclusive', 'pool']);
+});
+
+test('every locale has the lobby design keys (sx.*) with the same shape as English', () => {
+  const shape = (o: unknown): unknown => typeof o === 'object' && o ? Object.fromEntries(Object.entries(o).map(([k, v]) => [k, shape(v)])) : typeof o;
+  const en = JSON.parse(readFileSync(join(import.meta.dirname, '../messages/en/lobby.json'), 'utf8'));
+  for (const locale of ['de', 'es', 'fr', 'it', 'ko', 'pt', 'tr', 'zh']) {
+    const lobby = JSON.parse(readFileSync(join(import.meta.dirname, `../messages/${locale}/lobby.json`), 'utf8'));
+    assert.deepEqual(shape(lobby.sx), shape(en.sx), locale);
+    for (const c of ['live', 'slots', 'new', 'fair', 'exclusive', 'instant']) assert.ok(lobby.sx.cat[c].length > 0, `${locale} sx.cat.${c}`);
+  }
+});

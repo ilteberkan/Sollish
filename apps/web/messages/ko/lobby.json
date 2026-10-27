@@ -5,7 +5,7 @@
   },
   "heading": "Sollish 카지노 로비",
   "hero": {
-    "region": "추천 게임",
+    "region": "쇼케이스",
     "slide": "{total}개 중 {index}번째",
     "prev": "이전 추천 게임",
     "next": "다음 추천 게임",
@@ -185,5 +185,48 @@
     "note": "수치는 시뮬레이션으로 얻은 DEMO 추정치이며 인증되지 않았습니다.",
     "similar": "비슷한 게임",
     "similarSubtitle": "더 많은 Sollish 오리지널."
+  },
+  "sx": {
+    "cat": {
+      "live": "라이브",
+      "slots": "슬롯",
+      "new": "새 게임",
+      "fair": "증명 가능한 공정성",
+      "exclusive": "Sollish 전용",
+      "instant": "즉시 게임"
+    },
+    "exclusive": {
+      "title": "Sollish에서만",
+      "badge": "전용"
+    },
+    "featured": {
+      "title": "추천 게임"
+    },
+    "favorites": {
+      "title": "내 즐겨찾기"
+    },
+    "info": {
+      "open": "{name}: 게임 정보",
+      "title": "게임 정보",
+      "play": "플레이",
+      "close": "닫기"
+    },
+    "live": {
+      "title": "라이브 카지노",
+      "tabs": "라이브 테이블 종류",
+      "featured": "추천",
+      "exclusive": "Sollish 전용",
+      "new": "신규",
+      "pool": "풀 베팅",
+      "range": "{min}–{max} DEMO",
+      "rangeAria": "베팅 범위 {min}–{max} DEMO 크레딧",
+      "host": "Jev",
+      "hostAria": "코너 코치 Jev",
+      "shared": "공유 경기",
+      "results": "최근 결과",
+      "resultsEmpty": "결과는 아레나에서",
+      "empty": "이 탭에는 아직 라이브 테이블이 없습니다.",
+      "status": "라이브"
+    }
   }
 }

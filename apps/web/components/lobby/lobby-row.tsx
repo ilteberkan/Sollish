@@ -1,11 +1,19 @@
 'use client';
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
-import { Icon } from '@/components/icons';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useT } from '@/lib/i18n/client';
 import s from './lobby.module.css';
 
-/** Horizontal row: heading, "View all", scroll buttons; arrow keys move between the row's games. */
-export function Row({ id, title, subtitle, count, onViewAll, children, wide = false, action }: { id: string; title: string; subtitle?: string; count?: number; onViewAll?: () => void; children: ReactNode; wide?: boolean; action?: ReactNode }) {
+export type RowVariant = 'poster' | 'square' | 'round' | 'band' | 'mini';
+
+/**
+ * Horizontal row (888 / bet365 pattern): bold caps title left, "View all" pill and round prev/next buttons right, a
+ * scroll-snap strip with an edge arrow over the last visible card (pointer devices). Arrow keys move between the
+ * row's games; the edge arrow repeats the "next" button for the mouse and is hidden from assistive tech.
+ */
+export function Row({ id, title, subtitle, count, onViewAll, children, wide = false, action, variant = 'poster', icon }: {
+  id: string; title: string; subtitle?: string; count?: number; onViewAll?: () => void; children: ReactNode; wide?: boolean; action?: ReactNode; variant?: RowVariant; icon?: ReactNode;
+}) {
   const t = useT('lobby');
   const list = useRef<HTMLUListElement>(null);
   const [edges, setEdges] = useState({ start: true, end: false });
@@ -42,19 +50,23 @@ export function Row({ id, title, subtitle, count, onViewAll, children, wide = fa
     links[next]!.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   };
   const titleId = `${id}-title`;
-  return <section className={s.row} aria-labelledby={titleId}>
+  const rowVariant = wide ? 'wide' : variant;
+  return <section className={s.row} aria-labelledby={titleId} data-variant={rowVariant}>
     <div className={s.rowHead}>
       <div className={s.rowTitles}>
-        <h2 id={titleId}>{title}{count !== undefined && <span className={s.count}>{t('row.count', { count })}</span>}</h2>
+        <h2 id={titleId}>{icon}<span className={s.rowTitleText}>{title}</span>{count !== undefined && <span className={s.count}>{t('row.count', { count })}</span>}</h2>
         {subtitle && <p>{subtitle}</p>}
       </div>
       <div className={s.rowActions}>
         {action}
-        {onViewAll && <button type="button" className={s.viewAll} onClick={onViewAll} aria-label={t('row.viewAllAria', { title })}>{t('row.viewAll')}<Icon name="arrow" size={16} /></button>}
-        <button type="button" className={s.scrollButton} aria-label={t('row.prev', { title })} aria-controls={`${id}-list`} disabled={edges.start} onClick={() => page(-1)}><Icon name="chevron" size={18} className={s.flip} /></button>
-        <button type="button" className={s.scrollButton} aria-label={t('row.next', { title })} aria-controls={`${id}-list`} disabled={edges.end} onClick={() => page(1)}><Icon name="chevron" size={18} /></button>
+        {onViewAll && <button type="button" className={s.viewAll} onClick={onViewAll} aria-label={t('row.viewAllAria', { title })}>{t('row.viewAll')}</button>}
+        <button type="button" className={s.scrollButton} aria-label={t('row.prev', { title })} aria-controls={`${id}-list`} disabled={edges.start} onClick={() => page(-1)}><ChevronLeft size={18} className={s.dirIcon} aria-hidden="true" /></button>
+        <button type="button" className={s.scrollButton} aria-label={t('row.next', { title })} aria-controls={`${id}-list`} disabled={edges.end} onClick={() => page(1)}><ChevronRight size={18} className={s.dirIcon} aria-hidden="true" /></button>
       </div>
     </div>
-    <ul id={`${id}-list`} ref={list} className={s.rowList} data-wide={wide || undefined} onScroll={measure} onKeyDown={onKeyDown}>{children}</ul>
+    <div className={s.rowViewport}>
+      <ul id={`${id}-list`} ref={list} className={s.rowList} data-variant={rowVariant} onScroll={measure} onKeyDown={onKeyDown}>{children}</ul>
+      {!edges.end && <div className={s.edgeArrow} aria-hidden="true" onClick={() => page(1)}><ChevronRight size={22} className={s.dirIcon} /></div>}
+    </div>
   </section>;
 }

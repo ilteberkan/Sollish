@@ -5,7 +5,7 @@
   },
   "heading": "Lobby del casinò Sollish",
   "hero": {
-    "region": "Giochi in evidenza",
+    "region": "Vetrina",
     "slide": "{index} di {total}",
     "prev": "Gioco in evidenza precedente",
     "next": "Gioco in evidenza successivo",
@@ -185,5 +185,48 @@
     "note": "I valori sono stime DEMO simulate, non certificate.",
     "similar": "Giochi simili",
     "similarSubtitle": "Altri originali Sollish."
+  },
+  "sx": {
+    "cat": {
+      "live": "Live",
+      "slots": "Slot",
+      "new": "Nuovi giochi",
+      "fair": "Equità dimostrabile",
+      "exclusive": "Esclusiva Sollish",
+      "instant": "Giochi istantanei"
+    },
+    "exclusive": {
+      "title": "Solo su Sollish",
+      "badge": "ESCLUSIVO"
+    },
+    "featured": {
+      "title": "Giochi in evidenza"
+    },
+    "favorites": {
+      "title": "I tuoi preferiti"
+    },
+    "info": {
+      "open": "{name}: info sul gioco",
+      "title": "Info sul gioco",
+      "play": "Gioca",
+      "close": "Chiudi"
+    },
+    "live": {
+      "title": "Casinò dal vivo",
+      "tabs": "Tipi di tavoli dal vivo",
+      "featured": "In evidenza",
+      "exclusive": "Esclusiva Sollish",
+      "new": "Nuovi",
+      "pool": "Scommesse a pool",
+      "range": "{min}–{max} DEMO",
+      "rangeAria": "Puntata da {min} a {max} crediti DEMO",
+      "host": "Jev",
+      "hostAria": "Allenatore all’angolo Jev",
+      "shared": "Match condiviso",
+      "results": "Risultati recenti",
+      "resultsEmpty": "Risultati nell’arena",
+      "empty": "Ancora nessun tavolo dal vivo in questa scheda.",
+      "status": "Dal vivo"
+    }
   }
 }

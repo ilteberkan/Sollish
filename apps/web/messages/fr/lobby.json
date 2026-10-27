@@ -5,7 +5,7 @@
   },
   "heading": "Lobby du casino Sollish",
   "hero": {
-    "region": "Jeux à la une",
+    "region": "Vitrine",
     "slide": "{index} sur {total}",
     "prev": "Jeu à la une précédent",
     "next": "Jeu à la une suivant",
@@ -185,5 +185,48 @@
     "note": "Les chiffres sont des estimations DEMO simulées, non certifiées.",
     "similar": "Jeux similaires",
     "similarSubtitle": "Plus d’originaux Sollish."
+  },
+  "sx": {
+    "cat": {
+      "live": "En direct",
+      "slots": "Machines à sous",
+      "new": "Nouveaux jeux",
+      "fair": "Équité prouvable",
+      "exclusive": "Exclusivité Sollish",
+      "instant": "Jeux instantanés"
+    },
+    "exclusive": {
+      "title": "Uniquement sur Sollish",
+      "badge": "EXCLUSIF"
+    },
+    "featured": {
+      "title": "Jeux à la une"
+    },
+    "favorites": {
+      "title": "Tes favoris"
+    },
+    "info": {
+      "open": "{name} : infos du jeu",
+      "title": "Infos du jeu",
+      "play": "Jouer",
+      "close": "Fermer"
+    },
+    "live": {
+      "title": "Casino en direct",
+      "tabs": "Types de tables en direct",
+      "featured": "À la une",
+      "exclusive": "Exclusivité Sollish",
+      "new": "Nouveautés",
+      "pool": "Paris en pool",
+      "range": "{min}–{max} DEMO",
+      "rangeAria": "Mise de {min} à {max} crédits DEMO",
+      "host": "Jev",
+      "hostAria": "Coach de coin Jev",
+      "shared": "Match partagé",
+      "results": "Résultats récents",
+      "resultsEmpty": "Résultats dans l’arène",
+      "empty": "Aucune table en direct dans cet onglet pour l’instant.",
+      "status": "En direct"
+    }
   }
 }

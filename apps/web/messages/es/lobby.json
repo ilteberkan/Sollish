@@ -5,7 +5,7 @@
   },
   "heading": "Lobby del casino Sollish",
   "hero": {
-    "region": "Juegos destacados",
+    "region": "Escaparate",
     "slide": "{index} de {total}",
     "prev": "Juego destacado anterior",
     "next": "Juego destacado siguiente",
@@ -185,5 +185,48 @@
     "note": "Las cifras son estimaciones DEMO simuladas, no certificadas.",
     "similar": "Juegos similares",
     "similarSubtitle": "Más originales de Sollish."
+  },
+  "sx": {
+    "cat": {
+      "live": "En directo",
+      "slots": "Tragaperras",
+      "new": "Juegos nuevos",
+      "fair": "Justo y demostrable",
+      "exclusive": "Exclusivo Sollish",
+      "instant": "Juegos instantáneos"
+    },
+    "exclusive": {
+      "title": "Solo en Sollish",
+      "badge": "EXCLUSIVO"
+    },
+    "featured": {
+      "title": "Juegos destacados"
+    },
+    "favorites": {
+      "title": "Tus favoritos"
+    },
+    "info": {
+      "open": "{name}: información del juego",
+      "title": "Información del juego",
+      "play": "Jugar",
+      "close": "Cerrar"
+    },
+    "live": {
+      "title": "Casino en vivo",
+      "tabs": "Tipos de mesas en vivo",
+      "featured": "Destacados",
+      "exclusive": "Exclusivo Sollish",
+      "new": "Nuevos",
+      "pool": "Apuestas de pozo",
+      "range": "{min}–{max} DEMO",
+      "rangeAria": "Rango de apuesta {min}–{max} créditos DEMO",
+      "host": "Jev",
+      "hostAria": "Entrenador de esquina Jev",
+      "shared": "Combate compartido",
+      "results": "Resultados recientes",
+      "resultsEmpty": "Resultados en la arena",
+      "empty": "Todavía no hay mesas en vivo en esta pestaña.",
+      "status": "En vivo"
+    }
   }
 }

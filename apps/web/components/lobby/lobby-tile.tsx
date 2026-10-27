@@ -93,32 +93,6 @@ export function GameTile({ game, favorite, priority = false }: { game: LobbyGame
   </article>;
 }
 
-/** Landscape card (instant games row): poster left, pitch and chips right. */
-export function WideTile({ game, favorite }: { game: LobbyGame; favorite: boolean }) {
-  const t = useT('lobby');
-  const tc = useT('common');
-  const { activeDemo } = useProduct();
-  const id = useId();
-  const title = tc(`games.${game.id}`);
-  const art = poster(game.id, 'land') ?? poster(game.id, 'tile');
-  const prefetch = usePrefetch(game.href);
-  return <article className={s.wideTile} style={{ '--tone-a': game.tone[0], '--tone-b': game.tone[1] } as React.CSSProperties}>
-    <Link href={game.href} prefetch={false} className={s.wideLink} aria-labelledby={`${id}-t`} aria-describedby={`${id}-d`} aria-disabled={activeDemo || undefined}
-      onClick={event => { if (activeDemo) event.preventDefault(); }} onPointerEnter={prefetch} onFocus={prefetch} onTouchStart={prefetch}>
-      <span className={s.wideArt}>{art && <img src={art.src} width={art.width} height={art.height} alt="" loading="lazy" decoding="async" draggable={false} />}
-        <span className={s.badges}>{game.isNew && <span className={s.badge} data-tone="new">{t('tile.new')}</span>}<span className={s.badge} data-tone={game.original ? 'original' : undefined}>{game.original ? t('tile.sollishOriginal') : t('tile.original')}</span><span className={s.badge} data-tone="demo">{t('tile.demo')}</span></span>
-      </span>
-      <span className={s.wideBody}>
-        <b id={`${id}-t`} className={s.tileTitle}>{title}</b>
-        <span className={s.provider}>{t('tile.provider')} · {t(`cards.${game.id}.type`)}</span>
-        <span className={s.wideText}>{t(`cards.${game.id}.text`)}</span>
-        <span id={`${id}-d`}><StatChips stats={lobbyStats(game.id)} /></span>
-      </span>
-    </Link>
-    <FavoriteButton game={game} favorite={favorite} title={title} />
-  </article>;
-}
-
 /** Compact "recently played" chip: fixed height so the reserved row never shifts. */
 export function MiniTile({ game }: { game: LobbyGame }) {
   const tc = useT('common');
@@ -132,28 +106,3 @@ export function MiniTile({ game }: { game: LobbyGame }) {
   </Link>;
 }
 
-/** "New" row card: the 3:2 key art with the pitch below (a different rhythm from the portrait rows). */
-export function FeatureTile({ game, favorite }: { game: LobbyGame; favorite: boolean }) {
-  const t = useT('lobby');
-  const tc = useT('common');
-  const { activeDemo } = useProduct();
-  const id = useId();
-  const title = tc(`games.${game.id}`);
-  const art = poster(game.id, 'narrow') ?? poster(game.id, 'tile');
-  const prefetch = usePrefetch(game.href, game.kind !== 'live');
-  return <article className={s.feature} style={{ '--tone-a': game.tone[0], '--tone-b': game.tone[1] } as React.CSSProperties}>
-    <Link href={game.href} prefetch={false} className={s.featureLink} aria-labelledby={`${id}-t`} aria-describedby={`${id}-d`} aria-disabled={activeDemo || undefined}
-      onClick={event => { if (activeDemo) event.preventDefault(); }} onPointerEnter={prefetch} onFocus={prefetch} onTouchStart={prefetch}>
-      <span className={s.featureArt}>{art && <img src={art.src} width={art.width} height={art.height} alt="" loading="lazy" decoding="async" draggable={false} />}
-        <span className={s.badges}>{game.isNew && <span className={s.badge} data-tone="new">{t('tile.new')}</span>}{game.original && <span className={s.badge} data-tone="original">{t('tile.sollishOriginal')}</span>}<span className={s.badge} data-tone="demo">{t('tile.demo')}</span></span>
-      </span>
-      <span className={s.featureBody}>
-        <b id={`${id}-t`} className={s.tileTitle}>{title}</b>
-        <span className={s.provider}>{t('tile.provider')} · {t(`cards.${game.id}.type`)}</span>
-        <span className={s.featureText}>{t(`cards.${game.id}.tagline`)}</span>
-        <span id={`${id}-d`}><StatChips stats={lobbyStats(game.id)} compact /></span>
-      </span>
-    </Link>
-    <FavoriteButton game={game} favorite={favorite} title={title} />
-  </article>;
-}
