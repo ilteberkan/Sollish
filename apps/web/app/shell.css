@@ -84,6 +84,17 @@
 .shell-search-all { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 44px; padding: 0 10px; border-radius: var(--sx-radius); background: transparent; color: var(--sx-lime); font-weight: 600; font-size: 14px; }
 .shell-search-all:hover { background: var(--sx-surface-2); }
 
+/* ---------- community chat: closed by default, opened from the top bar or the sidebar square ---------- */
+.topbar .chat-toggle { display: inline-flex; }
+.topbar .chat-toggle.selected { color: var(--sx-lime); border-color: var(--sx-lime); }
+@media (max-width: 1199px) {
+  .desktop-chat { display: none; }
+  .workspace, .workspace.chat-collapsed { grid-template-columns: minmax(0, 1fr); }
+  dialog.mobile-chat-overlay { position: fixed; inset: 0; display: block; z-index: 50; margin: 0; width: 100vw; max-width: none; height: 100dvh; max-height: none; padding: 0; border: 0; background: transparent; color: var(--sx-text); }
+  dialog.mobile-chat-overlay::backdrop { background: rgb(0 0 0 / .72); }
+  .mobile-chat-panel { position: absolute; right: 0; top: 0; bottom: 0; width: min(380px, 100%); border-left: 1px solid var(--sx-line); background: var(--sx-bg-1); }
+}
+
 /* ---------- icon rail: labels stay in the accessibility tree and show as a tooltip ---------- */
 @media (min-width: 769px) and (max-width: 1199px) {
   :root { --sb-w: var(--sb-rail); }

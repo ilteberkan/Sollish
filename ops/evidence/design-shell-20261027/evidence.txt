@@ -1,0 +1,18 @@
+Design shell (part A) — 27 Oct 2026, local next dev (:3000, Next 16.3.8), not hosted, not deployed.
+
+Scope: --sx-* tokens + legacy mapping (apps/web/app/globals.css), local OFL fonts IBM Plex Sans 400-700 and
+Playfair Display italic 600/700 (apps/web/app/layout.tsx, apps/web/public/fonts/), 888-pattern shell
+(apps/web/components/shell.tsx, apps/web/app/shell.css), chat closed by default, i18n keys in 9 locales,
+test-page builder font embedding (ops/evidence/testpage-20261022/build.mjs, not re-run).
+
+Screenshots: before-*.png (old shell) and after-*.png at 1440x900, 834x1112, 390x844 for /, /live, /game/crash;
+after-chat-open-1440x900.png (inline panel), after-chat-open-834x1112.png (dialog).
+
+Checks (bash scripts/use-node.sh ...):
+- pnpm --filter @sollish/web typecheck            -> pass
+- pnpm --filter @sollish/web test                 -> 455/455 pass
+- test:browser lobby.spec.ts i18n.spec.ts product.spec.ts --workers=1 --output=<private dir>
+  (PLAYWRIGHT_SKIP_WEBSERVER=true, PLAYWRIGHT_BASE_URL=http://localhost:3000) -> 38 passed
+- Font probe (CDP CSS.getPlatformFontsForNode): "ŞğİşĞ" renders in IBM Plex Sans (latin-ext face),
+  em.accent renders in Playfair Display BoldItalic.
+Not covered: hosted/Cloudflare runtime, GitHub CI, owner visual acceptance.

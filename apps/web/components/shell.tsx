@@ -130,14 +130,16 @@ export function Shell({ children }: { children: ReactNode }) {
   const format = useFormat();
   const [walletLoaded, setWalletLoaded] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
-  const [chatHidden, setChatHidden] = useState(false);
+  // Community chat is closed by default (888/bet365 have no right panel); the top-bar button or the sidebar square opens
+  // it: inline beside the content on wide desktops (≥1200 px), as a dialog on tablets and phones.
+  const [chatHidden, setChatHidden] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [tip, setTip] = useState<{ text: string; top: number } | null>(null);
   const pref = useSidebarPref();
   const sidebarExpanded = pref ? pref === 'open' : kind === 'browse';
   // The arena needs the full width for the stage and the bet slip; chat stays one click away.
-  useEffect(() => { setChatHidden(arenaFocus); }, [arenaFocus]);
+  useEffect(() => { if (arenaFocus) setChatHidden(true); }, [arenaFocus]);
   // "Recently played" (this browser only) and a fresh search per page.
   useEffect(() => {
     const game = gameForPath(pathname);
@@ -147,13 +149,13 @@ export function Shell({ children }: { children: ReactNode }) {
   }, [pathname]);
   const chatDialog = useRef<HTMLDialogElement>(null);
   const menuDialog = useRef<HTMLDialogElement>(null);
-  const restoreChat = useRef<HTMLButtonElement>(null);
+  const chatButton = useRef<HTMLButtonElement>(null);
   const searchInput = useRef<HTMLInputElement>(null);
   const sidebar = useRef<HTMLElement>(null);
   useEffect(() => { if (walletOpen) setWalletLoaded(true); }, [walletOpen]);
   useEffect(() => {
     const desktop = window.matchMedia('(min-width: 769px)'), wide = window.matchMedia('(min-width: 1200px)');
-    const closeOnDesktop = () => { if (desktop.matches) { setChatOpen(false); setSearchOpen(false); } if (wide.matches) setMenuOpen(false); };
+    const closeOnDesktop = () => { if (desktop.matches) setSearchOpen(false); if (wide.matches) { setMenuOpen(false); setChatOpen(false); } else setChatHidden(true); };
     desktop.addEventListener('change', closeOnDesktop); wide.addEventListener('change', closeOnDesktop);
     return () => { desktop.removeEventListener('change', closeOnDesktop); wide.removeEventListener('change', closeOnDesktop); };
   }, []);
@@ -161,6 +163,9 @@ export function Shell({ children }: { children: ReactNode }) {
   useEffect(() => { if (menuOpen) menuDialog.current?.showModal(); else menuDialog.current?.close(); }, [menuOpen]);
   useEffect(() => { if (searchOpen) searchInput.current?.focus(); }, [searchOpen]);
   const openWallet = () => { setWalletLoaded(true); setWalletOpen(true); };
+  const chatInline = () => window.matchMedia('(min-width: 1200px)').matches;
+  const chatShown = !chatHidden || chatOpen;
+  const toggleChat = () => { if (chatInline()) setChatHidden(hidden => !hidden); else setChatOpen(open => !open); };
   const toggleSidebar = () => setSidebarPref(sidebarExpanded ? 'rail' : 'open');
   /* Rail tooltips: one floating label next to the hovered/focused icon (the link keeps its full accessible name). */
   const showTip = (text: string | null, el?: HTMLElement) => {
@@ -181,7 +186,7 @@ export function Shell({ children }: { children: ReactNode }) {
           <Link href={favoritesHref} scroll={false} className="sb-square" aria-disabled={activeDemo || undefined} {...{ onPointerEnter: (e: MouseEvent<HTMLElement>) => showTip(t('shell.nav.favorites'), e.currentTarget), onPointerLeave: () => showTip(null) }}
             onClick={event => { if (activeDemo) { event.preventDefault(); return; } if (onLobby && !event.metaKey && !event.ctrlKey) { event.preventDefault(); window.history.pushState(null, '', favoritesHref); } }}>
             <Heart size={20} aria-hidden="true" /><span className="sb-label">{t('shell.nav.favorites')}</span></Link>
-          <button type="button" className="sb-square sb-square-chat" aria-pressed={!chatHidden} disabled={activeDemo} onClick={() => setChatHidden(hidden => !hidden)} {...{ onPointerEnter: (e: MouseEvent<HTMLElement>) => showTip(t('shell.chatShortcut'), e.currentTarget), onPointerLeave: () => showTip(null) }}>
+          <button type="button" className="sb-square sb-square-chat" aria-pressed={chatShown} disabled={activeDemo} onClick={toggleChat} {...{ onPointerEnter: (e: MouseEvent<HTMLElement>) => showTip(t('shell.chatShortcut'), e.currentTarget), onPointerLeave: () => showTip(null) }}>
             <MessageSquare size={20} aria-hidden="true" /><span className="sb-label">{t('shell.chatShortcut')}</span></button>
         </div>
         <SideNav pathname={pathname} locked={activeDemo} onTip={showTip} />
@@ -199,15 +204,14 @@ export function Shell({ children }: { children: ReactNode }) {
           <div className="header-actions">
             <Link href="/verify" className="icon-button topbar-round topbar-help" aria-label={t('shell.help')} title={t('shell.help')} onClick={event => { if (activeDemo) event.preventDefault(); }}><CircleHelp size={20} aria-hidden="true" /></Link>
             <LocaleSwitcher className="topbar-round" />
-            <button className={`icon-button chat-toggle ${chatOpen ? 'selected' : ''}`} aria-label={chatOpen ? t('shell.closeChat') : t('shell.openChat')} aria-expanded={chatOpen} onClick={() => setChatOpen(!chatOpen)} disabled={activeDemo}><Icon name="chat"/></button>
+            <button ref={chatButton} className={`icon-button topbar-round chat-toggle ${chatShown ? 'selected' : ''}`} aria-label={chatShown ? t('shell.closeChat') : t('shell.openChat')} aria-expanded={chatShown} onClick={toggleChat} disabled={activeDemo}><MessageSquare size={19} aria-hidden="true" /></button>
             <button className="wallet-button sx-cta" onClick={openWallet} disabled={activeDemo} aria-label={wallet ? undefined : t('shell.connectWallet')}><Wallet size={18} aria-hidden="true" />{wallet ? <span>{shortAddress(wallet.address)}</span> : <><span className="wallet-long">{t('shell.connectWallet')}</span><span className="wallet-short" aria-hidden="true">{t('shell.connectWalletShort')}</span></>}</button>
             <span className="sx-balance" title={t('shell.demoBalance')}><span className="sx-balance-label">{t('shell.demoBalance')}</span><strong>{format.number(demoBalance / 100)}</strong></span>
           </div>
         </header>
         <div className={`workspace ${chatHidden ? 'chat-collapsed' : ''} ${arenaFocus ? 'arena-workspace' : ''}`}>
           <main id="main-content" className="main-content" tabIndex={-1}>{children}<footer className="page-footer"><BrandMark/><p>{t('shell.footer.tagline')}</p><span>{devnetConfigured ? t('shell.footer.devnet') : t('shell.footer.demo')}</span></footer></main>
-          {!chatHidden && <aside className="desktop-chat" aria-label={t('shell.communityChat')}><ChatPanel onClose={() => { setChatHidden(true); requestAnimationFrame(() => restoreChat.current?.focus()); }} openWallet={openWallet}/></aside>}
-          {chatHidden && <button ref={restoreChat} className="restore-chat icon-button" aria-label={t('shell.restoreChat')} onClick={() => setChatHidden(false)}><Icon name="chat"/></button>}
+          {!chatHidden && <aside className="desktop-chat" aria-label={t('shell.communityChat')}><ChatPanel onClose={() => { setChatHidden(true); requestAnimationFrame(() => chatButton.current?.focus()); }} openWallet={openWallet}/></aside>}
         </div>
       </div>
     </div>
