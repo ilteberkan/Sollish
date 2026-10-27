@@ -251,21 +251,21 @@ const runtime = `
 const pageCss = `
 :root{--font-barlow-face:'Barlow';--font-plex-face:'IBM Plex Sans';--font-plex-ext-face:'IBM Plex Sans';--font-playfair-face:'Playfair Display';--font-playfair-ext-face:'Playfair Display'}
 body{background:#000;margin:0;overflow-x:hidden}
-.tp-bar{position:sticky;top:0;z-index:60;background:#0c131a;border-bottom:1px solid #2a3b4a;padding:8px 16px 0}
+.tp-bar{position:sticky;top:0;z-index:60;background:#0b0b0c;border-bottom:1px solid #2a3b4a;padding:8px 16px 0}
 .tp-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .tp-row::-webkit-scrollbar{display:none}
 .tp-langs{padding-bottom:8px;align-items:center}
 .tp-langs button{flex:0 0 auto;min-width:40px;height:32px;border-radius:6px;background:#17212c;color:#aebfcb;font-size:13px;font-weight:600;border:1px solid #2a3b4a}
-.tp-langs button[aria-pressed=true]{background:#e9b35d;color:#10171f;border-color:#e9b35d}
+.tp-langs button[aria-pressed=true]{background:oklch(84.1% .238 128.85);color:#10171f;border-color:oklch(84.1% .238 128.85)}
 .tp-tag{margin-left:auto;flex:0 0 auto;font-size:12px;color:#91c9b0;border:1px solid #2f5546;border-radius:4px;padding:2px 6px}
 .tp-tabs button{flex:0 0 auto;padding:10px 12px;background:none;color:#aebfcb;font-size:15px;font-weight:600;border-bottom:2px solid transparent;white-space:nowrap}
-.tp-tabs button[aria-current=page]{color:#f1f5f8;border-bottom-color:#e9b35d}
+.tp-tabs button[aria-current=page]{color:#f1f5f8;border-bottom-color:oklch(84.1% .238 128.85)}
 .workspace{display:block}
 @media(max-width:500px){.tp-bar{padding:6px 12px 0}.tp-langs{gap:4px}.tp-langs button{min-width:0;flex:1 1 0;padding:0;height:30px;font-size:12px}.tp-tag{display:none}.tp-tabs button{padding:9px 10px;font-size:14px}}
 `;
 const html = `<!doctype html>
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10171F">
+<meta name="theme-color" content="#000000">
 <title>Sollish Test Oyunları</title>
 <style>${fontFace}</style>
 <style>${css}</style>

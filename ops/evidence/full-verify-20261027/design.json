@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-27",
+  "scope": "local build:cloudflare + preview:cloudflare (workerd), Playwright default Chromium; no hosted run, no CI, no real phone",
+  "change": "owner design references applied (layout, not branding): tokens black + neon lime, IBM Plex Sans + Playfair italic, 888 shell, lobby (888/bet365), Originals game page (Lucky) for Coinflip/Crash/Damla",
+  "build": "TFwCcEsUNYmE7uiJNts6I (commit cff60bc)",
+  "unit": "web 455/455, typecheck 0 (agents' runs; protocol untouched)",
+  "browser": {
+    "suites": "asena cascade cezeri damla demo-entropy ebru game-info goreme i18n lobby originals product solo-lifecycle tarhun wallet-reconnect",
+    "full_run": "198/199 (46.2 min)",
+    "failed_then_fixed": "asena spin lock: test race (round ended between the Playwright-side lock check and the key press); spin-lock.ts now checks the lock and sends the inputs in one page task (e23b848); asena/ebru/goreme/cezeri spin lock --repeat-each=3: 12/12"
+  },
+  "evidence": ["ops/evidence/design-shell-20261027/", "ops/evidence/design-lobby-20261027/", "ops/evidence/design-originals-20261027/"],
+  "not_shown": ["owner visual acceptance", "real phone", "hosted", "Ringside specs"]
+}
