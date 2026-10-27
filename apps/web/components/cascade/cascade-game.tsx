@@ -591,7 +591,8 @@ export function CascadeGame() {
 
   /** Real round (standard/ante spin or a confirmed buy). Returns false when nothing started. */
   const startRound = useCallback((kind: 'spin' | 'buy'): boolean => {
-    if ((live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
+    // busy: the round is still presenting (settled or not); the deck is locked, so no input may start the next one
+    if (busy || (live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
     const roundMode: CascadeMode = kind === 'buy' ? 'buy' : ante ? 'ante' : 'standard';
     if (kind === 'buy' && ante) return false;
     const cost = cascadeCost(bet, roundMode);
@@ -617,7 +618,7 @@ export function CascadeGame() {
     setReplaying(null);
     begin(current, t(roundMode === 'buy' ? 'announce.buyStarted' : 'announce.spinStarted', { amount: format.demo(cost) }));
     return true;
-  }, [ante, bet, begin, booting, gated, reducedMotion, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote, t, format]);
+  }, [busy, ante, bet, begin, booting, gated, reducedMotion, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote, t, format]);
 
   // Reload recovery (remote): the last server round of this game that this tab did not finish showing is shown again,
   // exactly as resolved. Nothing is debited or credited here; the server settled it when it was accepted.

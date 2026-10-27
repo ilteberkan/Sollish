@@ -630,7 +630,8 @@ export function EbruGame() {
   }, [bet, begin, makeLive, setActiveDemo, sound, stopAutoplay, t, format]);
 
   const startRound = useCallback((kind: 'spin' | 'buy'): boolean => {
-    if ((live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
+    // busy: the round is still presenting (settled or not); the deck is locked, so no input may start the next one
+    if (busy || (live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
     const roundMode: EbruMode = kind === 'buy' ? 'buy' : ante ? 'ante' : 'standard';
     if (kind === 'buy' && ante) return false;
     const cost = ebruCost(bet, roundMode);
@@ -651,7 +652,7 @@ export function EbruGame() {
     setReplaying(null);
     begin(current, t(roundMode === 'buy' ? 'announce.buyStarted' : 'announce.spinStarted', { amount: format.demo(cost) }));
     return true;
-  }, [ante, bet, begin, booting, gated, makeLive, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote, t, format]);
+  }, [busy, ante, bet, begin, booting, gated, makeLive, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote, t, format]);
 
   // Reload recovery (remote): the last unseen server round of this game is shown again exactly as resolved.
   const recoveredOnce = useRef(false);

@@ -704,7 +704,8 @@ export function GoremeGame() {
   }, [bet, begin, makeLive, setActiveDemo, sound, stopAutoplay, t, format, rgs]);
 
   const startRound = useCallback((kind: 'spin' | 'buy'): boolean => {
-    if ((live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
+    // busy: the round is still presenting (settled or not); the deck is locked, so no input may start the next one
+    if (busy || (live.current && !live.current.settled) || pendingRemote.current || gated || booting || sourcePending) return false;
     const roundMode: GoremeMode = kind === 'buy' ? 'buy' : ante ? 'ante' : 'standard';
     if (kind === 'buy' && ante) return false;
     const cost = goremeCost(bet, roundMode);
@@ -725,7 +726,7 @@ export function GoremeGame() {
     setReplaying(null);
     begin(current, roundMode === 'buy' ? t('announce.bonusBought', { amount: format.number(cost / 100) }) : t('announce.spinStarted', { amount: format.number(cost / 100) }));
     return true;
-  }, [ante, bet, begin, booting, gated, makeLive, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote, t, format]);
+  }, [busy, ante, bet, begin, booting, gated, makeLive, reserveDemo, setActiveDemo, sound, remote, sourcePending, startRemote, t, format]);
 
   // Reload recovery (remote): the last unseen server round of this game is shown again exactly as resolved.
   const recoveredOnce = useRef(false);
