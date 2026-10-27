@@ -1,4 +1,5 @@
 import { test, expect, type Locator, type Page } from '@playwright/test';
+import { pokeWhileLocked } from './spin-lock';
 import AxeBuilder from '@axe-core/playwright';
 import { EBRU_RTP, ebruSeedFromEntropy, playEbruRound, type EbruMode } from '@sollish/protocol';
 import { EBRU_SYMBOL_LABELS, ebruCellLabel } from '../../components/ebru/symbols';
@@ -187,16 +188,8 @@ test('spin lock: one debit, button and Space locked through every comb pass, pay
   await expect(button).toHaveAttribute('data-locked', 'true');
   await expect(page.getByRole('button', { name: 'Atla' })).toHaveCount(0);
   for (let i = 0; i < 3 && await button.isDisabled(); i++) {
-    // each input is tried only while the round still holds the lock (a slow machine can end the round mid-loop, and an
-    // input after that legitimately starts the next round)
-    await button.click({ force: true });
-    if (!(await button.isDisabled())) break;
-    await button.dispatchEvent('click');
-    if (!(await button.isDisabled())) break;
-    await page.locator('h1').click();
-    await page.keyboard.press('Space');
-    if (!(await button.isDisabled())) break;
-    await page.keyboard.press('Enter');
+    // every input is sent only while the round still holds the lock, checked in the same page task (spin-lock.ts)
+    if (!(await pokeWhileLocked(page, 'ebru-spin'))) break;
     // Never a second debit: the balance is the one reservation, or (once the round ended) plus the engine payout.
     expect([formatAmount(START - 1000), formatAmount(START - 1000 + round.payoutCents)]).toContain((await balance(page).textContent())!.replace(/\s*DEMO$/, '').trim());
   }

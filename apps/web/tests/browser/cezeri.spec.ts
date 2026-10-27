@@ -1,4 +1,5 @@
 import { test, expect, type Locator, type Page } from '@playwright/test';
+import { pokeWhileLocked } from './spin-lock';
 import AxeBuilder from '@axe-core/playwright';
 import { CEZERI_RTP, cezeriSeedFromEntropy, playCezeriRound, type CezeriMode } from '@sollish/protocol';
 import { formatAmount } from '../../lib/slot-kit/bet';
@@ -170,17 +171,10 @@ test('spin lock: one debit, button and Space locked through the whole chain; hub
   await expect(button).toBeDisabled();
   await expect(button).toHaveAttribute('data-locked', 'true');
   await expect(page.getByRole('button', { name: 'Atla' })).toHaveCount(0);
-  // each input is tried only while the chain still holds the lock (a slow machine can end the round mid-loop, and an
-  // input after that legitimately starts the next round); while locked there is never a second debit nor a history row
+  // every input is sent only while the chain still holds the lock, checked in the same page task (spin-lock.ts); while
+  // locked there is never a second debit nor a history row
   for (let i = 0; i < 2 && await button.isDisabled(); i++) {
-    await button.click({ force: true });
-    if (!(await button.isDisabled())) break;
-    await button.dispatchEvent('click');
-    if (!(await button.isDisabled())) break;
-    await page.locator('h1').click();
-    await page.keyboard.press('Space');
-    if (!(await button.isDisabled())) break;
-    await page.keyboard.press('Enter');
+    if (!(await pokeWhileLocked(page, 'cezeri-spin'))) break;
     await page.waitForTimeout(250);
     if (!(await button.isDisabled())) break;
     await expect(balance(page)).toContainText(formatAmount(START - 1000));
