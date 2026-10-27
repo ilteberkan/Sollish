@@ -3,15 +3,15 @@ import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const here = dirname(fileURLToPath(import.meta.url));
-const req = createRequire('/home/user/Sollish/apps/web/package.json');
-const { chromium } = req('playwright');
+const req = createRequire('/home/user/sollish/apps/web/package.json');
+const { chromium } = req('@playwright/test');
 const url = 'file://' + join(here, 'out/sollish-test.html');
 const shot = name => join(here, name);
 const log = (...a) => console.log('[verify]', ...a);
 const errors = [];
 const results = {};
 
-const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome', args: ['--autoplay-policy=no-user-gesture-required'] });
+const browser = await chromium.launch({ executablePath: undefined, args: ['--autoplay-policy=no-user-gesture-required'] });
 async function newPage(viewport, init) {
   const ctx = await browser.newContext({ viewport });
   const page = await ctx.newPage();

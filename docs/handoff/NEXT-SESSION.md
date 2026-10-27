@@ -44,3 +44,9 @@ Dal: `claude/sollish-wave3-games`. Test sayfası: https://claude.ai/artifact/NgZ
 - Ses dinleme kabulü (telaffuz: Ergenekon, Ay Ata, Elephant Clock, Tarhun kahkahası; Cascade sesi Skye).
 - ElevenLabs gizli anahtarı yanlış alana bağlı (`api.elevanlabs.io`); düzeltmek için silip `api.elevenlabs.io`, başlık `xi-api-key`, önek boş ile yeniden eklenmeli. Şimdilik Higgsfield üzerinden üretiliyor.
 - Çevirilerin anadil ve hukuk kontrolü (gerçek para öncesi); Portekizce Brezilya.
+
+## 27 Ekim: 23 Ekim görevleri tamamlandı
+- Dört görev bitti (ayrıntı STATUS.md "23–27 Ekim"). Test sayfası sürüm 12, aynı adres. Kanıtlar: `goreme-winfx-20261023/`, `round-breakdown-20261023/`, `rtp-audit-20261023/`, `full-verify-20261027/`.
+- Bu konteynerde Playwright varsayılan Chromium'u (headless shell 1243) kullanılıyor; `executablePath` gerekmiyor. Test sayfası `verify.mjs` buna göre düzeltildi.
+- Açık: Göreme kazanç efektinin gerçek telefonda fps ölçümü; sahibin görsel kabulü (Göreme efekti, Tur ayrıntısı paneli, Oturum istatistiği); dalganın ana dala birleşmesi ve yayın kararı.
+- Not: süreç öldürürken `pgrep -f "[w]orkerd"` gibi köşeli parantezli desen kullan; düz desen kendi kabuğunu da öldürüyor.
