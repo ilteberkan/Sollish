@@ -231,7 +231,8 @@ test('long chain: all ten respins play (pips 10/10), the hub climbs to its engin
   await spin(page).click();
   await expect(celebration(page)).toBeVisible({ timeout: 60_000 });
   await celebration(page).click({ position: { x: 12, y: 12 } });
-  await celebration(page).click({ position: { x: 12, y: 12 } }).catch(() => {});
+  // a second tap only if the first one left the takeover up (a short timeout: the overlay may already be gone)
+  await celebration(page).click({ position: { x: 12, y: 12 }, timeout: 3_000 }).catch(() => {});
   await expect(rows(page)).toHaveCount(1, { timeout: 20_000 });
   expect(await recorded<number>(page, '__chain')).toBe(10);
   const hubs = await recorded<number[]>(page, '__hub');
