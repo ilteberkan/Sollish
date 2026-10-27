@@ -99,6 +99,8 @@
   box-shadow: 0 0 0 1.5px #ffd65e, 0 4px 10px -3px rgba(20, 4, 12, 0.8);
   animation: label 0.34s cubic-bezier(0.2, 1.4, 0.4, 1) calc(var(--n) * 70ms + 120ms) both;
 }
+.label[data-extra] { display: none; }
+.more { padding: 1px 9px 2px; font-size: clamp(10px, 2.4cqw, 13px); }
 .labels[data-mode='way'] { bottom: 41%; }
 .labels[data-mode='way'] .label { font-size: clamp(13px, 3.8cqw, 19px); padding: 4px 14px 5px; background: linear-gradient(180deg, rgba(120, 40, 50, 0.96), rgba(56, 12, 24, 0.96)); box-shadow: 0 0 0 2px #ffe28a, 0 0 16px rgba(255, 200, 90, 0.7), 0 6px 14px -4px rgba(20, 4, 12, 0.85); }
 @keyframes label { from { opacity: 0; transform: translateY(40%) scale(0.8); } }

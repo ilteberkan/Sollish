@@ -37,6 +37,8 @@ export interface GoremeWinSpot { id: number; col: number; row: number }
 
 /** Kilim spark directions (deg): six rays, alternating long and short like a woven star (kept low: software rasterisers). */
 const RAYS = [0, 60, 120, 180, 240, 300];
+/** Summary labels shown before the "+N" chip. */
+const SUMMARY_LABELS = 3;
 
 export const GoremeWinFx = memo(function GoremeWinFx({ show, spots }: { show: GoremeWinShow; spots: ReadonlyMap<number, GoremeWinSpot> }) {
   const focusLine = show.focus === null ? null : show.lines[show.focus] ?? null;
@@ -46,7 +48,11 @@ export const GoremeWinFx = memo(function GoremeWinFx({ show, spots }: { show: Go
   const byCol = new Map<number, GoremeWinSpot[]>();
   if (focusLine) for (const c of cells) byCol.set(c.col, [...(byCol.get(c.col) ?? []), c]);
   const cols = [...byCol.keys()].sort((a, b) => a - b);
-  const labels = focusLine ? [{ line: focusLine, index: show.focus! }] : show.lines.map((line, index) => ({ line, index }));
+  // summary: biggest ways first; past SUMMARY_LABELS only a "+N" chip shows (each way still gets its own focus beat), so the
+  // list never covers the board's lower rows. The hidden labels stay in the DOM (the amounts still sum to the payout).
+  const labels = focusLine ? [{ line: focusLine, index: show.focus! }]
+    : show.lines.map((line, index) => ({ line, index })).sort((a, b) => b.line.amountCents - a.line.amountCents || a.index - b.index);
+  const more = focusLine ? 0 : Math.max(0, labels.length - SUMMARY_LABELS);
   return (
     <div key={show.key} className={styles.layer} data-fx={show.fx || undefined} data-burst={show.burst && show.focus === null ? '' : undefined}
       data-mode={focusLine ? 'way' : 'all'} data-testid="goreme-win-fx" style={{ '--ms': `${show.ms}ms` } as CSSProperties}>
@@ -73,8 +79,10 @@ export const GoremeWinFx = memo(function GoremeWinFx({ show, spots }: { show: Go
       ))}
       <ol className={styles.labels} data-testid="goreme-win-labels" data-mode={focusLine ? 'way' : 'all'}>
         {labels.map(({ line, index }, n) => (
-          <li key={index} className={styles.label} data-testid="goreme-win-label" data-cents={line.amountCents} data-symbol={line.symbol} style={{ '--n': n } as CSSProperties}>{line.text}</li>
+          <li key={index} className={styles.label} data-testid="goreme-win-label" data-cents={line.amountCents} data-symbol={line.symbol}
+            data-extra={n >= SUMMARY_LABELS && !focusLine ? '' : undefined} style={{ '--n': n } as CSSProperties}>{line.text}</li>
         ))}
+        {more > 0 && <li className={`${styles.label} ${styles.more}`} aria-hidden="true" data-testid="goreme-win-more" style={{ '--n': SUMMARY_LABELS } as CSSProperties}>+{more}</li>}
       </ol>
     </div>
   );

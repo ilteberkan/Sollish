@@ -442,6 +442,7 @@ async function trackWins(page: Page) {
 type Wins = { summaries: Array<Array<{ text: string; cents: number }>>; ways: string[]; dimMax: number; litMax: number; trace: number; sparks: number; burst: number };
 const MULTI = 1_839_862_647;  // base: one board, three ways, 0,78x, no lift
 const BIG = 1_753_536_851;    // base: one board, two ways, 12,32x (the winning symbols burst)
+const FOUR_WAYS = 1_303_552_506; // base: one board, four ways, 0,45x, no lift
 const wayLabel = (w: { symbol: string; length: number; ways: number; multiplierProduct: number }, cents: number) =>
   `${symbolName(w.symbol)} ${w.length}× · ${w.ways} yol${w.multiplierProduct > 1 ? ` · ×${w.multiplierProduct}` : ''} = ${demoText(cents)}`;
 
@@ -461,7 +462,14 @@ test('win presentation: one label per way with amounts that sum to the payout, t
   const labels = wins.summaries[0]!;
   expect(labels.length).toBe(step.wins.length);
   expect(labels.reduce((n, l) => n + l.cents, 0)).toBe(round.payoutCents);
-  labels.forEach((l, i) => expect(l.text).toBe(wayLabel(step.wins[i]!, l.cents)));
+  // biggest way first; each label is one engine way (matched once)
+  for (let i = 1; i < labels.length; i++) expect(labels[i]!.cents).toBeLessThanOrEqual(labels[i - 1]!.cents);
+  const unused = new Set(step.wins.map((_, i) => i));
+  for (const l of labels) {
+    const j = [...unused].find(k => wayLabel(step.wins[k]!, l.cents) === l.text);
+    expect(j, `label "${l.text}" is an engine way`).toBeDefined();
+    unused.delete(j!);
+  }
   // every way gets its own highlight (biggest first), traced across its reels
   expect([...wins.ways].sort()).toEqual(labels.map(l => l.text).sort());
   expect(wins.ways[0]).toBe([...labels].sort((a, b) => b.cents - a.cents)[0]!.text);
@@ -474,6 +482,26 @@ test('win presentation: one label per way with amounts that sum to the payout, t
   // the board is the engine board again once the presentation ends
   await expect(page.getByTestId('goreme-win-labels')).toHaveCount(0);
   expect(await shownLabels(page)).toEqual(boardLabels(MULTI));
+});
+
+test('win presentation, four ways: the summary shows the three biggest labels and a +1 chip (the board stays readable); all four still sum to the payout', async ({ page }) => {
+  test.setTimeout(90_000);
+  const round = engine(FOUR_WAYS);
+  const step = round.spins[0]!.steps.find(s => s.type === 'ways')!;
+  if (step.type !== 'ways') throw new Error('no ways step');
+  expect(step.wins.length).toBe(4);
+  await trackWins(page);
+  await stub(page, FOUR_WAYS);
+  await openGoreme(page);
+  await spin(page).click();
+  const list = page.getByTestId('goreme-win-labels');
+  await expect(page.getByTestId('goreme-win-more')).toHaveText('+1', { timeout: 30_000 });
+  await expect(list.locator('[data-testid="goreme-win-label"]:visible')).toHaveCount(3);
+  await expect(rows(page)).toHaveCount(1, { timeout: 60_000 });
+  const wins = await recorded<Wins>(page, '__wins');
+  expect(wins.summaries[0]!.length).toBe(4);
+  expect(wins.summaries[0]!.reduce((n, l) => n + l.cents, 0)).toBe(round.payoutCents);
+  await expect(balance(page)).toContainText(formatAmount(START - 1000 + round.payoutCents));
 });
 
 test('win presentation, reduced motion: static highlight and labels (sum = payout), no sparks, no burst', async ({ page }) => {
