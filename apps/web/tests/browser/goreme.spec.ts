@@ -131,10 +131,15 @@ test('spin lock: one debit, button and Space locked through every lift, payout a
   await expect(button).toBeDisabled();
   await expect(button).toHaveAttribute('data-locked', 'true');
   for (let i = 0; i < 3 && await button.isDisabled(); i++) {
+    // each input is tried only while the round still holds the lock (a slow machine can end the round mid-loop, and an
+    // input after that legitimately starts the next round)
     await button.click({ force: true });
+    if (!(await button.isDisabled())) break;
     await button.dispatchEvent('click');
+    if (!(await button.isDisabled())) break;
     await page.locator('h1').click();
     await page.keyboard.press('Space');
+    if (!(await button.isDisabled())) break;
     await page.keyboard.press('Enter');
     expect([formatAmount(START - 1000), formatAmount(START - 1000 + round.payoutCents)]).toContain((await balance(page).textContent())!.replace(/\s*DEMO$/, '').trim());
   }

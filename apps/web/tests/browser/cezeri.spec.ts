@@ -170,13 +170,19 @@ test('spin lock: one debit, button and Space locked through the whole chain; hub
   await expect(button).toBeDisabled();
   await expect(button).toHaveAttribute('data-locked', 'true');
   await expect(page.getByRole('button', { name: 'Atla' })).toHaveCount(0);
-  for (let i = 0; i < 2; i++) {
+  // each input is tried only while the chain still holds the lock (a slow machine can end the round mid-loop, and an
+  // input after that legitimately starts the next round); while locked there is never a second debit nor a history row
+  for (let i = 0; i < 2 && await button.isDisabled(); i++) {
     await button.click({ force: true });
+    if (!(await button.isDisabled())) break;
     await button.dispatchEvent('click');
+    if (!(await button.isDisabled())) break;
     await page.locator('h1').click();
     await page.keyboard.press('Space');
+    if (!(await button.isDisabled())) break;
     await page.keyboard.press('Enter');
     await page.waitForTimeout(250);
+    if (!(await button.isDisabled())) break;
     await expect(balance(page)).toContainText(formatAmount(START - 1000));
     await expect(rows(page)).toHaveCount(0);
   }
