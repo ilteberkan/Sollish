@@ -4,11 +4,13 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useRef, useState, type MouseEvent, type ReactNode } from 'react';
 import { BrandMark, Icon } from './icons';
+import { CircleHelp, Gift, Heart, House, Layers, Menu, MessageSquare, PanelLeft, Radio, ShieldCheck, Sparkles, Cherry, Zap, Wallet, type LucideIcon } from 'lucide-react';
 import { useProduct } from './providers';
 import { shortAddress } from '@/lib/demo';
 import { ChatPanel } from './chat-panel';
 import { containDialogFocus } from '@/lib/dialog';
-import { useT } from '@/lib/i18n/client';
+import { useFormat, useLocale, useT } from '@/lib/i18n/client';
+import { INTL_LOCALE } from '@/lib/i18n/config';
 import type { MessageKey } from '@/lib/i18n/catalog';
 import { LocaleSwitcher } from './locale-switcher';
 import { ShellSearch } from './shell-search';
@@ -24,16 +26,17 @@ const isLobbyPath = (path: string) => path === '/' || path === '/games';
 const routeKind = (path: string): RouteKind => (path.startsWith('/game/') || path.startsWith('/live/') ? 'game' : 'browse');
 
 type Category = Exclude<LobbyCategory, 'all' | 'favorites'>;
-const CATEGORY_LINKS: ReadonlyArray<{ category: Category; icon: string; label: MessageKey<'common'> }> = [
-  { category: 'slots', icon: 'slots', label: 'shell.nav.slots' },
-  { category: 'live', icon: 'broadcast', label: 'shell.nav.live' },
-  { category: 'instant', icon: 'bolt', label: 'shell.nav.instant' },
-  { category: 'new', icon: 'spark', label: 'shell.nav.new' },
+/* 888-style pill menu: every item has a round, tinted icon disc. Tints are design tokens (lime / yellow / danger). */
+type Tone = 'lime' | 'yellow' | 'danger';
+const CATEGORY_LINKS: ReadonlyArray<{ category: Category; icon: LucideIcon; tone: Tone; label: MessageKey<'common'> }> = [
+  { category: 'slots', icon: Cherry, tone: 'danger', label: 'shell.nav.slots' },
+  { category: 'live', icon: Radio, tone: 'danger', label: 'shell.nav.live' },
+  { category: 'new', icon: Sparkles, tone: 'yellow', label: 'shell.nav.new' },
+  { category: 'instant', icon: Zap, tone: 'lime', label: 'shell.nav.instant' },
 ];
-const MORE_LINKS: ReadonlyArray<{ href: string; icon: string; label: MessageKey<'common'> }> = [
-  { href: '/verify', icon: 'shield', label: 'shell.nav.fair' },
-  { href: '/rewards', icon: 'gift', label: 'shell.nav.rewards' },
-  { href: '/stake', icon: 'stake', label: 'shell.nav.stake' },
+const MORE_LINKS: ReadonlyArray<{ href: string; icon: LucideIcon; tone: Tone; label: MessageKey<'common'> }> = [
+  { href: '/verify', icon: ShieldCheck, tone: 'lime', label: 'shell.nav.fair' },
+  { href: '/stake', icon: Layers, tone: 'yellow', label: 'shell.nav.stake' },
 ];
 /* Sidebar game order: live first, then instant, then the slots. Names are brand names and stay as written. */
 const NAV_GAMES = ['ringside', 'crash', 'coinflip', 'cascade', 'tarhun', 'ebru', 'cezeri', 'asena', 'goreme', 'damla'].map(id => LOBBY_GAMES.find(g => g.id === id)!);
@@ -43,6 +46,7 @@ function lobbyHref(pathname: string, category: LobbyCategory) {
   const base = isLobbyPath(pathname) ? pathname : '/';
   return category === 'all' ? base : `${base}?c=${category}`;
 }
+const disc = (Glyph: LucideIcon, tone: Tone) => <span className="sb-disc" data-tone={tone} aria-hidden="true"><Glyph size={16} strokeWidth={2.2} /></span>;
 
 function SideNavLinks({ pathname, category, locked, onNavigate, onTip }: { pathname: string; category: LobbyCategory | null; locked: boolean; onNavigate?: () => void; onTip?: (text: string | null, el?: HTMLElement) => void }) {
   const t = useT('common');
@@ -59,15 +63,18 @@ function SideNavLinks({ pathname, category, locked, onNavigate, onTip }: { pathn
     </Link></li>
   );
   return <>
-    <ul className="sb-list">{item(lobbyHref(pathname, 'all'), <Icon name="home" size={20} />, t('shell.nav.lobby'), onLobby && (category === null || category === 'all'), true)}</ul>
+    <ul className="sb-list sb-card">{item('/rewards', disc(Gift, 'yellow'), t('shell.nav.rewards'), pathname === '/rewards')}</ul>
     <p className="sb-heading">{t('shell.sections.casino')}</p>
-    <ul className="sb-list">{CATEGORY_LINKS.map(link => item(lobbyHref(pathname, link.category), <Icon name={link.icon} size={20} />, t(link.label), onLobby && category === link.category, true))}</ul>
+    <ul className="sb-list sb-card">
+      {item(lobbyHref(pathname, 'all'), disc(House, 'lime'), t('shell.nav.lobby'), onLobby && (category === null || category === 'all'), true)}
+      {CATEGORY_LINKS.map(link => item(lobbyHref(pathname, link.category), disc(link.icon, link.tone), t(link.label), onLobby && category === link.category, true))}
+    </ul>
     <p className="sb-heading">{t('shell.sections.games')}</p>
-    <ul className="sb-list">{NAV_GAMES.map(game => item(game.href,
-      game.kind === 'live' ? <span className="sb-game-icon" data-live=""><span className="live-dot" aria-hidden="true" /></span> : <span className="sb-game-icon" style={{ background: `linear-gradient(135deg, ${game.tone[0]}, ${game.tone[1]})` }}><Icon name={game.icon} size={15} /></span>,
+    <ul className="sb-list sb-card">{NAV_GAMES.map(game => item(game.href,
+      game.kind === 'live' ? <span className="sb-disc sb-game" data-live="" aria-hidden="true"><span className="live-dot" /></span> : <span className="sb-disc sb-game" aria-hidden="true" style={{ background: `linear-gradient(135deg, ${game.tone[0]}, ${game.tone[1]})` }}><Icon name={game.icon} size={15} /></span>,
       game.short, pathname === game.href, false, game.kind === 'live' ? <span className="sr-only">{t('shell.liveSuffix')}</span> : undefined, game.kind === 'live' ? false : undefined))}</ul>
     <p className="sb-heading">{t('shell.sections.more')}</p>
-    <ul className="sb-list">{MORE_LINKS.map(link => item(link.href, <Icon name={link.icon} size={20} />, t(link.label), pathname === link.href))}</ul>
+    <ul className="sb-list sb-card">{MORE_LINKS.map(link => item(link.href, disc(link.icon, link.tone), t(link.label), pathname === link.href))}</ul>
   </>;
 }
 
@@ -83,20 +90,34 @@ function TabBarWithParams({ pathname, onSearch, onMenu, searchOpen, menuOpen, lo
   const c = useSearchParams().get('c');
   const t = useT('common');
   const onLobby = isLobbyPath(pathname);
-  const link = (category: LobbyCategory, icon: string, label: string) => {
+  const link = (category: LobbyCategory, Glyph: LucideIcon, label: string) => {
     const href = lobbyHref(pathname, category);
     const current = onLobby && !searchOpen && !menuOpen && ((category === 'all' && !isLobbyCategory(c)) || c === category);
     return <Link href={href} scroll={false} className="tab" aria-current={current ? 'page' : undefined} aria-disabled={locked || undefined}
       onClick={event => { if (locked) { event.preventDefault(); return; } if (onLobby) { event.preventDefault(); window.history.pushState(null, '', href); window.scrollTo({ top: 0 }); } }}>
-      <Icon name={icon} size={22} /><span>{label}</span></Link>;
+      <Glyph size={22} aria-hidden="true" /><span>{label}</span></Link>;
   };
   return <>
-    {link('all', 'home', t('shell.nav.lobby'))}
-    {link('slots', 'slots', t('shell.nav.slots'))}
-    {link('live', 'broadcast', t('shell.nav.live'))}
+    {link('all', House, t('shell.nav.lobby'))}
+    {link('slots', Cherry, t('shell.nav.slots'))}
+    {link('live', Radio, t('shell.nav.live'))}
     <button type="button" className="tab" aria-pressed={searchOpen} onClick={onSearch} disabled={locked}><Icon name="search" size={22} /><span>{t('shell.search.open')}</span></button>
-    <button type="button" className="tab" aria-expanded={menuOpen} aria-haspopup="dialog" onClick={onMenu}><Icon name="menu" size={22} /><span>{t('shell.menu')}</span></button>
+    <button type="button" className="tab" aria-expanded={menuOpen} aria-haspopup="dialog" onClick={onMenu}><Menu size={22} aria-hidden="true" /><span>{t('shell.menu')}</span></button>
   </>;
+}
+
+/** Sidebar footer clock (888 pattern). Client-only so server HTML never carries a stale time. */
+function SidebarClock() {
+  const { locale } = useLocale();
+  const t = useT('common');
+  const [now, setNow] = useState<Date | null>(null);
+  useEffect(() => { setNow(new Date()); const id = window.setInterval(() => setNow(new Date()), 15_000); return () => window.clearInterval(id); }, []);
+  const text = now ? new Intl.DateTimeFormat(INTL_LOCALE[locale], { hour: '2-digit', minute: '2-digit' }).format(now) : '';
+  return <time className="sb-clock" dateTime={now?.toISOString()} aria-label={now ? `${t('shell.clock')} ${text}` : undefined}>{text}</time>;
+}
+
+function BrandLink({ className, locked, label }: { className: string; locked: boolean; label: string }) {
+  return <Link href="/" className={`brand ${className}`} aria-label={label} onClick={event => { if (locked) event.preventDefault(); }}><BrandMark/><span>sollish<span className="brand-period">.</span></span></Link>;
 }
 
 export function Shell({ children }: { children: ReactNode }) {
@@ -104,8 +125,9 @@ export function Shell({ children }: { children: ReactNode }) {
   const arenaFocus = pathname === '/live/ringside';
   const kind = routeKind(pathname);
   const onLobby = isLobbyPath(pathname);
-  const { wallet, walletOpen, setWalletOpen, activeDemo } = useProduct();
+  const { wallet, walletOpen, setWalletOpen, activeDemo, demoBalance } = useProduct();
   const t = useT('common');
+  const format = useFormat();
   const [walletLoaded, setWalletLoaded] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [chatHidden, setChatHidden] = useState(false);
@@ -148,26 +170,45 @@ export function Shell({ children }: { children: ReactNode }) {
     setTip({ text, top: r.top + r.height / 2 });
   };
   const lobbyPath = onLobby ? pathname : '/';
+  const network = devnetConfigured ? t('shell.network.devnet') : t('shell.network.demo');
+  const favoritesHref = lobbyHref(pathname, 'favorites');
   return <>
     <a className="skip-link" href="#main-content">{t('shell.skipLink')}</a>
-    <header className={`topbar ${arenaFocus ? 'arena-header' : ''}`} data-kind={kind} data-search={searchOpen || undefined}>
-      <button type="button" className="icon-button topbar-toggle" aria-label={sidebarExpanded ? t('shell.collapse') : t('shell.expand')} aria-expanded={sidebarExpanded} aria-controls="site-sidebar" onClick={toggleSidebar}><Icon name="sidebar" size={20} /></button>
-      <button type="button" className="icon-button topbar-menu" aria-label={t('shell.menu')} aria-expanded={menuOpen} aria-haspopup="dialog" onClick={() => setMenuOpen(true)}><Icon name="menu" size={22} /></button>
-      <Link href="/" className="brand" aria-label={t('shell.home')} onClick={event => { if (activeDemo) event.preventDefault(); }}><BrandMark/><span>sollish<span className="brand-period">.</span></span></Link>
-      <div className="topbar-search">
-        <ShellSearch onLobby={onLobby} lobbyPath={lobbyPath} disabled={activeDemo} inputRef={searchInput} onClose={() => setSearchOpen(false)} />
-        <button type="button" className="text-button topbar-search-close" onClick={() => setSearchOpen(false)}>{t('shell.search.close')}</button>
-      </div>
-      <div className="header-actions"><LocaleSwitcher/><span className="network-label"><span className="status-dot"/>{devnetConfigured ? t('shell.network.devnet') : t('shell.network.demo')}</span><button className="wallet-button" onClick={openWallet} disabled={activeDemo} aria-label={wallet ? undefined : t('shell.connectWallet')}><Icon name="wallet" size={18}/>{wallet ? <span>{shortAddress(wallet.address)}</span> : <><span className="wallet-long">{t('shell.connectWallet')}</span><span className="wallet-short" aria-hidden="true">{t('shell.connectWalletShort')}</span></>}</button><button className={`icon-button chat-toggle ${chatOpen ? 'selected' : ''}`} aria-label={chatOpen ? t('shell.closeChat') : t('shell.openChat')} aria-expanded={chatOpen} onClick={() => setChatOpen(!chatOpen)} disabled={activeDemo}><Icon name="chat"/></button></div>
-    </header>
     <div className="app-frame" data-kind={kind}>
       <nav ref={sidebar} id="site-sidebar" className="sidebar" aria-label={t('shell.primaryNav')}>
+        <div className="sb-logo"><BrandLink className="sb-brand" locked={activeDemo} label={t('shell.home')} /></div>
+        <div className="sb-squares" role="group" aria-label={t('shell.shortcuts')}>
+          <Link href={favoritesHref} scroll={false} className="sb-square" aria-disabled={activeDemo || undefined} {...{ onPointerEnter: (e: MouseEvent<HTMLElement>) => showTip(t('shell.nav.favorites'), e.currentTarget), onPointerLeave: () => showTip(null) }}
+            onClick={event => { if (activeDemo) { event.preventDefault(); return; } if (onLobby && !event.metaKey && !event.ctrlKey) { event.preventDefault(); window.history.pushState(null, '', favoritesHref); } }}>
+            <Heart size={20} aria-hidden="true" /><span className="sb-label">{t('shell.nav.favorites')}</span></Link>
+          <button type="button" className="sb-square sb-square-chat" aria-pressed={!chatHidden} disabled={activeDemo} onClick={() => setChatHidden(hidden => !hidden)} {...{ onPointerEnter: (e: MouseEvent<HTMLElement>) => showTip(t('shell.chatShortcut'), e.currentTarget), onPointerLeave: () => showTip(null) }}>
+            <MessageSquare size={20} aria-hidden="true" /><span className="sb-label">{t('shell.chatShortcut')}</span></button>
+        </div>
         <SideNav pathname={pathname} locked={activeDemo} onTip={showTip} />
+        <div className="sb-foot"><span className="sb-network"><span className="status-dot"/>{network}</span><SidebarClock /></div>
       </nav>
-      <div className={`workspace ${chatHidden ? 'chat-collapsed' : ''} ${arenaFocus ? 'arena-workspace' : ''}`}>
-        <main id="main-content" className="main-content" tabIndex={-1}>{children}<footer className="page-footer"><BrandMark/><p>{t('shell.footer.tagline')}</p><span>{devnetConfigured ? t('shell.footer.devnet') : t('shell.footer.demo')}</span></footer></main>
-        {!chatHidden && <aside className="desktop-chat" aria-label={t('shell.communityChat')}><ChatPanel onClose={() => { setChatHidden(true); requestAnimationFrame(() => restoreChat.current?.focus()); }} openWallet={openWallet}/></aside>}
-        {chatHidden && <button ref={restoreChat} className="restore-chat icon-button" aria-label={t('shell.restoreChat')} onClick={() => setChatHidden(false)}><Icon name="chat"/></button>}
+      <div className="app-main">
+        <header className={`topbar ${arenaFocus ? 'arena-header' : ''}`} data-kind={kind} data-search={searchOpen || undefined}>
+          <button type="button" className="icon-button topbar-toggle" aria-label={sidebarExpanded ? t('shell.collapse') : t('shell.expand')} aria-expanded={sidebarExpanded} aria-controls="site-sidebar" onClick={toggleSidebar}><PanelLeft size={20} aria-hidden="true" /></button>
+          <button type="button" className="icon-button topbar-menu" aria-label={t('shell.menu')} aria-expanded={menuOpen} aria-haspopup="dialog" onClick={() => setMenuOpen(true)}><Menu size={22} aria-hidden="true" /></button>
+          <BrandLink className="topbar-brand" locked={activeDemo} label={t('shell.home')} />
+          <div className="topbar-search">
+            <ShellSearch onLobby={onLobby} lobbyPath={lobbyPath} disabled={activeDemo} inputRef={searchInput} onClose={() => setSearchOpen(false)} />
+            <button type="button" className="text-button topbar-search-close" onClick={() => setSearchOpen(false)}>{t('shell.search.close')}</button>
+          </div>
+          <div className="header-actions">
+            <Link href="/verify" className="icon-button topbar-round topbar-help" aria-label={t('shell.help')} title={t('shell.help')} onClick={event => { if (activeDemo) event.preventDefault(); }}><CircleHelp size={20} aria-hidden="true" /></Link>
+            <LocaleSwitcher className="topbar-round" />
+            <button className={`icon-button chat-toggle ${chatOpen ? 'selected' : ''}`} aria-label={chatOpen ? t('shell.closeChat') : t('shell.openChat')} aria-expanded={chatOpen} onClick={() => setChatOpen(!chatOpen)} disabled={activeDemo}><Icon name="chat"/></button>
+            <button className="wallet-button sx-cta" onClick={openWallet} disabled={activeDemo} aria-label={wallet ? undefined : t('shell.connectWallet')}><Wallet size={18} aria-hidden="true" />{wallet ? <span>{shortAddress(wallet.address)}</span> : <><span className="wallet-long">{t('shell.connectWallet')}</span><span className="wallet-short" aria-hidden="true">{t('shell.connectWalletShort')}</span></>}</button>
+            <span className="sx-balance" title={t('shell.demoBalance')}><span className="sx-balance-label">{t('shell.demoBalance')}</span><strong>{format.number(demoBalance / 100)}</strong></span>
+          </div>
+        </header>
+        <div className={`workspace ${chatHidden ? 'chat-collapsed' : ''} ${arenaFocus ? 'arena-workspace' : ''}`}>
+          <main id="main-content" className="main-content" tabIndex={-1}>{children}<footer className="page-footer"><BrandMark/><p>{t('shell.footer.tagline')}</p><span>{devnetConfigured ? t('shell.footer.devnet') : t('shell.footer.demo')}</span></footer></main>
+          {!chatHidden && <aside className="desktop-chat" aria-label={t('shell.communityChat')}><ChatPanel onClose={() => { setChatHidden(true); requestAnimationFrame(() => restoreChat.current?.focus()); }} openWallet={openWallet}/></aside>}
+          {chatHidden && <button ref={restoreChat} className="restore-chat icon-button" aria-label={t('shell.restoreChat')} onClick={() => setChatHidden(false)}><Icon name="chat"/></button>}
+        </div>
       </div>
     </div>
     {tip && <span className="sb-tip" aria-hidden="true" style={{ top: tip.top }}>{tip.text}</span>}
@@ -178,6 +219,7 @@ export function Shell({ children }: { children: ReactNode }) {
       <div className="menu-drawer-panel">
         <div className="menu-drawer-head"><span className="brand"><BrandMark/><span>sollish<span className="brand-period">.</span></span></span><button type="button" className="icon-button" aria-label={t('shell.closeMenu')} onClick={() => setMenuOpen(false)}><Icon name="close" /></button></div>
         <nav aria-label={t('shell.primaryNav')}><SideNav pathname={pathname} locked={activeDemo} onNavigate={() => setMenuOpen(false)} /></nav>
+        <div className="sb-foot"><span className="sb-network"><span className="status-dot"/>{network}</span><SidebarClock /></div>
       </div>
     </dialog>}
     {chatOpen && !activeDemo && <dialog ref={chatDialog} className="mobile-chat-overlay" aria-label={t('shell.communityChat')} onKeyDown={containDialogFocus} onCancel={() => setChatOpen(false)} onClick={event => { if (event.target === chatDialog.current) setChatOpen(false); }}><div className="mobile-chat-panel"><ChatPanel onClose={() => setChatOpen(false)} openWallet={() => { setChatOpen(false); openWallet(); }}/></div></dialog>}

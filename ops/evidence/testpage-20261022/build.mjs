@@ -190,8 +190,16 @@ function addDir(dir, urlBase, exts) {
 }
 addDir(join(pub, 'audio/voice'), '/audio/voice', ['.mp3']);
 addDir(join(pub, 'images/lobby'), '/images/lobby', ['.webp']);
-const fontFace = [['Regular', 400], ['Medium', 500], ['SemiBold', 600]].map(([n, wgt]) =>
-  `@font-face{font-family:'Barlow';src:url(data:font/woff2;base64,${readFileSync(join(pub, `fonts/Barlow-${n}.woff2`)).toString('base64')}) format('woff2');font-weight:${wgt};font-style:normal;font-display:swap}`).join('');
+// Fonts as data URIs (design system 27 Oct 2026): IBM Plex Sans 400–700 and Playfair Display italic 600/700 for the UI
+// (latin + latin-ext subsets, one family each, split by unicode-range), Barlow for game art lettering.
+const LATIN = 'U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD';
+const LATIN_EXT = 'U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF';
+const face = (family, file, wgt, style, range) => `@font-face{font-family:'${family}';src:url(data:font/woff2;base64,${readFileSync(join(pub, `fonts/${file}`)).toString('base64')}) format('woff2');font-weight:${wgt};font-style:${style};font-display:swap${range ? `;unicode-range:${range}` : ''}}`;
+const fontFace = [
+  ...[400, 500, 600, 700].flatMap(w => [face('IBM Plex Sans', `ibm-plex-sans-latin-${w}-normal.woff2`, w, 'normal', LATIN), face('IBM Plex Sans', `ibm-plex-sans-latin-ext-${w}-normal.woff2`, w, 'normal', LATIN_EXT)]),
+  ...[600, 700].flatMap(w => [face('Playfair Display', `playfair-display-latin-${w}-italic.woff2`, w, 'italic', LATIN), face('Playfair Display', `playfair-display-latin-ext-${w}-italic.woff2`, w, 'italic', LATIN_EXT)]),
+  ...[['Regular', 400], ['Medium', 500], ['SemiBold', 600]].map(([n, w]) => face('Barlow', `Barlow-${n}.woff2`, w, 'normal')),
+].join('');
 
 const payload = JSON.stringify({ worker: workerCode, files }).replace(/</g, '\\u003c');
 const runtime = `
@@ -241,8 +249,8 @@ const runtime = `
 })();`;
 
 const pageCss = `
-:root{--font-barlow-face:'Barlow'}
-body{background:#10171f;margin:0;overflow-x:hidden}
+:root{--font-barlow-face:'Barlow';--font-plex-face:'IBM Plex Sans';--font-plex-ext-face:'IBM Plex Sans';--font-playfair-face:'Playfair Display';--font-playfair-ext-face:'Playfair Display'}
+body{background:#000;margin:0;overflow-x:hidden}
 .tp-bar{position:sticky;top:0;z-index:60;background:#0c131a;border-bottom:1px solid #2a3b4a;padding:8px 16px 0}
 .tp-row{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .tp-row::-webkit-scrollbar{display:none}

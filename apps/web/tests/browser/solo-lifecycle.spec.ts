@@ -9,7 +9,7 @@ async function prepare(page: Page, game: 'Crash' | 'Coinflip', entropy: number) 
   await page.getByRole('link', { name: game, exact: true }).first().click();
   await expect(page).toHaveURL(game === 'Crash' ? /\/game\/crash$/ : /\/game\/coinflip$/);
   await expect(page.getByRole('heading', { name: game, exact: true, level: 1 })).toBeVisible();
-  await page.getByLabel('Demo miktarı', { exact: true }).fill('10');
+  await page.getByLabel('Bahis tutarı', { exact: true }).fill('10');
   await page.getByRole('button', { name: game === 'Crash' ? 'Demoyu başlat' : 'Demoda çevir', exact: true }).click();
   await expect(page.locator('.demo-balance')).toContainText('990');
 }

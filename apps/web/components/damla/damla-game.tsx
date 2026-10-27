@@ -32,6 +32,8 @@ import { DamlaHistory } from './damla-history';
 import { damlaInfoPages } from './damla-info-pages';
 import { DamlaDropGlyph, DamlaLogo } from './logo';
 import { GameInfoStrip } from '@/components/game-info-strip';
+import { BetPanel, HalfDouble, OriginalsInfo, OriginalsPage, OriginalsRow, ProfitReadout, type BetTab } from '../originals';
+import { ladderDouble, ladderHalf } from '@/lib/originals';
 import styles from './damla-game.module.css';
 
 /* Lifecycle (the RGS model, lib/damla-controls.ts): a press admits its drops — each its own engine round (seed, nonce) that
@@ -48,7 +50,7 @@ type Flight = {
 type StripItem = { key: number; hundredths: number; tier: number; edge: boolean };
 type Callout = { key: number; level: CelebrationLevel; hundredths: number; payout: number; life: number; gold: boolean };
 type Toast = { key: number; text: string; tone: 'info' | 'warn' };
-type ModalId = 'settings' | 'info' | 'autoplay' | null;
+type ModalId = 'settings' | 'info' | null;
 type Boot = { phase: 'loading' | 'ready' | 'done'; progress: number };
 type StopCode = AutoplayStopCode | 'server-failed' | 'drop-failed' | 'quit';
 
@@ -131,6 +133,7 @@ export function DamlaGame() {
   const [auto, setAuto] = useState<AutoplayState | null>(null);
   const [toast, setToast] = useState<Toast | null>(null);
   const [modal, setModal] = useState<ModalId>(null);
+  const [tab, setTab] = useState<BetTab>('manual');
   const [infoPage, setInfoPage] = useState('how');
   const [replaying, setReplaying] = useState<{ recordId: string | null; seed: string } | null>(null);
   const [boot, setBoot] = useState<Boot>(() => ({ phase: bootedOnce ? 'done' : 'loading', progress: 0 }));
@@ -541,86 +544,103 @@ export function DamlaGame() {
     setAnnounce(t('announce.mode', { risk: t(RISK_KEY[risk]), rows: next }));
   };
 
+  const doubleCap = Math.min(DAMLA_MAX_BET_CENTS, Math.max(DAMLA_MIN_BET_CENTS, balance));
+  const lastNet = lastWin && !lastWin.replay ? (lastWin.batchCount > 1 ? lastWin.batchTotal - cost * lastWin.batchCount : lastWin.payout - cost) : null;
   const deck = (
-    <BetSelector ladder={DAMLA_BET_LADDER} valueCents={bet} onChange={chooseBet} balanceCents={balance} maxBetCents={DAMLA_MAX_BET_CENTS} disabled={modeLocked}
+    <BetSelector ladder={DAMLA_BET_LADDER} valueCents={bet} onChange={chooseBet} balanceCents={balance} maxBetCents={DAMLA_MAX_BET_CENTS} disabled={modeLocked} label={tk('originals.betAmount')}
       classNames={{ minus: styles.stepBtn, plus: styles.stepBtn, value: styles.betValue, max: styles.maxChip }}
       render={parts => (
         <div className={`${kit.kit} ${styles.deck}`} role="group" aria-label={t('deck.group')} data-auto={auto ? '' : undefined}>
-          <div className={styles.money}>
-            <div className={styles.cell}>
-              <span className={styles.cellLabel}>{t('deck.balance')}</span>
-              <strong className={styles.cellValue} data-testid="damla-balance">{format.amount(balance)}<small> DEMO</small></strong>
-            </div>
-            <div className={styles.cell}>
-              <span className={styles.cellLabel}>{lastWin && lastWin.batchCount > 1 ? t('deck.rainWin', { count: lastWin.batchCount }) : lastWin?.replay ? t('deck.winReplay') : t('deck.win')}</span>
-              <strong className={`${styles.cellValue} ${winShown > 0 ? styles.cellWin : ''}`} data-testid="damla-win">{format.amount(winShown)}<small> DEMO</small></strong>
-            </div>
-            <button type="button" className={styles.refill} onClick={refill} disabled={inFlight > 0 || auto !== null || pending || gated} aria-label={t('deck.refill')} title={t('deck.refill')}><RefillIcon /></button>
-          </div>
-          <div className={styles.betRow}>
-            {parts.label}
-            <div className={styles.betControls} {...parts.groupProps}>{parts.minus}{parts.value}{parts.plus}{parts.max}</div>
-          </div>
-          <fieldset className={styles.choice} disabled={modeLocked} data-testid="damla-risk">
-            <legend>{t('deck.risk')}{modeLocked && inFlight > 0 && <span className={styles.lockNote}> · {t('deck.locked')}</span>}</legend>
-            <div className={styles.segments} role="radiogroup" aria-label={t('deck.risk')}>
-              {DAMLA_RISKS.map(r => (
-                <button key={r} type="button" role="radio" aria-checked={risk === r} className={styles.segment} data-risk={r} onClick={() => chooseRisk(r)} disabled={modeLocked}>{t(RISK_KEY[r])}</button>
-              ))}
-            </div>
-          </fieldset>
-          <fieldset className={styles.choice} disabled={modeLocked} data-testid="damla-rows">
-            <legend>{t('deck.rows')}</legend>
-            <div className={styles.segments} role="radiogroup" aria-label={t('deck.rows')}>
-              {DAMLA_ROWS.map(r => (
-                <button key={r} type="button" role="radio" aria-checked={rows === r} className={styles.segment} onClick={() => chooseRows(r)} disabled={modeLocked} aria-label={t('deck.rowsAria', { rows: r })}>{r}</button>
-              ))}
-            </div>
-          </fieldset>
-          <div className={styles.actions}>
-            {auto ? (
-              <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay('cancelled', 'info')} />
-            ) : (
-              <button type="button" className={styles.drop} onClick={() => startDrops(1)} disabled={dropLocked} data-locked={inFlight > 0 || undefined} data-testid="damla-drop"
-                aria-label={t('deck.drop')} aria-describedby="dm-drop-cost">
-                <DamlaDropGlyph className={styles.dropGlyph} />
-                <span className={styles.dropText}><strong>{t('deck.drop')}</strong><small>{format.demo(cost)}</small></span>
-              </button>
-            )}
-            <span id="dm-drop-cost" className="sr-only">{inFlight > 0 ? t('deck.dropLocked') : t('deck.dropCost', { cost: format.demo(cost) })}</span>
-            <div className={styles.rain} role="group" aria-label={t('deck.rain')}>
-              <span className={styles.rainLabel}><RainIcon />{t('deck.rain')}</span>
-              {DAMLA_RAIN_COUNTS.map(n => (
-                <button key={n} type="button" className={styles.rainBtn} onClick={() => startDrops(n)} disabled={dropLocked || auto !== null} data-testid={`damla-rain-${n}`}
-                  aria-label={t('deck.rainAria', { count: n, cost: format.demo(cost * n) })}>×{n}</button>
-              ))}
-            </div>
-          </div>
-          <p className={styles.facts} data-testid="damla-facts">{t('deck.facts', { rtp: damlaPercent(facts.exact, loc), edge: damlaPercent(facts.houseEdge, loc), max: damlaMultiplierText(facts.capHundredths, loc) })}</p>
-          <div className={styles.tools}>
-            <button type="button" className={styles.tool} onClick={() => { sound.click(); setModal('autoplay'); }} disabled={modeLocked} aria-haspopup="dialog"><LoopIcon /><span>{t('deck.auto')}</span></button>
-            <button type="button" className={`${styles.tool} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed} aria-label={t('deck.speedAria', { speed: tk(SPEED_KEY[settings.spinSpeed]) })}><SpeedDrops count={speedIndex + 1} /><span>{tk(SPEED_KEY[settings.spinSpeed])}</span></button>
-            <button type="button" className={`${styles.tool} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label={t('deck.sound')}><SoundIcon on={!settings.muted} /><span>{t('deck.sound')}</span></button>
-            <button type="button" className={styles.tool} onClick={() => openInfo()} aria-haspopup="dialog" aria-label={t('deck.infoAria')}><InfoIcon /><span>{t('deck.info')}</span></button>
-            <button type="button" className={styles.tool} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label={tk('settings.title')}><GearIcon /><span>{tk('settings.title')}</span></button>
-          </div>
-          <div className={styles.msg}>
-            {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">{t('deck.soundLoading', { percent: soundLoad.percent })}</p>}
-            {error ? <p className={styles.msgError} role="alert">{error}</p>
-              : outOfCredit ? <p className={styles.msgHint}>{t('deck.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
-              : <p className={styles.msgHint}>{inFlight > 0 ? t('deck.inFlight', { count: inFlight }) : lastWin && !lastWin.replay ? richText(t, 'deck.lastWin', { multiplier: damlaMultiplierText(lastWin.hundredths, loc), money: format.demo(lastWin.payout) }) : settings.spaceToSpin ? richText(t, 'deck.hintSpace') : t('deck.hintFixed')}</p>}
-            {doneBreakdown && <RoundBreakdownLauncher breakdown={doneBreakdown} modeLabel={t('history.modeValue', { risk: t(`risk.${doneBreakdown.mode.split('-')[0] as DamlaRisk}`), rows: Number(doneBreakdown.mode.split('-')[1]) })} />}
-          </div>
+          <BetPanel tab={tab} onTabChange={setTab}
+            shared={<div className={styles.shared}>
+              <div className={styles.money}>
+                <div className={styles.cell}>
+                  <span className={styles.cellLabel}>{t('deck.balance')}</span>
+                  <strong className={styles.cellValue} data-testid="damla-balance">{format.amount(balance)}<small> DEMO</small></strong>
+                </div>
+                <div className={styles.cell}>
+                  <span className={styles.cellLabel}>{lastWin && lastWin.batchCount > 1 ? t('deck.rainWin', { count: lastWin.batchCount }) : lastWin?.replay ? t('deck.winReplay') : t('deck.win')}</span>
+                  <strong className={`${styles.cellValue} ${winShown > 0 ? styles.cellWin : ''}`} data-testid="damla-win">{format.amount(winShown)}<small> DEMO</small></strong>
+                </div>
+                <button type="button" className={styles.refill} onClick={refill} disabled={inFlight > 0 || auto !== null || pending || gated} aria-label={t('deck.refill')} title={t('deck.refill')}><RefillIcon /></button>
+              </div>
+              <div className={styles.betRow}>
+                {parts.label}
+                <div className={styles.betControls} {...parts.groupProps}>{parts.minus}{parts.value}{parts.plus}<HalfDouble disabled={modeLocked} onHalf={() => chooseBet(ladderHalf(DAMLA_BET_LADDER, bet))} onDouble={() => chooseBet(ladderDouble(DAMLA_BET_LADDER, bet, doubleCap))} />{parts.max}</div>
+              </div>
+              <fieldset className={styles.choice} disabled={modeLocked} data-testid="damla-risk">
+                <legend>{t('deck.risk')}{modeLocked && inFlight > 0 && <span className={styles.lockNote}> · {t('deck.locked')}</span>}</legend>
+                <div className={styles.segments} role="radiogroup" aria-label={t('deck.risk')}>
+                  {DAMLA_RISKS.map(r => (
+                    <button key={r} type="button" role="radio" aria-checked={risk === r} className={styles.segment} data-risk={r} onClick={() => chooseRisk(r)} disabled={modeLocked}>{t(RISK_KEY[r])}</button>
+                  ))}
+                </div>
+              </fieldset>
+              <fieldset className={styles.choice} disabled={modeLocked} data-testid="damla-rows">
+                <legend>{t('deck.rows')}</legend>
+                <div className={styles.segments} role="radiogroup" aria-label={t('deck.rows')}>
+                  {DAMLA_ROWS.map(r => (
+                    <button key={r} type="button" role="radio" aria-checked={rows === r} className={styles.segment} onClick={() => chooseRows(r)} disabled={modeLocked} aria-label={t('deck.rowsAria', { rows: r })}>{r}</button>
+                  ))}
+                </div>
+              </fieldset>
+              <div className={styles.profit}>
+                <ProfitReadout value={lastNet === null ? '—' : format.signedDemo(lastNet)} up={lastNet !== null && lastNet > 0}
+                  note={lastWin && lastWin.batchCount > 1 ? tk('originals.profitLastRain', { count: lastWin.batchCount }) : tk('originals.profitLast')} />
+              </div>
+            </div>}
+            manual={<div className={styles.manual}>
+              <div className={styles.actions}>
+                {auto ? (
+                  <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay('cancelled', 'info')} />
+                ) : (
+                  <button type="button" className={styles.drop} onClick={() => startDrops(1)} disabled={dropLocked} data-locked={inFlight > 0 || undefined} data-testid="damla-drop"
+                    aria-label={t('deck.drop')} aria-describedby="dm-drop-cost">
+                    <DamlaDropGlyph className={styles.dropGlyph} />
+                    <span className={styles.dropText}><strong>{t('deck.drop')}</strong><small>{format.demo(cost)}</small></span>
+                  </button>
+                )}
+                <span id="dm-drop-cost" className="sr-only">{inFlight > 0 ? t('deck.dropLocked') : t('deck.dropCost', { cost: format.demo(cost) })}</span>
+                <div className={styles.rain} role="group" aria-label={t('deck.rain')}>
+                  <span className={styles.rainLabel}><RainIcon />{t('deck.rain')}</span>
+                  {DAMLA_RAIN_COUNTS.map(n => (
+                    <button key={n} type="button" className={styles.rainBtn} onClick={() => startDrops(n)} disabled={dropLocked || auto !== null} data-testid={`damla-rain-${n}`}
+                      aria-label={t('deck.rainAria', { count: n, cost: format.demo(cost * n) })}>×{n}</button>
+                  ))}
+                </div>
+              </div>
+              <p className={styles.facts} data-testid="damla-facts">{t('deck.facts', { rtp: damlaPercent(facts.exact, loc), edge: damlaPercent(facts.houseEdge, loc), max: damlaMultiplierText(facts.capHundredths, loc) })}</p>
+              <div className={styles.tools}>
+                <button type="button" className={`${styles.tool} ${speedIndex > 0 ? styles.toolOn : ''}`} onClick={cycleSpeed} aria-label={t('deck.speedAria', { speed: tk(SPEED_KEY[settings.spinSpeed]) })}><SpeedDrops count={speedIndex + 1} /><span>{tk(SPEED_KEY[settings.spinSpeed])}</span></button>
+                <button type="button" className={`${styles.tool} ${!settings.muted ? styles.toolOn : ''}`} onClick={toggleSound} aria-pressed={!settings.muted} aria-label={t('deck.sound')}><SoundIcon on={!settings.muted} /><span>{t('deck.sound')}</span></button>
+                <button type="button" className={styles.tool} onClick={() => openInfo()} aria-haspopup="dialog" aria-label={t('deck.infoAria')}><InfoIcon /><span>{t('deck.info')}</span></button>
+                <button type="button" className={styles.tool} onClick={() => { sound.click(); setModal('settings'); }} aria-haspopup="dialog" aria-label={tk('settings.title')}><GearIcon /><span>{tk('settings.title')}</span></button>
+              </div>
+              <div className={styles.msg}>
+                {soundLoad.started && !soundLoad.ready && !settings.muted && <p className={styles.msgHint} role="status">{t('deck.soundLoading', { percent: soundLoad.percent })}</p>}
+                {error ? <p className={styles.msgError} role="alert">{error}</p>
+                  : outOfCredit ? <p className={styles.msgHint}>{t('deck.outOfCredit')} <button type="button" className={styles.inlineLink} onClick={refill}>{t('deck.refill')}</button></p>
+                  : <p className={styles.msgHint}>{inFlight > 0 ? t('deck.inFlight', { count: inFlight }) : lastWin && !lastWin.replay ? richText(t, 'deck.lastWin', { multiplier: damlaMultiplierText(lastWin.hundredths, loc), money: format.demo(lastWin.payout) }) : settings.spaceToSpin ? richText(t, 'deck.hintSpace') : t('deck.hintFixed')}</p>}
+                {doneBreakdown && <RoundBreakdownLauncher breakdown={doneBreakdown} modeLabel={t('history.modeValue', { risk: t(`risk.${doneBreakdown.mode.split('-')[0] as DamlaRisk}`), rows: Number(doneBreakdown.mode.split('-')[1]) })} />}
+              </div>
+            </div>}
+            auto={<section className={styles.autoTab} aria-label={t('autoplay.title')} data-testid="damla-autoplay">
+              {auto
+                ? <AutoplayStopButton className={styles.stop} remaining={auto.spinsRemaining} onStop={() => stopAutoplay('cancelled', 'info')} />
+                : <AutoplayPanel onStart={startAutoplay} spinCostCents={cost} balanceCents={balance} disabled={inFlight > 0 || gated || booting} instant countLabel={t('autoplay.drops')} />}
+              <p className={styles.modalNote}>{t('autoplay.note', { cost: format.demo(cost), mode: `${t(RISK_KEY[risk])} · ${t('deck.rowsShort', { rows })}` })}</p>
+            </section>}
+          />
         </div>
       )}
     />
   );
 
   return (
-    <div className={`game-page ${styles.page}`}>
+    <OriginalsPage className={styles.page}>
       <GameHeading title={t('title')} subtitle={t('subtitle')} mode={mode} setMode={setMode} active={inFlight > 0 || auto !== null || pending}
         badge={remote ? rgs.source('remote') : sourcePending ? t('badge.checking') : rgs.source('local')} />
-      <section ref={tableRef} className={`game-table ${styles.table}`} aria-label={t('table')} data-risk={risk}>
+      <section ref={tableRef} className={`game-table ${styles.table}`} aria-label={t('table')} data-risk={risk} data-originals-table="">
         <div className={styles.layout}>
           <div className={styles.stage} data-replay={replayInfo ? '' : undefined}>
             <div className={styles.stageTop}>
@@ -689,7 +709,10 @@ export function DamlaGame() {
         )}
         <div className="sr-only" role="status" aria-live="polite">{announce}</div>
       </section>
+      <OriginalsInfo gameId="damla" rtp={facts.exact} rtpTitle={tk('originals.strip.rtpMode')} onSettings={() => { sound.click(); setModal('settings'); }}
+        onTry={() => { startDrops(1); }} tryDisabled={dropLocked || auto !== null} tryHint={tk('originals.strip.tryDamla')} />
       <SessionBar className={styles.sessionBar} nowMs={session.nowMs} elapsedMs={session.elapsedMs} netCents={session.netCents} stats={session.stats} />
+      <OriginalsRow current="damla" />
       <GameInfoStrip id="damla" />
       <DamlaHistory hiddenIds={hiddenIds} onReplay={replay} replayDisabled={inFlight > 0 || pending || auto !== null || booting} replayingId={replaying?.recordId ?? null} onShare={remote ? shareRound : undefined} />
       <Footer remote={remote !== null} rules={rules} />
@@ -704,13 +727,9 @@ export function DamlaGame() {
         </section>
       </Modal>
       <GameInfo open={modal === 'info'} onClose={() => setModal(null)} pages={infoPages} title={t('info.title')} initialPageId={infoPage} />
-      <Modal open={modal === 'autoplay'} onClose={() => setModal(null)} title={t('autoplay.title')} size="md">
-        <AutoplayPanel onStart={startAutoplay} spinCostCents={cost} balanceCents={balance} disabled={inFlight > 0 || gated} instant countLabel={t('autoplay.drops')} />
-        <p className={styles.modalNote}>{t('autoplay.note', { cost: format.demo(cost), mode: `${t(RISK_KEY[risk])} · ${t('deck.rowsShort', { rows })}` })}</p>
-      </Modal>
       <RealityCheckDialog open={realityDue && modal === null} elapsedMs={session.elapsedMs} netCents={session.netCents}
         onContinue={() => session.acknowledge()} onQuit={() => { stopAutoplay('quit', 'info'); session.acknowledge(); router.push('/games'); }} />
-    </div>
+    </OriginalsPage>
   );
 }
 /** First autobet drop starts at once; later ones wait for the speed's gap. */

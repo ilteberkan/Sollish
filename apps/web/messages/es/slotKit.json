@@ -230,5 +230,61 @@
     "checkBad": "✗ El detalle da {amount}, el motor pagó {engine}",
     "note": "Cada importe procede del resultado de la ronda del motor; los multiplicadores se aplican tal como se muestran y la suma es el pago. × = veces la apuesta.",
     "noWin": "Sin premio en esta ronda."
+  },
+  "originals": {
+    "tabsLabel": "Modo de apuesta",
+    "manual": "Manual",
+    "auto": "Auto",
+    "betAmount": "Importe de la apuesta",
+    "halfAria": "Reducir la apuesta a la mitad",
+    "doubleAria": "Duplicar la apuesta",
+    "amountHint": "1–500 DEMO",
+    "totalProfit": "Beneficio total",
+    "profitOnWin": "Si ganas · {factor}",
+    "profitAtTarget": "Retiro en {target}",
+    "profitLive": "Si retiras ahora",
+    "profitLast": "Última ronda",
+    "profitLastRain": "Últimas {count} gotas",
+    "profitIdle": "Sin objetivo de retiro",
+    "side": "Elige un lado",
+    "target": "Retiro automático",
+    "targetPlaceholder": "Desactivado",
+    "targetHint": "1,01–50,00×. Déjalo vacío para retirar a mano.",
+    "targetInvalid": "El objetivo de retiro debe estar entre 1,01× y 50,00×.",
+    "targetOff": "Desactivado",
+    "targetRequired": "Elige un objetivo de retiro para el juego automático.",
+    "targetPreset": "Objetivo {target}",
+    "autoCount": "Número de rondas",
+    "autoNote": "Cada ronda {cost} · límite de pérdida obligatorio · se detiene si la pestaña se oculta.",
+    "autoStopped": "Juego automático detenido: {reason} · {rounds} rondas · neto {net}",
+    "autoStarted": "Juego automático iniciado: {rounds} rondas, límite de pérdida {limit}",
+    "bar": {
+      "label": "Herramientas del juego",
+      "settings": "Ajustes",
+      "theatre": "Modo teatro",
+      "fullscreen": "Pantalla completa",
+      "exitFullscreen": "Salir de pantalla completa",
+      "favorite": "Añadir a favoritos",
+      "unfavorite": "Quitar de favoritos",
+      "fair": "Demostrablemente justo",
+      "notFair": "Práctica · no demostrablemente justo",
+      "home": "Inicio de Sollish"
+    },
+    "strip": {
+      "label": "Tarjeta de {name}",
+      "original": "Original",
+      "rtp": "RTP {value}",
+      "rtpMode": "RTP exacto del modo elegido",
+      "try": "Probar suerte",
+      "tryCoinflip": "Un lanzamiento DEMO normal con la apuesta actual a un lado aleatorio",
+      "tryCrash": "Una ronda DEMO normal con la apuesta y el objetivo actuales",
+      "tryDamla": "Una gota DEMO normal con la apuesta y el modo actuales"
+    },
+    "row": {
+      "title": "Originals",
+      "all": "Ver todo",
+      "current": "Jugando ahora",
+      "label": "Juegos Sollish Originals"
+    }
   }
 }

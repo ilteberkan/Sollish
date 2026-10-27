@@ -12,7 +12,7 @@ test('Crash local cashout updates only demo credits and cannot start a real bet'
   await expect(page.getByRole('heading', { name: 'Crash', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Demoyu başlat', exact: true }).click();
   await expect(page.locator('#amount-error')).toContainText('1–500');
-  await page.getByLabel('Demo miktarı').fill('10');
+  await page.getByLabel('Bahis tutarı', { exact: true }).fill('10');
   await page.getByRole('button', { name: 'Demoyu başlat', exact: true }).click();
   const exit = page.getByRole('button', { name: /Çıkış yap/ });
   await expect(exit).toBeEnabled({ timeout: 5000 });
@@ -26,7 +26,7 @@ test('Crash local cashout updates only demo credits and cannot start a real bet'
 test('Coinflip performs local gameplay and preserves precise result labels', async ({ page }) => {
   await page.addInitScript(() => { Object.defineProperty(crypto, 'getRandomValues', { value: (array: Uint32Array) => { array.fill(0); return array; } }); });
   await page.goto('/game/coinflip');
-  await page.getByLabel('Demo miktarı').fill('10');
+  await page.getByLabel('Bahis tutarı', { exact: true }).fill('10');
   await page.getByRole('button', { name: 'Yazı', exact: true }).click();
   await page.getByRole('button', { name: 'Demoda çevir' }).click();
   await expect(page.getByText('Doğru tahmin.')).toBeVisible();
@@ -74,7 +74,7 @@ test('mobile chat is a keyboard-dismissable dialog and never invents messages', 
 test('immediate crash is a loss and a double click never creates duplicate records', async ({ page }) => {
   await page.addInitScript(() => { Object.defineProperty(crypto, 'getRandomValues', { value: (array: Uint32Array) => { array.fill(0); return array; } }); });
   await page.goto('/game/crash');
-  await page.getByLabel('Demo miktarı').fill('10');
+  await page.getByLabel('Bahis tutarı', { exact: true }).fill('10');
   await page.getByRole('button', { name: 'Demoyu başlat', exact: true }).dblclick();
   await expect(page.getByText('Tur sona erdi', { exact: true })).toBeVisible();
   await expect(page.locator('.history-table tbody tr')).toHaveCount(1);
@@ -90,16 +90,17 @@ for (const width of [320, 390, 768, 1440]) {
       await page.evaluate(() => document.fonts.ready);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
       if (width <= 768 && route!.startsWith('/game/')) {
-        for (const button of await page.locator('.mode-switch button, .amount-quick button, .chat-toggle').all()) {
+        // Originals bet panel (27 Oct 2026): the ½ / 2× buttons replaced the 10/25/50 quick amounts.
+        for (const button of await page.locator('.mode-switch button, .chat-toggle').or(page.getByTestId('bet-half')).or(page.getByTestId('bet-double')).all()) {
           const bounds = await button.boundingBox();
           expect(bounds!.height).toBeGreaterThanOrEqual(44);
           expect(bounds!.width).toBeGreaterThanOrEqual(44);
         }
-        const quick = page.locator('.amount-quick');
-        const parent = await quick.boundingBox();
-        for (const button of await quick.getByRole('button').all()) {
+        const panel = await page.getByTestId('originals-panel').boundingBox();
+        for (const button of await page.getByTestId('originals-panel').getByRole('button').all()) {
           const bounds = await button.boundingBox();
-          expect(bounds!.x + bounds!.width).toBeLessThanOrEqual(parent!.x + parent!.width + 1);
+          if (!bounds) continue; // the hidden tab's controls
+          expect(bounds.x + bounds.width).toBeLessThanOrEqual(panel!.x + panel!.width + 1);
         }
       }
       await page.screenshot({ path: path.join(screenshots, `${route!.replaceAll('/', '-')}-${width}.png`), fullPage: true });
@@ -111,7 +112,7 @@ test('mobile manual cashout remains fixed in the viewport with reduced motion', 
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.addInitScript(() => { Object.defineProperty(crypto, 'getRandomValues', { value: (array: Uint32Array) => { array.fill(3_221_225_472); return array; } }); });
   await page.goto('/game/crash');
-  await page.getByLabel('Demo miktarı').fill('10');
+  await page.getByLabel('Bahis tutarı', { exact: true }).fill('10');
   await page.getByRole('button', { name: 'Demoyu başlat', exact: true }).click();
   const exit = page.getByRole('button', { name: /Çıkış yap/ });
   await expect(exit).toBeEnabled();

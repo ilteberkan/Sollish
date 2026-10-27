@@ -11,7 +11,7 @@ for (const game of [
     page.on('pageerror', error => errors.push(error.message));
     await page.clock.install();
     await page.goto(game.route);
-    await page.getByLabel('Demo miktarı', { exact: true }).fill('10');
+    await page.getByLabel('Bahis tutarı', { exact: true }).fill('10');
     await page.evaluate(source => {
       const originalUUID = crypto.randomUUID.bind(crypto);
       Object.defineProperty(window, '__restoreDemoUUID', { configurable: true, value: () => {
@@ -27,7 +27,7 @@ for (const game of [
     await expect(page.locator('.demo-balance')).toContainText('1.000');
     await expect(page.locator('.history-table tbody tr')).toHaveCount(0);
     await expect(page.getByRole('button', { name: game.start, exact: true })).toBeEnabled();
-    await expect(page.getByLabel('Demo miktarı', { exact: true })).toBeEnabled();
+    await expect(page.getByLabel('Bahis tutarı', { exact: true })).toBeEnabled();
     await expect(page.getByRole('button', { name: 'Cüzdan bağla', exact: true })).toBeEnabled();
 
     // Retry in the same mounted component/provider. A reload or unmount refund
@@ -40,7 +40,7 @@ for (const game of [
       });
     });
 
-    await expect(page.getByLabel('Demo miktarı', { exact: true })).toHaveValue('10');
+    await expect(page.getByLabel('Bahis tutarı', { exact: true })).toHaveValue('10');
     expect(await page.evaluate(() => typeof (window as unknown as { __restoreDemoUUID?: () => void }).__restoreDemoUUID)).toBe('function');
     await page.getByRole('button', { name: game.start, exact: true }).click();
     await page.clock.fastForward(5_000);

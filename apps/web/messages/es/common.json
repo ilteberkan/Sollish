@@ -48,6 +48,11 @@
     "menu": "Menú",
     "closeMenu": "Cerrar el menú",
     "tabbar": "Navegación rápida",
+    "shortcuts": "Accesos rápidos",
+    "chatShortcut": "Chat",
+    "help": "Ayuda: verificación de juego justo",
+    "clock": "Hora local",
+    "demoBalance": "Saldo DEMO",
     "search": {
       "label": "Buscar juegos",
       "placeholder": "Buscar juegos",

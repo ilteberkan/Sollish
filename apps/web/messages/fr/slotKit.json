@@ -230,5 +230,61 @@
     "checkBad": "✗ Le détail donne {amount}, le moteur a payé {engine}",
     "note": "Chaque montant provient du résultat du tour calculé par le moteur ; les multiplicateurs s’appliquent comme indiqué et la somme est le paiement. × = fois la mise.",
     "noWin": "Aucun gain dans ce tour."
+  },
+  "originals": {
+    "tabsLabel": "Mode de mise",
+    "manual": "Manuel",
+    "auto": "Auto",
+    "betAmount": "Montant de la mise",
+    "halfAria": "Diviser la mise par deux",
+    "doubleAria": "Doubler la mise",
+    "amountHint": "1–500 DEMO",
+    "totalProfit": "Profit total",
+    "profitOnWin": "Si tu gagnes · {factor}",
+    "profitAtTarget": "Encaissement à {target}",
+    "profitLive": "Si tu encaisses maintenant",
+    "profitLast": "Dernière manche",
+    "profitLastRain": "{count} dernières gouttes",
+    "profitIdle": "Aucun objectif d’encaissement",
+    "side": "Choisis un côté",
+    "target": "Encaissement auto",
+    "targetPlaceholder": "Désactivé",
+    "targetHint": "1,01–50,00×. Laisse vide pour encaisser à la main.",
+    "targetInvalid": "L’objectif doit être compris entre 1,01× et 50,00×.",
+    "targetOff": "Désactivé",
+    "targetRequired": "Choisis un objectif d’encaissement pour le jeu auto.",
+    "targetPreset": "Objectif {target}",
+    "autoCount": "Nombre de manches",
+    "autoNote": "Chaque manche {cost} · limite de perte obligatoire · s’arrête si l’onglet est masqué.",
+    "autoStopped": "Jeu auto arrêté : {reason} · {rounds} manches · net {net}",
+    "autoStarted": "Jeu auto lancé : {rounds} manches, limite de perte {limit}",
+    "bar": {
+      "label": "Outils du jeu",
+      "settings": "Paramètres",
+      "theatre": "Mode théâtre",
+      "fullscreen": "Plein écran",
+      "exitFullscreen": "Quitter le plein écran",
+      "favorite": "Ajouter aux favoris",
+      "unfavorite": "Retirer des favoris",
+      "fair": "Équité prouvable",
+      "notFair": "Entraînement · équité non prouvable",
+      "home": "Accueil Sollish"
+    },
+    "strip": {
+      "label": "Carte du jeu {name}",
+      "original": "Original",
+      "rtp": "RTP {value}",
+      "rtpMode": "RTP exact du mode choisi",
+      "try": "Tenter ma chance",
+      "tryCoinflip": "Un lancer DEMO normal à la mise actuelle sur un côté aléatoire",
+      "tryCrash": "Une manche DEMO normale à la mise et l’objectif actuels",
+      "tryDamla": "Une goutte DEMO normale à la mise et au mode actuels"
+    },
+    "row": {
+      "title": "Originals",
+      "all": "Tout voir",
+      "current": "En cours",
+      "label": "Jeux Sollish Originals"
+    }
   }
 }

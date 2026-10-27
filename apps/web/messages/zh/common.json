@@ -48,6 +48,11 @@
     "menu": "菜单",
     "closeMenu": "关闭菜单",
     "tabbar": "快捷导航",
+    "shortcuts": "快捷入口",
+    "chatShortcut": "聊天",
+    "help": "帮助：公平性验证",
+    "clock": "本地时间",
+    "demoBalance": "DEMO 余额",
     "search": {
       "label": "搜索游戏",
       "placeholder": "搜索游戏",

@@ -230,5 +230,61 @@
     "checkBad": "✗ 상세 합계 {amount}, 엔진 지급 {engine}",
     "note": "모든 금액은 엔진의 라운드 결과에서 가져옵니다. 배수는 표시된 그대로 적용되며 합계가 지급액입니다. × = 베팅의 배수.",
     "noWin": "이 라운드에는 당첨이 없습니다."
+  },
+  "originals": {
+    "tabsLabel": "베팅 모드",
+    "manual": "수동",
+    "auto": "자동",
+    "betAmount": "베팅 금액",
+    "halfAria": "베팅 절반",
+    "doubleAria": "베팅 두 배",
+    "amountHint": "1–500 DEMO",
+    "totalProfit": "총 수익",
+    "profitOnWin": "이기면 · {factor}",
+    "profitAtTarget": "{target}에서 캐시아웃",
+    "profitLive": "지금 캐시아웃하면",
+    "profitLast": "지난 라운드",
+    "profitLastRain": "최근 {count}개 방울",
+    "profitIdle": "캐시아웃 목표 없음",
+    "side": "면 선택",
+    "target": "자동 캐시아웃",
+    "targetPlaceholder": "끔",
+    "targetHint": "1.01–50.00×. 비우면 직접 캐시아웃합니다.",
+    "targetInvalid": "캐시아웃 목표는 1.01×에서 50.00× 사이여야 합니다.",
+    "targetOff": "끔",
+    "targetRequired": "자동 플레이에는 캐시아웃 목표가 필요합니다.",
+    "targetPreset": "목표 {target}",
+    "autoCount": "라운드 수",
+    "autoNote": "라운드당 {cost} · 손실 한도 필수 · 탭이 숨겨지면 멈춥니다.",
+    "autoStopped": "자동 플레이 중지: {reason} · {rounds}라운드 · 순손익 {net}",
+    "autoStarted": "자동 플레이 시작: {rounds}라운드, 손실 한도 {limit}",
+    "bar": {
+      "label": "게임 도구",
+      "settings": "설정",
+      "theatre": "극장 모드",
+      "fullscreen": "전체 화면",
+      "exitFullscreen": "전체 화면 종료",
+      "favorite": "즐겨찾기에 추가",
+      "unfavorite": "즐겨찾기에서 제거",
+      "fair": "증명 가능한 공정성",
+      "notFair": "연습 · 증명 가능한 공정성 아님",
+      "home": "Sollish 홈"
+    },
+    "strip": {
+      "label": "{name} 게임 카드",
+      "original": "오리지널",
+      "rtp": "RTP {value}",
+      "rtpMode": "선택한 모드의 정확한 RTP",
+      "try": "운 시험하기",
+      "tryCoinflip": "현재 베팅으로 무작위 면에 일반 DEMO 플립",
+      "tryCrash": "현재 베팅과 캐시아웃 목표로 일반 DEMO 라운드",
+      "tryDamla": "현재 베팅과 모드로 일반 DEMO 드롭"
+    },
+    "row": {
+      "title": "Originals",
+      "all": "모두 보기",
+      "current": "플레이 중",
+      "label": "Sollish Originals 게임"
+    }
   }
 }

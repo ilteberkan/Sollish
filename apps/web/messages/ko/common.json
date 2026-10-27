@@ -48,6 +48,11 @@
     "menu": "메뉴",
     "closeMenu": "메뉴 닫기",
     "tabbar": "빠른 이동",
+    "shortcuts": "바로가기",
+    "chatShortcut": "채팅",
+    "help": "도움말: 공정성 검증",
+    "clock": "현지 시간",
+    "demoBalance": "DEMO 잔액",
     "search": {
       "label": "게임 검색",
       "placeholder": "게임 검색",

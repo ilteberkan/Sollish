@@ -48,6 +48,11 @@
     "menu": "Menu",
     "closeMenu": "Fermer le menu",
     "tabbar": "Navigation rapide",
+    "shortcuts": "Raccourcis",
+    "chatShortcut": "Chat",
+    "help": "Aide : vérification du jeu équitable",
+    "clock": "Heure locale",
+    "demoBalance": "Solde DEMO",
     "search": {
       "label": "Rechercher des jeux",
       "placeholder": "Rechercher des jeux",

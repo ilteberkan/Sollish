@@ -230,5 +230,61 @@
     "checkBad": "✗ Ayrıntı {amount} veriyor, motor {engine} ödedi",
     "note": "Her tutar motorun tur sonucundan alınır; çarpanlar gösterildiği gibi uygulanır ve toplam ödemedir. × = bahsin katı.",
     "noWin": "Bu turda kazanç yok."
+  },
+  "originals": {
+    "tabsLabel": "Bahis modu",
+    "manual": "Manuel",
+    "auto": "Otomatik",
+    "betAmount": "Bahis tutarı",
+    "halfAria": "Bahsi yarıya indir",
+    "doubleAria": "Bahsi ikiye katla",
+    "amountHint": "1–500 DEMO",
+    "totalProfit": "Toplam kâr",
+    "profitOnWin": "Kazanırsan · {factor}",
+    "profitAtTarget": "{target} çıkışta",
+    "profitLive": "Şimdi çıkarsan",
+    "profitLast": "Son tur",
+    "profitLastRain": "Son {count} damla",
+    "profitIdle": "Çıkış hedefi yok",
+    "side": "Taraf seç",
+    "target": "Otomatik çıkış",
+    "targetPlaceholder": "Kapalı",
+    "targetHint": "1,01–50,00×. Boşsa elle çıkarsın.",
+    "targetInvalid": "Çıkış hedefi 1,01× ile 50,00× arasında olmalı.",
+    "targetOff": "Kapalı",
+    "targetRequired": "Otomatik oyun için bir çıkış hedefi seç.",
+    "targetPreset": "{target} hedefi",
+    "autoCount": "Tur sayısı",
+    "autoNote": "Her tur {cost} · kayıp limiti zorunlu · sekme gizlenince durur.",
+    "autoStopped": "Otomatik oyun durdu: {reason} · {rounds} tur · net {net}",
+    "autoStarted": "Otomatik oyun başladı: {rounds} tur, kayıp limiti {limit}",
+    "bar": {
+      "label": "Oyun araçları",
+      "settings": "Ayarlar",
+      "theatre": "Tiyatro modu",
+      "fullscreen": "Tam ekran",
+      "exitFullscreen": "Tam ekrandan çık",
+      "favorite": "Favorilere ekle",
+      "unfavorite": "Favorilerden çıkar",
+      "fair": "Kanıtlanabilir adil",
+      "notFair": "Pratik · kanıtlanabilir adil değil",
+      "home": "Sollish ana sayfa"
+    },
+    "strip": {
+      "label": "{name} oyun kartı",
+      "original": "Original",
+      "rtp": "RTP {value}",
+      "rtpMode": "Seçili modun gerçek RTP’si",
+      "try": "Şansımı dene",
+      "tryCoinflip": "Rastgele bir tarafla, şu anki bahisle normal bir DEMO atışı",
+      "tryCrash": "Şu anki bahis ve çıkış hedefiyle normal bir DEMO turu",
+      "tryDamla": "Şu anki bahis ve modla normal bir DEMO damlası"
+    },
+    "row": {
+      "title": "Originals",
+      "all": "Tümünü gör",
+      "current": "Şu an oynuyorsun",
+      "label": "Sollish Originals oyunları"
+    }
   }
 }

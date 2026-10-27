@@ -88,8 +88,9 @@ test('autobet needs a loss limit and stops before a drop that would exceed it', 
   await stub(page, LOSS); // every drop costs 1,00 and pays 0,30: net loss 0,70 per drop
   await openDamla(page);
   await turbo(page);
-  await page.getByRole('button', { name: 'Otomatik', exact: true }).click();
-  const dialog = page.getByRole('dialog', { name: 'Otomatik bahis' });
+  // Originals bet panel (27 Oct 2026): autobet is the "Otomatik" tab of the panel, not a dialog.
+  await page.getByRole('tab', { name: 'Otomatik', exact: true }).click();
+  const dialog = page.getByRole('region', { name: 'Otomatik bahis' });
   await expect(dialog.getByText('Damla sayısı')).toBeVisible();
   const start = dialog.getByRole('button', { name: /^Başlat/ });
   await expect(start).toBeDisabled();

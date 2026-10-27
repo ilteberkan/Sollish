@@ -230,5 +230,61 @@
     "checkBad": "✗ 明细得出 {amount}，引擎派彩 {engine}",
     "note": "所有金额均取自引擎的本局结果；倍数按所示应用，合计即派彩。× = 投注的倍数。",
     "noWin": "本局未中奖。"
+  },
+  "originals": {
+    "tabsLabel": "下注模式",
+    "manual": "手动",
+    "auto": "自动",
+    "betAmount": "下注金额",
+    "halfAria": "下注减半",
+    "doubleAria": "下注加倍",
+    "amountHint": "1–500 DEMO",
+    "totalProfit": "总利润",
+    "profitOnWin": "若获胜 · {factor}",
+    "profitAtTarget": "在 {target} 兑现",
+    "profitLive": "若现在兑现",
+    "profitLast": "上一局",
+    "profitLastRain": "最近 {count} 滴",
+    "profitIdle": "未设兑现目标",
+    "side": "选择一面",
+    "target": "自动兑现",
+    "targetPlaceholder": "关闭",
+    "targetHint": "1.01–50.00×。留空则手动兑现。",
+    "targetInvalid": "兑现目标须在 1.01× 到 50.00× 之间。",
+    "targetOff": "关闭",
+    "targetRequired": "自动游戏需要先选择兑现目标。",
+    "targetPreset": "目标 {target}",
+    "autoCount": "局数",
+    "autoNote": "每局 {cost} · 必须设置亏损上限 · 标签页隐藏时停止。",
+    "autoStopped": "自动游戏已停止：{reason} · {rounds} 局 · 净额 {net}",
+    "autoStarted": "自动游戏已开始：{rounds} 局，亏损上限 {limit}",
+    "bar": {
+      "label": "游戏工具",
+      "settings": "设置",
+      "theatre": "影院模式",
+      "fullscreen": "全屏",
+      "exitFullscreen": "退出全屏",
+      "favorite": "加入收藏",
+      "unfavorite": "取消收藏",
+      "fair": "可证明公平",
+      "notFair": "练习 · 不可证明公平",
+      "home": "Sollish 首页"
+    },
+    "strip": {
+      "label": "{name} 游戏卡",
+      "original": "原创",
+      "rtp": "RTP {value}",
+      "rtpMode": "所选模式的精确 RTP",
+      "try": "试试手气",
+      "tryCoinflip": "以当前下注、随机一面进行一次普通 DEMO 抛币",
+      "tryCrash": "以当前下注和兑现目标进行一局普通 DEMO",
+      "tryDamla": "以当前下注和模式进行一次普通 DEMO 落滴"
+    },
+    "row": {
+      "title": "Originals",
+      "all": "查看全部",
+      "current": "正在游玩",
+      "label": "Sollish Originals 游戏"
+    }
   }
 }

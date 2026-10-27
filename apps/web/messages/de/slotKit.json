@@ -230,5 +230,61 @@
     "checkBad": "✗ Die Aufschlüsselung ergibt {amount}, die Engine zahlte {engine}",
     "note": "Jeder Betrag stammt aus dem Rundenergebnis der Engine; Multiplikatoren gelten genau wie gezeigt und die Summe ist die Auszahlung. × = mal Einsatz.",
     "noWin": "Kein Gewinn in dieser Runde."
+  },
+  "originals": {
+    "tabsLabel": "Einsatzmodus",
+    "manual": "Manuell",
+    "auto": "Auto",
+    "betAmount": "Einsatzbetrag",
+    "halfAria": "Einsatz halbieren",
+    "doubleAria": "Einsatz verdoppeln",
+    "amountHint": "1–500 DEMO",
+    "totalProfit": "Gesamtgewinn",
+    "profitOnWin": "Bei Gewinn · {factor}",
+    "profitAtTarget": "Auszahlung bei {target}",
+    "profitLive": "Bei Auszahlung jetzt",
+    "profitLast": "Letzte Runde",
+    "profitLastRain": "Letzte {count} Tropfen",
+    "profitIdle": "Kein Auszahlungsziel",
+    "side": "Seite wählen",
+    "target": "Auto-Auszahlung",
+    "targetPlaceholder": "Aus",
+    "targetHint": "1,01–50,00×. Leer lassen, um selbst auszuzahlen.",
+    "targetInvalid": "Das Auszahlungsziel muss zwischen 1,01× und 50,00× liegen.",
+    "targetOff": "Aus",
+    "targetRequired": "Wähle ein Auszahlungsziel für Autoplay.",
+    "targetPreset": "Ziel {target}",
+    "autoCount": "Anzahl Runden",
+    "autoNote": "Jede Runde {cost} · Verlustlimit Pflicht · stoppt bei verstecktem Tab.",
+    "autoStopped": "Autoplay gestoppt: {reason} · {rounds} Runden · netto {net}",
+    "autoStarted": "Autoplay gestartet: {rounds} Runden, Verlustlimit {limit}",
+    "bar": {
+      "label": "Spielwerkzeuge",
+      "settings": "Einstellungen",
+      "theatre": "Theatermodus",
+      "fullscreen": "Vollbild",
+      "exitFullscreen": "Vollbild beenden",
+      "favorite": "Zu Favoriten hinzufügen",
+      "unfavorite": "Aus Favoriten entfernen",
+      "fair": "Nachweislich fair",
+      "notFair": "Übung · nicht nachweislich fair",
+      "home": "Sollish Startseite"
+    },
+    "strip": {
+      "label": "Spielkarte {name}",
+      "original": "Original",
+      "rtp": "RTP {value}",
+      "rtpMode": "Exakter RTP des gewählten Modus",
+      "try": "Glück versuchen",
+      "tryCoinflip": "Ein normaler DEMO-Wurf mit aktuellem Einsatz auf eine zufällige Seite",
+      "tryCrash": "Eine normale DEMO-Runde mit aktuellem Einsatz und Auszahlungsziel",
+      "tryDamla": "Ein normaler DEMO-Tropfen mit aktuellem Einsatz und Modus"
+    },
+    "row": {
+      "title": "Originals",
+      "all": "Alle ansehen",
+      "current": "Läuft gerade",
+      "label": "Sollish-Originals-Spiele"
+    }
   }
 }

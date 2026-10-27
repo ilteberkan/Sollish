@@ -48,6 +48,11 @@
     "menu": "Menu",
     "closeMenu": "Close menu",
     "tabbar": "Quick navigation",
+    "shortcuts": "Shortcuts",
+    "chatShortcut": "Chat",
+    "help": "Help: fair play verification",
+    "clock": "Local time",
+    "demoBalance": "DEMO balance",
     "search": {
       "label": "Search games",
       "placeholder": "Search games",

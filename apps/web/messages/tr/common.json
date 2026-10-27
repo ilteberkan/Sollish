@@ -48,6 +48,11 @@
     "menu": "Menü",
     "closeMenu": "Menüyü kapat",
     "tabbar": "Hızlı gezinme",
+    "shortcuts": "Kısayollar",
+    "chatShortcut": "Sohbet",
+    "help": "Yardım: adil oyun doğrulama",
+    "clock": "Yerel saat",
+    "demoBalance": "DEMO bakiye",
     "search": {
       "label": "Oyun ara",
       "placeholder": "Oyun ara",

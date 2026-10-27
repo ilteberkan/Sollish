@@ -230,5 +230,61 @@
     "checkBad": "✗ The breakdown gives {amount}, the engine paid {engine}",
     "note": "Every amount is taken from the engine's round result; multipliers apply exactly as shown and the sum is the payout. × = times the bet.",
     "noWin": "No win in this round."
+  },
+  "originals": {
+    "tabsLabel": "Bet mode",
+    "manual": "Manual",
+    "auto": "Auto",
+    "betAmount": "Bet amount",
+    "halfAria": "Halve the bet",
+    "doubleAria": "Double the bet",
+    "amountHint": "1–500 DEMO",
+    "totalProfit": "Total profit",
+    "profitOnWin": "If you win · {factor}",
+    "profitAtTarget": "Cash out at {target}",
+    "profitLive": "If you cash out now",
+    "profitLast": "Last round",
+    "profitLastRain": "Last {count} drops",
+    "profitIdle": "No cash-out target",
+    "side": "Pick a side",
+    "target": "Auto cash-out",
+    "targetPlaceholder": "Off",
+    "targetHint": "1.01–50.00×. Leave empty to cash out by hand.",
+    "targetInvalid": "The cash-out target must be between 1.01× and 50.00×.",
+    "targetOff": "Off",
+    "targetRequired": "Pick a cash-out target for auto play.",
+    "targetPreset": "{target} target",
+    "autoCount": "Number of rounds",
+    "autoNote": "Each round {cost} · loss limit required · stops when the tab is hidden.",
+    "autoStopped": "Auto play stopped: {reason} · {rounds} rounds · net {net}",
+    "autoStarted": "Auto play started: {rounds} rounds, loss limit {limit}",
+    "bar": {
+      "label": "Game tools",
+      "settings": "Settings",
+      "theatre": "Theatre mode",
+      "fullscreen": "Full screen",
+      "exitFullscreen": "Exit full screen",
+      "favorite": "Add to favourites",
+      "unfavorite": "Remove from favourites",
+      "fair": "Provably fair",
+      "notFair": "Practice · not provably fair",
+      "home": "Sollish home"
+    },
+    "strip": {
+      "label": "{name} game card",
+      "original": "Original",
+      "rtp": "RTP {value}",
+      "rtpMode": "Exact RTP of the selected mode",
+      "try": "Try my luck",
+      "tryCoinflip": "A normal DEMO flip at the current bet on a random side",
+      "tryCrash": "A normal DEMO round at the current bet and cash-out target",
+      "tryDamla": "A normal DEMO drop at the current bet and mode"
+    },
+    "row": {
+      "title": "Originals",
+      "all": "View all",
+      "current": "Now playing",
+      "label": "Sollish Originals games"
+    }
   }
 }

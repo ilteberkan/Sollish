@@ -230,5 +230,61 @@
     "checkBad": "✗ Il dettaglio dà {amount}, il motore ha pagato {engine}",
     "note": "Ogni importo proviene dal risultato del giro del motore; i moltiplicatori si applicano come mostrato e la somma è il pagamento. × = volte la puntata.",
     "noWin": "Nessuna vincita in questo giro."
+  },
+  "originals": {
+    "tabsLabel": "Modalità di puntata",
+    "manual": "Manuale",
+    "auto": "Auto",
+    "betAmount": "Importo della puntata",
+    "halfAria": "Dimezza la puntata",
+    "doubleAria": "Raddoppia la puntata",
+    "amountHint": "1–500 DEMO",
+    "totalProfit": "Profitto totale",
+    "profitOnWin": "Se vinci · {factor}",
+    "profitAtTarget": "Incasso a {target}",
+    "profitLive": "Se incassi ora",
+    "profitLast": "Ultimo round",
+    "profitLastRain": "Ultime {count} gocce",
+    "profitIdle": "Nessun obiettivo di incasso",
+    "side": "Scegli un lato",
+    "target": "Incasso automatico",
+    "targetPlaceholder": "Off",
+    "targetHint": "1,01–50,00×. Lascia vuoto per incassare a mano.",
+    "targetInvalid": "L’obiettivo deve essere tra 1,01× e 50,00×.",
+    "targetOff": "Off",
+    "targetRequired": "Scegli un obiettivo di incasso per il gioco automatico.",
+    "targetPreset": "Obiettivo {target}",
+    "autoCount": "Numero di round",
+    "autoNote": "Ogni round {cost} · limite di perdita obbligatorio · si ferma se la scheda è nascosta.",
+    "autoStopped": "Gioco automatico fermato: {reason} · {rounds} round · netto {net}",
+    "autoStarted": "Gioco automatico avviato: {rounds} round, limite di perdita {limit}",
+    "bar": {
+      "label": "Strumenti di gioco",
+      "settings": "Impostazioni",
+      "theatre": "Modalità teatro",
+      "fullscreen": "Schermo intero",
+      "exitFullscreen": "Esci da schermo intero",
+      "favorite": "Aggiungi ai preferiti",
+      "unfavorite": "Rimuovi dai preferiti",
+      "fair": "Equità dimostrabile",
+      "notFair": "Pratica · equità non dimostrabile",
+      "home": "Home Sollish"
+    },
+    "strip": {
+      "label": "Scheda di {name}",
+      "original": "Original",
+      "rtp": "RTP {value}",
+      "rtpMode": "RTP esatto della modalità scelta",
+      "try": "Tenta la fortuna",
+      "tryCoinflip": "Un lancio DEMO normale con la puntata attuale su un lato casuale",
+      "tryCrash": "Un round DEMO normale con la puntata e l’obiettivo attuali",
+      "tryDamla": "Una goccia DEMO normale con la puntata e la modalità attuali"
+    },
+    "row": {
+      "title": "Originals",
+      "all": "Vedi tutti",
+      "current": "In gioco ora",
+      "label": "Giochi Sollish Originals"
+    }
   }
 }
