@@ -1,0 +1,39 @@
+{
+ "date": "2026-10-27",
+ "scope": "local only: next dev (Linux cloud container, 4 cores) and build:cloudflare + preview:cloudflare (local workerd). No hosted run, no GitHub CI, no real phone.",
+ "browser": "Playwright 1.63 default Chromium (chromium_headless_shell-1243); under test load it drew ~13 rAF/s (scratchpad probe), far below the owner's machine",
+ "unit": {
+  "typecheck": "pnpm --filter @sollish/web typecheck: exit 0",
+  "web": "pnpm --filter @sollish/web test: 447/447",
+  "protocol": "pnpm --filter @sollish/protocol test: 341/341"
+ },
+ "build": {
+  "command": "pnpm --filter @sollish/web build:cloudflare",
+  "buildId": "UlgLG_5KhmWu_stWUPUBT",
+  "commit": "67aa3d3 (app code); later commits change specs only"
+ },
+ "browser_preview": {
+  "command": "PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3001 pnpm --filter @sollish/web test:browser asena cascade cezeri damla ebru goreme tarhun game-info lobby i18n --workers=1",
+  "full_run": "159/161 passed (50.4 min)",
+  "failed_then_fixed": {
+   "cezeri long chain": "test defect: optional second takeover tap had no timeout and waited the whole test once the overlay had closed; fixed in cc008fa, rerun 2/2 pass",
+   "goreme Şafak Şöleni moorings": "test defect: closest approach sampled per frame misses the landing of a balloon the band takes over at the end of its flight when the browser draws ~13 fps; fixed in 20d60e0 (hidden transition-free clone measures the landing point), rerun 3/3 and goreme.spec 18/18"
+  }
+ },
+ "defect_found_and_fixed": {
+  "spin lock (asena, cascade, cezeri, ebru, goreme, tarhun)": "after settlement and before the deck unlocked, Space/Enter could start the next round under a locked spin button (second debit). Reproduced by asena.spec spin lock on build 3zoGeasgrvS5NHFq9P3D_ and on base commit 8db8145; startRound now refuses while busy (67aa3d3); the spin-lock specs try each input only while the lock holds (e39a511). asena/ebru/cezeri/goreme/tarhun spin-lock specs pass on UlgLG_5KhmWu_stWUPUBT."
+ },
+ "next_dev_notes": "On next dev the same suite gave 127/139 with 12 red; 8 of those were also red on base commit 8db8145 in this container (Tarhun tests exceed the 30 s default under dev compile; timing races). All of them pass or were fixed on the production preview above.",
+ "not_shown": [
+  "hosted Cloudflare run",
+  "GitHub CI",
+  "real phone fps",
+  "owner visual/audio acceptance",
+  "Ringside specs (need NEXT_PUBLIC_API_URL build)"
+ ],
+ "followup_build": {
+  "buildId": "5zey9L8A-wtYTXesExj7N",
+  "change": "Göreme Tur ayrıntısı shows each way's board-label share (DEMO) so the panel and the board labels show the same amounts and they sum to the payout (unit test over 8 400 rounds incl. buy); web unit 448/448, typecheck 0",
+  "browser": "round-breakdown (cascade, damla, goreme), Göreme win presentation x4 and moorings: 8/8 on preview"
+ }
+}

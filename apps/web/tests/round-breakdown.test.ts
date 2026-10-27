@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
@@ -83,6 +84,17 @@ test('Asena: cluster pays x constellation x global multiplier + moon scatter add
 });
 test('Göreme: pay per way x weighted ways, floor(board x sky / 100), + sun scatter add up to the engine payout', () => {
   record('goreme', sweep('goreme', 5, GOREME_MODES, (s, b, m) => goremeBreakdown(playGoremeRound(s, b, m as never)), perMode));
+});
+test('Göreme: the DEMO amount shown on every line (the board label share) adds up to the payout exactly', () => {
+  for (const mode of GOREME_MODES) {
+    for (let i = 0; i < (mode === 'buy' ? 400 : 4000); i++) {
+      const seed = createHash('sha256').update(`goreme-share-${mode}-${i}`).digest('hex').slice(0, 32);
+      const b = goremeBreakdown(playGoremeRound(seed, [100, 300, 2500, 50_000][i % 4]!, mode as never));
+      const shown = b.spins.flatMap(s => [...s.groups.flatMap(g => g.lines), ...s.extras]);
+      for (const l of shown) assert.notEqual(l.shareCents, undefined, `${mode} ${seed}: every shown line has its share`);
+      assert.equal(shown.reduce((n, l) => n + (l.shareCents ?? 0), 0), b.payoutCents, `${mode} ${seed}`);
+    }
+  }
 });
 test('Damla: pool multiplier x bet = payout for every mode', () => {
   const stats = sweep('damla', 6, DAMLA_MODES, (s, b, m) => damlaBreakdown(playDamlaRound(s, b, m as never)), () => Math.max(2000, Math.floor(N / 10)));

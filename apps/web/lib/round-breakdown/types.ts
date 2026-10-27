@@ -50,6 +50,9 @@ export interface BreakdownLine {
   /** The engine's own amount of this win, in `unit`. */
   amount: number;
   unit: BreakdownUnit;
+  /** Göreme: this way's share of the cents its board adds to the payout (after the sky and the floor), the same
+   * amount the board label shows; the shares of a round sum to the payout. Shown instead of bet x amount. */
+  shareCents?: number;
 }
 
 /** One tumble / rotation / board of a spin. amount = min(clamp, floor(sum(lines) x product(factors) / divisor)). */

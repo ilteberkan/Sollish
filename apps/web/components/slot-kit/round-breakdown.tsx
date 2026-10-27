@@ -78,7 +78,7 @@ export function RoundBreakdownPanel({ breakdown: b, modeLabel }: RoundBreakdownP
         {l.path && <small className={styles.path} aria-label={t('breakdown.pathAria', { path: l.path })}>{l.path.split('').map(c => (c === 'R' ? '↘' : '↙')).join('')}</small>}
       </span>
       <span className={styles.lineCalc}>{l.factors.length || l.deduct ? lineCalc(l) : ''}{l.clamp !== undefined && BigInt(l.amount) === BigInt(l.clamp) ? ` · ${t('breakdown.clamped')}` : ''}</span>
-      <span className={styles.lineAmount}><strong>{times(l.amount, l.unit)}</strong><small>{money(b.betCents, l.amount, l.unit)} DEMO</small></span>
+      <span className={styles.lineAmount}><strong>{times(l.amount, l.unit)}</strong><small>{l.shareCents !== undefined ? format.amount(l.shareCents) : money(b.betCents, l.amount, l.unit)} DEMO</small></span>
     </li>
   );
   const spinTitle = (s: BreakdownSpin) => (s.kind === 'base' ? t('breakdown.base') : t('breakdown.free', { n: s.index }));
