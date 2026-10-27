@@ -1,0 +1,298 @@
+{
+ "task": "Tur ayrıntısı (round breakdown) for Candy Cascade, Tarhun, Ebru, Cezeri, Asena, Göreme, Damla",
+ "date": "2026-10-27",
+ "scope": "unit (node --test via tsx) on local machine; no hosted run, no CI",
+ "commands": {
+  "unit": "bash scripts/use-node.sh pnpm --filter @sollish/web test  (BREAKDOWN_SUMMARY=1 prints the per-mode sweep below)",
+  "typecheck": "bash scripts/use-node.sh pnpm --filter @sollish/web typecheck"
+ },
+ "results": {
+  "web_unit": "447/447 pass",
+  "typecheck": "exit 0"
+ },
+ "breakdown_sweep": {
+  "rule": "every round: verifyBreakdown() re-adds the engine's own per-win fields (line = (base - deduct) x factors, board = floor(sum x factors / divisor), spin = sum x factors + scatter, cap, payout = floor(bet x total / 100)) and must equal the engine's totalHundredths and payoutCents with zero mismatches",
+  "rounds_per_mode": "standard/ante 20000, buy 4000 (all buy rounds play free spins), Damla 2000 per each of the 15 modes; bets 1, 3, 25, 500 DEMO cycled; deterministic seeds",
+  "per_game_mode": {
+   "cascade": {
+    "standard": {
+     "rounds": 20000,
+     "wins": 5319,
+     "lines": 8092,
+     "feature": 44,
+     "capped": 0,
+     "multiplied": 44
+    },
+    "ante": {
+     "rounds": 20000,
+     "wins": 5289,
+     "lines": 8164,
+     "feature": 82,
+     "capped": 0,
+     "multiplied": 82
+    },
+    "buy": {
+     "rounds": 4000,
+     "wins": 4000,
+     "lines": 19553,
+     "feature": 4000,
+     "capped": 0,
+     "multiplied": 3999
+    }
+   },
+   "tarhun": {
+    "standard": {
+     "rounds": 20000,
+     "wins": 5261,
+     "lines": 8444,
+     "feature": 56,
+     "capped": 0,
+     "multiplied": 2451
+    },
+    "ante": {
+     "rounds": 20000,
+     "wins": 5251,
+     "lines": 8750,
+     "feature": 89,
+     "capped": 0,
+     "multiplied": 2487
+    },
+    "buy": {
+     "rounds": 4000,
+     "wins": 4000,
+     "lines": 44299,
+     "feature": 4000,
+     "capped": 0,
+     "multiplied": 3796
+    }
+   },
+   "ebru": {
+    "standard": {
+     "rounds": 20000,
+     "wins": 5508,
+     "lines": 7581,
+     "feature": 66,
+     "capped": 0,
+     "multiplied": 59
+    },
+    "ante": {
+     "rounds": 20000,
+     "wins": 5456,
+     "lines": 7824,
+     "feature": 115,
+     "capped": 1,
+     "multiplied": 106
+    },
+    "buy": {
+     "rounds": 4000,
+     "wins": 4000,
+     "lines": 30536,
+     "feature": 4000,
+     "capped": 0,
+     "multiplied": 3652
+    }
+   },
+   "cezeri": {
+    "standard": {
+     "rounds": 20000,
+     "wins": 6018,
+     "lines": 18005,
+     "feature": 62,
+     "capped": 0,
+     "multiplied": 6018
+    },
+    "ante": {
+     "rounds": 20000,
+     "wins": 5963,
+     "lines": 19308,
+     "feature": 119,
+     "capped": 0,
+     "multiplied": 5963
+    },
+    "buy": {
+     "rounds": 4000,
+     "wins": 4000,
+     "lines": 140425,
+     "feature": 4000,
+     "capped": 0,
+     "multiplied": 4000
+    }
+   },
+   "asena": {
+    "standard": {
+     "rounds": 20000,
+     "wins": 5063,
+     "lines": 16743,
+     "feature": 53,
+     "capped": 0,
+     "multiplied": 1610
+    },
+    "ante": {
+     "rounds": 20000,
+     "wins": 5163,
+     "lines": 20250,
+     "feature": 124,
+     "capped": 0,
+     "multiplied": 1674
+    },
+    "buy": {
+     "rounds": 4000,
+     "wins": 4000,
+     "lines": 158441,
+     "feature": 4000,
+     "capped": 1,
+     "multiplied": 3980
+    }
+   },
+   "goreme": {
+    "standard": {
+     "rounds": 20000,
+     "wins": 7170,
+     "lines": 10288,
+     "feature": 80,
+     "capped": 0,
+     "multiplied": 6533
+    },
+    "ante": {
+     "rounds": 20000,
+     "wins": 7368,
+     "lines": 11158,
+     "feature": 163,
+     "capped": 0,
+     "multiplied": 6687
+    },
+    "buy": {
+     "rounds": 4000,
+     "wins": 4000,
+     "lines": 31463,
+     "feature": 4000,
+     "capped": 2,
+     "multiplied": 3978
+    }
+   },
+   "damla": {
+    "low-8": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "low-10": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "low-12": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "low-14": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "low-16": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "medium-8": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "medium-10": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "medium-12": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "medium-14": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "medium-16": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "high-8": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "high-10": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "high-12": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "high-14": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    },
+    "high-16": {
+     "rounds": 2000,
+     "wins": 2000,
+     "lines": 2000,
+     "feature": 0,
+     "capped": 0,
+     "multiplied": 0
+    }
+   }
+  }
+ },
+ "paytable_tests": "tests/round-breakdown-paytables.test.ts: size/length labels vs engine tier functions (cascade/tarhun findWins, asenaTier, ebru tierOf, Göreme lengths), info-page sources contain no hard-coded engine pay values (one found and fixed: Tarhun keys note used literal 960 = STORM_PAYTABLE.h1[0]), scatter-count labels in all 9 locales match the engine scatter tables"
+}
