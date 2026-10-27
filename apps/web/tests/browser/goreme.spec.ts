@@ -178,7 +178,21 @@ async function trackAnimation(page: Page) {
         const slot = document.querySelector(`[data-moor-id="${el.dataset.balloonId}"] [data-slot]`);
         if (!slot) continue;
         const a = el.querySelector('svg')!.getBoundingClientRect(), b = slot.getBoundingClientRect();
-        const d = Math.hypot(a.left + a.width / 2 - (b.left + b.width / 2), a.top + a.height / 2 - (b.top + b.height / 2));
+        const dx = a.left + a.width / 2 - (b.left + b.width / 2), dy = a.top + a.height / 2 - (b.top + b.height / 2);
+        let d = Math.hypot(dx, dy);
+        // Where the flight lands, independent of the frame rate: a balloon the band takes over mid-flight is dropped the
+        // moment its transform transition ends, which a slow browser (≈13 fps) never samples. A transition-free clone placed
+        // beside it (measured and removed in the same frame, never painted) sits at the flight's end.
+        if (el.dataset.phase === 'moor' && el.getAnimations().length) {
+          const ghost = el.cloneNode(true) as HTMLElement;
+          ghost.style.transition = 'none';
+          ghost.style.visibility = 'hidden';
+          for (const n of ghost.querySelectorAll<HTMLElement>('*')) n.style.transition = 'none';
+          el.parentElement!.appendChild(ghost);
+          const g = ghost.querySelector('svg')!.getBoundingClientRect();
+          ghost.remove();
+          d = Math.min(d, Math.hypot(g.left + g.width / 2 - (b.left + b.width / 2), g.top + g.height / 2 - (b.top + b.height / 2)));
+        }
         w.__anim.slotDist[el.dataset.balloonId!] = Math.min(w.__anim.slotDist[el.dataset.balloonId!] ?? Infinity, d);
       }
       const shownIds = [...document.querySelectorAll<HTMLElement>('[data-testid="goreme-sky"] [data-moor-id]:not([data-incoming])')].map(el => el.dataset.moorId!);
