@@ -54,6 +54,7 @@
   "status": {
     "live": "LIVE",
     "connecting": "VERBINDE",
+    "offline": "OFFLINE",
     "verifyHint": "Dein Browser spielt die Runde mit Seed und Eckenprotokoll erneut ab und prüft sie",
     "verified": "Wiedergabe bestätigt ✓",
     "committed": "Seed festgelegt"
@@ -71,7 +72,10 @@
     "pick": "Wer gewinnt? Tippe auf einen Kämpfer.",
     "pickSub": "Ein Ticket für den ganzen Kampf · Wetten schließen in {time}",
     "connecting": "Verbindung zur Arena",
-    "waiting": "Warte auf den Live-Kampfserver."
+    "waiting": "Warte auf den Live-Kampfserver.",
+    "offline": "Die Live-Arena ist offline",
+    "offlineSub": "Dieser Build hat keinen Live-Kampfserver. Andere Spiele laufen; Ringside öffnet, sobald der Live-Dienst verbunden ist.",
+    "lobby": "Zurück zur Lobby"
   },
   "toast": { "knockdown": "NIEDERSCHLAG", "counter": "KONTER", "hit": "TREFFER", "damage": "{damage} Schaden" },
   "card": {

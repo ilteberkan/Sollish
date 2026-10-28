@@ -54,6 +54,7 @@
   "status": {
     "live": "LIVE",
     "connecting": "CONNECTING",
+    "offline": "OFFLINE",
     "verifyHint": "Your browser replays the round from the seed and the corner log and checks it",
     "verified": "Replay verified ✓",
     "committed": "Seed committed"
@@ -71,7 +72,10 @@
     "pick": "Who wins? Tap a fighter.",
     "pickSub": "One ticket for the whole match · betting closes in {time}",
     "connecting": "Connecting to the arena",
-    "waiting": "Waiting for the live match server."
+    "waiting": "Waiting for the live match server.",
+    "offline": "The live arena is offline",
+    "offlineSub": "This build has no live match server. Other games work; Ringside opens when the live service is connected.",
+    "lobby": "Back to the lobby"
   },
   "toast": { "knockdown": "KNOCKDOWN", "counter": "COUNTER", "hit": "HIT", "damage": "{damage} damage" },
   "card": {

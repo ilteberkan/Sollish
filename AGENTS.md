@@ -13,7 +13,7 @@ Non-custodial Solana game platform (Coinflip, Crash, Ringside live 2.5D boxing) 
 
 ## Commands
 Run from the repo root through the pinned Node wrapper, `bash scripts/use-node.sh <cmd>`. Do not change the system PATH. The machine is an 8 GB M2: do not run builds, training and browser tests in parallel.
-- Dev server: `pnpm dev` (:3000). Production runtime: `pnpm --filter @sollish/web build:cloudflare`, then `pnpm --filter @sollish/web preview:cloudflare` (:3001).
+- Dev server: `pnpm dev` (:3000); with the live arena (Ringside needs it): `pnpm dev:live` (realtime :8787 + web :3000). Production runtime: `pnpm --filter @sollish/web build:cloudflare`, then `pnpm --filter @sollish/web preview:cloudflare` (:3001).
 - Unit and types: `pnpm --filter @sollish/protocol test`, `pnpm --filter @sollish/web test`, `pnpm --filter @sollish/web typecheck`.
 - Browser tests against a running preview: `PLAYWRIGHT_SKIP_WEBSERVER=true PLAYWRIGHT_BASE_URL=http://localhost:3001 bash scripts/use-node.sh pnpm --filter @sollish/web test:browser <spec> --workers=1`.
 - LIVE and backend: `pnpm --filter @sollish/realtime <script>` with `test:contact`, `test:ringside`, `test:arena` or `test:integration`, `pnpm test:database` (loopback cluster only), `pnpm test:operations`, `pnpm idl:check`, `bash scripts/test-contracts.sh`.

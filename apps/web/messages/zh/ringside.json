@@ -54,6 +54,7 @@
   "status": {
     "live": "直播中",
     "connecting": "连接中",
+    "offline": "离线",
     "verifyHint": "你的浏览器会用种子和角落记录重放该回合并进行校验",
     "verified": "重放已验证 ✓",
     "committed": "种子已承诺"
@@ -71,7 +72,10 @@
     "pick": "谁会获胜？点击一名拳手。",
     "pickSub": "整场比赛只需一张票据 · 投注将在 {time} 后关闭",
     "connecting": "正在连接竞技场",
-    "waiting": "正在等待实时比赛服务器。"
+    "waiting": "正在等待实时比赛服务器。",
+    "offline": "实时竞技场离线",
+    "offlineSub": "此版本没有实时比赛服务器。其他游戏可正常游玩；连接实时服务后即可进入 Ringside。",
+    "lobby": "返回大厅"
   },
   "toast": { "knockdown": "击倒", "counter": "反击", "hit": "命中", "damage": "伤害 {damage}" },
   "card": {

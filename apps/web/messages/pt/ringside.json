@@ -54,6 +54,7 @@
   "status": {
     "live": "AO VIVO",
     "connecting": "CONECTANDO",
+    "offline": "OFFLINE",
     "verifyHint": "Seu navegador reproduz o round com a seed e o registro do córner e o confere",
     "verified": "Reprodução verificada ✓",
     "committed": "Seed comprometida"
@@ -71,7 +72,10 @@
     "pick": "Quem vence? Toque em um lutador.",
     "pickSub": "Um bilhete para a luta toda · apostas fecham em {time}",
     "connecting": "Conectando à arena",
-    "waiting": "Aguardando o servidor da luta ao vivo."
+    "waiting": "Aguardando o servidor da luta ao vivo.",
+    "offline": "A arena ao vivo está offline",
+    "offlineSub": "Esta versão não tem servidor de luta ao vivo. Os outros jogos funcionam; o Ringside abre quando o serviço ao vivo estiver conectado.",
+    "lobby": "Voltar ao lobby"
   },
   "toast": { "knockdown": "KNOCKDOWN", "counter": "CONTRA-ATAQUE", "hit": "GOLPE", "damage": "{damage} de dano" },
   "card": {

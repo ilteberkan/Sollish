@@ -54,6 +54,7 @@
   "status": {
     "live": "CANLI",
     "connecting": "BAĞLANIYOR",
+    "offline": "ÇEVRİMDIŞI",
     "verifyHint": "Tarayıcın raundu seed ve koç kaydıyla yeniden oynatıp kontrol eder",
     "verified": "Tekrar doğrulandı ✓",
     "committed": "Seed taahhüt edildi"
@@ -71,7 +72,10 @@
     "pick": "Kim kazanır? Dövüşçüye dokun.",
     "pickSub": "Tek bilet bütün maç için · bahis {time} sonra kapanır",
     "connecting": "Arenaya bağlanılıyor",
-    "waiting": "Canlı maç sunucusu bekleniyor."
+    "waiting": "Canlı maç sunucusu bekleniyor.",
+    "offline": "Canlı arena çevrimdışı",
+    "offlineSub": "Bu sürümde canlı maç sunucusu yok. Diğer oyunlar çalışıyor; Ringside canlı servis bağlanınca açılır.",
+    "lobby": "Lobiye dön"
   },
   "toast": { "knockdown": "YERE GÖNDERDİ", "counter": "KONTRA", "hit": "İSABET", "damage": "{damage} hasar" },
   "card": {

@@ -1,6 +1,6 @@
 # Sollish durum
 
-Son güncelleme: 27 Ekim 2026. **Yeni oturum önce [NEXT-SESSION.md](NEXT-SESSION.md) dosyasını okur.** Bu dosyayı yalnız güncel durumla tut. Oturum bitmeden veya context dolmadan güncelle; eskiyen kaydı [history.md](history.md)'nin başına taşı.
+Son güncelleme: 28 Ekim 2026. **Yeni oturum önce [NEXT-SESSION.md](NEXT-SESSION.md) dosyasını okur.** Bu dosyayı yalnız güncel durumla tut. Oturum bitmeden veya context dolmadan güncelle; eskiyen kaydı [history.md](history.md)'nin başına taşı.
 
 ## Yayında olan (Cloudflare devnet)
 - Web: `sollish-web-devnet`, version `93645ad3-1955-4f7d-b947-c495d6b604f6`, build `yTTEY4MG5gmewPMEL9MsM` (Combat Club `sparring-1`). Kök: https://sollish-web-devnet.sollish-web.workers.dev
@@ -8,6 +8,7 @@ Son güncelleme: 27 Ekim 2026. **Yeni oturum önce [NEXT-SESSION.md](NEXT-SESSIO
 - Bu kimlikler 4 Ekim'de Cloudflare MCP ile doğrulandı. Deploy öncesi yeniden doğrula.
 
 ## Yerelde hazır, yayımlanmamış
+- **28 Ekim: Ringside'a girilemiyordu:** yerel `pnpm dev` canlı maç sunucusunu (`apps/realtime`) açmıyor ve `NEXT_PUBLIC_API_URL` boş; sayfa sonsuza dek "bağlanıyor"da kalıyordu. Yeni `pnpm dev:live` (realtime :8787 + web :3000) ile Ringside açılıyor; sunucu yoksa "Canlı arena çevrimdışı" + "Lobiye dön" (9 dil). ringside 8/8, web 455/455, lobby+i18n 24/24 (yerel). Kanıt `ops/evidence/ringside-entry-20261028/`. Hosted sürüm bu konteynerden doğrulanamadı.
 - **Oyun dalgası 3 (21–22 Ekim, dal `claude/sollish-wave3-games`, yerel):** şartname ve kanıt özeti `docs/product/games-wave3.md`.
   - **Göreme: Şafak Balonları** `/game/goreme`, `goreme-balloons-1`: platformun ilk ways oyunu (6×5, 15.625 yol), yükselen balon wild'ları (rüzgâr, birleşme, çarpan +1), Şafak Şöleni'nde gök kuşağı + Gök çarpanı. RTP %96,29 / %95,42 / %95,86 (standart/ante 100 M, satın alma 20 M tur), tavan 10.000×. Özgün sanat, müzik/efekt (`lib/slot-audio/*goreme*`), 9 dil, lobide carousel'in başında. Seslendirme 22 Ekim'de üretildi: Alistair, tr/en 36 dosya, 5,70 kredi (kalan 14,75); dinleme kabulü bekliyor (telaffuz: Şafak Şöleni, Rüzgâr). Birleşme motorda seyrek.
   - **Damla: Pamukkale** `/game/damla`, `damla-terraces-1`, "Sollish Original" anlık oyun (Plinko türü özgün yorum): 3 risk × 5 teras (8–16) = 15 mod, kesin RTP %98,45–98,56 (kasa ≥%1,44), mod başına 20 M MC, azami 1.000×. Yağmur ×5/×10, otomatik bahis (zorunlu kayıp limiti). Seslendirme yok.

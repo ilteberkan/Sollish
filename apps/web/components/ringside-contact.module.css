@@ -42,6 +42,8 @@
 .bugClock span{font-size:13px;letter-spacing:1.4px;color:var(--muted);font-weight:600}.bugClock b{font-size:40px;font-weight:800;letter-spacing:-1px}.bugClock small{font-size:14px;color:#e3e9f0}.bugClock em{font-style:normal;font-weight:600;color:var(--side)}
 .prompt{position:absolute;left:0;right:0;top:48px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;z-index:3;pointer-events:none;text-shadow:0 2px 12px rgba(0,0,0,.8);padding:0 16px}
 .prompt b{font-size:28px;font-weight:800;letter-spacing:-.4px}.prompt span{font-size:16px;color:#e8edf3}
+.promptLink{pointer-events:auto;margin-top:10px;padding:8px 18px;border-radius:var(--sx-radius-pill,999px);background:var(--sx-lime,#b4f000);color:var(--sx-lime-ink,#0a0a0a);font-size:14px;font-weight:700;text-decoration:none;text-shadow:none}
+.live[data-offline]{color:var(--sx-muted,#a1a1aa)}
 .toast{position:absolute;left:50%;bottom:60px;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:8px 18px 8px 8px;border-radius:999px;background:rgba(10,13,18,.9);border:1px solid color-mix(in srgb,var(--side) 55%,transparent);box-shadow:0 0 24px color-mix(in srgb,var(--side) 35%,transparent);font-size:16px;font-weight:600;white-space:nowrap;z-index:3;pointer-events:none;animation:toast .9s ease-out both}
 .toast b{padding:4px 11px;border-radius:999px;background:var(--side);color:var(--on-side);font-size:13px;font-weight:800;letter-spacing:.5px}
 @keyframes toast{0%{opacity:0;transform:translate(-50%,8px)}15%{opacity:1;transform:translate(-50%,0)}100%{opacity:1}}
@@ -187,3 +189,5 @@
 .fighter[aria-pressed=true] .portrait,.fighter:hover .portrait{opacity:1}
 @media(max-width:900px){.prompt{display:none}}
 .portrait{opacity:.32}.fighter[aria-pressed=true] .portrait,.fighter:hover .portrait{opacity:.5}
+/* Without a live server the offline notice is the only thing the stage can say: keep it on phones too. */
+@media(max-width:900px){.prompt[data-offline]{display:flex}.prompt[data-offline] span{display:block;font-size:13px}.prompt[data-offline] b{background:none;padding:0}}

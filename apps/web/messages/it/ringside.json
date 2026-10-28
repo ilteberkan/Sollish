@@ -54,6 +54,7 @@
   "status": {
     "live": "LIVE",
     "connecting": "CONNESSIONE",
+    "offline": "OFFLINE",
     "verifyHint": "Il tuo browser riproduce il round con il seed e il registro degli angoli e lo controlla",
     "verified": "Replay verificato ✓",
     "committed": "Seed impegnato"
@@ -71,7 +72,10 @@
     "pick": "Chi vince? Tocca un lottatore.",
     "pickSub": "Un solo biglietto per tutto l’incontro · le scommesse chiudono tra {time}",
     "connecting": "Connessione all’arena",
-    "waiting": "In attesa del server dell’incontro dal vivo."
+    "waiting": "In attesa del server dell’incontro dal vivo.",
+    "offline": "L’arena dal vivo è offline",
+    "offlineSub": "Questa versione non ha un server degli incontri dal vivo. Gli altri giochi funzionano; Ringside si apre quando il servizio dal vivo è collegato.",
+    "lobby": "Torna alla lobby"
   },
   "toast": { "knockdown": "KNOCKDOWN", "counter": "CONTRO", "hit": "COLPO", "damage": "{damage} di danno" },
   "card": {

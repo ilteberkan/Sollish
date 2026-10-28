@@ -54,6 +54,7 @@
   "status": {
     "live": "라이브",
     "connecting": "연결 중",
+    "offline": "오프라인",
     "verifyHint": "브라우저가 시드와 코너 기록으로 라운드를 다시 재생해 확인합니다",
     "verified": "재생 검증됨 ✓",
     "committed": "시드 커밋됨"
@@ -71,7 +72,10 @@
     "pick": "누가 이길까요? 파이터를 탭하세요.",
     "pickSub": "경기 전체에 티켓 한 장 · 베팅은 {time} 후 마감",
     "connecting": "아레나에 연결하는 중",
-    "waiting": "라이브 경기 서버를 기다리는 중입니다."
+    "waiting": "라이브 경기 서버를 기다리는 중입니다.",
+    "offline": "라이브 아레나가 오프라인입니다",
+    "offlineSub": "이 빌드에는 라이브 경기 서버가 없습니다. 다른 게임은 이용할 수 있으며, 라이브 서비스가 연결되면 Ringside가 열립니다.",
+    "lobby": "로비로 돌아가기"
   },
   "toast": { "knockdown": "다운", "counter": "카운터", "hit": "적중", "damage": "피해 {damage}" },
   "card": {

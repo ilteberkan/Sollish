@@ -1,5 +1,6 @@
 'use client';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { Component, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { MATCH_MARKETS, MATCH_OPEN_MS, RINGSIDE_FEE_BPS, COMBAT_V5_DURATION_MS, CONTACT_TICK_MS, V5_FIGHTERS, V5_PLAN_LEAD_MS, replayContactV5, type V5Mind, type MatchMarket, type FighterId, type RingPool, type RingTicket } from '@sollish/protocol';
 import { useRingside, bettingOpen, ledgerOf } from '@/lib/use-ringside';
@@ -121,6 +122,8 @@ export function RingsideArena() {
     return leader === side ? { tone: 'up', text: t('track.ahead') } : leader === 'draw' || !leader ? { tone: 'even', text: t('track.even') } : { tone: 'down', text: t('track.behind') };
   };
 
+  // Without NEXT_PUBLIC_API_URL there is no live server to wait for: say so instead of an endless "connecting".
+  const offline = arena.error === 'NOT_CONFIGURED';
   const errorText = arena.error ? t(`error.${arena.error}`) : screenError ? t(`controls.${screenError}`) : '';
   const ended = final || current?.finish === 'stoppage';
   const flow = [
@@ -155,7 +158,7 @@ export function RingsideArena() {
           {!failed && <Boundary onError={onError}><Broadcast labels={scene} phase={broadcastPhase} winner={resultWinner} fightId={Number(round?.id ?? 0)} startedAt={startedAt} durationMs={COMBAT_V5_DURATION_MS} reducedMotion={reduced} camera={camera} replay={replay} sound={sound} selection={selection} onSelectFighter={open ? pickWinner : undefined} onReady={onReady} onError={onError}/></Boundary>}
           {(!ready || failed) && <div className={s.loading}><strong>RINGSIDE</strong><p>{failed ? t('loading.failed') : t('loading.preparing')}</p></div>}
           <div className={s.stageTop}>
-            <span className={s.live} data-on={arena.connected}><i/>{arena.connected ? t('status.live') : t('status.connecting')}</span>
+            <span className={s.live} data-on={arena.connected} data-offline={offline || undefined}><i/>{arena.connected ? t('status.live') : offline ? t('status.offline') : t('status.connecting')}</span>
             <span className={s.verify} data-ok={arena.verified} title={t('status.verifyHint')}>{arena.verified ? t('status.verified') : t('status.committed')}</span>
           </div>
           {stage !== 'betting' && stage !== 'connecting' && <div className={s.scorebug} data-testid="ring-clock">
@@ -167,7 +170,9 @@ export function RingsideArena() {
             <div className={s.bugClock}><span>{stage === 'fighting' ? t('bug.round', { n: bout?.round ?? 1 }) : stage === 'starting' ? t('bug.starting', { n: bout?.round ?? 1 }) : stage === 'break' ? t('bug.break') : t('bug.over')}</span><b>{clock(remaining)}</b><small>{t('bug.score')} <em data-side="kor">{(bout?.score.kor ?? 0) + (current?.winner === 'kor' ? 1 : 0)}</em>–<em data-side="ayaz">{(bout?.score.ayaz ?? 0) + (current?.winner === 'ayaz' ? 1 : 0)}</em></small></div>
           </div>}
           {stage === 'betting' && <div className={s.prompt}><b>{t('prompt.pick')}</b><span>{t('prompt.pickSub', { time: clock(remaining) })}</span></div>}
-          {stage === 'connecting' && <div className={s.prompt}><b>{t('prompt.connecting')}</b><span>{errorText || t('prompt.waiting')}</span></div>}
+          {stage === 'connecting' && (offline
+            ? <div className={s.prompt} data-offline="" data-testid="ring-offline"><b>{t('prompt.offline')}</b><span>{t('prompt.offlineSub')}</span><Link href="/" className={s.promptLink}>{t('prompt.lobby')}</Link></div>
+            : <div className={s.prompt}><b>{t('prompt.connecting')}</b><span>{errorText || t('prompt.waiting')}</span></div>)}
           {stage === 'fighting' && lastEvent && <div className={s.toast} key={lastEvent.tick} data-side={lastEvent.actor}><b>{lastEvent.type === 'knockdown' ? t('toast.knockdown') : lastEvent.counter ? t('toast.counter') : t('toast.hit')}</b>{nm(lastEvent.actor)}{lastEvent.type === 'knockdown' ? ` → ${nm(lastEvent.target)}` : ''} · {act(lastEvent.technique)}{lastEvent.type === 'hit' ? ` · ${t('toast.damage', { damage: lastEvent.damage })}` : ''}</div>}
           {showCard && stage === 'break' && current && <div className={s.card} role="status" key={cardKey}><button type="button" className={s.close} aria-label={t('card.close')} onClick={() => setClosedKey(cardKey)}>✕</button><span>{t('card.breakTitle', { n: bout?.round ?? 1 })}</span><strong data-side={current.winner}>{current.winner === 'draw' ? t('draw') : t('card.won', { name: nm(current.winner) })}</strong><p>{run?.ok && run.replay ? `${t('card.points', { kor: run.replay.points.kor, ayaz: run.replay.points.ayaz })} · ` : ''}{knockdowns ? `${t('card.knockdownsTotal', { n: knockdowns })} · ` : ''}{t.rich('card.next', { b: chunk => <b key="b">{chunk}</b> }, { n: (bout?.round ?? 1) + 1, time: clock(remaining) })}</p></div>}
           {showCard && stage === 'final' && match?.results && <div className={s.card} data-final="true" role="status" key={cardKey}><button type="button" className={s.close} aria-label={t('card.close')} onClick={() => setClosedKey(cardKey)}>✕</button><span>{t('card.finalTitle', { id: bout?.id ?? '' })}</span><strong data-side={match.results['match-winner']}>{match.results['match-winner'] === 'draw' ? t('card.finalDraw') : nm(match.results['match-winner'])}</strong><p>{outcomeLabel('match-method', match.results['match-method'])} · {outcomeLabel('match-knockdowns', match.results['match-knockdowns'])}</p>{mine.length > 0 && <em data-good={payout > staked}>{t('card.coupon', { amount: payout ? `+${dn(payout)}` : '0' })}</em>}<small>{t.rich('card.nextOpens', { b: chunk => <b key="b">{chunk}</b> }, { time: clock(remaining) })}</small></div>}
@@ -248,7 +253,7 @@ export function RingsideArena() {
       </div></details>
     </div>
 
-    {errorText && <p className={s.error} role="alert">{errorText}</p>}
+    {errorText && !offline && <p className={s.error} role="alert">{errorText}</p>}
     {auditOpen && <div className={s.audit} role="dialog" aria-modal="false" aria-label={t('audit.aria')}><div><h2>{t('audit.title', { id: ledger ?? '' })}</h2><button type="button" onClick={() => setAuditOpen(false)} aria-label={t('audit.close')}>✕</button></div>{audit ? <><p>{t('audit.summary', { count: audit.entries.length, amount: dn(audit.entries.reduce((n, tk) => n + tk.amount, 0)) })}</p><a download={`ringside-match-${audit.roundId}.json`} href={`data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify({ unit: 'valueless DEMO', round, ...audit }, null, 2))}`}>{t('audit.download')}</a></> : <p>{t('audit.requesting')}</p>}</div>}
   </div>;
 }

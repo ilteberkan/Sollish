@@ -54,6 +54,7 @@
   "status": {
     "live": "EN DIRECT",
     "connecting": "CONNEXION",
+    "offline": "HORS LIGNE",
     "verifyHint": "Votre navigateur rejoue le round avec la seed et le journal des coins, puis le vérifie",
     "verified": "Rediffusion vérifiée ✓",
     "committed": "Seed engagée"
@@ -71,7 +72,10 @@
     "pick": "Qui gagne ? Touchez un combattant.",
     "pickSub": "Un seul ticket pour tout le combat · les paris ferment dans {time}",
     "connecting": "Connexion à l’arène",
-    "waiting": "En attente du serveur de combat en direct."
+    "waiting": "En attente du serveur de combat en direct.",
+    "offline": "L’arène en direct est hors ligne",
+    "offlineSub": "Cette version n’a pas de serveur de combat en direct. Les autres jeux fonctionnent ; Ringside s’ouvre quand le service en direct est connecté.",
+    "lobby": "Retour au lobby"
   },
   "toast": { "knockdown": "KNOCKDOWN", "counter": "CONTRE", "hit": "TOUCHÉ", "damage": "{damage} de dégâts" },
   "card": {
