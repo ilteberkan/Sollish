@@ -19,7 +19,7 @@
     "test:clean": "node test/clean-checkout.mjs"
   },
   "dependencies": {
-    "@magicblock-labs/ephemeral-rollups-sdk": "0.17.3",
+    "@magicblock-labs/ephemeral-rollups-sdk": "0.20.0",
     "@phala/dcap-qvl": "0.3.9",
     "@solana/web3.js": "1.99.0"
   },
